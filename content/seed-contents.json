@@ -1,0 +1,72 @@
+[
+  {
+    "day_order": 1,
+    "expression": "Can I get you started with something to drink?",
+    "pronunciation_tip": "get you started는 [게츄 스타-티드]처럼 이어서 발음. started의 t는 약하게 굴려서 '스타리드'에 가깝게 들려도 자연스러움.",
+    "example_sentence": "Hi, welcome in! Can I get you started with something to drink?",
+    "situation_note": "카페/레스토랑에서 손님이 착석하자마자 음료 주문부터 받을 때 쓰는 인사 겸 주문 유도 표현."
+  },
+  {
+    "day_order": 2,
+    "expression": "For here or to go?",
+    "pronunciation_tip": "for here는 [폴히얼]처럼 r 소리를 살짝만 굴리고, to go는 강세를 go에 줘서 [터고우]에 가깝게.",
+    "example_sentence": "Sure, that'll be one flat white. For here or to go?",
+    "situation_note": "카페에서 주문 마지막에 매장 이용/포장 여부를 확인할 때 쓰는 필수 표현."
+  },
+  {
+    "day_order": 3,
+    "expression": "Sorry, we're all out of that today.",
+    "pronunciation_tip": "all out of는 연음으로 [올 아우러브]처럼 이어짐. of는 약하게 [어v] 정도로만 발음.",
+    "example_sentence": "Sorry, we're all out of the pumpkin soup today. Would you like to try the mushroom instead?",
+    "situation_note": "레스토랑 주방에서 특정 메뉴 재료가 소진됐을 때 손님에게 양해를 구하며 대안을 제시하는 표현."
+  },
+  {
+    "day_order": 4,
+    "expression": "Could I please see some ID?",
+    "pronunciation_tip": "ID는 알파벳 그대로 [아이디-]로 발음, could I는 이어져서 [쿠다이]처럼 들림.",
+    "example_sentence": "Before I pour that, could I please see some ID?",
+    "situation_note": "바에서 주류 주문 시 연령 확인을 위해 신분증을 요청할 때 정중하게 쓰는 표현."
+  },
+  {
+    "day_order": 5,
+    "expression": "Would you like that on the rocks or neat?",
+    "pronunciation_tip": "on the rocks는 [온더락스]로 매끄럽게 이어 발음, neat는 [니-트]로 t를 짧게 끊어줌.",
+    "example_sentence": "One whiskey, coming up. Would you like that on the rocks or neat?",
+    "situation_note": "바에서 위스키 등 스트레이트 주류 주문 시 얼음 유무를 확인하는 표현."
+  },
+  {
+    "day_order": 6,
+    "expression": "How would you like your steak cooked?",
+    "pronunciation_tip": "cooked의 마지막 -ed는 [트] 소리만 살짝, 전체적으로 [하우 우쥬 라이크 유어 스테이크 쿡트]로 빠르게 이어짐.",
+    "example_sentence": "And how would you like your steak cooked — rare, medium, or well done?",
+    "situation_note": "레스토랑에서 스테이크 등 굽기 정도를 물을 때 쓰는 표준 표현."
+  },
+  {
+    "day_order": 7,
+    "expression": "I'll be right back with that.",
+    "pronunciation_tip": "I'll be는 [아일비]로 축약, right back은 t 소리를 약하게 삼켜서 [라이백]처럼 들림.",
+    "example_sentence": "One iced latte, no sugar. I'll be right back with that.",
+    "situation_note": "주문을 받은 직후 손님에게 곧 가져다주겠다고 안심시키는 짧은 응대 표현."
+  },
+  {
+    "day_order": 8,
+    "expression": "Is everything tasting okay so far?",
+    "pronunciation_tip": "tasting okay는 이어서 [테이스팅 오케이], so far는 강세를 far에 줘서 자연스럽게 마무리.",
+    "example_sentence": "Just checking in — is everything tasting okay so far?",
+    "situation_note": "레스토랑 서빙 중간에 손님 테이블을 돌며 만족도를 확인하는 체크인 표현."
+  },
+  {
+    "day_order": 9,
+    "expression": "Would you like to close out your tab?",
+    "pronunciation_tip": "close out은 [클로자웃]처럼 연음, tab은 짧고 명확하게 [탭].",
+    "example_sentence": "We're closing up soon — would you like to close out your tab?",
+    "situation_note": "바에서 마감 시간대에 손님의 결제(탭 정산) 의사를 물을 때 쓰는 표현."
+  },
+  {
+    "day_order": 10,
+    "expression": "Sorry for the wait, thanks for your patience.",
+    "pronunciation_tip": "for the는 약하게 [f더]로 뭉개지고, patience는 [페이션스]로 두 음절처럼 짧게.",
+    "example_sentence": "Sorry for the wait, thanks for your patience — here's your order.",
+    "situation_note": "바쁜 시간대에 주문이 늦어졌을 때 음식을 내주며 양해를 구하는 사과 표현."
+  }
+]
