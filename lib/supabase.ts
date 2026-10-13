@@ -59,3 +59,63 @@ export function createServerSupabaseClient() {
     auth: { persistSession: false },
   });
 }
+
+// ===== 클래스룸 =====
+
+export interface Student {
+  id: string;
+  name: string;
+  phone: string | null;
+  memo: string | null;
+  login_code_hash: string;
+  is_active: boolean;
+  created_at: string;
+}
+
+export interface Lesson {
+  id: string;
+  title: string;
+  description: string | null;
+  lesson_date: string;
+  is_published: boolean;
+  created_at: string;
+}
+
+export interface LessonItem {
+  id: string;
+  lesson_id: string;
+  item_order: number;
+  sentence: string;
+  translation: string | null;
+  note: string | null;
+  content_id: string | null;
+  created_at: string;
+}
+
+export interface Submission {
+  id: string;
+  student_id: string;
+  lesson_item_id: string;
+  audio_path: string;
+  status: "pending" | "scored" | "failed";
+  overall_score: number | null;
+  accuracy_score: number | null;
+  fluency_score: number | null;
+  completeness_score: number | null;
+  prosody_score: number | null;
+  word_details: unknown;
+  feedback_text: string | null;
+  created_at: string;
+  scored_at: string | null;
+}
+
+export type AttendanceStatus = "present" | "late" | "absent" | "excused";
+
+export interface Attendance {
+  id: string;
+  student_id: string;
+  class_date: string;
+  status: AttendanceStatus;
+  note: string | null;
+  created_at: string;
+}
