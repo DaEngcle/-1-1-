@@ -10,6 +10,26 @@
 4. 토스페이먼츠 빌링키 결제 완료 시 유료 구독 전환 (`status = 'active'`)
 5. 결제 실패/해지 시 자동으로 발송 리스트에서 제거 (`status = 'cancelled'`)
 
+## 다잉클 클래스룸 (부트캠프 수강생용)
+
+수강생이 부트캠프 60일 커리큘럼을 복습하고, 쉐도잉을 녹음·제출하면 AI가 발음·억양을 채점해주는 웹앱.
+
+- **학생** (`/student`): 교재 영상·수업 영상 시청, 문장별 원어민 음성(보통/천천히/반복/단어별) 듣기,
+  녹음 제출 → Azure 발음 평가 점수 + Claude 한국어 코칭 피드백, 발음 가이드(th·r·l·f/v·z·호주식 t),
+  내 성과(연속 학습일, 점수 추이, 자주 틀리는 단어, 출결)
+- **선생님** (`/teacher`): 학생 등록·로그인 코드 발급, 진도 공개, 레슨별 쉐도잉 문장 관리,
+  주차별 수업 영상 등록, 출결 체크, 학생별 성과·제출 녹음 확인
+- 로그인: 학생은 선생님이 발급한 8자리 코드, 선생님은 `ADMIN_PASSWORD`
+
+### 처음 설정
+
+1. Supabase SQL 에디터에서 `supabase/migrations/0002_classroom.sql` 실행 (Storage 버킷 `shadowing`, `tts` 포함)
+2. `.env.local`에 `SESSION_SECRET`, `ADMIN_PASSWORD`, `AZURE_SPEECH_KEY`, `AZURE_SPEECH_REGION`, `ANTHROPIC_API_KEY` 입력
+3. `npm run seed:bootcamp` → 부트캠프 12주/60일 + drill 레슨과 Day별 영상 링크 등록
+4. `/login?role=teacher` 로그인 → 학생 등록 → 진도 공개 → 레슨별로 교재 문장 붙여넣기
+
+Azure 키가 없으면 원어민 음성은 브라우저 내장 음성으로 대체되고, 제출은 "채점 대기"로 저장된다.
+
 ## 기술 스택
 
 - **Frontend/Backend**: Next.js (App Router)
@@ -18,6 +38,7 @@
 - **카톡 발송**: 솔라피(Solapi) 알림톡 API
 - **스케줄러**: Vercel Cron
 - **배포**: Vercel
+- **클래스룸**: Azure AI Speech (en-AU 신경망 TTS, 발음 평가), Claude API (코칭 피드백), jose (세션)
 
 ## 폴더 구조
 

@@ -12,17 +12,25 @@ create table if not exists students (
   created_at timestamptz not null default now()
 );
 
--- 레슨 (수업 1회 = 레슨 1개)
+-- 레슨: 부트캠프 커리큘럼 (Day 01~60 + 주차별 drill)
 create table if not exists lessons (
   id uuid primary key default gen_random_uuid(),
+  -- 전체 정렬 순서 (Day/drill 섞어서 1부터)
+  sort_order integer not null unique,
+  week_number integer not null,
+  week_title text not null,
+  kind text not null default 'day' check (kind in ('day', 'drill')),
+  -- kind='day'일 때 Day 번호 (drill은 null)
+  day_number integer unique,
   title text not null,
+  video_url text,
   description text,
-  lesson_date date not null default current_date,
+  -- 기수 진도에 맞춰 선생님이 공개
   is_published boolean not null default false,
   created_at timestamptz not null default now()
 );
 
-create index if not exists lessons_lesson_date_idx on lessons (lesson_date desc);
+create index if not exists lessons_week_idx on lessons (week_number, sort_order);
 
 -- 레슨별 쉐도잉 문장
 create table if not exists lesson_items (
@@ -37,6 +45,17 @@ create table if not exists lesson_items (
   created_at timestamptz not null default now(),
   unique (lesson_id, item_order)
 );
+
+-- 주차별 수업 영상 (줌 라이브 녹화본 등)
+create table if not exists class_recordings (
+  id uuid primary key default gen_random_uuid(),
+  week_number integer not null,
+  title text not null,
+  video_url text not null,
+  created_at timestamptz not null default now()
+);
+
+create index if not exists class_recordings_week_idx on class_recordings (week_number);
 
 -- 쉐도잉 제출 + AI 평가 결과
 create table if not exists submissions (
@@ -84,9 +103,15 @@ insert into storage.buckets (id, name, public)
 values ('shadowing', 'shadowing', false)
 on conflict (id) do nothing;
 
+-- 원어민 TTS 음성 캐시 (같은 문장은 한 번만 생성)
+insert into storage.buckets (id, name, public)
+values ('tts', 'tts', false)
+on conflict (id) do nothing;
+
 -- RLS: 0001과 동일하게 서버(service role) 전용
 alter table students enable row level security;
 alter table lessons enable row level security;
 alter table lesson_items enable row level security;
 alter table submissions enable row level security;
 alter table attendance enable row level security;
+alter table class_recordings enable row level security;

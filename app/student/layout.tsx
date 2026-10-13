@@ -1,0 +1,21 @@
+import { requireStudent } from "@/lib/classroom/dal";
+import { AppShell } from "@/app/_ui/app-shell";
+
+const NAV = [
+  { href: "/student", label: "홈 · 내 성과" },
+  { href: "/student/lessons", label: "부트캠프 복습" },
+  { href: "/student/pronunciation", label: "발음 가이드" },
+];
+
+export default async function StudentLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const student = await requireStudent();
+  return (
+    <AppShell title={`다잉클 클래스룸 · ${student.name}`} nav={NAV}>
+      {children}
+    </AppShell>
+  );
+}

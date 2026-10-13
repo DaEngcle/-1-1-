@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { SubscribeForm } from "./subscribe-form";
 
 export default function Home() {
@@ -19,6 +20,9 @@ export default function Home() {
         <p className="text-xs text-zinc-400">
           3일 무료체험 후 월 3,900원 자동결제 · 언제든 해지 가능
         </p>
+        <Link href="/login" className="text-xs text-zinc-500 underline">
+          부트캠프 수강생이신가요? 클래스룸 로그인
+        </Link>
       </main>
     </div>
   );

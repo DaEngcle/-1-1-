@@ -74,9 +74,14 @@ export interface Student {
 
 export interface Lesson {
   id: string;
+  sort_order: number;
+  week_number: number;
+  week_title: string;
+  kind: "day" | "drill";
+  day_number: number | null;
   title: string;
+  video_url: string | null;
   description: string | null;
-  lesson_date: string;
   is_published: boolean;
   created_at: string;
 }
@@ -117,5 +122,13 @@ export interface Attendance {
   class_date: string;
   status: AttendanceStatus;
   note: string | null;
+  created_at: string;
+}
+
+export interface ClassRecording {
+  id: string;
+  week_number: number;
+  title: string;
+  video_url: string;
   created_at: string;
 }
