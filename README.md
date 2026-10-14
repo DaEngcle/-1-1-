@@ -25,7 +25,7 @@
 
 1. Supabase SQL 에디터에서 `supabase/migrations/0002_classroom.sql` 실행 (Storage 버킷 `shadowing`, `tts` 포함)
 2. `.env.local`에 `SESSION_SECRET`, `ADMIN_PASSWORD`, `AZURE_SPEECH_KEY`, `AZURE_SPEECH_REGION`, `ANTHROPIC_API_KEY` 입력
-3. `npm run seed:bootcamp` → 부트캠프 12주/60일 + drill 레슨과 Day별 영상 링크 등록
+3. SQL 에디터에서 `supabase/seed/bootcamp.sql` 실행 (또는 `npm run seed:bootcamp`) → 부트캠프 12주/60일 + drill 레슨과 영상 링크 등록
 4. `/login?role=teacher` 로그인 → 학생 등록 → 진도 공개 → 레슨별로 교재 문장 붙여넣기
 
 Azure 키가 없으면 원어민 음성은 브라우저 내장 음성으로 대체되고, 제출은 "채점 대기"로 저장된다.
