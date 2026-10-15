@@ -69,7 +69,18 @@ export interface Student {
   memo: string | null;
   login_code_hash: string;
   is_active: boolean;
+  session_version: number;
   created_at: string;
+}
+
+export interface VideoProgress {
+  student_id: string;
+  lesson_id: string;
+  watched_segments: number[];
+  duration_seconds: number;
+  percent: number;
+  completed_at: string | null;
+  updated_at: string;
 }
 
 export interface Lesson {

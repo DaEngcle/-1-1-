@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createServerSupabaseClient } from "@/lib/supabase";
-import { getSession } from "@/lib/classroom/session";
+import { getVerifiedStudent } from "@/lib/classroom/dal";
 import {
   assessPronunciation,
   isAzureConfigured,
@@ -17,8 +17,8 @@ const MAX_AUDIO_BYTES = 2 * 1024 * 1024;
  * 녹음 저장 → 제출 기록 → (Azure 설정 시) 발음 평가 → Claude 코칭 피드백
  */
 export async function POST(request: NextRequest) {
-  const session = await getSession();
-  if (session?.role !== "student") {
+  const student = await getVerifiedStudent();
+  if (!student) {
     return NextResponse.json({ error: "로그인이 필요해요." }, { status: 401 });
   }
 
@@ -36,15 +36,6 @@ export async function POST(request: NextRequest) {
   }
 
   const supabase = createServerSupabaseClient();
-
-  const { data: student } = await supabase
-    .from("students")
-    .select("id, is_active")
-    .eq("id", session.studentId)
-    .maybeSingle();
-  if (!student?.is_active) {
-    return NextResponse.json({ error: "비활성화된 계정이에요." }, { status: 403 });
-  }
 
   const { data: item } = await supabase
     .from("lesson_items")

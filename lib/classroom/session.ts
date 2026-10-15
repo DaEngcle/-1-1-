@@ -5,9 +5,11 @@ import { cookies } from "next/headers";
 export const SESSION_COOKIE = "classroom_session";
 const SESSION_DAYS = 30;
 
+// teacher.pv: 선생님 비밀번호 지문 (비밀번호를 바꾸면 기존 로그인이 끊김)
+// student.v: 학생 세션 버전 (코드를 재발급하면 기존 로그인이 끊김)
 export type SessionPayload =
-  | { role: "teacher" }
-  | { role: "student"; studentId: string };
+  | { role: "teacher"; pv: string }
+  | { role: "student"; studentId: string; v: number };
 
 function getKey() {
   const secret = process.env.SESSION_SECRET;
@@ -33,9 +35,15 @@ export async function decryptSession(
     const { payload } = await jwtVerify(token, getKey(), {
       algorithms: ["HS256"],
     });
-    if (payload.role === "teacher") return { role: "teacher" };
-    if (payload.role === "student" && typeof payload.studentId === "string") {
-      return { role: "student", studentId: payload.studentId };
+    if (payload.role === "teacher" && typeof payload.pv === "string") {
+      return { role: "teacher", pv: payload.pv };
+    }
+    if (
+      payload.role === "student" &&
+      typeof payload.studentId === "string" &&
+      typeof payload.v === "number"
+    ) {
+      return { role: "student", studentId: payload.studentId, v: payload.v };
     }
     return null;
   } catch {

@@ -16,8 +16,11 @@ import {
   primaryButtonClass,
   secondaryButtonClass,
 } from "@/app/_ui/styles";
+import { requireTeacher } from "@/lib/classroom/dal";
+import { PlaylistImportForm } from "./playlist-form";
 
 export default async function TeacherLessonsPage() {
+  await requireTeacher();
   const supabase = createServerSupabaseClient();
   const [{ data: lessonRows }, { data: itemRows }, { data: recRows }] = await Promise.all([
     supabase.from("lessons").select("*").order("sort_order"),
@@ -113,6 +116,8 @@ export default async function TeacherLessonsPage() {
                   </form>
                 </div>
               ))}
+            <PlaylistImportForm weekNumber={weekNumber} />
+            <p className="my-2 text-xs text-zinc-500">또는 영상 하나씩 추가</p>
             <form action={addRecording} className="flex flex-col gap-2 sm:flex-row">
               <input type="hidden" name="week_number" value={weekNumber} />
               <input name="title" placeholder="제목 (예: 6기 Week1 라이브)" required className={`${inputClass} flex-1`} />

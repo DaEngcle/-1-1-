@@ -3,8 +3,10 @@ import { createServerSupabaseClient } from "@/lib/supabase";
 import { kstDate } from "@/lib/classroom/stats";
 import { SubmissionList } from "./submission-list";
 import { cardClass } from "@/app/_ui/styles";
+import { requireTeacher } from "@/lib/classroom/dal";
 
 export default async function TeacherHomePage() {
+  await requireTeacher();
   const supabase = createServerSupabaseClient();
   const now = new Date();
   const today = kstDate(now);

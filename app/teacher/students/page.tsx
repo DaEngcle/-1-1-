@@ -1,17 +1,21 @@
 import Link from "next/link";
 import { createServerSupabaseClient, type Student } from "@/lib/supabase";
 import { setStudentActive } from "./actions";
+import { getCourseProgress } from "@/lib/classroom/progress";
 import { CreateStudentForm, RegenerateCodeButton } from "./student-forms";
 import { cardClass, secondaryButtonClass } from "@/app/_ui/styles";
+import { requireTeacher } from "@/lib/classroom/dal";
 
 export default async function StudentsPage() {
+  await requireTeacher();
   const supabase = createServerSupabaseClient();
   const { data } = await supabase
     .from("students")
     .select("id, name, phone, memo, is_active, created_at")
     .order("is_active", { ascending: false })
     .order("name");
-  const students = (data ?? []) as Omit<Student, "login_code_hash">[];
+  const students = (data ?? []) as Omit<Student, "login_code_hash" | "session_version">[];
+  const progress = await getCourseProgress(students.map((s) => s.id));
 
   return (
     <>
@@ -44,6 +48,13 @@ export default async function StudentsPage() {
                 <p className="text-xs text-zinc-500">
                   {[s.phone, s.memo].filter(Boolean).join(" · ") || "-"}
                 </p>
+                {progress.get(s.id) && (
+                  <p className="mt-1 text-xs text-zinc-700">
+                    🎬 수강 <b>{progress.get(s.id)!.videoPercent}%</b> ({progress.get(s.id)!.completedVideos}/
+                    {progress.get(s.id)!.videoLessons}) · 🎤 쉐도잉 <b>{progress.get(s.id)!.submitPercent}%</b> (
+                    {progress.get(s.id)!.submittedSentences}/{progress.get(s.id)!.sentences})
+                  </p>
+                )}
               </div>
               <form action={setStudentActive}>
                 <input type="hidden" name="id" value={s.id} />

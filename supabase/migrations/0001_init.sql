@@ -54,7 +54,7 @@ create table if not exists send_logs (
 );
 
 create unique index if not exists send_logs_subscriber_per_day_idx
-  on send_logs (subscriber_id, (sent_at::date));
+  on send_logs (subscriber_id, ((sent_at at time zone 'Asia/Seoul')::date));
 
 -- RLS 활성화: 모든 접근은 서버(service role)를 통해서만 이루어진다.
 -- anon/authenticated 키에는 별도 정책을 부여하지 않는다 (기본 차단).

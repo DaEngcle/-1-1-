@@ -9,6 +9,8 @@ import {
 } from "@/lib/supabase";
 import { requireStudent } from "@/lib/classroom/dal";
 import { VideoEmbed } from "@/app/_ui/video-embed";
+import { TrackedVideo } from "@/app/_ui/tracked-video";
+import { youTubeVideoId } from "@/lib/classroom/youtube";
 import { SentencePractice, type PracticeResult } from "@/app/_ui/practice/sentence-practice";
 import type { WordResult } from "@/lib/classroom/azure-speech";
 
@@ -30,7 +32,7 @@ export default async function StudentLessonPage({
   if (!lessonRow) notFound();
   const lesson = lessonRow as Lesson;
 
-  const [{ data: itemRows }, { data: recordingRows }, { data: neighborRows }] = await Promise.all([
+  const [{ data: itemRows }, { data: recordingRows }, { data: neighborRows }, { data: progressRow }] = await Promise.all([
     supabase.from("lesson_items").select("*").eq("lesson_id", id).order("item_order"),
     supabase
       .from("class_recordings")
@@ -42,7 +44,14 @@ export default async function StudentLessonPage({
       .select("id, sort_order")
       .eq("is_published", true)
       .in("sort_order", [lesson.sort_order - 1, lesson.sort_order + 1]),
+    supabase
+      .from("video_progress")
+      .select("watched_segments, duration_seconds")
+      .eq("student_id", student.id)
+      .eq("lesson_id", id)
+      .maybeSingle(),
   ]);
+  const lessonVideoId = youTubeVideoId(lesson.video_url);
   const items = (itemRows ?? []) as LessonItem[];
   const recordings = (recordingRows ?? []) as ClassRecording[];
   const prev = neighborRows?.find((n) => n.sort_order === lesson.sort_order - 1);
@@ -85,7 +94,17 @@ export default async function StudentLessonPage({
       {lesson.video_url && (
         <section className="flex flex-col gap-2">
           <h2 className="font-bold text-zinc-900">🎬 교재 영상</h2>
-          <VideoEmbed url={lesson.video_url} title={heading} />
+          {lessonVideoId ? (
+            <TrackedVideo
+              lessonId={lesson.id}
+              videoId={lessonVideoId}
+              title={heading}
+              initialSegments={progressRow?.watched_segments ?? []}
+              initialDuration={progressRow?.duration_seconds ?? null}
+            />
+          ) : (
+            <VideoEmbed url={lesson.video_url} title={heading} />
+          )}
         </section>
       )}
 

@@ -3,12 +3,14 @@ import { kstDate } from "@/lib/classroom/stats";
 import { ATTENDANCE_LABEL } from "@/lib/classroom/attendance";
 import { saveAttendance } from "./actions";
 import { cardClass, inputClass, primaryButtonClass, secondaryButtonClass } from "@/app/_ui/styles";
+import { requireTeacher } from "@/lib/classroom/dal";
 
 export default async function AttendancePage({
   searchParams,
 }: {
   searchParams: Promise<{ date?: string }>;
 }) {
+  await requireTeacher();
   const { date } = await searchParams;
   const classDate = date && /^\d{4}-\d{2}-\d{2}$/.test(date) ? date : kstDate(new Date());
   const supabase = createServerSupabaseClient();

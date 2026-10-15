@@ -30,3 +30,12 @@ export function isTeacherPassword(input: string) {
   const b = createHash("sha256").update(expected).digest();
   return timingSafeEqual(a, b);
 }
+
+/** 세션에 넣을 선생님 비밀번호 지문. 비밀번호 자체는 드러나지 않음 */
+export function teacherPasswordFingerprint() {
+  const secret = process.env.ADMIN_PASSWORD ?? "";
+  return createHash("sha256")
+    .update(`teacher-session:${process.env.SESSION_SECRET ?? ""}:${secret}`)
+    .digest("hex")
+    .slice(0, 32);
+}

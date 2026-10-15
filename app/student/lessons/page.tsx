@@ -6,7 +6,7 @@ export default async function StudentLessonsPage() {
   const student = await requireStudent();
   const supabase = createServerSupabaseClient();
 
-  const [{ data: lessonRows }, { data: itemRows }, { data: subRows }] = await Promise.all([
+  const [{ data: lessonRows }, { data: itemRows }, { data: subRows }, { data: progressRows }] = await Promise.all([
     supabase
       .from("lessons")
       .select("id, sort_order, week_number, week_title, kind, day_number, title, video_url")
@@ -14,7 +14,9 @@ export default async function StudentLessonsPage() {
       .order("sort_order"),
     supabase.from("lesson_items").select("id, lesson_id"),
     supabase.from("submissions").select("lesson_item_id").eq("student_id", student.id),
+    supabase.from("video_progress").select("lesson_id, percent, completed_at").eq("student_id", student.id),
   ]);
+  const watch = new Map((progressRows ?? []).map((p) => [p.lesson_id, p]));
 
   const lessons = (lessonRows ?? []) as Lesson[];
   const practiced = new Set((subRows ?? []).map((s) => s.lesson_item_id));
@@ -64,15 +66,26 @@ export default async function StudentLessonsPage() {
                       {l.kind === "day" ? l.title : "주간 복습 드릴"}
                     </span>
                   </span>
-                  {items.length > 0 && (
-                    <span
-                      className={`shrink-0 rounded-full px-2 py-0.5 text-xs ${
-                        done === items.length ? "bg-green-100 text-green-700" : "bg-zinc-100 text-zinc-600"
-                      }`}
-                    >
-                      {done === items.length ? "✓ 완료" : `${done}/${items.length}`}
-                    </span>
-                  )}
+                  <span className="flex shrink-0 flex-col items-end gap-1">
+                    {l.video_url && (
+                      <span
+                        className={`rounded-full px-2 py-0.5 text-xs ${
+                          watch.get(l.id)?.completed_at ? "bg-green-100 text-green-700" : "bg-zinc-100 text-zinc-600"
+                        }`}
+                      >
+                        🎬 {watch.get(l.id)?.completed_at ? "수강 완료" : `${watch.get(l.id)?.percent ?? 0}%`}
+                      </span>
+                    )}
+                    {items.length > 0 && (
+                      <span
+                        className={`rounded-full px-2 py-0.5 text-xs ${
+                          done === items.length ? "bg-green-100 text-green-700" : "bg-zinc-100 text-zinc-600"
+                        }`}
+                      >
+                        🎤 {done === items.length ? "제출 완료" : `${done}/${items.length}`}
+                      </span>
+                    )}
+                  </span>
                 </Link>
               );
             })}

@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
 import { NextResponse, type NextRequest } from "next/server";
 import { createServerSupabaseClient } from "@/lib/supabase";
-import { getSession } from "@/lib/classroom/session";
+import { getVerifiedStudent, isTeacher } from "@/lib/classroom/dal";
 import {
   TTS_SPEEDS,
   TTS_VOICE,
@@ -18,7 +18,7 @@ const MAX_TEXT_LENGTH = 300;
  * Azure 미설정 시 503 → 클라이언트가 브라우저 내장 음성으로 대체.
  */
 export async function GET(request: NextRequest) {
-  if (!(await getSession())) {
+  if (!(await isTeacher()) && !(await getVerifiedStudent())) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
   if (!isAzureConfigured()) {

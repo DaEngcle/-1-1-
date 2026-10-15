@@ -61,10 +61,17 @@ export async function regenerateCode(
   const name = String(formData.get("name"));
   const supabase = createServerSupabaseClient();
   try {
+    const { data: current } = await supabase
+      .from("students")
+      .select("session_version")
+      .eq("id", id)
+      .single();
+    // 세션 버전을 올려서 예전 코드로 로그인해 둔 기기도 바로 로그아웃시킨다
+    const nextVersion = (current?.session_version ?? 1) + 1;
     const code = await withFreshCode(async (hash) => {
       const { error } = await supabase
         .from("students")
-        .update({ login_code_hash: hash })
+        .update({ login_code_hash: hash, session_version: nextVersion })
         .eq("id", id);
       if (error && error.code !== "23505") throw new Error(error.message);
       return error;

@@ -4,12 +4,14 @@ import { createServerSupabaseClient, type Lesson, type LessonItem } from "@/lib/
 import { addItems, deleteItem, updateItem } from "../actions";
 import { VideoEmbed } from "@/app/_ui/video-embed";
 import { cardClass, inputClass, primaryButtonClass, secondaryButtonClass } from "@/app/_ui/styles";
+import { requireTeacher } from "@/lib/classroom/dal";
 
 export default async function TeacherLessonPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
+  await requireTeacher();
   const { id } = await params;
   const supabase = createServerSupabaseClient();
   const [{ data: lessonRow }, { data: itemRows }] = await Promise.all([

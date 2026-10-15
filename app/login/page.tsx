@@ -28,9 +28,9 @@ export default async function LoginPage({
               : "복습하고, 쉐도잉하고, AI 피드백 받기."}
           </p>
         </div>
-        {error === "inactive" && (
+        {(error === "inactive" || error === "expired") && (
           <p className="text-sm text-red-600">
-            비활성화된 계정이에요. 선생님께 문의해주세요.
+            로그인이 만료됐어요. 선생님께 받은 코드로 다시 로그인해주세요.
           </p>
         )}
         {isTeacher ? <TeacherLoginForm /> : <StudentLoginForm />}

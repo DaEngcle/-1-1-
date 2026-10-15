@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { requireStudent } from "@/lib/classroom/dal";
 import { getStudentStats } from "@/lib/classroom/stats";
+import { getCourseProgress } from "@/lib/classroom/progress";
 import { ScoreTrendChart } from "@/app/_ui/score-trend-chart";
 import { cardClass } from "@/app/_ui/styles";
 import { ATTENDANCE_LABEL } from "@/lib/classroom/attendance";
@@ -17,9 +18,21 @@ function StatTile({ label, value, unit }: { label: string; value: string | numbe
   );
 }
 
+function ProgressBar({ percent }: { percent: number }) {
+  return (
+    <span className="h-2 w-full overflow-hidden rounded-full bg-zinc-200">
+      <span className="block h-full bg-yellow-400" style={{ width: `${percent}%` }} />
+    </span>
+  );
+}
+
 export default async function StudentHomePage() {
   const student = await requireStudent();
-  const stats = await getStudentStats(student.id);
+  const [stats, progressMap] = await Promise.all([
+    getStudentStats(student.id),
+    getCourseProgress([student.id]),
+  ]);
+  const progress = progressMap.get(student.id)!;
   const totalClasses = Object.values(stats.attendance).reduce((a, b) => a + b, 0);
   const attended = stats.attendance.present + stats.attendance.late;
 
@@ -31,6 +44,31 @@ export default async function StudentHomePage() {
           부트캠프 복습하러 가기 →
         </Link>
       </div>
+
+      <section className="grid grid-cols-2 gap-3">
+        <Link href="/student/lessons" className={`${cardClass} flex flex-col gap-1.5 hover:border-yellow-400`}>
+          <span className="text-xs text-zinc-500">🎬 영상 수강률</span>
+          <span className="text-2xl font-bold text-zinc-900">
+            {progress.videoPercent}
+            <span className="ml-0.5 text-sm font-normal text-zinc-500">%</span>
+          </span>
+          <ProgressBar percent={progress.videoPercent} />
+          <span className="text-xs text-zinc-500">
+            {progress.completedVideos}/{progress.videoLessons} 레슨 수강 완료
+          </span>
+        </Link>
+        <Link href="/student/shadowing" className={`${cardClass} flex flex-col gap-1.5 hover:border-yellow-400`}>
+          <span className="text-xs text-zinc-500">🎤 쉐도잉 제출</span>
+          <span className="text-2xl font-bold text-zinc-900">
+            {progress.submitPercent}
+            <span className="ml-0.5 text-sm font-normal text-zinc-500">%</span>
+          </span>
+          <ProgressBar percent={progress.submitPercent} />
+          <span className="text-xs text-zinc-500">
+            {progress.submittedSentences}/{progress.sentences} 문장 제출
+          </span>
+        </Link>
+      </section>
 
       <section className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         <StatTile label="연속 학습" value={stats.streakDays} unit="일" />
