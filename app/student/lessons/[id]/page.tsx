@@ -32,7 +32,13 @@ export default async function StudentLessonPage({
   if (!lessonRow) notFound();
   const lesson = lessonRow as Lesson;
 
-  const [{ data: itemRows }, { data: recordingRows }, { data: neighborRows }, { data: progressRow }] = await Promise.all([
+  const [
+    { data: itemRows },
+    { data: recordingRows },
+    { data: neighborRows },
+    { data: progressRow },
+    { data: subRows },
+  ] = await Promise.all([
     supabase.from("lesson_items").select("*").eq("lesson_id", id).order("item_order"),
     supabase
       .from("class_recordings")
@@ -50,6 +56,13 @@ export default async function StudentLessonPage({
       .eq("student_id", student.id)
       .eq("lesson_id", id)
       .maybeSingle(),
+    // 이 레슨 문장들에 대한 내 제출 (문장 목록을 기다리지 않고 함께 조회)
+    supabase
+      .from("submissions")
+      .select("*, lesson_items!inner(lesson_id)")
+      .eq("student_id", student.id)
+      .eq("lesson_items.lesson_id", id)
+      .order("created_at", { ascending: false }),
   ]);
   const lessonVideoId = youTubeVideoId(lesson.video_url);
   const items = (itemRows ?? []) as LessonItem[];
@@ -59,20 +72,12 @@ export default async function StudentLessonPage({
 
   // 문장별 가장 최근 제출 결과
   const latest = new Map<string, PracticeResult>();
-  if (items.length > 0) {
-    const { data: subs } = await supabase
-      .from("submissions")
-      .select("*")
-      .eq("student_id", student.id)
-      .in("lesson_item_id", items.map((i) => i.id))
-      .order("created_at", { ascending: false });
-    for (const s of (subs ?? []) as Submission[]) {
-      if (!latest.has(s.lesson_item_id)) {
-        latest.set(s.lesson_item_id, {
-          ...s,
-          word_details: s.word_details as WordResult[] | null,
-        });
-      }
+  for (const s of (subRows ?? []) as Submission[]) {
+    if (!latest.has(s.lesson_item_id)) {
+      latest.set(s.lesson_item_id, {
+        ...s,
+        word_details: s.word_details as WordResult[] | null,
+      });
     }
   }
 

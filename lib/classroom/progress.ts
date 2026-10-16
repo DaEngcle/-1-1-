@@ -32,19 +32,22 @@ async function fetchAll<T>(
 type PublishedLesson = Pick<Lesson, "id" | "sort_order" | "week_number" | "week_title" | "kind" | "day_number" | "title" | "video_url">;
 
 async function loadPublished(supabase: Client) {
-  const { data: lessonRows } = await supabase
-    .from("lessons")
-    .select("id, sort_order, week_number, week_title, kind, day_number, title, video_url")
-    .eq("is_published", true)
-    .order("sort_order");
-  const lessons = (lessonRows ?? []) as PublishedLesson[];
-  const lessonIds = lessons.map((l) => l.id);
-  const items = lessonIds.length
-    ? await fetchAll<{ id: string; lesson_id: string }>((from, to) =>
-        supabase.from("lesson_items").select("id, lesson_id").in("lesson_id", lessonIds).range(from, to),
-      )
-    : [];
-  return { lessons, items };
+  // 레슨과 문장을 동시에 조회 (문장은 공개 레슨 것만)
+  const [{ data: lessonRows }, items] = await Promise.all([
+    supabase
+      .from("lessons")
+      .select("id, sort_order, week_number, week_title, kind, day_number, title, video_url")
+      .eq("is_published", true)
+      .order("sort_order"),
+    fetchAll<{ id: string; lesson_id: string }>((from, to) =>
+      supabase
+        .from("lesson_items")
+        .select("id, lesson_id, lessons!inner(is_published)")
+        .eq("lessons.is_published", true)
+        .range(from, to),
+    ),
+  ]);
+  return { lessons: (lessonRows ?? []) as PublishedLesson[], items };
 }
 
 export interface CourseProgress {
@@ -66,11 +69,8 @@ export async function getCourseProgress(studentIds: string[]): Promise<Map<strin
   if (studentIds.length === 0) return result;
 
   const supabase = createServerSupabaseClient();
-  const { lessons, items } = await loadPublished(supabase);
-  const videoLessonIds = new Set(lessons.filter((l) => l.video_url).map((l) => l.id));
-  const itemIds = new Set(items.map((i) => i.id));
-
-  const [progressRows, submissionRows] = await Promise.all([
+  const [{ lessons, items }, progressRows, submissionRows] = await Promise.all([
+    loadPublished(supabase),
     fetchAll<{ student_id: string; lesson_id: string }>((from, to) =>
       supabase
         .from("video_progress")
@@ -87,6 +87,8 @@ export async function getCourseProgress(studentIds: string[]): Promise<Map<strin
         .range(from, to),
     ),
   ]);
+  const videoLessonIds = new Set(lessons.filter((l) => l.video_url).map((l) => l.id));
+  const itemIds = new Set(items.map((i) => i.id));
 
   const completed = new Map<string, Set<string>>();
   for (const p of progressRows) {
@@ -127,8 +129,8 @@ export interface LessonProgressRow {
 /** 한 학생의 레슨별 진도 (공개 레슨 순서대로) */
 export async function getLessonProgress(studentId: string): Promise<LessonProgressRow[]> {
   const supabase = createServerSupabaseClient();
-  const { lessons, items } = await loadPublished(supabase);
-  const [{ data: progressRows }, submissionRows] = await Promise.all([
+  const [{ lessons, items }, { data: progressRows }, submissionRows] = await Promise.all([
+    loadPublished(supabase),
     supabase
       .from("video_progress")
       .select("lesson_id, percent, completed_at")
