@@ -38,7 +38,7 @@ export default async function TeacherHomePage() {
             </>
           );
           return t.href ? (
-            <Link key={t.label} href={t.href} className={`${cardClass} flex flex-col gap-1 hover:border-yellow-400`}>
+            <Link key={t.label} href={t.href} className={`${cardClass} flex flex-col gap-1 hover:border-brand-300`}>
               {body}
             </Link>
           ) : (
@@ -49,7 +49,7 @@ export default async function TeacherHomePage() {
         })}
       </section>
 
-      <Link href="/teacher/attendance" className={`${cardClass} flex items-center justify-between hover:border-yellow-400`}>
+      <Link href="/teacher/attendance" className={`${cardClass} flex items-center justify-between hover:border-brand-300`}>
         <span className="font-semibold text-zinc-900">오늘({today}) 출결 체크</span>
         <span className="text-sm text-zinc-500">
           {todayAttendance.count ? `${todayAttendance.count}명 기록됨` : "아직 기록 없음"} →

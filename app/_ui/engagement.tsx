@@ -101,7 +101,7 @@ export function Badges({ badges }: { badges: Badge[] }) {
           <div key={b.id} title={b.hint} className="flex flex-col items-center gap-1">
             <span
               className={`flex h-11 w-11 items-center justify-center rounded-full text-xl ${
-                b.earned ? "bg-yellow-100" : "border border-dashed border-zinc-300 bg-zinc-50 grayscale opacity-40"
+                b.earned ? "bg-amber-100 ring-2 ring-amber-300" : "border border-dashed border-zinc-300 bg-zinc-50 grayscale opacity-40"
               }`}
             >
               {b.earned ? BADGE_ICONS[b.id] : "🔒"}
@@ -122,8 +122,15 @@ export function WeeklyRanking({ rows, meId, limit = 5 }: { rows: RankRow[]; meId
     <section className={cardClass}>
       <div className="mb-2 flex items-center justify-between">
         <h2 className="font-bold text-zinc-900">이번 주 랭킹</h2>
-        <span className="text-[11px] text-zinc-500">영상 1분=1P · 쉐도잉 제출=10P · 80점 이상 +5P</span>
+        {meId ? (
+          <a href="/student/profile" className="text-xs font-semibold text-brand-600 underline">
+            닉네임 바꾸기
+          </a>
+        ) : (
+          <span className="text-[11px] text-zinc-500">실명 (닉네임)</span>
+        )}
       </div>
+      <p className="mb-2 text-[11px] text-zinc-500">영상 1분 = 1P · 쉐도잉 제출 = 10P · 80점 이상 +5P</p>
       {rows.length === 0 ? (
         <p className="text-sm text-zinc-500">아직 기록이 없어요.</p>
       ) : (
@@ -132,7 +139,7 @@ export function WeeklyRanking({ rows, meId, limit = 5 }: { rows: RankRow[]; meId
             <li
               key={r.studentId}
               className={`flex items-center justify-between rounded-lg px-2 py-1 ${
-                r.studentId === meId ? "bg-yellow-100 font-semibold" : ""
+                r.studentId === meId ? "bg-brand-50 font-semibold text-brand-800 ring-1 ring-brand-200" : ""
               }`}
             >
               <span>
@@ -144,7 +151,7 @@ export function WeeklyRanking({ rows, meId, limit = 5 }: { rows: RankRow[]; meId
             </li>
           ))}
           {me && !top.some((r) => r.studentId === meId) && (
-            <li className="flex items-center justify-between rounded-lg bg-yellow-100 px-2 py-1 font-semibold">
+            <li className="flex items-center justify-between rounded-lg bg-brand-50 px-2 py-1 font-semibold text-brand-800 ring-1 ring-brand-200">
               <span>
                 <span className="inline-block w-7 text-center">{me.rank}</span>
                 {me.name} (나)

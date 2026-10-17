@@ -117,7 +117,7 @@ export default async function StudentLessonPage({
         <section className="flex flex-col gap-2">
           <h2 className="font-bold text-zinc-900">📹 Week {lesson.week_number} 수업 영상</h2>
           {recordings.map((r) => (
-            <details key={r.id} className="rounded-xl border border-zinc-200 bg-white p-3">
+            <details key={r.id} className="rounded-2xl border border-slate-200/80 bg-white shadow-sm shadow-brand-900/5 p-3">
               <summary className="cursor-pointer text-sm font-medium text-zinc-800">{r.title}</summary>
               <div className="mt-3">
                 <VideoEmbed url={r.video_url} title={r.title} />

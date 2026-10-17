@@ -7,10 +7,10 @@ function LevelBlock({ label, test, highlight }: { label: string; test: LevelTest
   return (
     <div className="flex flex-col items-center">
       <span className="text-xs text-zinc-500">{label}</span>
-      <span className={`font-bold ${highlight ? "text-3xl text-violet-700" : "text-2xl text-zinc-500"}`}>
+      <span className={`font-bold ${highlight ? "text-3xl text-brand-700" : "text-2xl text-zinc-500"}`}>
         Lv.{test.level}
       </span>
-      <span className={`text-xs ${highlight ? "text-violet-700" : "text-zinc-500"}`}>
+      <span className={`text-xs ${highlight ? "text-brand-700" : "text-zinc-500"}`}>
         {levelInfo(test.level ?? 1).name} · {test.total_score}점
       </span>
     </div>
@@ -39,7 +39,7 @@ export function LevelCard({
           <p className="text-xs text-zinc-500">말하기 10문장 + 듣기 10문제 · 약 10분</p>
         </div>
         {href && (
-          <Link href={href} className="shrink-0 rounded-lg bg-violet-600 px-3 py-2 text-sm font-semibold text-white">
+          <Link href={href} className="shrink-0 rounded-lg bg-brand-600 px-3 py-2 text-sm font-semibold text-white">
             테스트 보기
           </Link>
         )}
@@ -53,7 +53,7 @@ export function LevelCard({
       <div className="flex items-center justify-between">
         <span className="text-xs text-zinc-500">내 레벨</span>
         {href && (
-          <Link href={href} className="text-xs text-violet-700 underline">
+          <Link href={href} className="text-xs text-brand-700 underline">
             자세히
           </Link>
         )}

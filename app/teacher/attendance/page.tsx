@@ -53,7 +53,7 @@ export default async function AttendancePage({
                 {(Object.keys(ATTENDANCE_LABEL) as AttendanceStatus[]).map((status) => (
                   <label
                     key={status}
-                    className="flex cursor-pointer items-center gap-1 rounded-full border border-zinc-300 px-3 py-1 text-sm has-[:checked]:border-yellow-500 has-[:checked]:bg-yellow-100"
+                    className="flex cursor-pointer items-center gap-1 rounded-full border border-zinc-300 px-3 py-1 text-sm has-[:checked]:border-brand-500 has-[:checked]:bg-brand-50 has-[:checked]:text-brand-700"
                   >
                     <input
                       type="radio"

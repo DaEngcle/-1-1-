@@ -13,7 +13,7 @@ export default function PronunciationGuidePage() {
           <Link
             key={tip.id}
             href={`/student/pronunciation/${tip.id}`}
-            className="flex flex-col gap-1 rounded-xl border border-zinc-200 bg-white p-4 hover:border-yellow-400"
+            className="flex flex-col gap-1 rounded-2xl border border-slate-200/80 bg-white shadow-sm shadow-brand-900/5 p-4 hover:border-brand-300"
           >
             <span className="text-2xl font-bold text-zinc-900">
               {tip.label} <span className="text-sm font-normal text-zinc-400">{tip.ipa}</span>

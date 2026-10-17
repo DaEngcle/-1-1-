@@ -4,9 +4,9 @@ import { useActionState } from "react";
 import { studentLogin, teacherLogin } from "./actions";
 
 const inputClass =
-  "rounded-lg border border-zinc-300 px-4 py-3 text-base text-zinc-900 placeholder:text-zinc-400 focus:border-yellow-500 focus:outline-none";
+  "rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-base text-zinc-900 placeholder:text-zinc-400 focus:border-brand-500 focus:outline-none";
 const buttonClass =
-  "rounded-lg bg-yellow-400 px-4 py-3 font-semibold text-zinc-900 transition-colors hover:bg-yellow-300 disabled:opacity-50";
+  "rounded-xl border-b-4 border-brand-800 bg-brand-600 px-4 py-3 font-bold text-white transition-all hover:bg-brand-500 active:translate-y-0.5 active:border-b-2 disabled:opacity-50";
 
 export function StudentLoginForm() {
   const [state, action, pending] = useActionState(studentLogin, undefined);

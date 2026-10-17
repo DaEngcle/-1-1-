@@ -48,7 +48,7 @@ export default async function StudentLessonsPage() {
           <h2 className="text-sm font-bold text-zinc-500">
             Week {weekNumber} · {week.title}
           </h2>
-          <div className="flex flex-col divide-y divide-zinc-100 overflow-hidden rounded-xl border border-zinc-200 bg-white">
+          <div className="flex flex-col divide-y divide-zinc-100 overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm shadow-brand-900/5">
             {week.lessons.map((l) => {
               const items = itemsByLesson.get(l.id) ?? [];
               const done = items.filter((id) => practiced.has(id)).length;
@@ -56,7 +56,7 @@ export default async function StudentLessonsPage() {
                 <Link
                   key={l.id}
                   href={`/student/lessons/${l.id}`}
-                  className="flex items-center justify-between gap-3 px-4 py-3 hover:bg-yellow-50"
+                  className="flex items-center justify-between gap-3 px-4 py-3 hover:bg-brand-50"
                 >
                   <span className="flex flex-col">
                     <span className="text-xs text-zinc-500">

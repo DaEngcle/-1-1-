@@ -18,7 +18,7 @@ function CodeNotice({ state }: { state: StudentFormState }) {
     return <p className="text-sm text-red-600">{state.message}</p>;
   }
   return (
-    <div className="rounded-lg bg-yellow-100 p-3 text-sm text-zinc-800">
+    <div className="rounded-xl border border-brand-200 bg-brand-50 p-3 text-sm text-zinc-800">
       <p>
         <b>{state.name}</b> 학생 로그인 코드:{" "}
         <span className="font-mono text-base font-bold tracking-widest">

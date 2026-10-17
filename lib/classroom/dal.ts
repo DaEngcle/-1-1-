@@ -28,14 +28,18 @@ export const getVerifiedStudent = cache(async () => {
   const supabase = createServerSupabaseClient();
   const { data: student } = await supabase
     .from("students")
-    .select("id, name, is_active, session_version")
+    .select("id, name, nickname, is_active, session_version")
     .eq("id", session.studentId)
     .maybeSingle();
 
   if (!student || !student.is_active || student.session_version !== session.v) {
     return null;
   }
-  return { id: student.id as string, name: student.name as string };
+  return {
+    id: student.id as string,
+    name: student.name as string,
+    nickname: (student.nickname as string | null) ?? null,
+  };
 });
 
 /** 학생 권한 확인. 아니면 로그인 페이지로 */

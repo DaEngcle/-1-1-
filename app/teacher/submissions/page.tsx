@@ -66,7 +66,7 @@ export default async function TeacherSubmissionsPage({
                   <span className="flex items-center gap-2">
                     <span className="h-2 w-20 overflow-hidden rounded-full bg-zinc-200 sm:w-32">
                       <span
-                        className="block h-full bg-yellow-400"
+                        className="block h-full bg-brand-500"
                         style={{ width: `${p?.submitPercent ?? 0}%` }}
                       />
                     </span>

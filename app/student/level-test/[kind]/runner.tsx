@@ -85,9 +85,9 @@ export function LevelTestRunner({ kind, speaking, listening, answeredSpeaking }:
   if (result) {
     const info = levelInfo(result.level);
     return (
-      <section className="flex flex-col items-center gap-3 rounded-xl border border-zinc-200 bg-white p-6 text-center">
+      <section className="flex flex-col items-center gap-3 rounded-2xl border border-slate-200/80 bg-white shadow-sm shadow-brand-900/5 p-6 text-center">
         <span className="text-sm text-zinc-500">{kind === "pre" ? "수강 전" : "수강 후"} 레벨테스트 결과</span>
-        <span className="text-4xl font-bold text-violet-700">Lv.{result.level}</span>
+        <span className="text-4xl font-bold text-brand-700">Lv.{result.level}</span>
         <span className="text-lg font-semibold text-zinc-900">{info.name}</span>
         <span className="text-sm text-zinc-600">{info.desc}</span>
         <div className="mt-2 grid w-full grid-cols-3 gap-2 text-sm">
@@ -102,7 +102,7 @@ export function LevelTestRunner({ kind, speaking, listening, answeredSpeaking }:
             </div>
           ))}
         </div>
-        <Link href="/student" className={`${btn} mt-2 border-yellow-400 bg-yellow-400 text-zinc-900`}>
+        <Link href="/student" className={`${btn} mt-2 border-b-4 border-brand-800 bg-brand-600 text-white active:translate-y-0.5 active:border-b-2`}>
           내 홈으로
         </Link>
       </section>
@@ -120,14 +120,14 @@ export function LevelTestRunner({ kind, speaking, listening, answeredSpeaking }:
         </div>
         <div className="h-2 overflow-hidden rounded-full bg-zinc-200">
           <div
-            className="h-full bg-violet-500 transition-all"
+            className="h-full bg-brand-500 transition-all"
             style={{ width: `${((Math.min(step, speaking.length) + Object.keys(choices).length) / total) * 100}%` }}
           />
         </div>
       </div>
 
       {isSpeaking ? (
-        <article className="flex flex-col gap-4 rounded-xl border border-zinc-200 bg-white p-5">
+        <article className="flex flex-col gap-4 rounded-2xl border border-slate-200/80 bg-white shadow-sm shadow-brand-900/5 p-5">
           <p className="text-sm text-zinc-500">
             말하기 {step + 1}/{speaking.length} · 문장을 소리 내어 읽고 녹음하세요. (한 번 들어볼 수 있어요)
           </p>
@@ -162,7 +162,7 @@ export function LevelTestRunner({ kind, speaking, listening, answeredSpeaking }:
                 type="button"
                 onClick={() => submitSpeaking(speaking[step].id)}
                 disabled={busy}
-                className={`${btn} border-yellow-400 bg-yellow-400 text-zinc-900`}
+                className={`${btn} border-b-4 border-brand-800 bg-brand-600 text-white active:translate-y-0.5 active:border-b-2`}
               >
                 {busy ? "채점 중..." : "제출하고 다음 →"}
               </button>
@@ -179,7 +179,7 @@ export function LevelTestRunner({ kind, speaking, listening, answeredSpeaking }:
             듣기 {listening.length}문제 · ▶를 눌러 듣고 알맞은 뜻을 고르세요. 여러 번 들어도 돼요.
           </p>
           {listening.map((q, i) => (
-            <article key={q.id} className="flex flex-col gap-2 rounded-xl border border-zinc-200 bg-white p-4">
+            <article key={q.id} className="flex flex-col gap-2 rounded-2xl border border-slate-200/80 bg-white shadow-sm shadow-brand-900/5 p-4">
               <div className="flex items-center gap-2">
                 <span className="text-sm font-semibold text-zinc-500">{i + 1}.</span>
                 <button
@@ -195,7 +195,7 @@ export function LevelTestRunner({ kind, speaking, listening, answeredSpeaking }:
                   <label
                     key={ci}
                     className={`flex cursor-pointer items-center gap-2 rounded-lg border px-3 py-2 text-sm ${
-                      choices[q.id] === ci ? "border-violet-400 bg-violet-50" : "border-zinc-200"
+                      choices[q.id] === ci ? "border-brand-400 bg-brand-50" : "border-zinc-200"
                     }`}
                   >
                     <input
@@ -218,7 +218,7 @@ export function LevelTestRunner({ kind, speaking, listening, answeredSpeaking }:
             type="button"
             onClick={finish}
             disabled={busy}
-            className={`${btn} border-yellow-400 bg-yellow-400 text-zinc-900`}
+            className={`${btn} border-b-4 border-brand-800 bg-brand-600 text-white active:translate-y-0.5 active:border-b-2`}
           >
             {busy ? "결과 계산 중..." : "제출하고 내 레벨 보기"}
           </button>

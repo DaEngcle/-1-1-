@@ -75,7 +75,7 @@ export default async function TeacherLessonsPage() {
           <h2 className="font-bold text-zinc-900">
             Week {weekNumber} · {week.title}
           </h2>
-          <div className="flex flex-col divide-y divide-zinc-100 overflow-hidden rounded-xl border border-zinc-200 bg-white">
+          <div className="flex flex-col divide-y divide-zinc-100 overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm shadow-brand-900/5">
             {week.lessons.map((l) => (
               <div key={l.id} className="flex items-center justify-between gap-2 px-4 py-2.5">
                 <Link href={`/teacher/lessons/${l.id}`} className="flex flex-col hover:underline">

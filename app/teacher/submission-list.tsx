@@ -69,7 +69,7 @@ export async function SubmissionList({
         {rows.map((r) => {
           const lesson = r.lesson_items?.lessons;
           return (
-            <li key={r.id} className="flex flex-col gap-1.5 rounded-xl border border-zinc-200 bg-white p-3">
+            <li key={r.id} className="flex flex-col gap-1.5 rounded-2xl border border-slate-200/80 bg-white shadow-sm shadow-brand-900/5 p-3">
               <div className="flex items-start justify-between gap-2">
                 <div className="flex flex-col">
                   {!studentId && r.students && (

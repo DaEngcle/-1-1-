@@ -11,10 +11,10 @@ export default async function StudentsPage() {
   const supabase = createServerSupabaseClient();
   const { data } = await supabase
     .from("students")
-    .select("id, name, phone, memo, is_active, created_at")
+    .select("id, name, nickname, phone, memo, is_active, created_at")
     .order("is_active", { ascending: false })
     .order("name");
-  const students = (data ?? []) as Omit<Student, "login_code_hash" | "session_version">[];
+  const students = (data ?? []) as (Omit<Student, "login_code_hash" | "session_version"> & { nickname: string | null })[];
   const [progress, { data: levelRows }] = await Promise.all([
     getCourseProgress(students.map((s) => s.id)),
     supabase
@@ -50,8 +50,9 @@ export default async function StudentsPage() {
                 >
                   {s.name}
                 </Link>
+                {s.nickname && <span className="ml-1 text-xs text-zinc-500">({s.nickname})</span>}
                 {levelOf(s.id, "pre") != null && (
-                  <span className="ml-2 rounded bg-violet-100 px-1.5 py-0.5 text-xs text-violet-800">
+                  <span className="ml-2 rounded bg-brand-100 px-1.5 py-0.5 text-xs text-brand-800">
                     Lv.{levelOf(s.id, "pre")}
                     {levelOf(s.id, "post") != null && ` → Lv.${levelOf(s.id, "post")}`}
                   </span>

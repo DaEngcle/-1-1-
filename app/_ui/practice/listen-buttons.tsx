@@ -16,7 +16,7 @@ export function MinimalPairs({ pairs }: { pairs: [string, string][] }) {
               onClick={() => play(word, "slow", word)}
               className={`flex-1 rounded-md px-3 py-2 text-sm font-semibold ${
                 i === 0 ? "bg-sky-50 text-sky-800" : "bg-zinc-50 text-zinc-600"
-              } ${playingKey === word ? "ring-2 ring-yellow-400" : ""}`}
+              } ${playingKey === word ? "ring-2 ring-brand-400" : ""}`}
             >
               🔊 {word}
             </button>
@@ -36,14 +36,14 @@ export function WordChips({ words }: { words: string[] }) {
           <button
             type="button"
             onClick={() => play(word, "normal", `n:${word}`)}
-            className={`px-3 py-1 ${playingKey === `n:${word}` ? "bg-yellow-100" : ""}`}
+            className={`px-3 py-1 ${playingKey === `n:${word}` ? "bg-brand-50" : ""}`}
           >
             🔊 {word}
           </button>
           <button
             type="button"
             onClick={() => play(word, "slow", `s:${word}`)}
-            className={`border-l border-zinc-200 px-2 py-1 ${playingKey === `s:${word}` ? "bg-yellow-100" : ""}`}
+            className={`border-l border-zinc-200 px-2 py-1 ${playingKey === `s:${word}` ? "bg-brand-50" : ""}`}
             aria-label={`${word} 천천히`}
           >
             🐢

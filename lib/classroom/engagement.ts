@@ -83,6 +83,8 @@ export interface Engagement {
   month: { label: string; firstWeekday: number; days: CalendarDay[]; studiedDays: number };
   missions: { label: string; done: boolean }[];
   badges: Badge[];
+  /** 아직 다 안 끝낸 첫 공개 레슨 (이어서 공부하기) */
+  nextLesson: { id: string; label: string } | null;
 }
 
 /** 학생 한 명의 달력·연속 학습·오늘의 미션·배지 */
@@ -170,7 +172,17 @@ export async function getEngagement(studentId: string): Promise<Engagement> {
     },
   ];
 
+  const next = lessonRows.find(
+    (r) => (r.videoPercent != null && !r.videoCompleted) || r.submitted < r.sentences,
+  )?.lesson;
+
   return {
+    nextLesson: next
+      ? {
+          id: next.id,
+          label: next.kind === "day" ? `Day ${String(next.day_number).padStart(2, "0")} · ${next.title}` : next.title,
+        }
+      : null,
     streak: current,
     bestStreak: best,
     month: {
@@ -198,13 +210,16 @@ export interface RankRow {
   rank: number;
 }
 
-/** 이번 주(월~일) 학습 포인트 순위. masked=true면 이름 가운데를 가림 */
+/**
+ * 이번 주(월~일) 학습 포인트 순위.
+ * masked=true(학생 화면): 닉네임, 없으면 이름 가운데를 가림. false(선생님): 실명 (닉네임)
+ */
 export async function getWeeklyRanking({ masked }: { masked: boolean }): Promise<RankRow[]> {
   const supabase = createServerSupabaseClient();
   const start = weekStart();
   const startIso = new Date(`${start}T00:00:00+09:00`).toISOString();
   const [{ data: students }, watchRows, subs] = await Promise.all([
-    supabase.from("students").select("id, name").eq("is_active", true),
+    supabase.from("students").select("id, name, nickname").eq("is_active", true),
     fetchAll<{ student_id: string; watched_seconds: number }>((from, to) =>
       supabase.from("daily_activity").select("student_id, watched_seconds").gte("day", start).range(from, to),
     ),
@@ -226,7 +241,15 @@ export async function getWeeklyRanking({ masked }: { masked: boolean }): Promise
   }
 
   const rows = (students ?? [])
-    .map((s) => ({ studentId: s.id as string, name: masked ? maskName(s.name) : (s.name as string), xp: xp.get(s.id) ?? 0 }))
+    .map((s) => ({
+      studentId: s.id as string,
+      name: masked
+        ? ((s.nickname as string | null) ?? maskName(s.name))
+        : s.nickname
+          ? `${s.name} (${s.nickname})`
+          : (s.name as string),
+      xp: xp.get(s.id) ?? 0,
+    }))
     .sort((a, b) => b.xp - a.xp || a.name.localeCompare(b.name));
   // 같은 점수는 같은 등수
   let rank = 0;

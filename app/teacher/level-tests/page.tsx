@@ -55,7 +55,7 @@ export default async function TeacherLevelTestsPage() {
                 {(["pre", "post"] as const).map((kind) => (
                   <div key={kind} className="flex items-center gap-1.5">
                     <span
-                      className={`h-2.5 rounded-sm ${kind === "pre" ? "bg-zinc-300" : "bg-violet-500"}`}
+                      className={`h-2.5 rounded-sm ${kind === "pre" ? "bg-zinc-300" : "bg-brand-500"}`}
                       style={{ width: `${(count(kind, l.level) / maxCount) * 100}%`, minWidth: count(kind, l.level) ? 6 : 0 }}
                     />
                     <span className="text-[11px] text-zinc-500">{count(kind, l.level) || ""}</span>
@@ -67,7 +67,7 @@ export default async function TeacherLevelTestsPage() {
         </div>
         <p className="mt-2 text-[11px] text-zinc-500">
           <span className="mr-1 inline-block h-2 w-2 rounded-sm bg-zinc-300" />
-          수강 전 <span className="ml-2 mr-1 inline-block h-2 w-2 rounded-sm bg-violet-500" />
+          수강 전 <span className="ml-2 mr-1 inline-block h-2 w-2 rounded-sm bg-brand-500" />
           수강 후
         </p>
       </section>

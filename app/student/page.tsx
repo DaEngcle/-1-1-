@@ -25,7 +25,7 @@ function StatTile({ label, value, unit }: { label: string; value: string | numbe
 function ProgressBar({ percent }: { percent: number }) {
   return (
     <span className="h-2 w-full overflow-hidden rounded-full bg-zinc-200">
-      <span className="block h-full bg-yellow-400" style={{ width: `${percent}%` }} />
+      <span className="block h-full bg-brand-500" style={{ width: `${percent}%` }} />
     </span>
   );
 }
@@ -39,18 +39,42 @@ export default async function StudentHomePage() {
     getWeeklyRanking({ masked: true }),
     getTests(student.id),
   ]);
+  const nickname = student.nickname;
   const progress = progressMap.get(student.id)!;
   const totalClasses = Object.values(stats.attendance).reduce((a, b) => a + b, 0);
   const attended = stats.attendance.present + stats.attendance.late;
 
   return (
     <>
-      <div className="flex flex-col gap-1">
-        <h1 className="text-xl font-bold text-zinc-900">{student.name}님, 오늘도 한 문장! 💪</h1>
-        <Link href="/student/lessons" className="text-sm font-semibold text-yellow-700 underline">
-          부트캠프 복습하러 가기 →
-        </Link>
-      </div>
+      <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-600 to-brand-500 p-5 text-white shadow-lg shadow-brand-900/15">
+        <span aria-hidden className="pointer-events-none absolute -top-10 -right-10 h-40 w-40 rounded-full bg-white/10" />
+        <span aria-hidden className="pointer-events-none absolute -bottom-14 right-16 h-28 w-28 rounded-full bg-white/10" />
+        <p className="text-sm text-brand-100">오늘도 한 문장!</p>
+        <h1 className="text-2xl font-extrabold tracking-tight">{nickname ?? student.name}님, 반가워요 👋</h1>
+        <div className="mt-3 flex flex-wrap gap-2 text-sm font-semibold">
+          <span className="rounded-full bg-white/15 px-3 py-1">🔥 {engagement.streak}일 연속</span>
+          {!nickname && (
+            <Link href="/student/profile" className="rounded-full bg-white px-3 py-1 text-brand-700">
+              ✏️ 랭킹 닉네임 정하기
+            </Link>
+          )}
+          <span className="rounded-full bg-white/15 px-3 py-1">
+            🎯 오늘 미션 {engagement.missions.filter((m) => m.done).length}/{engagement.missions.length}
+          </span>
+        </div>
+        {engagement.nextLesson && (
+          <Link
+            href={`/student/lessons/${engagement.nextLesson.id}`}
+            className="mt-4 flex items-center justify-between gap-3 rounded-2xl border-b-4 border-brand-100 bg-white px-4 py-3 text-brand-700 transition-all active:translate-y-0.5 active:border-b-2"
+          >
+            <span className="flex min-w-0 flex-col">
+              <span className="text-xs font-semibold text-brand-500">이어서 공부하기</span>
+              <span className="truncate font-bold">{engagement.nextLesson.label}</span>
+            </span>
+            <span className="shrink-0 text-xl">→</span>
+          </Link>
+        )}
+      </section>
 
       <LevelCard pre={tests.pre} post={tests.post} href="/student/level-test" />
 
@@ -61,10 +85,9 @@ export default async function StudentHomePage() {
             {engagement.streak}
             <span className="ml-0.5 text-sm font-normal text-zinc-500">일</span>
           </span>
-          <span className="text-xs text-zinc-500">연속 학습</span>
-          <span className="text-[11px] text-zinc-400">최고 {engagement.bestStreak}일</span>
+          <span className="text-xs text-zinc-500">최고 {engagement.bestStreak}일</span>
         </div>
-        <Link href="/student/lessons" className={`${cardClass} flex flex-col items-center gap-0.5 text-center hover:border-yellow-400`}>
+        <Link href="/student/lessons" className={`${cardClass} flex flex-col items-center gap-0.5 text-center hover:border-brand-300`}>
           <span className="text-xl">🎬</span>
           <span className="text-2xl font-bold text-zinc-900">
             {progress.videoPercent}
@@ -73,7 +96,7 @@ export default async function StudentHomePage() {
           <span className="text-xs text-zinc-500">강의 수강</span>
           <ProgressBar percent={progress.videoPercent} />
         </Link>
-        <Link href="/student/shadowing" className={`${cardClass} flex flex-col items-center gap-0.5 text-center hover:border-yellow-400`}>
+        <Link href="/student/shadowing" className={`${cardClass} flex flex-col items-center gap-0.5 text-center hover:border-brand-300`}>
           <span className="text-xl">🎤</span>
           <span className="text-2xl font-bold text-zinc-900">
             {progress.submittedSentences}

@@ -35,7 +35,7 @@ export default async function StudentShadowingPage({
               <li key={lesson.id}>
                 <Link
                   href={`/student/lessons/${lesson.id}`}
-                  className="flex items-center justify-between gap-3 py-2.5 hover:bg-yellow-50"
+                  className="flex items-center justify-between gap-3 py-2.5 hover:bg-brand-50"
                 >
                   <span className="flex flex-col">
                     <span className="text-xs text-zinc-500">
@@ -44,7 +44,7 @@ export default async function StudentShadowingPage({
                     </span>
                     <span className="text-sm font-medium text-zinc-900">{lesson.title}</span>
                   </span>
-                  <span className="shrink-0 rounded-full bg-yellow-100 px-2 py-0.5 text-xs text-yellow-800">
+                  <span className="shrink-0 rounded-full bg-brand-50 px-2 py-0.5 text-xs font-semibold text-brand-700">
                     {sentences - submitted}개 남음 →
                   </span>
                 </Link>

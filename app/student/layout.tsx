@@ -19,7 +19,7 @@ export default async function StudentLayout({
 }) {
   const student = await requireStudent();
   return (
-    <AppShell title={`다잉클 클래스룸 · ${student.name}`} nav={NAV}>
+    <AppShell title={`다잉클 · ${student.nickname ?? student.name}`} nav={NAV}>
       {children}
     </AppShell>
   );

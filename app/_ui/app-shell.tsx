@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { logout } from "@/app/login/actions";
+import { NavLinks } from "./nav-links";
 
 export function AppShell({
   title,
@@ -11,31 +12,24 @@ export function AppShell({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-1 flex-col bg-zinc-50">
-      <header className="sticky top-0 z-10 border-b border-zinc-200 bg-white">
-        <div className="mx-auto flex max-w-3xl items-center justify-between gap-4 px-4 py-3">
-          <span className="font-bold text-zinc-900">{title}</span>
+    <div className="flex flex-1 flex-col bg-[#f4f7fe]">
+      <header className="sticky top-0 z-10 bg-brand-600 text-white shadow-md shadow-brand-900/10">
+        <div className="mx-auto flex max-w-3xl items-center justify-between gap-4 px-4 pt-3 pb-2">
+          <Link href={nav[0]?.href ?? "/"} className="flex items-center gap-2 font-extrabold tracking-tight">
+            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-white text-sm font-black text-brand-600">
+              D
+            </span>
+            {title}
+          </Link>
           <form action={logout}>
-            <button type="submit" className="text-sm text-zinc-500 underline">
+            <button type="submit" className="text-sm text-brand-100 underline-offset-2 hover:underline">
               로그아웃
             </button>
           </form>
         </div>
-        <nav className="mx-auto flex max-w-3xl gap-1 overflow-x-auto px-2 pb-2">
-          {nav.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="shrink-0 rounded-full px-3 py-1 text-sm text-zinc-700 hover:bg-yellow-100"
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
+        <NavLinks items={nav} />
       </header>
-      <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-6 px-4 py-6">
-        {children}
-      </main>
+      <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-5 px-4 py-6">{children}</main>
     </div>
   );
 }

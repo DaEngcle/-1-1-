@@ -28,7 +28,7 @@ export default async function StudentLevelTestPage() {
       {next ? (
         <Link
           href={`/student/level-test/${next.kind}`}
-          className="rounded-lg bg-violet-600 px-4 py-3 text-center font-semibold text-white"
+          className="rounded-lg bg-brand-600 px-4 py-3 text-center font-semibold text-white"
         >
           {next.label} →
         </Link>
@@ -44,7 +44,7 @@ export default async function StudentLevelTestPage() {
         <ul className="flex flex-col gap-1.5 text-sm">
           {LEVELS.map((l) => (
             <li key={l.level} className="flex gap-2">
-              <span className="w-12 shrink-0 font-semibold text-violet-700">Lv.{l.level}</span>
+              <span className="w-12 shrink-0 font-semibold text-brand-700">Lv.{l.level}</span>
               <span className="w-32 shrink-0 font-medium text-zinc-900">{l.name}</span>
               <span className="text-zinc-600">{l.desc}</span>
             </li>

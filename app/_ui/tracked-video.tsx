@@ -175,7 +175,7 @@ export function TrackedVideo({
       <div className="flex items-center gap-2 text-xs">
         <div className="h-2 flex-1 overflow-hidden rounded-full bg-zinc-200">
           <div
-            className={`h-full ${completed ? "bg-green-500" : "bg-yellow-400"}`}
+            className={`h-full ${completed ? "bg-green-500" : "bg-brand-500"}`}
             style={{ width: `${percent}%` }}
           />
         </div>

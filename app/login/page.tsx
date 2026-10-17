@@ -15,13 +15,16 @@ export default async function LoginPage({
   const isTeacher = role === "teacher";
 
   return (
-    <div className="flex flex-1 flex-col items-center justify-center bg-yellow-50 px-6 py-16">
-      <main className="flex w-full max-w-sm flex-col items-center gap-8 text-center">
-        <div className="flex flex-col gap-2">
-          <p className="text-sm font-semibold text-yellow-700">
+    <div className="flex flex-1 flex-col items-center justify-center bg-gradient-to-b from-brand-600 to-brand-500 px-6 py-16">
+      <main className="flex w-full max-w-sm flex-col items-center gap-6 rounded-3xl bg-white p-8 text-center shadow-xl shadow-brand-900/20">
+        <div className="flex flex-col items-center gap-2">
+          <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-600 text-2xl font-black text-white shadow-md">
+            D
+          </span>
+          <p className="mt-1 rounded-full bg-brand-50 px-3 py-0.5 text-xs font-bold text-brand-700">
             {isTeacher ? "선생님 전용" : "수강생 전용"}
           </p>
-          <h1 className="text-3xl font-bold text-zinc-900">다잉클 클래스룸</h1>
+          <h1 className="text-3xl font-extrabold tracking-tight text-zinc-900">다잉클 클래스룸</h1>
           <p className="text-base text-zinc-600">
             {isTeacher
               ? "학생 관리, 레슨, 출결을 한 곳에서."
