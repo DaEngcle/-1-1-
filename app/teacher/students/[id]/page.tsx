@@ -11,7 +11,11 @@ import { LevelCard } from "@/app/_ui/level-card";
 import { Badges, StudyCalendar } from "@/app/_ui/engagement";
 import { resetLevelTest } from "../../level-tests/actions";
 import { ConfirmButton } from "@/app/_ui/confirm-button";
-import { updatePlan } from "../actions";
+import { addNote, deleteNote, setStudentActive, updateMemo, updatePlan } from "../actions";
+import { RegenerateCodeButton } from "../student-forms";
+import { CopyButton } from "@/app/_ui/copy-button";
+import { getRoster, nudgeMessage, STATUS_INFO } from "@/lib/classroom/roster";
+import { headers } from "next/headers";
 import { PLANS } from "@/lib/classroom/plans";
 import { ATTENDANCE_LABEL } from "@/lib/classroom/attendance";
 import { ScoreTrendChart } from "@/app/_ui/score-trend-chart";
@@ -33,6 +37,12 @@ export default async function TeacherStudentPage({
     .eq("id", id)
     .maybeSingle();
   if (!student) notFound();
+  const [roster, { data: noteRows }] = await Promise.all([
+    getRoster(),
+    supabase.from("teacher_notes").select("id, body, created_at").eq("student_id", id).order("created_at", { ascending: false }),
+  ]);
+  const me = roster.find((r) => r.id === id);
+  const host = (await headers()).get("host") ?? "dingle-classroom.vercel.app";
   const [stats, progressMap, lessonRows, engagement, tests] = await Promise.all([
     getStudentStats(id),
     getCourseProgress([id]),
@@ -61,6 +71,102 @@ export default async function TeacherStudentPage({
         <h1 className="text-xl font-bold text-zinc-900">{student.name}</h1>
         <p className="text-xs text-zinc-500">{[student.phone, student.memo].filter(Boolean).join(" · ")}</p>
       </div>
+
+      {me && (
+        <section className={`${cardClass} flex flex-col gap-3`}>
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <span className={`rounded-full border px-3 py-1 text-sm font-bold ${STATUS_INFO[me.status].tone}`}>
+              {STATUS_INFO[me.status].icon} {STATUS_INFO[me.status].label}
+            </span>
+            <span className="text-xs text-zinc-500">
+              최근 활동: {me.daysInactive == null ? "없음" : me.daysInactive === 0 ? "오늘" : `${me.daysInactive}일 전`} ·
+              이번 주 제출 {me.weekSubmissions}개 · 최근 7일 중 {me.week.filter(Boolean).length}일 공부
+            </span>
+          </div>
+          <div className="flex flex-wrap gap-2 text-xs">
+            <CopyButton
+              text={nudgeMessage(me, `https://${host}/login`)}
+              label="💬 카톡 응원 메시지 복사"
+              className="rounded-lg border border-brand-200 bg-brand-50 px-2.5 py-1.5 font-semibold text-brand-700"
+            />
+            {student.phone && (
+              <CopyButton
+                text={student.phone}
+                label={`📱 ${student.phone}`}
+                className="rounded-lg border border-slate-200 px-2.5 py-1.5 text-zinc-600"
+              />
+            )}
+          </div>
+        </section>
+      )}
+
+      <section className={cardClass}>
+        <h2 className="mb-2 font-bold text-zinc-900">📝 상담·관리 기록</h2>
+        <form action={addNote} className="flex flex-col gap-2 sm:flex-row">
+          <input type="hidden" name="id" value={student.id} />
+          <textarea
+            name="body"
+            rows={2}
+            required
+            placeholder="예: 10/18 카톡으로 응원 메시지 보냄 / 레벨테스트 후 상담, r 발음 집중하기로 함"
+            className="flex-1 rounded-xl border border-slate-200 px-3 py-2 text-sm"
+          />
+          <button type="submit" className="rounded-xl bg-brand-600 px-4 py-2 text-sm font-bold text-white">
+            기록
+          </button>
+        </form>
+        <ul className="mt-3 flex flex-col gap-2">
+          {(noteRows ?? []).map((n) => (
+            <li key={n.id} className="flex items-start justify-between gap-2 rounded-xl bg-slate-50 px-3 py-2 text-sm">
+              <span className="whitespace-pre-line text-zinc-800">
+                <span className="mr-2 text-xs text-zinc-400">
+                  {new Date(n.created_at).toLocaleString("ko-KR", { timeZone: "Asia/Seoul", dateStyle: "short", timeStyle: "short" })}
+                </span>
+                {n.body}
+              </span>
+              <form action={deleteNote}>
+                <input type="hidden" name="id" value={student.id} />
+                <input type="hidden" name="note_id" value={n.id} />
+                <ConfirmButton message="이 기록을 지울까요?" className="text-xs text-zinc-400 hover:text-red-600">
+                  삭제
+                </ConfirmButton>
+              </form>
+            </li>
+          ))}
+          {(noteRows ?? []).length === 0 && <li className="text-xs text-zinc-400">아직 기록이 없어요.</li>}
+        </ul>
+      </section>
+
+      <section className={cardClass}>
+        <h2 className="mb-2 font-bold text-zinc-900">계정 관리</h2>
+        <form action={updateMemo} className="mb-3 flex gap-2">
+          <input type="hidden" name="id" value={student.id} />
+          <input
+            name="memo"
+            defaultValue={student.memo ?? ""}
+            placeholder="한 줄 메모 (학생 목록에 보여요)"
+            className="flex-1 rounded-lg border border-slate-200 px-3 py-1.5 text-sm"
+          />
+          <button type="submit" className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-semibold">
+            저장
+          </button>
+        </form>
+        <div className="flex flex-wrap items-start gap-2">
+          <form action={setStudentActive}>
+            <input type="hidden" name="id" value={student.id} />
+            <input type="hidden" name="is_active" value={String(!student.is_active)} />
+            <ConfirmButton
+              message={student.is_active ? "이 학생을 비활성화할까요? 로그인할 수 없게 돼요." : "이 학생을 다시 활성화할까요?"}
+              className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm"
+            >
+              {student.is_active ? "비활성화" : "다시 활성화"}
+            </ConfirmButton>
+          </form>
+          <div className="flex-1">
+            <RegenerateCodeButton id={student.id} name={student.name} />
+          </div>
+        </div>
+      </section>
 
       <section className={cardClass}>
         <h2 className="mb-2 font-bold text-zinc-900">수강권</h2>

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { kstDate } from "@/lib/classroom/stats";
 import { SubmissionList } from "./submission-list";
+import { getRoster, STATUS_INFO } from "@/lib/classroom/roster";
 import { cardClass } from "@/app/_ui/styles";
 import { requireTeacher } from "@/lib/classroom/dal";
 
@@ -19,6 +20,10 @@ export default async function TeacherHomePage() {
     supabase.from("attendance").select("id", { count: "exact", head: true }).eq("class_date", today),
     supabase.from("students").select("id", { count: "exact", head: true }).eq("approval", "pending"),
   ]);
+  const roster = await getRoster();
+  const attention = roster
+    .filter((r) => r.isActive && (r.status === "risk" || r.status === "slow"))
+    .sort((a, b) => (b.daysInactive ?? 99) - (a.daysInactive ?? 99));
   const activeThisWeek = new Set((weekSubs.data ?? []).map((s) => s.student_id)).size;
 
   const tiles = [
@@ -39,6 +44,34 @@ export default async function TeacherHomePage() {
           <span>승인하러 가기 →</span>
         </Link>
       )}
+      {attention.length > 0 && (
+        <section className={cardClass}>
+          <div className="mb-2 flex items-center justify-between">
+            <h2 className="font-bold text-zinc-900">👀 오늘 챙길 학생</h2>
+            <Link href="/teacher/students?filter=risk&sort=attention" className="text-xs font-semibold text-brand-700">
+              전체 보기 →
+            </Link>
+          </div>
+          <ul className="flex flex-col divide-y divide-slate-100 text-sm">
+            {attention.slice(0, 5).map((r) => (
+              <li key={r.id}>
+                <Link href={`/teacher/students/${r.id}`} className="flex items-center justify-between gap-2 py-2 hover:bg-brand-50">
+                  <span>
+                    {STATUS_INFO[r.status].icon} <b>{r.name}</b>
+                    <span className="ml-2 text-xs text-zinc-500">
+                      {r.daysInactive == null ? "아직 시작 안 함" : `${r.daysInactive}일째 활동 없음`}
+                    </span>
+                  </span>
+                  <span className="text-xs text-zinc-400">
+                    {r.daysLeft != null && r.daysLeft >= 0 && r.daysLeft <= 14 ? `⏳ D-${r.daysLeft}` : ""}
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
       <section className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         {tiles.map((t) => {
           const body = (

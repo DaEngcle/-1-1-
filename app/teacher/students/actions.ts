@@ -136,3 +136,32 @@ export async function updatePlan(formData: FormData) {
   revalidatePath("/teacher/students");
   revalidatePath(`/teacher/students/${id}`);
 }
+
+/** 상담·관리 기록 추가 */
+export async function addNote(formData: FormData) {
+  await requireTeacher();
+  const id = String(formData.get("id"));
+  const body = String(formData.get("body") ?? "").trim().slice(0, 2000);
+  if (!body) return;
+  const supabase = createServerSupabaseClient();
+  await supabase.from("teacher_notes").insert({ student_id: id, body });
+  revalidatePath(`/teacher/students/${id}`);
+}
+
+export async function deleteNote(formData: FormData) {
+  await requireTeacher();
+  const supabase = createServerSupabaseClient();
+  await supabase.from("teacher_notes").delete().eq("id", String(formData.get("note_id")));
+  revalidatePath(`/teacher/students/${String(formData.get("id"))}`);
+}
+
+/** 학생 한 줄 메모 (목록에 보임) */
+export async function updateMemo(formData: FormData) {
+  await requireTeacher();
+  const id = String(formData.get("id"));
+  const memo = String(formData.get("memo") ?? "").trim().slice(0, 200);
+  const supabase = createServerSupabaseClient();
+  await supabase.from("students").update({ memo: memo || null }).eq("id", id);
+  revalidatePath(`/teacher/students/${id}`);
+  revalidatePath("/teacher/students");
+}
