@@ -1,0 +1,2102 @@
+[
+ {
+  "day": 1,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Hmm, you've got an accent... where're you from?",
+    "ko": "음, 억양이 있네… 어디서 왔어?"
+   },
+   {
+    "speaker": "B",
+    "en": "Korea. Just landed a couple of weeks ago.",
+    "ko": "한국. 2주 전쯤에 막 도착했어."
+   },
+   {
+    "speaker": "A",
+    "en": "Ah, nice! That's a big move. How're you liking it so far?",
+    "ko": "오, 좋다! 큰 결심했네. 지금까지 지내보니 어때?"
+   },
+   {
+    "speaker": "B",
+    "en": "Loving it so far. People are super chill here.",
+    "ko": "지금까진 너무 좋아. 여기 사람들 엄청 여유로워."
+   }
+  ]
+ },
+ {
+  "day": 2,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "So, where're you living these days?",
+    "ko": "그래서, 요즘 어디 살아?"
+   },
+   {
+    "speaker": "B",
+    "en": "Melbourne, just near the CBD.",
+    "ko": "멜버른, 시티(CBD) 바로 근처."
+   },
+   {
+    "speaker": "A",
+    "en": "Oh sweet! That area's pretty walkable, huh?",
+    "ko": "오 좋다! 거기 걸어 다니기 좋지?"
+   },
+   {
+    "speaker": "B",
+    "en": "Yeah, love it. Cafes and shops everywhere.",
+    "ko": "응, 완전 좋아. 카페랑 가게가 여기저기 다 있어."
+   }
+  ]
+ },
+ {
+  "day": 3,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "So, what do you do? Work or study?",
+    "ko": "그래서 무슨 일 해? 일해, 아니면 공부해?"
+   },
+   {
+    "speaker": "B",
+    "en": "A bit of both. I'm a barista by day, uni student by night.",
+    "ko": "둘 다 조금씩. 낮에는 바리스타, 밤에는 대학생이야."
+   },
+   {
+    "speaker": "A",
+    "en": "Wow hustling hard, I like it.",
+    "ko": "와 열심히 사네, 멋지다."
+   },
+   {
+    "speaker": "B",
+    "en": "Haha, keeps me busy but I'm loving it.",
+    "ko": "하하, 바쁘긴 한데 너무 좋아."
+   }
+  ]
+ },
+ {
+  "day": 4,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "So, how old are you anyway?",
+    "ko": "그나저나 너 몇 살이야?"
+   },
+   {
+    "speaker": "B",
+    "en": "How old do I look?",
+    "ko": "몇 살처럼 보여?"
+   },
+   {
+    "speaker": "A",
+    "en": "Maybe 22?",
+    "ko": "스물두 살쯤?"
+   },
+   {
+    "speaker": "B",
+    "en": "Haha, thanks! I'm 28 actually.",
+    "ko": "하하, 고마워! 사실 스물여덟이야."
+   },
+   {
+    "speaker": "A",
+    "en": "No way! Thought you were my little sister's age.",
+    "ko": "말도 안 돼! 내 여동생 나이인 줄 알았어."
+   },
+   {
+    "speaker": "B",
+    "en": "Haha, I'll take that as a compliment.",
+    "ko": "하하, 칭찬으로 받을게."
+   }
+  ]
+ },
+ {
+  "day": 5,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Hey! You must be Daniel, right?",
+    "ko": "안녕! 네가 다니엘 맞지?"
+   },
+   {
+    "speaker": "B",
+    "en": "Yeah, that's me. How's it going?",
+    "ko": "응, 나야. 잘 지내?"
+   },
+   {
+    "speaker": "A",
+    "en": "Pretty good! Finally meeting you in person feels kinda weird in a good way.",
+    "ko": "잘 지내! 드디어 직접 만나니까 좋은 의미로 좀 신기하다."
+   },
+   {
+    "speaker": "B",
+    "en": "Haha, I know what you mean. You look just like your photos!",
+    "ko": "하하, 무슨 말인지 알아. 너 사진이랑 똑같다!"
+   },
+   {
+    "speaker": "A",
+    "en": "Thanks! You too. Glad we finally met.",
+    "ko": "고마워! 너도. 드디어 만나서 반가워."
+   }
+  ]
+ },
+ {
+  "day": 6,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "G'day mate! How ya going?",
+    "ko": "안녕 친구! 잘 지내?"
+   },
+   {
+    "speaker": "B",
+    "en": "Yeah, not too bad. You?",
+    "ko": "응, 나쁘지 않아. 너는?"
+   },
+   {
+    "speaker": "A",
+    "en": "Can't complain. Just finished work. Ready for a cold one.",
+    "ko": "괜찮아. 방금 일 끝났어. 시원한 맥주 한잔하고 싶다."
+   },
+   {
+    "speaker": "B",
+    "en": "Haha, classic. You heading to the pub?",
+    "ko": "하하, 역시. 펍 가는 거야?"
+   },
+   {
+    "speaker": "A",
+    "en": "Reckon so. Gotta unwind somehow!",
+    "ko": "그럴 것 같아. 어떻게든 좀 쉬어야지!"
+   }
+  ]
+ },
+ {
+  "day": 7,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Hi, I saw your post on Facebook. Is this position still available?",
+    "ko": "안녕하세요, 페이스북에서 올리신 글 봤는데요. 이 자리 아직 구하세요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Hey! Yeah, we're still looking for someone. Do you have experience?",
+    "ko": "안녕하세요! 네, 아직 사람 구하고 있어요. 경력 있으세요?"
+   },
+   {
+    "speaker": "A",
+    "en": "Yes, I worked in a cafe back in Melbourne.",
+    "ko": "네, 전에 멜버른에서 카페 일 했었어요."
+   },
+   {
+    "speaker": "B",
+    "en": "Nice one. You can send me your resume or drop it off tomorrow.",
+    "ko": "좋네요. 이력서 보내주시거나 내일 직접 갖다주셔도 돼요."
+   },
+   {
+    "speaker": "A",
+    "en": "Great, I'll bring it in person. Thanks a lot!",
+    "ko": "좋아요, 제가 직접 가져갈게요. 정말 감사해요!"
+   },
+   {
+    "speaker": "B",
+    "en": "No worries, see you then!",
+    "ko": "천만에요, 그때 봬요!"
+   }
+  ]
+ },
+ {
+  "day": 8,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "I'm looking for a job. Can I leave my resume?",
+    "ko": "일자리 구하고 있는데요. 이력서 두고 가도 될까요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Sure, no worries. What kind of experience do you have?",
+    "ko": "그럼요, 괜찮아요. 어떤 경력 있으세요?"
+   },
+   {
+    "speaker": "A",
+    "en": "I've got some experience in hospitality. I worked in a cafe for a year.",
+    "ko": "요식업 쪽 경험이 좀 있어요. 카페에서 1년 일했어요."
+   },
+   {
+    "speaker": "B",
+    "en": "Perfect. When is your availability?",
+    "ko": "완벽하네요. 언제 일할 수 있어요?"
+   },
+   {
+    "speaker": "A",
+    "en": "I'm available on Monday to Friday, from 7am to 6pm.",
+    "ko": "월요일부터 금요일까지, 오전 7시부터 오후 6시까지 가능해요."
+   },
+   {
+    "speaker": "B",
+    "en": "Awesome, we'll be in touch soon. Thanks for dropping it off!",
+    "ko": "좋아요, 곧 연락드릴게요. 갖다주셔서 고마워요!"
+   }
+  ]
+ },
+ {
+  "day": 9,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "So, tell me a bit about yourself.",
+    "ko": "자, 본인 소개 좀 해줄래요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Sure! I've been in Australia for about six months. I used to work as a barista back home.",
+    "ko": "네! 호주에 온 지 한 6개월 됐어요. 한국에서는 바리스타로 일했었어요."
+   },
+   {
+    "speaker": "A",
+    "en": "Nice. Do you feel comfortable working in a fast-paced environment?",
+    "ko": "좋네요. 바쁘게 돌아가는 환경에서 일하는 거 괜찮아요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Yeah, absolutely. I'm a quick learner and I don't mind pressure.",
+    "ko": "네, 완전 괜찮아요. 저 빨리 배우는 편이고 압박감도 괜찮아요."
+   },
+   {
+    "speaker": "A",
+    "en": "Good to hear. When can you start?",
+    "ko": "다행이네요. 언제부터 일할 수 있어요?"
+   },
+   {
+    "speaker": "B",
+    "en": "I can start right away. I live just five minutes away.",
+    "ko": "바로 시작할 수 있어요. 여기서 5분 거리에 살아요."
+   }
+  ]
+ },
+ {
+  "day": 10,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Thanks for explaining the job. Can I ask a few questions about the pay?",
+    "ko": "일 설명해주셔서 감사해요. 급여에 대해 몇 가지 여쭤봐도 될까요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Of course, go ahead.",
+    "ko": "물론이죠, 물어보세요."
+   },
+   {
+    "speaker": "A",
+    "en": "How much is the pay rate?",
+    "ko": "시급이 얼마예요?"
+   },
+   {
+    "speaker": "B",
+    "en": "It's $28 per hour on weekdays and $32 on weekends.",
+    "ko": "평일엔 시간당 28달러, 주말엔 32달러예요."
+   },
+   {
+    "speaker": "A",
+    "en": "Nice! Is it cash or bank transfer?",
+    "ko": "좋네요! 현금이에요, 아니면 계좌이체예요?"
+   }
+  ]
+ },
+ {
+  "day": 11,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Bank transfer, we pay every Thursday.",
+    "ko": "계좌이체요. 매주 목요일에 지급해요."
+   },
+   {
+    "speaker": "B",
+    "en": "Great. Do you also pay superannuation?",
+    "ko": "좋아요. 슈퍼(퇴직연금)도 넣어주세요?"
+   },
+   {
+    "speaker": "A",
+    "en": "Yep, we do.",
+    "ko": "네, 넣어줘요."
+   },
+   {
+    "speaker": "B",
+    "en": "Awesome. What's the roster like?",
+    "ko": "좋네요. 근무 스케줄은 어떻게 돼요?"
+   },
+   {
+    "speaker": "A",
+    "en": "You'll get around 25 to 30 hours a week.",
+    "ko": "일주일에 대략 25~30시간 정도 받을 거예요."
+   },
+   {
+    "speaker": "B",
+    "en": "Sounds good to me. Thanks for letting me know!",
+    "ko": "저는 좋아요. 알려주셔서 감사해요!"
+   }
+  ]
+ },
+ {
+  "day": 12,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Hi, thanks for having me today.",
+    "ko": "안녕하세요, 오늘 불러주셔서 감사해요."
+   },
+   {
+    "speaker": "B",
+    "en": "No worries, glad you could make it. Have you brought your RSA?",
+    "ko": "별말씀을요, 와줘서 반가워요. RSA(주류 서빙 자격증) 가져왔어요?"
+   },
+   {
+    "speaker": "A",
+    "en": "Yes, I've got it. Should I also bring my apron and uniform?",
+    "ko": "네, 가져왔어요. 앞치마랑 유니폼도 가져와야 하나요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Yeah, that'd be great. What time can you start?",
+    "ko": "네, 그러면 좋죠. 몇 시부터 시작할 수 있어요?"
+   },
+   {
+    "speaker": "A",
+    "en": "I'm free to start anytime. How long will the trial be?",
+    "ko": "언제든 시작할 수 있어요. 트라이얼은 얼마나 해요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Just a few hours this morning.",
+    "ko": "오늘 오전에 몇 시간만 할 거예요."
+   },
+   {
+    "speaker": "A",
+    "en": "Yep, that'd be perfect. Let's get started!",
+    "ko": "네, 딱 좋아요. 시작해볼까요!"
+   }
+  ]
+ },
+ {
+  "day": 13,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Can you please cover my shift on Friday?",
+    "ko": "금요일에 내 시프트 좀 대신 해줄 수 있어?"
+   },
+   {
+    "speaker": "B",
+    "en": "Yeah sure all good.",
+    "ko": "응 그래, 괜찮아."
+   },
+   {
+    "speaker": "A",
+    "en": "You sure? I owe you one. You're a legend.",
+    "ko": "진짜? 내가 신세 한 번 졌다. 너 최고야."
+   },
+   {
+    "speaker": "B",
+    "en": "No worries, seriously. Happens all the time.",
+    "ko": "진짜 괜찮아. 늘 있는 일인데 뭐."
+   },
+   {
+    "speaker": "A",
+    "en": "By the way what you gonna do on Friday?",
+    "ko": "근데 너 금요일에 뭐 할 거야?"
+   },
+   {
+    "speaker": "B",
+    "en": "I'm having a barbie with my friends",
+    "ko": "친구들이랑 바비큐 할 거야"
+   }
+  ]
+ },
+ {
+  "day": 14,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "It's bloody hot today!",
+    "ko": "오늘 진짜 미치게 덥다!"
+   },
+   {
+    "speaker": "B",
+    "en": "Tell me about it! I reckon it's like 40 degrees.",
+    "ko": "그러니까! 한 40도는 되는 것 같아."
+   },
+   {
+    "speaker": "A",
+    "en": "Heaps of people down at the beach, though.",
+    "ko": "그래도 해변엔 사람 엄청 많더라."
+   },
+   {
+    "speaker": "B",
+    "en": "Yeah, no wonder. It's way too nice to stay inside.",
+    "ko": "응, 그럴 만하지. 안에만 있기엔 날씨가 너무 좋잖아."
+   }
+  ]
+ },
+ {
+  "day": 15,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Hey, can I grab a magic, takeaway please?",
+    "ko": "안녕하세요, 매직 하나 테이크아웃으로 주시겠어요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Sure thing. Anything else for you?",
+    "ko": "그럼요. 더 필요한 거 있으세요?"
+   },
+   {
+    "speaker": "A",
+    "en": "Yeah...nah, that's all. Cheers, mate.",
+    "ko": "음... 아니요, 그거면 돼요. 고마워요."
+   },
+   {
+    "speaker": "B",
+    "en": "No worries. That'll be five fifty",
+    "ko": "천만에요. 5달러 50센트입니다"
+   }
+  ]
+ },
+ {
+  "day": 16,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "I heard you got the job!",
+    "ko": "너 취직했다며!"
+   },
+   {
+    "speaker": "B",
+    "en": "Yeah, I'm pretty stoked, actually!",
+    "ko": "응, 사실 완전 신나!"
+   },
+   {
+    "speaker": "A",
+    "en": "Good on ya! You deserve it.",
+    "ko": "잘했다! 넌 그럴 자격 있어."
+   },
+   {
+    "speaker": "B",
+    "en": "Thanks! The interview was a bit rough, though.",
+    "ko": "고마워! 근데 면접은 좀 힘들었어."
+   },
+   {
+    "speaker": "A",
+    "en": "Ah yeah, they can be brutal sometimes.",
+    "ko": "아 그치, 면접이 가끔 진짜 빡세긴 하지."
+   }
+  ]
+ },
+ {
+  "day": 17,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Hey, you right, mate? You look knackered.",
+    "ko": "야, 괜찮아? 완전 지쳐 보여."
+   },
+   {
+    "speaker": "B",
+    "en": "Yeah, just on break. Needed a minute to breathe.",
+    "ko": "응, 그냥 쉬는 시간이야. 잠깐 숨 좀 돌려야 해서."
+   },
+   {
+    "speaker": "A",
+    "en": "Fair enough. Go get some fresh air, you've earned it.",
+    "ko": "그럴 만하지. 바람 좀 쐬고 와, 그럴 자격 있어."
+   },
+   {
+    "speaker": "B",
+    "en": "Cheers, I'll be back in five minutes.",
+    "ko": "고마워, 5분 뒤에 올게."
+   }
+  ]
+ },
+ {
+  "day": 18,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Hey, can you do me a favor?",
+    "ko": "야, 부탁 하나만 들어줄 수 있어?"
+   },
+   {
+    "speaker": "B",
+    "en": "Sure what's that?",
+    "ko": "그럼, 뭔데?"
+   },
+   {
+    "speaker": "A",
+    "en": "Can you give me a hand with these plates?",
+    "ko": "이 접시들 좀 같이 들어줄래?"
+   },
+   {
+    "speaker": "B",
+    "en": "Yup, where should I put them?",
+    "ko": "응, 어디에 둘까?"
+   },
+   {
+    "speaker": "A",
+    "en": "Just chuck them in the bin, they're cracked.",
+    "ko": "그냥 쓰레기통에 버려, 금 갔어."
+   }
+  ]
+ },
+ {
+  "day": 19,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Hey, how's your day been?",
+    "ko": "야, 오늘 하루 어땠어?"
+   },
+   {
+    "speaker": "B",
+    "en": "Mate, I'm flat out. It's been hectic since morning.",
+    "ko": "야, 나 완전 정신없어. 아침부터 계속 바빴어."
+   },
+   {
+    "speaker": "A",
+    "en": "Tell me about it. I haven't even had a coffee yet.",
+    "ko": "내 말이. 나 아직 커피도 한 잔 못 마셨어."
+   },
+   {
+    "speaker": "B",
+    "en": "Hang in there, almost done.",
+    "ko": "조금만 버텨, 거의 끝났어."
+   }
+  ]
+ },
+ {
+  "day": 20,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Before I put your order through, any allergies at all?",
+    "ko": "주문 넣기 전에, 혹시 알레르기 있으세요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Yeah, I'm allergic to nuts.",
+    "ko": "네, 견과류 알레르기 있어요."
+   },
+   {
+    "speaker": "A",
+    "en": "Thanks for letting me know.",
+    "ko": "알려주셔서 감사해요."
+   },
+   {
+    "speaker": "B",
+    "en": "Sorry for being picky, but I try to avoid nuts completely.",
+    "ko": "까다롭게 굴어서 죄송한데, 견과류는 아예 안 먹으려고 해요."
+   },
+   {
+    "speaker": "A",
+    "en": "Got it. I'll mark it clearly on your order.",
+    "ko": "알겠습니다. 주문서에 확실하게 표시해 둘게요."
+   },
+   {
+    "speaker": "B",
+    "en": "The dish is nut-free, but I'll double-check with the kitchen.",
+    "ko": "그 요리는 견과류가 안 들어가는데, 주방에 한 번 더 확인해 볼게요."
+   }
+  ]
+ },
+ {
+  "day": 21,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Hi! I saw your ad on Flatmates. Is the room still available?",
+    "ko": "안녕하세요! Flatmates에서 광고 봤어요. 방 아직 있어요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Hey! Yep, it's still available.",
+    "ko": "안녕하세요! 네, 아직 있어요."
+   },
+   {
+    "speaker": "A",
+    "en": "Great. Can I come for an inspection?",
+    "ko": "잘됐네요. 방 보러 가도 될까요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Sure. When would be a good time for you?",
+    "ko": "그럼요. 언제가 편하세요?"
+   },
+   {
+    "speaker": "A",
+    "en": "I'm free tomorrow evening. Does that work?",
+    "ko": "내일 저녁에 시간 돼요. 괜찮으세요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Yeah, that works for me.",
+    "ko": "네, 저도 괜찮아요."
+   }
+  ]
+ },
+ {
+  "day": 22,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Nice. By the way, how many people are currently living there?",
+    "ko": "좋네요. 그런데 지금 거기 몇 명 살고 있어요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Just three of us. All full-time workers.",
+    "ko": "저희 세 명뿐이에요. 다 풀타임으로 일해요."
+   },
+   {
+    "speaker": "A",
+    "en": "Perfect. Is the rent per week or per month?",
+    "ko": "완벽하네요. 렌트비는 주 단위예요, 월 단위예요?"
+   },
+   {
+    "speaker": "B",
+    "en": "It's $290 per week. Bond is two weeks' rent.",
+    "ko": "주당 290달러예요. 보증금은 2주치 렌트비고요."
+   },
+   {
+    "speaker": "A",
+    "en": "Got it. And what are the other housemates like?",
+    "ko": "알겠어요. 그리고 다른 하우스메이트들은 어떤 사람들이에요?"
+   }
+  ]
+ },
+ {
+  "day": 23,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Hey, welcome! You here for the inspection?",
+    "ko": "안녕하세요, 어서 와요! 방 보러 오신 거죠?"
+   },
+   {
+    "speaker": "B",
+    "en": "Yep! Thanks for having me. I'm looking for a long-term stay.",
+    "ko": "네! 불러주셔서 고마워요. 저는 오래 지낼 곳을 찾고 있어요."
+   },
+   {
+    "speaker": "A",
+    "en": "Nice. What do you do?",
+    "ko": "좋네요. 무슨 일 하세요?"
+   },
+   {
+    "speaker": "B",
+    "en": "I work full-time. And I'm tidy and pretty easy-going.",
+    "ko": "풀타임으로 일해요. 그리고 깔끔하고 꽤 무난한 성격이에요."
+   },
+   {
+    "speaker": "A",
+    "en": "Good to know.",
+    "ko": "그렇군요, 좋네요."
+   },
+   {
+    "speaker": "B",
+    "en": "By the way, is the bathroom shared or private?",
+    "ko": "그런데 화장실은 같이 써요, 아니면 혼자 써요?"
+   },
+   {
+    "speaker": "A",
+    "en": "It's shared, but only with one other person.",
+    "ko": "같이 쓰는데, 딱 한 명이랑만 써요."
+   },
+   {
+    "speaker": "B",
+    "en": "Got it. And are bills included in the rent?",
+    "ko": "알겠어요. 그리고 공과금은 렌트비에 포함이에요?"
+   },
+   {
+    "speaker": "A",
+    "en": "Yep, everything's included. Electricity, water, internet...",
+    "ko": "네, 다 포함이에요. 전기, 수도, 인터넷..."
+   }
+  ]
+ },
+ {
+  "day": 24,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "When is the move-in date?",
+    "ko": "입주 날짜는 언제예요?"
+   },
+   {
+    "speaker": "B",
+    "en": "From next Monday. You can move in anytime after that.",
+    "ko": "다음 주 월요일부터요. 그 이후엔 언제든 들어와도 돼요."
+   },
+   {
+    "speaker": "A",
+    "en": "Great. How long is the minimum stay?",
+    "ko": "좋아요. 최소 거주 기간은 얼마예요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Minimum stay would be three months.",
+    "ko": "최소 3개월이에요."
+   },
+   {
+    "speaker": "A",
+    "en": "And the notice period?",
+    "ko": "그리고 퇴거 통보 기간은요?"
+   },
+   {
+    "speaker": "B",
+    "en": "It's two weeks. Just let us know before you move out.",
+    "ko": "2주예요. 나가기 전에 미리 말만 해줘요."
+   },
+   {
+    "speaker": "A",
+    "en": "Cool. Is the bond refundable?",
+    "ko": "좋아요. 보증금은 돌려받을 수 있어요?"
+   },
+   {
+    "speaker": "B",
+    "en": "100%, as long as there's no damage.",
+    "ko": "망가진 것만 없으면 100% 돌려줘요."
+   }
+  ]
+ },
+ {
+  "day": 25,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Thanks for showing me around.",
+    "ko": "구경시켜 줘서 고마워요."
+   },
+   {
+    "speaker": "B",
+    "en": "No wuckas! Feel free to look around.",
+    "ko": "별말씀을요! 편하게 둘러보세요."
+   },
+   {
+    "speaker": "A",
+    "en": "Do you mind if I check the kitchen?",
+    "ko": "주방 좀 봐도 될까요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Go for it. You can open the drawers if you like.",
+    "ko": "그럼요. 서랍도 열어봐도 돼요."
+   },
+   {
+    "speaker": "A",
+    "en": "Nice. I really like the place. I'll let you know soon!",
+    "ko": "좋네요. 여기 정말 마음에 들어요. 곧 연락드릴게요!"
+   }
+  ]
+ },
+ {
+  "day": 26,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Quick question, are there any house rules I should know about?",
+    "ko": "하나만 물어볼게요. 제가 알아야 할 집 규칙 같은 거 있어요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Nothing strict. Just clean up after yourself and don't be too loud at night.",
+    "ko": "엄격한 건 없어요. 쓴 건 알아서 치우고, 밤에 너무 시끄럽게만 안 하면 돼요."
+   },
+   {
+    "speaker": "A",
+    "en": "Got it. Where can I put my food in the fridge and cupboard?",
+    "ko": "알겠어요. 냉장고랑 찬장에 제 음식은 어디에 두면 돼요?"
+   },
+   {
+    "speaker": "B",
+    "en": "The middle shelf is free.",
+    "ko": "가운데 칸이 비어 있어요."
+   },
+   {
+    "speaker": "A",
+    "en": "Cool. Also, do we share the cleaning or do we take turns?",
+    "ko": "좋아요. 그리고 청소는 같이 해요, 아니면 돌아가면서 해요?"
+   },
+   {
+    "speaker": "B",
+    "en": "We usually take turns.",
+    "ko": "보통 돌아가면서 해요."
+   },
+   {
+    "speaker": "A",
+    "en": "Perfect. And one more thing, how do we sort the rubbish here?",
+    "ko": "완벽하네요. 그리고 하나 더, 여기 쓰레기 분리수거는 어떻게 해요?"
+   },
+   {
+    "speaker": "B",
+    "en": "General waste goes in the red bin, recycling in the yellow.",
+    "ko": "일반 쓰레기는 빨간 통에, 재활용은 노란 통에 넣어요."
+   }
+  ]
+ },
+ {
+  "day": 27,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Do you mind if I keep my stuff here on this shelf?",
+    "ko": "내 물건 이 선반에 둬도 괜찮아?"
+   },
+   {
+    "speaker": "B",
+    "en": "Well, technically, the shelf is my space.",
+    "ko": "음, 사실 그 선반은 내 자리야."
+   },
+   {
+    "speaker": "A",
+    "en": "But I don't have much stuff so you can use it.",
+    "ko": "근데 난 짐이 별로 없으니까 너가 써도 돼."
+   },
+   {
+    "speaker": "B",
+    "en": "Cheers. By the way, I noticed the sink was full this morning.",
+    "ko": "고마워. 그런데 오늘 아침에 보니까 싱크대가 꽉 차 있더라."
+   }
+  ]
+ },
+ {
+  "day": 28,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Hey, whose turn is it to take out the rubbish? The bin's full.",
+    "ko": "야, 쓰레기 버릴 차례 누구야? 쓰레기통 꽉 찼어."
+   },
+   {
+    "speaker": "B",
+    "en": "I think it's mine, sorry. I'll do it now.",
+    "ko": "내 차례인 것 같아, 미안. 지금 할게."
+   },
+   {
+    "speaker": "A",
+    "en": "All good man. Hey, do we have a cleaning roster?",
+    "ko": "괜찮아. 근데 우리 청소 당번표 있어?"
+   },
+   {
+    "speaker": "B",
+    "en": "Not really, we've just been doing it randomly.",
+    "ko": "딱히 없어, 그냥 되는 대로 해왔어."
+   },
+   {
+    "speaker": "A",
+    "en": "Hmm, maybe we could make a cleaning schedule?",
+    "ko": "흠, 청소 스케줄 하나 만들어 보는 게 어때?"
+   },
+   {
+    "speaker": "B",
+    "en": "Nah, I can't be bothered",
+    "ko": "아니, 귀찮아."
+   }
+  ]
+ },
+ {
+  "day": 29,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Last night the music was a bit loud. Do you mind keeping the noise down a bit after 11?",
+    "ko": "어젯밤에 음악이 좀 시끄러웠어. 11시 이후엔 소리 좀 줄여줄 수 있어?"
+   },
+   {
+    "speaker": "B",
+    "en": "Oh, my bad. I'll keep it down.",
+    "ko": "아, 내 잘못이야. 조용히 할게."
+   },
+   {
+    "speaker": "A",
+    "en": "Thanks! And the bathroom, can we try to keep it tidy?",
+    "ko": "고마워! 그리고 화장실 말인데, 좀 깨끗하게 쓰도록 하자?"
+   },
+   {
+    "speaker": "B",
+    "en": "Yep, I'll make sure of it.",
+    "ko": "응, 꼭 그렇게 할게."
+   }
+  ]
+ },
+ {
+  "day": 30,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "I'm asking because I think someone had all of my cookies yesterday.",
+    "ko": "물어보는 이유가, 어제 누가 내 쿠키를 다 먹은 것 같아서."
+   },
+   {
+    "speaker": "B",
+    "en": "You gotta be kidding me.",
+    "ko": "말도 안 돼."
+   },
+   {
+    "speaker": "A",
+    "en": "Yeah, my whole box of cookies was gone. So just a reminder, please don't take my food without asking.",
+    "ko": "응, 쿠키 한 상자가 통째로 없어졌어. 그러니까 한 번 더 말하는데, 내 음식은 물어보고 먹어줘."
+   },
+   {
+    "speaker": "B",
+    "en": "Yeah, fair enough.",
+    "ko": "응, 그럴 만하지."
+   },
+   {
+    "speaker": "A",
+    "en": "Also, I'll be away this weekend, just letting you know in case any mail arrives.",
+    "ko": "그리고 나 이번 주말에 없어, 혹시 우편물 오면 알고 있으라고 말하는 거야."
+   },
+   {
+    "speaker": "B",
+    "en": "No worries. Is it okay if I have a friend over tonight? Just for dinner.",
+    "ko": "알겠어. 오늘 밤에 친구 불러도 돼? 저녁만 먹고 갈 거야."
+   },
+   {
+    "speaker": "A",
+    "en": "Yeah, that's fine.",
+    "ko": "응, 괜찮아."
+   }
+  ]
+ },
+ {
+  "day": 31,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Hi, I'd like to open a bank account.",
+    "ko": "안녕하세요, 은행 계좌를 하나 만들고 싶어요."
+   },
+   {
+    "speaker": "B",
+    "en": "Sure. Are you new to Australia?",
+    "ko": "네. 호주에 오신 지 얼마 안 되셨어요?"
+   },
+   {
+    "speaker": "A",
+    "en": "Yes, I've just arrived. I'm on a working holiday visa.",
+    "ko": "네, 막 도착했어요. 워킹홀리데이 비자로 왔어요."
+   },
+   {
+    "speaker": "B",
+    "en": "No worries. Do you have your passport with you?",
+    "ko": "알겠어요. 여권 지금 가지고 계세요?"
+   }
+  ]
+ },
+ {
+  "day": 32,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Hi, I'd like to check my balance.",
+    "ko": "안녕하세요, 잔액 좀 확인하고 싶어요."
+   },
+   {
+    "speaker": "B",
+    "en": "Sure. Please enter your PIN number.",
+    "ko": "네. 비밀번호(PIN) 입력해 주세요."
+   },
+   {
+    "speaker": "A",
+    "en": "I'd like to deposit this cash.",
+    "ko": "이 현금도 입금하고 싶어요."
+   },
+   {
+    "speaker": "B",
+    "en": "No problem.",
+    "ko": "네, 그럼요."
+   },
+   {
+    "speaker": "A",
+    "en": "And can I transfer money using PayID?",
+    "ko": "그리고 PayID로 송금할 수 있어요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Yes, you can do that on the app.",
+    "ko": "네, 앱에서 하시면 돼요."
+   }
+  ]
+ },
+ {
+  "day": 33,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Hi, my card got swallowed by an ATM.",
+    "ko": "안녕하세요, ATM이 제 카드를 먹어버렸어요."
+   },
+   {
+    "speaker": "B",
+    "en": "Oh no. Which ATM was it?",
+    "ko": "어머, 어느 ATM이었어요?"
+   },
+   {
+    "speaker": "A",
+    "en": "The one on Bourke Street.",
+    "ko": "버크 스트리트에 있는 거요."
+   },
+   {
+    "speaker": "B",
+    "en": "Did it happen just now?",
+    "ko": "방금 그런 거예요?"
+   },
+   {
+    "speaker": "A",
+    "en": "Yes. I left the card in too long and it didn't return it. I was trying to withdraw cash.",
+    "ko": "네. 카드를 너무 오래 넣어뒀더니 안 돌려주더라고요. 현금 뽑으려던 중이었어요."
+   },
+   {
+    "speaker": "B",
+    "en": "No worries. I'll block the card and order a new one for you.",
+    "ko": "걱정 마세요. 카드 정지하고 새 카드 신청해 드릴게요."
+   },
+   {
+    "speaker": "A",
+    "en": "Okay. How long will it take to get a new card?",
+    "ko": "네. 새 카드 받으려면 얼마나 걸려요?"
+   },
+   {
+    "speaker": "B",
+    "en": "About five to seven business days.",
+    "ko": "영업일 기준으로 5~7일 정도요."
+   },
+   {
+    "speaker": "A",
+    "en": "Got it. Thank goodness",
+    "ko": "알겠어요. 다행이다"
+   }
+  ]
+ },
+ {
+  "day": 34,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "I'd like to get a SIM card.",
+    "ko": "유심 하나 사고 싶어요."
+   },
+   {
+    "speaker": "B",
+    "en": "Sure. How much data are you looking for?",
+    "ko": "네. 데이터는 얼마나 필요하세요?"
+   },
+   {
+    "speaker": "A",
+    "en": "Not sure. How much data does this plan include?",
+    "ko": "잘 모르겠어요. 이 요금제는 데이터가 얼마나 돼요?"
+   },
+   {
+    "speaker": "B",
+    "en": "This one comes with 200GB for $50 a month.",
+    "ko": "이건 한 달에 50달러에 200GB예요."
+   },
+   {
+    "speaker": "A",
+    "en": "Is there any contract?",
+    "ko": "약정이 있어요?"
+   },
+   {
+    "speaker": "B",
+    "en": "No, there's no contract.",
+    "ko": "아니요, 약정 없어요."
+   },
+   {
+    "speaker": "A",
+    "en": "Okay. Is there a cheaper option?",
+    "ko": "그렇군요. 더 싼 것도 있어요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Yes, we have a 50GB plan for $40.",
+    "ko": "네, 40달러에 50GB짜리 요금제가 있어요."
+   },
+   {
+    "speaker": "A",
+    "en": "I'll go with this one.",
+    "ko": "이걸로 할게요."
+   }
+  ]
+ },
+ {
+  "day": 35,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Hi, my data is running out already.",
+    "ko": "안녕하세요, 벌써 데이터가 다 떨어져 가요."
+   },
+   {
+    "speaker": "B",
+    "en": "Let me check your usage.",
+    "ko": "사용량 한번 확인해 볼게요."
+   },
+   {
+    "speaker": "A",
+    "en": "I'm using data faster than expected.",
+    "ko": "생각보다 데이터를 빨리 쓰고 있어요."
+   },
+   {
+    "speaker": "B",
+    "en": "You're close to your limit.",
+    "ko": "한도에 거의 다 됐네요."
+   }
+  ]
+ },
+ {
+  "day": 36,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Will I be charged extra if I run out of data?",
+    "ko": "데이터 다 쓰면 추가 요금 나와요?"
+   },
+   {
+    "speaker": "B",
+    "en": "No, your speed will just be reduced.",
+    "ko": "아니요, 속도만 느려져요."
+   },
+   {
+    "speaker": "A",
+    "en": "Okay. Can I upgrade my plan?",
+    "ko": "그렇군요. 요금제 업그레이드할 수 있어요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Yes, we can do that for you.",
+    "ko": "네, 해 드릴게요."
+   }
+  ]
+ },
+ {
+  "day": 37,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Hi, I'd like to cancel my plan.",
+    "ko": "안녕하세요, 요금제 해지하고 싶어요."
+   },
+   {
+    "speaker": "B",
+    "en": "No problem. Are you switching to another provider?",
+    "ko": "네. 다른 통신사로 옮기시는 거예요?"
+   },
+   {
+    "speaker": "A",
+    "en": "Yes, but I want to keep my number.",
+    "ko": "네, 근데 번호는 그대로 쓰고 싶어요."
+   },
+   {
+    "speaker": "B",
+    "en": "Sure. We can transfer your number for you.",
+    "ko": "그럼요. 번호 이동해 드릴 수 있어요."
+   },
+   {
+    "speaker": "A",
+    "en": "Great. When will the cancellation take effect?",
+    "ko": "좋아요. 해지는 언제부터 적용돼요?"
+   },
+   {
+    "speaker": "B",
+    "en": "It'll be effective from today.",
+    "ko": "오늘부터 적용돼요."
+   },
+   {
+    "speaker": "A",
+    "en": "Will I be charged after today?",
+    "ko": "오늘 이후에도 요금이 나가요?"
+   },
+   {
+    "speaker": "B",
+    "en": "No, you won't be charged anymore.",
+    "ko": "아니요, 이제 요금 안 나가요."
+   },
+   {
+    "speaker": "A",
+    "en": "Perfect, thanks.",
+    "ko": "완벽해요, 고마워요."
+   }
+  ]
+ },
+ {
+  "day": 38,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Hi, I'd like to join the gym. How much is the membership?",
+    "ko": "안녕하세요, 헬스장 등록하고 싶은데요. 회원권 얼마예요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Sure. It's $45 fortnightly.",
+    "ko": "네. 2주에 45달러예요."
+   },
+   {
+    "speaker": "A",
+    "en": "So it's $22.50 per week, right?",
+    "ko": "그럼 일주일에 22.50달러인 거죠?"
+   },
+   {
+    "speaker": "B",
+    "en": "Exactly!",
+    "ko": "맞아요!"
+   },
+   {
+    "speaker": "A",
+    "en": "Do you also offer a free trial?",
+    "ko": "무료 체험도 있어요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Yes, we do. We offer a 4-day free trial.",
+    "ko": "네, 있어요. 4일 무료 체험 가능해요."
+   }
+  ]
+ },
+ {
+  "day": 39,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Is there any promo going on at the moment?",
+    "ko": "지금 진행 중인 프로모션 있어요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Yes, there is. It's usually $45 per week, but for the first 12 weeks, it's $22.50 per week.",
+    "ko": "네, 있어요. 원래 주당 45달러인데, 처음 12주 동안은 주당 22.50달러예요."
+   },
+   {
+    "speaker": "A",
+    "en": "Got it. Just to double-check, that would be $90 per month for the first three months, right?",
+    "ko": "알겠어요. 한 번만 더 확인할게요, 그럼 처음 세 달은 한 달에 90달러인 거 맞죠?"
+   },
+   {
+    "speaker": "B",
+    "en": "Yep, exactly.",
+    "ko": "네, 맞아요."
+   }
+  ]
+ },
+ {
+  "day": 40,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Also, one of my friends wants to join the gym too.",
+    "ko": "그리고 제 친구 한 명도 헬스장 등록하고 싶어 해요."
+   },
+   {
+    "speaker": "B",
+    "en": "Oh, cool. In that case, you can actually get more benefits. If you refer someone, you'll get 50% off for one month.",
+    "ko": "오, 좋네요. 그럼 혜택을 더 받을 수 있어요. 누군가를 추천하면 한 달 동안 50% 할인받아요."
+   },
+   {
+    "speaker": "A",
+    "en": "Even better! Do we need to come in person to sign up?",
+    "ko": "더 좋네요! 가입하려면 직접 와야 해요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Nah, you can just send her your referral link.",
+    "ko": "아니요, 그냥 친구한테 추천 링크만 보내주면 돼요."
+   }
+  ]
+ },
+ {
+  "day": 41,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Bella's Italian, good evening.",
+    "ko": "벨라스 이탈리안입니다, 안녕하세요."
+   },
+   {
+    "speaker": "B",
+    "en": "Hi, I'd like to make a reservation for four at 7:30.",
+    "ko": "안녕하세요, 7시 30분에 4명 예약하고 싶어요."
+   },
+   {
+    "speaker": "A",
+    "en": "Indoor or outdoor seating?",
+    "ko": "실내석이요, 야외석이요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Indoors, please. Would it be possible to get a window seat?",
+    "ko": "실내로 해주세요. 창가 자리도 가능할까요?"
+   },
+   {
+    "speaker": "A",
+    "en": "Should be alright. Can I get a name and contact number?",
+    "ko": "괜찮을 거예요. 성함이랑 연락처 알려주시겠어요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Sure. It's Nathan. 0452 461 660.",
+    "ko": "네. 네이선이에요. 0452 461 660이요."
+   },
+   {
+    "speaker": "A",
+    "en": "Lovely, I'll see you at 7:30.",
+    "ko": "좋아요, 7시 30분에 뵐게요."
+   }
+  ]
+ },
+ {
+  "day": 42,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Hi! What can I get for you?",
+    "ko": "안녕하세요! 뭐 드릴까요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Hi, I'll just grab one of those banana breads.",
+    "ko": "안녕하세요, 저 바나나 브레드 하나 주세요."
+   },
+   {
+    "speaker": "A",
+    "en": "Sure. Anything else?",
+    "ko": "네. 다른 건요?"
+   },
+   {
+    "speaker": "B",
+    "en": "And I'll do a strong cap. I was just wondering if you have any sweetener.",
+    "ko": "그리고 카푸치노 진하게 하나요. 혹시 감미료 있어요?"
+   },
+   {
+    "speaker": "A",
+    "en": "Yes, we do. We've got Equal and Stevia.",
+    "ko": "네, 있어요. 이퀄이랑 스테비아 있어요."
+   },
+   {
+    "speaker": "B",
+    "en": "Great, I'll have Equal in my coffee. And the banana bread plain, toasted, with extra butter, please.",
+    "ko": "좋아요, 커피에 이퀄 넣어 주세요. 그리고 바나나 브레드는 아무것도 안 올리고 토스트해서 버터 추가로 주세요."
+   },
+   {
+    "speaker": "A",
+    "en": "No worries. That'll be $10.80. When you're ready.",
+    "ko": "알겠어요. 10.80달러예요. 준비되시면 결제해 주세요."
+   }
+  ]
+ },
+ {
+  "day": 43,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Here you go. One tiramisu.",
+    "ko": "여기 있어요. 티라미수 하나요."
+   },
+   {
+    "speaker": "B",
+    "en": "Oh, sorry, I don't think we ordered this.",
+    "ko": "어, 죄송한데 저희 이거 안 시킨 것 같아요."
+   },
+   {
+    "speaker": "A",
+    "en": "That's right. This one's on the house.",
+    "ko": "맞아요. 이건 서비스예요."
+   },
+   {
+    "speaker": "B",
+    "en": "Oh, really?",
+    "ko": "오, 진짜요?"
+   },
+   {
+    "speaker": "A",
+    "en": "Yeah, sorry about the wait earlier. We wanted to make it up to you.",
+    "ko": "네, 아까 오래 기다리게 해서 죄송해요. 보답하고 싶었어요."
+   },
+   {
+    "speaker": "B",
+    "en": "Oh wow, thanks. We appreciate it.",
+    "ko": "와, 고마워요. 정말 감사해요."
+   },
+   {
+    "speaker": "A",
+    "en": "No worries. Enjoy!",
+    "ko": "별말씀을요. 맛있게 드세요!"
+   }
+  ]
+ },
+ {
+  "day": 44,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "How does it feel?",
+    "ko": "신어 보니 어때요?"
+   },
+   {
+    "speaker": "B",
+    "en": "It fits like a glove, but a little snug around the toes.",
+    "ko": "딱 맞는데, 발가락 쪽이 좀 꽉 껴요."
+   },
+   {
+    "speaker": "A",
+    "en": "You might want to go half a size up, because Salomon runs small, you know?",
+    "ko": "반 사이즈 올리시는 게 나을 수도 있어요, 살로몬이 좀 작게 나오거든요."
+   },
+   {
+    "speaker": "B",
+    "en": "Yeah, could I try an eight and a half?",
+    "ko": "네, 8.5 사이즈 신어 볼 수 있을까요?"
+   }
+  ]
+ },
+ {
+  "day": 45,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Big summer blowout! How can I help?",
+    "ko": "여름 대박 세일 중이에요! 뭐 도와드릴까요?"
+   },
+   {
+    "speaker": "B",
+    "en": "I'm just browsing. I'll let you know if I need any help.",
+    "ko": "그냥 구경 중이에요. 도움 필요하면 말씀드릴게요."
+   },
+   {
+    "speaker": "A",
+    "en": "Oh, those are on special. Buy one, get one free.",
+    "ko": "아, 그거 세일 중이에요. 하나 사면 하나 공짜예요."
+   },
+   {
+    "speaker": "B",
+    "en": "Do you have this in a larger size?",
+    "ko": "이거 더 큰 사이즈 있어요?"
+   },
+   {
+    "speaker": "A",
+    "en": "Yes. Would you like to try it on?",
+    "ko": "네. 입어 보시겠어요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Is there a fitting room?",
+    "ko": "탈의실 있어요?"
+   },
+   {
+    "speaker": "A",
+    "en": "How do you like it?",
+    "ko": "어떠세요?"
+   },
+   {
+    "speaker": "B",
+    "en": "It's a bit tight around the shoulders. I'll come back later.",
+    "ko": "어깨 쪽이 좀 껴요. 나중에 다시 올게요."
+   }
+  ]
+ },
+ {
+  "day": 46,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Excuse me, does this tram go to Melbourne Central?",
+    "ko": "실례지만, 이 트램 멜번 센트럴 가요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Yep, it does. You need to get off at Little Lonsdale Street.",
+    "ko": "네, 가요. 리틀 론스데일 스트리트에서 내리면 돼요."
+   },
+   {
+    "speaker": "A",
+    "en": "Is that in the free tram zone?",
+    "ko": "거기 무료 트램 구역 안이에요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Yeah, you don't need to tap on.",
+    "ko": "네, 카드 안 찍어도 돼요."
+   },
+   {
+    "speaker": "A",
+    "en": "Sweet!",
+    "ko": "오 좋다!"
+   }
+  ]
+ },
+ {
+  "day": 47,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "My Myki is not working.",
+    "ko": "제 마이키 카드가 안 돼요."
+   },
+   {
+    "speaker": "B",
+    "en": "Yeah, your Myki might be low on balance.",
+    "ko": "아, 마이키 잔액이 부족한 것 같아요."
+   },
+   {
+    "speaker": "A",
+    "en": "I just topped it up, but it didn't go through.",
+    "ko": "방금 충전했는데 충전이 안 됐어요."
+   },
+   {
+    "speaker": "B",
+    "en": "Maybe we've got an issue with the machine.",
+    "ko": "기계에 문제가 있나 봐요."
+   },
+   {
+    "speaker": "A",
+    "en": "Can you do that manually?",
+    "ko": "직접 충전해 주실 수 있어요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Sure, how much would you like to top up?",
+    "ko": "그럼요, 얼마 충전하시겠어요?"
+   },
+   {
+    "speaker": "A",
+    "en": "I'll top up $30.",
+    "ko": "30달러 충전할게요."
+   }
+  ]
+ },
+ {
+  "day": 48,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Hi, I'm trying to get to Richmond.",
+    "ko": "안녕하세요, 리치먼드에 가려고 하는데요."
+   },
+   {
+    "speaker": "B",
+    "en": "You need to take the Pakenham line from Southern Cross Station.",
+    "ko": "서던 크로스 역에서 패컨엄 라인 타시면 돼요."
+   },
+   {
+    "speaker": "A",
+    "en": "Which platform is it?",
+    "ko": "몇 번 플랫폼이에요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Platform 12. But it's not express, though. Platform 4 is faster.",
+    "ko": "12번 플랫폼이요. 근데 급행은 아니에요. 4번 플랫폼이 더 빨라요."
+   },
+   {
+    "speaker": "A",
+    "en": "Even better! Thank you for your help.",
+    "ko": "그럼 더 좋죠! 도와주셔서 고마워요."
+   }
+  ]
+ },
+ {
+  "day": 49,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Excuse me, how do I get to this cafe?",
+    "ko": "실례지만, 이 카페 어떻게 가요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Oh, it's just down the road.",
+    "ko": "아, 이 길 따라 조금만 가면 있어요."
+   },
+   {
+    "speaker": "A",
+    "en": "Is it far from here?",
+    "ko": "여기서 멀어요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Not at all. About a 5-minute walk.",
+    "ko": "전혀요. 걸어서 5분 정도예요."
+   },
+   {
+    "speaker": "A",
+    "en": "Should I turn left or right?",
+    "ko": "왼쪽으로 꺾어요, 오른쪽으로 꺾어요?"
+   },
+   {
+    "speaker": "B",
+    "en": "There's a roundabout down the road. You can chuck a right at the chook shop.",
+    "ko": "길 따라가면 로터리가 있어요. 치킨집에서 오른쪽으로 꺾으면 돼요."
+   },
+   {
+    "speaker": "A",
+    "en": "Got it. Thanks so much! Do you happen to know any good places to eat around here?",
+    "ko": "알겠어요. 정말 고마워요! 혹시 이 근처에 괜찮은 식당 아세요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Yeah, there's a pretty decent Thai place just next to the cafe.",
+    "ko": "네, 그 카페 바로 옆에 꽤 괜찮은 태국 음식점 있어요."
+   }
+  ]
+ },
+ {
+  "day": 50,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Sorry, I think I missed my stop.",
+    "ko": "죄송한데, 내릴 정류장을 지나친 것 같아요."
+   },
+   {
+    "speaker": "B",
+    "en": "No worries. Get off at the next one and cross over.",
+    "ko": "괜찮아요. 다음 정류장에서 내려서 길 건너세요."
+   },
+   {
+    "speaker": "A",
+    "en": "So I need to catch the bus back?",
+    "ko": "그럼 버스 타고 다시 돌아가야 해요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Yeah, just from the other side.",
+    "ko": "네, 반대편에서 타시면 돼요."
+   },
+   {
+    "speaker": "A",
+    "en": "Got it. Thanks heaps!",
+    "ko": "알겠어요. 정말 고마워요!"
+   }
+  ]
+ },
+ {
+  "day": 51,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Hello, I'd like to make an appointment, please.",
+    "ko": "안녕하세요, 진료 예약하고 싶어요."
+   },
+   {
+    "speaker": "B",
+    "en": "Sure. What seems to be the problem?",
+    "ko": "네. 어디가 불편하세요?"
+   },
+   {
+    "speaker": "A",
+    "en": "I have a fever and a sore throat.",
+    "ko": "열이 나고 목이 아파요."
+   },
+   {
+    "speaker": "B",
+    "en": "When would you like to come in?",
+    "ko": "언제 오고 싶으세요?"
+   },
+   {
+    "speaker": "A",
+    "en": "What's the earliest available appointment?",
+    "ko": "제일 빠른 예약이 언제예요?"
+   },
+   {
+    "speaker": "B",
+    "en": "We have an opening at 2 PM today.",
+    "ko": "오늘 오후 2시에 자리가 있어요."
+   },
+   {
+    "speaker": "A",
+    "en": "That works for me. This is my first visit.",
+    "ko": "그때 좋아요. 이번이 처음 방문이에요."
+   },
+   {
+    "speaker": "B",
+    "en": "No problem. Please bring your ID and insurance card.",
+    "ko": "괜찮아요. 신분증이랑 보험 카드 가져오세요."
+   }
+  ]
+ },
+ {
+  "day": 52,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "What brings you in today?",
+    "ko": "오늘 어떻게 오셨어요?"
+   },
+   {
+    "speaker": "B",
+    "en": "I've been feeling sick for 3 days. I have a fever and my throat hurts.",
+    "ko": "3일째 아파요. 열이 나고 목이 아파요."
+   },
+   {
+    "speaker": "A",
+    "en": "Any other symptoms?",
+    "ko": "다른 증상은요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Yes, I feel dizzy, I have a headache, and I feel a little nauseous.",
+    "ko": "네, 어지럽고 머리도 아프고 속이 좀 메스꺼워요."
+   },
+   {
+    "speaker": "A",
+    "en": "Are you allergic to any medication?",
+    "ko": "약 알레르기 있으세요?"
+   },
+   {
+    "speaker": "B",
+    "en": "I'm allergic to penicillin.",
+    "ko": "페니실린 알레르기 있어요."
+   }
+  ]
+ },
+ {
+  "day": 53,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "What seems to be the problem?",
+    "ko": "어디가 불편하세요?"
+   },
+   {
+    "speaker": "B",
+    "en": "I've been coughing a lot, especially when I talk. It's been like this for about two weeks.",
+    "ko": "기침을 많이 해요, 특히 말할 때요. 이런 지 2주 정도 됐어요."
+   },
+   {
+    "speaker": "A",
+    "en": "Do you have a sore throat or any pain?",
+    "ko": "목이 아프거나 다른 통증은 있어요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Not really a sore throat, but my throat feels irritated.",
+    "ko": "목이 아픈 건 아닌데, 목이 좀 따끔거리고 칼칼해요."
+   },
+   {
+    "speaker": "A",
+    "en": "On a scale of 1 to 10, how bad is it?",
+    "ko": "1부터 10까지 중에 얼마나 심해요?"
+   },
+   {
+    "speaker": "B",
+    "en": "About a 7.",
+    "ko": "7 정도요."
+   },
+   {
+    "speaker": "A",
+    "en": "Are you taking any medication?",
+    "ko": "지금 드시는 약 있어요?"
+   },
+   {
+    "speaker": "B",
+    "en": "No, nothing regularly. Just some cold medicine.",
+    "ko": "아뇨, 꾸준히 먹는 건 없어요. 감기약 좀 먹은 거 말고는요."
+   },
+   {
+    "speaker": "A",
+    "en": "Alright. I'll prescribe you some medication.",
+    "ko": "알겠어요. 약 처방해 드릴게요."
+   }
+  ]
+ },
+ {
+  "day": 54,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Are you feeling off or not yourself?",
+    "ko": "몸이 좀 안 좋거나 평소 같지 않으세요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Yeah, I've been feeling a bit crook for a few days.",
+    "ko": "네, 며칠째 몸이 좀 안 좋아요."
+   },
+   {
+    "speaker": "A",
+    "en": "Have you had any vomiting?",
+    "ko": "토하신 적 있어요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Just a little.",
+    "ko": "조금이요."
+   },
+   {
+    "speaker": "A",
+    "en": "Have you had a fever?",
+    "ko": "열은 났어요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Not that I know of.",
+    "ko": "제가 알기로는 없어요."
+   },
+   {
+    "speaker": "A",
+    "en": "You've got a throat infection. I'll prescribe some antibiotics.",
+    "ko": "목에 염증이 생겼네요. 항생제 처방해 드릴게요."
+   },
+   {
+    "speaker": "B",
+    "en": "I feel pretty worn out. Do I need an injection or an IV?",
+    "ko": "너무 기운이 없어요. 주사나 링거 맞아야 할까요?"
+   }
+  ]
+ },
+ {
+  "day": 55,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Here you go. Take two tablets twice a day.",
+    "ko": "여기 있어요. 하루 두 번, 두 알씩 드세요."
+   },
+   {
+    "speaker": "B",
+    "en": "When should I take this? Before or after meals?",
+    "ko": "언제 먹어야 해요? 식전이에요, 식후예요?"
+   },
+   {
+    "speaker": "A",
+    "en": "After meals.",
+    "ko": "식후요."
+   },
+   {
+    "speaker": "B",
+    "en": "How long do I need to take it?",
+    "ko": "얼마 동안 먹어야 해요?"
+   },
+   {
+    "speaker": "A",
+    "en": "For five days.",
+    "ko": "5일 동안이요."
+   },
+   {
+    "speaker": "B",
+    "en": "Do I need to finish all of these?",
+    "ko": "이거 다 먹어야 해요?"
+   },
+   {
+    "speaker": "A",
+    "en": "Yes, finish the full course, even if you feel better.",
+    "ko": "네, 나아진 것 같아도 끝까지 다 드세요."
+   },
+   {
+    "speaker": "B",
+    "en": "Are there any side effects?",
+    "ko": "부작용 있어요?"
+   },
+   {
+    "speaker": "A",
+    "en": "You might feel a bit sleepy.",
+    "ko": "좀 졸릴 수 있어요."
+   },
+   {
+    "speaker": "B",
+    "en": "Can I drink alcohol with this medication?",
+    "ko": "이 약 먹으면서 술 마셔도 돼요?"
+   },
+   {
+    "speaker": "A",
+    "en": "No, avoid alcohol while taking this.",
+    "ko": "아뇨, 이 약 드시는 동안은 술 피하세요."
+   }
+  ]
+ },
+ {
+  "day": 56,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Hey, are you okay? You don't look well.",
+    "ko": "저기, 괜찮아요? 안색이 안 좋아 보여요."
+   },
+   {
+    "speaker": "B",
+    "en": "I'm not feeling well. I think I'm going to pass out.",
+    "ko": "몸이 안 좋아요. 쓰러질 것 같아요."
+   },
+   {
+    "speaker": "A",
+    "en": "Sit down. Do you want me to call triple zero?",
+    "ko": "앉아요. 000(응급번호)에 전화해 줄까요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Please. My head is spinning.",
+    "ko": "네, 부탁해요. 머리가 빙빙 돌아요."
+   }
+  ]
+ },
+ {
+  "day": 57,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Oh my god. What happened?!",
+    "ko": "세상에. 무슨 일이야?!"
+   },
+   {
+    "speaker": "B",
+    "en": "I just cut my finger. It won't stop bleeding.",
+    "ko": "방금 손가락을 베었어. 피가 안 멈춰."
+   },
+   {
+    "speaker": "A",
+    "en": "Okay, sit down. Let me get the first aid kit.",
+    "ko": "알았어, 앉아 있어. 구급상자 가져올게."
+   },
+   {
+    "speaker": "B",
+    "en": "Thanks. Can you press on it for me? I feel a bit lightheaded.",
+    "ko": "고마워. 여기 좀 눌러줄래? 좀 어지러워."
+   },
+   {
+    "speaker": "A",
+    "en": "Do you want me to call an ambulance?",
+    "ko": "구급차 불러줄까?"
+   },
+   {
+    "speaker": "B",
+    "en": "Yes, please. Do we have a Band-Aid?",
+    "ko": "응, 부탁해. 밴드 있어?"
+   },
+   {
+    "speaker": "A",
+    "en": "Yeah, but it looks pretty deep. I don't think a Band-Aid's gonna work.",
+    "ko": "응, 근데 꽤 깊어 보여. 밴드로는 안 될 것 같아."
+   },
+   {
+    "speaker": "B",
+    "en": "Do you think I need stitches?",
+    "ko": "꿰매야 할 것 같아?"
+   }
+  ]
+ },
+ {
+  "day": 58,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Man, you alright? You're scratching a lot.",
+    "ko": "야, 괜찮아? 엄청 긁고 있네."
+   },
+   {
+    "speaker": "B",
+    "en": "Think I'm having an allergic reaction. My whole body is itchy and my lips are swelling.",
+    "ko": "알레르기 반응 온 것 같아. 온몸이 가렵고 입술이 붓고 있어."
+   },
+   {
+    "speaker": "A",
+    "en": "That's serious. Do you have an EpiPen?",
+    "ko": "그거 심각한데. 에피펜 있어?"
+   },
+   {
+    "speaker": "B",
+    "en": "No. I feel like I'm choking. I can't breathe properly.",
+    "ko": "아니. 숨 막힐 것 같아. 숨을 제대로 못 쉬겠어."
+   }
+  ]
+ },
+ {
+  "day": 59,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "Is everything okay?",
+    "ko": "괜찮아요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Actually... I think that guy's been following me.",
+    "ko": "사실... 저 남자가 저를 계속 따라오는 것 같아요."
+   },
+   {
+    "speaker": "A",
+    "en": "Alright, come stand next to me.",
+    "ko": "알겠어요, 제 옆에 와서 서 있어요."
+   },
+   {
+    "speaker": "B",
+    "en": "Can you pretend you know me? Just act like I'm with you.",
+    "ko": "저랑 아는 사이인 척해 줄 수 있어요? 그냥 일행인 것처럼요."
+   },
+   {
+    "speaker": "A",
+    "en": "Yeah, of course. Do you know him?",
+    "ko": "네, 물론이죠. 저 사람 아는 사람이에요?"
+   },
+   {
+    "speaker": "B",
+    "en": "No, I don't even know who he is.",
+    "ko": "아뇨, 누군지도 몰라요."
+   },
+   {
+    "speaker": "A",
+    "en": "I think he's leaving now. What do you do by the way?",
+    "ko": "이제 가는 것 같네요. 근데 무슨 일 하세요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Are you hitting on me now?",
+    "ko": "지금 저 꼬시는 거예요?"
+   }
+  ]
+ },
+ {
+  "day": 60,
+  "lines": [
+   {
+    "speaker": "A",
+    "en": "G'day. What can I do for you today?",
+    "ko": "안녕하세요. 오늘 무슨 일로 오셨어요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Hi, my phone got stolen on the tram. I need to report it.",
+    "ko": "안녕하세요, 트램에서 휴대폰을 도둑맞았어요. 신고하려고요."
+   },
+   {
+    "speaker": "A",
+    "en": "Alright. When did it happen?",
+    "ko": "알겠어요. 언제 그랬어요?"
+   },
+   {
+    "speaker": "B",
+    "en": "About 20 minutes ago, near Flinders Street Station.",
+    "ko": "20분 전쯤에 플린더스 스트리트 역 근처에서요."
+   },
+   {
+    "speaker": "A",
+    "en": "Do you know which tram number it was?",
+    "ko": "몇 번 트램이었는지 아세요?"
+   },
+   {
+    "speaker": "B",
+    "en": "Yeah, it was the tram 86.",
+    "ko": "네, 86번 트램이었어요."
+   },
+   {
+    "speaker": "A",
+    "en": "Okay. Was it taken from your pocket or your bag?",
+    "ko": "네. 주머니에서 가져갔어요, 가방에서 가져갔어요?"
+   },
+   {
+    "speaker": "B",
+    "en": "From my jacket pocket. I didn't notice until I got off.",
+    "ko": "재킷 주머니에서요. 내릴 때까지 몰랐어요."
+   }
+  ]
+ }
+]
