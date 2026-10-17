@@ -12,11 +12,12 @@ export default async function TeacherHomePage() {
   const today = kstDate(now);
   const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000).toISOString();
 
-  const [students, published, weekSubs, todayAttendance] = await Promise.all([
+  const [students, published, weekSubs, todayAttendance, pending] = await Promise.all([
     supabase.from("students").select("id", { count: "exact", head: true }).eq("is_active", true),
     supabase.from("lessons").select("id", { count: "exact", head: true }).eq("is_published", true),
     supabase.from("submissions").select("student_id").gte("created_at", weekAgo),
     supabase.from("attendance").select("id", { count: "exact", head: true }).eq("class_date", today),
+    supabase.from("students").select("id", { count: "exact", head: true }).eq("approval", "pending"),
   ]);
   const activeThisWeek = new Set((weekSubs.data ?? []).map((s) => s.student_id)).size;
 
@@ -29,6 +30,15 @@ export default async function TeacherHomePage() {
 
   return (
     <>
+      {(pending.count ?? 0) > 0 && (
+        <Link
+          href="/teacher/students"
+          className="flex items-center justify-between rounded-2xl bg-brand-600 p-4 font-bold text-white shadow-md"
+        >
+          <span>🙋 가입 신청 {pending.count}건이 승인을 기다리고 있어요</span>
+          <span>승인하러 가기 →</span>
+        </Link>
+      )}
       <section className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         {tiles.map((t) => {
           const body = (

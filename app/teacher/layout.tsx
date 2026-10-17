@@ -1,4 +1,5 @@
 import { requireTeacher } from "@/lib/classroom/dal";
+import { createServerSupabaseClient } from "@/lib/supabase";
 import type { Metadata } from "next";
 import { AppShell } from "@/app/_ui/app-shell";
 
@@ -19,8 +20,15 @@ export default async function TeacherLayout({
   children: React.ReactNode;
 }) {
   await requireTeacher();
+  const { count } = await createServerSupabaseClient()
+    .from("students")
+    .select("id", { count: "exact", head: true })
+    .eq("approval", "pending");
+  const nav = NAV.map((n) =>
+    n.href === "/teacher/students" && count ? { ...n, label: `학생 · 신청 ${count}` } : n,
+  );
   return (
-    <AppShell title="다잉클 클래스룸 · 선생님" nav={NAV}>
+    <AppShell title="다잉클 클래스룸 · 선생님" nav={nav}>
       {children}
     </AppShell>
   );

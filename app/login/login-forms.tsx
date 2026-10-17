@@ -73,7 +73,7 @@ export function PhoneLoginForm() {
   );
 }
 
-export function SignupForm({ plans }: { plans: { id: string; label: string }[] }) {
+export function SignupForm() {
   const [state, action, pending] = useActionState(signup, undefined);
   if (state && "done" in state) {
     return (
@@ -89,16 +89,6 @@ export function SignupForm({ plans }: { plans: { id: string; label: string }[] }
       <input name="phone" type="tel" inputMode="numeric" placeholder="휴대폰 번호 (로그인 아이디)" autoComplete="tel" required className={inputClass} />
       <input name="password" type="password" placeholder="비밀번호 (8자 이상)" autoComplete="new-password" minLength={8} required className={inputClass} />
       <input name="password_confirm" type="password" placeholder="비밀번호 확인" autoComplete="new-password" minLength={8} required className={inputClass} />
-      <select name="plan" required defaultValue="" className={inputClass}>
-        <option value="" disabled>
-          신청한 과정 선택
-        </option>
-        {plans.map((p) => (
-          <option key={p.id} value={p.id}>
-            {p.label}
-          </option>
-        ))}
-      </select>
       <label className="flex items-start gap-2 rounded-xl bg-slate-50 p-3 text-xs leading-relaxed text-zinc-600">
         <input type="checkbox" name="privacy" required className="mt-0.5" />
         <span>

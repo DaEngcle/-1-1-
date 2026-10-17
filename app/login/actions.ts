@@ -15,7 +15,6 @@ import {
   recordLoginFailure,
 } from "@/lib/classroom/rate-limit";
 import { hashPassword, normalizePhone, verifyPassword } from "@/lib/classroom/password";
-import { isPlanId } from "@/lib/classroom/plans";
 import { kstDate } from "@/lib/classroom/stats";
 
 export type LoginState = { error: string } | undefined;
@@ -106,14 +105,13 @@ export async function signup(_prev: SignupState, formData: FormData): Promise<Si
   const phone = normalizePhone(String(formData.get("phone") ?? ""));
   const password = String(formData.get("password") ?? "");
   const passwordConfirm = String(formData.get("password_confirm") ?? "");
-  const plan = String(formData.get("plan") ?? "");
+  // 수강 과정은 학생이 고르지 않고 선생님이 승인할 때 정한다
   const agreed = formData.get("privacy") === "on";
 
   if (!NAME_PATTERN.test(name)) return { error: "이름을 한글 또는 영문으로 2~20자 입력해주세요." };
   if (!/^01[016789][0-9]{7,8}$/.test(phone)) return { error: "휴대폰 번호를 정확히 입력해주세요. (예: 010-1234-5678)" };
   if (password.length < 8) return { error: "비밀번호는 8자 이상으로 정해주세요." };
   if (password !== passwordConfirm) return { error: "비밀번호 확인이 일치하지 않아요." };
-  if (!isPlanId(plan)) return { error: "신청한 과정을 선택해주세요." };
   if (!agreed) return { error: "개인정보 수집·이용에 동의해야 가입할 수 있어요." };
 
   // 가입 남용 방지: 로그인 실패 제한과 같은 방식으로 IP당 횟수 제한
@@ -127,7 +125,6 @@ export async function signup(_prev: SignupState, formData: FormData): Promise<Si
     phone,
     password_hash: await hashPassword(password),
     approval: "pending",
-    requested_plan: plan,
     privacy_agreed_at: new Date().toISOString(),
   });
   if (error?.code === "23505") return { error: "이미 가입된 전화번호예요. 로그인해주세요." };
