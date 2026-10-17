@@ -82,7 +82,11 @@ function ResultView({ result, onPlayWord }: { result: PracticeResult; onPlayWord
             ))}
         </p>
       )}
-      <p className="text-xs text-zinc-500">초록 80+ · 노랑 60~79 · 빨강 60 미만 · 회색 줄: 빠뜨린 단어. 단어를 누르면 원어민 발음.</p>
+      <p className="text-xs text-zinc-500">
+        초록 80+ · 노랑 60~79 · 빨강 60 미만 · 회색 줄: 빠뜨린 단어
+        <br />
+        👆 단어를 누르면 그 단어만 천천히 들을 수 있어요.
+      </p>
       {result.feedback_text && (
         <div className="rounded-xl border border-brand-100 bg-brand-50 p-3 text-sm leading-relaxed whitespace-pre-line text-zinc-800">
           <span className="mb-1 block text-xs font-semibold text-brand-700">AI 코치 피드백</span>
@@ -162,6 +166,8 @@ export function SentencePractice({
   }
 
   const btn = "rounded-lg border px-3 py-2 text-sm font-medium transition-colors disabled:opacity-50";
+  // 듣기·천천히·반복·해석 4개를 한 줄에
+  const tool = "rounded-lg border px-1 py-2 text-sm font-medium whitespace-nowrap transition-colors disabled:opacity-40";
 
   return (
     <article className="flex flex-col gap-3 rounded-2xl border border-slate-200/80 bg-white shadow-sm shadow-brand-900/5 p-4">
@@ -187,18 +193,18 @@ export function SentencePractice({
         </p>
       </div>
 
-      <div className="flex flex-wrap gap-2">
+      <div className="grid grid-cols-4 gap-1.5">
         <button
           type="button"
           onClick={() => (playingKey === "normal" ? stop() : play(sentence, "normal", "normal"))}
-          className={`${btn} ${playingKey === "normal" ? "border-brand-400 bg-brand-50 text-brand-700" : "border-zinc-300 bg-white"}`}
+          className={`${tool} ${playingKey === "normal" ? "border-brand-400 bg-brand-50 text-brand-700" : "border-zinc-300 bg-white"}`}
         >
-          {playingKey === "normal" ? "■ 정지" : "▶ 원어민 듣기"}
+          {playingKey === "normal" ? "■ 정지" : "▶ 듣기"}
         </button>
         <button
           type="button"
           onClick={() => (playingKey === "slow" ? stop() : play(sentence, "slow", "slow"))}
-          className={`${btn} ${playingKey === "slow" ? "border-brand-400 bg-brand-50 text-brand-700" : "border-zinc-300 bg-white"}`}
+          className={`${tool} ${playingKey === "slow" ? "border-brand-400 bg-brand-50 text-brand-700" : "border-zinc-300 bg-white"}`}
         >
           {playingKey === "slow" ? "■ 정지" : "🐢 천천히"}
         </button>
@@ -206,21 +212,19 @@ export function SentencePractice({
           type="button"
           onClick={() => setLoop(!loop)}
           aria-pressed={loop}
-          className={`${btn} ${loop ? "border-brand-400 bg-brand-50 text-brand-700" : "border-zinc-300 bg-white"}`}
+          className={`${tool} ${loop ? "border-brand-400 bg-brand-50 text-brand-700" : "border-zinc-300 bg-white"}`}
         >
-          🔁 반복 {loop ? "ON" : "OFF"}
+          🔁 반복{loop ? " ON" : ""}
         </button>
-        {(translation || note) && (
-          <button
-            type="button"
-            onClick={() => setShowTranslation((v) => !v)}
-            className={`${btn} border-zinc-300 bg-white`}
-          >
-            {showTranslation ? "해석 숨기기" : "해석 보기"}
-          </button>
-        )}
+        <button
+          type="button"
+          onClick={() => setShowTranslation((v) => !v)}
+          disabled={!translation && !note}
+          className={`${tool} ${showTranslation ? "border-brand-400 bg-brand-50 text-brand-700" : "border-zinc-300 bg-white"}`}
+        >
+          {showTranslation ? "해석 닫기" : "해석"}
+        </button>
       </div>
-      <p className="text-xs text-zinc-500">단어를 누르면 그 단어만 천천히 들을 수 있어요.</p>
 
       {showTranslation && (
         <div className="rounded-lg bg-zinc-50 p-3 text-sm text-zinc-700">

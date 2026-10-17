@@ -141,11 +141,11 @@ export const PRONUNCIATION_TIPS: PronunciationTip[] = [
   },
   {
     id: "flap",
-    label: "호주식 t",
+    label: "부드러운 t",
     ipa: "/ɾ/",
     title: "모음 사이 t — 'ㄹ'처럼 가볍게 튕기기",
     summary:
-      "water, got a처럼 t가 모음 사이에 오면 호주·미국 영어에선 혀를 한 번 가볍게 튕겨 'ㄹ/ㄷ' 중간 소리가 돼요.",
+      "water, better처럼 t가 모음 사이에 오면 원어민은 혀를 한 번 가볍게 튕겨 'ㄹ/ㄷ' 중간 소리로 자주 말해요. 꼭 따라 할 필요는 없고, 알아듣는 데 익숙해지면 충분해요.",
     commonMistake: "water → '워터'로 t를 세게 발음",
     steps: [
       "혀끝으로 윗잇몸을 아주 짧게 '톡' 한 번만 쳐요.",
@@ -158,7 +158,7 @@ export const PRONUNCIATION_TIPS: PronunciationTip[] = [
       ["better", "bedder"],
     ],
     practiceWords: ["water", "better", "a lot of", "get it", "started"],
-    match: (w) => /[aeiouy]t+[aeiouy]|[aeiou]t$/.test(w),
+    match: (w) => /[aeiouy]t+[aeiouy]/.test(w),
   },
 ];
 
@@ -167,7 +167,7 @@ export function getTip(id: string) {
 }
 
 /** 문장에 들어있는 어려운 소리 팁 (우선순위 순, 최대 limit개) */
-export function findTipsForSentence(sentence: string, limit = 3) {
+export function findTipsForSentence(sentence: string, limit = 2) {
   const words = sentence.toLowerCase().match(/[a-z']+/g) ?? [];
   return PRONUNCIATION_TIPS.map((tip) => ({
     tip,
