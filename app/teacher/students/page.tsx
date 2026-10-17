@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { createServerSupabaseClient, type Student } from "@/lib/supabase";
-import { approveStudent, rejectStudent } from "./actions";
+import { approveStudent, mergeSignup, rejectStudent } from "./actions";
 import { PLANS, isPlanId } from "@/lib/classroom/plans";
 import { kstDate } from "@/lib/classroom/stats";
 import { ConfirmButton } from "@/app/_ui/confirm-button";
@@ -11,8 +11,8 @@ import { CopyButton } from "@/app/_ui/copy-button";
 import { cardClass } from "@/app/_ui/styles";
 import { requireTeacher } from "@/lib/classroom/dal";
 
-type Filter = "all" | "good" | "slow" | "risk" | "expiring";
-const FILTERS: Filter[] = ["all", "good", "slow", "risk", "expiring"];
+type Filter = "all" | "good" | "slow" | "risk" | "noaccount" | "expiring";
+const FILTERS: Filter[] = ["all", "good", "slow", "risk", "noaccount", "expiring"];
 type SortKey = "attention" | "recent" | "shadowing" | "score" | "name";
 const SORTS: { key: SortKey; label: string }[] = [
   { key: "attention", label: "챙길 학생 먼저" },
@@ -21,7 +21,7 @@ const SORTS: { key: SortKey; label: string }[] = [
   { key: "score", label: "평균 점수순" },
   { key: "name", label: "이름순" },
 ];
-const STATUS_ORDER: Record<RosterStatus, number> = { risk: 0, slow: 1, new: 2, good: 3 };
+const STATUS_ORDER: Record<RosterStatus, number> = { risk: 0, slow: 1, new: 2, good: 3, noaccount: 4 };
 const SORTERS: Record<SortKey, (a: RosterRow, b: RosterRow) => number> = {
   attention: (a, b) => STATUS_ORDER[a.status] - STATUS_ORDER[b.status] || (b.daysInactive ?? 99) - (a.daysInactive ?? 99),
   recent: (a, b) => (a.daysInactive ?? 9999) - (b.daysInactive ?? 9999),
@@ -33,24 +33,33 @@ const SORTERS: Record<SortKey, (a: RosterRow, b: RosterRow) => number> = {
 export default async function StudentsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ filter?: string; sort?: string }>;
+  searchParams: Promise<{ filter?: string; sort?: string; cohort?: string }>;
 }) {
   await requireTeacher();
   const supabase = createServerSupabaseClient();
   const { data } = await supabase
     .from("students")
-    .select("id, name, nickname, phone, memo, is_active, created_at, approval, plan, requested_plan, access_until")
+    .select(
+      "id, name, nickname, phone, memo, is_active, created_at, approval, plan, requested_plan, access_until, password_hash, login_code_hash",
+    )
     .order("is_active", { ascending: false })
     .order("name");
   type Row = Omit<Student, "login_code_hash" | "session_version"> & {
     nickname: string | null;
-    approval: "pending" | "approved" | "rejected";
+    approval: "lead" | "pending" | "approved" | "rejected";
     plan: string | null;
+    password_hash: string | null;
+    login_code_hash: string | null;
     requested_plan: string | null;
     access_until: string | null;
   };
   const all = (data ?? []) as Row[];
   const pendingStudents = all.filter((s) => s.approval === "pending");
+  // 시트·상담에서 미리 만든 카드 중 아직 계정이 없는 사람 (가입 신청과 이름이 같으면 합치기 제안)
+  const noAccount = all.filter((s) => s.approval !== "pending" && !s.password_hash && !s.login_code_hash);
+  const { data: cohortRows } = await supabase.from("cohorts").select("id, name").order("created_at");
+  const cohorts = cohortRows ?? [];
+  const cohortName = new Map(cohorts.map((c) => [c.id as string, c.name as string]));
   const today = kstDate(new Date());
   const params = await searchParams;
   const filter = FILTERS.includes(params.filter as Filter) ? (params.filter as Filter) : "all";
@@ -58,13 +67,21 @@ export default async function StudentsPage({
   const roster = await getRoster();
   const count = (st: RosterStatus) => roster.filter((r) => r.status === st).length;
   const expiring = roster.filter((r) => r.daysLeft != null && r.daysLeft >= 0 && r.daysLeft <= 14);
+  const cohortId = cohorts.some((c) => c.id === params.cohort) ? params.cohort : undefined;
+  const inCohort = cohortId ? roster.filter((r) => r.cohortId === cohortId) : roster;
   const filtered =
-    filter === "all" ? roster : filter === "expiring" ? expiring : roster.filter((r) => r.status === filter);
+    filter === "all"
+      ? inCohort
+      : filter === "expiring"
+        ? inCohort.filter((r) => expiring.includes(r))
+        : inCohort.filter((r) => r.status === filter);
   const shown = [...filtered].sort(SORTERS[sort]);
   const host = (await headers()).get("host") ?? "dingle-classroom.vercel.app";
   const loginUrl = `https://${host}/login`;
-  const href = (next: { filter?: string; sort?: string }) => {
+  const href = (next: { filter?: string; sort?: string; cohort?: string | null }) => {
     const q = new URLSearchParams({ filter: next.filter ?? filter, sort: next.sort ?? sort });
+    const c = next.cohort === undefined ? cohortId : next.cohort;
+    if (c) q.set("cohort", c);
     return `/teacher/students?${q}`;
   };
   return (
@@ -76,7 +93,10 @@ export default async function StudentsPage({
             결제·수강 등록을 확인한 뒤 승인해 주세요. 시작일부터 수강권 기간만큼 이용할 수 있어요.
           </p>
           <ul className="flex flex-col gap-2">
-            {pendingStudents.map((p) => (
+            {pendingStudents.map((p) => {
+              const matches = noAccount.filter((s) => s.name.replace(/\s/g, "") === p.name.replace(/\s/g, ""));
+              const defaultPlan = isPlanId(p.plan) ? p.plan : isPlanId(p.requested_plan) ? p.requested_plan : "bootcamp";
+              return (
               <li key={p.id} className="flex flex-col gap-2 rounded-xl border border-slate-200 bg-white p-3">
                 <div className="text-sm">
                   <b className="text-zinc-900">{p.name}</b>
@@ -91,7 +111,7 @@ export default async function StudentsPage({
                     <input type="hidden" name="id" value={p.id} />
                     <select
                       name="plan"
-                      defaultValue={isPlanId(p.requested_plan) ? p.requested_plan : "bootcamp"}
+                      defaultValue={defaultPlan}
                       className="rounded-lg border border-slate-200 px-2 py-1.5 text-sm"
                     >
                       {Object.entries(PLANS).map(([id, plan]) => (
@@ -109,8 +129,14 @@ export default async function StudentsPage({
                         className="rounded-lg border border-slate-200 px-2 py-1 text-sm"
                       />
                     </label>
+                    {p.access_until && (
+                      <label className="flex items-center gap-1 text-xs text-zinc-500">
+                        <input type="checkbox" name="keep" value="1" defaultChecked />
+                        기존 종료일({p.access_until}) 유지
+                      </label>
+                    )}
                     <button type="submit" className="rounded-lg bg-brand-600 px-3 py-1.5 text-sm font-bold text-white">
-                      승인
+                      {matches.length ? "새 학생으로 승인" : "승인"}
                     </button>
                   </form>
                   <form action={rejectStudent}>
@@ -120,18 +146,41 @@ export default async function StudentsPage({
                     </ConfirmButton>
                   </form>
                 </div>
+                {matches.map((m) => (
+                  <form
+                    key={m.id}
+                    action={mergeSignup}
+                    className="flex flex-wrap items-center gap-2 rounded-lg bg-violet-50 px-2 py-1.5 text-xs text-violet-900"
+                  >
+                    <input type="hidden" name="pending_id" value={p.id} />
+                    <input type="hidden" name="target_id" value={m.id} />
+                    <input type="hidden" name="plan" value={isPlanId(m.plan) ? m.plan : defaultPlan} />
+                    <input type="hidden" name="start" value={today} />
+                    <span>
+                      📎 시트에서 가져온 <b>{m.name}</b> 카드가 있어요
+                      {isPlanId(m.plan) && ` (${PLANS[m.plan].name.replace("다잉클 ", "")}`}
+                      {m.access_until && ` ~${m.access_until}`}
+                      {isPlanId(m.plan) && ")"}
+                    </span>
+                    <button type="submit" className="rounded-md bg-violet-600 px-2 py-1 font-bold text-white">
+                      이 카드와 합쳐서 승인
+                    </button>
+                  </form>
+                ))}
               </li>
-            ))}
+              );
+            })}
           </ul>
         </section>
       )}
 
-      <section className="grid grid-cols-2 gap-2 sm:grid-cols-5">
+      <section className="grid grid-cols-3 gap-2 sm:grid-cols-6">
         {[
           { key: "all", label: "전체 학생", value: roster.length, icon: "👥" },
           { key: "good", label: "잘 따라오는 중", value: count("good"), icon: "🟢" },
           { key: "slow", label: "느슨해짐", value: count("slow"), icon: "🟡" },
           { key: "risk", label: "이탈 위험", value: count("risk"), icon: "🔴" },
+          { key: "noaccount", label: "가입 안내 필요", value: count("noaccount"), icon: "🔑" },
           { key: "expiring", label: "만료 2주 이내", value: expiring.length, icon: "⏳" },
         ].map((t) => (
           <Link
@@ -168,6 +217,28 @@ export default async function StudentsPage({
         </Link>
       </div>
 
+      {cohorts.length > 0 && (
+        <div className="flex flex-wrap gap-1 text-xs">
+          <Link
+            href={href({ cohort: null })}
+            className={`rounded-full border px-2.5 py-0.5 ${!cohortId ? "border-brand-400 bg-brand-50 text-brand-800" : "border-slate-200 text-slate-500"}`}
+          >
+            모든 기수
+          </Link>
+          {cohorts.map((c) => (
+            <Link
+              key={c.id}
+              href={href({ cohort: c.id })}
+              className={`rounded-full border px-2.5 py-0.5 ${
+                cohortId === c.id ? "border-brand-400 bg-brand-50 text-brand-800" : "border-slate-200 text-slate-500"
+              }`}
+            >
+              👥 {c.name} ({roster.filter((r) => r.cohortId === c.id).length})
+            </Link>
+          ))}
+        </div>
+      )}
+
       <section className="flex flex-col gap-2">
         {shown.length === 0 && <p className="text-sm text-zinc-500">해당하는 학생이 없어요.</p>}
         {shown.map((r) => {
@@ -184,6 +255,11 @@ export default async function StudentsPage({
                     <span className={`rounded-full border px-2 py-0.5 text-xs font-semibold ${info.tone}`}>
                       {info.icon} {info.label}
                     </span>
+                    {r.cohortId && (
+                      <span className="rounded bg-slate-100 px-1.5 py-0.5 text-xs text-slate-700">
+                        👥 {cohortName.get(r.cohortId)}
+                      </span>
+                    )}
                     {!r.isActive && <span className="text-xs text-zinc-500">비활성</span>}
                   </div>
                   <div className="flex flex-wrap items-center gap-1.5 text-xs text-zinc-500">

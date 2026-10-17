@@ -102,7 +102,7 @@ export async function setStudentActive(formData: FormData) {
   revalidatePath("/teacher/students");
 }
 
-/** 가입 신청 승인: 수강권과 시작일을 정하면 종료일이 자동 계산된다 */
+/** 가입 신청 승인: 수강권과 시작일을 정하면 종료일이 자동 계산된다 (keep=1이면 기존 종료일 유지) */
 export async function approveStudent(formData: FormData) {
   await requireTeacher();
   const id = String(formData.get("id"));
@@ -110,11 +110,57 @@ export async function approveStudent(formData: FormData) {
   const start = String(formData.get("start") || kstDate(new Date()));
   if (!isPlanId(plan) || !/^\d{4}-\d{2}-\d{2}$/.test(start)) return;
   const supabase = createServerSupabaseClient();
+  const { data: cur } = await supabase.from("students").select("access_until").eq("id", id).maybeSingle();
+  const until =
+    formData.get("keep") === "1" && cur?.access_until ? (cur.access_until as string) : accessUntil(plan, start);
   await supabase
     .from("students")
-    .update({ approval: "approved", is_active: true, plan, access_until: accessUntil(plan, start) })
+    .update({ approval: "approved", is_active: true, stage: "enrolled", plan, access_until: until })
     .eq("id", id);
   revalidatePath("/teacher/students");
+  revalidatePath("/teacher/crm");
+}
+
+/**
+ * 가입 신청을 시트에서 가져온 기존 학생 카드와 합친다.
+ * 신청서의 전화번호·비밀번호를 기존 카드로 옮기고, 신청서는 지운다 (프로필·메모·결제 기록 유지)
+ */
+export async function mergeSignup(formData: FormData) {
+  await requireTeacher();
+  const pendingId = String(formData.get("pending_id"));
+  const targetId = String(formData.get("target_id"));
+  const plan = String(formData.get("plan"));
+  const start = String(formData.get("start") || kstDate(new Date()));
+  if (!isPlanId(plan) || !/^\d{4}-\d{2}-\d{2}$/.test(start) || pendingId === targetId) return;
+  const supabase = createServerSupabaseClient();
+  const [{ data: pending }, { data: target }] = await Promise.all([
+    supabase.from("students").select("phone, password_hash, privacy_agreed_at, approval").eq("id", pendingId).maybeSingle(),
+    supabase.from("students").select("access_until, password_hash, login_code_hash").eq("id", targetId).maybeSingle(),
+  ]);
+  if (!pending || pending.approval !== "pending" || !target || target.password_hash || target.login_code_hash) return;
+  // 전화번호는 한 사람만 쓸 수 있어서, 신청서의 번호를 먼저 비우고 옮긴 뒤 신청서를 지운다
+  await supabase.from("students").update({ phone: null }).eq("id", pendingId);
+  const { error } = await supabase
+    .from("students")
+    .update({
+      phone: pending.phone,
+      password_hash: pending.password_hash,
+      privacy_agreed_at: pending.privacy_agreed_at,
+      approval: "approved",
+      is_active: true,
+      stage: "enrolled",
+      plan,
+      access_until: (target.access_until as string | null) ?? accessUntil(plan, start),
+    })
+    .eq("id", targetId);
+  if (error) {
+    console.error("학생 합치기 실패:", error);
+    await supabase.from("students").update({ phone: pending.phone }).eq("id", pendingId);
+    return;
+  }
+  await supabase.from("students").delete().eq("id", pendingId);
+  revalidatePath("/teacher/students");
+  revalidatePath("/teacher/crm");
 }
 
 export async function rejectStudent(formData: FormData) {

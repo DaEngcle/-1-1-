@@ -4,13 +4,14 @@ import { fetchAll, getCourseProgress, type CourseProgress } from "./progress";
 import { kstDate } from "./stats";
 
 /** 학생 상태 신호등 */
-export type RosterStatus = "new" | "good" | "slow" | "risk";
+export type RosterStatus = "new" | "good" | "slow" | "risk" | "noaccount";
 
 export const STATUS_INFO: Record<RosterStatus, { icon: string; label: string; tone: string }> = {
   good: { icon: "🟢", label: "잘 따라오는 중", tone: "bg-green-50 text-green-800 border-green-200" },
   slow: { icon: "🟡", label: "느슨해짐", tone: "bg-amber-50 text-amber-800 border-amber-200" },
   risk: { icon: "🔴", label: "이탈 위험", tone: "bg-red-50 text-red-700 border-red-200" },
   new: { icon: "🆕", label: "시작 전", tone: "bg-slate-50 text-slate-700 border-slate-200" },
+  noaccount: { icon: "🔑", label: "가입 안내 필요", tone: "bg-violet-50 text-violet-800 border-violet-200" },
 };
 
 export interface RosterRow {
@@ -24,6 +25,9 @@ export interface RosterRow {
   accessUntil: string | null;
   daysLeft: number | null;
   createdAt: string;
+  cohortId: string | null;
+  /** 로그인할 방법(비밀번호·코드)이 있는지. 시트에서 가져온 학생은 없음 */
+  hasAccount: boolean;
   status: RosterStatus;
   lastActive: string | null;
   daysInactive: number | null;
@@ -53,7 +57,7 @@ export async function getRoster(): Promise<RosterRow[]> {
   const supabase = createServerSupabaseClient();
   const { data: studentRows } = await supabase
     .from("students")
-    .select("id, name, nickname, phone, memo, is_active, plan, access_until, created_at")
+    .select("id, name, nickname, phone, memo, is_active, plan, access_until, created_at, cohort_id, password_hash, login_code_hash")
     .eq("approval", "approved")
     .order("name");
   const students = studentRows ?? [];
@@ -104,8 +108,10 @@ export async function getRoster(): Promise<RosterRow[]> {
     const sinceJoin = daysBetween(kstDate(s.created_at), today);
     const weekActive = week.filter(Boolean).length;
 
+    const hasAccount = Boolean(s.password_hash || s.login_code_hash);
     let status: RosterStatus;
-    if (!last) status = sinceJoin < 3 ? "new" : "risk";
+    if (!hasAccount) status = "noaccount";
+    else if (!last) status = sinceJoin < 3 ? "new" : "risk";
     else if (daysInactive! >= 7) status = "risk";
     else if (daysInactive! >= 3 || weekActive <= 1) status = "slow";
     else status = "good";
@@ -125,6 +131,8 @@ export async function getRoster(): Promise<RosterRow[]> {
       accessUntil: until,
       daysLeft: until ? daysBetween(today, until) : null,
       createdAt: s.created_at as string,
+      cohortId: (s.cohort_id as string | null) ?? null,
+      hasAccount,
       status,
       lastActive: last,
       daysInactive,
@@ -146,6 +154,8 @@ export async function getRoster(): Promise<RosterRow[]> {
 export function nudgeMessage(row: RosterRow, loginUrl: string) {
   const who = `${row.nickname ?? row.name}님`;
   switch (row.status) {
+    case "noaccount":
+      return `${who} 안녕하세요! 다잉클 온라인 클래스룸이 열렸어요 🎉 아래 링크에서 '처음이에요(가입)'로 이름·전화번호만 넣어주시면 바로 연결해 드릴게요. 쉐도잉 채점, 레벨테스트, 강의 진도까지 한 곳에서 볼 수 있어요 💙\n👉 ${loginUrl}`;
     case "new":
       return `${who} 환영해요! 🎉 레벨테스트로 지금 실력부터 확인하고, Day 01부터 같이 시작해봐요 💪\n👉 ${loginUrl}`;
     case "risk":

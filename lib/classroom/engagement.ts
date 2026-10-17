@@ -219,7 +219,12 @@ export async function getWeeklyRanking({ masked }: { masked: boolean }): Promise
   const start = weekStart();
   const startIso = new Date(`${start}T00:00:00+09:00`).toISOString();
   const [{ data: students }, watchRows, subs] = await Promise.all([
-    supabase.from("students").select("id, name, nickname").eq("is_active", true),
+    supabase
+      .from("students")
+      .select("id, name, nickname")
+      .eq("is_active", true)
+      // 시트에서 가져왔지만 아직 가입 안 한 학생은 랭킹에서 뺀다
+      .or("password_hash.not.is.null,login_code_hash.not.is.null"),
     fetchAll<{ student_id: string; watched_seconds: number }>((from, to) =>
       supabase.from("daily_activity").select("student_id, watched_seconds").gte("day", start).range(from, to),
     ),

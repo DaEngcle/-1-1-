@@ -120,11 +120,31 @@ export async function signup(_prev: SignupState, formData: FormData): Promise<Si
   await recordLoginFailure(key);
 
   const supabase = createServerSupabaseClient();
+  const passwordHash = await hashPassword(password);
+  // 선생님이 상담·시트로 미리 만들어 둔 카드(전화번호 같고 계정 없음)가 있으면 그 카드에 연결한다.
+  // 다른 사람이 번호만 알고 가로채지 못하게 항상 '승인 대기'로 돌려서 선생님이 확인한다
+  const { data: existing } = await supabase
+    .from("students")
+    .select("id, password_hash, login_code_hash")
+    .eq("phone", phone)
+    .maybeSingle();
+  if (existing && !existing.password_hash && !existing.login_code_hash) {
+    const { error: linkError } = await supabase
+      .from("students")
+      .update({ name, password_hash: passwordHash, approval: "pending", privacy_agreed_at: new Date().toISOString() })
+      .eq("id", existing.id);
+    if (linkError) {
+      console.error("가입 연결 실패:", linkError.message);
+      return { error: "가입 중 오류가 발생했어요. 잠시 후 다시 시도해주세요." };
+    }
+    return { done: true };
+  }
   const { error } = await supabase.from("students").insert({
     name,
     phone,
-    password_hash: await hashPassword(password),
+    password_hash: passwordHash,
     approval: "pending",
+    stage: "enrolled",
     privacy_agreed_at: new Date().toISOString(),
   });
   if (error?.code === "23505") return { error: "이미 가입된 전화번호예요. 로그인해주세요." };

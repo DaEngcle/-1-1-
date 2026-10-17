@@ -22,6 +22,9 @@ import { ScoreTrendChart } from "@/app/_ui/score-trend-chart";
 import { SubmissionList } from "../../submission-list";
 import { cardClass } from "@/app/_ui/styles";
 import { requireTeacher } from "@/lib/classroom/dal";
+import { PROFILE_SELECT, STAGES, isStage, type Profile } from "@/lib/classroom/profile";
+import { ProfileFields } from "../../_ui/profile-fields";
+import { updateProfile } from "../../crm/actions";
 
 export default async function TeacherStudentPage({
   params,
@@ -33,14 +36,30 @@ export default async function TeacherStudentPage({
   const supabase = createServerSupabaseClient();
   const { data: student } = await supabase
     .from("students")
-    .select("id, name, phone, memo, is_active, created_at, plan, access_until")
+    .select(`id, name, phone, memo, is_active, created_at, plan, access_until, ${PROFILE_SELECT}`)
     .eq("id", id)
-    .maybeSingle();
+    .maybeSingle<{
+      id: string;
+      name: string;
+      phone: string | null;
+      memo: string | null;
+      is_active: boolean;
+      created_at: string;
+      plan: string | null;
+      access_until: string | null;
+    } & Profile>();
   if (!student) notFound();
-  const [roster, { data: noteRows }] = await Promise.all([
+  const [roster, { data: noteRows }, { data: cohortRows }, { data: buys }] = await Promise.all([
     getRoster(),
     supabase.from("teacher_notes").select("id, body, created_at").eq("student_id", id).order("created_at", { ascending: false }),
+    supabase.from("cohorts").select("id, name").order("created_at"),
+    supabase
+      .from("purchases")
+      .select("id, paid_on, amount, product, kind, starts_on, ends_on, source")
+      .eq("student_id", id)
+      .order("paid_on", { ascending: false }),
   ]);
+  const stage = isStage(student.stage) ? student.stage : "enrolled";
   const me = roster.find((r) => r.id === id);
   const host = (await headers()).get("host") ?? "dingle-classroom.vercel.app";
   const [stats, progressMap, lessonRows, engagement, tests] = await Promise.all([
@@ -99,6 +118,43 @@ export default async function TeacherStudentPage({
           </div>
         </section>
       )}
+
+      <section className={cardClass}>
+        <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
+          <h2 className="font-bold text-zinc-900">🙋 프로필 (상담 정보)</h2>
+          <Link href="/teacher/crm" className={`rounded-full border px-2 py-0.5 text-xs font-semibold ${STAGES[stage].tone}`}>
+            {STAGES[stage].icon} {STAGES[stage].label}
+          </Link>
+        </div>
+        <form action={updateProfile} className="flex flex-col gap-2">
+          <input type="hidden" name="id" value={student.id} />
+          <ProfileFields profile={student} cohorts={cohortRows ?? []} />
+          <button type="submit" className="self-start rounded-lg bg-brand-600 px-3 py-1.5 text-sm font-bold text-white">
+            프로필 저장
+          </button>
+        </form>
+        {(buys ?? []).length > 0 && (
+          <div className="mt-3 border-t border-slate-100 pt-2">
+            <h3 className="mb-1 text-sm font-bold text-zinc-800">💳 결제 기록</h3>
+            <ul className="flex flex-col gap-1 text-xs text-zinc-600">
+              {(buys ?? []).map((b) => (
+                <li key={b.id} className="flex flex-wrap gap-x-2">
+                  <span className="text-zinc-400">{b.paid_on}</span>
+                  <b className="text-zinc-800">{b.product}</b>
+                  {b.amount != null && <span>{Number(b.amount).toLocaleString("ko-KR")}원</span>}
+                  {b.kind && <span>· {b.kind}</span>}
+                  {(b.starts_on || b.ends_on) && (
+                    <span>
+                      · {b.starts_on ?? "?"} ~ {b.ends_on ?? "?"}
+                    </span>
+                  )}
+                  {b.source && <span className="text-zinc-400">· {b.source}</span>}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </section>
 
       <section className={cardClass}>
         <h2 className="mb-2 font-bold text-zinc-900">📝 상담·관리 기록</h2>
