@@ -4,11 +4,12 @@ import { useActionState } from "react";
 import { importPlaylist } from "./actions";
 import { inputClass, secondaryButtonClass } from "@/app/_ui/styles";
 
-export function PlaylistImportForm({ weekNumber }: { weekNumber: number }) {
+export function PlaylistImportForm({ weekNumber, course }: { weekNumber: number; course: string }) {
   const [state, action, pending] = useActionState(importPlaylist, undefined);
   return (
     <form action={action} className="flex flex-col gap-2">
       <input type="hidden" name="week_number" value={weekNumber} />
+      <input type="hidden" name="course" value={course} />
       <div className="flex flex-col gap-2 sm:flex-row">
         <input
           name="playlist_url"

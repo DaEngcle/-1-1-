@@ -76,7 +76,7 @@ values
   (70, 12, '긴급상황 영어', 'day', 59, 'I don''t even know who he is.', 'https://youtu.be/dCklgnlrVMs', null),
   (71, 12, '긴급상황 영어', 'day', 60, 'My phone got stolen on the tram.', 'https://youtu.be/OfzZeQ0h-rA', null),
   (72, 12, '긴급상황 영어', 'drill', null, 'Day 56~60 drill', null, null)
-on conflict (sort_order) do update set
+on conflict (course_id, sort_order) do update set
   week_number = excluded.week_number,
   week_title = excluded.week_title,
   kind = excluded.kind,
@@ -149,5 +149,5 @@ from (values
   (70, 1, 'I don''t even know who he is.'),
   (71, 1, 'My phone got stolen on the tram.')
 ) as v(sort_order, item_order, sentence)
-join lessons l on l.sort_order = v.sort_order
+join lessons l on l.course_id = 'bootcamp' and l.sort_order = v.sort_order
 where not exists (select 1 from lesson_items li where li.lesson_id = l.id);

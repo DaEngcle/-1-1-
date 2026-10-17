@@ -36,10 +36,10 @@ select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
   {values}
 ) as v(item_order, sentence, translation, note)
-where l.day_number = {n}
+where l.course_id = 'bootcamp' and l.day_number = {n}
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = {n}) and item_order > {len(lines)};"""
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = {n}) and item_order > {len(lines)};"""
     )
 sql.append("commit;")
 open(out, "w", encoding="utf-8").write("\n".join(sql) + "\n")

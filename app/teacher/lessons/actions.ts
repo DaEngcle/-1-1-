@@ -3,6 +3,11 @@
 import { revalidatePath } from "next/cache";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { requireTeacher } from "@/lib/classroom/dal";
+import { COURSE_IDS, type CourseId } from "@/lib/classroom/plans";
+
+function isCourseId(v: string): v is CourseId {
+  return (COURSE_IDS as readonly string[]).includes(v);
+}
 import { fetchPlaylistVideos, youTubePlaylistId, youTubeVideoId } from "@/lib/classroom/youtube";
 
 export async function setPublished(formData: FormData) {
@@ -14,14 +19,58 @@ export async function setPublished(formData: FormData) {
   revalidatePath("/teacher/lessons");
 }
 
-/** 선택한 레슨까지(정렬 순서 기준) 공개하고 이후는 비공개 */
+/** 선택한 레슨까지(과정 안 정렬 순서 기준) 공개하고 이후는 비공개 */
 export async function publishUntil(formData: FormData) {
   await requireTeacher();
+  const course = String(formData.get("course"));
   const sortOrder = Number(formData.get("sort_order"));
-  if (!Number.isInteger(sortOrder)) return;
+  if (!isCourseId(course) || !Number.isInteger(sortOrder)) return;
   const supabase = createServerSupabaseClient();
-  await supabase.from("lessons").update({ is_published: true }).lte("sort_order", sortOrder);
-  await supabase.from("lessons").update({ is_published: false }).gt("sort_order", sortOrder);
+  await supabase.from("lessons").update({ is_published: true }).eq("course_id", course).lte("sort_order", sortOrder);
+  await supabase.from("lessons").update({ is_published: false }).eq("course_id", course).gt("sort_order", sortOrder);
+  revalidatePath("/teacher/lessons");
+}
+
+/** 새 레슨(Day) 추가: 과정의 맨 뒤에 붙고, Day 번호는 자동 */
+export async function addLesson(formData: FormData) {
+  await requireTeacher();
+  const course = String(formData.get("course"));
+  const weekNumber = Number(formData.get("week_number"));
+  const weekTitle = String(formData.get("week_title") ?? "").trim();
+  const title = String(formData.get("title") ?? "").trim();
+  const videoUrl = String(formData.get("video_url") ?? "").trim();
+  if (!isCourseId(course) || !Number.isInteger(weekNumber) || weekNumber < 1 || !title) return;
+  if (videoUrl && !/^https?:\/\//.test(videoUrl)) return;
+
+  const supabase = createServerSupabaseClient();
+  const { data: rows } = await supabase
+    .from("lessons")
+    .select("sort_order, day_number, week_number, week_title")
+    .eq("course_id", course);
+  const sortOrder = Math.max(0, ...(rows ?? []).map((r) => r.sort_order)) + 1;
+  const dayNumber = Math.max(0, ...(rows ?? []).map((r) => r.day_number ?? 0)) + 1;
+  const sameWeek = (rows ?? []).find((r) => r.week_number === weekNumber);
+  await supabase.from("lessons").insert({
+    course_id: course,
+    sort_order: sortOrder,
+    week_number: weekNumber,
+    week_title: weekTitle || sameWeek?.week_title || `Week ${weekNumber}`,
+    kind: "day",
+    day_number: dayNumber,
+    title,
+    video_url: videoUrl || null,
+  });
+  revalidatePath("/teacher/lessons");
+}
+
+/** 과정 상태: 열림 / 준비 중 */
+export async function setCourseStatus(formData: FormData) {
+  await requireTeacher();
+  const course = String(formData.get("course"));
+  const status = String(formData.get("status"));
+  if (!isCourseId(course) || (status !== "open" && status !== "preparing")) return;
+  const supabase = createServerSupabaseClient();
+  await supabase.from("courses").update({ status }).eq("id", course);
   revalidatePath("/teacher/lessons");
 }
 
@@ -91,14 +140,15 @@ export async function deleteItem(formData: FormData) {
 
 export async function addRecording(formData: FormData) {
   await requireTeacher();
+  const course = String(formData.get("course") ?? "bootcamp");
   const weekNumber = Number(formData.get("week_number"));
   const title = String(formData.get("title") ?? "").trim();
   const videoUrl = String(formData.get("video_url") ?? "").trim();
-  if (!Number.isInteger(weekNumber) || !title || !/^https?:\/\//.test(videoUrl)) return;
+  if (!isCourseId(course) || !Number.isInteger(weekNumber) || !title || !/^https?:\/\//.test(videoUrl)) return;
   const supabase = createServerSupabaseClient();
   await supabase
     .from("class_recordings")
-    .insert({ week_number: weekNumber, title, video_url: videoUrl });
+    .insert({ course_id: course, week_number: weekNumber, title, video_url: videoUrl });
   revalidatePath("/teacher/lessons");
 }
 
@@ -112,6 +162,8 @@ export async function importPlaylist(
   formData: FormData,
 ): Promise<PlaylistImportState> {
   await requireTeacher();
+  const course = String(formData.get("course") ?? "bootcamp");
+  if (!isCourseId(course)) return { status: "error", message: "과정을 확인해주세요." };
   const weekNumber = Number(formData.get("week_number"));
   const playlistId = youTubePlaylistId(String(formData.get("playlist_url") ?? ""));
   if (!Number.isInteger(weekNumber)) return { status: "error", message: "주차를 확인해주세요." };
@@ -131,6 +183,7 @@ export async function importPlaylist(
   const { data: existing } = await supabase
     .from("class_recordings")
     .select("video_url")
+    .eq("course_id", course)
     .eq("week_number", weekNumber);
   const existingIds = new Set((existing ?? []).map((r) => youTubeVideoId(r.video_url)));
   const toAdd = videos.filter((v) => !existingIds.has(v.videoId));
@@ -138,6 +191,7 @@ export async function importPlaylist(
   if (toAdd.length > 0) {
     const { error } = await supabase.from("class_recordings").insert(
       toAdd.map((v) => ({
+        course_id: course,
         week_number: weekNumber,
         title: v.title,
         video_url: `https://youtu.be/${v.videoId}`,

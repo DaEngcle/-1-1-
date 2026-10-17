@@ -1,18 +1,66 @@
 import Link from "next/link";
-import { createServerSupabaseClient, type Lesson } from "@/lib/supabase";
+import { createServerSupabaseClient, type Course, type Lesson } from "@/lib/supabase";
 import { requireStudent } from "@/lib/classroom/dal";
+import { COURSE_SHORT, PLANS } from "@/lib/classroom/plans";
 
-export default async function StudentLessonsPage() {
+export default async function StudentLessonsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ course?: string }>;
+}) {
   const student = await requireStudent();
   const supabase = createServerSupabaseClient();
+  const { data: courseRows } = await supabase.from("courses").select("*").order("sort_order");
+  const courses = (courseRows ?? []) as Course[];
+  const allowed = new Set<string>(student.courses);
+  const requested = (await searchParams).course;
+  const course =
+    courses.find((c) => c.id === requested) ?? courses.find((c) => allowed.has(c.id) && c.status === "open") ?? courses[0];
+  const canSee = allowed.has(course.id) && course.status === "open";
+
+  const tabs = (
+    <nav className="flex gap-1.5 overflow-x-auto">
+      {courses.map((c) => (
+        <Link
+          key={c.id}
+          href={`/student/lessons?course=${c.id}`}
+          className={`shrink-0 rounded-full border px-3 py-1.5 text-sm font-semibold ${
+            c.id === course.id ? "border-brand-600 bg-brand-600 text-white" : "border-slate-200 bg-white text-slate-700"
+          } ${allowed.has(c.id) ? "" : "opacity-60"}`}
+        >
+          {allowed.has(c.id) ? "" : "🔒 "}
+          {COURSE_SHORT[c.id] ?? c.title}
+        </Link>
+      ))}
+    </nav>
+  );
+
+  if (!canSee) {
+    const upgrade = Object.values(PLANS).find((p) => p.courses.includes(course.id as never));
+    return (
+      <>
+        {tabs}
+        <section className="flex flex-col items-center gap-2 rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm">
+          <span className="text-4xl">{allowed.has(course.id) ? "🎬" : "🔒"}</span>
+          <h1 className="text-lg font-bold text-zinc-900">{course.title}</h1>
+          <p className="text-sm text-zinc-600">
+            {!allowed.has(course.id)
+              ? `${upgrade?.name ?? "상위 과정"} 수강생에게 열리는 과정이에요.`
+              : `지금 열심히 준비하고 있어요! (${course.subtitle ?? "준비 중"})`}
+          </p>
+        </section>
+      </>
+    );
+  }
 
   const [{ data: lessonRows }, { data: itemRows }, { data: subRows }, { data: progressRows }] = await Promise.all([
     supabase
       .from("lessons")
-      .select("id, sort_order, week_number, week_title, kind, day_number, title, video_url")
+      .select("id, course_id, sort_order, week_number, week_title, kind, day_number, title, video_url")
       .eq("is_published", true)
+      .eq("course_id", course.id)
       .order("sort_order"),
-    supabase.from("lesson_items").select("id, lesson_id"),
+    supabase.from("lesson_items").select("id, lesson_id, lessons!inner(course_id)").eq("lessons.course_id", course.id),
     supabase.from("submissions").select("lesson_item_id").eq("student_id", student.id),
     supabase.from("video_progress").select("lesson_id, percent, completed_at").eq("student_id", student.id),
   ]);
@@ -34,15 +82,17 @@ export default async function StudentLessonsPage() {
 
   if (lessons.length === 0) {
     return (
-      <p className="text-sm text-zinc-500">
-        아직 공개된 레슨이 없어요. 수업이 시작되면 여기서 복습할 수 있어요!
-      </p>
+      <>
+        {tabs}
+        <p className="text-sm text-zinc-500">아직 공개된 레슨이 없어요. 수업이 시작되면 여기서 복습할 수 있어요!</p>
+      </>
     );
   }
 
   return (
     <>
-      <h1 className="text-xl font-bold text-zinc-900">📘 60일 워홀영어 부트캠프</h1>
+      {tabs}
+      <h1 className="text-xl font-bold text-zinc-900">📘 {course.title}</h1>
       {[...weeks.entries()].map(([weekNumber, week]) => (
         <section key={weekNumber} className="flex flex-col gap-2">
           <h2 className="text-sm font-bold text-zinc-500">

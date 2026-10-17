@@ -47,6 +47,7 @@ export async function POST(request: NextRequest) {
     .select("id, video_url")
     .eq("id", lessonId)
     .eq("is_published", true)
+    .in("course_id", student.courses)
     .maybeSingle();
   if (!lesson?.video_url) {
     return NextResponse.json({ error: "not_found" }, { status: 404 });

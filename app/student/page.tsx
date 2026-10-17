@@ -1,5 +1,12 @@
 import Link from "next/link";
 import { requireStudent } from "@/lib/classroom/dal";
+import { PLANS, isPlanId } from "@/lib/classroom/plans";
+import { kstDate } from "@/lib/classroom/stats";
+
+function daysLeft(until: string) {
+  const ms = new Date(`${until}T00:00:00Z`).getTime() - new Date(`${kstDate(new Date())}T00:00:00Z`).getTime();
+  return Math.max(0, Math.round(ms / 86400000));
+}
 import { getStudentStats } from "@/lib/classroom/stats";
 import { getCourseProgress } from "@/lib/classroom/progress";
 import { ScoreTrendChart } from "@/app/_ui/score-trend-chart";
@@ -53,6 +60,12 @@ export default async function StudentHomePage() {
         <h1 className="text-2xl font-extrabold tracking-tight">{nickname ?? student.name}님, 반가워요 👋</h1>
         <div className="mt-3 flex flex-wrap gap-2 text-sm font-semibold">
           <span className="rounded-full bg-white/15 px-3 py-1">🔥 {engagement.streak}일 연속</span>
+          {isPlanId(student.plan) && (
+            <span className="rounded-full bg-white/15 px-3 py-1">
+              🎫 {PLANS[student.plan].name.replace("다잉클 ", "")}
+              {student.accessUntil && ` · D-${daysLeft(student.accessUntil)}`}
+            </span>
+          )}
           {!nickname && (
             <Link href="/student/profile" className="rounded-full bg-white px-3 py-1 text-brand-700">
               ✏️ 랭킹 닉네임 정하기

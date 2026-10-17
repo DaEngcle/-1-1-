@@ -31,6 +31,8 @@ export default async function StudentLessonPage({
     .maybeSingle();
   if (!lessonRow) notFound();
   const lesson = lessonRow as Lesson;
+  // 수강권에 없는 과정의 레슨은 보이지 않게
+  if (!(student.courses as string[]).includes(lesson.course_id)) notFound();
 
   const [
     { data: itemRows },
@@ -43,12 +45,14 @@ export default async function StudentLessonPage({
     supabase
       .from("class_recordings")
       .select("*")
+      .eq("course_id", lesson.course_id)
       .eq("week_number", lesson.week_number)
       .order("created_at"),
     supabase
       .from("lessons")
       .select("id, sort_order")
       .eq("is_published", true)
+      .eq("course_id", lesson.course_id)
       .in("sort_order", [lesson.sort_order - 1, lesson.sort_order + 1]),
     supabase
       .from("video_progress")
@@ -89,7 +93,7 @@ export default async function StudentLessonPage({
   return (
     <>
       <div className="flex flex-col gap-1">
-        <Link href="/student/lessons" className="text-xs text-zinc-500">
+        <Link href={`/student/lessons?course=${lesson.course_id}`} className="text-xs text-zinc-500">
           ← Week {lesson.week_number} · {lesson.week_title}
         </Link>
         <h1 className="text-xl font-bold text-zinc-900">{heading}</h1>

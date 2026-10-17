@@ -2,12 +2,15 @@ import Link from "next/link";
 import {
   createServerSupabaseClient,
   type ClassRecording,
+  type Course,
   type Lesson,
 } from "@/lib/supabase";
 import {
+  addLesson,
   addRecording,
   deleteRecording,
   publishUntil,
+  setCourseStatus,
   setPublished,
 } from "./actions";
 import {
@@ -18,14 +21,23 @@ import {
 } from "@/app/_ui/styles";
 import { requireTeacher } from "@/lib/classroom/dal";
 import { PlaylistImportForm } from "./playlist-form";
+import { COURSE_SHORT } from "@/lib/classroom/plans";
 
-export default async function TeacherLessonsPage() {
+export default async function TeacherLessonsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ course?: string }>;
+}) {
   await requireTeacher();
   const supabase = createServerSupabaseClient();
+  const { data: courseRows } = await supabase.from("courses").select("*").order("sort_order");
+  const courses = (courseRows ?? []) as Course[];
+  const requested = (await searchParams).course;
+  const course = courses.find((c) => c.id === requested) ?? courses[0];
   const [{ data: lessonRows }, { data: itemRows }, { data: recRows }] = await Promise.all([
-    supabase.from("lessons").select("*").order("sort_order"),
-    supabase.from("lesson_items").select("lesson_id"),
-    supabase.from("class_recordings").select("*").order("created_at"),
+    supabase.from("lessons").select("*").eq("course_id", course.id).order("sort_order"),
+    supabase.from("lesson_items").select("lesson_id, lessons!inner(course_id)").eq("lessons.course_id", course.id),
+    supabase.from("class_recordings").select("*").eq("course_id", course.id).order("created_at"),
   ]);
   const lessons = (lessonRows ?? []) as Lesson[];
   const recordings = (recRows ?? []) as ClassRecording[];
@@ -39,20 +51,84 @@ export default async function TeacherLessonsPage() {
     weeks.set(l.week_number, w);
   }
 
+  const nextWeek = Math.max(1, ...lessons.map((l) => l.week_number));
+
+  const header = (
+    <>
+      <nav className="flex gap-1.5 overflow-x-auto">
+        {courses.map((c) => (
+          <Link
+            key={c.id}
+            href={`/teacher/lessons?course=${c.id}`}
+            className={`shrink-0 rounded-full border px-3 py-1.5 text-sm font-semibold ${
+              c.id === course.id ? "border-brand-600 bg-brand-600 text-white" : "border-slate-200 bg-white text-slate-700"
+            }`}
+          >
+            {COURSE_SHORT[c.id] ?? c.title}
+            {c.status === "preparing" && <span className="ml-1 text-[10px] opacity-80">준비 중</span>}
+          </Link>
+        ))}
+      </nav>
+      <section className={`${cardClass} flex flex-wrap items-center justify-between gap-3`}>
+        <div>
+          <p className="font-bold text-zinc-900">{course.title}</p>
+          <p className="text-xs text-zinc-500">
+            {course.status === "open"
+              ? "학생 화면에 열려 있어요. 공개한 레슨만 보여요."
+              : "학생 화면에 '준비 중'으로 보여요. 레슨을 다 올린 뒤 열어주세요."}
+          </p>
+        </div>
+        <form action={setCourseStatus}>
+          <input type="hidden" name="course" value={course.id} />
+          <input type="hidden" name="status" value={course.status === "open" ? "preparing" : "open"} />
+          <button type="submit" className={course.status === "open" ? secondaryButtonClass : primaryButtonClass}>
+            {course.status === "open" ? "준비 중으로 바꾸기" : "학생에게 열기"}
+          </button>
+        </form>
+      </section>
+      <section className={cardClass}>
+        <h2 className="mb-2 font-bold text-zinc-900">레슨(Day) 추가</h2>
+        <form action={addLesson} className="grid gap-2 sm:grid-cols-2">
+          <input type="hidden" name="course" value={course.id} />
+          <input name="title" placeholder="레슨 제목 (예: Nice to meet you)" required className={inputClass} />
+          <input name="video_url" type="url" placeholder="강의 영상 링크 (유튜브)" className={inputClass} />
+          <input
+            name="week_number"
+            type="number"
+            min={1}
+            defaultValue={nextWeek}
+            placeholder="주차"
+            required
+            className={inputClass}
+          />
+          <input name="week_title" placeholder="주차 제목 (새 주차일 때만)" className={inputClass} />
+          <button type="submit" className={`${primaryButtonClass} sm:col-span-2`}>
+            레슨 추가
+          </button>
+        </form>
+        <p className="mt-2 text-xs text-zinc-500">
+          맨 뒤에 다음 Day로 추가돼요. 추가한 뒤 레슨을 눌러 쉐도잉 문장을 넣고, &lsquo;공개&rsquo;를 눌러주세요.
+        </p>
+      </section>
+    </>
+  );
+
   if (lessons.length === 0) {
     return (
-      <p className="text-sm text-zinc-600">
-        레슨이 없어요. 터미널에서 <code className="rounded bg-zinc-100 px-1">npm run seed:bootcamp</code>를
-        실행해 부트캠프 60일 커리큘럼을 불러오세요.
-      </p>
+      <>
+        {header}
+        <p className="text-sm text-zinc-600">아직 이 과정에 레슨이 없어요. 위에서 첫 레슨을 추가해 보세요.</p>
+      </>
     );
   }
 
   return (
     <>
+      {header}
       <section className={cardClass}>
         <h2 className="mb-2 font-bold text-zinc-900">진도 공개</h2>
         <form action={publishUntil} className="flex flex-wrap items-center gap-2">
+          <input type="hidden" name="course" value={course.id} />
           <select name="sort_order" className={inputClass} defaultValue="">
             <option value="" disabled>
               어디까지 공개할까요?
@@ -116,10 +192,11 @@ export default async function TeacherLessonsPage() {
                   </form>
                 </div>
               ))}
-            <PlaylistImportForm weekNumber={weekNumber} />
+            <PlaylistImportForm weekNumber={weekNumber} course={course.id} />
             <p className="my-2 text-xs text-zinc-500">또는 영상 하나씩 추가</p>
             <form action={addRecording} className="flex flex-col gap-2 sm:flex-row">
               <input type="hidden" name="week_number" value={weekNumber} />
+              <input type="hidden" name="course" value={course.id} />
               <input name="title" placeholder="제목 (예: 6기 Week1 라이브)" required className={`${inputClass} flex-1`} />
               <input name="video_url" type="url" placeholder="영상 링크 (유튜브/줌/드라이브)" required className={`${inputClass} flex-1`} />
               <button type="submit" className={secondaryButtonClass}>

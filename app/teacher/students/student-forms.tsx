@@ -11,6 +11,7 @@ import {
   primaryButtonClass,
   secondaryButtonClass,
 } from "@/app/_ui/styles";
+import { PLANS } from "@/lib/classroom/plans";
 
 function CodeNotice({ state }: { state: StudentFormState }) {
   if (!state) return null;
@@ -41,6 +42,13 @@ export function CreateStudentForm() {
         <input name="phone" type="tel" placeholder="전화번호 (선택)" className={inputClass} />
         <input name="memo" placeholder="메모 (선택)" className={inputClass} />
       </div>
+      <select name="plan" defaultValue="bootcamp" className={inputClass}>
+        {Object.entries(PLANS).map(([id, p]) => (
+          <option key={id} value={id}>
+            {p.name} ({p.months}개월, 오늘부터)
+          </option>
+        ))}
+      </select>
       <button type="submit" disabled={pending} className={primaryButtonClass}>
         {pending ? "등록 중..." : "학생 등록"}
       </button>

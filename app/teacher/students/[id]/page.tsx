@@ -11,6 +11,8 @@ import { LevelCard } from "@/app/_ui/level-card";
 import { Badges, StudyCalendar } from "@/app/_ui/engagement";
 import { resetLevelTest } from "../../level-tests/actions";
 import { ConfirmButton } from "@/app/_ui/confirm-button";
+import { updatePlan } from "../actions";
+import { PLANS } from "@/lib/classroom/plans";
 import { ATTENDANCE_LABEL } from "@/lib/classroom/attendance";
 import { ScoreTrendChart } from "@/app/_ui/score-trend-chart";
 import { SubmissionList } from "../../submission-list";
@@ -27,7 +29,7 @@ export default async function TeacherStudentPage({
   const supabase = createServerSupabaseClient();
   const { data: student } = await supabase
     .from("students")
-    .select("id, name, phone, memo, is_active, created_at")
+    .select("id, name, phone, memo, is_active, created_at, plan, access_until")
     .eq("id", id)
     .maybeSingle();
   if (!student) notFound();
@@ -59,6 +61,36 @@ export default async function TeacherStudentPage({
         <h1 className="text-xl font-bold text-zinc-900">{student.name}</h1>
         <p className="text-xs text-zinc-500">{[student.phone, student.memo].filter(Boolean).join(" · ")}</p>
       </div>
+
+      <section className={cardClass}>
+        <h2 className="mb-2 font-bold text-zinc-900">수강권</h2>
+        <form action={updatePlan} className="flex flex-wrap items-center gap-2 text-sm">
+          <input type="hidden" name="id" value={student.id} />
+          <select name="plan" defaultValue={student.plan ?? "bootcamp"} className="rounded-lg border border-slate-200 px-2 py-1.5">
+            {Object.entries(PLANS).map(([pid, p]) => (
+              <option key={pid} value={pid}>
+                {p.name} ({p.months}개월)
+              </option>
+            ))}
+          </select>
+          <label className="flex items-center gap-1 text-xs text-zinc-500">
+            종료일
+            <input
+              type="date"
+              name="until"
+              defaultValue={student.access_until ?? ""}
+              required
+              className="rounded-lg border border-slate-200 px-2 py-1"
+            />
+          </label>
+          <button type="submit" className="rounded-lg border border-slate-300 px-3 py-1.5 font-semibold">
+            저장
+          </button>
+        </form>
+        <p className="mt-1 text-xs text-zinc-500">
+          연장할 때는 종료일만 바꿔서 저장하세요. 종료일이 지나면 학생은 로그인할 수 없어요.
+        </p>
+      </section>
 
       <section className="grid grid-cols-2 gap-3 sm:grid-cols-3">
         {[

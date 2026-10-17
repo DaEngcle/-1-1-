@@ -29,7 +29,7 @@ async function main() {
         video_url: l.video_url,
         description: l.description,
       })),
-      { onConflict: "sort_order" },
+      { onConflict: "course_id,sort_order" },
     )
     .select("id, sort_order");
 

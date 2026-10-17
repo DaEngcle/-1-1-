@@ -85,6 +85,7 @@ export interface VideoProgress {
 
 export interface Lesson {
   id: string;
+  course_id: string;
   sort_order: number;
   week_number: number;
   week_title: string;
@@ -138,8 +139,17 @@ export interface Attendance {
 
 export interface ClassRecording {
   id: string;
+  course_id: string;
   week_number: number;
   title: string;
   video_url: string;
   created_at: string;
+}
+
+export interface Course {
+  id: string;
+  title: string;
+  subtitle: string | null;
+  sort_order: number;
+  status: "open" | "preparing";
 }

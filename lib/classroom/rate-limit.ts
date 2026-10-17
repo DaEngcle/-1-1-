@@ -21,7 +21,7 @@ function windowStart() {
 }
 
 /** 로그인 시도 전에 호출. 최근 실패가 너무 많으면 남은 대기 시간(분)을 반환 */
-export async function checkLoginBlocked(scope: "teacher" | "student") {
+export async function checkLoginBlocked(scope: "teacher" | "student" | "signup") {
   const key = `${scope}:${await clientIp()}`;
   const supabase = createServerSupabaseClient();
   const { data, count } = await supabase

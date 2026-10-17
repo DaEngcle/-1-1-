@@ -10,10 +10,10 @@ from lessons l, (values
   (3, 'Ah, nice! That''s a big move. How''re you liking it so far?', '오, 좋다! 큰 결심했네. 지금까지 지내보니 어때?', 'A 대사'),
   (4, 'Loving it so far. People are super chill here.', '지금까진 너무 좋아. 여기 사람들 엄청 여유로워.', 'B 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 1
+where l.course_id = 'bootcamp' and l.day_number = 1
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 1) and item_order > 4;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 1) and item_order > 4;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -22,10 +22,10 @@ from lessons l, (values
   (3, 'Oh sweet! That area''s pretty walkable, huh?', '오 좋다! 거기 걸어 다니기 좋지?', 'A 대사'),
   (4, 'Yeah, love it. Cafes and shops everywhere.', '응, 완전 좋아. 카페랑 가게가 여기저기 다 있어.', 'B 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 2
+where l.course_id = 'bootcamp' and l.day_number = 2
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 2) and item_order > 4;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 2) and item_order > 4;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -34,10 +34,10 @@ from lessons l, (values
   (3, 'Wow hustling hard, I like it.', '와 열심히 사네, 멋지다.', 'A 대사'),
   (4, 'Haha, keeps me busy but I''m loving it.', '하하, 바쁘긴 한데 너무 좋아.', 'B 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 3
+where l.course_id = 'bootcamp' and l.day_number = 3
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 3) and item_order > 4;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 3) and item_order > 4;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -48,10 +48,10 @@ from lessons l, (values
   (5, 'No way! Thought you were my little sister''s age.', '말도 안 돼! 내 여동생 나이인 줄 알았어.', 'A 대사'),
   (6, 'Haha, I''ll take that as a compliment.', '하하, 칭찬으로 받을게.', 'B 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 4
+where l.course_id = 'bootcamp' and l.day_number = 4
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 4) and item_order > 6;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 4) and item_order > 6;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -61,10 +61,10 @@ from lessons l, (values
   (4, 'Haha, I know what you mean. You look just like your photos!', '하하, 무슨 말인지 알아. 너 사진이랑 똑같다!', 'B 대사'),
   (5, 'Thanks! You too. Glad we finally met.', '고마워! 너도. 드디어 만나서 반가워.', 'A 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 5
+where l.course_id = 'bootcamp' and l.day_number = 5
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 5) and item_order > 5;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 5) and item_order > 5;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -74,10 +74,10 @@ from lessons l, (values
   (4, 'Haha, classic. You heading to the pub?', '하하, 역시. 펍 가는 거야?', 'B 대사'),
   (5, 'Reckon so. Gotta unwind somehow!', '그럴 것 같아. 어떻게든 좀 쉬어야지!', 'A 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 6
+where l.course_id = 'bootcamp' and l.day_number = 6
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 6) and item_order > 5;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 6) and item_order > 5;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -88,10 +88,10 @@ from lessons l, (values
   (5, 'Great, I''ll bring it in person. Thanks a lot!', '좋아요, 제가 직접 가져갈게요. 정말 감사해요!', 'A 대사'),
   (6, 'No worries, see you then!', '천만에요, 그때 봬요!', 'B 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 7
+where l.course_id = 'bootcamp' and l.day_number = 7
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 7) and item_order > 6;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 7) and item_order > 6;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -102,10 +102,10 @@ from lessons l, (values
   (5, 'I''m available on Monday to Friday, from 7am to 6pm.', '월요일부터 금요일까지, 오전 7시부터 오후 6시까지 가능해요.', 'A 대사'),
   (6, 'Awesome, we''ll be in touch soon. Thanks for dropping it off!', '좋아요, 곧 연락드릴게요. 갖다주셔서 고마워요!', 'B 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 8
+where l.course_id = 'bootcamp' and l.day_number = 8
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 8) and item_order > 6;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 8) and item_order > 6;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -116,10 +116,10 @@ from lessons l, (values
   (5, 'Good to hear. When can you start?', '다행이네요. 언제부터 일할 수 있어요?', 'A 대사'),
   (6, 'I can start right away. I live just five minutes away.', '바로 시작할 수 있어요. 여기서 5분 거리에 살아요.', 'B 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 9
+where l.course_id = 'bootcamp' and l.day_number = 9
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 9) and item_order > 6;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 9) and item_order > 6;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -129,10 +129,10 @@ from lessons l, (values
   (4, 'It''s $28 per hour on weekdays and $32 on weekends.', '평일엔 시간당 28달러, 주말엔 32달러예요.', 'B 대사'),
   (5, 'Nice! Is it cash or bank transfer?', '좋네요! 현금이에요, 아니면 계좌이체예요?', 'A 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 10
+where l.course_id = 'bootcamp' and l.day_number = 10
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 10) and item_order > 5;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 10) and item_order > 5;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -143,10 +143,10 @@ from lessons l, (values
   (5, 'You''ll get around 25 to 30 hours a week.', '일주일에 대략 25~30시간 정도 받을 거예요.', 'A 대사'),
   (6, 'Sounds good to me. Thanks for letting me know!', '저는 좋아요. 알려주셔서 감사해요!', 'B 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 11
+where l.course_id = 'bootcamp' and l.day_number = 11
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 11) and item_order > 6;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 11) and item_order > 6;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -158,10 +158,10 @@ from lessons l, (values
   (6, 'Just a few hours this morning.', '오늘 오전에 몇 시간만 할 거예요.', 'B 대사'),
   (7, 'Yep, that''d be perfect. Let''s get started!', '네, 딱 좋아요. 시작해볼까요!', 'A 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 12
+where l.course_id = 'bootcamp' and l.day_number = 12
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 12) and item_order > 7;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 12) and item_order > 7;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -172,10 +172,10 @@ from lessons l, (values
   (5, 'By the way what you gonna do on Friday?', '근데 너 금요일에 뭐 할 거야?', 'A 대사'),
   (6, 'I''m having a barbie with my friends', '친구들이랑 바비큐 할 거야', 'B 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 13
+where l.course_id = 'bootcamp' and l.day_number = 13
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 13) and item_order > 6;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 13) and item_order > 6;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -184,10 +184,10 @@ from lessons l, (values
   (3, 'Heaps of people down at the beach, though.', '그래도 해변엔 사람 엄청 많더라.', 'A 대사'),
   (4, 'Yeah, no wonder. It''s way too nice to stay inside.', '응, 그럴 만하지. 안에만 있기엔 날씨가 너무 좋잖아.', 'B 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 14
+where l.course_id = 'bootcamp' and l.day_number = 14
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 14) and item_order > 4;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 14) and item_order > 4;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -196,10 +196,10 @@ from lessons l, (values
   (3, 'Yeah...nah, that''s all. Cheers, mate.', '음... 아니요, 그거면 돼요. 고마워요.', 'A 대사'),
   (4, 'No worries. That''ll be five fifty', '천만에요. 5달러 50센트입니다', 'B 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 15
+where l.course_id = 'bootcamp' and l.day_number = 15
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 15) and item_order > 4;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 15) and item_order > 4;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -209,10 +209,10 @@ from lessons l, (values
   (4, 'Thanks! The interview was a bit rough, though.', '고마워! 근데 면접은 좀 힘들었어.', 'B 대사'),
   (5, 'Ah yeah, they can be brutal sometimes.', '아 그치, 면접이 가끔 진짜 빡세긴 하지.', 'A 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 16
+where l.course_id = 'bootcamp' and l.day_number = 16
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 16) and item_order > 5;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 16) and item_order > 5;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -221,10 +221,10 @@ from lessons l, (values
   (3, 'Fair enough. Go get some fresh air, you''ve earned it.', '그럴 만하지. 바람 좀 쐬고 와, 그럴 자격 있어.', 'A 대사'),
   (4, 'Cheers, I''ll be back in five minutes.', '고마워, 5분 뒤에 올게.', 'B 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 17
+where l.course_id = 'bootcamp' and l.day_number = 17
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 17) and item_order > 4;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 17) and item_order > 4;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -234,10 +234,10 @@ from lessons l, (values
   (4, 'Yup, where should I put them?', '응, 어디에 둘까?', 'B 대사'),
   (5, 'Just chuck them in the bin, they''re cracked.', '그냥 쓰레기통에 버려, 금 갔어.', 'A 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 18
+where l.course_id = 'bootcamp' and l.day_number = 18
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 18) and item_order > 5;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 18) and item_order > 5;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -246,10 +246,10 @@ from lessons l, (values
   (3, 'Tell me about it. I haven''t even had a coffee yet.', '내 말이. 나 아직 커피도 한 잔 못 마셨어.', 'A 대사'),
   (4, 'Hang in there, almost done.', '조금만 버텨, 거의 끝났어.', 'B 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 19
+where l.course_id = 'bootcamp' and l.day_number = 19
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 19) and item_order > 4;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 19) and item_order > 4;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -260,10 +260,10 @@ from lessons l, (values
   (5, 'Got it. I''ll mark it clearly on your order.', '알겠습니다. 주문서에 확실하게 표시해 둘게요.', 'A 대사'),
   (6, 'The dish is nut-free, but I''ll double-check with the kitchen.', '그 요리는 견과류가 안 들어가는데, 주방에 한 번 더 확인해 볼게요.', 'B 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 20
+where l.course_id = 'bootcamp' and l.day_number = 20
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 20) and item_order > 6;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 20) and item_order > 6;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -274,10 +274,10 @@ from lessons l, (values
   (5, 'I''m free tomorrow evening. Does that work?', '내일 저녁에 시간 돼요. 괜찮으세요?', 'A 대사'),
   (6, 'Yeah, that works for me.', '네, 저도 괜찮아요.', 'B 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 21
+where l.course_id = 'bootcamp' and l.day_number = 21
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 21) and item_order > 6;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 21) and item_order > 6;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -287,10 +287,10 @@ from lessons l, (values
   (4, 'It''s $290 per week. Bond is two weeks'' rent.', '주당 290달러예요. 보증금은 2주치 렌트비고요.', 'B 대사'),
   (5, 'Got it. And what are the other housemates like?', '알겠어요. 그리고 다른 하우스메이트들은 어떤 사람들이에요?', 'A 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 22
+where l.course_id = 'bootcamp' and l.day_number = 22
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 22) and item_order > 5;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 22) and item_order > 5;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -304,10 +304,10 @@ from lessons l, (values
   (8, 'Got it. And are bills included in the rent?', '알겠어요. 그리고 공과금은 렌트비에 포함이에요?', 'B 대사'),
   (9, 'Yep, everything''s included. Electricity, water, internet...', '네, 다 포함이에요. 전기, 수도, 인터넷...', 'A 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 23
+where l.course_id = 'bootcamp' and l.day_number = 23
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 23) and item_order > 9;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 23) and item_order > 9;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -320,10 +320,10 @@ from lessons l, (values
   (7, 'Cool. Is the bond refundable?', '좋아요. 보증금은 돌려받을 수 있어요?', 'A 대사'),
   (8, '100%, as long as there''s no damage.', '망가진 것만 없으면 100% 돌려줘요.', 'B 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 24
+where l.course_id = 'bootcamp' and l.day_number = 24
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 24) and item_order > 8;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 24) and item_order > 8;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -333,10 +333,10 @@ from lessons l, (values
   (4, 'Go for it. You can open the drawers if you like.', '그럼요. 서랍도 열어봐도 돼요.', 'B 대사'),
   (5, 'Nice. I really like the place. I''ll let you know soon!', '좋네요. 여기 정말 마음에 들어요. 곧 연락드릴게요!', 'A 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 25
+where l.course_id = 'bootcamp' and l.day_number = 25
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 25) and item_order > 5;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 25) and item_order > 5;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -349,10 +349,10 @@ from lessons l, (values
   (7, 'Perfect. And one more thing, how do we sort the rubbish here?', '완벽하네요. 그리고 하나 더, 여기 쓰레기 분리수거는 어떻게 해요?', 'A 대사'),
   (8, 'General waste goes in the red bin, recycling in the yellow.', '일반 쓰레기는 빨간 통에, 재활용은 노란 통에 넣어요.', 'B 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 26
+where l.course_id = 'bootcamp' and l.day_number = 26
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 26) and item_order > 8;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 26) and item_order > 8;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -361,10 +361,10 @@ from lessons l, (values
   (3, 'But I don''t have much stuff so you can use it.', '근데 난 짐이 별로 없으니까 너가 써도 돼.', 'A 대사'),
   (4, 'Cheers. By the way, I noticed the sink was full this morning.', '고마워. 그런데 오늘 아침에 보니까 싱크대가 꽉 차 있더라.', 'B 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 27
+where l.course_id = 'bootcamp' and l.day_number = 27
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 27) and item_order > 4;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 27) and item_order > 4;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -375,10 +375,10 @@ from lessons l, (values
   (5, 'Hmm, maybe we could make a cleaning schedule?', '흠, 청소 스케줄 하나 만들어 보는 게 어때?', 'A 대사'),
   (6, 'Nah, I can''t be bothered', '아니, 귀찮아.', 'B 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 28
+where l.course_id = 'bootcamp' and l.day_number = 28
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 28) and item_order > 6;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 28) and item_order > 6;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -387,10 +387,10 @@ from lessons l, (values
   (3, 'Thanks! And the bathroom, can we try to keep it tidy?', '고마워! 그리고 화장실 말인데, 좀 깨끗하게 쓰도록 하자?', 'A 대사'),
   (4, 'Yep, I''ll make sure of it.', '응, 꼭 그렇게 할게.', 'B 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 29
+where l.course_id = 'bootcamp' and l.day_number = 29
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 29) and item_order > 4;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 29) and item_order > 4;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -402,10 +402,10 @@ from lessons l, (values
   (6, 'No worries. Is it okay if I have a friend over tonight? Just for dinner.', '알겠어. 오늘 밤에 친구 불러도 돼? 저녁만 먹고 갈 거야.', 'B 대사'),
   (7, 'Yeah, that''s fine.', '응, 괜찮아.', 'A 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 30
+where l.course_id = 'bootcamp' and l.day_number = 30
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 30) and item_order > 7;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 30) and item_order > 7;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -414,10 +414,10 @@ from lessons l, (values
   (3, 'Yes, I''ve just arrived. I''m on a working holiday visa.', '네, 막 도착했어요. 워킹홀리데이 비자로 왔어요.', 'A 대사'),
   (4, 'No worries. Do you have your passport with you?', '알겠어요. 여권 지금 가지고 계세요?', 'B 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 31
+where l.course_id = 'bootcamp' and l.day_number = 31
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 31) and item_order > 4;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 31) and item_order > 4;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -428,10 +428,10 @@ from lessons l, (values
   (5, 'And can I transfer money using PayID?', '그리고 PayID로 송금할 수 있어요?', 'A 대사'),
   (6, 'Yes, you can do that on the app.', '네, 앱에서 하시면 돼요.', 'B 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 32
+where l.course_id = 'bootcamp' and l.day_number = 32
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 32) and item_order > 6;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 32) and item_order > 6;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -445,10 +445,10 @@ from lessons l, (values
   (8, 'About five to seven business days.', '영업일 기준으로 5~7일 정도요.', 'B 대사'),
   (9, 'Got it. Thank goodness', '알겠어요. 다행이다', 'A 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 33
+where l.course_id = 'bootcamp' and l.day_number = 33
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 33) and item_order > 9;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 33) and item_order > 9;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -462,10 +462,10 @@ from lessons l, (values
   (8, 'Yes, we have a 50GB plan for $40.', '네, 40달러에 50GB짜리 요금제가 있어요.', 'B 대사'),
   (9, 'I''ll go with this one.', '이걸로 할게요.', 'A 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 34
+where l.course_id = 'bootcamp' and l.day_number = 34
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 34) and item_order > 9;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 34) and item_order > 9;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -474,10 +474,10 @@ from lessons l, (values
   (3, 'I''m using data faster than expected.', '생각보다 데이터를 빨리 쓰고 있어요.', 'A 대사'),
   (4, 'You''re close to your limit.', '한도에 거의 다 됐네요.', 'B 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 35
+where l.course_id = 'bootcamp' and l.day_number = 35
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 35) and item_order > 4;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 35) and item_order > 4;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -486,10 +486,10 @@ from lessons l, (values
   (3, 'Okay. Can I upgrade my plan?', '그렇군요. 요금제 업그레이드할 수 있어요?', 'A 대사'),
   (4, 'Yes, we can do that for you.', '네, 해 드릴게요.', 'B 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 36
+where l.course_id = 'bootcamp' and l.day_number = 36
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 36) and item_order > 4;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 36) and item_order > 4;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -503,10 +503,10 @@ from lessons l, (values
   (8, 'No, you won''t be charged anymore.', '아니요, 이제 요금 안 나가요.', 'B 대사'),
   (9, 'Perfect, thanks.', '완벽해요, 고마워요.', 'A 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 37
+where l.course_id = 'bootcamp' and l.day_number = 37
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 37) and item_order > 9;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 37) and item_order > 9;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -517,10 +517,10 @@ from lessons l, (values
   (5, 'Do you also offer a free trial?', '무료 체험도 있어요?', 'A 대사'),
   (6, 'Yes, we do. We offer a 4-day free trial.', '네, 있어요. 4일 무료 체험 가능해요.', 'B 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 38
+where l.course_id = 'bootcamp' and l.day_number = 38
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 38) and item_order > 6;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 38) and item_order > 6;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -529,10 +529,10 @@ from lessons l, (values
   (3, 'Got it. Just to double-check, that would be $90 per month for the first three months, right?', '알겠어요. 한 번만 더 확인할게요, 그럼 처음 세 달은 한 달에 90달러인 거 맞죠?', 'A 대사'),
   (4, 'Yep, exactly.', '네, 맞아요.', 'B 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 39
+where l.course_id = 'bootcamp' and l.day_number = 39
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 39) and item_order > 4;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 39) and item_order > 4;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -541,10 +541,10 @@ from lessons l, (values
   (3, 'Even better! Do we need to come in person to sign up?', '더 좋네요! 가입하려면 직접 와야 해요?', 'A 대사'),
   (4, 'Nah, you can just send her your referral link.', '아니요, 그냥 친구한테 추천 링크만 보내주면 돼요.', 'B 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 40
+where l.course_id = 'bootcamp' and l.day_number = 40
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 40) and item_order > 4;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 40) and item_order > 4;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -556,10 +556,10 @@ from lessons l, (values
   (6, 'Sure. It''s Nathan. 0452 461 660.', '네. 네이선이에요. 0452 461 660이요.', 'B 대사'),
   (7, 'Lovely, I''ll see you at 7:30.', '좋아요, 7시 30분에 뵐게요.', 'A 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 41
+where l.course_id = 'bootcamp' and l.day_number = 41
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 41) and item_order > 7;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 41) and item_order > 7;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -571,10 +571,10 @@ from lessons l, (values
   (6, 'Great, I''ll have Equal in my coffee. And the banana bread plain, toasted, with extra butter, please.', '좋아요, 커피에 이퀄 넣어 주세요. 그리고 바나나 브레드는 아무것도 안 올리고 토스트해서 버터 추가로 주세요.', 'B 대사'),
   (7, 'No worries. That''ll be $10.80. When you''re ready.', '알겠어요. 10.80달러예요. 준비되시면 결제해 주세요.', 'A 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 42
+where l.course_id = 'bootcamp' and l.day_number = 42
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 42) and item_order > 7;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 42) and item_order > 7;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -586,10 +586,10 @@ from lessons l, (values
   (6, 'Oh wow, thanks. We appreciate it.', '와, 고마워요. 정말 감사해요.', 'B 대사'),
   (7, 'No worries. Enjoy!', '별말씀을요. 맛있게 드세요!', 'A 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 43
+where l.course_id = 'bootcamp' and l.day_number = 43
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 43) and item_order > 7;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 43) and item_order > 7;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -598,10 +598,10 @@ from lessons l, (values
   (3, 'You might want to go half a size up, because Salomon runs small, you know?', '반 사이즈 올리시는 게 나을 수도 있어요, 살로몬이 좀 작게 나오거든요.', 'A 대사'),
   (4, 'Yeah, could I try an eight and a half?', '네, 8.5 사이즈 신어 볼 수 있을까요?', 'B 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 44
+where l.course_id = 'bootcamp' and l.day_number = 44
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 44) and item_order > 4;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 44) and item_order > 4;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -614,10 +614,10 @@ from lessons l, (values
   (7, 'How do you like it?', '어떠세요?', 'A 대사'),
   (8, 'It''s a bit tight around the shoulders. I''ll come back later.', '어깨 쪽이 좀 껴요. 나중에 다시 올게요.', 'B 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 45
+where l.course_id = 'bootcamp' and l.day_number = 45
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 45) and item_order > 8;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 45) and item_order > 8;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -627,10 +627,10 @@ from lessons l, (values
   (4, 'Yeah, you don''t need to tap on.', '네, 카드 안 찍어도 돼요.', 'B 대사'),
   (5, 'Sweet!', '오 좋다!', 'A 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 46
+where l.course_id = 'bootcamp' and l.day_number = 46
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 46) and item_order > 5;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 46) and item_order > 5;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -642,10 +642,10 @@ from lessons l, (values
   (6, 'Sure, how much would you like to top up?', '그럼요, 얼마 충전하시겠어요?', 'B 대사'),
   (7, 'I''ll top up $30.', '30달러 충전할게요.', 'A 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 47
+where l.course_id = 'bootcamp' and l.day_number = 47
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 47) and item_order > 7;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 47) and item_order > 7;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -655,10 +655,10 @@ from lessons l, (values
   (4, 'Platform 12. But it''s not express, though. Platform 4 is faster.', '12번 플랫폼이요. 근데 급행은 아니에요. 4번 플랫폼이 더 빨라요.', 'B 대사'),
   (5, 'Even better! Thank you for your help.', '그럼 더 좋죠! 도와주셔서 고마워요.', 'A 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 48
+where l.course_id = 'bootcamp' and l.day_number = 48
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 48) and item_order > 5;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 48) and item_order > 5;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -671,10 +671,10 @@ from lessons l, (values
   (7, 'Got it. Thanks so much! Do you happen to know any good places to eat around here?', '알겠어요. 정말 고마워요! 혹시 이 근처에 괜찮은 식당 아세요?', 'A 대사'),
   (8, 'Yeah, there''s a pretty decent Thai place just next to the cafe.', '네, 그 카페 바로 옆에 꽤 괜찮은 태국 음식점 있어요.', 'B 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 49
+where l.course_id = 'bootcamp' and l.day_number = 49
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 49) and item_order > 8;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 49) and item_order > 8;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -684,10 +684,10 @@ from lessons l, (values
   (4, 'Yeah, just from the other side.', '네, 반대편에서 타시면 돼요.', 'B 대사'),
   (5, 'Got it. Thanks heaps!', '알겠어요. 정말 고마워요!', 'A 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 50
+where l.course_id = 'bootcamp' and l.day_number = 50
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 50) and item_order > 5;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 50) and item_order > 5;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -700,10 +700,10 @@ from lessons l, (values
   (7, 'That works for me. This is my first visit.', '그때 좋아요. 이번이 처음 방문이에요.', 'A 대사'),
   (8, 'No problem. Please bring your ID and insurance card.', '괜찮아요. 신분증이랑 보험 카드 가져오세요.', 'B 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 51
+where l.course_id = 'bootcamp' and l.day_number = 51
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 51) and item_order > 8;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 51) and item_order > 8;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -714,10 +714,10 @@ from lessons l, (values
   (5, 'Are you allergic to any medication?', '약 알레르기 있으세요?', 'A 대사'),
   (6, 'I''m allergic to penicillin.', '페니실린 알레르기 있어요.', 'B 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 52
+where l.course_id = 'bootcamp' and l.day_number = 52
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 52) and item_order > 6;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 52) and item_order > 6;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -731,10 +731,10 @@ from lessons l, (values
   (8, 'No, nothing regularly. Just some cold medicine.', '아뇨, 꾸준히 먹는 건 없어요. 감기약 좀 먹은 거 말고는요.', 'B 대사'),
   (9, 'Alright. I''ll prescribe you some medication.', '알겠어요. 약 처방해 드릴게요.', 'A 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 53
+where l.course_id = 'bootcamp' and l.day_number = 53
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 53) and item_order > 9;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 53) and item_order > 9;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -747,10 +747,10 @@ from lessons l, (values
   (7, 'You''ve got a throat infection. I''ll prescribe some antibiotics.', '목에 염증이 생겼네요. 항생제 처방해 드릴게요.', 'A 대사'),
   (8, 'I feel pretty worn out. Do I need an injection or an IV?', '너무 기운이 없어요. 주사나 링거 맞아야 할까요?', 'B 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 54
+where l.course_id = 'bootcamp' and l.day_number = 54
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 54) and item_order > 8;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 54) and item_order > 8;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -766,10 +766,10 @@ from lessons l, (values
   (10, 'Can I drink alcohol with this medication?', '이 약 먹으면서 술 마셔도 돼요?', 'B 대사'),
   (11, 'No, avoid alcohol while taking this.', '아뇨, 이 약 드시는 동안은 술 피하세요.', 'A 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 55
+where l.course_id = 'bootcamp' and l.day_number = 55
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 55) and item_order > 11;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 55) and item_order > 11;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -778,10 +778,10 @@ from lessons l, (values
   (3, 'Sit down. Do you want me to call triple zero?', '앉아요. 000(응급번호)에 전화해 줄까요?', 'A 대사'),
   (4, 'Please. My head is spinning.', '네, 부탁해요. 머리가 빙빙 돌아요.', 'B 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 56
+where l.course_id = 'bootcamp' and l.day_number = 56
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 56) and item_order > 4;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 56) and item_order > 4;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -794,10 +794,10 @@ from lessons l, (values
   (7, 'Yeah, but it looks pretty deep. I don''t think a Band-Aid''s gonna work.', '응, 근데 꽤 깊어 보여. 밴드로는 안 될 것 같아.', 'A 대사'),
   (8, 'Do you think I need stitches?', '꿰매야 할 것 같아?', 'B 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 57
+where l.course_id = 'bootcamp' and l.day_number = 57
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 57) and item_order > 8;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 57) and item_order > 8;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -806,10 +806,10 @@ from lessons l, (values
   (3, 'That''s serious. Do you have an EpiPen?', '그거 심각한데. 에피펜 있어?', 'A 대사'),
   (4, 'No. I feel like I''m choking. I can''t breathe properly.', '아니. 숨 막힐 것 같아. 숨을 제대로 못 쉬겠어.', 'B 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 58
+where l.course_id = 'bootcamp' and l.day_number = 58
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 58) and item_order > 4;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 58) and item_order > 4;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -822,10 +822,10 @@ from lessons l, (values
   (7, 'I think he''s leaving now. What do you do by the way?', '이제 가는 것 같네요. 근데 무슨 일 하세요?', 'A 대사'),
   (8, 'Are you hitting on me now?', '지금 저 꼬시는 거예요?', 'B 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 59
+where l.course_id = 'bootcamp' and l.day_number = 59
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 59) and item_order > 8;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 59) and item_order > 8;
 insert into lesson_items (lesson_id, item_order, sentence, translation, note)
 select l.id, v.item_order, v.sentence, v.translation, v.note
 from lessons l, (values
@@ -838,8 +838,8 @@ from lessons l, (values
   (7, 'Okay. Was it taken from your pocket or your bag?', '네. 주머니에서 가져갔어요, 가방에서 가져갔어요?', 'A 대사'),
   (8, 'From my jacket pocket. I didn''t notice until I got off.', '재킷 주머니에서요. 내릴 때까지 몰랐어요.', 'B 대사')
 ) as v(item_order, sentence, translation, note)
-where l.day_number = 60
+where l.course_id = 'bootcamp' and l.day_number = 60
 on conflict (lesson_id, item_order) do update set
   sentence = excluded.sentence, translation = excluded.translation, note = excluded.note;
-delete from lesson_items where lesson_id = (select id from lessons where day_number = 60) and item_order > 8;
+delete from lesson_items where lesson_id = (select id from lessons where course_id = 'bootcamp' and day_number = 60) and item_order > 8;
 commit;

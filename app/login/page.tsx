@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { StudentLoginForm, TeacherLoginForm } from "./login-forms";
+import { PhoneLoginForm, StudentLoginForm, TeacherLoginForm } from "./login-forms";
+
+const ERRORS: Record<string, string> = {
+  expired: "로그인이 만료됐어요. 다시 로그인해주세요.",
+  inactive: "이용이 중지된 계정이에요. 선생님께 문의해주세요.",
+  pending: "가입 승인 대기 중이에요. 선생님이 승인하면 로그인할 수 있어요.",
+  "plan-ended": "수강 기간이 끝났어요. 연장은 선생님께 문의해주세요.",
+};
 
 export const metadata: Metadata = {
   title: "로그인 | 다잉클 클래스룸",
@@ -9,9 +16,10 @@ export const metadata: Metadata = {
 export default async function LoginPage({
   searchParams,
 }: {
-  searchParams: Promise<{ role?: string; error?: string }>;
+  searchParams: Promise<{ role?: string; error?: string; method?: string }>;
 }) {
-  const { role, error } = await searchParams;
+  const { role, error, method } = await searchParams;
+  const byCode = method === "code";
   const isTeacher = role === "teacher";
 
   return (
@@ -31,12 +39,27 @@ export default async function LoginPage({
               : "복습하고, 쉐도잉하고, AI 피드백 받기."}
           </p>
         </div>
-        {(error === "inactive" || error === "expired") && (
-          <p className="text-sm text-red-600">
-            로그인이 만료됐어요. 선생님께 받은 코드로 다시 로그인해주세요.
-          </p>
+        {error && ERRORS[error] && <p className="text-sm text-red-600">{ERRORS[error]}</p>}
+        {isTeacher ? (
+          <TeacherLoginForm />
+        ) : byCode ? (
+          <StudentLoginForm />
+        ) : (
+          <PhoneLoginForm />
         )}
-        {isTeacher ? <TeacherLoginForm /> : <StudentLoginForm />}
+        {!isTeacher && (
+          <div className="flex w-full flex-col gap-2 text-sm">
+            <Link
+              href="/signup"
+              className="rounded-xl border-2 border-brand-100 px-4 py-2.5 font-bold text-brand-700 hover:bg-brand-50"
+            >
+              처음이에요 · 회원가입
+            </Link>
+            <Link href={byCode ? "/login" : "/login?method=code"} className="text-xs text-zinc-500 underline">
+              {byCode ? "전화번호로 로그인" : "선생님께 받은 코드로 로그인"}
+            </Link>
+          </div>
+        )}
         <Link
           href={isTeacher ? "/login" : "/login?role=teacher"}
           className="text-xs text-zinc-400 underline"

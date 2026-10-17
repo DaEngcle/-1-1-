@@ -39,9 +39,10 @@ export async function POST(request: NextRequest) {
 
   const { data: item } = await supabase
     .from("lesson_items")
-    .select("id, sentence, lessons!inner(is_published)")
+    .select("id, sentence, lessons!inner(is_published, course_id)")
     .eq("id", lessonItemId)
     .eq("lessons.is_published", true)
+    .in("lessons.course_id", student.courses)
     .maybeSingle();
   if (!item) {
     return NextResponse.json({ error: "문장을 찾을 수 없어요." }, { status: 404 });

@@ -14,6 +14,9 @@ import {
   clearLoginFailures,
   recordLoginFailure,
 } from "@/lib/classroom/rate-limit";
+import { hashPassword, normalizePhone, verifyPassword } from "@/lib/classroom/password";
+import { isPlanId } from "@/lib/classroom/plans";
+import { kstDate } from "@/lib/classroom/stats";
 
 export type LoginState = { error: string } | undefined;
 
@@ -36,7 +39,7 @@ export async function studentLogin(
   const supabase = createServerSupabaseClient();
   const { data: student } = await supabase
     .from("students")
-    .select("id, is_active, session_version")
+    .select("id, is_active, session_version, approval, access_until")
     .eq("login_code_hash", hashLoginCode(code))
     .maybeSingle();
 
@@ -44,9 +47,8 @@ export async function studentLogin(
     await recordLoginFailure(key);
     return { error: "코드가 올바르지 않아요. 다시 확인해주세요." };
   }
-  if (!student.is_active) {
-    return { error: "비활성화된 계정이에요. 선생님께 문의해주세요." };
-  }
+  const problem = accessProblem(student);
+  if (problem) return { error: problem };
 
   await clearLoginFailures(key);
   await createSession({
@@ -55,6 +57,85 @@ export async function studentLogin(
     v: student.session_version,
   });
   redirect("/student");
+}
+
+/** 승인 상태·수강 기간 확인 (로그인 직전) */
+function accessProblem(student: { is_active: boolean; approval: string; access_until: string | null }) {
+  if (!student.is_active || student.approval === "rejected") return "이용이 중지된 계정이에요. 선생님께 문의해주세요.";
+  if (student.approval === "pending") return "가입 승인 대기 중이에요. 선생님이 승인하면 로그인할 수 있어요.";
+  if (student.access_until && student.access_until < kstDate(new Date())) {
+    return "수강 기간이 끝났어요. 연장은 선생님께 문의해주세요.";
+  }
+  return null;
+}
+
+/** 직접 가입한 학생: 전화번호 + 비밀번호 */
+export async function phoneLogin(_prev: LoginState, formData: FormData): Promise<LoginState> {
+  const phone = normalizePhone(String(formData.get("phone") ?? ""));
+  const password = String(formData.get("password") ?? "");
+  if (phone.length < 9 || !password) return { error: "전화번호와 비밀번호를 입력해주세요." };
+
+  const { key, waitMinutes } = await checkLoginBlocked("student");
+  if (waitMinutes > 0) return { error: blockedMessage(waitMinutes) };
+
+  const supabase = createServerSupabaseClient();
+  const { data: student } = await supabase
+    .from("students")
+    .select("id, is_active, approval, access_until, session_version, password_hash")
+    .eq("phone", phone)
+    .maybeSingle();
+  if (!student || !(await verifyPassword(password, student.password_hash))) {
+    await recordLoginFailure(key);
+    return { error: "전화번호 또는 비밀번호가 올바르지 않아요." };
+  }
+  const problem = accessProblem(student);
+  if (problem) return { error: problem };
+
+  await clearLoginFailures(key);
+  await createSession({ role: "student", studentId: student.id, v: student.session_version });
+  redirect("/student");
+}
+
+export type SignupState = { error: string } | { done: true } | undefined;
+
+const NAME_PATTERN = /^[가-힣A-Za-z ]{2,20}$/;
+
+/** 학생 직접 가입 → 승인 대기 */
+export async function signup(_prev: SignupState, formData: FormData): Promise<SignupState> {
+  const name = String(formData.get("name") ?? "").trim();
+  const phone = normalizePhone(String(formData.get("phone") ?? ""));
+  const password = String(formData.get("password") ?? "");
+  const passwordConfirm = String(formData.get("password_confirm") ?? "");
+  const plan = String(formData.get("plan") ?? "");
+  const agreed = formData.get("privacy") === "on";
+
+  if (!NAME_PATTERN.test(name)) return { error: "이름을 한글 또는 영문으로 2~20자 입력해주세요." };
+  if (!/^01[016789][0-9]{7,8}$/.test(phone)) return { error: "휴대폰 번호를 정확히 입력해주세요. (예: 010-1234-5678)" };
+  if (password.length < 8) return { error: "비밀번호는 8자 이상으로 정해주세요." };
+  if (password !== passwordConfirm) return { error: "비밀번호 확인이 일치하지 않아요." };
+  if (!isPlanId(plan)) return { error: "신청한 과정을 선택해주세요." };
+  if (!agreed) return { error: "개인정보 수집·이용에 동의해야 가입할 수 있어요." };
+
+  // 가입 남용 방지: 로그인 실패 제한과 같은 방식으로 IP당 횟수 제한
+  const { key, waitMinutes } = await checkLoginBlocked("signup");
+  if (waitMinutes > 0) return { error: blockedMessage(waitMinutes) };
+  await recordLoginFailure(key);
+
+  const supabase = createServerSupabaseClient();
+  const { error } = await supabase.from("students").insert({
+    name,
+    phone,
+    password_hash: await hashPassword(password),
+    approval: "pending",
+    requested_plan: plan,
+    privacy_agreed_at: new Date().toISOString(),
+  });
+  if (error?.code === "23505") return { error: "이미 가입된 전화번호예요. 로그인해주세요." };
+  if (error) {
+    console.error("가입 실패:", error.message);
+    return { error: "가입 중 오류가 발생했어요. 잠시 후 다시 시도해주세요." };
+  }
+  return { done: true };
 }
 
 export async function teacherLogin(
