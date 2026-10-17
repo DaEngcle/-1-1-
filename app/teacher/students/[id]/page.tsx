@@ -3,6 +3,13 @@ import { notFound } from "next/navigation";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { getStudentStats } from "@/lib/classroom/stats";
 import { getCourseProgress, getLessonProgress } from "@/lib/classroom/progress";
+import { getEngagement } from "@/lib/classroom/engagement";
+import { getAnswers, getTests } from "@/lib/classroom/level-test-data";
+import { SPEAKING_QUESTIONS } from "@/lib/classroom/level-test";
+import { LevelCard } from "@/app/_ui/level-card";
+import { Badges, StudyCalendar } from "@/app/_ui/engagement";
+import { resetLevelTest } from "../../level-tests/actions";
+import { ConfirmButton } from "@/app/_ui/confirm-button";
 import { ATTENDANCE_LABEL } from "@/lib/classroom/attendance";
 import { ScoreTrendChart } from "@/app/_ui/score-trend-chart";
 import { SubmissionList } from "../../submission-list";
@@ -23,11 +30,22 @@ export default async function TeacherStudentPage({
     .eq("id", id)
     .maybeSingle();
   if (!student) notFound();
-  const [stats, progressMap, lessonRows] = await Promise.all([
+  const [stats, progressMap, lessonRows, engagement, tests] = await Promise.all([
     getStudentStats(id),
     getCourseProgress([id]),
     getLessonProgress(id),
+    getEngagement(id),
+    getTests(id),
   ]);
+  const [preAnswers, postAnswers] = await Promise.all([
+    tests.pre ? getAnswers(tests.pre.id) : [],
+    tests.post ? getAnswers(tests.post.id) : [],
+  ]);
+  const testAudioPaths = [...preAnswers, ...postAnswers].map((a) => a.audio_path).filter((p): p is string => Boolean(p));
+  const { data: signedTestAudio } = testAudioPaths.length
+    ? await supabase.storage.from("shadowing").createSignedUrls(testAudioPaths, 60 * 60)
+    : { data: [] };
+  const audioUrl = new Map((signedTestAudio ?? []).map((x) => [x.path, x.signedUrl]));
   const progress = progressMap.get(id)!;
   const totalClasses = Object.values(stats.attendance).reduce((a, b) => a + b, 0);
 
@@ -45,7 +63,7 @@ export default async function TeacherStudentPage({
         {[
           ["🎬 영상 수강", `${progress.videoPercent}% (${progress.completedVideos}/${progress.videoLessons})`],
           ["🎤 쉐도잉 제출", `${progress.submitPercent}% (${progress.submittedSentences}/${progress.sentences})`],
-          ["연속 학습", `${stats.streakDays}일`],
+          ["🔥 연속 학습", `${engagement.streak}일 (최고 ${engagement.bestStreak}일)`],
           ["평균 점수", stats.averageScore != null ? `${stats.averageScore}점` : "-"],
           ["연습 문장", `${stats.practicedSentences}개`],
           [
@@ -64,6 +82,65 @@ export default async function TeacherStudentPage({
           </div>
         ))}
       </section>
+
+      <LevelCard pre={tests.pre} post={tests.post} />
+
+      {(tests.pre || tests.post) && (
+        <section className={cardClass}>
+          <h2 className="mb-1 font-bold text-zinc-900">레벨테스트 말하기 녹음 비교</h2>
+          <p className="mb-2 text-xs text-zinc-500">같은 문장을 수강 전·후에 어떻게 말했는지 들어보세요.</p>
+          <ul className="flex flex-col divide-y divide-zinc-100">
+            {SPEAKING_QUESTIONS.map((q) => {
+              const pre = preAnswers.find((a) => a.question_id === q.id);
+              const post = postAnswers.find((a) => a.question_id === q.id);
+              return (
+                <li key={q.id} className="flex flex-col gap-1 py-2">
+                  <span className="text-sm text-zinc-900">{q.sentence}</span>
+                  <div className="grid gap-1 sm:grid-cols-2">
+                    {[
+                      ["수강 전", pre],
+                      ["수강 후", post],
+                    ].map(([label, a]) => {
+                      const ans = a as typeof pre;
+                      const url = ans?.audio_path ? audioUrl.get(ans.audio_path) : undefined;
+                      return (
+                        <div key={label as string} className="flex items-center gap-2 text-xs text-zinc-500">
+                          <span className="w-24 shrink-0">
+                            {label as string} {ans ? `${ans.score}점` : "-"}
+                          </span>
+                          {url && <audio src={url} controls preload="none" className="h-8 w-full" />}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {[tests.pre, tests.post].map(
+              (t) =>
+                t && (
+                  <form key={t.id} action={resetLevelTest}>
+                    <input type="hidden" name="test_id" value={t.id} />
+                    <input type="hidden" name="student_id" value={id} />
+                    <ConfirmButton
+                      message={`${t.kind === "pre" ? "수강 전" : "수강 후"} 테스트 결과와 녹음을 지울까요? 학생이 다시 봐야 해요.`}
+                      className="text-xs text-red-600 underline"
+                    >
+                      {t.kind === "pre" ? "수강 전" : "수강 후"} 테스트 초기화 (다시 보게 하기)
+                    </ConfirmButton>
+                  </form>
+                ),
+            )}
+          </div>
+        </section>
+      )}
+
+      <div className="grid gap-3 sm:grid-cols-2">
+        <StudyCalendar month={engagement.month} />
+        <Badges badges={engagement.badges} />
+      </div>
 
       <section className={cardClass}>
         <h2 className="mb-1 font-bold text-zinc-900">레슨별 진도</h2>

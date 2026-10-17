@@ -17,7 +17,7 @@ export function watchPercent(segments: number[], durationSeconds: number) {
 type Client = ReturnType<typeof createServerSupabaseClient>;
 
 /** Supabase는 한 번에 1000행까지만 주므로 끝까지 나눠서 가져온다 */
-async function fetchAll<T>(
+export async function fetchAll<T>(
   build: (from: number, to: number) => PromiseLike<{ data: T[] | null }>,
 ): Promise<T[]> {
   const PAGE = 1000;

@@ -15,7 +15,15 @@ export default async function StudentsPage() {
     .order("is_active", { ascending: false })
     .order("name");
   const students = (data ?? []) as Omit<Student, "login_code_hash" | "session_version">[];
-  const progress = await getCourseProgress(students.map((s) => s.id));
+  const [progress, { data: levelRows }] = await Promise.all([
+    getCourseProgress(students.map((s) => s.id)),
+    supabase
+      .from("level_tests")
+      .select("student_id, kind, level")
+      .not("finished_at", "is", null),
+  ]);
+  const levelOf = (id: string, kind: string) =>
+    levelRows?.find((r) => r.student_id === id && r.kind === kind)?.level as number | undefined;
 
   return (
     <>
@@ -42,6 +50,12 @@ export default async function StudentsPage() {
                 >
                   {s.name}
                 </Link>
+                {levelOf(s.id, "pre") != null && (
+                  <span className="ml-2 rounded bg-violet-100 px-1.5 py-0.5 text-xs text-violet-800">
+                    Lv.{levelOf(s.id, "pre")}
+                    {levelOf(s.id, "post") != null && ` → Lv.${levelOf(s.id, "post")}`}
+                  </span>
+                )}
                 {!s.is_active && (
                   <span className="ml-2 text-xs text-zinc-500">비활성</span>
                 )}

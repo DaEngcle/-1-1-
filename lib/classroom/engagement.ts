@@ -1,0 +1,264 @@
+import "server-only";
+import { createServerSupabaseClient } from "@/lib/supabase";
+import { kstDate } from "./stats";
+import { fetchAll, getLessonProgress } from "./progress";
+
+// 학습 포인트: 영상 1분 = 1, 쉐도잉 제출 = 10, 80점 이상이면 +5
+const XP_PER_SUBMISSION = 10;
+const XP_HIGH_SCORE_BONUS = 5;
+const HIGH_SCORE = 80;
+
+function addDays(day: string, n: number) {
+  const d = new Date(`${day}T00:00:00Z`);
+  d.setUTCDate(d.getUTCDate() + n);
+  return d.toISOString().slice(0, 10);
+}
+
+/** 이번 주 월요일 (한국 시간) */
+export function weekStart(today = kstDate(new Date())) {
+  const dow = new Date(`${today}T00:00:00Z`).getUTCDay(); // 0=일
+  return addDays(today, -((dow + 6) % 7));
+}
+
+type SubRow = { created_at: string; status: string; overall_score: number | null };
+
+interface DayActivity {
+  watchedSeconds: number;
+  submissions: number;
+  bestScore: number;
+}
+
+function buildDays(watchRows: { day: string; watched_seconds: number }[], subs: SubRow[]) {
+  const days = new Map<string, DayActivity>();
+  const get = (d: string) => {
+    let v = days.get(d);
+    if (!v) days.set(d, (v = { watchedSeconds: 0, submissions: 0, bestScore: 0 }));
+    return v;
+  };
+  for (const w of watchRows) get(w.day).watchedSeconds += w.watched_seconds;
+  for (const s of subs) {
+    const d = get(kstDate(s.created_at));
+    d.submissions++;
+    if (s.status === "scored") d.bestScore = Math.max(d.bestScore, Number(s.overall_score ?? 0));
+  }
+  return days;
+}
+
+function streaks(studied: Set<string>, today: string) {
+  let current = 0;
+  let cursor = studied.has(today) ? today : addDays(today, -1);
+  while (studied.has(cursor)) {
+    current++;
+    cursor = addDays(cursor, -1);
+  }
+  let best = 0;
+  let run = 0;
+  let prev: string | null = null;
+  for (const d of [...studied].sort()) {
+    run = prev && addDays(prev, 1) === d ? run + 1 : 1;
+    best = Math.max(best, run);
+    prev = d;
+  }
+  return { current, best };
+}
+
+export interface Badge {
+  id: string;
+  label: string;
+  hint: string;
+  earned: boolean;
+}
+
+export interface CalendarDay {
+  day: string;
+  /** 0 = 안 함, 1 = 영상만, 2 = 쉐도잉 제출 */
+  level: 0 | 1 | 2;
+  attended: boolean;
+  future: boolean;
+}
+
+export interface Engagement {
+  streak: number;
+  bestStreak: number;
+  month: { label: string; firstWeekday: number; days: CalendarDay[]; studiedDays: number };
+  missions: { label: string; done: boolean }[];
+  badges: Badge[];
+}
+
+/** 학생 한 명의 달력·연속 학습·오늘의 미션·배지 */
+export async function getEngagement(studentId: string): Promise<Engagement> {
+  const supabase = createServerSupabaseClient();
+  const [watchRows, subs, { data: attRows }, { count: completedVideos }, lessonRows, { data: tests }] =
+    await Promise.all([
+      fetchAll<{ day: string; watched_seconds: number }>((from, to) =>
+        supabase.from("daily_activity").select("day, watched_seconds").eq("student_id", studentId).range(from, to),
+      ),
+      fetchAll<SubRow>((from, to) =>
+        supabase
+          .from("submissions")
+          .select("created_at, status, overall_score")
+          .eq("student_id", studentId)
+          .range(from, to),
+      ),
+      supabase.from("attendance").select("class_date, status").eq("student_id", studentId),
+      supabase
+        .from("video_progress")
+        .select("lesson_id", { count: "exact", head: true })
+        .eq("student_id", studentId)
+        .not("completed_at", "is", null),
+      getLessonProgress(studentId),
+      supabase.from("level_tests").select("kind, level, finished_at").eq("student_id", studentId),
+    ]);
+
+  const today = kstDate(new Date());
+  const days = buildDays(watchRows, subs);
+  const studied = new Set([...days].filter(([, v]) => v.watchedSeconds > 0 || v.submissions > 0).map(([d]) => d));
+  const { current, best } = streaks(studied, today);
+  const attended = new Set(
+    (attRows ?? []).filter((a) => a.status === "present" || a.status === "late").map((a) => a.class_date),
+  );
+
+  // 이번 달 달력
+  const monthStart = `${today.slice(0, 8)}01`;
+  const monthDays: CalendarDay[] = [];
+  for (let d = monthStart; d.slice(0, 7) === monthStart.slice(0, 7); d = addDays(d, 1)) {
+    const a = days.get(d);
+    monthDays.push({
+      day: d,
+      level: a?.submissions ? 2 : a?.watchedSeconds ? 1 : 0,
+      attended: attended.has(d),
+      future: d > today,
+    });
+  }
+  const firstWeekday = (new Date(`${monthStart}T00:00:00Z`).getUTCDay() + 6) % 7; // 월=0
+
+  const todayAct = days.get(today);
+  const missions = [
+    { label: "영상 10분 이상 보기", done: (todayAct?.watchedSeconds ?? 0) >= 600 },
+    { label: "쉐도잉 1문장 제출", done: (todayAct?.submissions ?? 0) > 0 },
+    { label: `쉐도잉 ${HIGH_SCORE}점 넘기기`, done: (todayAct?.bestScore ?? 0) >= HIGH_SCORE },
+  ];
+
+  const scores = subs.filter((s) => s.status === "scored").map((s) => Number(s.overall_score ?? 0));
+  const maxScore = scores.length ? Math.max(...scores) : 0;
+  const weeks = new Map<number, boolean>();
+  for (const r of lessonRows) {
+    const done = (r.videoPercent == null || r.videoCompleted) && r.submitted === r.sentences;
+    weeks.set(r.lesson.week_number, (weeks.get(r.lesson.week_number) ?? true) && done);
+  }
+  const weekCleared = [...weeks.values()].some(Boolean);
+  const pre = tests?.find((t) => t.kind === "pre" && t.finished_at);
+  const post = tests?.find((t) => t.kind === "post" && t.finished_at);
+
+  const badges: Badge[] = [
+    { id: "first", label: "첫 걸음", hint: "쉐도잉 첫 제출", earned: subs.length > 0 },
+    { id: "streak3", label: "3일 연속", hint: "3일 연속 공부", earned: best >= 3 },
+    { id: "streak7", label: "7일 연속", hint: "7일 연속 공부", earned: best >= 7 },
+    { id: "streak30", label: "30일 연속", hint: "30일 연속 공부", earned: best >= 30 },
+    { id: "video1", label: "첫 수강 완료", hint: "영상 하나를 90% 이상 시청", earned: (completedVideos ?? 0) > 0 },
+    { id: "week", label: "한 주 완주", hint: "한 주 영상·쉐도잉 모두 완료", earned: weekCleared },
+    { id: "score80", label: "첫 80점", hint: "쉐도잉 80점 이상", earned: maxScore >= 80 },
+    { id: "score90", label: "첫 90점", hint: "쉐도잉 90점 이상", earned: maxScore >= 90 },
+    { id: "sub10", label: "쉐도잉 10회", hint: "쉐도잉 10번 제출", earned: subs.length >= 10 },
+    { id: "sub50", label: "쉐도잉 50회", hint: "쉐도잉 50번 제출", earned: subs.length >= 50 },
+    { id: "test", label: "레벨 확인", hint: "레벨테스트 완료", earned: Boolean(pre) },
+    {
+      id: "levelup",
+      label: "레벨 업",
+      hint: "수강 후 테스트에서 레벨 상승",
+      earned: Boolean(pre && post && (post.level ?? 0) > (pre.level ?? 0)),
+    },
+  ];
+
+  return {
+    streak: current,
+    bestStreak: best,
+    month: {
+      label: `${Number(today.slice(5, 7))}월`,
+      firstWeekday,
+      days: monthDays,
+      studiedDays: monthDays.filter((d) => !d.future && d.level > 0).length,
+    },
+    missions,
+    badges,
+  };
+}
+
+function maskName(name: string) {
+  const chars = [...name];
+  if (chars.length <= 1) return name;
+  if (chars.length === 2) return `${chars[0]}*`;
+  return `${chars[0]}${"*".repeat(chars.length - 2)}${chars[chars.length - 1]}`;
+}
+
+export interface RankRow {
+  studentId: string;
+  name: string;
+  xp: number;
+  rank: number;
+}
+
+/** 이번 주(월~일) 학습 포인트 순위. masked=true면 이름 가운데를 가림 */
+export async function getWeeklyRanking({ masked }: { masked: boolean }): Promise<RankRow[]> {
+  const supabase = createServerSupabaseClient();
+  const start = weekStart();
+  const startIso = new Date(`${start}T00:00:00+09:00`).toISOString();
+  const [{ data: students }, watchRows, subs] = await Promise.all([
+    supabase.from("students").select("id, name").eq("is_active", true),
+    fetchAll<{ student_id: string; watched_seconds: number }>((from, to) =>
+      supabase.from("daily_activity").select("student_id, watched_seconds").gte("day", start).range(from, to),
+    ),
+    fetchAll<{ student_id: string; status: string; overall_score: number | null }>((from, to) =>
+      supabase
+        .from("submissions")
+        .select("student_id, status, overall_score")
+        .gte("created_at", startIso)
+        .range(from, to),
+    ),
+  ]);
+
+  const xp = new Map<string, number>();
+  const add = (id: string, n: number) => xp.set(id, (xp.get(id) ?? 0) + n);
+  for (const w of watchRows) add(w.student_id, Math.floor(w.watched_seconds / 60));
+  for (const s of subs) {
+    add(s.student_id, XP_PER_SUBMISSION);
+    if (s.status === "scored" && Number(s.overall_score) >= HIGH_SCORE) add(s.student_id, XP_HIGH_SCORE_BONUS);
+  }
+
+  const rows = (students ?? [])
+    .map((s) => ({ studentId: s.id as string, name: masked ? maskName(s.name) : (s.name as string), xp: xp.get(s.id) ?? 0 }))
+    .sort((a, b) => b.xp - a.xp || a.name.localeCompare(b.name));
+  // 같은 점수는 같은 등수
+  let rank = 0;
+  return rows.map((r, i) => {
+    if (i === 0 || r.xp !== rows[i - 1].xp) rank = i + 1;
+    return { ...r, rank };
+  });
+}
+
+/**
+ * 실제로 재생한 시간을 오늘 날짜(한국 시간)에 더한다.
+ * 브라우저가 보낸 값은 마지막 기록 이후 흐른 시간(2배속까지)만큼만 인정한다.
+ */
+export async function addWatchedSeconds(studentId: string, claimedSeconds: number) {
+  if (!(claimedSeconds > 0)) return;
+  const supabase = createServerSupabaseClient();
+  const day = kstDate(new Date());
+  const { data } = await supabase
+    .from("daily_activity")
+    .select("watched_seconds, updated_at")
+    .eq("student_id", studentId)
+    .eq("day", day)
+    .maybeSingle();
+  const allowed = data
+    ? Math.min(60, Math.floor(((Date.now() - new Date(data.updated_at).getTime()) / 1000) * 2))
+    : 30;
+  const add = Math.min(Math.floor(claimedSeconds), allowed);
+  if (add <= 0) return;
+  await supabase.from("daily_activity").upsert({
+    student_id: studentId,
+    day,
+    watched_seconds: (data?.watched_seconds ?? 0) + add,
+    updated_at: new Date().toISOString(),
+  });
+}

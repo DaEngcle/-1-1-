@@ -1,11 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import type { WordResult } from "@/lib/classroom/azure-speech";
 import { findTipsForSentence } from "@/lib/classroom/pronunciation-tips";
 import { useTts } from "@/app/_ui/audio/use-tts";
 import { toWav16kMono } from "@/app/_ui/audio/wav";
+import { useRecorder } from "@/app/_ui/audio/use-recorder";
 
 export interface PracticeResult {
   status: "pending" | "scored" | "failed";
@@ -122,63 +123,19 @@ export function SentencePractice({
 }) {
   const { play, stop, playingKey, loop, setLoop } = useTts();
   const [showTranslation, setShowTranslation] = useState(false);
-  const [recording, setRecording] = useState(false);
-  const [seconds, setSeconds] = useState(0);
-  const [recordedUrl, setRecordedUrl] = useState<string | null>(null);
-  const [recordedBlob, setRecordedBlob] = useState<Blob | null>(null);
+  const recorder = useRecorder(MAX_RECORD_SECONDS);
+  const { recording, seconds, url: recordedUrl, blob: recordedBlob } = recorder;
   const [submitting, setSubmitting] = useState(false);
   const [result, setResult] = useState<PracticeResult | null>(initialResult);
   const [error, setError] = useState<string | null>(null);
-  const recorderRef = useRef<MediaRecorder | null>(null);
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const tips = findTipsForSentence(sentence);
   const tokens = sentence.split(/(\s+)/);
 
-  useEffect(() => {
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-      recorderRef.current?.stream.getTracks().forEach((t) => t.stop());
-    };
-  }, []);
-
-  async function startRecording() {
+  function startRecording() {
     setError(null);
     stop();
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const recorder = new MediaRecorder(stream);
-      const chunks: BlobPart[] = [];
-      recorder.ondataavailable = (e) => chunks.push(e.data);
-      recorder.onstop = () => {
-        stream.getTracks().forEach((t) => t.stop());
-        const blob = new Blob(chunks, { type: recorder.mimeType });
-        setRecordedBlob(blob);
-        setRecordedUrl((old) => {
-          if (old) URL.revokeObjectURL(old);
-          return URL.createObjectURL(blob);
-        });
-      };
-      recorderRef.current = recorder;
-      recorder.start();
-      setRecording(true);
-      setSeconds(0);
-      let elapsed = 0;
-      timerRef.current = setInterval(() => {
-        elapsed++;
-        setSeconds(elapsed);
-        if (elapsed >= MAX_RECORD_SECONDS) stopRecording();
-      }, 1000);
-    } catch {
-      setError("마이크 권한이 필요해요. 브라우저 설정에서 마이크를 허용해주세요.");
-    }
-  }
-
-  function stopRecording() {
-    if (timerRef.current) clearInterval(timerRef.current);
-    timerRef.current = null;
-    if (recorderRef.current?.state === "recording") recorderRef.current.stop();
-    setRecording(false);
+    recorder.start();
   }
 
   async function submit() {
@@ -289,7 +246,7 @@ export function SentencePractice({
       <div className="flex flex-col gap-2 border-t border-zinc-100 pt-3">
         <div className="flex flex-wrap items-center gap-2">
           {recording ? (
-            <button type="button" onClick={stopRecording} className={`${btn} border-red-400 bg-red-50 text-red-700`}>
+            <button type="button" onClick={recorder.stop} className={`${btn} border-red-400 bg-red-50 text-red-700`}>
               ■ 녹음 끝내기 ({seconds}s)
             </button>
           ) : (
@@ -316,7 +273,7 @@ export function SentencePractice({
             </>
           )}
         </div>
-        {error && <p className="text-sm text-red-600">{error}</p>}
+        {(error ?? recorder.error) && <p className="text-sm text-red-600">{error ?? recorder.error}</p>}
         {result && <ResultView result={result} onPlayWord={(w) => play(w, "slow")} />}
       </div>
     </article>

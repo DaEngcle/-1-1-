@@ -7,6 +7,7 @@ import {
   segmentCount,
   watchPercent,
 } from "@/lib/classroom/progress";
+import { addWatchedSeconds } from "@/lib/classroom/engagement";
 
 const MAX_DURATION_SECONDS = 6 * 60 * 60;
 // 2배속까지 허용 + 여유분. 실제로 흐른 시간보다 많이 본 것으로 기록되지 않게 막는다
@@ -14,8 +15,9 @@ const MAX_SPEED = 2;
 const FIRST_REPORT_SEGMENTS = 6;
 
 /**
- * 레슨 영상 시청 기록: JSON { lessonId, duration, segments: number[] }
+ * 레슨 영상 시청 기록: JSON { lessonId, duration, segments: number[], played }
  * segments = 실제로 재생된 10초 구간 번호. 기존 기록과 합쳐서 저장한다.
+ * played = 지난 보고 이후 실제로 재생한 초 (복습 포함, 하루 학습 시간용)
  */
 export async function POST(request: NextRequest) {
   const student = await getVerifiedStudent();
@@ -23,7 +25,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "로그인이 필요해요." }, { status: 401 });
   }
 
-  let body: { lessonId?: unknown; duration?: unknown; segments?: unknown };
+  let body: { lessonId?: unknown; duration?: unknown; segments?: unknown; played?: unknown };
   try {
     body = await request.json();
   } catch {
@@ -49,6 +51,9 @@ export async function POST(request: NextRequest) {
   if (!lesson?.video_url) {
     return NextResponse.json({ error: "not_found" }, { status: 404 });
   }
+
+  // 학습 달력·주간 랭킹용 하루 시청 시간 (복습으로 다시 본 시간도 포함)
+  await addWatchedSeconds(student.id, Number(body.played) || 0);
 
   const { data: existing } = await supabase
     .from("video_progress")

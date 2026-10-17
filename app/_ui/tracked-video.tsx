@@ -66,6 +66,8 @@ export function TrackedVideo({
   const segmentsRef = useRef(new Set(initialSegments));
   const durationRef = useRef(initialDuration ?? 0);
   const dirtyRef = useRef(false);
+  // 지난 보고 이후 실제로 재생한 초 (복습 포함)
+  const playedRef = useRef(0);
   const [percent, setPercent] = useState(() =>
     initialDuration ? calcPercent(new Set(initialSegments), initialDuration) : 0,
   );
@@ -77,9 +79,11 @@ export function TrackedVideo({
 
     const report = (useBeacon = false) => {
       const duration = durationRef.current;
-      if (!dirtyRef.current || !duration) return;
+      const played = Math.floor(playedRef.current);
+      if ((!dirtyRef.current && played < 1) || !duration) return;
       dirtyRef.current = false;
-      const body = JSON.stringify({ lessonId, duration, segments: [...segmentsRef.current] });
+      playedRef.current -= played;
+      const body = JSON.stringify({ lessonId, duration, played, segments: [...segmentsRef.current] });
       if (useBeacon && navigator.sendBeacon) {
         navigator.sendBeacon("/api/progress", new Blob([body], { type: "application/json" }));
         return;
@@ -91,6 +95,7 @@ export function TrackedVideo({
         })
         .catch(() => {
           dirtyRef.current = true;
+          playedRef.current += played;
         });
     };
 
@@ -107,6 +112,7 @@ export function TrackedVideo({
       if (lastTime != null) {
         const step = now - lastTime;
         if (step > 0 && step <= MAX_NATURAL_STEP) {
+          playedRef.current += step;
           for (let s = Math.floor(lastTime); s <= Math.floor(now); s++) {
             const seg = Math.floor(s / SEGMENT_SECONDS);
             if (!segmentsRef.current.has(seg)) {

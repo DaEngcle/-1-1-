@@ -8,6 +8,7 @@ const NAV = [
   { href: "/student", label: "홈 · 내 성과" },
   { href: "/student/lessons", label: "부트캠프 복습" },
   { href: "/student/shadowing", label: "내 쉐도잉" },
+  { href: "/student/level-test", label: "레벨테스트" },
   { href: "/student/pronunciation", label: "발음 가이드" },
 ];
 

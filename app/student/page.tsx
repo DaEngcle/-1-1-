@@ -5,6 +5,10 @@ import { getCourseProgress } from "@/lib/classroom/progress";
 import { ScoreTrendChart } from "@/app/_ui/score-trend-chart";
 import { cardClass } from "@/app/_ui/styles";
 import { ATTENDANCE_LABEL } from "@/lib/classroom/attendance";
+import { getEngagement, getWeeklyRanking } from "@/lib/classroom/engagement";
+import { getTests } from "@/lib/classroom/level-test-data";
+import { LevelCard } from "@/app/_ui/level-card";
+import { Badges, Missions, StudyCalendar, WeeklyRanking } from "@/app/_ui/engagement";
 
 function StatTile({ label, value, unit }: { label: string; value: string | number; unit?: string }) {
   return (
@@ -28,9 +32,12 @@ function ProgressBar({ percent }: { percent: number }) {
 
 export default async function StudentHomePage() {
   const student = await requireStudent();
-  const [stats, progressMap] = await Promise.all([
+  const [stats, progressMap, engagement, ranking, tests] = await Promise.all([
     getStudentStats(student.id),
     getCourseProgress([student.id]),
+    getEngagement(student.id),
+    getWeeklyRanking({ masked: true }),
+    getTests(student.id),
   ]);
   const progress = progressMap.get(student.id)!;
   const totalClasses = Object.values(stats.attendance).reduce((a, b) => a + b, 0);
@@ -45,33 +52,48 @@ export default async function StudentHomePage() {
         </Link>
       </div>
 
-      <section className="grid grid-cols-2 gap-3">
-        <Link href="/student/lessons" className={`${cardClass} flex flex-col gap-1.5 hover:border-yellow-400`}>
-          <span className="text-xs text-zinc-500">🎬 영상 수강률</span>
+      <LevelCard pre={tests.pre} post={tests.post} href="/student/level-test" />
+
+      <section className="grid grid-cols-3 gap-3">
+        <div className={`${cardClass} flex flex-col items-center gap-0.5 text-center`}>
+          <span className="text-xl">🔥</span>
+          <span className="text-2xl font-bold text-zinc-900">
+            {engagement.streak}
+            <span className="ml-0.5 text-sm font-normal text-zinc-500">일</span>
+          </span>
+          <span className="text-xs text-zinc-500">연속 학습</span>
+          <span className="text-[11px] text-zinc-400">최고 {engagement.bestStreak}일</span>
+        </div>
+        <Link href="/student/lessons" className={`${cardClass} flex flex-col items-center gap-0.5 text-center hover:border-yellow-400`}>
+          <span className="text-xl">🎬</span>
           <span className="text-2xl font-bold text-zinc-900">
             {progress.videoPercent}
             <span className="ml-0.5 text-sm font-normal text-zinc-500">%</span>
           </span>
+          <span className="text-xs text-zinc-500">강의 수강</span>
           <ProgressBar percent={progress.videoPercent} />
-          <span className="text-xs text-zinc-500">
-            {progress.completedVideos}/{progress.videoLessons} 레슨 수강 완료
-          </span>
         </Link>
-        <Link href="/student/shadowing" className={`${cardClass} flex flex-col gap-1.5 hover:border-yellow-400`}>
-          <span className="text-xs text-zinc-500">🎤 쉐도잉 제출</span>
+        <Link href="/student/shadowing" className={`${cardClass} flex flex-col items-center gap-0.5 text-center hover:border-yellow-400`}>
+          <span className="text-xl">🎤</span>
           <span className="text-2xl font-bold text-zinc-900">
-            {progress.submitPercent}
-            <span className="ml-0.5 text-sm font-normal text-zinc-500">%</span>
+            {progress.submittedSentences}
+            <span className="ml-0.5 text-sm font-normal text-zinc-500">/{progress.sentences}</span>
           </span>
+          <span className="text-xs text-zinc-500">쉐도잉 제출</span>
           <ProgressBar percent={progress.submitPercent} />
-          <span className="text-xs text-zinc-500">
-            {progress.submittedSentences}/{progress.sentences} 문장 제출
-          </span>
         </Link>
       </section>
 
-      <section className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <StatTile label="연속 학습" value={stats.streakDays} unit="일" />
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Missions missions={engagement.missions} />
+        <WeeklyRanking rows={ranking} meId={student.id} />
+      </div>
+
+      <StudyCalendar month={engagement.month} />
+
+      <Badges badges={engagement.badges} />
+
+      <section className="grid grid-cols-3 gap-3">
         <StatTile label="평균 발음 점수" value={stats.averageScore ?? "-"} unit={stats.averageScore != null ? "점" : undefined} />
         <StatTile label="연습한 문장" value={stats.practicedSentences} unit="개" />
         <StatTile
