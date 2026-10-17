@@ -78,8 +78,8 @@ export function SignupForm() {
   if (state && "done" in state) {
     return (
       <div className="flex w-full flex-col gap-2 rounded-2xl bg-brand-50 p-4 text-sm text-zinc-800">
-        <p className="text-base font-bold text-brand-700">🎉 가입 신청 완료!</p>
-        <p>선생님이 확인 후 승인하면 전화번호와 비밀번호로 로그인할 수 있어요.</p>
+        <p className="text-base font-bold text-brand-700">🎉 가입 완료! 환영해요</p>
+        <p>수강 확인이 끝나면 바로 열어드릴게요. 그때 휴대폰 번호와 비밀번호로 로그인하면 돼요 😊</p>
       </div>
     );
   }

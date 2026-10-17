@@ -61,7 +61,7 @@ export async function studentLogin(
 /** 승인 상태·수강 기간 확인 (로그인 직전) */
 function accessProblem(student: { is_active: boolean; approval: string; access_until: string | null }) {
   if (!student.is_active || student.approval === "rejected") return "이용이 중지된 계정이에요. 선생님께 문의해주세요.";
-  if (student.approval === "pending") return "가입 승인 대기 중이에요. 선생님이 승인하면 로그인할 수 있어요.";
+  if (student.approval === "pending") return "거의 다 됐어요! 수강 확인이 끝나면 바로 열어드릴게요 😊";
   if (student.access_until && student.access_until < kstDate(new Date())) {
     return "수강 기간이 끝났어요. 연장은 선생님께 문의해주세요.";
   }

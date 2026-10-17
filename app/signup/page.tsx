@@ -13,7 +13,7 @@ export default function SignupPage() {
             D
           </span>
           <h1 className="text-2xl font-extrabold tracking-tight text-zinc-900">다잉클 클래스룸 가입</h1>
-          <p className="text-sm text-zinc-600">수강생만 이용할 수 있어요. 신청하면 선생님이 확인 후 승인해요.</p>
+          <p className="text-sm text-zinc-600">워홀 영어, 오늘부터 같이 시작해요! 🙌</p>
         </div>
         <SignupForm />
         <Link href="/login" className="text-xs text-zinc-500 underline">

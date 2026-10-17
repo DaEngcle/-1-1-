@@ -5,7 +5,7 @@ import { PhoneLoginForm, StudentLoginForm, TeacherLoginForm } from "./login-form
 const ERRORS: Record<string, string> = {
   expired: "로그인이 만료됐어요. 다시 로그인해주세요.",
   inactive: "이용이 중지된 계정이에요. 선생님께 문의해주세요.",
-  pending: "가입 승인 대기 중이에요. 선생님이 승인하면 로그인할 수 있어요.",
+  pending: "거의 다 됐어요! 수강 확인이 끝나면 바로 열어드릴게요 😊",
   "plan-ended": "수강 기간이 끝났어요. 연장은 선생님께 문의해주세요.",
 };
 
