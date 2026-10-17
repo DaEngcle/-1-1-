@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import type { WordResult } from "@/lib/classroom/azure-speech";
 import { findTipsForSentence } from "@/lib/classroom/pronunciation-tips";
+import { buildDetailedFeedback } from "@/lib/classroom/detailed-feedback";
 import { useTts } from "@/app/_ui/audio/use-tts";
 import { toWav16kMono } from "@/app/_ui/audio/wav";
 import { useRecorder } from "@/app/_ui/audio/use-recorder";
@@ -51,6 +52,12 @@ function ResultView({ result, onPlayWord }: { result: PracticeResult; onPlayWord
     .map((w) => w.word)
     .join(" ");
   const tips = weakWords ? findTipsForSentence(weakWords) : [];
+  const detailed = buildDetailedFeedback(words, {
+    accuracy: result.accuracy_score,
+    fluency: result.fluency_score,
+    completeness: result.completeness_score,
+    prosody: result.prosody_score,
+  });
 
   return (
     <div className="flex flex-col gap-3">
@@ -87,11 +94,35 @@ function ResultView({ result, onPlayWord }: { result: PracticeResult; onPlayWord
         <br />
         👆 단어를 누르면 그 단어만 천천히 들을 수 있어요.
       </p>
-      {result.feedback_text && (
+      {result.feedback_text ? (
         <div className="rounded-xl border border-brand-100 bg-brand-50 p-3 text-sm leading-relaxed whitespace-pre-line text-zinc-800">
           <span className="mb-1 block text-xs font-semibold text-brand-700">AI 코치 피드백</span>
           {result.feedback_text}
         </div>
+      ) : (
+        detailed.length > 0 && (
+          <div className="rounded-xl border border-brand-100 bg-brand-50 p-3 text-sm leading-relaxed text-zinc-800">
+            <span className="mb-1.5 block text-xs font-semibold text-brand-700">📝 이렇게 고쳐 보세요</span>
+            <ul className="flex flex-col gap-1.5">
+              {detailed.map((line, i) => (
+                <li key={i}>
+                  {line.word ? (
+                    <button
+                      type="button"
+                      onClick={() => onPlayWord(line.word!)}
+                      className="mr-1 rounded bg-white px-1.5 font-semibold text-brand-700 underline decoration-dotted"
+                    >
+                      {line.word} 🔊
+                    </button>
+                  ) : (
+                    "• "
+                  )}
+                  {line.text}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
       )}
       {tips.length > 0 && (
         <div className="flex flex-wrap gap-2">

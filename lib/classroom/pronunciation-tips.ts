@@ -43,7 +43,8 @@ export const PRONUNCIATION_TIPS: PronunciationTip[] = [
       ["breathe", "breeze"],
     ],
     practiceWords: ["thanks", "think", "the", "that", "though", "anything", "month"],
-    match: (w) => w.includes("th"),
+    // the·this·that 같은 기능어는 초보에게 너무 세세해서 제외
+    match: (w) => w.includes("th") && !TH_FUNCTION_WORDS.has(w.replace(/'.*$/, "")),
   },
   {
     id: "r",
@@ -67,7 +68,8 @@ export const PRONUNCIATION_TIPS: PronunciationTip[] = [
       ["pray", "play"],
     ],
     practiceWords: ["roster", "rent", "really", "reckon", "price", "around"],
-    match: (w) => /r/.test(w),
+    // r로 시작하는 단어만 (melbourne·near처럼 중간·끝 r은 제외)
+    match: (w) => /^w?r/.test(w),
   },
   {
     id: "l",
@@ -137,7 +139,10 @@ export const PRONUNCIATION_TIPS: PronunciationTip[] = [
       ["rise", "rice"],
     ],
     practiceWords: ["days", "bills", "is", "heaps", "allergies", "these"],
-    match: (w) => /z|[^s]s$/.test(w) && !/(?:ts|ks|ps|fs)$/.test(w),
+    match: (w) => {
+      const plain = w.replace(/'/g, "");
+      return /z|[^s]s$/.test(plain) && !/(?:ts|ks|ps|fs)$/.test(plain);
+    },
   },
   {
     id: "flap",
@@ -161,6 +166,11 @@ export const PRONUNCIATION_TIPS: PronunciationTip[] = [
     match: (w) => /[aeiouy]t+[aeiouy]/.test(w),
   },
 ];
+
+const TH_FUNCTION_WORDS = new Set([
+  "the", "this", "that", "these", "those", "they", "them", "their", "there", "then", "than",
+  "with", "though", "other", "another", "either", "neither", "whether", "together",
+]);
 
 export function getTip(id: string) {
   return PRONUNCIATION_TIPS.find((t) => t.id === id);
