@@ -1,6 +1,9 @@
 import "server-only";
 
 export const TTS_VOICE = "en-AU-NatashaNeural";
+// 대화 듣기용 두 목소리 (A: 여성, B: 남성)
+export const TTS_VOICES = { a: "en-AU-NatashaNeural", b: "en-AU-WilliamNeural" } as const;
+export type TtsVoice = keyof typeof TTS_VOICES;
 export const TTS_SPEEDS = { normal: "0%", slow: "-35%" } as const;
 export type TtsSpeed = keyof typeof TTS_SPEEDS;
 
@@ -24,12 +27,12 @@ function escapeXml(text: string) {
 }
 
 /** Azure 신경망 TTS로 mp3 생성 */
-export async function synthesizeSpeech(text: string, speed: TtsSpeed) {
+export async function synthesizeSpeech(text: string, speed: TtsSpeed, voice: TtsVoice = "a") {
   const config = getConfig();
   if (!config) throw new Error("Azure Speech가 설정되지 않았습니다.");
 
   const ssml =
-    `<speak version="1.0" xml:lang="en-AU"><voice name="${TTS_VOICE}">` +
+    `<speak version="1.0" xml:lang="en-AU"><voice name="${TTS_VOICES[voice]}">` +
     `<prosody rate="${TTS_SPEEDS[speed]}">${escapeXml(text)}</prosody>` +
     `</voice></speak>`;
 
@@ -167,4 +170,36 @@ export async function assessPronunciation(
       };
     }),
   };
+}
+
+/** 음성을 글자로 받아 적기 (자유 발화용) */
+export async function transcribe(audio: Uint8Array): Promise<string> {
+  const config = getConfig();
+  if (!config) throw new Error("Azure Speech가 설정되지 않았습니다.");
+  const res = await fetch(
+    `https://${config.region}.stt.speech.microsoft.com/speech/recognition/conversation/cognitiveservices/v1?language=en-US&format=detailed`,
+    {
+      method: "POST",
+      headers: {
+        "Ocp-Apim-Subscription-Key": config.key,
+        "Content-Type": "audio/wav; codecs=audio/pcm; samplerate=16000",
+        Accept: "application/json",
+      },
+      body: Buffer.from(audio),
+    },
+  );
+  if (!res.ok) throw new Error(`Azure 받아쓰기 실패: ${res.status} ${await res.text()}`);
+  const data = (await res.json()) as { RecognitionStatus: string; NBest?: { Display?: string }[] };
+  return data.RecognitionStatus === "Success" ? (data.NBest?.[0]?.Display ?? "").trim() : "";
+}
+
+/**
+ * 대본 없는 자유 발화 평가: 먼저 받아 적고, 받아 적은 문장을 기준으로 발음·유창성·억양을 채점.
+ * 아무 말도 인식되지 않으면 null.
+ */
+export async function assessFreeSpeech(audio: Uint8Array) {
+  const transcript = await transcribe(audio);
+  if (!transcript) return null;
+  const result = await assessPronunciation(audio, transcript);
+  return { ...result, transcript };
 }

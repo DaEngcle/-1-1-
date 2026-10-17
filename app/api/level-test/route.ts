@@ -1,18 +1,45 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { getVerifiedStudent } from "@/lib/classroom/dal";
-import { assessPronunciation, isAzureConfigured } from "@/lib/classroom/azure-speech";
-import { SPEAKING_QUESTIONS, listeningScore } from "@/lib/classroom/level-test";
+import { assessFreeSpeech, isAzureConfigured } from "@/lib/classroom/azure-speech";
+import {
+  BLANKS,
+  DIALOGUES,
+  DICTATION,
+  RESPONSES,
+  SPEAKING,
+  audioFor,
+  blankScore,
+  choiceScore,
+  dictationScore,
+  speakingDetail,
+} from "@/lib/classroom/level-test";
 import { canTakeTest, finishTest, getOrCreateTest, type TestKind } from "@/lib/classroom/level-test-data";
+import { getSpeechAudio, mp3Response } from "@/lib/classroom/speech-cache";
 
 export const maxDuration = 60;
 
 const MAX_AUDIO_BYTES = 2 * 1024 * 1024;
+const MAX_TEXT = 300;
+
+/** 문제 음성: GET /api/level-test?audio=d1 | l2:0 | s1 (대본은 서버에만 있음) */
+export async function GET(request: NextRequest) {
+  if (!(await getVerifiedStudent())) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+  const item = audioFor(request.nextUrl.searchParams.get("audio") ?? "");
+  if (!item) return NextResponse.json({ error: "not_found" }, { status: 404 });
+  try {
+    return mp3Response(await getSpeechAudio(item.text, "normal", item.voice));
+  } catch (e) {
+    console.error("레벨테스트 음성 실패:", e);
+    return NextResponse.json({ error: "tts_failed" }, { status: 502 });
+  }
+}
 
 /**
  * 레벨테스트 진행 (multipart)
- * - action=speaking: kind, questionId, audio(wav) → 발음 평가 점수 저장
- * - action=finish: kind, listening(JSON {questionId: 고른 보기}) → 듣기 채점 후 결과 확정
+ * - action=speaking: kind, questionId, audio(wav) → 자유 발화 평가 후 저장
+ * - action=finish: kind, answers(JSON) → 듣기·문법 채점 후 결과 확정
+ *   answers = { dictation: {d1: "..."}, dialogues: {l1: 0}, responses: {g1: 1}, blanks: {b1: "have"} }
  */
 export async function POST(request: NextRequest) {
   const student = await getVerifiedStudent();
@@ -32,42 +59,70 @@ export async function POST(request: NextRequest) {
     if (!isAzureConfigured()) {
       return NextResponse.json({ error: "아직 말하기 채점이 준비되지 않았어요. 선생님께 알려주세요." }, { status: 503 });
     }
-    const question = SPEAKING_QUESTIONS.find((q) => q.id === form.get("questionId"));
+    const question = SPEAKING.find((q) => q.id === form.get("questionId"));
     const audio = form.get("audio");
-    if (!question || !(audio instanceof Blob) || audio.size === 0 || audio.size > MAX_AUDIO_BYTES) {
+    const skip = form.get("skip") === "true";
+    if (!question || (!skip && (!(audio instanceof Blob) || audio.size === 0 || audio.size > MAX_AUDIO_BYTES))) {
       return NextResponse.json({ error: "녹음을 다시 해주세요." }, { status: 400 });
     }
-    const bytes = new Uint8Array(await audio.arrayBuffer());
-    let score: number;
-    try {
-      score = Math.round((await assessPronunciation(bytes, question.sentence)).overall);
-    } catch (e) {
-      console.error("레벨테스트 발음 평가 실패:", e);
-      return NextResponse.json(
-        { error: "음성을 잘 인식하지 못했어요. 조용한 곳에서 문장 전체를 다시 녹음해주세요." },
-        { status: 422 },
-      );
+
+    let result = null;
+    let audioPath: string | null = null;
+    if (!skip && audio instanceof Blob) {
+      const bytes = new Uint8Array(await audio.arrayBuffer());
+      try {
+        result = await assessFreeSpeech(bytes);
+      } catch (e) {
+        console.error("레벨테스트 말하기 평가 실패:", e);
+        return NextResponse.json(
+          { error: "음성을 잘 인식하지 못했어요. 조용한 곳에서 조금 더 크게 다시 녹음해주세요." },
+          { status: 422 },
+        );
+      }
+      if (!result) {
+        return NextResponse.json(
+          { error: "말소리가 들리지 않았어요. 마이크 가까이에서 다시 녹음해주세요." },
+          { status: 422 },
+        );
+      }
+      audioPath = `level-tests/${student.id}/${kind}/${question.id}.wav`;
+      await supabase.storage.from("shadowing").upload(audioPath, bytes, { contentType: "audio/wav", upsert: true });
     }
-    const audioPath = `level-tests/${student.id}/${kind}/${question.id}.wav`;
-    await supabase.storage.from("shadowing").upload(audioPath, bytes, { contentType: "audio/wav", upsert: true });
+    const { score, detail } = speakingDetail(question.id, result);
     await supabase
       .from("level_test_answers")
-      .upsert({ test_id: testId, question_id: question.id, score, audio_path: audioPath });
-    return NextResponse.json({ questionId: question.id, score });
+      .upsert({ test_id: testId, question_id: question.id, score, audio_path: audioPath, detail });
+    return NextResponse.json({ questionId: question.id, done: true });
   }
 
   if (form.get("action") === "finish") {
-    let choices: Record<string, unknown> = {};
+    let answers: Record<string, Record<string, unknown>> = {};
     try {
-      choices = JSON.parse(String(form.get("listening") ?? "{}"));
+      answers = JSON.parse(String(form.get("answers") ?? "{}"));
     } catch {
       return NextResponse.json({ error: "bad_request" }, { status: 400 });
     }
-    const rows = Object.entries(choices).flatMap(([questionId, choice]) => {
-      const score = Number.isInteger(choice) ? listeningScore(questionId, choice as number) : null;
-      return score == null ? [] : [{ test_id: testId, question_id: questionId, score, choice: choice as number }];
-    });
-    if (rows.length > 0) await supabase.from("level_test_answers").upsert(rows);
+    const text = (v: unknown) => (typeof v === "string" ? v.slice(0, MAX_TEXT) : "");
+    const rows = [
+      ...DICTATION.map((q) => {
+        const typed = text(answers.dictation?.[q.id]);
+        return { test_id: testId, question_id: q.id, score: dictationScore(q.id, typed) ?? 0, text_answer: typed };
+      }),
+      ...[...DIALOGUES, ...RESPONSES].map((q) => {
+        const raw = (q.id.startsWith("l") ? answers.dialogues : answers.responses)?.[q.id];
+        const choice = Number.isInteger(raw) ? (raw as number) : null;
+        return { test_id: testId, question_id: q.id, score: choice == null ? 0 : (choiceScore(q.id, choice) ?? 0), choice };
+      }),
+      ...BLANKS.map((q) => {
+        const typed = text(answers.blanks?.[q.id]);
+        return { test_id: testId, question_id: q.id, score: blankScore(q.id, typed) ?? 0, text_answer: typed };
+      }),
+    ];
+    const { error } = await supabase.from("level_test_answers").upsert(rows);
+    if (error) {
+      console.error("레벨테스트 답 저장 실패:", error.message);
+      return NextResponse.json({ error: "제출 중 오류가 발생했어요." }, { status: 500 });
+    }
     return NextResponse.json(await finishTest(testId));
   }
 

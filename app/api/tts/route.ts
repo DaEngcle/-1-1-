@@ -1,12 +1,9 @@
-import { createHash } from "node:crypto";
 import { NextResponse, type NextRequest } from "next/server";
-import { createServerSupabaseClient } from "@/lib/supabase";
+import { getSpeechAudio, mp3Response } from "@/lib/classroom/speech-cache";
 import { getVerifiedStudent, isTeacher } from "@/lib/classroom/dal";
 import {
   TTS_SPEEDS,
-  TTS_VOICE,
   isAzureConfigured,
-  synthesizeSpeech,
   type TtsSpeed,
 } from "@/lib/classroom/azure-speech";
 
@@ -32,32 +29,10 @@ export async function GET(request: NextRequest) {
   }
   const speed = speedParam as TtsSpeed;
 
-  const hash = createHash("sha256")
-    .update(`${TTS_VOICE}|${speed}|${text}`)
-    .digest("hex");
-  const path = `${hash}.mp3`;
-  const supabase = createServerSupabaseClient();
-
-  let audio: Uint8Array;
-  const cached = await supabase.storage.from("tts").download(path);
-  if (cached.data) {
-    audio = new Uint8Array(await cached.data.arrayBuffer());
-  } else {
-    try {
-      audio = await synthesizeSpeech(text, speed);
-    } catch (e) {
-      console.error(e);
-      return NextResponse.json({ error: "tts_failed" }, { status: 502 });
-    }
-    await supabase.storage
-      .from("tts")
-      .upload(path, audio, { contentType: "audio/mpeg", upsert: true });
+  try {
+    return mp3Response(await getSpeechAudio(text, speed));
+  } catch (e) {
+    console.error(e);
+    return NextResponse.json({ error: "tts_failed" }, { status: 502 });
   }
-
-  return new NextResponse(Buffer.from(audio), {
-    headers: {
-      "Content-Type": "audio/mpeg",
-      "Cache-Control": "private, max-age=604800, immutable",
-    },
-  });
 }

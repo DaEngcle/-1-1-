@@ -37,10 +37,7 @@ export default async function LevelTestRunPage({ params }: { params: Promise<{ k
   const tests = await getTests(student.id);
   const current = kind === "pre" ? tests.pre : tests.post;
   const answers = current ? await getAnswers(current.id) : [];
-  const answeredSpeaking = Object.fromEntries(
-    answers.filter((a) => a.audio_path).map((a) => [a.question_id, a.score]),
-  );
-  const questions = publicQuestions();
+  const answeredSpeaking = answers.filter((a) => a.question_id.startsWith("s")).map((a) => a.question_id);
 
   return (
     <>
@@ -48,12 +45,10 @@ export default async function LevelTestRunPage({ params }: { params: Promise<{ k
       <h1 className="text-xl font-bold text-zinc-900">
         {kind === "pre" ? "수강 전" : "수강 후"} 레벨테스트
       </h1>
-      <LevelTestRunner
-        kind={kind}
-        speaking={questions.speaking}
-        listening={questions.listening}
-        answeredSpeaking={answeredSpeaking}
-      />
+      <p className="text-sm text-zinc-600">
+        듣기 → 문법·어휘 → 말하기 순서로 약 12분 걸려요. 이어폰과 조용한 곳을 추천해요. 중간에 나가도 이어서 볼 수 있어요.
+      </p>
+      <LevelTestRunner kind={kind} questions={publicQuestions()} answeredSpeaking={answeredSpeaking} />
     </>
   );
 }

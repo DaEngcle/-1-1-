@@ -5,7 +5,8 @@ import { getStudentStats } from "@/lib/classroom/stats";
 import { getCourseProgress, getLessonProgress } from "@/lib/classroom/progress";
 import { getEngagement } from "@/lib/classroom/engagement";
 import { getAnswers, getTests } from "@/lib/classroom/level-test-data";
-import { SPEAKING_QUESTIONS } from "@/lib/classroom/level-test";
+import { SPEAKING, type SpeakingDetail } from "@/lib/classroom/level-test";
+import { SkillBars } from "@/app/_ui/skill-bars";
 import { LevelCard } from "@/app/_ui/level-card";
 import { Badges, StudyCalendar } from "@/app/_ui/engagement";
 import { resetLevelTest } from "../../level-tests/actions";
@@ -85,17 +86,29 @@ export default async function TeacherStudentPage({
 
       <LevelCard pre={tests.pre} post={tests.post} />
 
+      {(tests.post?.skills ?? tests.pre?.skills) && (
+        <section className={cardClass}>
+          <h2 className="mb-2 font-bold text-zinc-900">5가지 실력</h2>
+          <SkillBars
+            current={(tests.post?.skills ?? tests.pre?.skills)!}
+            previous={tests.post?.skills ? tests.pre?.skills : null}
+          />
+        </section>
+      )}
+
       {(tests.pre || tests.post) && (
         <section className={cardClass}>
-          <h2 className="mb-1 font-bold text-zinc-900">레벨테스트 말하기 녹음 비교</h2>
-          <p className="mb-2 text-xs text-zinc-500">같은 문장을 수강 전·후에 어떻게 말했는지 들어보세요.</p>
+          <h2 className="mb-1 font-bold text-zinc-900">레벨테스트 말하기 답변</h2>
+          <p className="mb-2 text-xs text-zinc-500">
+            같은 질문에 수강 전·후 어떻게 대답했는지 들어보세요. 글자는 AI가 받아 적은 내용이에요.
+          </p>
           <ul className="flex flex-col divide-y divide-zinc-100">
-            {SPEAKING_QUESTIONS.map((q) => {
+            {SPEAKING.map((q) => {
               const pre = preAnswers.find((a) => a.question_id === q.id);
               const post = postAnswers.find((a) => a.question_id === q.id);
               return (
                 <li key={q.id} className="flex flex-col gap-1 py-2">
-                  <span className="text-sm text-zinc-900">{q.sentence}</span>
+                  <span className="text-sm font-medium text-zinc-900">{q.question}</span>
                   <div className="grid gap-1 sm:grid-cols-2">
                     {[
                       ["수강 전", pre],
@@ -104,11 +117,22 @@ export default async function TeacherStudentPage({
                       const ans = a as typeof pre;
                       const url = ans?.audio_path ? audioUrl.get(ans.audio_path) : undefined;
                       return (
-                        <div key={label as string} className="flex items-center gap-2 text-xs text-zinc-500">
-                          <span className="w-24 shrink-0">
-                            {label as string} {ans ? `${ans.score}점` : "-"}
-                          </span>
-                          {url && <audio src={url} controls preload="none" className="h-8 w-full" />}
+                        <div key={label as string} className="flex flex-col gap-1 text-xs text-zinc-500">
+                          <div className="flex items-center gap-2">
+                            <span className="w-24 shrink-0">
+                              {label as string} {ans ? `${ans.score}점` : "-"}
+                            </span>
+                            {url && <audio src={url} controls preload="none" className="h-8 w-full" />}
+                          </div>
+                          {(ans?.detail as SpeakingDetail | null)?.transcript && (
+                            <p className="rounded-lg bg-slate-50 px-2 py-1 text-zinc-700">
+                              &ldquo;{(ans!.detail as SpeakingDetail).transcript}&rdquo;
+                              <span className="ml-1 text-zinc-400">
+                                · 발음 {(ans!.detail as SpeakingDetail).accuracy} · 유창성{" "}
+                                {(ans!.detail as SpeakingDetail).fluency} · 단어 {(ans!.detail as SpeakingDetail).uniqueWords}개
+                              </span>
+                            </p>
+                          )}
                         </div>
                       );
                     })}

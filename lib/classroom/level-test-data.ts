@@ -1,7 +1,7 @@
 import "server-only";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { levelForScore } from "./levels";
-import { summarize } from "./level-test";
+import { summarize, type Skills } from "./level-test";
 
 export type TestKind = "pre" | "post";
 
@@ -11,6 +11,9 @@ export interface LevelTestRow {
   kind: TestKind;
   speaking_score: number | null;
   listening_score: number | null;
+  grammar_score: number | null;
+  skills: Skills | null;
+  version: number;
   total_score: number | null;
   level: number | null;
   started_at: string;
@@ -71,29 +74,40 @@ export async function getOrCreateTest(studentId: string, kind: TestKind) {
   return data.id as string;
 }
 
+export interface AnswerRow {
+  question_id: string;
+  score: number;
+  audio_path: string | null;
+  choice: number | null;
+  text_answer: string | null;
+  detail: unknown;
+}
+
 export async function getAnswers(testId: string) {
   const supabase = createServerSupabaseClient();
   const { data } = await supabase
     .from("level_test_answers")
-    .select("question_id, score, audio_path, choice")
+    .select("question_id, score, audio_path, choice, text_answer, detail")
     .eq("test_id", testId);
-  return (data ?? []) as { question_id: string; score: number; audio_path: string | null; choice: number | null }[];
+  return (data ?? []) as AnswerRow[];
 }
 
 /** 답을 모아 점수·레벨을 확정한다 */
 export async function finishTest(testId: string) {
   const supabase = createServerSupabaseClient();
-  const { speaking, listening, total } = summarize(await getAnswers(testId));
+  const { listening, grammar, speaking, total, skills } = summarize(await getAnswers(testId));
   const level = levelForScore(total).level;
   await supabase
     .from("level_tests")
     .update({
       speaking_score: speaking,
       listening_score: listening,
+      grammar_score: grammar,
       total_score: total,
+      skills,
       level,
       finished_at: new Date().toISOString(),
     })
     .eq("id", testId);
-  return { speaking, listening, total, level };
+  return { listening, grammar, speaking, total, skills, level };
 }

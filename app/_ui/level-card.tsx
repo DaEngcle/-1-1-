@@ -36,7 +36,7 @@ export function LevelCard({
         <div>
           <p className="text-xs text-zinc-500">내 레벨</p>
           <p className="font-semibold text-zinc-900">아직 레벨테스트를 보지 않았어요</p>
-          <p className="text-xs text-zinc-500">말하기 10문장 + 듣기 10문제 · 약 10분</p>
+          <p className="text-xs text-zinc-500">듣기 · 문법 · 자유 말하기 · 약 12분</p>
         </div>
         {href && (
           <Link href={href} className="shrink-0 rounded-lg bg-brand-600 px-3 py-2 text-sm font-semibold text-white">
@@ -77,13 +77,14 @@ export function LevelCard({
                 {growth >= 0 ? `+${growth}점 성장` : `${growth}점`}
               </span>
               <span className="text-zinc-600">
-                말하기 {signed((postDone!.speaking_score ?? 0) - (preDone.speaking_score ?? 0))} · 듣기{" "}
-                {signed((postDone!.listening_score ?? 0) - (preDone.listening_score ?? 0))}
+                듣기 {signed((postDone!.listening_score ?? 0) - (preDone.listening_score ?? 0))} · 문법{" "}
+                {signed((postDone!.grammar_score ?? 0) - (preDone.grammar_score ?? 0))} · 말하기{" "}
+                {signed((postDone!.speaking_score ?? 0) - (preDone.speaking_score ?? 0))}
               </span>
             </>
           ) : (
             <span className="text-zinc-600">
-              말하기 {preDone.speaking_score} · 듣기 {preDone.listening_score}
+              듣기 {preDone.listening_score} · 문법 {preDone.grammar_score} · 말하기 {preDone.speaking_score}
               <br />
               수료 때 한 번 더 보고 성장을 확인해요
             </span>

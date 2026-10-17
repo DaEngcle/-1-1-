@@ -3,6 +3,7 @@ import { requireStudent } from "@/lib/classroom/dal";
 import { LEVELS } from "@/lib/classroom/levels";
 import { getTests, isPostTestOpen } from "@/lib/classroom/level-test-data";
 import { LevelCard } from "@/app/_ui/level-card";
+import { SkillBars } from "@/app/_ui/skill-bars";
 import { cardClass } from "@/app/_ui/styles";
 
 export default async function StudentLevelTestPage() {
@@ -24,6 +25,12 @@ export default async function StudentLevelTestPage() {
       </p>
 
       <LevelCard pre={pre} post={post} />
+      {(post?.skills ?? pre?.skills) && (
+        <section className={cardClass}>
+          <h2 className="mb-2 font-bold text-zinc-900">내 5가지 실력</h2>
+          <SkillBars current={(post?.skills ?? pre?.skills)!} previous={post?.skills ? pre?.skills : null} />
+        </section>
+      )}
 
       {next ? (
         <Link
@@ -50,7 +57,9 @@ export default async function StudentLevelTestPage() {
             </li>
           ))}
         </ul>
-        <p className="mt-2 text-xs text-zinc-500">점수 = 말하기(발음·유창성·억양) 60% + 듣기 40%</p>
+        <p className="mt-2 text-xs text-zinc-500">
+          점수 = 듣기(받아쓰기·대화) 35% + 문법·어휘 25% + 자유 말하기(발음·유창성·말한 양) 40%
+        </p>
       </section>
     </>
   );

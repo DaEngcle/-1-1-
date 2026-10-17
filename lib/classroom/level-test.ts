@@ -1,120 +1,265 @@
 import "server-only";
+import type { TtsVoice } from "./azure-speech";
 
-// 레벨테스트 문제. 수강 전·후 같은 문제로 비교한다.
-// 문제를 바꾸면 이미 본 학생과 점수 비교가 어긋나므로 기수 중간에는 바꾸지 않는다.
+// 레벨테스트 v2: 듣기(받아쓰기·대화) → 문법·어휘 → 자유 말하기
+// 수강 전·후 같은 문제로 비교하므로 기수 중간에는 문제를 바꾸지 않는다.
+// 정답·받아쓰기 원문은 이 파일(서버)에만 있고 브라우저로 보내지 않는다.
 
-export interface SpeakingQuestion {
-  id: string;
-  sentence: string;
-}
+export const TEST_VERSION = 2;
 
-export interface ListeningQuestion {
-  id: string;
-  sentence: string;
-  choices: string[];
-  answer: number;
-}
-
-// 쉬운 문장 → 어려운 문장
-export const SPEAKING_QUESTIONS: SpeakingQuestion[] = [
-  { id: "s1", sentence: "What do you do?" },
-  { id: "s2", sentence: "Reckon so." },
-  { id: "s3", sentence: "How old do I look?" },
-  { id: "s4", sentence: "Are bills included?" },
-  { id: "s5", sentence: "Can I grab a magic takeaway please?" },
-  { id: "s6", sentence: "Is the rent per week or per month?" },
-  { id: "s7", sentence: "Can you please cover my shift on Friday?" },
-  { id: "s8", sentence: "I haven't even had a coffee yet." },
-  { id: "s9", sentence: "I've been coughing a lot, especially when I talk." },
-  { id: "s10", sentence: "I just topped it up, but it didn't go through." },
+/** 받아쓰기: 듣고 그대로 타이핑 (짧은 문장 → 긴 문장) */
+export const DICTATION = [
+  { id: "d1", text: "I'll grab a flat white, please." },
+  { id: "d2", text: "Do you reckon we could swap shifts this Friday?" },
+  { id: "d3", text: "I've been meaning to ask, are bills included in the rent or not?" },
 ];
 
-export const LISTENING_QUESTIONS: ListeningQuestion[] = [
+/** 대화 듣기: A(여)·B(남) 대화를 듣고 영어 질문에 답하기 (쉬운 것 → 어려운 것) */
+export const DIALOGUES: {
+  id: string;
+  lines: { voice: TtsVoice; text: string }[];
+  question: string;
+  choices: string[];
+  answer: number;
+}[] = [
   {
     id: "l1",
-    sentence: "Where're you living these days?",
-    choices: ["요즘 어디 살아?", "요즘 뭐 하고 지내?", "어디서 왔어?", "언제 이사 가?"],
-    answer: 0,
+    lines: [
+      { voice: "a", text: "Hi, I'd like to book a table for two tonight." },
+      { voice: "b", text: "Sure, what time were you after?" },
+      { voice: "a", text: "Around seven thirty, if that's possible." },
+      { voice: "b", text: "Seven thirty works. Can I grab a name?" },
+    ],
+    question: "What time is the booking for?",
+    choices: ["7:00", "7:30", "2:00", "8:30"],
+    answer: 1,
   },
   {
     id: "l2",
-    sentence: "Is this position still available?",
-    choices: ["이 자리에 앉아도 되나요?", "이 일자리 아직 구하고 있나요?", "이 가게 언제 문 열어요?", "이 일 시급이 얼마예요?"],
+    lines: [
+      { voice: "a", text: "Hey, are you still keen for the beach tomorrow?" },
+      { voice: "b", text: "I'd love to, but I've been called in to work." },
+      { voice: "a", text: "Ah, bummer. What about Sunday?" },
+      { voice: "b", text: "Sunday's perfect. I'm free all day." },
+    ],
+    question: "Why can't B go to the beach tomorrow?",
+    choices: ["B is sick.", "B has to work.", "The weather is bad.", "B doesn't like the beach."],
     answer: 1,
   },
   {
     id: "l3",
-    sentence: "You look knackered.",
-    choices: ["너 오늘 멋져 보여.", "너 화난 것 같아.", "너 엄청 피곤해 보여.", "너 배고파 보여."],
-    answer: 2,
-  },
-  {
-    id: "l4",
-    sentence: "How long is the minimum stay?",
-    choices: ["집까지 얼마나 걸려요?", "방이 얼마나 넓어요?", "언제 들어올 수 있어요?", "최소 얼마나 살아야 해요?"],
-    answer: 3,
-  },
-  {
-    id: "l5",
-    sentence: "This one's on the house.",
-    choices: ["이건 서비스예요.", "이건 집에서 만들었어요.", "이건 포장해 드릴게요.", "이건 오늘의 메뉴예요."],
-    answer: 0,
-  },
-  {
-    id: "l6",
-    sentence: "You might want to go half a size up.",
-    choices: ["반 사이즈 작은 게 좋겠어요.", "반 사이즈 큰 걸로 신어 보세요.", "반값 할인 중이에요.", "위층에 더 있어요."],
+    lines: [
+      { voice: "a", text: "The rent's two hundred and sixty a week, and the bond is four weeks' rent." },
+      { voice: "b", text: "So I'd need to pay the bond upfront?" },
+      { voice: "a", text: "Yep, plus the first two weeks of rent before you move in." },
+      { voice: "b", text: "Okay, that's a bit more than I expected." },
+    ],
+    question: "Not counting the bond, how much rent does B pay before moving in?",
+    choices: ["$260", "$520", "$1,040", "$1,560"],
     answer: 1,
   },
   {
-    id: "l7",
-    sentence: "Will I be charged after today?",
-    choices: ["오늘 충전할 수 있나요?", "오늘 이후에도 일하나요?", "오늘 이후에 요금이 나가나요?", "오늘까지 내야 하나요?"],
+    id: "l4",
+    lines: [
+      { voice: "a", text: "Mate, you look knackered. Big night?" },
+      { voice: "b", text: "Nah, I did a double shift. Twelve hours straight." },
+      { voice: "a", text: "Fair dinkum? You should chuck a sickie tomorrow." },
+      { voice: "b", text: "Can't, we're short-staffed. I'll just have an early one tonight." },
+    ],
+    question: "What will B probably do tonight?",
+    choices: ["Go to a party", "Call in sick", "Go to bed early", "Work another shift"],
     answer: 2,
   },
   {
-    id: "l8",
-    sentence: "I think I missed my stop.",
-    choices: ["버스를 놓친 것 같아요.", "길을 잃은 것 같아요.", "카드를 잃어버린 것 같아요.", "내릴 정류장을 지나친 것 같아요."],
-    answer: 3,
-  },
-  {
-    id: "l9",
-    sentence: "Not that I know of.",
-    choices: ["제가 알기로는 없어요.", "저는 잘 몰라요.", "그건 제 것이 아니에요.", "아직 못 들었어요."],
-    answer: 0,
-  },
-  {
-    id: "l10",
-    sentence: "I don't think a Band-Aid's gonna work.",
-    choices: ["밴드가 다 떨어진 것 같아.", "밴드로는 안 될 것 같아.", "밴드 공연은 안 갈 것 같아.", "밴드 붙이면 괜찮을 거야."],
+    id: "l5",
+    lines: [
+      { voice: "a", text: "Did you end up getting that job at the cafe?" },
+      { voice: "b", text: "They offered it to me, but the pay was below award wage, so I turned it down." },
+      { voice: "a", text: "Good on you. Plenty of places pay properly." },
+      { voice: "b", text: "Yeah, I've got another trial on Thursday, so fingers crossed." },
+    ],
+    question: "Why didn't B take the cafe job?",
+    choices: ["The hours were too long.", "The pay was too low.", "The cafe was too far.", "B failed the trial."],
     answer: 1,
   },
 ];
 
-export const SPEAKING_WEIGHT = 0.6;
+/** 문법·어휘 ① 가장 자연스러운 대답 고르기 */
+export const RESPONSES = [
+  {
+    id: "g1",
+    prompt: "How's it going?",
+    choices: ["Yes, I'm going.", "Not bad, thanks. You?", "I'm going to the shop.", "It goes well to me."],
+    answer: 1,
+  },
+  {
+    id: "g2",
+    prompt: "Is this seat taken?",
+    choices: ["No, go for it.", "Yes, I take it.", "I'm sitting on it yesterday.", "No, it's my seat taking."],
+    answer: 0,
+  },
+  {
+    id: "g3",
+    prompt: "Would you mind closing the window?",
+    choices: ["Yes, I'll close it right now.", "Not at all. I'll close it.", "No, I mind it.", "Sure, I don't close it."],
+    answer: 1,
+  },
+  {
+    id: "g4",
+    prompt: "I'm so sorry, I completely forgot about our catch-up.",
+    choices: [
+      "Don't worry, it's all good. Let's reschedule.",
+      "Yes, you forgot it.",
+      "I'm sorry too about it.",
+      "It doesn't matter for you.",
+    ],
+    answer: 0,
+  },
+];
 
-/** 브라우저로 보낼 문제 (듣기 정답 제외) */
+/** 문법·어휘 ② 빈칸에 한 단어 쓰기 */
+export const BLANKS = [
+  { id: "b1", sentence: "I ___ been in Melbourne for six months.", ko: "멜버른에 온 지 6개월 됐어요.", answers: ["have", "ve"] },
+  { id: "b2", sentence: "Can you give me a ___ with these boxes?", ko: "이 상자들 좀 도와줄래?", answers: ["hand"] },
+  { id: "b3", sentence: "If I ___ more money, I'd travel around Australia.", ko: "돈이 더 있으면 호주 여행할 텐데.", answers: ["had"] },
+  { id: "b4", sentence: "I'm not used to ___ up so early.", ko: "이렇게 일찍 일어나는 게 익숙하지 않아.", answers: ["getting", "waking"] },
+];
+
+/** 자유 말하기: 영어 질문에 자유롭게 대답 (target = 이만큼 다양한 단어를 쓰면 '말한 양' 만점) */
+export const SPEAKING = [
+  { id: "s1", question: "Can you introduce yourself? Where are you from, and what do you do?", ko: "자기소개를 해주세요. 어디서 왔고, 무슨 일을 하나요?", target: 15 },
+  { id: "s2", question: "What do you usually do on your days off?", ko: "쉬는 날엔 보통 뭐 하나요?", target: 18 },
+  { id: "s3", question: "You're at a café. Order a drink and ask how long it'll take.", ko: "카페에 있어요. 음료를 주문하고 얼마나 걸리는지 물어보세요.", target: 15 },
+  { id: "s4", question: "Your housemate keeps leaving dirty dishes in the sink. What would you say to them?", ko: "하우스메이트가 계속 설거지를 안 하고 싱크대에 그릇을 쌓아둬요. 뭐라고 말할까요?", target: 20 },
+];
+
+export const WEIGHTS = { listening: 0.35, grammar: 0.25, speaking: 0.4 };
+
+/** 브라우저로 보낼 문제 (정답·받아쓰기 원문·대화 대본 제외) */
 export function publicQuestions() {
   return {
-    speaking: SPEAKING_QUESTIONS,
-    listening: LISTENING_QUESTIONS.map(({ id, sentence, choices }) => ({ id, sentence, choices })),
+    dictation: DICTATION.map(({ id }) => ({ id })),
+    dialogues: DIALOGUES.map(({ id, lines, question, choices }) => ({ id, lineCount: lines.length, question, choices })),
+    responses: RESPONSES.map(({ id, prompt, choices }) => ({ id, prompt, choices })),
+    blanks: BLANKS.map(({ id, sentence, ko }) => ({ id, sentence, ko })),
+    speaking: SPEAKING.map(({ id, question, ko }) => ({ id, question, ko })),
   };
 }
 
-export function listeningScore(questionId: string, choice: number) {
-  const q = LISTENING_QUESTIONS.find((x) => x.id === questionId);
+/** 문제 음성: 받아쓰기 id 또는 "대화id:줄번호" */
+export function audioFor(audioId: string): { text: string; voice: TtsVoice } | null {
+  const d = DICTATION.find((x) => x.id === audioId);
+  if (d) return { text: d.text, voice: "a" };
+  const [dialogueId, line] = audioId.split(":");
+  const l = DIALOGUES.find((x) => x.id === dialogueId)?.lines[Number(line)];
+  if (l) return l;
+  const s = SPEAKING.find((x) => x.id === audioId);
+  return s ? { text: s.question, voice: "b" } : null;
+}
+
+const words = (s: string) =>
+  s
+    .toLowerCase()
+    .replace(/[’']/g, "")
+    .replace(/[^a-z0-9\s]/g, " ")
+    .split(/\s+/)
+    .filter(Boolean);
+
+/** 받아쓰기 점수: 원문 단어 중 순서대로 맞게 쓴 비율 (최장 공통 부분열) */
+export function dictationScore(id: string, typed: string) {
+  const item = DICTATION.find((x) => x.id === id);
+  if (!item) return null;
+  const a = words(item.text);
+  const b = words(typed);
+  const dp = Array.from({ length: a.length + 1 }, () => new Array<number>(b.length + 1).fill(0));
+  for (let i = 1; i <= a.length; i++)
+    for (let j = 1; j <= b.length; j++)
+      dp[i][j] = a[i - 1] === b[j - 1] ? dp[i - 1][j - 1] + 1 : Math.max(dp[i - 1][j], dp[i][j - 1]);
+  const matched = dp[a.length][b.length];
+  // 엉뚱한 단어를 잔뜩 써서 맞추는 것 방지: 쓴 단어가 원문보다 많으면 그만큼 감점
+  const extra = Math.max(0, b.length - a.length);
+  return Math.max(0, Math.round(((matched - extra * 0.5) / a.length) * 100));
+}
+
+export function choiceScore(id: string, choice: number) {
+  const q = DIALOGUES.find((x) => x.id === id) ?? RESPONSES.find((x) => x.id === id);
   if (!q) return null;
   return q.answer === choice ? 100 : 0;
 }
 
-/** 문항 점수(0~100)로 영역 점수와 종합 점수 계산. 안 푼 문항은 0점 */
-export function summarize(answers: { question_id: string; score: number }[]) {
-  const byId = new Map(answers.map((a) => [a.question_id, a.score]));
-  const avg = (ids: string[]) =>
-    Math.round(ids.reduce((sum, id) => sum + (byId.get(id) ?? 0), 0) / ids.length);
-  const speaking = avg(SPEAKING_QUESTIONS.map((q) => q.id));
-  const listening = avg(LISTENING_QUESTIONS.map((q) => q.id));
-  const total = Math.round(speaking * SPEAKING_WEIGHT + listening * (1 - SPEAKING_WEIGHT));
-  return { speaking, listening, total };
+export function blankScore(id: string, typed: string) {
+  const q = BLANKS.find((x) => x.id === id);
+  if (!q) return null;
+  const w = words(typed)[0] ?? "";
+  return q.answers.includes(w) ? 100 : 0;
+}
+
+export interface SpeakingDetail {
+  transcript: string;
+  uniqueWords: number;
+  accuracy: number;
+  fluency: number;
+  prosody: number | null;
+  pron: number;
+  range: number;
+}
+
+/** 자유 말하기 한 문항: 발음 평가 70% + 말한 양(다양한 단어 수) 30% */
+export function speakingDetail(
+  id: string,
+  result: { transcript: string; overall: number; accuracy: number; fluency: number; prosody: number | null } | null,
+): { score: number; detail: SpeakingDetail } {
+  const target = SPEAKING.find((x) => x.id === id)?.target ?? 15;
+  if (!result) {
+    return {
+      score: 0,
+      detail: { transcript: "", uniqueWords: 0, accuracy: 0, fluency: 0, prosody: null, pron: 0, range: 0 },
+    };
+  }
+  const uniqueWords = new Set(words(result.transcript)).size;
+  const range = Math.min(100, Math.round((uniqueWords / target) * 100));
+  const pron = Math.round(result.overall);
+  return {
+    score: Math.round(pron * 0.7 + range * 0.3),
+    detail: {
+      transcript: result.transcript,
+      uniqueWords,
+      accuracy: Math.round(result.accuracy),
+      fluency: Math.round(result.fluency),
+      prosody: result.prosody == null ? null : Math.round(result.prosody),
+      pron,
+      range,
+    },
+  };
+}
+
+export interface Skills {
+  listening: number;
+  grammar: number;
+  pronunciation: number;
+  fluency: number;
+  range: number;
+}
+
+/** 문항 점수로 영역 점수·5가지 실력·종합 점수 계산. 안 푼 문항은 0점 */
+export function summarize(answers: { question_id: string; score: number; detail?: unknown }[]) {
+  const byId = new Map(answers.map((a) => [a.question_id, a]));
+  const avg = (ids: string[]) => Math.round(ids.reduce((sum, id) => sum + (byId.get(id)?.score ?? 0), 0) / ids.length);
+  const listening = avg([...DICTATION, ...DIALOGUES].map((q) => q.id));
+  const grammar = avg([...RESPONSES, ...BLANKS].map((q) => q.id));
+  const speaking = avg(SPEAKING.map((q) => q.id));
+  const details = SPEAKING.map((q) => byId.get(q.id)?.detail as SpeakingDetail | undefined);
+  const avgDetail = (key: "accuracy" | "fluency" | "range") =>
+    Math.round(details.reduce((sum, d) => sum + (d?.[key] ?? 0), 0) / SPEAKING.length);
+  const skills: Skills = {
+    listening,
+    grammar,
+    pronunciation: avgDetail("accuracy"),
+    fluency: avgDetail("fluency"),
+    range: avgDetail("range"),
+  };
+  const total = Math.round(
+    listening * WEIGHTS.listening + grammar * WEIGHTS.grammar + speaking * WEIGHTS.speaking,
+  );
+  return { listening, grammar, speaking, total, skills };
 }
