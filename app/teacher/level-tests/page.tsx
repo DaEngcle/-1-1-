@@ -119,7 +119,7 @@ export default async function TeacherLevelTestsPage() {
 
       <WeeklyRanking rows={ranking} limit={20} />
       <p className="-mt-4 text-xs text-zinc-500">
-        학생 화면에는 상위 5명만 이름 가운데를 가려서(예: 김*수) 보여줘요.
+        학생 화면에는 상위 5명만, 실명 대신 닉네임으로 보여줘요. 닉네임이 없는 학생은 이름 가운데를 가려요(예: 김*수).
       </p>
     </>
   );
