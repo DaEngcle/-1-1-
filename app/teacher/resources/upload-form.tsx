@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createResourceUpload, registerResource } from "./actions";
+import { renderPdfCover } from "./pdf-cover";
+import { uploadCover } from "./cover-tools";
 import { inputClass, primaryButtonClass } from "@/app/_ui/styles";
 
 /** PDF는 Supabase에 바로 올리고(용량 큰 전자책도 가능), 다 올라가면 자료실에 등록 */
@@ -40,8 +42,15 @@ export function ResourceUploadForm() {
             description: String(fd.get("description") ?? ""),
           });
           if ("error" in done) throw new Error(done.error);
+          // 표지는 PDF 첫 페이지로 자동 생성 (실패해도 자료는 올라간 상태)
+          let coverNote = "";
+          try {
+            await uploadCover(done.id, await renderPdfCover(await file.arrayBuffer()));
+          } catch {
+            coverNote = " 표지는 자동으로 못 만들었어요. 아래에서 다시 만들어 주세요.";
+          }
           form.reset();
-          setMessage({ ok: true, text: "✅ 자료실에 올렸어요!" });
+          setMessage({ ok: true, text: `✅ 자료실에 올렸어요!${coverNote}` });
           router.refresh();
         } catch (err) {
           setMessage({ ok: false, text: err instanceof Error ? err.message : "업로드 중 오류가 발생했어요." });

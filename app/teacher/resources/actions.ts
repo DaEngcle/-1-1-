@@ -29,17 +29,17 @@ export async function registerResource(input: {
   const title = input.title.trim().slice(0, 80);
   if (!title || !/^\d+-[\w]{8}\.pdf$/.test(input.path)) return { error: "제목을 확인해주세요." };
   const supabase = createServerSupabaseClient();
-  const { error } = await supabase.from("resources").insert({
+  const { data: created, error } = await supabase.from("resources").insert({
     title,
     description: input.description.trim().slice(0, 200) || null,
     file_path: input.path,
     file_name: input.fileName.replace(/[\\/]/g, "").slice(0, 120) || "dingle.pdf",
     size_bytes: Math.max(0, Math.round(input.size)),
-  });
-  if (error) return { error: "등록에 실패했어요." };
+  }).select("id").single();
+  if (error || !created) return { error: "등록에 실패했어요." };
   revalidatePath("/teacher/resources");
   revalidatePath("/student/resources");
-  return { ok: true };
+  return { ok: true, id: created.id as string };
 }
 
 export async function setResourcePublished(formData: FormData) {
@@ -59,7 +59,33 @@ export async function deleteResource(formData: FormData) {
   const supabase = createServerSupabaseClient();
   const { data } = await supabase.from("resources").select("file_path").eq("id", id).maybeSingle();
   if (data) await supabase.storage.from("resources").remove([data.file_path]);
+  const { data: cover } = await supabase.from("resources").select("cover_path").eq("id", id).maybeSingle();
+  if (cover?.cover_path) await supabase.storage.from("covers").remove([cover.cover_path]);
   await supabase.from("resources").delete().eq("id", id);
   revalidatePath("/teacher/resources");
   revalidatePath("/student/resources");
+}
+
+/** 표지 1단계: 표지 이미지 업로드 주소 */
+export async function createCoverUpload(resourceId: string, ext: "jpg" | "png" | "webp") {
+  await requireTeacher();
+  if (!isId(resourceId) || !["jpg", "png", "webp"].includes(ext)) return { error: "표지 형식을 확인해주세요." };
+  const path = `${resourceId}/${Date.now()}.${ext}`;
+  const supabase = createServerSupabaseClient();
+  const { data, error } = await supabase.storage.from("covers").createSignedUploadUrl(path);
+  if (error || !data) return { error: "표지 업로드 준비에 실패했어요." };
+  return { path, signedUrl: data.signedUrl };
+}
+
+/** 표지 2단계: 올린 표지를 자료에 연결 (예전 표지는 지움) */
+export async function setCover(resourceId: string, path: string) {
+  await requireTeacher();
+  if (!isId(resourceId) || !path.startsWith(`${resourceId}/`)) return { error: "표지를 확인해주세요." };
+  const supabase = createServerSupabaseClient();
+  const { data: old } = await supabase.from("resources").select("cover_path").eq("id", resourceId).maybeSingle();
+  await supabase.from("resources").update({ cover_path: path }).eq("id", resourceId);
+  if (old?.cover_path && old.cover_path !== path) await supabase.storage.from("covers").remove([old.cover_path]);
+  revalidatePath("/teacher/resources");
+  revalidatePath("/student/resources");
+  return { ok: true };
 }
