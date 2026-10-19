@@ -134,16 +134,17 @@ export async function mergeSignup(formData: FormData) {
   if (!isPlanId(plan) || !/^\d{4}-\d{2}-\d{2}$/.test(start) || pendingId === targetId) return;
   const supabase = createServerSupabaseClient();
   const [{ data: pending }, { data: target }] = await Promise.all([
-    supabase.from("students").select("phone, password_hash, privacy_agreed_at, approval").eq("id", pendingId).maybeSingle(),
+    supabase.from("students").select("phone, nickname, password_hash, privacy_agreed_at, approval").eq("id", pendingId).maybeSingle(),
     supabase.from("students").select("access_until, password_hash, login_code_hash").eq("id", targetId).maybeSingle(),
   ]);
   if (!pending || pending.approval !== "pending" || !target || target.password_hash || target.login_code_hash) return;
   // 전화번호는 한 사람만 쓸 수 있어서, 신청서의 번호를 먼저 비우고 옮긴 뒤 신청서를 지운다
-  await supabase.from("students").update({ phone: null }).eq("id", pendingId);
+  await supabase.from("students").update({ phone: null, nickname: null }).eq("id", pendingId);
   const { error } = await supabase
     .from("students")
     .update({
       phone: pending.phone,
+      nickname: pending.nickname,
       password_hash: pending.password_hash,
       privacy_agreed_at: pending.privacy_agreed_at,
       approval: "approved",
@@ -155,7 +156,7 @@ export async function mergeSignup(formData: FormData) {
     .eq("id", targetId);
   if (error) {
     console.error("학생 합치기 실패:", error);
-    await supabase.from("students").update({ phone: pending.phone }).eq("id", pendingId);
+    await supabase.from("students").update({ phone: pending.phone, nickname: pending.nickname }).eq("id", pendingId);
     return;
   }
   await supabase.from("students").delete().eq("id", pendingId);

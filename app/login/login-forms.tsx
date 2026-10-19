@@ -86,6 +86,20 @@ export function SignupForm() {
   return (
     <form action={action} className="flex w-full flex-col gap-3 text-left">
       <input name="name" placeholder="이름 (실명)" autoComplete="name" required className={inputClass} />
+      <div className="flex flex-col gap-1">
+        <input
+          name="nickname"
+          placeholder="닉네임 (랭킹에 보여요)"
+          autoComplete="off"
+          minLength={2}
+          maxLength={12}
+          pattern="[가-힣A-Za-z0-9_]{2,12}"
+          title="한글·영문·숫자·_ 로 2~12자"
+          required
+          className={inputClass}
+        />
+        <span className="px-1 text-xs text-zinc-500">🏆 랭킹에는 실명 대신 닉네임이 보여요. 한글·영문·숫자 2~12자</span>
+      </div>
       <input name="phone" type="tel" inputMode="numeric" placeholder="휴대폰 번호 (로그인 아이디)" autoComplete="tel" required className={inputClass} />
       <input name="password" type="password" placeholder="비밀번호 (8자 이상)" autoComplete="new-password" minLength={8} required className={inputClass} />
       <input name="password_confirm" type="password" placeholder="비밀번호 확인" autoComplete="new-password" minLength={8} required className={inputClass} />

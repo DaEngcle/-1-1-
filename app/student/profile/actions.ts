@@ -3,17 +3,15 @@
 import { revalidatePath } from "next/cache";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { requireStudent } from "@/lib/classroom/dal";
+import { NICKNAME_PATTERN, NICKNAME_RULE } from "@/lib/classroom/nickname";
 
 export type NicknameState = { status: "success" | "error"; message: string } | undefined;
-
-// 한글·영문·숫자·밑줄, 2~12자
-const NICKNAME_PATTERN = /^[가-힣A-Za-z0-9_]{2,12}$/;
 
 export async function saveNickname(_prev: NicknameState, formData: FormData): Promise<NicknameState> {
   const student = await requireStudent();
   const nickname = String(formData.get("nickname") ?? "").trim();
   if (!NICKNAME_PATTERN.test(nickname)) {
-    return { status: "error", message: "한글·영문·숫자·_ 로 2~12자까지 쓸 수 있어요. (띄어쓰기 불가)" };
+    return { status: "error", message: NICKNAME_RULE };
   }
 
   const supabase = createServerSupabaseClient();

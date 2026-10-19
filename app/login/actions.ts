@@ -1,6 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { NICKNAME_PATTERN, NICKNAME_RULE } from "@/lib/classroom/nickname";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { createSession, deleteSession } from "@/lib/classroom/session";
 import {
@@ -105,11 +106,13 @@ export async function signup(_prev: SignupState, formData: FormData): Promise<Si
   const phone = normalizePhone(String(formData.get("phone") ?? ""));
   const password = String(formData.get("password") ?? "");
   const passwordConfirm = String(formData.get("password_confirm") ?? "");
+  const nickname = String(formData.get("nickname") ?? "").trim();
   // 수강 과정은 학생이 고르지 않고 선생님이 승인할 때 정한다
   const agreed = formData.get("privacy") === "on";
 
   if (!NAME_PATTERN.test(name)) return { error: "이름을 한글 또는 영문으로 2~20자 입력해주세요." };
   if (!/^01[016789][0-9]{7,8}$/.test(phone)) return { error: "휴대폰 번호를 정확히 입력해주세요. (예: 010-1234-5678)" };
+  if (!NICKNAME_PATTERN.test(nickname)) return { error: NICKNAME_RULE };
   if (password.length < 8) return { error: "비밀번호는 8자 이상으로 정해주세요." };
   if (password !== passwordConfirm) return { error: "비밀번호 확인이 일치하지 않아요." };
   if (!agreed) return { error: "개인정보 수집·이용에 동의해야 가입할 수 있어요." };
@@ -120,6 +123,8 @@ export async function signup(_prev: SignupState, formData: FormData): Promise<Si
   await recordLoginFailure(key);
 
   const supabase = createServerSupabaseClient();
+  const { data: taken } = await supabase.from("students").select("id").eq("nickname", nickname).maybeSingle();
+  if (taken) return { error: "이미 다른 친구가 쓰고 있는 닉네임이에요. 다른 닉네임을 골라주세요." };
   const passwordHash = await hashPassword(password);
   // 선생님이 상담·시트로 미리 만들어 둔 카드(전화번호 같고 계정 없음)가 있으면 그 카드에 연결한다.
   // 다른 사람이 번호만 알고 가로채지 못하게 항상 '승인 대기'로 돌려서 선생님이 확인한다
@@ -131,7 +136,7 @@ export async function signup(_prev: SignupState, formData: FormData): Promise<Si
   if (existing && !existing.password_hash && !existing.login_code_hash) {
     const { error: linkError } = await supabase
       .from("students")
-      .update({ name, password_hash: passwordHash, approval: "pending", privacy_agreed_at: new Date().toISOString() })
+      .update({ name, nickname, password_hash: passwordHash, approval: "pending", privacy_agreed_at: new Date().toISOString() })
       .eq("id", existing.id);
     if (linkError) {
       console.error("가입 연결 실패:", linkError.message);
@@ -142,6 +147,7 @@ export async function signup(_prev: SignupState, formData: FormData): Promise<Si
   const { error } = await supabase.from("students").insert({
     name,
     phone,
+    nickname,
     password_hash: passwordHash,
     approval: "pending",
     stage: "enrolled",
