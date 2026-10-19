@@ -92,6 +92,8 @@ export interface Lesson {
   kind: "day" | "drill";
   day_number: number | null;
   title: string;
+  /** 목차에 함께 보이는 한국어 해석 */
+  title_ko?: string | null;
   video_url: string | null;
   description: string | null;
   is_published: boolean;

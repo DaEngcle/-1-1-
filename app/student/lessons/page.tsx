@@ -61,7 +61,7 @@ export default async function StudentLessonsPage({
     const [{ data: tocRows }, { count: sentenceCount }] = await Promise.all([
       supabase
         .from("lessons")
-        .select("id, sort_order, week_number, week_title, kind, day_number, title, video_url")
+        .select("id, sort_order, week_number, week_title, kind, day_number, title, title_ko, video_url")
         .eq("is_published", true)
         .eq("course_id", course.id)
         .order("sort_order"),
@@ -106,6 +106,7 @@ export default async function StudentLessonsPage({
                       {l.kind === "day" ? `Day ${String(l.day_number).padStart(2, "0")}` : "Drill"}
                     </span>
                     <span className="font-medium text-zinc-700">{l.kind === "day" ? l.title : "주간 복습 드릴"}</span>
+                    {l.kind === "day" && l.title_ko && <span className="text-xs text-zinc-500">{l.title_ko}</span>}
                   </span>
                   <span className="shrink-0 text-sm opacity-50">🔒</span>
                 </li>
@@ -120,7 +121,7 @@ export default async function StudentLessonsPage({
   const [{ data: lessonRows }, { data: itemRows }, { data: subRows }, { data: progressRows }] = await Promise.all([
     supabase
       .from("lessons")
-      .select("id, course_id, sort_order, week_number, week_title, kind, day_number, title, video_url")
+      .select("id, course_id, sort_order, week_number, week_title, kind, day_number, title, title_ko, video_url")
       .eq("is_published", true)
       .eq("course_id", course.id)
       .order("sort_order"),
@@ -183,6 +184,7 @@ export default async function StudentLessonsPage({
                     <span className="font-medium text-zinc-900">
                       {l.kind === "day" ? l.title : "주간 복습 드릴"}
                     </span>
+                    {l.kind === "day" && l.title_ko && <span className="text-xs text-zinc-500">{l.title_ko}</span>}
                   </span>
                   <span className="flex shrink-0 flex-col items-end gap-1">
                     {l.video_url && (

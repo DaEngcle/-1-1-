@@ -1,912 +1,972 @@
 [
-  {
-    "sort_order": 1,
-    "week_number": 1,
-    "week_title": "인사 & 스몰톡",
-    "kind": "day",
-    "day_number": 1,
-    "title": "You've got an accent",
-    "video_url": "https://youtu.be/vy-qJ4kbvo8",
-    "description": null,
-    "items": [
-      "You've got an accent"
-    ]
-  },
-  {
-    "sort_order": 2,
-    "week_number": 1,
-    "week_title": "인사 & 스몰톡",
-    "kind": "day",
-    "day_number": 2,
-    "title": "Where're you living these days?",
-    "video_url": "https://youtu.be/w4Um1Lkf7O4",
-    "description": null,
-    "items": [
-      "Where're you living these days?"
-    ]
-  },
-  {
-    "sort_order": 3,
-    "week_number": 1,
-    "week_title": "인사 & 스몰톡",
-    "kind": "day",
-    "day_number": 3,
-    "title": "What do you do?",
-    "video_url": "https://youtu.be/lbh5uKTpoBs",
-    "description": null,
-    "items": [
-      "What do you do?"
-    ]
-  },
-  {
-    "sort_order": 4,
-    "week_number": 1,
-    "week_title": "인사 & 스몰톡",
-    "kind": "day",
-    "day_number": 4,
-    "title": "How old do I look?",
-    "video_url": "https://youtu.be/AR9LT0sdnwQ",
-    "description": null,
-    "items": [
-      "How old do I look?"
-    ]
-  },
-  {
-    "sort_order": 5,
-    "week_number": 1,
-    "week_title": "인사 & 스몰톡",
-    "kind": "day",
-    "day_number": 5,
-    "title": "Finally meeting you in person",
-    "video_url": "https://youtu.be/LdVjNgcQyXE",
-    "description": null,
-    "items": [
-      "Finally meeting you in person"
-    ]
-  },
-  {
-    "sort_order": 6,
-    "week_number": 1,
-    "week_title": "인사 & 스몰톡",
-    "kind": "drill",
-    "day_number": null,
-    "title": "Day 01~05 drill",
-    "video_url": "https://youtu.be/bEi6umb23EI",
-    "description": null,
-    "items": []
-  },
-  {
-    "sort_order": 7,
-    "week_number": 2,
-    "week_title": "취업 준비 실전 영어",
-    "kind": "day",
-    "day_number": 6,
-    "title": "Reckon so.",
-    "video_url": "https://youtu.be/W7Jyt8ogwuo",
-    "description": null,
-    "items": [
-      "Reckon so."
-    ]
-  },
-  {
-    "sort_order": 8,
-    "week_number": 2,
-    "week_title": "취업 준비 실전 영어",
-    "kind": "day",
-    "day_number": 7,
-    "title": "Is this position still available?",
-    "video_url": "https://youtu.be/_yPd9QrBFNc",
-    "description": null,
-    "items": [
-      "Is this position still available?"
-    ]
-  },
-  {
-    "sort_order": 9,
-    "week_number": 2,
-    "week_title": "취업 준비 실전 영어",
-    "kind": "day",
-    "day_number": 8,
-    "title": "When is your availability?",
-    "video_url": "https://youtu.be/kLEdM8ZDklY",
-    "description": null,
-    "items": [
-      "When is your availability?"
-    ]
-  },
-  {
-    "sort_order": 10,
-    "week_number": 2,
-    "week_title": "취업 준비 실전 영어",
-    "kind": "day",
-    "day_number": 9,
-    "title": "I used to work as a barista.",
-    "video_url": "https://youtu.be/sSQJjkze9jM",
-    "description": null,
-    "items": [
-      "I used to work as a barista."
-    ]
-  },
-  {
-    "sort_order": 11,
-    "week_number": 2,
-    "week_title": "취업 준비 실전 영어",
-    "kind": "day",
-    "day_number": 10,
-    "title": "How much is the pay rate?",
-    "video_url": "https://youtu.be/GZIpuCBT6-E",
-    "description": null,
-    "items": [
-      "How much is the pay rate?"
-    ]
-  },
-  {
-    "sort_order": 12,
-    "week_number": 2,
-    "week_title": "취업 준비 실전 영어",
-    "kind": "drill",
-    "day_number": null,
-    "title": "Day 06~10 drill",
-    "video_url": "https://youtu.be/Rzh3Sow1SBI",
-    "description": null,
-    "items": []
-  },
-  {
-    "sort_order": 13,
-    "week_number": 3,
-    "week_title": "면접 영어 & 직장 초기 적응",
-    "kind": "day",
-    "day_number": 11,
-    "title": "What's the roster like?",
-    "video_url": "https://youtu.be/7wV5mN3a5kE",
-    "description": null,
-    "items": [
-      "What's the roster like?"
-    ]
-  },
-  {
-    "sort_order": 14,
-    "week_number": 3,
-    "week_title": "면접 영어 & 직장 초기 적응",
-    "kind": "day",
-    "day_number": 12,
-    "title": "How long will the trial be?",
-    "video_url": "https://youtu.be/jVbqenfadpw",
-    "description": null,
-    "items": [
-      "How long will the trial be?"
-    ]
-  },
-  {
-    "sort_order": 15,
-    "week_number": 3,
-    "week_title": "면접 영어 & 직장 초기 적응",
-    "kind": "day",
-    "day_number": 13,
-    "title": "Can you please cover my shift on Friday?",
-    "video_url": "https://youtu.be/-pGZUlo9bPo",
-    "description": null,
-    "items": [
-      "Can you please cover my shift on Friday?"
-    ]
-  },
-  {
-    "sort_order": 16,
-    "week_number": 3,
-    "week_title": "면접 영어 & 직장 초기 적응",
-    "kind": "day",
-    "day_number": 14,
-    "title": "Heaps of people down at the beach, though.",
-    "video_url": "https://youtu.be/AM_rCftvfTM",
-    "description": null,
-    "items": [
-      "Heaps of people down at the beach, though."
-    ]
-  },
-  {
-    "sort_order": 17,
-    "week_number": 3,
-    "week_title": "면접 영어 & 직장 초기 적응",
-    "kind": "day",
-    "day_number": 15,
-    "title": "Can I grab a magic takeaway please?",
-    "video_url": "https://youtu.be/CUYr_c8QMy8",
-    "description": null,
-    "items": [
-      "Can I grab a magic takeaway please?"
-    ]
-  },
-  {
-    "sort_order": 18,
-    "week_number": 3,
-    "week_title": "면접 영어 & 직장 초기 적응",
-    "kind": "drill",
-    "day_number": null,
-    "title": "Day 11~15 drill",
-    "video_url": "https://youtu.be/J_UOXIAsVzg",
-    "description": null,
-    "items": []
-  },
-  {
-    "sort_order": 19,
-    "week_number": 4,
-    "week_title": "직장 필수 요청 & 주문 응대 영어",
-    "kind": "day",
-    "day_number": 16,
-    "title": "You deserve it.",
-    "video_url": "https://youtu.be/kHvsbivN0TE",
-    "description": null,
-    "items": [
-      "You deserve it."
-    ]
-  },
-  {
-    "sort_order": 20,
-    "week_number": 4,
-    "week_title": "직장 필수 요청 & 주문 응대 영어",
-    "kind": "day",
-    "day_number": 17,
-    "title": "You look knackered.",
-    "video_url": "https://youtu.be/Cb_G8ChvmeA",
-    "description": null,
-    "items": [
-      "You look knackered."
-    ]
-  },
-  {
-    "sort_order": 21,
-    "week_number": 4,
-    "week_title": "직장 필수 요청 & 주문 응대 영어",
-    "kind": "day",
-    "day_number": 18,
-    "title": "Can you do me a favor?",
-    "video_url": "https://youtu.be/hQ6Jm0hxOaw",
-    "description": null,
-    "items": [
-      "Can you do me a favor?"
-    ]
-  },
-  {
-    "sort_order": 22,
-    "week_number": 4,
-    "week_title": "직장 필수 요청 & 주문 응대 영어",
-    "kind": "day",
-    "day_number": 19,
-    "title": "I haven't even had a coffee yet.",
-    "video_url": "https://youtu.be/yeOcd-OLBZY",
-    "description": null,
-    "items": [
-      "I haven't even had a coffee yet."
-    ]
-  },
-  {
-    "sort_order": 23,
-    "week_number": 4,
-    "week_title": "직장 필수 요청 & 주문 응대 영어",
-    "kind": "day",
-    "day_number": 20,
-    "title": "Any allergies at all?",
-    "video_url": "https://youtu.be/gxGaHaduIec",
-    "description": "피드백 데이",
-    "items": [
-      "Any allergies at all?"
-    ]
-  },
-  {
-    "sort_order": 24,
-    "week_number": 4,
-    "week_title": "직장 필수 요청 & 주문 응대 영어",
-    "kind": "drill",
-    "day_number": null,
-    "title": "Day 16~20 drill",
-    "video_url": "https://youtu.be/6Ea3bu_ivBo",
-    "description": null,
-    "items": []
-  },
-  {
-    "sort_order": 25,
-    "week_number": 5,
-    "week_title": "하우스 인스펙션 영어",
-    "kind": "day",
-    "day_number": 21,
-    "title": "Can I come for an inspection?",
-    "video_url": "https://youtu.be/4cd3z31Z60c",
-    "description": null,
-    "items": [
-      "Can I come for an inspection?"
-    ]
-  },
-  {
-    "sort_order": 26,
-    "week_number": 5,
-    "week_title": "하우스 인스펙션 영어",
-    "kind": "day",
-    "day_number": 22,
-    "title": "Is the rent per week or per month?",
-    "video_url": "https://youtu.be/Qq5Zrs10IeY",
-    "description": null,
-    "items": [
-      "Is the rent per week or per month?"
-    ]
-  },
-  {
-    "sort_order": 27,
-    "week_number": 5,
-    "week_title": "하우스 인스펙션 영어",
-    "kind": "day",
-    "day_number": 23,
-    "title": "Are bills included?",
-    "video_url": "https://youtu.be/2MjXGHkxqg0",
-    "description": null,
-    "items": [
-      "Are bills included?"
-    ]
-  },
-  {
-    "sort_order": 28,
-    "week_number": 5,
-    "week_title": "하우스 인스펙션 영어",
-    "kind": "day",
-    "day_number": 24,
-    "title": "How long is the minimum stay?",
-    "video_url": "https://youtu.be/d-11t51ZlLc",
-    "description": null,
-    "items": [
-      "How long is the minimum stay?"
-    ]
-  },
-  {
-    "sort_order": 29,
-    "week_number": 5,
-    "week_title": "하우스 인스펙션 영어",
-    "kind": "day",
-    "day_number": 25,
-    "title": "Do you mind if I check the kitchen?",
-    "video_url": "https://youtu.be/iLNQwzK6U2E",
-    "description": null,
-    "items": [
-      "Do you mind if I check the kitchen?"
-    ]
-  },
-  {
-    "sort_order": 30,
-    "week_number": 5,
-    "week_title": "하우스 인스펙션 영어",
-    "kind": "drill",
-    "day_number": null,
-    "title": "Day 21~25 drill",
-    "video_url": "https://youtu.be/YfapOq-QHEg",
-    "description": null,
-    "items": []
-  },
-  {
-    "sort_order": 31,
-    "week_number": 6,
-    "week_title": "하우스메이트와의 생활 영어",
-    "kind": "day",
-    "day_number": 26,
-    "title": "How do we sort the rubbish here?",
-    "video_url": "https://youtu.be/CoVb7JNbWx0",
-    "description": null,
-    "items": [
-      "How do we sort the rubbish here?"
-    ]
-  },
-  {
-    "sort_order": 32,
-    "week_number": 6,
-    "week_title": "하우스메이트와의 생활 영어",
-    "kind": "day",
-    "day_number": 27,
-    "title": "Technically the shelf is my space.",
-    "video_url": "https://youtu.be/soLDVVugfb4",
-    "description": null,
-    "items": [
-      "Technically the shelf is my space."
-    ]
-  },
-  {
-    "sort_order": 33,
-    "week_number": 6,
-    "week_title": "하우스메이트와의 생활 영어",
-    "kind": "day",
-    "day_number": 28,
-    "title": "I can't be bothered.",
-    "video_url": "https://youtu.be/rJ0AiPl3bko",
-    "description": null,
-    "items": [
-      "I can't be bothered."
-    ]
-  },
-  {
-    "sort_order": 34,
-    "week_number": 6,
-    "week_title": "하우스메이트와의 생활 영어",
-    "kind": "day",
-    "day_number": 29,
-    "title": "I'll keep it down.",
-    "video_url": "https://youtu.be/Or3pqAflTsM",
-    "description": null,
-    "items": [
-      "I'll keep it down."
-    ]
-  },
-  {
-    "sort_order": 35,
-    "week_number": 6,
-    "week_title": "하우스메이트와의 생활 영어",
-    "kind": "day",
-    "day_number": 30,
-    "title": "You gotta be kidding me.",
-    "video_url": "https://youtu.be/56JuhNt1HOM",
-    "description": "피드백 데이",
-    "items": [
-      "You gotta be kidding me."
-    ]
-  },
-  {
-    "sort_order": 36,
-    "week_number": 6,
-    "week_title": "하우스메이트와의 생활 영어",
-    "kind": "drill",
-    "day_number": null,
-    "title": "Day 26~30 drill",
-    "video_url": "https://youtu.be/4GuXU7CqTyE",
-    "description": null,
-    "items": []
-  },
-  {
-    "sort_order": 37,
-    "week_number": 7,
-    "week_title": "은행 계좌 개설 & 통신사 영어",
-    "kind": "day",
-    "day_number": 31,
-    "title": "I'd like to open a bank account.",
-    "video_url": "https://youtu.be/lfss0UZSf1Q",
-    "description": null,
-    "items": [
-      "I'd like to open a bank account."
-    ]
-  },
-  {
-    "sort_order": 38,
-    "week_number": 7,
-    "week_title": "은행 계좌 개설 & 통신사 영어",
-    "kind": "day",
-    "day_number": 32,
-    "title": "I'd like to check my balance.",
-    "video_url": "https://youtu.be/CUXpYFL1VE8",
-    "description": null,
-    "items": [
-      "I'd like to check my balance."
-    ]
-  },
-  {
-    "sort_order": 39,
-    "week_number": 7,
-    "week_title": "은행 계좌 개설 & 통신사 영어",
-    "kind": "day",
-    "day_number": 33,
-    "title": "How long will it take to get a new card?",
-    "video_url": "https://youtu.be/NcOdoEdzyck",
-    "description": null,
-    "items": [
-      "How long will it take to get a new card?"
-    ]
-  },
-  {
-    "sort_order": 40,
-    "week_number": 7,
-    "week_title": "은행 계좌 개설 & 통신사 영어",
-    "kind": "day",
-    "day_number": 34,
-    "title": "How much data are you looking for?",
-    "video_url": "https://youtu.be/X4mtaHzhIp4",
-    "description": null,
-    "items": [
-      "How much data are you looking for?"
-    ]
-  },
-  {
-    "sort_order": 41,
-    "week_number": 7,
-    "week_title": "은행 계좌 개설 & 통신사 영어",
-    "kind": "day",
-    "day_number": 35,
-    "title": "My data is running out already.",
-    "video_url": "https://youtu.be/z_g899W4A2c",
-    "description": null,
-    "items": [
-      "My data is running out already."
-    ]
-  },
-  {
-    "sort_order": 42,
-    "week_number": 7,
-    "week_title": "은행 계좌 개설 & 통신사 영어",
-    "kind": "drill",
-    "day_number": null,
-    "title": "Day 31~35 drill",
-    "video_url": "https://youtu.be/PIRsbTAh9fk",
-    "description": null,
-    "items": []
-  },
-  {
-    "sort_order": 43,
-    "week_number": 8,
-    "week_title": "헬스장 & 멤버십",
-    "kind": "day",
-    "day_number": 36,
-    "title": "Will I be charged extra if I run out of data?",
-    "video_url": "https://youtu.be/ppc9iVWQAh8",
-    "description": null,
-    "items": [
-      "Will I be charged extra if I run out of data?"
-    ]
-  },
-  {
-    "sort_order": 44,
-    "week_number": 8,
-    "week_title": "헬스장 & 멤버십",
-    "kind": "day",
-    "day_number": 37,
-    "title": "Will I be charged after today?",
-    "video_url": "https://youtu.be/mYq9NbrrKXY",
-    "description": null,
-    "items": [
-      "Will I be charged after today?"
-    ]
-  },
-  {
-    "sort_order": 45,
-    "week_number": 8,
-    "week_title": "헬스장 & 멤버십",
-    "kind": "day",
-    "day_number": 38,
-    "title": "It's $45 fortnightly.",
-    "video_url": "https://youtu.be/eKRDP4yM1fY",
-    "description": null,
-    "items": [
-      "It's $45 fortnightly."
-    ]
-  },
-  {
-    "sort_order": 46,
-    "week_number": 8,
-    "week_title": "헬스장 & 멤버십",
-    "kind": "day",
-    "day_number": 39,
-    "title": "Is there any promo going on at the moment?",
-    "video_url": "https://youtu.be/YUjnY-cgVuI",
-    "description": null,
-    "items": [
-      "Is there any promo going on at the moment?"
-    ]
-  },
-  {
-    "sort_order": 47,
-    "week_number": 8,
-    "week_title": "헬스장 & 멤버십",
-    "kind": "day",
-    "day_number": 40,
-    "title": "Even better!",
-    "video_url": "https://youtu.be/ju2A8_fgCJA",
-    "description": "피드백 데이",
-    "items": [
-      "Even better!"
-    ]
-  },
-  {
-    "sort_order": 48,
-    "week_number": 8,
-    "week_title": "헬스장 & 멤버십",
-    "kind": "drill",
-    "day_number": null,
-    "title": "Day 36~40 drill",
-    "video_url": "https://youtu.be/FD9ELHLC5aM",
-    "description": null,
-    "items": []
-  },
-  {
-    "sort_order": 49,
-    "week_number": 9,
-    "week_title": "식당 · 카페 · 쇼핑 영어",
-    "kind": "day",
-    "day_number": 41,
-    "title": "I'd like to make a reservation for four at 7:30.",
-    "video_url": "https://youtu.be/QkLtMJGZ5mM",
-    "description": null,
-    "items": [
-      "I'd like to make a reservation for four at 7:30."
-    ]
-  },
-  {
-    "sort_order": 50,
-    "week_number": 9,
-    "week_title": "식당 · 카페 · 쇼핑 영어",
-    "kind": "day",
-    "day_number": 42,
-    "title": "I was just wondering if you have sweetener.",
-    "video_url": "https://youtu.be/4qQwVY_09SE",
-    "description": null,
-    "items": [
-      "I was just wondering if you have sweetener."
-    ]
-  },
-  {
-    "sort_order": 51,
-    "week_number": 9,
-    "week_title": "식당 · 카페 · 쇼핑 영어",
-    "kind": "day",
-    "day_number": 43,
-    "title": "This one's on the house.",
-    "video_url": "https://youtu.be/yYDvfhdGpIs",
-    "description": null,
-    "items": [
-      "This one's on the house."
-    ]
-  },
-  {
-    "sort_order": 52,
-    "week_number": 9,
-    "week_title": "식당 · 카페 · 쇼핑 영어",
-    "kind": "day",
-    "day_number": 44,
-    "title": "You might want to go half a size up.",
-    "video_url": "https://youtu.be/4t_ITPacyqM",
-    "description": null,
-    "items": [
-      "You might want to go half a size up."
-    ]
-  },
-  {
-    "sort_order": 53,
-    "week_number": 9,
-    "week_title": "식당 · 카페 · 쇼핑 영어",
-    "kind": "day",
-    "day_number": 45,
-    "title": "Buy one get one free.",
-    "video_url": "https://youtu.be/ai6QkraAjzo",
-    "description": "피드백 데이",
-    "items": [
-      "Buy one get one free."
-    ]
-  },
-  {
-    "sort_order": 54,
-    "week_number": 9,
-    "week_title": "식당 · 카페 · 쇼핑 영어",
-    "kind": "drill",
-    "day_number": null,
-    "title": "Day 41~45 drill",
-    "video_url": "https://youtu.be/LVEHk4-3EVc",
-    "description": null,
-    "items": []
-  },
-  {
-    "sort_order": 55,
-    "week_number": 10,
-    "week_title": "대중교통 & 길 찾기 영어",
-    "kind": "day",
-    "day_number": 46,
-    "title": "Does this tram go to Melbourne Central?",
-    "video_url": "https://youtu.be/eKpYBLA72mU",
-    "description": null,
-    "items": [
-      "Does this tram go to Melbourne Central?"
-    ]
-  },
-  {
-    "sort_order": 56,
-    "week_number": 10,
-    "week_title": "대중교통 & 길 찾기 영어",
-    "kind": "day",
-    "day_number": 47,
-    "title": "I just topped it up, but it didn't go through.",
-    "video_url": "https://youtu.be/Qlbq2CzS5gA",
-    "description": null,
-    "items": [
-      "I just topped it up, but it didn't go through."
-    ]
-  },
-  {
-    "sort_order": 57,
-    "week_number": 10,
-    "week_title": "대중교통 & 길 찾기 영어",
-    "kind": "day",
-    "day_number": 48,
-    "title": "But it's not express, though.",
-    "video_url": "https://youtu.be/5ANUkLlqoaU",
-    "description": null,
-    "items": [
-      "But it's not express, though."
-    ]
-  },
-  {
-    "sort_order": 58,
-    "week_number": 10,
-    "week_title": "대중교통 & 길 찾기 영어",
-    "kind": "day",
-    "day_number": 49,
-    "title": "There's a pretty decent Thai place.",
-    "video_url": "https://youtu.be/MWUBw5lgJ3Q",
-    "description": null,
-    "items": [
-      "There's a pretty decent Thai place."
-    ]
-  },
-  {
-    "sort_order": 59,
-    "week_number": 10,
-    "week_title": "대중교통 & 길 찾기 영어",
-    "kind": "day",
-    "day_number": 50,
-    "title": "I think I missed my stop.",
-    "video_url": "https://youtu.be/CAuEa5gtEc4",
-    "description": "피드백 데이",
-    "items": [
-      "I think I missed my stop."
-    ]
-  },
-  {
-    "sort_order": 60,
-    "week_number": 10,
-    "week_title": "대중교통 & 길 찾기 영어",
-    "kind": "drill",
-    "day_number": null,
-    "title": "Day 46~50 drill",
-    "video_url": null,
-    "description": null,
-    "items": []
-  },
-  {
-    "sort_order": 61,
-    "week_number": 11,
-    "week_title": "병원 & 약국 영어",
-    "kind": "day",
-    "day_number": 51,
-    "title": "What's the earliest available appointment?",
-    "video_url": "https://youtu.be/zlyLse3Q7HU",
-    "description": null,
-    "items": [
-      "What's the earliest available appointment?"
-    ]
-  },
-  {
-    "sort_order": 62,
-    "week_number": 11,
-    "week_title": "병원 & 약국 영어",
-    "kind": "day",
-    "day_number": 52,
-    "title": "What brings you in today?",
-    "video_url": "https://youtu.be/bug1twOuNcc",
-    "description": null,
-    "items": [
-      "What brings you in today?"
-    ]
-  },
-  {
-    "sort_order": 63,
-    "week_number": 11,
-    "week_title": "병원 & 약국 영어",
-    "kind": "day",
-    "day_number": 53,
-    "title": "I've been coughing a lot, especially when I talk.",
-    "video_url": "https://youtu.be/kBLvHsY5YqI",
-    "description": null,
-    "items": [
-      "I've been coughing a lot, especially when I talk."
-    ]
-  },
-  {
-    "sort_order": 64,
-    "week_number": 11,
-    "week_title": "병원 & 약국 영어",
-    "kind": "day",
-    "day_number": 54,
-    "title": "Not that I know of.",
-    "video_url": "https://youtu.be/ULF8k_IzFFA",
-    "description": null,
-    "items": [
-      "Not that I know of."
-    ]
-  },
-  {
-    "sort_order": 65,
-    "week_number": 11,
-    "week_title": "병원 & 약국 영어",
-    "kind": "day",
-    "day_number": 55,
-    "title": "Even if you feel better",
-    "video_url": "https://youtu.be/dZTfi8XubLU",
-    "description": "피드백 데이",
-    "items": []
-  },
-  {
-    "sort_order": 66,
-    "week_number": 11,
-    "week_title": "병원 & 약국 영어",
-    "kind": "drill",
-    "day_number": null,
-    "title": "Day 51~55 drill",
-    "video_url": null,
-    "description": null,
-    "items": []
-  },
-  {
-    "sort_order": 67,
-    "week_number": 12,
-    "week_title": "긴급상황 영어",
-    "kind": "day",
-    "day_number": 56,
-    "title": "Do you want me to call 000?",
-    "video_url": "https://youtu.be/xBPuh3OmAOU",
-    "description": null,
-    "items": [
-      "Do you want me to call 000?"
-    ]
-  },
-  {
-    "sort_order": 68,
-    "week_number": 12,
-    "week_title": "긴급상황 영어",
-    "kind": "day",
-    "day_number": 57,
-    "title": "I don't think a Band-Aid's gonna work.",
-    "video_url": "https://youtu.be/Z0sOjoEdf9Q",
-    "description": null,
-    "items": [
-      "I don't think a Band-Aid's gonna work."
-    ]
-  },
-  {
-    "sort_order": 69,
-    "week_number": 12,
-    "week_title": "긴급상황 영어",
-    "kind": "day",
-    "day_number": 58,
-    "title": "Think I'm having an allergic reaction.",
-    "video_url": "https://youtu.be/jhlr7Gs9bEo",
-    "description": null,
-    "items": [
-      "Think I'm having an allergic reaction."
-    ]
-  },
-  {
-    "sort_order": 70,
-    "week_number": 12,
-    "week_title": "긴급상황 영어",
-    "kind": "day",
-    "day_number": 59,
-    "title": "I don't even know who he is.",
-    "video_url": "https://youtu.be/dCklgnlrVMs",
-    "description": null,
-    "items": [
-      "I don't even know who he is."
-    ]
-  },
-  {
-    "sort_order": 71,
-    "week_number": 12,
-    "week_title": "긴급상황 영어",
-    "kind": "day",
-    "day_number": 60,
-    "title": "My phone got stolen on the tram.",
-    "video_url": "https://youtu.be/OfzZeQ0h-rA",
-    "description": null,
-    "items": [
-      "My phone got stolen on the tram."
-    ]
-  },
-  {
-    "sort_order": 72,
-    "week_number": 12,
-    "week_title": "긴급상황 영어",
-    "kind": "drill",
-    "day_number": null,
-    "title": "Day 56~60 drill",
-    "video_url": null,
-    "description": null,
-    "items": []
-  }
+ {
+  "sort_order": 1,
+  "week_number": 1,
+  "week_title": "인사 & 스몰톡",
+  "kind": "day",
+  "day_number": 1,
+  "title": "You've got an accent",
+  "video_url": "https://youtu.be/vy-qJ4kbvo8",
+  "description": null,
+  "items": [
+   "You've got an accent"
+  ],
+  "title_ko": "억양이 있네요"
+ },
+ {
+  "sort_order": 2,
+  "week_number": 1,
+  "week_title": "인사 & 스몰톡",
+  "kind": "day",
+  "day_number": 2,
+  "title": "Where're you living these days?",
+  "video_url": "https://youtu.be/w4Um1Lkf7O4",
+  "description": null,
+  "items": [
+   "Where're you living these days?"
+  ],
+  "title_ko": "요즘 어디 살아?"
+ },
+ {
+  "sort_order": 3,
+  "week_number": 1,
+  "week_title": "인사 & 스몰톡",
+  "kind": "day",
+  "day_number": 3,
+  "title": "What do you do?",
+  "video_url": "https://youtu.be/lbh5uKTpoBs",
+  "description": null,
+  "items": [
+   "What do you do?"
+  ],
+  "title_ko": "무슨 일 해?"
+ },
+ {
+  "sort_order": 4,
+  "week_number": 1,
+  "week_title": "인사 & 스몰톡",
+  "kind": "day",
+  "day_number": 4,
+  "title": "How old do I look?",
+  "video_url": "https://youtu.be/AR9LT0sdnwQ",
+  "description": null,
+  "items": [
+   "How old do I look?"
+  ],
+  "title_ko": "몇 살처럼 보여?"
+ },
+ {
+  "sort_order": 5,
+  "week_number": 1,
+  "week_title": "인사 & 스몰톡",
+  "kind": "day",
+  "day_number": 5,
+  "title": "Finally meeting you in person",
+  "video_url": "https://youtu.be/LdVjNgcQyXE",
+  "description": null,
+  "items": [
+   "Finally meeting you in person"
+  ],
+  "title_ko": "드디어 직접 만나네요"
+ },
+ {
+  "sort_order": 6,
+  "week_number": 1,
+  "week_title": "인사 & 스몰톡",
+  "kind": "drill",
+  "day_number": null,
+  "title": "Day 01~05 drill",
+  "video_url": "https://youtu.be/bEi6umb23EI",
+  "description": null,
+  "items": []
+ },
+ {
+  "sort_order": 7,
+  "week_number": 2,
+  "week_title": "취업 준비 실전 영어",
+  "kind": "day",
+  "day_number": 6,
+  "title": "Reckon so.",
+  "video_url": "https://youtu.be/W7Jyt8ogwuo",
+  "description": null,
+  "items": [
+   "Reckon so."
+  ],
+  "title_ko": "그런 것 같아."
+ },
+ {
+  "sort_order": 8,
+  "week_number": 2,
+  "week_title": "취업 준비 실전 영어",
+  "kind": "day",
+  "day_number": 7,
+  "title": "Is this position still available?",
+  "video_url": "https://youtu.be/_yPd9QrBFNc",
+  "description": null,
+  "items": [
+   "Is this position still available?"
+  ],
+  "title_ko": "이 자리 아직 구하나요?"
+ },
+ {
+  "sort_order": 9,
+  "week_number": 2,
+  "week_title": "취업 준비 실전 영어",
+  "kind": "day",
+  "day_number": 8,
+  "title": "When is your availability?",
+  "video_url": "https://youtu.be/kLEdM8ZDklY",
+  "description": null,
+  "items": [
+   "When is your availability?"
+  ],
+  "title_ko": "언제 근무 가능하세요?"
+ },
+ {
+  "sort_order": 10,
+  "week_number": 2,
+  "week_title": "취업 준비 실전 영어",
+  "kind": "day",
+  "day_number": 9,
+  "title": "I used to work as a barista.",
+  "video_url": "https://youtu.be/sSQJjkze9jM",
+  "description": null,
+  "items": [
+   "I used to work as a barista."
+  ],
+  "title_ko": "바리스타로 일했었어요."
+ },
+ {
+  "sort_order": 11,
+  "week_number": 2,
+  "week_title": "취업 준비 실전 영어",
+  "kind": "day",
+  "day_number": 10,
+  "title": "How much is the pay rate?",
+  "video_url": "https://youtu.be/GZIpuCBT6-E",
+  "description": null,
+  "items": [
+   "How much is the pay rate?"
+  ],
+  "title_ko": "시급이 얼마예요?"
+ },
+ {
+  "sort_order": 12,
+  "week_number": 2,
+  "week_title": "취업 준비 실전 영어",
+  "kind": "drill",
+  "day_number": null,
+  "title": "Day 06~10 drill",
+  "video_url": "https://youtu.be/Rzh3Sow1SBI",
+  "description": null,
+  "items": []
+ },
+ {
+  "sort_order": 13,
+  "week_number": 3,
+  "week_title": "면접 영어 & 직장 초기 적응",
+  "kind": "day",
+  "day_number": 11,
+  "title": "What's the roster like?",
+  "video_url": "https://youtu.be/7wV5mN3a5kE",
+  "description": null,
+  "items": [
+   "What's the roster like?"
+  ],
+  "title_ko": "근무 스케줄은 어떻게 돼요?"
+ },
+ {
+  "sort_order": 14,
+  "week_number": 3,
+  "week_title": "면접 영어 & 직장 초기 적응",
+  "kind": "day",
+  "day_number": 12,
+  "title": "How long will the trial be?",
+  "video_url": "https://youtu.be/jVbqenfadpw",
+  "description": null,
+  "items": [
+   "How long will the trial be?"
+  ],
+  "title_ko": "트라이얼은 얼마나 해요?"
+ },
+ {
+  "sort_order": 15,
+  "week_number": 3,
+  "week_title": "면접 영어 & 직장 초기 적응",
+  "kind": "day",
+  "day_number": 13,
+  "title": "Can you please cover my shift on Friday?",
+  "video_url": "https://youtu.be/-pGZUlo9bPo",
+  "description": null,
+  "items": [
+   "Can you please cover my shift on Friday?"
+  ],
+  "title_ko": "금요일에 내 시프트 좀 대신 해줄 수 있어?"
+ },
+ {
+  "sort_order": 16,
+  "week_number": 3,
+  "week_title": "면접 영어 & 직장 초기 적응",
+  "kind": "day",
+  "day_number": 14,
+  "title": "Heaps of people down at the beach, though.",
+  "video_url": "https://youtu.be/AM_rCftvfTM",
+  "description": null,
+  "items": [
+   "Heaps of people down at the beach, though."
+  ],
+  "title_ko": "그래도 해변엔 사람 엄청 많더라."
+ },
+ {
+  "sort_order": 17,
+  "week_number": 3,
+  "week_title": "면접 영어 & 직장 초기 적응",
+  "kind": "day",
+  "day_number": 15,
+  "title": "Can I grab a magic takeaway please?",
+  "video_url": "https://youtu.be/CUYr_c8QMy8",
+  "description": null,
+  "items": [
+   "Can I grab a magic takeaway please?"
+  ],
+  "title_ko": "매직 테이크아웃으로 하나 주세요"
+ },
+ {
+  "sort_order": 18,
+  "week_number": 3,
+  "week_title": "면접 영어 & 직장 초기 적응",
+  "kind": "drill",
+  "day_number": null,
+  "title": "Day 11~15 drill",
+  "video_url": "https://youtu.be/J_UOXIAsVzg",
+  "description": null,
+  "items": []
+ },
+ {
+  "sort_order": 19,
+  "week_number": 4,
+  "week_title": "직장 필수 요청 & 주문 응대 영어",
+  "kind": "day",
+  "day_number": 16,
+  "title": "You deserve it.",
+  "video_url": "https://youtu.be/kHvsbivN0TE",
+  "description": null,
+  "items": [
+   "You deserve it."
+  ],
+  "title_ko": "그럴 자격 있어."
+ },
+ {
+  "sort_order": 20,
+  "week_number": 4,
+  "week_title": "직장 필수 요청 & 주문 응대 영어",
+  "kind": "day",
+  "day_number": 17,
+  "title": "You look knackered.",
+  "video_url": "https://youtu.be/Cb_G8ChvmeA",
+  "description": null,
+  "items": [
+   "You look knackered."
+  ],
+  "title_ko": "엄청 피곤해 보여."
+ },
+ {
+  "sort_order": 21,
+  "week_number": 4,
+  "week_title": "직장 필수 요청 & 주문 응대 영어",
+  "kind": "day",
+  "day_number": 18,
+  "title": "Can you do me a favor?",
+  "video_url": "https://youtu.be/hQ6Jm0hxOaw",
+  "description": null,
+  "items": [
+   "Can you do me a favor?"
+  ],
+  "title_ko": "부탁 하나만 들어줄래?"
+ },
+ {
+  "sort_order": 22,
+  "week_number": 4,
+  "week_title": "직장 필수 요청 & 주문 응대 영어",
+  "kind": "day",
+  "day_number": 19,
+  "title": "I haven't even had a coffee yet.",
+  "video_url": "https://youtu.be/yeOcd-OLBZY",
+  "description": null,
+  "items": [
+   "I haven't even had a coffee yet."
+  ],
+  "title_ko": "아직 커피도 못 마셨어."
+ },
+ {
+  "sort_order": 23,
+  "week_number": 4,
+  "week_title": "직장 필수 요청 & 주문 응대 영어",
+  "kind": "day",
+  "day_number": 20,
+  "title": "Any allergies at all?",
+  "video_url": "https://youtu.be/gxGaHaduIec",
+  "description": "피드백 데이",
+  "items": [
+   "Any allergies at all?"
+  ],
+  "title_ko": "알레르기 있으세요?"
+ },
+ {
+  "sort_order": 24,
+  "week_number": 4,
+  "week_title": "직장 필수 요청 & 주문 응대 영어",
+  "kind": "drill",
+  "day_number": null,
+  "title": "Day 16~20 drill",
+  "video_url": "https://youtu.be/6Ea3bu_ivBo",
+  "description": null,
+  "items": []
+ },
+ {
+  "sort_order": 25,
+  "week_number": 5,
+  "week_title": "하우스 인스펙션 영어",
+  "kind": "day",
+  "day_number": 21,
+  "title": "Can I come for an inspection?",
+  "video_url": "https://youtu.be/4cd3z31Z60c",
+  "description": null,
+  "items": [
+   "Can I come for an inspection?"
+  ],
+  "title_ko": "집 보러 가도 될까요?"
+ },
+ {
+  "sort_order": 26,
+  "week_number": 5,
+  "week_title": "하우스 인스펙션 영어",
+  "kind": "day",
+  "day_number": 22,
+  "title": "Is the rent per week or per month?",
+  "video_url": "https://youtu.be/Qq5Zrs10IeY",
+  "description": null,
+  "items": [
+   "Is the rent per week or per month?"
+  ],
+  "title_ko": "월세가 주 단위예요, 월 단위예요?"
+ },
+ {
+  "sort_order": 27,
+  "week_number": 5,
+  "week_title": "하우스 인스펙션 영어",
+  "kind": "day",
+  "day_number": 23,
+  "title": "Are bills included?",
+  "video_url": "https://youtu.be/2MjXGHkxqg0",
+  "description": null,
+  "items": [
+   "Are bills included?"
+  ],
+  "title_ko": "공과금 포함인가요?"
+ },
+ {
+  "sort_order": 28,
+  "week_number": 5,
+  "week_title": "하우스 인스펙션 영어",
+  "kind": "day",
+  "day_number": 24,
+  "title": "How long is the minimum stay?",
+  "video_url": "https://youtu.be/d-11t51ZlLc",
+  "description": null,
+  "items": [
+   "How long is the minimum stay?"
+  ],
+  "title_ko": "최소 거주 기간이 얼마예요?"
+ },
+ {
+  "sort_order": 29,
+  "week_number": 5,
+  "week_title": "하우스 인스펙션 영어",
+  "kind": "day",
+  "day_number": 25,
+  "title": "Do you mind if I check the kitchen?",
+  "video_url": "https://youtu.be/iLNQwzK6U2E",
+  "description": null,
+  "items": [
+   "Do you mind if I check the kitchen?"
+  ],
+  "title_ko": "주방 좀 봐도 될까요?"
+ },
+ {
+  "sort_order": 30,
+  "week_number": 5,
+  "week_title": "하우스 인스펙션 영어",
+  "kind": "drill",
+  "day_number": null,
+  "title": "Day 21~25 drill",
+  "video_url": "https://youtu.be/YfapOq-QHEg",
+  "description": null,
+  "items": []
+ },
+ {
+  "sort_order": 31,
+  "week_number": 6,
+  "week_title": "하우스메이트와의 생활 영어",
+  "kind": "day",
+  "day_number": 26,
+  "title": "How do we sort the rubbish here?",
+  "video_url": "https://youtu.be/CoVb7JNbWx0",
+  "description": null,
+  "items": [
+   "How do we sort the rubbish here?"
+  ],
+  "title_ko": "여기 쓰레기는 어떻게 분리해?"
+ },
+ {
+  "sort_order": 32,
+  "week_number": 6,
+  "week_title": "하우스메이트와의 생활 영어",
+  "kind": "day",
+  "day_number": 27,
+  "title": "Technically the shelf is my space.",
+  "video_url": "https://youtu.be/soLDVVugfb4",
+  "description": null,
+  "items": [
+   "Technically the shelf is my space."
+  ],
+  "title_ko": "엄밀히 말하면 그 선반은 내 자리야."
+ },
+ {
+  "sort_order": 33,
+  "week_number": 6,
+  "week_title": "하우스메이트와의 생활 영어",
+  "kind": "day",
+  "day_number": 28,
+  "title": "I can't be bothered.",
+  "video_url": "https://youtu.be/rJ0AiPl3bko",
+  "description": null,
+  "items": [
+   "I can't be bothered."
+  ],
+  "title_ko": "귀찮아."
+ },
+ {
+  "sort_order": 34,
+  "week_number": 6,
+  "week_title": "하우스메이트와의 생활 영어",
+  "kind": "day",
+  "day_number": 29,
+  "title": "I'll keep it down.",
+  "video_url": "https://youtu.be/Or3pqAflTsM",
+  "description": null,
+  "items": [
+   "I'll keep it down."
+  ],
+  "title_ko": "조용히 할게."
+ },
+ {
+  "sort_order": 35,
+  "week_number": 6,
+  "week_title": "하우스메이트와의 생활 영어",
+  "kind": "day",
+  "day_number": 30,
+  "title": "You gotta be kidding me.",
+  "video_url": "https://youtu.be/56JuhNt1HOM",
+  "description": "피드백 데이",
+  "items": [
+   "You gotta be kidding me."
+  ],
+  "title_ko": "말도 안 돼."
+ },
+ {
+  "sort_order": 36,
+  "week_number": 6,
+  "week_title": "하우스메이트와의 생활 영어",
+  "kind": "drill",
+  "day_number": null,
+  "title": "Day 26~30 drill",
+  "video_url": "https://youtu.be/4GuXU7CqTyE",
+  "description": null,
+  "items": []
+ },
+ {
+  "sort_order": 37,
+  "week_number": 7,
+  "week_title": "은행 계좌 개설 & 통신사 영어",
+  "kind": "day",
+  "day_number": 31,
+  "title": "I'd like to open a bank account.",
+  "video_url": "https://youtu.be/lfss0UZSf1Q",
+  "description": null,
+  "items": [
+   "I'd like to open a bank account."
+  ],
+  "title_ko": "계좌 하나 만들고 싶어요."
+ },
+ {
+  "sort_order": 38,
+  "week_number": 7,
+  "week_title": "은행 계좌 개설 & 통신사 영어",
+  "kind": "day",
+  "day_number": 32,
+  "title": "I'd like to check my balance.",
+  "video_url": "https://youtu.be/CUXpYFL1VE8",
+  "description": null,
+  "items": [
+   "I'd like to check my balance."
+  ],
+  "title_ko": "잔액 확인하고 싶어요."
+ },
+ {
+  "sort_order": 39,
+  "week_number": 7,
+  "week_title": "은행 계좌 개설 & 통신사 영어",
+  "kind": "day",
+  "day_number": 33,
+  "title": "How long will it take to get a new card?",
+  "video_url": "https://youtu.be/NcOdoEdzyck",
+  "description": null,
+  "items": [
+   "How long will it take to get a new card?"
+  ],
+  "title_ko": "새 카드 받는 데 얼마나 걸려요?"
+ },
+ {
+  "sort_order": 40,
+  "week_number": 7,
+  "week_title": "은행 계좌 개설 & 통신사 영어",
+  "kind": "day",
+  "day_number": 34,
+  "title": "How much data are you looking for?",
+  "video_url": "https://youtu.be/X4mtaHzhIp4",
+  "description": null,
+  "items": [
+   "How much data are you looking for?"
+  ],
+  "title_ko": "데이터 얼마나 필요하세요?"
+ },
+ {
+  "sort_order": 41,
+  "week_number": 7,
+  "week_title": "은행 계좌 개설 & 통신사 영어",
+  "kind": "day",
+  "day_number": 35,
+  "title": "My data is running out already.",
+  "video_url": "https://youtu.be/z_g899W4A2c",
+  "description": null,
+  "items": [
+   "My data is running out already."
+  ],
+  "title_ko": "벌써 데이터가 다 떨어져 가."
+ },
+ {
+  "sort_order": 42,
+  "week_number": 7,
+  "week_title": "은행 계좌 개설 & 통신사 영어",
+  "kind": "drill",
+  "day_number": null,
+  "title": "Day 31~35 drill",
+  "video_url": "https://youtu.be/PIRsbTAh9fk",
+  "description": null,
+  "items": []
+ },
+ {
+  "sort_order": 43,
+  "week_number": 8,
+  "week_title": "헬스장 & 멤버십",
+  "kind": "day",
+  "day_number": 36,
+  "title": "Will I be charged extra if I run out of data?",
+  "video_url": "https://youtu.be/ppc9iVWQAh8",
+  "description": null,
+  "items": [
+   "Will I be charged extra if I run out of data?"
+  ],
+  "title_ko": "데이터 다 쓰면 추가 요금 나와요?"
+ },
+ {
+  "sort_order": 44,
+  "week_number": 8,
+  "week_title": "헬스장 & 멤버십",
+  "kind": "day",
+  "day_number": 37,
+  "title": "Will I be charged after today?",
+  "video_url": "https://youtu.be/mYq9NbrrKXY",
+  "description": null,
+  "items": [
+   "Will I be charged after today?"
+  ],
+  "title_ko": "오늘 이후에도 요금이 나가요?"
+ },
+ {
+  "sort_order": 45,
+  "week_number": 8,
+  "week_title": "헬스장 & 멤버십",
+  "kind": "day",
+  "day_number": 38,
+  "title": "It's $45 fortnightly.",
+  "video_url": "https://youtu.be/eKRDP4yM1fY",
+  "description": null,
+  "items": [
+   "It's $45 fortnightly."
+  ],
+  "title_ko": "2주에 45달러예요."
+ },
+ {
+  "sort_order": 46,
+  "week_number": 8,
+  "week_title": "헬스장 & 멤버십",
+  "kind": "day",
+  "day_number": 39,
+  "title": "Is there any promo going on at the moment?",
+  "video_url": "https://youtu.be/YUjnY-cgVuI",
+  "description": null,
+  "items": [
+   "Is there any promo going on at the moment?"
+  ],
+  "title_ko": "지금 진행 중인 프로모션 있어요?"
+ },
+ {
+  "sort_order": 47,
+  "week_number": 8,
+  "week_title": "헬스장 & 멤버십",
+  "kind": "day",
+  "day_number": 40,
+  "title": "Even better!",
+  "video_url": "https://youtu.be/ju2A8_fgCJA",
+  "description": "피드백 데이",
+  "items": [
+   "Even better!"
+  ],
+  "title_ko": "더 좋네!"
+ },
+ {
+  "sort_order": 48,
+  "week_number": 8,
+  "week_title": "헬스장 & 멤버십",
+  "kind": "drill",
+  "day_number": null,
+  "title": "Day 36~40 drill",
+  "video_url": "https://youtu.be/FD9ELHLC5aM",
+  "description": null,
+  "items": []
+ },
+ {
+  "sort_order": 49,
+  "week_number": 9,
+  "week_title": "식당 · 카페 · 쇼핑 영어",
+  "kind": "day",
+  "day_number": 41,
+  "title": "I'd like to make a reservation for four at 7:30.",
+  "video_url": "https://youtu.be/QkLtMJGZ5mM",
+  "description": null,
+  "items": [
+   "I'd like to make a reservation for four at 7:30."
+  ],
+  "title_ko": "7시 반에 4명 예약하고 싶어요."
+ },
+ {
+  "sort_order": 50,
+  "week_number": 9,
+  "week_title": "식당 · 카페 · 쇼핑 영어",
+  "kind": "day",
+  "day_number": 42,
+  "title": "I was just wondering if you have sweetener.",
+  "video_url": "https://youtu.be/4qQwVY_09SE",
+  "description": null,
+  "items": [
+   "I was just wondering if you have sweetener."
+  ],
+  "title_ko": "혹시 감미료 있나 해서요."
+ },
+ {
+  "sort_order": 51,
+  "week_number": 9,
+  "week_title": "식당 · 카페 · 쇼핑 영어",
+  "kind": "day",
+  "day_number": 43,
+  "title": "This one's on the house.",
+  "video_url": "https://youtu.be/yYDvfhdGpIs",
+  "description": null,
+  "items": [
+   "This one's on the house."
+  ],
+  "title_ko": "이건 서비스예요."
+ },
+ {
+  "sort_order": 52,
+  "week_number": 9,
+  "week_title": "식당 · 카페 · 쇼핑 영어",
+  "kind": "day",
+  "day_number": 44,
+  "title": "You might want to go half a size up.",
+  "video_url": "https://youtu.be/4t_ITPacyqM",
+  "description": null,
+  "items": [
+   "You might want to go half a size up."
+  ],
+  "title_ko": "반 사이즈 크게 신어 보세요."
+ },
+ {
+  "sort_order": 53,
+  "week_number": 9,
+  "week_title": "식당 · 카페 · 쇼핑 영어",
+  "kind": "day",
+  "day_number": 45,
+  "title": "Buy one get one free.",
+  "video_url": "https://youtu.be/ai6QkraAjzo",
+  "description": "피드백 데이",
+  "items": [
+   "Buy one get one free."
+  ],
+  "title_ko": "1+1이에요."
+ },
+ {
+  "sort_order": 54,
+  "week_number": 9,
+  "week_title": "식당 · 카페 · 쇼핑 영어",
+  "kind": "drill",
+  "day_number": null,
+  "title": "Day 41~45 drill",
+  "video_url": "https://youtu.be/LVEHk4-3EVc",
+  "description": null,
+  "items": []
+ },
+ {
+  "sort_order": 55,
+  "week_number": 10,
+  "week_title": "대중교통 & 길 찾기 영어",
+  "kind": "day",
+  "day_number": 46,
+  "title": "Does this tram go to Melbourne Central?",
+  "video_url": "https://youtu.be/eKpYBLA72mU",
+  "description": null,
+  "items": [
+   "Does this tram go to Melbourne Central?"
+  ],
+  "title_ko": "이 트램 멜버른 센트럴 가요?"
+ },
+ {
+  "sort_order": 56,
+  "week_number": 10,
+  "week_title": "대중교통 & 길 찾기 영어",
+  "kind": "day",
+  "day_number": 47,
+  "title": "I just topped it up, but it didn't go through.",
+  "video_url": "https://youtu.be/Qlbq2CzS5gA",
+  "description": null,
+  "items": [
+   "I just topped it up, but it didn't go through."
+  ],
+  "title_ko": "방금 충전했는데 충전이 안 됐어요."
+ },
+ {
+  "sort_order": 57,
+  "week_number": 10,
+  "week_title": "대중교통 & 길 찾기 영어",
+  "kind": "day",
+  "day_number": 48,
+  "title": "But it's not express, though.",
+  "video_url": "https://youtu.be/5ANUkLlqoaU",
+  "description": null,
+  "items": [
+   "But it's not express, though."
+  ],
+  "title_ko": "근데 급행은 아니야."
+ },
+ {
+  "sort_order": 58,
+  "week_number": 10,
+  "week_title": "대중교통 & 길 찾기 영어",
+  "kind": "day",
+  "day_number": 49,
+  "title": "There's a pretty decent Thai place.",
+  "video_url": "https://youtu.be/MWUBw5lgJ3Q",
+  "description": null,
+  "items": [
+   "There's a pretty decent Thai place."
+  ],
+  "title_ko": "꽤 괜찮은 태국 음식점 있어."
+ },
+ {
+  "sort_order": 59,
+  "week_number": 10,
+  "week_title": "대중교통 & 길 찾기 영어",
+  "kind": "day",
+  "day_number": 50,
+  "title": "I think I missed my stop.",
+  "video_url": "https://youtu.be/CAuEa5gtEc4",
+  "description": "피드백 데이",
+  "items": [
+   "I think I missed my stop."
+  ],
+  "title_ko": "내릴 정거장을 지나친 것 같아."
+ },
+ {
+  "sort_order": 60,
+  "week_number": 10,
+  "week_title": "대중교통 & 길 찾기 영어",
+  "kind": "drill",
+  "day_number": null,
+  "title": "Day 46~50 drill",
+  "video_url": null,
+  "description": null,
+  "items": []
+ },
+ {
+  "sort_order": 61,
+  "week_number": 11,
+  "week_title": "병원 & 약국 영어",
+  "kind": "day",
+  "day_number": 51,
+  "title": "What's the earliest available appointment?",
+  "video_url": "https://youtu.be/zlyLse3Q7HU",
+  "description": null,
+  "items": [
+   "What's the earliest available appointment?"
+  ],
+  "title_ko": "제일 빠른 예약이 언제예요?"
+ },
+ {
+  "sort_order": 62,
+  "week_number": 11,
+  "week_title": "병원 & 약국 영어",
+  "kind": "day",
+  "day_number": 52,
+  "title": "What brings you in today?",
+  "video_url": "https://youtu.be/bug1twOuNcc",
+  "description": null,
+  "items": [
+   "What brings you in today?"
+  ],
+  "title_ko": "오늘 어떻게 오셨어요?"
+ },
+ {
+  "sort_order": 63,
+  "week_number": 11,
+  "week_title": "병원 & 약국 영어",
+  "kind": "day",
+  "day_number": 53,
+  "title": "I've been coughing a lot, especially when I talk.",
+  "video_url": "https://youtu.be/kBLvHsY5YqI",
+  "description": null,
+  "items": [
+   "I've been coughing a lot, especially when I talk."
+  ],
+  "title_ko": "기침을 많이 해요, 특히 말할 때요."
+ },
+ {
+  "sort_order": 64,
+  "week_number": 11,
+  "week_title": "병원 & 약국 영어",
+  "kind": "day",
+  "day_number": 54,
+  "title": "Not that I know of.",
+  "video_url": "https://youtu.be/ULF8k_IzFFA",
+  "description": null,
+  "items": [
+   "Not that I know of."
+  ],
+  "title_ko": "제가 알기로는 없어요."
+ },
+ {
+  "sort_order": 65,
+  "week_number": 11,
+  "week_title": "병원 & 약국 영어",
+  "kind": "day",
+  "day_number": 55,
+  "title": "Even if you feel better",
+  "video_url": "https://youtu.be/dZTfi8XubLU",
+  "description": "피드백 데이",
+  "items": [],
+  "title_ko": "좀 나아진 것 같아도"
+ },
+ {
+  "sort_order": 66,
+  "week_number": 11,
+  "week_title": "병원 & 약국 영어",
+  "kind": "drill",
+  "day_number": null,
+  "title": "Day 51~55 drill",
+  "video_url": null,
+  "description": null,
+  "items": []
+ },
+ {
+  "sort_order": 67,
+  "week_number": 12,
+  "week_title": "긴급상황 영어",
+  "kind": "day",
+  "day_number": 56,
+  "title": "Do you want me to call 000?",
+  "video_url": "https://youtu.be/xBPuh3OmAOU",
+  "description": null,
+  "items": [
+   "Do you want me to call 000?"
+  ],
+  "title_ko": "000에 전화해 줄까?"
+ },
+ {
+  "sort_order": 68,
+  "week_number": 12,
+  "week_title": "긴급상황 영어",
+  "kind": "day",
+  "day_number": 57,
+  "title": "I don't think a Band-Aid's gonna work.",
+  "video_url": "https://youtu.be/Z0sOjoEdf9Q",
+  "description": null,
+  "items": [
+   "I don't think a Band-Aid's gonna work."
+  ],
+  "title_ko": "밴드로는 안 될 것 같아."
+ },
+ {
+  "sort_order": 69,
+  "week_number": 12,
+  "week_title": "긴급상황 영어",
+  "kind": "day",
+  "day_number": 58,
+  "title": "Think I'm having an allergic reaction.",
+  "video_url": "https://youtu.be/jhlr7Gs9bEo",
+  "description": null,
+  "items": [
+   "Think I'm having an allergic reaction."
+  ],
+  "title_ko": "알레르기 반응이 온 것 같아요."
+ },
+ {
+  "sort_order": 70,
+  "week_number": 12,
+  "week_title": "긴급상황 영어",
+  "kind": "day",
+  "day_number": 59,
+  "title": "I don't even know who he is.",
+  "video_url": "https://youtu.be/dCklgnlrVMs",
+  "description": null,
+  "items": [
+   "I don't even know who he is."
+  ],
+  "title_ko": "그 사람이 누군지도 몰라."
+ },
+ {
+  "sort_order": 71,
+  "week_number": 12,
+  "week_title": "긴급상황 영어",
+  "kind": "day",
+  "day_number": 60,
+  "title": "My phone got stolen on the tram.",
+  "video_url": "https://youtu.be/OfzZeQ0h-rA",
+  "description": null,
+  "items": [
+   "My phone got stolen on the tram."
+  ],
+  "title_ko": "트램에서 휴대폰을 도둑맞았어요."
+ },
+ {
+  "sort_order": 72,
+  "week_number": 12,
+  "week_title": "긴급상황 영어",
+  "kind": "drill",
+  "day_number": null,
+  "title": "Day 56~60 drill",
+  "video_url": null,
+  "description": null,
+  "items": []
+ }
 ]
