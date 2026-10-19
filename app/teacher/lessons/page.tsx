@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { VideoSheetForm } from "./video-sheet-form";
 import {
   createServerSupabaseClient,
   type ClassRecording,
@@ -86,6 +87,14 @@ export default async function TeacherLessonsPage({
             {course.status === "open" ? "준비 중으로 바꾸기" : "학생에게 열기"}
           </SubmitButton>
         </form>
+      </section>
+      <section className={cardClass}>
+        <h2 className="mb-1 font-bold text-zinc-900">📄 강의 링크 시트</h2>
+        <p className="mb-2 text-xs text-zinc-500">
+          시트에 VOD 링크를 넣으면 1시간 안에 학생 화면 영상이 자동으로 바뀌어요 (VOD가 없으면 Live 녹화). 바로 바꾸려면
+          &lsquo;지금 반영하기&rsquo;를 눌러주세요. 시트 공유는 &lsquo;링크가 있는 모든 사용자 · 뷰어&rsquo;여야 해요.
+        </p>
+        <VideoSheetForm course={course.id} sheet={course.video_sheet ?? null} />
       </section>
       <section className={cardClass}>
         <h2 className="mb-2 font-bold text-zinc-900">레슨(Day) 추가</h2>

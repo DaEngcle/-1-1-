@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { after } from "next/server";
+import { syncCourseVideos } from "@/lib/classroom/video-sheet";
 import { createServerSupabaseClient, type Course, type Lesson } from "@/lib/supabase";
 import { requireStudent } from "@/lib/classroom/dal";
 import { COURSE_SHORT, PLANS } from "@/lib/classroom/plans";
@@ -24,6 +26,8 @@ export default async function StudentLessonsPage({
     courses.find((c) => c.id === requested) ?? courses.find((c) => allowed.has(c.id) && c.status === "open") ?? courses[0];
   const canSee = allowed.has(course.id) && course.status === "open";
   const theme = THEME[course.id] ?? DEFAULT_THEME;
+  // 강의 링크 시트에 새 VOD가 있으면 응답을 보낸 뒤 조용히 반영 (시트는 1시간 캐시)
+  if (course.video_sheet) after(() => syncCourseVideos(course.id).catch(() => undefined));
 
   const tabs = (
     <nav className="flex gap-1.5 overflow-x-auto">
