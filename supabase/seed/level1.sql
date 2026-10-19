@@ -983,10 +983,10 @@ from lessons l, (values
   (14, 'Log book?', '로그북?', 'B 대사'),
   (15, 'Check. I have the app.', '확인. 앱에 있어.', 'A 대사'),
   (16, 'Show me the records.', '기록 보여 줘.', 'B 대사'),
-  (17, 'Damn it! I really need to stop using smoke as my enterance!', '젠장! 연기 피우면서 등장하는 거 진짜 그만해야겠다!', 'A 대사'),
+  (17, 'Damn it! I really need to stop using smoke as my entrance!', '젠장! 연기 피우면서 등장하는 거 진짜 그만해야겠다!', 'A 대사'),
   (18, 'To get your driver''s license in Australia, you must first get your Learner''s license. Or as we say: L''s.', '호주에서 운전면허를 따려면 먼저 연습 면허를 따야 해. 우리는 그걸 L''s라고 불러.', 'A 대사'),
   (19, 'L''s driver''s must practise their driving with a supervisor.', 'L 면허 운전자는 반드시 감독자랑 같이 운전 연습을 해야 해.', 'A 대사'),
-  (20, 'Lily is on her L''s and is hoping to get on her P''s Her provisonal license. She must record her driving hours in a log book before taking her P''s exam. She looks ready, doesn''t she? She totally understands all the basic road signs and rules, I hope.', '릴리는 지금 L 면허 단계고 P 면허, 그러니까 임시 면허를 따려고 해. P 시험 보기 전에 로그북에 운전 시간을 기록해야 해. 준비된 것 같아 보이지? 기본 도로 표지판이랑 규칙은 다 완벽하게 알고 있겠지, 아마도.', 'A 대사')
+  (20, 'Lily is on her L''s and is hoping to get on her P''s. Her provisional license. She must record her driving hours in a log book before taking her P''s exam. She looks ready, doesn''t she? She totally understands all the basic road signs and rules, I hope.', '릴리는 지금 L 면허 단계고 P 면허, 그러니까 임시 면허를 따려고 해. P 시험 보기 전에 로그북에 운전 시간을 기록해야 해. 준비된 것 같아 보이지? 기본 도로 표지판이랑 규칙은 다 완벽하게 알고 있겠지, 아마도.', 'A 대사')
 ) as v(item_order, sentence, translation, note)
 where l.course_id = 'level1' and l.day_number = 60
 on conflict (lesson_id, item_order) do update set
