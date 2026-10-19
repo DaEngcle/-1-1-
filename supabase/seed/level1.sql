@@ -574,11 +574,11 @@ from lessons l, (values
   (1, 'So, what did you study back home?', '그래서, 한국에선 뭐 전공했어?', 'A 대사'),
   (2, 'I majored in business administration.', '경영학 전공했어.', 'B 대사'),
   (3, 'Cool! What kind of jobs did you do before coming here?', '오 좋네! 여기 오기 전엔 무슨 일 했어?', 'A 대사'),
-  (4, 'I worked at a marketing company for about two years.', '마케팅 회사에서 2년 정도 일했어.', 'A 대사'),
-  (5, 'Nice. So what brought you here?', '좋네. 그럼 여긴 어떻게 오게 된 거야?', 'B 대사'),
-  (6, 'I wanted a change. I was a bit burnt out, honestly.', '변화가 필요했어. 솔직히 좀 번아웃 왔었거든.', 'A 대사'),
-  (7, 'Fair enough. Best decision you made?', '그럴 만하지. 인생 최고의 결정이었어?', 'B 대사'),
-  (8, 'Getting on that plane. Hundred percent.', '그 비행기 탄 거. 백 퍼센트.', 'A 대사')
+  (4, 'I worked at a marketing company for about two years.', '마케팅 회사에서 2년 정도 일했어.', 'B 대사'),
+  (5, 'Nice. So what brought you here?', '좋네. 그럼 여긴 어떻게 오게 된 거야?', 'A 대사'),
+  (6, 'I wanted a change. I was a bit burnt out, honestly.', '변화가 필요했어. 솔직히 좀 번아웃 왔었거든.', 'B 대사'),
+  (7, 'Fair enough. Best decision you made?', '그럴 만하지. 인생 최고의 결정이었어?', 'A 대사'),
+  (8, 'Getting on that plane. Hundred percent.', '그 비행기 탄 거. 백 퍼센트.', 'B 대사')
 ) as v(item_order, sentence, translation, note)
 where l.course_id = 'level1' and l.day_number = 36
 on conflict (lesson_id, item_order) do update set
