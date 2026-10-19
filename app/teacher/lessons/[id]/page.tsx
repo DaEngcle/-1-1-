@@ -5,6 +5,7 @@ import { addItems, deleteItem, updateItem } from "../actions";
 import { VideoEmbed } from "@/app/_ui/video-embed";
 import { cardClass, inputClass, primaryButtonClass, secondaryButtonClass } from "@/app/_ui/styles";
 import { requireTeacher } from "@/lib/classroom/dal";
+import { SubmitButton } from "@/app/_ui/submit-button";
 
 export default async function TeacherLessonPage({
   params,
@@ -49,12 +50,12 @@ export default async function TeacherLessonPage({
             <input name="translation" defaultValue={item.translation ?? ""} placeholder="해석 (선택)" className={inputClass} />
             <input name="note" defaultValue={item.note ?? ""} placeholder="발음/상황 메모 (선택)" className={inputClass} />
             <div className="flex gap-2">
-              <button type="submit" className={secondaryButtonClass}>
+              <SubmitButton className={secondaryButtonClass}>
                 저장
-              </button>
-              <button type="submit" formAction={deleteItem} className={`${secondaryButtonClass} text-red-600`}>
+              </SubmitButton>
+              <SubmitButton formAction={deleteItem} className={`${secondaryButtonClass} text-red-600`}>
                 삭제
-              </button>
+              </SubmitButton>
             </div>
           </form>
         ))}
@@ -69,9 +70,9 @@ export default async function TeacherLessonPage({
         <form action={addItems} className="flex flex-col gap-2">
           <input type="hidden" name="lesson_id" value={lesson.id} />
           <textarea name="lines" rows={6} required className={`${inputClass} font-mono text-sm`} />
-          <button type="submit" className={primaryButtonClass}>
+          <SubmitButton className={primaryButtonClass}>
             추가하기
-          </button>
+          </SubmitButton>
         </form>
       </section>
     </>

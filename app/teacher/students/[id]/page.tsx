@@ -25,6 +25,7 @@ import { requireTeacher } from "@/lib/classroom/dal";
 import { PROFILE_SELECT, STAGES, isStage, type Profile } from "@/lib/classroom/profile";
 import { ProfileFields } from "../../_ui/profile-fields";
 import { updateProfile } from "../../crm/actions";
+import { SubmitButton } from "@/app/_ui/submit-button";
 
 export default async function TeacherStudentPage({
   params,
@@ -129,9 +130,9 @@ export default async function TeacherStudentPage({
         <form action={updateProfile} className="flex flex-col gap-2">
           <input type="hidden" name="id" value={student.id} />
           <ProfileFields profile={student} cohorts={cohortRows ?? []} />
-          <button type="submit" className="self-start rounded-lg bg-brand-600 px-3 py-1.5 text-sm font-bold text-white">
+          <SubmitButton className="self-start rounded-lg bg-brand-600 px-3 py-1.5 text-sm font-bold text-white">
             프로필 저장
-          </button>
+          </SubmitButton>
         </form>
         {(buys ?? []).length > 0 && (
           <div className="mt-3 border-t border-slate-100 pt-2">
@@ -167,9 +168,9 @@ export default async function TeacherStudentPage({
             placeholder="예: 10/18 카톡으로 응원 메시지 보냄 / 레벨테스트 후 상담, r 발음 집중하기로 함"
             className="flex-1 rounded-xl border border-slate-200 px-3 py-2 text-sm"
           />
-          <button type="submit" className="rounded-xl bg-brand-600 px-4 py-2 text-sm font-bold text-white">
+          <SubmitButton className="rounded-xl bg-brand-600 px-4 py-2 text-sm font-bold text-white">
             기록
-          </button>
+          </SubmitButton>
         </form>
         <ul className="mt-3 flex flex-col gap-2">
           {(noteRows ?? []).map((n) => (
@@ -203,9 +204,9 @@ export default async function TeacherStudentPage({
             placeholder="한 줄 메모 (학생 목록에 보여요)"
             className="flex-1 rounded-lg border border-slate-200 px-3 py-1.5 text-sm"
           />
-          <button type="submit" className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-semibold">
+          <SubmitButton className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-semibold">
             저장
-          </button>
+          </SubmitButton>
         </form>
         <div className="flex flex-wrap items-start gap-2">
           <form action={setStudentActive}>
@@ -245,9 +246,9 @@ export default async function TeacherStudentPage({
               className="rounded-lg border border-slate-200 px-2 py-1"
             />
           </label>
-          <button type="submit" className="rounded-lg border border-slate-300 px-3 py-1.5 font-semibold">
+          <SubmitButton className="rounded-lg border border-slate-300 px-3 py-1.5 font-semibold">
             저장
-          </button>
+          </SubmitButton>
         </form>
         <p className="mt-1 text-xs text-zinc-500">
           연장할 때는 종료일만 바꿔서 저장하세요. 종료일이 지나면 학생은 로그인할 수 없어요.

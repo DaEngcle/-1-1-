@@ -12,6 +12,7 @@ import {
   secondaryButtonClass,
 } from "@/app/_ui/styles";
 import { PLANS } from "@/lib/classroom/plans";
+import { SubmitButton } from "@/app/_ui/submit-button";
 
 function CodeNotice({ state }: { state: StudentFormState }) {
   if (!state) return null;
@@ -49,9 +50,9 @@ export function CreateStudentForm() {
           </option>
         ))}
       </select>
-      <button type="submit" disabled={pending} className={primaryButtonClass}>
+      <SubmitButton disabled={pending} className={primaryButtonClass}>
         {pending ? "등록 중..." : "학생 등록"}
-      </button>
+      </SubmitButton>
       <CodeNotice state={state} />
     </form>
   );
@@ -71,9 +72,9 @@ export function RegenerateCodeButton({ id, name }: { id: string; name: string })
     >
       <input type="hidden" name="id" value={id} />
       <input type="hidden" name="name" value={name} />
-      <button type="submit" disabled={pending} className={secondaryButtonClass}>
+      <SubmitButton disabled={pending} className={secondaryButtonClass}>
         코드 재발급
-      </button>
+      </SubmitButton>
       <CodeNotice state={state} />
     </form>
   );

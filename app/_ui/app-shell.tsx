@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { logout } from "@/app/login/actions";
 import { NavLinks } from "./nav-links";
+import { SubmitButton } from "@/app/_ui/submit-button";
 
 export function AppShell({
   title,
@@ -22,9 +23,9 @@ export function AppShell({
             {title}
           </Link>
           <form action={logout}>
-            <button type="submit" className="text-sm text-brand-100 underline-offset-2 hover:underline">
+            <SubmitButton className="text-sm text-brand-100 underline-offset-2 hover:underline">
               로그아웃
-            </button>
+            </SubmitButton>
           </form>
         </div>
         <NavLinks items={nav} />

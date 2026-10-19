@@ -7,6 +7,7 @@ import { getWeeklyRanking } from "@/lib/classroom/engagement";
 import { WeeklyRanking } from "@/app/_ui/engagement";
 import { togglePostTest } from "./actions";
 import { cardClass, primaryButtonClass, secondaryButtonClass } from "@/app/_ui/styles";
+import { SubmitButton } from "@/app/_ui/submit-button";
 
 export default async function TeacherLevelTestsPage() {
   await requireTeacher();
@@ -37,9 +38,9 @@ export default async function TeacherLevelTestsPage() {
         </div>
         <form action={togglePostTest}>
           <input type="hidden" name="open" value={String(!postOpen)} />
-          <button type="submit" className={postOpen ? secondaryButtonClass : primaryButtonClass}>
+          <SubmitButton className={postOpen ? secondaryButtonClass : primaryButtonClass}>
             {postOpen ? "닫기" : "수강 후 테스트 열기"}
-          </button>
+          </SubmitButton>
         </form>
       </section>
 

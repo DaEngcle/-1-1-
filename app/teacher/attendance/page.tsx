@@ -4,6 +4,7 @@ import { ATTENDANCE_LABEL } from "@/lib/classroom/attendance";
 import { saveAttendance } from "./actions";
 import { cardClass, inputClass, primaryButtonClass, secondaryButtonClass } from "@/app/_ui/styles";
 import { requireTeacher } from "@/lib/classroom/dal";
+import { SubmitButton } from "@/app/_ui/submit-button";
 
 export default async function AttendancePage({
   searchParams,
@@ -34,9 +35,9 @@ export default async function AttendancePage({
     <>
       <form className="flex items-center gap-2">
         <input type="date" name="date" defaultValue={classDate} className={inputClass} />
-        <button type="submit" className={secondaryButtonClass}>
+        <SubmitButton className={secondaryButtonClass}>
           날짜 이동
-        </button>
+        </SubmitButton>
       </form>
 
       <form action={saveAttendance} className={`${cardClass} flex flex-col gap-3`}>
@@ -75,9 +76,9 @@ export default async function AttendancePage({
             </fieldset>
           );
         })}
-        <button type="submit" className={primaryButtonClass}>
+        <SubmitButton className={primaryButtonClass}>
           출결 저장
-        </button>
+        </SubmitButton>
       </form>
 
       {summary.size > 0 && (

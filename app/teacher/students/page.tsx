@@ -10,6 +10,7 @@ import { getRoster, nudgeMessage, STATUS_INFO, type RosterRow, type RosterStatus
 import { CopyButton } from "@/app/_ui/copy-button";
 import { cardClass } from "@/app/_ui/styles";
 import { requireTeacher } from "@/lib/classroom/dal";
+import { SubmitButton } from "@/app/_ui/submit-button";
 
 type Filter = "all" | "good" | "slow" | "risk" | "noaccount" | "expiring";
 const FILTERS: Filter[] = ["all", "good", "slow", "risk", "noaccount", "expiring"];
@@ -135,9 +136,9 @@ export default async function StudentsPage({
                         기존 종료일({p.access_until}) 유지
                       </label>
                     )}
-                    <button type="submit" className="rounded-lg bg-brand-600 px-3 py-1.5 text-sm font-bold text-white">
+                    <SubmitButton className="rounded-lg bg-brand-600 px-3 py-1.5 text-sm font-bold text-white">
                       {matches.length ? "새 학생으로 승인" : "승인"}
-                    </button>
+                    </SubmitButton>
                   </form>
                   <form action={rejectStudent}>
                     <input type="hidden" name="id" value={p.id} />
@@ -162,9 +163,9 @@ export default async function StudentsPage({
                       {m.access_until && ` ~${m.access_until}`}
                       {isPlanId(m.plan) && ")"}
                     </span>
-                    <button type="submit" className="rounded-md bg-violet-600 px-2 py-1 font-bold text-white">
+                    <SubmitButton className="rounded-md bg-violet-600 px-2 py-1 font-bold text-white">
                       이 카드와 합쳐서 승인
-                    </button>
+                    </SubmitButton>
                   </form>
                 ))}
               </li>

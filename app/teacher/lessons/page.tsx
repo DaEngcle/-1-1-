@@ -22,6 +22,7 @@ import {
 import { requireTeacher } from "@/lib/classroom/dal";
 import { PlaylistImportForm } from "./playlist-form";
 import { COURSE_SHORT } from "@/lib/classroom/plans";
+import { SubmitButton } from "@/app/_ui/submit-button";
 
 export default async function TeacherLessonsPage({
   searchParams,
@@ -81,9 +82,9 @@ export default async function TeacherLessonsPage({
         <form action={setCourseStatus}>
           <input type="hidden" name="course" value={course.id} />
           <input type="hidden" name="status" value={course.status === "open" ? "preparing" : "open"} />
-          <button type="submit" className={course.status === "open" ? secondaryButtonClass : primaryButtonClass}>
+          <SubmitButton className={course.status === "open" ? secondaryButtonClass : primaryButtonClass}>
             {course.status === "open" ? "준비 중으로 바꾸기" : "학생에게 열기"}
-          </button>
+          </SubmitButton>
         </form>
       </section>
       <section className={cardClass}>
@@ -102,9 +103,9 @@ export default async function TeacherLessonsPage({
             className={inputClass}
           />
           <input name="week_title" placeholder="주차 제목 (새 주차일 때만)" className={inputClass} />
-          <button type="submit" className={`${primaryButtonClass} sm:col-span-2`}>
+          <SubmitButton className={`${primaryButtonClass} sm:col-span-2`}>
             레슨 추가
-          </button>
+          </SubmitButton>
         </form>
         <p className="mt-2 text-xs text-zinc-500">
           맨 뒤에 다음 Day로 추가돼요. 추가한 뒤 레슨을 눌러 쉐도잉 문장을 넣고, &lsquo;공개&rsquo;를 눌러주세요.
@@ -139,9 +140,9 @@ export default async function TeacherLessonsPage({
               </option>
             ))}
           </select>
-          <button type="submit" className={primaryButtonClass}>
+          <SubmitButton className={primaryButtonClass}>
             여기까지 공개
-          </button>
+          </SubmitButton>
         </form>
         <p className="mt-2 text-xs text-zinc-500">선택한 레슨까지 학생에게 보이고, 이후 레슨은 숨겨져요.</p>
       </section>
@@ -186,9 +187,9 @@ export default async function TeacherLessonsPage({
                   </a>
                   <form action={deleteRecording}>
                     <input type="hidden" name="id" value={r.id} />
-                    <button type="submit" className="text-xs text-red-600">
+                    <SubmitButton className="text-xs text-red-600">
                       삭제
-                    </button>
+                    </SubmitButton>
                   </form>
                 </div>
               ))}
@@ -199,9 +200,9 @@ export default async function TeacherLessonsPage({
               <input type="hidden" name="course" value={course.id} />
               <input name="title" placeholder="제목 (예: 6기 Week1 라이브)" required className={`${inputClass} flex-1`} />
               <input name="video_url" type="url" placeholder="영상 링크 (유튜브/줌/드라이브)" required className={`${inputClass} flex-1`} />
-              <button type="submit" className={secondaryButtonClass}>
+              <SubmitButton className={secondaryButtonClass}>
                 추가
-              </button>
+              </SubmitButton>
             </form>
           </div>
         </section>

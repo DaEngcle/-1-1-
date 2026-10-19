@@ -1,5 +1,7 @@
 "use client";
 
+import { SubmitButton } from "./submit-button";
+
 /** 누르면 확인 창을 띄우고, 확인해야 폼을 제출하는 버튼 */
 export function ConfirmButton({
   message,
@@ -11,14 +13,13 @@ export function ConfirmButton({
   children: React.ReactNode;
 }) {
   return (
-    <button
-      type="submit"
+    <SubmitButton
       className={className}
       onClick={(e) => {
         if (!confirm(message)) e.preventDefault();
       }}
     >
       {children}
-    </button>
+    </SubmitButton>
   );
 }

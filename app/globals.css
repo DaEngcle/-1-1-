@@ -33,3 +33,31 @@ body {
   font-family: var(--font-sans);
   word-break: keep-all;
 }
+
+/* 누르면 살짝 '딸깍' 눌리는 느낌 (버튼·링크·접기 메뉴) */
+button,
+a,
+summary,
+select,
+label:has(> input[type="checkbox"]) {
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    transform 90ms ease-out,
+    filter 90ms ease-out,
+    opacity 90ms ease-out;
+}
+button:not(:disabled):active,
+a:active,
+summary:active {
+  transform: scale(0.96);
+  filter: brightness(0.92);
+}
+button:disabled {
+  cursor: progress;
+}
+
+/* 페이지 이동 중 위쪽 진행 막대 */
+@keyframes nav-progress {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(250%); }
+}

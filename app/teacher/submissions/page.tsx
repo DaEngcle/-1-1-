@@ -4,6 +4,7 @@ import { requireTeacher } from "@/lib/classroom/dal";
 import { getCourseProgress } from "@/lib/classroom/progress";
 import { SubmissionList } from "../submission-list";
 import { cardClass, inputClass, secondaryButtonClass } from "@/app/_ui/styles";
+import { SubmitButton } from "@/app/_ui/submit-button";
 
 const STATUS_OPTIONS: { value: Submission["status"]; label: string }[] = [
   { value: "pending", label: "채점 대기" },
@@ -106,9 +107,9 @@ export default async function TeacherSubmissionsPage({
             </option>
           ))}
         </select>
-        <button type="submit" className={secondaryButtonClass}>
+        <SubmitButton className={secondaryButtonClass}>
           보기
-        </button>
+        </SubmitButton>
         {(studentId || weekNumber || status) && (
           <Link href="/teacher/submissions" className="text-sm text-zinc-500 underline">
             초기화

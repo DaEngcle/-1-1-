@@ -17,6 +17,7 @@ import { CopyButton } from "@/app/_ui/copy-button";
 import { ConfirmButton } from "@/app/_ui/confirm-button";
 import { ProfileFields } from "../_ui/profile-fields";
 import { addCohort, addLead, deleteLead, updateFollowUp } from "./actions";
+import { SubmitButton } from "@/app/_ui/submit-button";
 
 type Person = Profile & {
   id: string;
@@ -306,9 +307,9 @@ export default async function CrmPage({
                     className={`${small} w-44`}
                   />
                 )}
-                <button type="submit" className="rounded-lg bg-brand-600 px-2.5 py-1 font-bold text-white">
+                <SubmitButton className="rounded-lg bg-brand-600 px-2.5 py-1 font-bold text-white">
                   저장
-                </button>
+                </SubmitButton>
               </form>
 
               <div className="flex flex-wrap items-center gap-2 text-xs">
@@ -371,9 +372,9 @@ export default async function CrmPage({
             📝 상담 메모 (노트앱 내용 그대로 붙여넣어도 돼요)
             <textarea name="note" rows={4} maxLength={2000} className={small} />
           </label>
-          <button type="submit" className={`${primaryButtonClass} self-start`}>
+          <SubmitButton className={`${primaryButtonClass} self-start`}>
             상담 카드 저장
-          </button>
+          </SubmitButton>
         </form>
       </details>
 
@@ -404,9 +405,9 @@ export default async function CrmPage({
             ))}
           </select>
           <input type="date" name="starts_on" className={small} />
-          <button type="submit" className="rounded-lg bg-brand-600 px-2.5 py-1 font-bold text-white">
+          <SubmitButton className="rounded-lg bg-brand-600 px-2.5 py-1 font-bold text-white">
             기수 만들기
-          </button>
+          </SubmitButton>
         </form>
         <p className="mt-2 text-xs text-zinc-500">학생을 기수에 넣으려면 학생 프로필에서 ‘기수’를 골라주세요.</p>
       </section>

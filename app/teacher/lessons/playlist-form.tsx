@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import { importPlaylist } from "./actions";
 import { inputClass, secondaryButtonClass } from "@/app/_ui/styles";
+import { SubmitButton } from "@/app/_ui/submit-button";
 
 export function PlaylistImportForm({ weekNumber, course }: { weekNumber: number; course: string }) {
   const [state, action, pending] = useActionState(importPlaylist, undefined);
@@ -17,9 +18,9 @@ export function PlaylistImportForm({ weekNumber, course }: { weekNumber: number;
           required
           className={`${inputClass} flex-1`}
         />
-        <button type="submit" disabled={pending} className={secondaryButtonClass}>
+        <SubmitButton disabled={pending} className={secondaryButtonClass}>
           {pending ? "가져오는 중..." : "재생목록 가져오기"}
-        </button>
+        </SubmitButton>
       </div>
       {state && (
         <p className={`text-sm ${state.status === "error" ? "text-red-600" : "text-green-700"}`}>

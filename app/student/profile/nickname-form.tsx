@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import { saveNickname } from "./actions";
 import { inputClass, primaryButtonClass } from "@/app/_ui/styles";
+import { SubmitButton } from "@/app/_ui/submit-button";
 
 export function NicknameForm({ current }: { current: string | null }) {
   const [state, action, pending] = useActionState(saveNickname, undefined);
@@ -17,9 +18,9 @@ export function NicknameForm({ current }: { current: string | null }) {
           required
           className={`${inputClass} flex-1`}
         />
-        <button type="submit" disabled={pending} className={primaryButtonClass}>
+        <SubmitButton disabled={pending} className={primaryButtonClass}>
           {pending ? "저장 중..." : "저장"}
-        </button>
+        </SubmitButton>
       </div>
       {state && (
         <p className={`text-sm ${state.status === "error" ? "text-red-600" : "text-green-700"}`}>{state.message}</p>

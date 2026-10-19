@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import { phoneLogin, signup, studentLogin, teacherLogin } from "./actions";
+import { SubmitButton } from "@/app/_ui/submit-button";
 
 const inputClass =
   "rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-base text-zinc-900 placeholder:text-zinc-400 focus:border-brand-500 focus:outline-none";
@@ -20,9 +21,9 @@ export function StudentLoginForm() {
         required
         className={`${inputClass} text-center font-mono tracking-widest uppercase`}
       />
-      <button type="submit" disabled={pending} className={buttonClass}>
+      <SubmitButton disabled={pending} className={buttonClass}>
         {pending ? "확인 중..." : "시작하기"}
-      </button>
+      </SubmitButton>
       {state?.error && (
         <p role="alert" className="text-sm text-red-600">
           {state.error}
@@ -43,9 +44,9 @@ export function TeacherLoginForm() {
         required
         className={inputClass}
       />
-      <button type="submit" disabled={pending} className={buttonClass}>
+      <SubmitButton disabled={pending} className={buttonClass}>
         {pending ? "확인 중..." : "선생님으로 로그인"}
-      </button>
+      </SubmitButton>
       {state?.error && (
         <p role="alert" className="text-sm text-red-600">
           {state.error}
@@ -61,9 +62,9 @@ export function PhoneLoginForm() {
     <form action={action} className="flex w-full flex-col gap-3">
       <input name="phone" type="tel" inputMode="numeric" placeholder="휴대폰 번호" autoComplete="tel" required className={inputClass} />
       <input name="password" type="password" placeholder="비밀번호" autoComplete="current-password" required className={inputClass} />
-      <button type="submit" disabled={pending} className={buttonClass}>
+      <SubmitButton disabled={pending} className={buttonClass}>
         {pending ? "확인 중..." : "로그인"}
-      </button>
+      </SubmitButton>
       {state?.error && (
         <p role="alert" className="text-sm text-red-600">
           {state.error}
@@ -112,9 +113,9 @@ export function SignupForm() {
           삭제
         </span>
       </label>
-      <button type="submit" disabled={pending} className={buttonClass}>
+      <SubmitButton disabled={pending} className={buttonClass}>
         {pending ? "신청 중..." : "가입 신청"}
-      </button>
+      </SubmitButton>
       {state && "error" in state && (
         <p role="alert" className="text-sm text-red-600">
           {state.error}
