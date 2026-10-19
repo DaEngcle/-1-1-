@@ -26,14 +26,15 @@ export async function registerResource(input: {
   description: string;
 }) {
   await requireTeacher();
-  const title = input.title.trim().slice(0, 80);
+  // 맥 파일 이름에서 온 한글은 자모가 풀려 있어(NFD) 검색이 안 되니 합쳐서 저장
+  const title = input.title.normalize("NFC").trim().slice(0, 80);
   if (!title || !/^\d+-[\w]{8}\.pdf$/.test(input.path)) return { error: "제목을 확인해주세요." };
   const supabase = createServerSupabaseClient();
   const { data: created, error } = await supabase.from("resources").insert({
     title,
-    description: input.description.trim().slice(0, 200) || null,
+    description: input.description.normalize("NFC").trim().slice(0, 200) || null,
     file_path: input.path,
-    file_name: input.fileName.replace(/[\\/]/g, "").slice(0, 120) || "dingle.pdf",
+    file_name: input.fileName.normalize("NFC").replace(/[\\/]/g, "").slice(0, 120) || "dingle.pdf",
     size_bytes: Math.max(0, Math.round(input.size)),
   }).select("id").single();
   if (error || !created) return { error: "등록에 실패했어요." };

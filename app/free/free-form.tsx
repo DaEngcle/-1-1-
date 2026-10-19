@@ -32,20 +32,6 @@ export function FreeSignupForm({ from }: { from: string }) {
         required
         className={inputClass}
       />
-      <div className="flex flex-col gap-1">
-        <input
-          name="nickname"
-          placeholder="닉네임 (랭킹에 보여요)"
-          autoComplete="off"
-          minLength={2}
-          maxLength={12}
-          pattern="[가-힣A-Za-z0-9_]{2,12}"
-          title="한글·영문·숫자·_ 로 2~12자"
-          required
-          className={inputClass}
-        />
-        <span className="px-1 text-xs text-zinc-500">한글·영문·숫자 2~12자, 띄어쓰기 없이</span>
-      </div>
       <label className="flex items-start gap-2 rounded-xl bg-slate-50 p-3 text-xs leading-relaxed text-zinc-600">
         <input type="checkbox" name="privacy" required className="mt-0.5" />
         <span>
