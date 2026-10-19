@@ -33,7 +33,8 @@
     "ko": "그럼요. 탈의실은 바로 저쪽이에요."
    }
   ],
-  "title_ko": "특별히 찾으시는 거 있으세요?"
+  "title_ko": "특별히 찾으시는 거 있으세요?",
+  "video_url": "https://youtu.be/VjnrNRuxcOk"
  },
  {
   "day": 2,
@@ -69,7 +70,8 @@
     "ko": "이걸로 할게요."
    }
   ],
-  "title_ko": "가성비 최고"
+  "title_ko": "가성비 최고",
+  "video_url": "https://youtu.be/1BEgQGzzc3k"
  },
  {
   "day": 3,
@@ -110,14 +112,15 @@
     "ko": "네, 그럴까요."
    }
   ],
-  "title_ko": "지금까지 어때요?"
+  "title_ko": "지금까지 어때요?",
+  "video_url": "https://youtu.be/8fQM9YKBPTk"
  },
  {
   "day": 4,
   "week": 1,
   "week_title": "세일즈・리테일 표현",
   "week_title_en": "Sales & Retail",
-  "title": "Hi there. Are you looking for anything specific today?",
+  "title": "In that case, I'd recommend this MacBook.",
   "notes": [],
   "lines": [
    {
@@ -161,7 +164,8 @@
     "ko": "음, 맥북 에어랑 맥북 프로 사이에서 고민 중이에요."
    }
   ],
-  "title_ko": "안녕하세요. 오늘 특별히 찾으시는 거 있으세요?"
+  "title_ko": "그럼 이 맥북을 추천드려요.",
+  "video_url": "https://youtu.be/2gHQ2oRDI8g"
  },
  {
   "day": 5,
@@ -192,7 +196,8 @@
     "ko": "제가 제대로 이해했는지 확인하려고 그러는데, 어떻게 쓰실 계획이세요?"
    }
   ],
-  "title_ko": "옵션 하나씩 설명해 드릴게요"
+  "title_ko": "옵션 하나씩 설명해 드릴게요",
+  "video_url": "https://youtu.be/lSlUGPwcVYA"
  },
  {
   "day": 6,
@@ -228,14 +233,15 @@
     "ko": "뜨거운 건 원하시면 그냥 드세요! 서비스예요."
    }
   ],
-  "title_ko": "뜨거운 건 그냥 가지셔도 돼요!"
+  "title_ko": "뜨거운 건 그냥 가지셔도 돼요!",
+  "video_url": "https://youtu.be/8DPjTXBH8U8"
  },
  {
   "day": 7,
   "week": 2,
   "week_title": "컴플레인 대처법",
   "week_title_en": "How to Handle Complaints",
-  "title": "We've been waiting for over 40 minutes.",
+  "title": "No one told me it would take this long.",
   "notes": [],
   "lines": [
    {
@@ -264,14 +270,15 @@
     "ko": "그래서 얼마나 더 걸려요?"
    }
   ],
-  "title_ko": "저희 40분 넘게 기다리고 있어요."
+  "title_ko": "이렇게 오래 걸린다고 아무도 말 안 해줬어요.",
+  "video_url": "https://youtu.be/DOiLtLAXxDE"
  },
  {
   "day": 8,
   "week": 2,
   "week_title": "컴플레인 대처법",
   "week_title_en": "How to Handle Complaints",
-  "title": "Excuse me, I think there's something wrong with my sandwich.",
+  "title": "May I ask what the issue is?",
   "notes": [],
   "lines": [
    {
@@ -290,14 +297,15 @@
     "ko": "방금 봤는데 빵에 곰팡이가 있어요. 환불 받을 수 있을까요?"
    }
   ],
-  "title_ko": "저기요, 제 샌드위치에 뭔가 문제가 있는 것 같아요."
+  "title_ko": "어떤 문제인지 여쭤봐도 될까요?",
+  "video_url": "https://youtu.be/7r_dG8Cbcw4"
  },
  {
   "day": 9,
   "week": 2,
   "week_title": "컴플레인 대처법",
   "week_title_en": "How to Handle Complaints",
-  "title": "Excuse me, I'd like to talk to someone in charge.",
+  "title": "Would you mind telling me what was said?",
   "notes": [],
   "lines": [
    {
@@ -331,14 +339,15 @@
     "ko": "말씀해 주셔서 감사해요. 그건 절대 있어선 안 되는 일이고, 진심으로 사과드립니다."
    }
   ],
-  "title_ko": "저기요, 책임자분이랑 얘기하고 싶은데요."
+  "title_ko": "무슨 말이 오갔는지 말씀해 주시겠어요?",
+  "video_url": "https://youtu.be/hHmHCpv9QpU"
  },
  {
   "day": 10,
   "week": 2,
   "week_title": "컴플레인 대처법",
   "week_title_en": "How to Handle Complaints",
-  "title": "Isn't this place a vibe?",
+  "title": "Can we get another coffee?",
   "notes": [],
   "lines": [
    {
@@ -472,14 +481,15 @@
     "ko": "응, 여기 사람들 진짜 좋아. 내가 원하는 만큼 그냥 있어도 되거든."
    }
   ],
-  "title_ko": "여기 분위기 진짜 좋지 않아?"
+  "title_ko": "커피 한 잔 더 받을 수 있을까요?",
+  "video_url": "https://youtu.be/JZ9V8MSkqUg"
  },
  {
   "day": 11,
   "week": 3,
   "week_title": "동료・상사 영어",
   "week_title_en": "Colleagues and supervisors",
-  "title": "Hey, do you have a second?",
+  "title": "I have a lot on my plate",
   "notes": [],
   "lines": [
    {
@@ -513,7 +523,8 @@
     "ko": "오케이, 잠깐만 기다려 줘."
    }
   ],
-  "title_ko": "저기, 잠깐 시간 돼?"
+  "title_ko": "나 할 일이 너무 많아",
+  "video_url": "https://youtu.be/9gH3iBYUbzE"
  },
  {
   "day": 12,
@@ -549,7 +560,8 @@
     "ko": "역시 최고야. 점심은 내가 쏠게!"
    }
   ],
-  "title_ko": "상황 봐서요. 점심 사주시면…"
+  "title_ko": "상황 봐서요. 점심 사주시면…",
+  "video_url": "https://youtu.be/-c_GZ1oBh0s"
  },
  {
   "day": 13,
@@ -585,7 +597,8 @@
     "ko": "그래, 그럴 만하다."
    }
   ],
-  "title_ko": "오늘 이거 마무리 좀 도와줄 수 있어요?"
+  "title_ko": "오늘 이거 마무리 좀 도와줄 수 있어요?",
+  "video_url": "https://youtu.be/BHsTgvoJooY"
  },
  {
   "day": 14,
@@ -611,7 +624,8 @@
     "ko": "아, 그렇군요. 케이터링 일 있는 줄 몰랐어요."
    }
   ],
-  "title_ko": "베서니, 다음 주 금요일에 쉬어도 괜찮을까요?"
+  "title_ko": "베서니, 다음 주 금요일에 쉬어도 괜찮을까요?",
+  "video_url": "https://youtu.be/sJ7bM5ovF6c"
  },
  {
   "day": 15,
@@ -637,7 +651,8 @@
     "ko": "좋아요, 감사해요! 마고랑 다 한 번 더 확인하고 로스터 업데이트할게요."
    }
   ],
-  "title_ko": "마고가 케이터링 준비 맡는 거 괜찮다고 하면 문제없어."
+  "title_ko": "마고가 케이터링 준비 맡는 거 괜찮다고 하면 문제없어.",
+  "video_url": "https://youtu.be/w5GZWVV8e0o"
  },
  {
   "day": 16,
@@ -676,14 +691,15 @@
     "ko": "비계 근처에선 발 조심해. 저쪽 좀 위험해. 괜히 무리하지 마."
    }
   ],
-  "title_ko": "일단 중요한 것부터!"
+  "title_ko": "일단 중요한 것부터!",
+  "video_url": "https://youtu.be/X7HViokvpnM"
  },
  {
   "day": 17,
   "week": 4,
   "week_title": "건설 현장 영어",
   "week_title_en": "Construction work place",
-  "title": "Smoko time. Drop everything.",
+  "title": "Smoko time! drop everything",
   "notes": [
    "*Smoko: break time 쉬는 시간",
    "*Chippie: carpenter 목수"
@@ -720,7 +736,8 @@
     "ko": "알겠어요. 그럼 쉬는 시간 끝나고는 딴짓 금지네요."
    }
   ],
-  "title_ko": "쉬는 시간이다. 다 내려놔."
+  "title_ko": "스모코 타임! 다 내려놔",
+  "video_url": "https://youtu.be/tBl8-7_rWbQ"
  },
  {
   "day": 18,
@@ -770,7 +787,8 @@
     "ko": "알겠습니다."
    }
   ],
-  "title_ko": "나사가 다 떨어졌어요"
+  "title_ko": "나사가 다 떨어졌어요",
+  "video_url": "https://youtu.be/EnbBLmvKPeY"
  },
  {
   "day": 19,
@@ -808,7 +826,8 @@
     "ko": "괜찮아. 다음엔 그냥 물어봐."
    }
   ],
-  "title_ko": "시작하기 전에 물어봤어야지."
+  "title_ko": "시작하기 전에 물어봤어야지.",
+  "video_url": "https://youtu.be/9NH5Hsv6wbc"
  },
  {
   "day": 20,
@@ -851,7 +870,8 @@
     "ko": "하! 이제야 말이 통하네."
    }
   ],
-  "title_ko": "쟤네 뭘 하는지 모르나 봐"
+  "title_ko": "쟤네 뭘 하는지 모르나 봐",
+  "video_url": "https://youtu.be/XI1RJ3jdEa8"
  },
  {
   "day": 21,
@@ -905,7 +925,8 @@
     "ko": "아이스박스. 꽉 차 있어."
    }
   ],
-  "title_ko": "바비큐에서 소시지 하나 집어 가!"
+  "title_ko": "바비큐에서 소시지 하나 집어 가!",
+  "video_url": "https://youtu.be/eOX5CfUpE4c"
  },
  {
   "day": 22,
@@ -962,7 +983,8 @@
     "ko": "말도 안 돼!"
    }
   ],
-  "title_ko": "풋티 좋아해?"
+  "title_ko": "풋티 좋아해?",
+  "video_url": "https://youtu.be/XmTUWZTVU2s"
  },
  {
   "day": 23,
@@ -1020,7 +1042,8 @@
     "ko": "고마워, 최고야."
    }
   ],
-  "title_ko": "오는 길에 맥도날드에서 사 왔어"
+  "title_ko": "오는 길에 맥도날드에서 사 왔어",
+  "video_url": "https://youtu.be/Hq-ev5ecaeE"
  },
  {
   "day": 24,
@@ -1062,14 +1085,15 @@
     "ko": "세상에, 첫 주부터 군이라니. 너 이제 거의 호주 사람이다."
    }
   ],
-  "title_ko": "보틀샵 가면 팩 와인 하나만 사다 줘"
+  "title_ko": "보틀샵 가면 팩 와인 하나만 사다 줘",
+  "video_url": "https://youtu.be/8ynI8C1qUAw"
  },
  {
   "day": 25,
   "week": 5,
   "week_title": "호주 슬랭 101",
   "week_title_en": "Aussie Slang 101",
-  "title": "Hey, excuse me.",
+  "title": "WTF smoko's already over?",
   "notes": [],
   "lines": [
    {
@@ -1128,7 +1152,8 @@
     "ko": "네..."
    }
   ],
-  "title_ko": "저기요, 실례합니다."
+  "title_ko": "헐, 스모코 벌써 끝났어?",
+  "video_url": "https://youtu.be/CdYbaiuXRqY"
  },
  {
   "day": 26,
@@ -1169,7 +1194,8 @@
     "ko": "뭐 떨어져 가는 거 있으면 말씀드릴게요."
    }
   ],
-  "title_ko": "뭐 떨어져 가는 거 있으면 말씀드릴게요."
+  "title_ko": "뭐 떨어져 가는 거 있으면 말씀드릴게요.",
+  "video_url": "https://youtu.be/GDuLNh8YaXE"
  },
  {
   "day": 27,
@@ -1215,7 +1241,8 @@
     "ko": "주문서에 오타가 있었나 보네. 아이스 라떼로 다시 만들게."
    }
   ],
-  "title_ko": "라떼 아이스로 주문했는데요"
+  "title_ko": "라떼 아이스로 주문했는데요",
+  "video_url": "https://youtu.be/MTeRapPhyAE"
  },
  {
   "day": 28,
@@ -1261,14 +1288,15 @@
     "ko": "그거 좀 적어 줄래?"
    }
   ],
-  "title_ko": "그거 적어 둬"
+  "title_ko": "그거 적어 둬",
+  "video_url": "https://youtu.be/dw2g9SkRE7w"
  },
  {
   "day": 29,
   "week": 6,
   "week_title": "근무 중 \"확실한\"소통 - okay만 반복 X",
   "week_title_en": "communicating at work",
-  "title": "Hey Emma, just now a customer asked for three hundred...",
+  "title": "Is Cash out not a thing? but Three hundred is massive red flag.",
   "notes": [],
   "lines": [
    {
@@ -1302,14 +1330,15 @@
     "ko": "캐시아웃은 있지. 근데 50달러, 많아야 100달러까지야. 300달러는 완전 수상한 거야."
    }
   ],
-  "title_ko": "에마, 방금 손님이 300달러를…"
+  "title_ko": "캐시아웃은 안 되나요? 근데 300달러는 완전 위험 신호예요.",
+  "video_url": "https://youtu.be/7HzaqiPUM-E"
  },
  {
   "day": 30,
   "week": 6,
   "week_title": "근무 중 \"확실한\"소통 - okay만 반복 X",
   "week_title_en": "communicating at work",
-  "title": "Just to confirm,",
+  "title": "Just to confirm",
   "notes": [],
   "lines": [
    {
@@ -1343,14 +1372,15 @@
     "ko": "바로 그거죠. 이제 좀 말이 통하네요."
    }
   ],
-  "title_ko": "확인차 말씀드리면,"
+  "title_ko": "확인차 말씀드리면",
+  "video_url": "https://youtu.be/vPgbfUK3Uxw"
  },
  {
   "day": 31,
   "week": 7,
   "week_title": "서운함부터 장난까지",
   "week_title_en": "Saying How You Really Feel",
-  "title": "Did you guys go out without me?",
+  "title": "That kind of hurts",
   "notes": [],
   "lines": [
    {
@@ -1379,14 +1409,15 @@
     "ko": "알아. 근데 내가 안 간다고 했더라도 물어봐 줬으면 좋았을 것 같아."
    }
   ],
-  "title_ko": "너네 나 빼고 놀러 갔어?"
+  "title_ko": "그거 좀 서운하다",
+  "video_url": "https://youtu.be/xj2dmejEOSU"
  },
  {
   "day": 32,
   "week": 7,
   "week_title": "서운함부터 장난까지",
   "week_title_en": "Saying How You Really Feel",
-  "title": "Did you see the team meeting today? Dave presented the...",
+  "title": "I just feel a bit overlooked",
   "notes": [],
   "lines": [
    {
@@ -1425,7 +1456,8 @@
     "ko": "알아. 그냥 일단 입 밖으로 한번 말해보고 싶었어."
    }
   ],
-  "title_ko": "오늘 팀 회의 봤어? 데이브가 발표한 거…"
+  "title_ko": "나 좀 소외된 기분이야",
+  "video_url": "https://youtu.be/-bVRrCV_Q_E"
  },
  {
   "day": 33,
@@ -1451,7 +1483,8 @@
     "ko": "응. 걔 새로 온 사람한테 다 그래. 너무 신경 쓰지 마."
    }
   ],
-  "title_ko": "톰이 날 무시해"
+  "title_ko": "톰이 날 무시해",
+  "video_url": "https://youtu.be/JVUd4Gbc3sY"
  },
  {
   "day": 34,
@@ -1492,7 +1525,8 @@
     "ko": "아. 진짜 전혀 몰랐어."
    }
   ],
-  "title_ko": "지금 비꼬는 거야?"
+  "title_ko": "지금 비꼬는 거야?",
+  "video_url": "https://youtu.be/K50KtcVE7IU"
  },
  {
   "day": 35,
@@ -1538,7 +1572,8 @@
     "ko": "미안하다고 내 토요일이 해결되진 않잖아."
    }
   ],
-  "title_ko": "이거 때문에 다른 약속 거절했단 말이야"
+  "title_ko": "이거 때문에 다른 약속 거절했단 말이야",
+  "video_url": "https://youtu.be/AbGlP0xb3HI"
  },
  {
   "day": 36,
@@ -1589,7 +1624,8 @@
     "ko": "그 비행기 탄 거. 백 퍼센트."
    }
   ],
-  "title_ko": "여긴 어떻게 오게 됐어?"
+  "title_ko": "여긴 어떻게 오게 됐어?",
+  "video_url": "https://youtu.be/f62WT9H42j8"
  },
  {
   "day": 37,
@@ -1630,7 +1666,8 @@
     "ko": "처음엔 긴장했는데, 여기 오길 잘한 것 같아."
    }
   ],
-  "title_ko": "혼자 여기 오다니 용기 대단하다"
+  "title_ko": "혼자 여기 오다니 용기 대단하다",
+  "video_url": "https://youtu.be/65dnmZiQ6nY"
  },
  {
   "day": 38,
@@ -1671,7 +1708,8 @@
     "ko": "응. 한국에선 다들 계획이 있잖아. 여기선 몰라도 괜찮아."
    }
   ],
-  "title_ko": "아직 고민 중이야"
+  "title_ko": "아직 고민 중이야",
+  "video_url": "https://youtu.be/tIDMWsHTlSU"
  },
  {
   "day": 39,
@@ -1712,7 +1750,8 @@
     "ko": "이미 리스트에 있어."
    }
   ],
-  "title_ko": "쉴 때 뭐 해?"
+  "title_ko": "쉴 때 뭐 해?",
+  "video_url": "https://youtu.be/PWLlOhFJ10c"
  },
  {
   "day": 40,
@@ -1753,7 +1792,8 @@
     "ko": "걱정 마. 덜 맵게 해줄게."
    }
   ],
-  "title_ko": "한국 음식 엄청 맵다며?"
+  "title_ko": "한국 음식 엄청 맵다며?",
+  "video_url": "https://youtu.be/VsdjAnTyzHQ"
  },
  {
   "day": 41,
@@ -1784,14 +1824,15 @@
     "ko": "잠깐... 지금 나한테 데이트 신청하는 거야?"
    }
   ],
-  "title_ko": "우리 저녁 한번 먹을래?"
+  "title_ko": "우리 저녁 한번 먹을래?",
+  "video_url": "https://youtu.be/gMlHrDyff7w"
  },
  {
   "day": 42,
   "week": 9,
   "week_title": "연애 시작 · 미묘한 관계 영어",
   "week_title_en": "Starting a Relationship · Situationships",
-  "title": "That was so awesome. I love spending time with you. You...",
+  "title": "I think I'm catching feelings",
   "notes": [],
   "lines": [
    {
@@ -1865,7 +1906,8 @@
     "ko": "그냥 하는 말 같은데."
    }
   ],
-  "title_ko": "진짜 즐거웠어. 너랑 있는 게 좋아…"
+  "title_ko": "나 너 좋아지는 것 같아",
+  "video_url": "https://youtu.be/BuqBOM-SI4Y"
  },
  {
   "day": 43,
@@ -1901,14 +1943,15 @@
     "ko": "아, 좀 거리 두고 싶어? 그럼 시간 줄게. 일주일 말고 2주에 한 번 볼까? 그 정도면 돼?"
    }
   ],
-  "title_ko": "나 누구랑 이렇게 오래 시간 보낸 적 처음이야."
+  "title_ko": "나 누구랑 이렇게 오래 시간 보낸 적 처음이야.",
+  "video_url": "https://youtu.be/SChFLT0kYvA"
  },
  {
   "day": 44,
   "week": 9,
   "week_title": "연애 시작 · 미묘한 관계 영어",
   "week_title_en": "Starting a Relationship · Situationships",
-  "title": "So after last night... what are we?",
+  "title": "What do you want us to be?",
   "notes": [],
   "lines": [
    {
@@ -1947,14 +1990,15 @@
     "ko": "진짜!"
    }
   ],
-  "title_ko": "그래서 어젯밤 이후로... 우리 무슨 사이야?"
+  "title_ko": "우리 무슨 사이가 되고 싶어?",
+  "video_url": "https://youtu.be/UrOOj7oczbI"
  },
  {
   "day": 45,
   "week": 9,
   "week_title": "연애 시작 · 미묘한 관계 영어",
   "week_title_en": "Starting a Relationship · Situationships",
-  "title": "Are you two actually together now?",
+  "title": "You guys were betting on us?",
   "notes": [],
   "lines": [
    {
@@ -1993,14 +2037,15 @@
     "ko": "그래... 이제 그럴 때도 됐지."
    }
   ],
-  "title_ko": "너네 둘 진짜 사귀는 거야?"
+  "title_ko": "너네 우리 갖고 내기했어?",
+  "video_url": "https://youtu.be/-O485m0HUEM"
  },
  {
   "day": 46,
   "week": 10,
   "week_title": "연애문제 · 배신 · 감정폭발",
   "week_title_en": "Love Troubles · Betrayal · Emotional Breakdown",
-  "title": "So, the boy I would like to couple up with is... Reid.",
+  "title": "She stole my problem not my man.",
   "notes": [],
   "lines": [
    {
@@ -2044,14 +2089,15 @@
     "ko": "그 말 티셔츠에 새겨야겠다."
    }
   ],
-  "title_ko": "그래서, 내가 커플이 되고 싶은 남자는... 리드야."
+  "title_ko": "걔가 뺏은 건 내 남자가 아니라 내 골칫거리야.",
+  "video_url": "https://youtu.be/pYB_EZh97Wk"
  },
  {
   "day": 47,
   "week": 10,
   "week_title": "연애문제 · 배신 · 감정폭발",
   "week_title_en": "Love Troubles · Betrayal · Emotional Breakdown",
-  "title": "Hey... can I ask you something?",
+  "title": "I feel like something's been off lately",
   "notes": [],
   "lines": [
    {
@@ -2090,14 +2136,15 @@
     "ko": "모르겠어... 그냥 그런 느낌이 들어."
    }
   ],
-  "title_ko": "있잖아... 뭐 하나 물어봐도 돼?"
+  "title_ko": "요즘 뭔가 좀 이상한 것 같아",
+  "video_url": "https://youtu.be/Zg7MO4MbYYU"
  },
  {
   "day": 48,
   "week": 10,
   "week_title": "연애문제 · 배신 · 감정폭발",
   "week_title_en": "Love Troubles · Betrayal · Emotional Breakdown",
-  "title": "Want some tea",
+  "title": "I heard that Emily's boyfriend cheated on her.",
   "notes": [],
   "lines": [
    {
@@ -2141,14 +2188,15 @@
     "ko": "와... 이거 어색하다."
    }
   ],
-  "title_ko": "차 한잔할래?"
+  "title_ko": "에밀리 남자친구가 바람피웠대.",
+  "video_url": "https://youtu.be/2GkkxCq_cCM"
  },
  {
   "day": 49,
   "week": 10,
   "week_title": "연애문제 · 배신 · 감정폭발",
   "week_title_en": "Love Troubles · Betrayal · Emotional Breakdown",
-  "title": "That was so fun.",
+  "title": "Husband level good?",
   "notes": [],
   "lines": [
    {
@@ -2247,14 +2295,15 @@
     "ko": "야, 릴리, 듣고 있어?"
    }
   ],
-  "title_ko": "진짜 재밌었다."
+  "title_ko": "남편감 수준으로 좋아?",
+  "video_url": "https://youtu.be/XJMVnW7kvS8"
  },
  {
   "day": 50,
   "week": 10,
   "week_title": "연애문제 · 배신 · 감정폭발",
   "week_title_en": "Love Troubles · Betrayal · Emotional Breakdown",
-  "title": "Hey... what's eating you? You've been off all day.",
+  "title": "What's eating you?",
   "notes": [],
   "lines": [
    {
@@ -2288,14 +2337,15 @@
     "ko": "그러니까... 좀 무서워. 지금 진짜 의심스러워."
    }
   ],
-  "title_ko": "야... 무슨 고민 있어? 하루 종일 좀 이상하던데."
+  "title_ko": "무슨 고민 있어?",
+  "video_url": "https://youtu.be/tUwwhy0zyRQ"
  },
  {
   "day": 51,
   "week": 11,
   "week_title": "네트워킹・파티",
   "week_title_en": "Networking and Party",
-  "title": "Hey! I don't think we've met before. I'm Emma.",
+  "title": "I'm the only one who doesn't know anyone.",
   "notes": [],
   "lines": [
    {
@@ -2329,14 +2379,15 @@
     "ko": "나도 마찬가지야."
    }
   ],
-  "title_ko": "안녕! 우리 처음 보는 것 같은데. 난 엠마야."
+  "title_ko": "나만 아는 사람이 하나도 없네.",
+  "video_url": "https://youtu.be/ifUJRRxaHZU"
  },
  {
   "day": 52,
   "week": 11,
   "week_title": "네트워킹・파티",
   "week_title_en": "Networking and Party",
-  "title": "The vibe here is amazing. I love the music. Right?",
+  "title": "We used to work together. He's my senior",
   "notes": [],
   "lines": [
    {
@@ -2375,14 +2426,15 @@
     "ko": "4개월이면 아무것도 아니지. 두 달만 더 있어 봐. 천천히 해. 서두를 거 없어."
    }
   ],
-  "title_ko": "여기 분위기 진짜 좋다. 음악 완전 좋아. 그치?"
+  "title_ko": "예전에 같이 일했어. 내 선배야",
+  "video_url": "https://youtu.be/fhqEl3loE0k"
  },
  {
   "day": 53,
   "week": 11,
   "week_title": "네트워킹・파티",
   "week_title_en": "Networking and Party",
-  "title": "Wait wait wait — you don't wanna eat that. There's mould...",
+  "title": "You don't wanna eat that!",
   "notes": [],
   "lines": [
    {
@@ -2411,14 +2463,15 @@
     "ko": "근데 안 먹었잖아. 고마운 줄 알아."
    }
   ],
-  "title_ko": "잠깐잠깐, 그거 먹지 마. 곰팡이 있어…"
+  "title_ko": "그거 먹지 마!",
+  "video_url": "https://youtu.be/q4DnXhhf-gM"
  },
  {
   "day": 54,
   "week": 11,
   "week_title": "네트워킹・파티",
   "week_title_en": "Networking and Party",
-  "title": "So I was trying to say... 답답한? Like when you can't...",
+  "title": "I was trying to say 답답한?",
   "notes": [],
   "lines": [
    {
@@ -2457,14 +2510,15 @@
     "ko": "나만 그런 게 아니라니 다행이다."
    }
   ],
-  "title_ko": "그러니까 '답답한'을 말하고 싶었는데…"
+  "title_ko": "'답답한'이라고 말하려던 건데?",
+  "video_url": "https://youtu.be/b4c-FPrOxAU"
  },
  {
   "day": 55,
   "week": 11,
   "week_title": "네트워킹・파티",
   "week_title_en": "Networking and Party",
-  "title": "Oh my God. Guess what?",
+  "title": "POV: your serial dater friend met someone new",
   "notes": [],
   "lines": [
    {
@@ -2653,14 +2707,15 @@
     "ko": "안녕, 자기야. 응, 지금 얘한테 얘기하고 있어. 알아."
    }
   ],
-  "title_ko": "세상에. 있잖아, 맞혀 봐."
+  "title_ko": "POV: 연애 쉬지 않는 친구가 새 사람을 만났다",
+  "video_url": "https://youtu.be/ZQbzuAdjvTs"
  },
  {
   "day": 56,
   "week": 12,
   "week_title": "운전 필수 영어",
   "week_title_en": "Must-Know Driving English",
-  "title": "Excuse me, sir. Please pull over to the side of the road.",
+  "title": "Please pull over to the side of the road",
   "notes": [],
   "lines": [
    {
@@ -2694,14 +2749,15 @@
     "ko": "물론이죠. 여기 있습니다."
    }
   ],
-  "title_ko": "실례합니다, 선생님. 길가에 차 세워 주세요."
+  "title_ko": "길가에 차 세워 주세요",
+  "video_url": "https://youtu.be/bDpLXIuNxKM"
  },
  {
   "day": 57,
   "week": 12,
   "week_title": "운전 필수 영어",
   "week_title_en": "Must-Know Driving English",
-  "title": "How are you getting to work tomorrow?",
+  "title": "I'll pick you up and drop you off",
   "notes": [],
   "lines": [
    {
@@ -2735,14 +2791,15 @@
     "ko": "7시 30분쯤이면 딱 좋아."
    }
   ],
-  "title_ko": "내일 출근 어떻게 해?"
+  "title_ko": "내가 데려다주고 데리러 갈게",
+  "video_url": "https://youtu.be/0ZRTQBJb04s"
  },
  {
   "day": 58,
   "week": 12,
   "week_title": "운전 필수 영어",
   "week_title_en": "Must-Know Driving English",
-  "title": "Excuse me, can I park here?",
+  "title": "If you leave your car here longer than that, It'll be towed.",
   "notes": [],
   "lines": [
    {
@@ -2776,14 +2833,15 @@
     "ko": "뭐 말하려고 했는데 완전 까먹었네."
    }
   ],
-  "title_ko": "실례지만, 여기 주차해도 돼요?"
+  "title_ko": "그보다 오래 세워 두면 견인돼요.",
+  "video_url": "https://youtu.be/5663kaMSDMI"
  },
  {
   "day": 59,
   "week": 12,
   "week_title": "운전 필수 영어",
   "week_title_en": "Must-Know Driving English",
-  "title": "Which pump are you on?",
+  "title": "That'll be $84.75. Unleaded or diesel?",
   "notes": [],
   "lines": [
    {
@@ -2822,14 +2880,15 @@
     "ko": "네, 그럴 만하죠."
    }
   ],
-  "title_ko": "몇 번 주유기 쓰셨어요?"
+  "title_ko": "84.75달러입니다. 휘발유요, 경유요?",
+  "video_url": "https://youtu.be/uMePet2Qv4I"
  },
  {
   "day": 60,
   "week": 12,
   "week_title": "운전 필수 영어",
   "week_title_en": "Must-Know Driving English",
-  "title": "So sorry. Always bothering you to teach me.",
+  "title": "She looks ready, doesn't she?",
   "notes": [],
   "lines": [
    {
@@ -2933,6 +2992,7 @@
     "ko": "릴리는 지금 L 면허 단계고 P 면허, 그러니까 임시 면허를 따려고 해. P 시험 보기 전에 로그북에 운전 시간을 기록해야 해. 준비된 것 같아 보이지? 기본 도로 표지판이랑 규칙은 다 완벽하게 알고 있겠지, 아마도."
    }
   ],
-  "title_ko": "진짜 미안해. 맨날 가르쳐 달라고 귀찮게 해서."
+  "title_ko": "준비 다 된 것 같지 않아?",
+  "video_url": "https://youtu.be/OXP7WoxqYTg"
  }
 ]

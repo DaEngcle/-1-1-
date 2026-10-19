@@ -103,9 +103,9 @@ export default async function StudentLessonsPage({
                 <li key={l.id} className="flex items-center justify-between gap-3 px-4 py-3">
                   <span className="flex flex-col">
                     <span className="text-xs text-zinc-500">
-                      {l.kind === "day" ? `Day ${String(l.day_number).padStart(2, "0")}` : "Drill"}
+                      {l.kind === "day" ? `Day ${String(l.day_number).padStart(2, "0")}` : l.title}
                     </span>
-                    <span className="font-medium text-zinc-700">{l.kind === "day" ? l.title : "주간 복습 드릴"}</span>
+                    <span className="font-medium text-zinc-700">{l.kind === "day" ? l.title : (l.title_ko ?? "주간 복습 드릴")}</span>
                     {l.kind === "day" && l.title_ko && <span className="text-xs text-zinc-500">{l.title_ko}</span>}
                   </span>
                   <span className="shrink-0 text-sm opacity-50">🔒</span>
@@ -179,10 +179,10 @@ export default async function StudentLessonsPage({
                 >
                   <span className="flex flex-col">
                     <span className="text-xs text-zinc-500">
-                      {l.kind === "day" ? `Day ${String(l.day_number).padStart(2, "0")}` : "Drill"}
+                      {l.kind === "day" ? `Day ${String(l.day_number).padStart(2, "0")}` : l.title}
                     </span>
                     <span className="font-medium text-zinc-900">
-                      {l.kind === "day" ? l.title : "주간 복습 드릴"}
+                      {l.kind === "day" ? l.title : (l.title_ko ?? "주간 복습 드릴")}
                     </span>
                     {l.kind === "day" && l.title_ko && <span className="text-xs text-zinc-500">{l.title_ko}</span>}
                   </span>
