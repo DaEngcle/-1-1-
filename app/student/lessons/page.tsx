@@ -80,24 +80,9 @@ export default async function StudentLessonsPage({
   const upgrade = Object.values(PLANS).find((p) =>
     p.courses.includes(course.id as never),
   );
-  if (course.status !== "open") {
-    return (
-      <>
-        {tabs}
-        <section className="flex flex-col items-center gap-2 rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm">
-          <span className="text-4xl">
-            {allowed.has(course.id) ? "🎬" : "🔒"}
-          </span>
-          <h1 className="text-lg font-bold text-zinc-900">{course.title}</h1>
-          <p className="text-sm text-zinc-600">
-            지금 열심히 준비하고 있어요! ({course.subtitle ?? "준비 중"})
-          </p>
-        </section>
-      </>
-    );
-  }
+  const preparing = course.status !== "open";
 
-  // 수강권이 없어도 열린 과정의 목차는 보여준다 (레슨 내용은 상세 페이지에서 막힘)
+  // 수강권이 없거나 준비 중인 과정은 한글 목차만 보여준다 (레슨 내용은 상세 페이지에서 막힘)
   if (!canSee) {
     const [{ data: tocRows }, { data: previewRows }, { count: sentenceCount }] =
       await Promise.all([
@@ -117,7 +102,8 @@ export default async function StudentLessonsPage({
           .eq("course_id", course.id)
           .eq("kind", "day")
           .eq("is_published", true)
-          .lte("day_number", PREVIEW_DAYS),
+          // 준비 중인 과정은 맛보기 없음
+          .lte("day_number", preparing ? 0 : PREVIEW_DAYS),
         supabase
           .from("lesson_items")
           .select("id, lessons!inner(course_id, is_published)", {
@@ -128,6 +114,18 @@ export default async function StudentLessonsPage({
           .eq("lessons.is_published", true),
       ]);
     const toc = (tocRows ?? []) as Lesson[];
+    if (toc.length === 0) {
+      return (
+        <>
+          {tabs}
+          <section className="flex flex-col items-center gap-2 rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm">
+            <span className="text-4xl">{allowed.has(course.id) ? "🎬" : "🔒"}</span>
+            <h1 className="text-lg font-bold text-zinc-900">{course.title}</h1>
+            <p className="text-sm text-zinc-600">지금 열심히 준비하고 있어요! ({course.subtitle ?? "준비 중"})</p>
+          </section>
+        </>
+      );
+    }
     const previewTitle = new Map(
       (previewRows ?? []).map((p) => [p.id as string, p.title as string]),
     );
@@ -150,10 +148,9 @@ export default async function StudentLessonsPage({
           className={`flex flex-col gap-2 rounded-2xl p-4 ${theme.badge}`}
         >
           <p className="font-bold">
-            🔒{" "}
-            {upgrade
-              ? `${upgrade.name} 수강생에게 열리는 과정이에요`
-              : "상위 과정 수강생에게 열리는 과정이에요"}
+            {preparing
+              ? `🛠 지금 열심히 준비 중이에요! 목차 먼저 공개해요 (${course.subtitle ?? "곧 오픈"})`
+              : `🔒 ${upgrade ? upgrade.name : "상위 과정"} 수강생에게 열리는 과정이에요`}
           </p>
           {info && (
             <p className="text-sm leading-relaxed opacity-90">{info.intro}</p>
@@ -161,7 +158,7 @@ export default async function StudentLessonsPage({
           <div className="flex flex-wrap gap-1.5 text-xs font-semibold">
             {[
               `${toc.filter((l) => l.kind === "day").length}일 과정`,
-              `쉐도잉 문장 ${sentenceCount ?? 0}개`,
+              ...(sentenceCount ? [`쉐도잉 문장 ${sentenceCount}개`] : []),
               ...(info?.points ?? []),
             ].map((t) => (
               <span
