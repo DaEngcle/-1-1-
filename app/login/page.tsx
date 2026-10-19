@@ -11,6 +11,14 @@ const ERRORS: Record<string, string> = {
 
 export const metadata: Metadata = {
   title: "로그인 | 다잉클 클래스룸",
+  description: "워홀 영어, 매일 10분 쉐도잉으로. AI 발음 채점 · 강의 진도 · 레벨테스트를 한 곳에서.",
+  openGraph: {
+    title: "다잉클 클래스룸",
+    description: "워홀 영어, 매일 10분 쉐도잉으로. AI 발음 채점 · 강의 진도 · 레벨테스트를 한 곳에서.",
+    siteName: "다잉클",
+    locale: "ko_KR",
+    type: "website",
+  },
 };
 
 export default async function LoginPage({
