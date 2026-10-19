@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { after } from "next/server";
 import { syncCourseVideos } from "@/lib/classroom/video-sheet";
+import { COURSE_INFO } from "@/lib/classroom/course-info";
 import { createServerSupabaseClient, type Course, type Lesson } from "@/lib/supabase";
 import { requireStudent } from "@/lib/classroom/dal";
 import { COURSE_SHORT, PLANS } from "@/lib/classroom/plans";
@@ -9,7 +10,7 @@ import { COURSE_SHORT, PLANS } from "@/lib/classroom/plans";
 const THEME: Record<string, { tab: string; badge: string; icon: string }> = {
   level1: { tab: "border-[#f5c518] bg-[#ffd23f] text-zinc-900", badge: "bg-[#ffd23f] text-zinc-900", icon: "📒" },
 };
-const DEFAULT_THEME = { tab: "border-brand-600 bg-brand-600 text-white", badge: "", icon: "📘" };
+const DEFAULT_THEME = { tab: "border-brand-600 bg-brand-600 text-white", badge: "bg-brand-600 text-white", icon: "📘" };
 
 export default async function StudentLessonsPage({
   searchParams,
@@ -26,6 +27,16 @@ export default async function StudentLessonsPage({
     courses.find((c) => c.id === requested) ?? courses.find((c) => allowed.has(c.id) && c.status === "open") ?? courses[0];
   const canSee = allowed.has(course.id) && course.status === "open";
   const theme = THEME[course.id] ?? DEFAULT_THEME;
+  const info = COURSE_INFO[course.id];
+  const weekHeader = (weekNumber: number, title: string) => (
+    <div className="flex flex-col gap-0.5">
+      <h2 className="text-sm font-bold text-zinc-600">
+        <span className={`mr-1.5 rounded-full px-2 py-0.5 ${theme.badge}`}>Week {weekNumber}</span>
+        {title}
+      </h2>
+      {info?.weeks[weekNumber] && <p className="pl-1 text-xs text-zinc-500">{info.weeks[weekNumber]}</p>}
+    </div>
+  );
   // 강의 링크 시트에 새 VOD가 있으면 응답을 보낸 뒤 조용히 반영 (시트는 1시간 캐시)
   if (course.video_sheet) after(() => syncCourseVideos(course.id).catch(() => undefined));
 
@@ -65,7 +76,8 @@ export default async function StudentLessonsPage({
     const [{ data: tocRows }, { count: sentenceCount }] = await Promise.all([
       supabase
         .from("lessons")
-        .select("id, sort_order, week_number, week_title, kind, day_number, title, title_ko, video_url")
+        // 수강 전에는 영어 제목·문장을 보내지 않는다 (한글 목차만)
+        .select("id, sort_order, week_number, week_title, kind, day_number, title_ko")
         .eq("is_published", true)
         .eq("course_id", course.id)
         .order("sort_order"),
@@ -88,31 +100,40 @@ export default async function StudentLessonsPage({
         <h1 className="text-xl font-bold text-zinc-900">
           {theme.icon} {course.title}
         </h1>
-        <section className={`flex flex-col gap-1 rounded-2xl p-4 ${theme.badge || "bg-brand-50"}`}>
+        <section className={`flex flex-col gap-2 rounded-2xl p-4 ${theme.badge}`}>
           <p className="font-bold">
             🔒 {upgrade ? `${upgrade.name} 수강생에게 열리는 과정이에요` : "상위 과정 수강생에게 열리는 과정이에요"}
           </p>
-          <p className="text-sm opacity-80">
-            {toc.filter((l) => l.kind === "day").length}일 과정 · 쉐도잉 문장 {sentenceCount ?? 0}개 · AI 발음 채점.
-            어떤 걸 배우는지 목차를 미리 둘러보세요!
-          </p>
+          {info && <p className="text-sm leading-relaxed opacity-90">{info.intro}</p>}
+          <div className="flex flex-wrap gap-1.5 text-xs font-semibold">
+            {[
+              `${toc.filter((l) => l.kind === "day").length}일 과정`,
+              `쉐도잉 문장 ${sentenceCount ?? 0}개`,
+              ...(info?.points ?? []),
+            ].map((t) => (
+              <span key={t} className="rounded-full bg-white/70 px-2.5 py-1 text-zinc-800">
+                {t}
+              </span>
+            ))}
+          </div>
         </section>
         {[...tocWeeks.entries()].map(([weekNumber, week]) => (
           <section key={weekNumber} className="flex flex-col gap-2">
-            <h2 className="text-sm font-bold text-zinc-500">
-              Week {weekNumber} · {week.title}
-            </h2>
+            {weekHeader(weekNumber, week.title)}
             <ul className="flex flex-col divide-y divide-zinc-100 overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm shadow-brand-900/5">
               {week.lessons.map((l) => (
-                <li key={l.id} className="flex items-center justify-between gap-3 px-4 py-3">
-                  <span className="flex flex-col">
-                    <span className="text-xs text-zinc-500">
-                      {l.kind === "day" ? `Day ${String(l.day_number).padStart(2, "0")}` : l.title}
+                <li key={l.id} className="flex items-center justify-between gap-3 px-4 py-2.5">
+                  <span className="flex items-baseline gap-2">
+                    <span className="w-12 shrink-0 text-xs text-zinc-400">
+                      {l.kind === "day"
+                        ? `Day ${String(l.day_number).padStart(2, "0")}`
+                        : l.title_ko?.includes("특강")
+                          ? "특강"
+                          : "복습"}
                     </span>
-                    <span className="font-medium text-zinc-700">{l.kind === "day" ? l.title : (l.title_ko ?? "주간 복습 드릴")}</span>
-                    {l.kind === "day" && l.title_ko && <span className="text-xs text-zinc-500">{l.title_ko}</span>}
+                    <span className="font-medium text-zinc-700">{l.title_ko ?? "주간 복습 드릴"}</span>
                   </span>
-                  <span className="shrink-0 text-sm opacity-50">🔒</span>
+                  <span className="shrink-0 text-sm opacity-40">🔒</span>
                 </li>
               ))}
             </ul>
@@ -164,13 +185,10 @@ export default async function StudentLessonsPage({
       <h1 className="text-xl font-bold text-zinc-900">
         {theme.icon} {course.title}
       </h1>
+      {info && <p className="-mt-2 text-sm text-zinc-500">{info.intro}</p>}
       {[...weeks.entries()].map(([weekNumber, week]) => (
         <section key={weekNumber} className="flex flex-col gap-2">
-          <h2 className="text-sm font-bold text-zinc-500">
-            <span className={theme.badge ? `mr-1 rounded-full px-2 py-0.5 ${theme.badge}` : ""}>Week {weekNumber}</span>
-            {theme.badge ? "" : " · "}
-            {week.title}
-          </h2>
+          {weekHeader(weekNumber, week.title)}
           <div className="flex flex-col divide-y divide-zinc-100 overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm shadow-brand-900/5">
             {week.lessons.map((l) => {
               const items = itemsByLesson.get(l.id) ?? [];
