@@ -43,20 +43,22 @@ const youTubeId = (url: string) =>
 export function parseVideoSheet(csv: string) {
   // 구글 시트에서 복사해 붙여넣으면 탭으로 구분된다
   if (csv.includes("\t")) csv = csv.split(/\r?\n/).map((l) => l.split("\t").map((c) => `"${c.replace(/"/g, '""')}"`).join(",")).join("\n");
-  const days = new Map<number, string>();
-  const drills = new Map<number, string>(); // 시작 Day → 영상
+  type Video = { url: string; live: boolean };
+  const days = new Map<number, Video>();
+  const drills = new Map<number, Video>(); // 시작 Day → 영상
   for (const cols of parseCsv(csv)) {
     const label = cols.find((c) => /day\s*\d+/i.test(c)) ?? "";
     const links = cols.map((c) => youTubeId(c.trim()));
     // 링크 칸 중 마지막(VOD)이 있으면 우선, 없으면 앞쪽(Live)
     const chosen = [...links].reverse().find(Boolean);
     if (!label || !chosen) continue;
-    const url = `https://youtu.be/${chosen}`;
+    // 링크가 두 칸(Live·VOD) 다 있으면 VOD, 하나뿐이면 Live 녹화
+    const video = { url: `https://youtu.be/${chosen}`, live: links.filter(Boolean).length < 2 };
     const drill = label.match(/day\s*(\d+)\s*[-~]\s*\d+\s*drill/i);
-    if (drill) drills.set(Number(drill[1]), url);
+    if (drill) drills.set(Number(drill[1]), video);
     else {
       const day = label.match(/day\s*(\d+)\s*-/i);
-      if (day) days.set(Number(day[1]), url);
+      if (day) days.set(Number(day[1]), video);
     }
   }
   return { days, drills };
@@ -69,22 +71,24 @@ export async function applyVideoRows(courseId: string, text: string): Promise<Sy
   return { ok: true, ...(await updateLessons(courseId, days, drills)), checked: days.size + drills.size };
 }
 
-async function updateLessons(courseId: string, days: Map<number, string>, drills: Map<number, string>) {
+type Video = { url: string; live: boolean };
+
+async function updateLessons(courseId: string, days: Map<number, Video>, drills: Map<number, Video>) {
   const supabase = createServerSupabaseClient();
   const { data: lessons } = await supabase
     .from("lessons")
-    .select("id, kind, day_number, title, video_url")
+    .select("id, kind, day_number, title, video_url, video_live")
     .eq("course_id", courseId);
   let changed = 0;
   for (const l of lessons ?? []) {
-    let url: string | undefined;
-    if (l.kind === "day" && l.day_number != null) url = days.get(l.day_number);
+    let video: Video | undefined;
+    if (l.kind === "day" && l.day_number != null) video = days.get(l.day_number);
     else {
       const start = (l.title as string).match(/day\s*(\d+)\s*[~-]\s*\d+\s*drill/i)?.[1];
-      if (start) url = drills.get(Number(start));
+      if (start) video = drills.get(Number(start));
     }
-    if (url && url !== l.video_url) {
-      await supabase.from("lessons").update({ video_url: url }).eq("id", l.id);
+    if (video && (video.url !== l.video_url || video.live !== l.video_live)) {
+      await supabase.from("lessons").update({ video_url: video.url, video_live: video.live }).eq("id", l.id);
       changed++;
     }
   }

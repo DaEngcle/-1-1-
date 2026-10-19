@@ -1,3 +1,4 @@
+import { canOpenLesson } from "@/lib/classroom/preview";
 import { NextResponse, type NextRequest } from "next/server";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { getVerifiedStudent } from "@/lib/classroom/dal";
@@ -44,12 +45,12 @@ export async function POST(request: NextRequest) {
   const supabase = createServerSupabaseClient();
   const { data: lesson } = await supabase
     .from("lessons")
-    .select("id, video_url")
+    .select("id, video_url, course_id, kind, day_number, courses!inner(status)")
     .eq("id", lessonId)
     .eq("is_published", true)
-    .in("course_id", student.courses)
     .maybeSingle();
-  if (!lesson?.video_url) {
+  const status = (lesson?.courses as unknown as { status: string } | undefined)?.status;
+  if (!lesson?.video_url || !canOpenLesson(student.courses, lesson, status)) {
     return NextResponse.json({ error: "not_found" }, { status: 404 });
   }
 

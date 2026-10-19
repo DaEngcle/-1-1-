@@ -95,6 +95,8 @@ export interface Lesson {
   /** 목차에 함께 보이는 한국어 해석 */
   title_ko?: string | null;
   video_url: string | null;
+  /** Live 수업 녹화본 (VOD 준비되면 교체 예정) */
+  video_live?: boolean;
   description: string | null;
   is_published: boolean;
   created_at: string;

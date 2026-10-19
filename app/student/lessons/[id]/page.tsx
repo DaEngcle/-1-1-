@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { canOpenLesson, PREVIEW_DAYS } from "@/lib/classroom/preview";
+import { PLANS } from "@/lib/classroom/plans";
 import {
   createServerSupabaseClient,
   type ClassRecording,
@@ -31,8 +33,11 @@ export default async function StudentLessonPage({
     .maybeSingle();
   if (!lessonRow) notFound();
   const lesson = lessonRow as Lesson;
-  // 수강권에 없는 과정의 레슨은 보이지 않게
-  if (!(student.courses as string[]).includes(lesson.course_id)) notFound();
+  // 수강권에 없는 과정은 맛보기(Day 1~3)만
+  const { data: courseRow } = await supabase.from("courses").select("status").eq("id", lesson.course_id).maybeSingle();
+  if (!canOpenLesson(student.courses, lesson, courseRow?.status)) notFound();
+  const isPreview = !(student.courses as string[]).includes(lesson.course_id);
+  const upgrade = Object.values(PLANS).find((p) => p.courses.includes(lesson.course_id as never));
 
   const [
     { data: itemRows },
@@ -48,12 +53,25 @@ export default async function StudentLessonPage({
       .eq("course_id", lesson.course_id)
       .eq("week_number", lesson.week_number)
       .order("created_at"),
-    supabase
-      .from("lessons")
-      .select("id, sort_order")
-      .eq("is_published", true)
-      .eq("course_id", lesson.course_id)
-      .in("sort_order", [lesson.sort_order - 1, lesson.sort_order + 1]),
+    // 바로 앞·뒤 레슨 (정렬 번호가 띄엄띄엄이어도 찾도록)
+    Promise.all([
+      supabase
+        .from("lessons")
+        .select("id, sort_order")
+        .eq("is_published", true)
+        .eq("course_id", lesson.course_id)
+        .lt("sort_order", lesson.sort_order)
+        .order("sort_order", { ascending: false })
+        .limit(1),
+      supabase
+        .from("lessons")
+        .select("id, sort_order")
+        .eq("is_published", true)
+        .eq("course_id", lesson.course_id)
+        .gt("sort_order", lesson.sort_order)
+        .order("sort_order")
+        .limit(1),
+    ]).then(([p, n]) => ({ data: [...(p.data ?? []), ...(n.data ?? [])] })),
     supabase
       .from("video_progress")
       .select("watched_segments, duration_seconds")
@@ -71,8 +89,10 @@ export default async function StudentLessonPage({
   const lessonVideoId = youTubeVideoId(lesson.video_url);
   const items = (itemRows ?? []) as LessonItem[];
   const recordings = (recordingRows ?? []) as ClassRecording[];
-  const prev = neighborRows?.find((n) => n.sort_order === lesson.sort_order - 1);
-  const next = neighborRows?.find((n) => n.sort_order === lesson.sort_order + 1);
+  const prev = neighborRows?.find((n) => n.sort_order < lesson.sort_order);
+  const nextRow = neighborRows?.find((n) => n.sort_order > lesson.sort_order);
+  // 맛보기 학생은 맛보기 레슨까지만 다음으로 넘어간다
+  const next = isPreview && lesson.day_number != null && lesson.day_number >= PREVIEW_DAYS ? undefined : nextRow;
 
   // 문장별 가장 최근 제출 결과
   const latest = new Map<string, PracticeResult>();
@@ -100,9 +120,24 @@ export default async function StudentLessonPage({
         {lesson.description && <p className="text-sm text-zinc-600">{lesson.description}</p>}
       </div>
 
+      {isPreview && (
+        <section className="flex flex-col gap-1 rounded-2xl bg-[#ffd23f] p-4 text-zinc-900">
+          <p className="font-bold">🎁 맛보기 강의예요 (Day 1~{PREVIEW_DAYS} 무료 공개)</p>
+          <p className="text-sm opacity-90">
+            영상도 보고, 쉐도잉 녹음해서 AI 발음 채점까지 받아보세요. 나머지 강의는{" "}
+            {upgrade?.name ?? "상위 과정"} 수강생에게 열려요.
+          </p>
+        </section>
+      )}
+
       {lesson.video_url && (
         <section className="flex flex-col gap-2">
           <h2 className="font-bold text-zinc-900">🎬 교재 영상</h2>
+          {lesson.video_live && (
+            <p className="rounded-lg bg-slate-100 px-3 py-1.5 text-xs text-zinc-600">
+              📼 Live 수업 녹화본이에요. VOD 강의가 준비되면 교체될 예정입니다.
+            </p>
+          )}
           {lessonVideoId ? (
             <TrackedVideo
               lessonId={lesson.id}
