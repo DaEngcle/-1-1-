@@ -59,6 +59,8 @@ export async function getRoster(): Promise<RosterRow[]> {
     .from("students")
     .select("id, name, nickname, phone, memo, is_active, plan, access_until, created_at, cohort_id, password_hash, login_code_hash")
     .eq("approval", "approved")
+    // 무료회원(웨비나 등)·상담 고객은 학생 관리판이 아니라 상담·고객 탭에서 본다
+    .eq("stage", "enrolled")
     .order("name");
   const students = studentRows ?? [];
   const ids = students.map((s) => s.id as string);

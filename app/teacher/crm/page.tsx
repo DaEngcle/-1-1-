@@ -243,6 +243,9 @@ export default async function CrmPage({
                     👥 {cohortName.get(p.cohort_id)}
                   </span>
                 )}
+                {stage !== "enrolled" && hasAccount && p.approval === "approved" && (
+                  <span className="rounded bg-[#ffd23f] px-1.5 py-0.5 text-xs font-semibold text-zinc-900">🎁 무료회원</span>
+                )}
                 {stage === "enrolled" && !hasAccount && (
                   <span className="rounded bg-violet-50 px-1.5 py-0.5 text-xs text-violet-800">🔑 아직 가입 전</span>
                 )}

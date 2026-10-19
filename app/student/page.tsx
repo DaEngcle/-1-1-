@@ -66,6 +66,9 @@ export default async function StudentHomePage() {
               {student.accessUntil && ` · D-${daysLeft(student.accessUntil)}`}
             </span>
           )}
+          {student.courses.length === 0 && (
+            <span className="rounded-full bg-[#ffd23f] px-3 py-1 text-zinc-900">🎁 무료회원</span>
+          )}
           {!nickname && (
             <Link href="/student/profile" className="rounded-full bg-white px-3 py-1 text-brand-700">
               ✏️ 랭킹 닉네임 정하기
@@ -88,6 +91,24 @@ export default async function StudentHomePage() {
           </Link>
         )}
       </section>
+
+      {student.courses.length === 0 && (
+        <section className="flex flex-col gap-2 rounded-2xl bg-[#fff8db] p-4 text-zinc-900">
+          <p className="font-bold">🎁 무료회원으로 이용 중이에요</p>
+          <p className="text-sm text-zinc-700">자료실 전자책, 강의 맛보기(과정별 Day 1~3), 레벨테스트를 무료로 써보세요.</p>
+          <div className="flex flex-wrap gap-2 text-sm font-semibold">
+            <Link href="/student/resources" className="rounded-full bg-[#ffd23f] px-3 py-1">
+              📕 자료 받기
+            </Link>
+            <Link href="/student/lessons?course=bootcamp" className="rounded-full bg-white px-3 py-1">
+              🎬 강의 맛보기
+            </Link>
+            <Link href="/student/level-test" className="rounded-full bg-white px-3 py-1">
+              📊 레벨테스트
+            </Link>
+          </div>
+        </section>
+      )}
 
       <LevelCard pre={tests.pre} post={tests.post} href="/student/level-test" />
 

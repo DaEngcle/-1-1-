@@ -10,6 +10,7 @@ const NAV = [
   { href: "/teacher/students", label: "학생" },
   { href: "/teacher/crm", label: "상담·고객" },
   { href: "/teacher/lessons", label: "레슨" },
+  { href: "/teacher/resources", label: "자료실" },
   { href: "/teacher/submissions", label: "쉐도잉 제출" },
   { href: "/teacher/level-tests", label: "레벨·랭킹" },
   { href: "/teacher/attendance", label: "출결" },

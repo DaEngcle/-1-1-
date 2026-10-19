@@ -179,8 +179,13 @@ export async function updatePlan(formData: FormData) {
   const until = String(formData.get("until") ?? "");
   if (!isPlanId(plan) || !/^\d{4}-\d{2}-\d{2}$/.test(until)) return;
   const supabase = createServerSupabaseClient();
-  await supabase.from("students").update({ plan, access_until: until }).eq("id", id);
+  // 무료회원이 수강권을 사면 여기서 수강권을 주면 바로 등록생이 된다
+  await supabase
+    .from("students")
+    .update({ plan, access_until: until, stage: "enrolled", approval: "approved", is_active: true })
+    .eq("id", id);
   revalidatePath("/teacher/students");
+  revalidatePath("/teacher/crm");
   revalidatePath(`/teacher/students/${id}`);
 }
 
