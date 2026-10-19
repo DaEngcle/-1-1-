@@ -8,5 +8,7 @@ export const bookIcon = (index: number) => BOOK_ICONS[index % BOOK_ICONS.length]
 /** 공개 버킷의 표지 주소 */
 export function coverUrl(path: string | null) {
   if (!path) return null;
+  // '/covers/...'는 앱에 같이 배포된 표지 (public/covers)
+  if (path.startsWith("/")) return path;
   return createServerSupabaseClient().storage.from("covers").getPublicUrl(path).data.publicUrl;
 }

@@ -62,12 +62,12 @@ export default async function ResourcesPage({
                   className="aspect-[3/4] w-full rounded-lg object-cover object-top shadow-md transition-transform group-hover:-translate-y-0.5"
                 />
               ) : (
-                <span className="flex aspect-[3/4] w-full items-center justify-center rounded-lg bg-slate-100 text-6xl">
-                  {bookIcon(i)}
+                <span className="flex aspect-[3/4] w-full items-center justify-center rounded-lg bg-gradient-to-br from-brand-100 to-brand-50 text-xs text-brand-700">
+                  표지 준비 중
                 </span>
               )}
               <p className="text-sm font-bold leading-snug text-zinc-900">
-                {r.title}
+                {bookIcon(i)} {r.title}
               </p>
               {r.description && (
                 <p className="text-xs text-zinc-600">{r.description}</p>

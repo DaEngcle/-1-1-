@@ -102,12 +102,14 @@ export default async function TeacherResourcesPage() {
                       className="h-20 w-14 shrink-0 rounded-md object-cover shadow"
                     />
                   ) : (
-                    <span className="flex h-20 w-14 shrink-0 items-center justify-center rounded-md bg-slate-100 text-3xl">
-                      {bookIcon(i)}
+                    <span className="flex h-20 w-14 shrink-0 items-center justify-center rounded-md bg-slate-100 text-center text-[10px] text-zinc-400">
+                      표지 없음
                     </span>
                   )}
                   <div>
-                    <p className="font-bold text-zinc-900">{r.title}</p>
+                    <p className="font-bold text-zinc-900">
+                      {bookIcon(i)} {r.title}
+                    </p>
                     {r.description && (
                       <p className="text-sm text-zinc-600">{r.description}</p>
                     )}
