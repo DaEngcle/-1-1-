@@ -89,12 +89,12 @@ export default async function TeacherLessonsPage({
         </form>
       </section>
       <section className={cardClass}>
-        <h2 className="mb-1 font-bold text-zinc-900">📄 강의 링크 시트</h2>
+        <h2 className="mb-1 font-bold text-zinc-900">📄 시트에서 영상 한 번에 바꾸기</h2>
         <p className="mb-2 text-xs text-zinc-500">
-          시트에 VOD 링크를 넣으면 1시간 안에 학생 화면 영상이 자동으로 바뀌어요 (VOD가 없으면 Live 녹화). 바로 바꾸려면
-          &lsquo;지금 반영하기&rsquo;를 눌러주세요. 시트 공유는 &lsquo;링크가 있는 모든 사용자 · 뷰어&rsquo;여야 해요.
+          강의 링크 시트에서 Day 줄을 통째로 복사해 붙여넣으면, VOD 링크가 있는 Day는 VOD로(없으면 Live 녹화로) 바뀌어요. 바뀐
+          것만 고치고 쉐도잉 문장·제출 기록은 그대로예요. 전체를 복사해도 되고 새로 올린 줄만 복사해도 돼요.
         </p>
-        <VideoSheetForm course={course.id} sheet={course.video_sheet ?? null} />
+        <VideoSheetForm course={course.id} />
       </section>
       <section className={cardClass}>
         <h2 className="mb-2 font-bold text-zinc-900">레슨(Day) 추가</h2>

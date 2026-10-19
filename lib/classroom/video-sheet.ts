@@ -2,9 +2,9 @@ import "server-only";
 import { createServerSupabaseClient } from "@/lib/supabase";
 
 /**
- * 강의 링크 구글 시트 → 레슨 영상 자동 반영
- * 시트 형식: B열 "Day 01 - 제목" 또는 "Lv1.0 - Day 01-05 drill", C열 Live 녹화, E열 VOD.
- * VOD가 있으면 VOD, 없으면 Live. 시트는 '링크가 있는 모든 사용자: 뷰어'로 공유돼 있어야 한다.
+ * 강의 링크 시트에서 복사한 줄 → 레슨 영상 교체 (시트는 비공개 그대로 둔다)
+ * 줄 형식: "Day 01 - 제목" 또는 "Lv1.0 - Day 01-05 drill", 그 뒤에 Live 녹화, VOD 링크.
+ * VOD가 있으면 VOD, 없으면 Live.
  */
 
 function parseCsv(text: string): string[][] {
@@ -40,14 +40,9 @@ function parseCsv(text: string): string[][] {
 const youTubeId = (url: string) =>
   url.match(/(?:youtu\.be\/|[?&]v=|\/shorts\/|\/live\/)([\w-]{11})/)?.[1] ?? null;
 
-export function sheetCsvUrl(sheet: string) {
-  const id = sheet.match(/\/spreadsheets\/d\/([\w-]+)/)?.[1] ?? (/^[\w-]{20,}$/.test(sheet) ? sheet : null);
-  if (!id) return null;
-  const gid = sheet.match(/[#?&]gid=(\d+)/)?.[1] ?? "0";
-  return `https://docs.google.com/spreadsheets/d/${id}/export?format=csv&gid=${gid}`;
-}
-
 export function parseVideoSheet(csv: string) {
+  // 구글 시트에서 복사해 붙여넣으면 탭으로 구분된다
+  if (csv.includes("\t")) csv = csv.split(/\r?\n/).map((l) => l.split("\t").map((c) => `"${c.replace(/"/g, '""')}"`).join(",")).join("\n");
   const days = new Map<number, string>();
   const drills = new Map<number, string>(); // 시작 Day → 영상
   for (const cols of parseCsv(csv)) {
@@ -67,27 +62,15 @@ export function parseVideoSheet(csv: string) {
   return { days, drills };
 }
 
-export type SyncResult = { ok: true; changed: number; checked: number } | { ok: false; message: string };
+/** 붙여넣은 시트 내용으로 바뀐 영상만 업데이트 */
+export async function applyVideoRows(courseId: string, text: string): Promise<SyncResult> {
+  const { days, drills } = parseVideoSheet(text);
+  if (days.size + drills.size === 0) return { ok: false, message: "Day와 유튜브 링크가 있는 줄을 찾지 못했어요." };
+  return { ok: true, ...(await updateLessons(courseId, days, drills)), checked: days.size + drills.size };
+}
 
-/** 시트를 읽어 바뀐 영상만 업데이트. force=false면 시트를 1시간 캐시 */
-export async function syncCourseVideos(courseId: string, { force = false } = {}): Promise<SyncResult> {
+async function updateLessons(courseId: string, days: Map<number, string>, drills: Map<number, string>) {
   const supabase = createServerSupabaseClient();
-  const { data: course } = await supabase.from("courses").select("video_sheet").eq("id", courseId).maybeSingle();
-  const csvUrl = course?.video_sheet ? sheetCsvUrl(course.video_sheet) : null;
-  if (!csvUrl) return { ok: false, message: "연결된 시트가 없어요." };
-
-  let csv: string;
-  try {
-    const res = await fetch(csvUrl, force ? { cache: "no-store" } : { next: { revalidate: 3600 } });
-    csv = await res.text();
-    if (!res.ok || csv.trimStart().startsWith("<")) {
-      return { ok: false, message: "시트를 열 수 없어요. 공유를 '링크가 있는 모든 사용자 · 뷰어'로 바꿔주세요." };
-    }
-  } catch {
-    return { ok: false, message: "시트를 불러오지 못했어요. 잠시 후 다시 시도해주세요." };
-  }
-
-  const { days, drills } = parseVideoSheet(csv);
   const { data: lessons } = await supabase
     .from("lessons")
     .select("id, kind, day_number, title, video_url")
@@ -105,5 +88,7 @@ export async function syncCourseVideos(courseId: string, { force = false } = {})
       changed++;
     }
   }
-  return { ok: true, changed, checked: days.size + drills.size };
+  return { changed };
 }
+
+export type SyncResult = { ok: true; changed: number; checked: number } | { ok: false; message: string };

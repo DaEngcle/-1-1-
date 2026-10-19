@@ -1,25 +1,24 @@
 "use client";
 
 import { useActionState } from "react";
-import { saveVideoSheet } from "./actions";
+import { pasteVideoRows } from "./actions";
 import { inputClass, secondaryButtonClass } from "@/app/_ui/styles";
 import { SubmitButton } from "@/app/_ui/submit-button";
 
-/** 강의 링크 시트 연결: VOD 링크를 시트에 넣으면 1시간 안에 학생 화면에 자동 반영 */
-export function VideoSheetForm({ course, sheet }: { course: string; sheet: string | null }) {
-  const [state, action] = useActionState(saveVideoSheet, undefined);
+/** 강의 링크 시트에서 줄을 복사해 붙여넣으면 바뀐 영상만 교체 (시트는 비공개 그대로) */
+export function VideoSheetForm({ course }: { course: string }) {
+  const [state, action] = useActionState(pasteVideoRows, undefined);
   return (
     <form action={action} className="flex flex-col gap-2">
       <input type="hidden" name="course" value={course} />
-      <div className="flex flex-col gap-2 sm:flex-row">
-        <input
-          name="sheet"
-          defaultValue={sheet ?? ""}
-          placeholder="구글 시트 주소 (docs.google.com/spreadsheets/d/...)"
-          className={`${inputClass} flex-1 text-sm`}
-        />
-        <SubmitButton className={secondaryButtonClass}>{sheet ? "지금 반영하기" : "연결하기"}</SubmitButton>
-      </div>
+      <textarea
+        name="rows"
+        required
+        rows={3}
+        placeholder={"시트에서 Day 줄들을 드래그해서 복사(⌘C) → 여기에 붙여넣기(⌘V)\n예: Day 07 - No one told me…   https://youtu.be/…   https://youtu.be/…"}
+        className={`${inputClass} text-sm`}
+      />
+      <SubmitButton className={`${secondaryButtonClass} self-start`}>영상 반영하기</SubmitButton>
       {state && (
         <p className={`text-sm ${state.status === "error" ? "text-red-600" : "text-green-700"}`}>{state.message}</p>
       )}

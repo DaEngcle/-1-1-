@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { sheetCsvUrl, syncCourseVideos } from "@/lib/classroom/video-sheet";
+import { applyVideoRows } from "@/lib/classroom/video-sheet";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { requireTeacher } from "@/lib/classroom/dal";
 import { COURSE_IDS, type CourseId } from "@/lib/classroom/plans";
@@ -220,23 +220,16 @@ export async function deleteRecording(formData: FormData) {
 
 export type SheetSyncState = { status: "success" | "error"; message: string } | undefined;
 
-/** 강의 링크 시트를 연결하고 바로 한 번 반영 */
-export async function saveVideoSheet(_prev: SheetSyncState, formData: FormData): Promise<SheetSyncState> {
+/** 강의 링크 시트에서 복사한 줄을 붙여넣으면 VOD(없으면 Live) 영상으로 교체 */
+export async function pasteVideoRows(_prev: SheetSyncState, formData: FormData): Promise<SheetSyncState> {
   await requireTeacher();
   const course = String(formData.get("course"));
-  const sheet = String(formData.get("sheet") ?? "").trim();
+  const text = String(formData.get("rows") ?? "").slice(0, 200_000);
   if (!isCourseId(course)) return { status: "error", message: "과정을 확인해주세요." };
-  if (sheet && !sheetCsvUrl(sheet)) return { status: "error", message: "구글 시트 주소를 확인해주세요." };
-  const supabase = createServerSupabaseClient();
-  await supabase.from("courses").update({ video_sheet: sheet || null }).eq("id", course);
-  if (!sheet) {
-    revalidatePath("/teacher/lessons");
-    return { status: "success", message: "시트 연결을 해제했어요." };
-  }
-  const result = await syncCourseVideos(course, { force: true });
+  const result = await applyVideoRows(course, text);
   revalidatePath("/teacher/lessons");
   revalidatePath("/student/lessons");
   return result.ok
-    ? { status: "success", message: `시트에서 영상 ${result.checked}개를 확인했고, ${result.changed}개를 새 영상으로 바꿨어요.` }
+    ? { status: "success", message: `영상 ${result.checked}개를 확인했고, ${result.changed}개를 새 영상으로 바꿨어요.` }
     : { status: "error", message: result.message };
 }

@@ -154,6 +154,4 @@ export interface Course {
   subtitle: string | null;
   sort_order: number;
   status: "open" | "preparing";
-  /** 강의 링크 구글 시트 주소 (VOD 자동 반영) */
-  video_sheet?: string | null;
 }
