@@ -75,9 +75,6 @@ export function ReviewWall({
         >
           먼저 들은 분들의 진짜 후기
         </h2>
-        <p className={`text-xs ${light ? "text-zinc-500" : "text-brand-100"}`}>
-          단톡방·설문에 남겨주신 후기 그대로예요. 이름과 프로필은 가렸어요.
-        </p>
       </div>
       <div className={grid}>
         {first.map((r, i) => (
