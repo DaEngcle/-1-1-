@@ -16,6 +16,12 @@ const THEME: Record<string, { tab: string; badge: string; icon: string }> = {
     badge: "bg-[#ffd23f] text-zinc-900",
     icon: "📒",
   },
+  // Level 2.0은 교재(📗)처럼 초록색
+  level2: {
+    tab: "border-emerald-600 bg-emerald-500 text-white",
+    badge: "bg-emerald-500 text-white",
+    icon: "📗",
+  },
 };
 const DEFAULT_THEME = {
   tab: "border-brand-600 bg-brand-600 text-white",
