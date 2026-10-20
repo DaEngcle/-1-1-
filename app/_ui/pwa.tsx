@@ -87,18 +87,32 @@ export function InstallAppCard() {
         )}
       </div>
       {mode === "ios" && open && (
-        <ol className="flex flex-col gap-1.5 rounded-xl bg-slate-50 p-3 text-sm text-zinc-700">
-          <li>
-            1. Safari 아래쪽(또는 위쪽) <b>공유 버튼</b>{" "}
-            <span className="inline-block rounded border border-slate-300 px-1 text-xs">⬆︎</span>을 눌러요
-          </li>
-          <li>
-            2. 목록을 내려서 <b>&lsquo;홈 화면에 추가&rsquo;</b>를 눌러요
-          </li>
-          <li>
-            3. 오른쪽 위 <b>&lsquo;추가&rsquo;</b>를 누르면 끝! 홈 화면에 다잉클 아이콘이 생겨요
-          </li>
-          <li className="text-xs text-zinc-500">카카오톡 안에서 열었다면 먼저 오른쪽 아래 메뉴 → &lsquo;Safari로 열기&rsquo;를 눌러주세요.</li>
+        <ol className="flex flex-col gap-3">
+          {[
+            {
+              img: "/install/ios-1.jpg",
+              title: "Safari 아래쪽 ··· 버튼을 누르고 공유(Share)",
+              note: "카톡 안에서 열었다면 먼저 오른쪽 아래 메뉴 → 'Safari로 열기'",
+            },
+            {
+              img: "/install/ios-2.jpg",
+              title: "아래로 내려서 홈 화면에 추가(Add to Home Screen)",
+              note: "안 보이면 '더 보기(View More)'를 눌러주세요. 그다음 오른쪽 위 '추가'",
+            },
+            { img: "/install/ios-3.jpg", title: "홈 화면에 생긴 다잉클 아이콘을 누르면 끝!", note: "" },
+          ].map((step, i) => (
+            <li key={step.img} className="flex flex-col gap-2 rounded-xl bg-slate-50 p-3">
+              <p className="flex items-start gap-2 text-sm font-bold text-zinc-900">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-600 text-xs text-white">
+                  {i + 1}
+                </span>
+                {step.title}
+              </p>
+              {/* eslint-disable-next-line @next/next/no-img-element -- 설치 방법 캡처 */}
+              <img src={step.img} alt={step.title} loading="lazy" className="w-full rounded-lg border border-slate-200" />
+              {step.note && <p className="text-xs text-zinc-500">{step.note}</p>}
+            </li>
+          ))}
         </ol>
       )}
       <button type="button" onClick={dismiss} className="self-end text-xs text-zinc-400 underline">
