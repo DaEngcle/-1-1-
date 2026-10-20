@@ -1,6 +1,6 @@
 // 다잉클 클래스룸 서비스 워커: 앱 설치(PWA) + 인터넷이 끊겼을 때 안내 화면
 // 로그인·학습 기록은 항상 서버에서 받아야 해서 페이지는 캐시하지 않는다 (아이콘·오프라인 화면만)
-const CACHE = "dingle-static-v2";
+const CACHE = "dingle-static-v3";
 const ASSETS = ["/offline.html", "/icon-192.png", "/icon-512.png"];
 
 self.addEventListener("install", (event) => {
@@ -41,7 +41,7 @@ self.addEventListener("push", (event) => {
   event.waitUntil(
     self.registration.showNotification(data.title || "다잉클", {
       body: data.body || "",
-      icon: "/icon-192.png",
+      icon: data.icon || "/icon-192.png",
       badge: "/icon-192.png",
       tag: data.tag || "dingle",
       data: { url: data.url || "/student" },

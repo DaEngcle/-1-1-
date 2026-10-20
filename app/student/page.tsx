@@ -5,6 +5,27 @@ import { PushToggle } from "@/app/_ui/push-toggle";
 import { requireStudent } from "@/lib/classroom/dal";
 import { PLANS, isPlanId } from "@/lib/classroom/plans";
 import { kstDate } from "@/lib/classroom/stats";
+import { CatSprite } from "@/app/_ui/cat";
+import { CatPicker } from "@/app/_ui/cat-picker";
+import type { CatMood } from "@/lib/classroom/cat";
+
+/** 오늘 상태에 따라 고양이 표정과 한마디 (듀오링고식) */
+function catGreeting(
+  name: string,
+  streak: number,
+  bestStreak: number,
+  missionsDone: number,
+  missionsTotal: number,
+): { mood: CatMood; text: string } {
+  if (missionsTotal > 0 && missionsDone === missionsTotal)
+    return { mood: "cheer", text: "오늘 미션 다 했어! 진짜 최고야 🎉" };
+  if (missionsDone > 0)
+    return { mood: "happy", text: streak > 1 ? `오늘도 해냈다! ${streak}일 연속이야 🔥` : "오늘도 해냈다! 내일도 같이 하자 🔥" };
+  if (streak > 0)
+    return { mood: "default", text: `${name}님, ${streak}일 연속이야! 오늘도 한 문장만 같이 하자 🔥` };
+  if (bestStreak > 0) return { mood: "sad", text: "요즘 안 와서 기다렸어… 오늘 한 문장만 해볼까? 🥺" };
+  return { mood: "default", text: "반가워! 나랑 같이 오늘 첫 문장 해볼까? 🎧" };
+}
 
 function daysLeft(until: string) {
   const ms =
@@ -78,6 +99,13 @@ export default async function StudentHomePage() {
     0,
   );
   const attended = stats.attendance.present + stats.attendance.late;
+  const greeting = catGreeting(
+    nickname ?? student.name,
+    engagement.streak,
+    engagement.bestStreak,
+    engagement.missions.filter((m) => m.done).length,
+    engagement.missions.length,
+  );
 
   return (
     <>
@@ -90,10 +118,32 @@ export default async function StudentHomePage() {
           aria-hidden
           className="pointer-events-none absolute -bottom-14 right-16 h-28 w-28 rounded-full bg-white/10"
         />
-        <p className="text-sm text-brand-100">오늘도 한 문장!</p>
-        <h1 className="text-2xl font-extrabold tracking-tight">
-          {nickname ?? student.name}님, 반가워요 👋
-        </h1>
+        {student.catBreed ? (
+          <div className="relative flex items-center gap-3">
+            <Link
+              href="/student/profile#cat"
+              aria-label="고양이 바꾸기"
+              className="shrink-0 rounded-2xl bg-white/15 p-1.5"
+            >
+              <CatSprite breed={student.catBreed} mood={greeting.mood} className="h-16 w-20" />
+            </Link>
+            <div className="flex min-w-0 flex-col gap-1.5">
+              <h1 className="text-xl font-extrabold tracking-tight">
+                {nickname ?? student.name}님, 반가워요 👋
+              </h1>
+              <p className="rounded-2xl rounded-tl-sm bg-white px-3 py-2 text-sm font-bold text-brand-700 shadow-sm">
+                {greeting.text}
+              </p>
+            </div>
+          </div>
+        ) : (
+          <>
+            <p className="text-sm text-brand-100">오늘도 한 문장!</p>
+            <h1 className="text-2xl font-extrabold tracking-tight">
+              {nickname ?? student.name}님, 반가워요 👋
+            </h1>
+          </>
+        )}
         <div className="mt-3 flex flex-wrap gap-2 text-sm font-semibold">
           <span className="rounded-full bg-white/15 px-3 py-1">
             🔥 {engagement.streak}일 연속
@@ -139,6 +189,18 @@ export default async function StudentHomePage() {
           </Link>
         )}
       </section>
+
+      {!student.catBreed && (
+        <section className="flex flex-col gap-3 rounded-3xl border-2 border-dashed border-brand-200 bg-white p-4">
+          <div>
+            <p className="font-extrabold text-zinc-900">🐾 나랑 같이 공부할 고양이를 골라주세요!</p>
+            <p className="text-sm text-zinc-500">
+              고른 고양이가 매일 응원해주고, 점수가 높으면 같이 기뻐해요. 나중에 바꿀 수도 있어요.
+            </p>
+          </div>
+          <CatPicker current={null} />
+        </section>
+      )}
 
       <InstallAppCard />
       <PushToggle />

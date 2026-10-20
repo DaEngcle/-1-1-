@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { requireStudent } from "@/lib/classroom/dal";
 import { NICKNAME_PATTERN, NICKNAME_RULE } from "@/lib/classroom/nickname";
+import { isCatBreed } from "@/lib/classroom/cat";
 
 export type NicknameState = { status: "success" | "error"; message: string } | undefined;
 
@@ -23,4 +24,15 @@ export async function saveNickname(_prev: NicknameState, formData: FormData): Pr
   }
   revalidatePath("/student");
   return { status: "success", message: `이제 랭킹에 '${nickname}'(으)로 보여요.` };
+}
+
+/** 응원 고양이 고르기 */
+export async function chooseCat(formData: FormData) {
+  const student = await requireStudent();
+  const breed = formData.get("breed");
+  if (!isCatBreed(breed)) return;
+  const supabase = createServerSupabaseClient();
+  const { error } = await supabase.from("students").update({ cat_breed: breed }).eq("id", student.id);
+  if (error) console.error("고양이 저장 실패:", error.message);
+  revalidatePath("/student", "layout");
 }

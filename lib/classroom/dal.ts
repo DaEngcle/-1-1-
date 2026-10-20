@@ -6,6 +6,7 @@ import { getSession } from "./session";
 import { teacherPasswordFingerprint } from "./login-code";
 import { coursesForPlan } from "./plans";
 import { kstDate } from "./stats";
+import { isCatBreed } from "./cat";
 
 /** 선생님 세션이 유효한지 (비밀번호가 바뀌면 기존 세션은 무효) */
 export const isTeacher = cache(async () => {
@@ -32,7 +33,7 @@ export const checkStudent = cache(async () => {
   const supabase = createServerSupabaseClient();
   const { data: student } = await supabase
     .from("students")
-    .select("id, name, nickname, is_active, session_version, approval, plan, access_until, early_courses")
+    .select("id, name, nickname, is_active, session_version, approval, plan, access_until, early_courses, cat_breed")
     .eq("id", session.studentId)
     .maybeSingle();
 
@@ -47,6 +48,8 @@ export const checkStudent = cache(async () => {
       id: student.id as string,
       name: student.name as string,
       nickname: (student.nickname as string | null) ?? null,
+      /** 고른 응원 고양이 (아직 안 골랐으면 null) */
+      catBreed: isCatBreed(student.cat_breed) ? student.cat_breed : null,
       plan: (student.plan as string | null) ?? null,
       accessUntil: (student.access_until as string | null) ?? null,
       courses: coursesForPlan(student.plan),

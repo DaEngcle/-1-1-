@@ -1,6 +1,7 @@
 import { requireStudent } from "@/lib/classroom/dal";
 import type { Metadata } from "next";
 import { AppShell } from "@/app/_ui/app-shell";
+import { CatProvider } from "@/app/_ui/cat-context";
 
 export const metadata: Metadata = { title: "다잉클 클래스룸" };
 
@@ -21,7 +22,7 @@ export default async function StudentLayout({
   const student = await requireStudent();
   return (
     <AppShell title={`다잉클 · ${student.nickname ?? student.name}`} nav={NAV}>
-      {children}
+      <CatProvider breed={student.catBreed}>{children}</CatProvider>
     </AppShell>
   );
 }

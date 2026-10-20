@@ -8,6 +8,17 @@ import { buildDetailedFeedback } from "@/lib/classroom/detailed-feedback";
 import { useTts } from "@/app/_ui/audio/use-tts";
 import { toWav16kMono } from "@/app/_ui/audio/wav";
 import { useRecorder } from "@/app/_ui/audio/use-recorder";
+import { CatSprite } from "@/app/_ui/cat";
+import { useCatBreed } from "@/app/_ui/cat-context";
+import type { CatMood } from "@/lib/classroom/cat";
+
+/** 점수에 따라 고양이 반응 */
+function catReaction(score: number): { mood: CatMood; text: string } {
+  if (score >= 90) return { mood: "cheer", text: "원어민 같아! 완전 최고야 🎉" };
+  if (score >= 80) return { mood: "happy", text: "잘했어! 조금만 더 하면 90점이야 🔥" };
+  if (score >= 60) return { mood: "default", text: "좋아! 빨간 단어만 한 번 더 따라 해볼까?" };
+  return { mood: "sad", text: "괜찮아, 천천히 다시 들어보고 따라 해보자 💪" };
+}
 
 export interface PracticeResult {
   status: "pending" | "scored" | "failed";
@@ -40,6 +51,7 @@ function ScoreBadge({ label, value }: { label: string; value?: number | null }) 
 }
 
 function ResultView({ result, onPlayWord }: { result: PracticeResult; onPlayWord: (w: string) => void }) {
+  const breed = useCatBreed();
   if (result.status === "failed") {
     return <p className="text-sm text-red-600">{result.error ?? "평가에 실패했어요. 다시 녹음해보세요."}</p>;
   }
@@ -61,6 +73,14 @@ function ResultView({ result, onPlayWord }: { result: PracticeResult; onPlayWord
 
   return (
     <div className="flex flex-col gap-3">
+      {breed && result.overall_score != null && (
+        <div className="flex items-center gap-2">
+          <CatSprite breed={breed} mood={catReaction(result.overall_score).mood} className="h-14 w-16 shrink-0" />
+          <p className="rounded-2xl rounded-tl-sm bg-brand-50 px-3 py-2 text-sm font-bold text-brand-700">
+            {catReaction(result.overall_score).text}
+          </p>
+        </div>
+      )}
       <div className="grid grid-cols-5 gap-1.5">
         <ScoreBadge label="종합" value={result.overall_score} />
         <ScoreBadge label="정확도" value={result.accuracy_score} />

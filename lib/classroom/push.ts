@@ -1,8 +1,9 @@
 import "server-only";
 import webpush from "web-push";
 import { createServerSupabaseClient } from "@/lib/supabase";
+import { isCatBreed } from "./cat";
 
-export type PushPayload = { title: string; body: string; url?: string; tag?: string };
+export type PushPayload = { title: string; body: string; url?: string; tag?: string; icon?: string };
 
 let configured = false;
 export function pushReady() {
@@ -24,12 +25,15 @@ export async function sendPushToStudent(studentId: string, payload: PushPayload,
     .from("push_subscriptions")
     .select("id, endpoint, p256dh, auth")
     .eq("student_id", studentId);
+  // 학생이 고른 고양이를 알림 아이콘으로 (안드로이드에서 보임)
+  const { data: st } = await supabase.from("students").select("cat_breed").eq("id", studentId).maybeSingle();
+  const icon = isCatBreed(st?.cat_breed) ? `/cats/${st.cat_breed}.png` : undefined;
   let sent = 0;
   for (const s of subs ?? []) {
     try {
       await webpush.sendNotification(
         { endpoint: s.endpoint, keys: { p256dh: s.p256dh, auth: s.auth } },
-        JSON.stringify({ url: "/student", ...payload }),
+        JSON.stringify({ url: "/student", icon, ...payload }),
         { TTL: 60 * 60 * 6 },
       );
       sent++;
