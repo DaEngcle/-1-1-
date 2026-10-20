@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { requireTeacher } from "@/lib/classroom/dal";
 import { generateLoginCode, hashLoginCode } from "@/lib/classroom/login-code";
-import { accessUntil, isPlanId } from "@/lib/classroom/plans";
+import { COURSE_IDS, accessUntil, isPlanId } from "@/lib/classroom/plans";
 import { kstDate } from "@/lib/classroom/stats";
 
 export type StudentFormState =
@@ -221,4 +221,17 @@ export async function updateMemo(formData: FormData) {
   await supabase.from("students").update({ memo: memo || null }).eq("id", id);
   revalidatePath(`/teacher/students/${id}`);
   revalidatePath("/teacher/students");
+}
+
+/** 준비 중인 과정을 이 학생에게만 미리 열어주기 */
+export async function setEarlyCourses(formData: FormData) {
+  await requireTeacher();
+  const id = String(formData.get("id"));
+  const courses = formData
+    .getAll("early")
+    .map(String)
+    .filter((c) => (COURSE_IDS as readonly string[]).includes(c));
+  const supabase = createServerSupabaseClient();
+  await supabase.from("students").update({ early_courses: courses }).eq("id", id);
+  revalidatePath(`/teacher/students/${id}`);
 }

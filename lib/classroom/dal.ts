@@ -32,7 +32,7 @@ export const checkStudent = cache(async () => {
   const supabase = createServerSupabaseClient();
   const { data: student } = await supabase
     .from("students")
-    .select("id, name, nickname, is_active, session_version, approval, plan, access_until")
+    .select("id, name, nickname, is_active, session_version, approval, plan, access_until, early_courses")
     .eq("id", session.studentId)
     .maybeSingle();
 
@@ -50,6 +50,8 @@ export const checkStudent = cache(async () => {
       plan: (student.plan as string | null) ?? null,
       accessUntil: (student.access_until as string | null) ?? null,
       courses: coursesForPlan(student.plan),
+      /** 준비 중이어도 이 학생에게만 미리 열린 과정 */
+      earlyCourses: ((student.early_courses as string[] | null) ?? []) as string[],
     },
   };
 });

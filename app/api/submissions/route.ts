@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
   const itemLesson = item?.lessons as unknown as
     | { course_id: string; kind: string; day_number: number | null; courses: { status: string } }
     | undefined;
-  if (!item || !itemLesson || !canOpenLesson(student.courses, itemLesson, itemLesson.courses?.status)) {
+  if (!item || !itemLesson || !canOpenLesson(student.courses, itemLesson, itemLesson.courses?.status, student.earlyCourses)) {
     return NextResponse.json({ error: "문장을 찾을 수 없어요." }, { status: 404 });
   }
 

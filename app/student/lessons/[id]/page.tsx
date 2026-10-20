@@ -35,8 +35,9 @@ export default async function StudentLessonPage({
   const lesson = lessonRow as Lesson;
   // 수강권에 없는 과정은 맛보기(Day 1~3)만
   const { data: courseRow } = await supabase.from("courses").select("status").eq("id", lesson.course_id).maybeSingle();
-  if (!canOpenLesson(student.courses, lesson, courseRow?.status)) notFound();
-  const isPreview = !(student.courses as string[]).includes(lesson.course_id);
+  if (!canOpenLesson(student.courses, lesson, courseRow?.status, student.earlyCourses)) notFound();
+  const isPreview =
+    !(student.courses as string[]).includes(lesson.course_id) && !student.earlyCourses.includes(lesson.course_id);
   const upgrade = upgradePlanFor(lesson.course_id);
 
   const [

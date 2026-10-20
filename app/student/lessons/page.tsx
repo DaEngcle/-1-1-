@@ -48,12 +48,14 @@ export default async function StudentLessonsPage({
     .order("sort_order");
   const courses = (courseRows ?? []) as Course[];
   const allowed = new Set<string>(student.courses);
+  const early = new Set<string>(student.earlyCourses);
   const requested = (await searchParams).course;
   const course =
     courses.find((c) => c.id === requested) ??
     courses.find((c) => allowed.has(c.id) && c.status === "open") ??
     courses[0];
-  const canSee = allowed.has(course.id) && course.status === "open";
+  // 준비 중이어도 선생님이 미리 열어준 학생은 바로 볼 수 있다
+  const canSee = early.has(course.id) || (allowed.has(course.id) && course.status === "open");
   const theme = THEME[course.id] ?? DEFAULT_THEME;
   const info = COURSE_INFO[course.id];
   const weekHeader = (weekNumber: number, title: string) => (
@@ -80,9 +82,9 @@ export default async function StudentLessonsPage({
             c.id === course.id
               ? (THEME[c.id] ?? DEFAULT_THEME).tab
               : "border-slate-200 bg-white text-slate-700"
-          } ${allowed.has(c.id) ? "" : "opacity-60"}`}
+          } ${allowed.has(c.id) || early.has(c.id) ? "" : "opacity-60"}`}
         >
-          {allowed.has(c.id) ? "" : "🔒 "}
+          {allowed.has(c.id) || early.has(c.id) ? "" : "🔒 "}
           {COURSE_SHORT[c.id] ?? c.title}
         </Link>
       ))}
@@ -258,9 +260,9 @@ export default async function StudentLessonsPage({
     supabase
       .from("lessons")
       .select(
-        "id, course_id, sort_order, week_number, week_title, kind, day_number, title, title_ko, video_url, video_live",
+        "id, course_id, sort_order, week_number, week_title, kind, day_number, title, title_ko, video_url, video_live, is_published",
       )
-      .eq("is_published", true)
+      // 아직 공개 안 한 레슨도 '공개 예정'으로 목록에 보여준다
       .eq("course_id", course.id)
       .order("sort_order"),
     supabase
@@ -279,6 +281,8 @@ export default async function StudentLessonsPage({
   const watch = new Map((progressRows ?? []).map((p) => [p.lesson_id, p]));
 
   const lessons = (lessonRows ?? []) as Lesson[];
+  const openIds = new Set(lessons.filter((l) => l.is_published).map((l) => l.id));
+  const openItems = (itemRows ?? []).filter((i) => openIds.has(i.lesson_id));
   const practiced = new Set((subRows ?? []).map((s) => s.lesson_item_id));
   const itemsByLesson = new Map<string, string[]>();
   for (const item of itemRows ?? []) {
@@ -318,15 +322,15 @@ export default async function StudentLessonsPage({
         >
           <p className="font-bold">
             🎓 수강 중인 과정이에요 · 쉐도잉{" "}
-            {(itemRows ?? []).filter((i) => practiced.has(i.id)).length}/
-            {(itemRows ?? []).length}문장 완료
+            {openItems.filter((i) => practiced.has(i.id)).length}/
+            {openItems.length}문장 완료
           </p>
           <p className="text-sm leading-relaxed opacity-90">{info.intro}</p>
           <div className="flex flex-wrap gap-1.5 text-xs font-semibold">
             {[
               `${lessons.filter((l) => l.kind === "day").length}일 과정`,
-              ...((itemRows ?? []).length
-                ? [`쉐도잉 문장 ${(itemRows ?? []).length}개`]
+              ...(openItems.length
+                ? [`쉐도잉 문장 ${openItems.length}개`]
                 : []),
               ...info.points,
             ].map((t) => (
@@ -353,6 +357,19 @@ export default async function StudentLessonsPage({
             {week.lessons.map((l) => {
               const items = itemsByLesson.get(l.id) ?? [];
               const done = items.filter((id) => practiced.has(id)).length;
+              if (!l.is_published) {
+                return (
+                  <div key={l.id} className="flex items-center justify-between gap-3 px-4 py-3 opacity-60">
+                    <span className="flex flex-col">
+                      <span className="text-xs text-zinc-500">
+                        {l.kind === "day" ? `Day ${String(l.day_number).padStart(2, "0")}` : l.title}
+                      </span>
+                      <span className="font-medium text-zinc-700">{l.title_ko ?? "주간 복습 드릴"}</span>
+                    </span>
+                    <span className="shrink-0 rounded-full bg-zinc-100 px-2 py-0.5 text-xs text-zinc-500">🔜 공개 예정</span>
+                  </div>
+                );
+              }
               return (
                 <Link
                   key={l.id}

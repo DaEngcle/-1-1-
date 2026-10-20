@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
     .eq("is_published", true)
     .maybeSingle();
   const status = (lesson?.courses as unknown as { status: string } | undefined)?.status;
-  if (!lesson?.video_url || !canOpenLesson(student.courses, lesson, status)) {
+  if (!lesson?.video_url || !canOpenLesson(student.courses, lesson, status, student.earlyCourses)) {
     return NextResponse.json({ error: "not_found" }, { status: 404 });
   }
 

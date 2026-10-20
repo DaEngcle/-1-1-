@@ -11,12 +11,12 @@ import { LevelCard } from "@/app/_ui/level-card";
 import { Badges, StudyCalendar } from "@/app/_ui/engagement";
 import { resetLevelTest } from "../../level-tests/actions";
 import { ConfirmButton } from "@/app/_ui/confirm-button";
-import { addNote, deleteNote, setStudentActive, updateMemo, updatePlan } from "../actions";
+import { addNote, deleteNote, setEarlyCourses, setStudentActive, updateMemo, updatePlan } from "../actions";
 import { RegenerateCodeButton } from "../student-forms";
 import { CopyButton } from "@/app/_ui/copy-button";
 import { getRoster, nudgeMessage, STATUS_INFO } from "@/lib/classroom/roster";
 import { headers } from "next/headers";
-import { PLANS } from "@/lib/classroom/plans";
+import { COURSE_SHORT, PLANS } from "@/lib/classroom/plans";
 import { ATTENDANCE_LABEL } from "@/lib/classroom/attendance";
 import { ScoreTrendChart } from "@/app/_ui/score-trend-chart";
 import { SubmissionList } from "../../submission-list";
@@ -37,7 +37,7 @@ export default async function TeacherStudentPage({
   const supabase = createServerSupabaseClient();
   const { data: student } = await supabase
     .from("students")
-    .select(`id, name, phone, memo, is_active, created_at, plan, access_until, ${PROFILE_SELECT}`)
+    .select(`id, name, phone, memo, is_active, created_at, plan, access_until, early_courses, ${PROFILE_SELECT}`)
     .eq("id", id)
     .maybeSingle<{
       id: string;
@@ -48,9 +48,10 @@ export default async function TeacherStudentPage({
       created_at: string;
       plan: string | null;
       access_until: string | null;
+      early_courses: string[] | null;
     } & Profile>();
   if (!student) notFound();
-  const [roster, { data: noteRows }, { data: cohortRows }, { data: buys }] = await Promise.all([
+  const [roster, { data: noteRows }, { data: cohortRows }, { data: buys }, { data: courseRows }] = await Promise.all([
     getRoster(),
     supabase.from("teacher_notes").select("id, body, created_at").eq("student_id", id).order("created_at", { ascending: false }),
     supabase.from("cohorts").select("id, name").order("created_at"),
@@ -59,6 +60,7 @@ export default async function TeacherStudentPage({
       .select("id, paid_on, amount, product, kind, starts_on, ends_on, source")
       .eq("student_id", id)
       .order("paid_on", { ascending: false }),
+    supabase.from("courses").select("id, title, status").order("sort_order"),
   ]);
   const stage = isStage(student.stage) ? student.stage : "enrolled";
   const me = roster.find((r) => r.id === id);
@@ -253,6 +255,29 @@ export default async function TeacherStudentPage({
         <p className="mt-1 text-xs text-zinc-500">
           연장할 때는 종료일만 바꿔서 저장하세요. 종료일이 지나면 학생은 로그인할 수 없어요.
         </p>
+        {(courseRows ?? []).some((c) => c.status !== "open") && (
+          <form action={setEarlyCourses} className="mt-3 flex flex-wrap items-center gap-3 border-t border-slate-100 pt-3 text-sm">
+            <input type="hidden" name="id" value={student.id} />
+            <span className="text-xs font-semibold text-zinc-700">🔑 준비 중인 과정 미리 열어주기</span>
+            {(courseRows ?? [])
+              .filter((c) => c.status !== "open")
+              .map((c) => (
+                <label key={c.id} className="flex items-center gap-1 text-xs text-zinc-700">
+                  <input
+                    type="checkbox"
+                    name="early"
+                    value={c.id}
+                    defaultChecked={(student.early_courses ?? []).includes(c.id)}
+                  />
+                  {COURSE_SHORT[c.id] ?? c.title}
+                </label>
+              ))}
+            <SubmitButton className="rounded-lg border border-slate-300 px-3 py-1 text-xs font-semibold">저장</SubmitButton>
+            <span className="w-full text-xs text-zinc-500">
+              다른 학생에게는 계속 &lsquo;준비 중&rsquo;으로 보이고, 체크한 학생만 공개된 레슨을 볼 수 있어요.
+            </span>
+          </form>
+        )}
       </section>
 
       <section className="grid grid-cols-2 gap-3 sm:grid-cols-3">
