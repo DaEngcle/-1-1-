@@ -35,10 +35,13 @@ export function PushToggle() {
       return;
     }
     if (Notification.permission === "denied") return setState("denied");
-    navigator.serviceWorker.ready
-      .then((reg) => reg.pushManager.getSubscription())
-      .then((sub) => setState(sub ? "on" : "off"))
-      .catch(() => setState("off"));
+    // 서비스 워커 준비를 기다리지 않고 바로 보여주고, 이미 켜져 있는지는 뒤에서 확인
+    setState("off");
+    navigator.serviceWorker
+      .getRegistration()
+      .then((reg) => reg?.pushManager.getSubscription())
+      .then((sub) => sub && setState("on"))
+      .catch(() => undefined);
   }, []);
 
   const turnOn = async () => {
@@ -96,7 +99,7 @@ export function PushToggle() {
     }
   };
 
-  if (state === "loading" || state === "unsupported") return null;
+  if (state === "loading") return null;
   return (
     <section className="flex flex-col gap-2 rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm">
       <div className="flex items-center gap-3">
@@ -109,10 +112,12 @@ export function PushToggle() {
             {state === "on"
               ? "공부를 깜빡한 날 저녁 8시쯤 살짝 알려드려요."
               : state === "ios-install"
-                ? "아이폰은 위 방법으로 홈 화면에 앱을 추가한 뒤, 앱에서 알림을 켤 수 있어요."
-                : state === "denied"
-                  ? "알림이 차단돼 있어요. 휴대폰 설정 → 알림에서 다잉클을 허용해 주세요."
-                  : "연속 기록이 끊기기 전에 저녁에 한 번 알려드려요."}
+                ? "아이폰은 위 방법으로 홈 화면에 앱을 추가한 뒤, 홈 화면의 다잉클 앱에서 알림을 켤 수 있어요."
+                : state === "unsupported"
+                  ? "이 브라우저는 알림을 지원하지 않아요. 크롬·사파리로 열거나 홈 화면 앱에서 켜주세요."
+                  : state === "denied"
+                    ? "알림이 차단돼 있어요. 휴대폰 설정 → 알림에서 다잉클을 허용해 주세요."
+                    : "연속 기록이 끊기기 전에 저녁에 한 번 알려드려요."}
           </p>
         </div>
         {state === "off" && (
