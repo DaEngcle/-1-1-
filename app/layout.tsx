@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Suspense } from "react";
 import { NavProgress } from "./_ui/nav-progress";
+import { RegisterServiceWorker } from "./_ui/pwa";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,9 +18,17 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   // 카톡·문자 링크 미리보기 이미지가 전체 주소로 나가도록
   metadataBase: new URL("https://dingle-classroom.vercel.app"),
+  applicationName: "다잉클 클래스룸",
+  // 아이폰 '홈 화면에 추가'용
+  appleWebApp: { capable: true, title: "다잉클", statusBarStyle: "default" },
+  icons: { icon: "/icon-192.png", apple: "/apple-touch-icon.png" },
   title: "다잉클 데일리 | 1일 1영어표현 카톡 구독",
   description:
     "워킹홀리데이에서 바로 쓰는 영어 표현을 매일 아침 9시 카카오톡으로 받아보세요. 3일 무료체험.",
+};
+
+export const viewport: Viewport = {
+  themeColor: "#2453eb",
 };
 
 export default function RootLayout({
@@ -29,13 +38,14 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="ko"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <Suspense fallback={null}>
           <NavProgress />
         </Suspense>
+        <RegisterServiceWorker />
         {children}
       </body>
     </html>
