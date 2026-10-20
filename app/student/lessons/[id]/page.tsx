@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { canOpenLesson, PREVIEW_DAYS } from "@/lib/classroom/preview";
-import { PLANS } from "@/lib/classroom/plans";
+import { upgradePlanFor } from "@/lib/classroom/plans";
 import {
   createServerSupabaseClient,
   type ClassRecording,
@@ -37,7 +37,7 @@ export default async function StudentLessonPage({
   const { data: courseRow } = await supabase.from("courses").select("status").eq("id", lesson.course_id).maybeSingle();
   if (!canOpenLesson(student.courses, lesson, courseRow?.status)) notFound();
   const isPreview = !(student.courses as string[]).includes(lesson.course_id);
-  const upgrade = Object.values(PLANS).find((p) => p.courses.includes(lesson.course_id as never));
+  const upgrade = upgradePlanFor(lesson.course_id);
 
   const [
     { data: itemRows },

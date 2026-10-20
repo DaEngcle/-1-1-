@@ -7,7 +7,7 @@ import {
   type Lesson,
 } from "@/lib/supabase";
 import { requireStudent } from "@/lib/classroom/dal";
-import { COURSE_SHORT, PLANS } from "@/lib/classroom/plans";
+import { COURSE_SHORT, upgradePlanFor } from "@/lib/classroom/plans";
 
 /** 과정별 색 (Level 1.0은 교재 표지의 노란색) */
 const THEME: Record<string, { tab: string; badge: string; icon: string }> = {
@@ -77,9 +77,7 @@ export default async function StudentLessonsPage({
     </nav>
   );
 
-  const upgrade = Object.values(PLANS).find((p) =>
-    p.courses.includes(course.id as never),
-  );
+  const upgrade = upgradePlanFor(course.id);
   const preparing = course.status !== "open";
 
   // 수강권이 없거나 준비 중인 과정은 한글 목차만 보여준다 (레슨 내용은 상세 페이지에서 막힘)
