@@ -61,3 +61,18 @@ button:disabled {
   0% { transform: translateX(-100%); }
   100% { transform: translateX(250%); }
 }
+
+/* 후기 띠: 끝없이 옆으로 흘러감 (움직임 줄이기 설정이면 멈춤) */
+@keyframes review-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.review-marquee {
+  animation: review-marquee var(--marquee-duration, 60s) linear infinite;
+}
+.review-marquee:hover {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .review-marquee { animation: none; }
+}

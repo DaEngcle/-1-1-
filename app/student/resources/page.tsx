@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { REVIEW_COUNT, ReviewMarquee } from "@/app/_ui/reviews";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { requireStudent } from "@/lib/classroom/dal";
 import { cardClass } from "@/app/_ui/styles";
@@ -114,6 +115,28 @@ export default async function ResourcesPage({
           );
         })}
       </section>
+
+      {free && (
+        <section className="flex flex-col gap-3 overflow-hidden rounded-3xl bg-gradient-to-br from-brand-600 to-brand-500 py-4 text-white shadow-lg shadow-brand-900/15">
+          <div className="flex items-end justify-between gap-2 px-4">
+            <div>
+              <p className="text-xs text-brand-100">
+                먼저 들은 분들의 진짜 후기
+              </p>
+              <p className="text-2xl font-extrabold">
+                ⭐ 후기 {REVIEW_COUNT}개
+              </p>
+            </div>
+            <Link
+              href="/student#all-reviews"
+              className="rounded-full bg-white/15 px-3 py-1 text-xs font-bold hover:bg-white/25"
+            >
+              전체 보기 →
+            </Link>
+          </div>
+          <ReviewMarquee />
+        </section>
+      )}
 
       {free && (
         <section className={`${cardClass} flex flex-col gap-3`}>
