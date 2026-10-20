@@ -169,19 +169,19 @@ export default async function StudentHomePage() {
       )}
 
       {student.courses.length === 0 && (
-        <section className="flex flex-col gap-3 overflow-hidden rounded-3xl bg-gradient-to-br from-brand-600 to-brand-500 py-4 text-white shadow-lg shadow-brand-900/15">
+        <section className="flex flex-col gap-3 overflow-hidden rounded-3xl border border-slate-200/80 bg-slate-50 py-4 text-zinc-900 shadow-sm">
           <div className="flex items-end justify-between gap-2 px-4">
             <div>
-              <p className="text-xs text-brand-100">
+              <p className="text-xs text-zinc-500">
                 먼저 들은 분들의 진짜 후기
               </p>
-              <p className="text-2xl font-extrabold">
+              <p className="text-2xl font-extrabold text-brand-700">
                 ⭐ 진짜 수강생 후기
               </p>
             </div>
             <a
               href="#all-reviews"
-              className="rounded-full bg-white/15 px-3 py-1 text-xs font-bold hover:bg-white/25"
+              className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-bold text-zinc-700 hover:bg-slate-100"
             >
               전체 보기 ↓
             </a>

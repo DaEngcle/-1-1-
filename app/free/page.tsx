@@ -69,7 +69,7 @@ export default async function FreePage({
             </li>
           ))}
         </ul>
-        <div className="-mx-7 w-[calc(100%+3.5rem)] bg-brand-600 py-2">
+        <div className="-mx-7 w-[calc(100%+3.5rem)] border-y border-slate-200 bg-slate-50 py-2">
           <ReviewMarquee />
         </div>
         <div id="signup" className="w-full scroll-mt-6">
@@ -81,9 +81,9 @@ export default async function FreePage({
       </main>
       <div
         id="reviews"
-        className="flex w-full scroll-mt-6 flex-col items-center gap-5"
+        className="flex w-full max-w-4xl scroll-mt-6 flex-col items-center gap-5 rounded-3xl bg-slate-50 p-5 shadow-xl shadow-brand-900/20"
       >
-        <ReviewWall />
+        <ReviewWall tone="light" />
         <a
           href="#signup"
           className="rounded-2xl border-b-4 border-amber-500 bg-[#ffd23f] px-6 py-3 text-base font-extrabold text-zinc-900 shadow-lg"
