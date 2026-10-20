@@ -62,7 +62,7 @@ button:disabled {
   100% { transform: translateX(250%); }
 }
 
-/* 후기 띠: 끝없이 옆으로 흘러감 (움직임 줄이기 설정이면 멈춤) */
+/* 후기 띠: 끝없이 옆으로 흘러감 ('동작 줄이기' 설정이어도 천천히 흐르게) */
 @keyframes review-marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
@@ -74,5 +74,5 @@ button:disabled {
   animation-play-state: paused;
 }
 @media (prefers-reduced-motion: reduce) {
-  .review-marquee { animation: none; }
+  .review-marquee { animation-duration: calc(var(--marquee-duration, 60s) * 1.6); }
 }
