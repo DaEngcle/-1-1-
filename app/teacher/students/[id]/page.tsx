@@ -228,7 +228,7 @@ export default async function TeacherStudentPage({
         )}
       </section>
 
-      <section className={cardClass}>
+      <section id="push" className={`${cardClass} scroll-mt-6`}>
         <h2 className="mb-1 font-bold text-zinc-900">🔔 알림 보내기</h2>
         {pushDevices ? (
           <>

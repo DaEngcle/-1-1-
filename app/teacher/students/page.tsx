@@ -113,7 +113,11 @@ export default async function StudentsPage({
   const sort = SORTS.some((o) => o.key === params.sort)
     ? (params.sort as SortKey)
     : "attention";
-  const roster = await getRoster();
+  const [roster, { data: pushRows }] = await Promise.all([
+    getRoster(),
+    supabase.from("push_subscriptions").select("student_id"),
+  ]);
+  const pushOn = new Set((pushRows ?? []).map((p) => p.student_id as string));
   const count = (st: RosterStatus) =>
     roster.filter((r) => r.status === st).length;
   const expiring = roster.filter(
@@ -645,6 +649,16 @@ export default async function StudentsPage({
                   />
                 )}
                 {r.memo && <span className="text-zinc-500">📝 {r.memo}</span>}
+                {pushOn.has(r.id) ? (
+                  <Link
+                    href={`/teacher/students/${r.id}#push`}
+                    className="rounded-lg border border-brand-200 bg-white px-2.5 py-1.5 font-semibold text-brand-700"
+                  >
+                    🔔 알림 보내기
+                  </Link>
+                ) : (
+                  <span className="text-zinc-400">🔕 알림 꺼짐</span>
+                )}
                 <Link
                   href={`/teacher/students/${r.id}`}
                   className="ml-auto font-semibold text-brand-700"
