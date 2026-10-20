@@ -55,7 +55,12 @@ const SORTERS: Record<SortKey, (a: RosterRow, b: RosterRow) => number> = {
 export default async function StudentsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ filter?: string; sort?: string; cohort?: string }>;
+  searchParams: Promise<{
+    filter?: string;
+    sort?: string;
+    cohort?: string;
+    q?: string;
+  }>;
 }) {
   await requireTeacher();
   const supabase = createServerSupabaseClient();
@@ -126,7 +131,30 @@ export default async function StudentsPage({
       : filter === "expiring"
         ? inCohort.filter((r) => expiring.includes(r))
         : inCohort.filter((r) => r.status === filter);
-  const shown = [...filtered].sort(SORTERS[sort]);
+  // 검색: 이름·닉네임·전화번호 (하이픈 없이도)
+  const q = (params.q ?? "").trim();
+  const qDigits = q.replace(/[^0-9]/g, "");
+  const matchesQ = (
+    name: string,
+    nickname: string | null,
+    phone: string | null,
+  ) =>
+    !q ||
+    name.includes(q) ||
+    (nickname ?? "").toLowerCase().includes(q.toLowerCase()) ||
+    (qDigits.length >= 3 && (phone ?? "").includes(qDigits));
+  const shown = [
+    ...(q
+      ? filtered.filter((r) => matchesQ(r.name, r.nickname, r.phone))
+      : filtered),
+  ].sort(SORTERS[sort]);
+  // 학생 관리판 밖(무료회원·가입 신청·상담 카드)에서도 찾아준다
+  const rosterIds = new Set(roster.map((r) => r.id));
+  const elsewhere = q
+    ? all.filter(
+        (s) => !rosterIds.has(s.id) && matchesQ(s.name, s.nickname, s.phone),
+      )
+    : [];
   const host = (await headers()).get("host") ?? "dingle-classroom.vercel.app";
   const loginUrl = `https://${host}/login`;
   const href = (next: {
@@ -140,10 +168,75 @@ export default async function StudentsPage({
     });
     const c = next.cohort === undefined ? cohortId : next.cohort;
     if (c) q.set("cohort", c);
+    if (params.q) q.set("q", params.q);
     return `/teacher/students?${q}`;
   };
   return (
     <>
+      <form className="flex gap-2" role="search">
+        <input type="hidden" name="filter" value={filter} />
+        <input type="hidden" name="sort" value={sort} />
+        {cohortId && <input type="hidden" name="cohort" value={cohortId} />}
+        <input
+          name="q"
+          defaultValue={q}
+          placeholder="🔍 학생 검색 (이름 · 닉네임 · 전화번호)"
+          className="flex-1 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm shadow-sm focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-100"
+        />
+        <button
+          type="submit"
+          className="rounded-xl bg-brand-600 px-4 py-2.5 text-sm font-bold text-white"
+        >
+          검색
+        </button>
+        {q && (
+          <Link
+            href={`/teacher/students?${new URLSearchParams({ filter, sort, ...(cohortId ? { cohort: cohortId } : {}) })}`}
+            className="flex items-center rounded-xl border border-slate-200 bg-white px-3 text-sm text-zinc-600"
+          >
+            지우기
+          </Link>
+        )}
+      </form>
+
+      {q && (
+        <section className={`${cardClass} flex flex-col gap-2`}>
+          <p className="text-sm font-bold text-zinc-900">
+            &lsquo;{q}&rsquo; 검색 결과: 관리 학생 {shown.length}명
+            {elsewhere.length > 0 && ` · 그 외 ${elsewhere.length}명`}
+          </p>
+          {elsewhere.length > 0 && (
+            <ul className="flex flex-col gap-1 text-sm">
+              {elsewhere.map((s) => (
+                <li key={s.id} className="flex flex-wrap items-center gap-2">
+                  <Link
+                    href={`/teacher/students/${s.id}`}
+                    className="font-semibold text-brand-700 hover:underline"
+                  >
+                    {s.name}
+                  </Link>
+                  <span className="text-xs text-zinc-500">{s.phone}</span>
+                  <span className="rounded bg-slate-100 px-1.5 py-0.5 text-xs text-slate-600">
+                    {s.approval === "pending"
+                      ? "🙋 가입 신청"
+                      : s.approval === "rejected"
+                        ? "거절됨"
+                        : s.password_hash || s.login_code_hash
+                          ? "🎁 무료회원"
+                          : "📋 상담·고객 카드"}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )}
+          {shown.length === 0 && elsewhere.length === 0 && (
+            <p className="text-xs text-zinc-500">
+              찾는 학생이 없어요. 철자나 번호를 확인해 주세요.
+            </p>
+          )}
+        </section>
+      )}
+
       {pendingStudents.length > 0 && (
         <section className={`${cardClass} border-brand-200 bg-brand-50/50`}>
           <h2 className="mb-1 font-bold text-zinc-900">
