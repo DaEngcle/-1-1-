@@ -123,9 +123,13 @@ export default async function StudentLessonsPage({
         <>
           {tabs}
           <section className="flex flex-col items-center gap-2 rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm">
-            <span className="text-4xl">{allowed.has(course.id) ? "🎬" : "🔒"}</span>
+            <span className="text-4xl">
+              {allowed.has(course.id) ? "🎬" : "🔒"}
+            </span>
             <h1 className="text-lg font-bold text-zinc-900">{course.title}</h1>
-            <p className="text-sm text-zinc-600">지금 열심히 준비하고 있어요! ({course.subtitle ?? "준비 중"})</p>
+            <p className="text-sm text-zinc-600">
+              지금 열심히 준비하고 있어요! ({course.subtitle ?? "준비 중"})
+            </p>
           </section>
         </>
       );
@@ -302,7 +306,34 @@ export default async function StudentLessonsPage({
       <h1 className="text-xl font-bold text-zinc-900">
         {theme.icon} {course.title}
       </h1>
-      {info && <p className="-mt-2 text-sm text-zinc-500">{info.intro}</p>}
+      {info && (
+        <section
+          className={`flex flex-col gap-2 rounded-2xl p-4 ${theme.badge}`}
+        >
+          <p className="font-bold">
+            🎓 수강 중인 과정이에요 · 쉐도잉{" "}
+            {(itemRows ?? []).filter((i) => practiced.has(i.id)).length}/
+            {(itemRows ?? []).length}문장 완료
+          </p>
+          <p className="text-sm leading-relaxed opacity-90">{info.intro}</p>
+          <div className="flex flex-wrap gap-1.5 text-xs font-semibold">
+            {[
+              `${lessons.filter((l) => l.kind === "day").length}일 과정`,
+              ...((itemRows ?? []).length
+                ? [`쉐도잉 문장 ${(itemRows ?? []).length}개`]
+                : []),
+              ...info.points,
+            ].map((t) => (
+              <span
+                key={t}
+                className="rounded-full bg-white/70 px-2.5 py-1 text-zinc-800"
+              >
+                {t}
+              </span>
+            ))}
+          </div>
+        </section>
+      )}
       {lessons.some((l) => l.video_live) && (
         <p className="rounded-lg bg-slate-100 px-3 py-1.5 text-xs text-zinc-600">
           📼 Live 표시가 있는 강의는 수업 녹화본이에요. VOD 강의가 준비되면
