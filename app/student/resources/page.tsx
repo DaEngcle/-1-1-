@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { REVIEW_COUNT, ReviewMarquee } from "@/app/_ui/reviews";
+import { ReviewMarquee } from "@/app/_ui/reviews";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { requireStudent } from "@/lib/classroom/dal";
 import { cardClass } from "@/app/_ui/styles";
@@ -124,7 +124,7 @@ export default async function ResourcesPage({
                 먼저 들은 분들의 진짜 후기
               </p>
               <p className="text-2xl font-extrabold">
-                ⭐ 후기 {REVIEW_COUNT}개
+                ⭐ 진짜 수강생 후기
               </p>
             </div>
             <Link

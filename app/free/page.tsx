@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { FreeSignupForm } from "./free-form";
 import { ReviewMarquee, ReviewWall } from "@/app/_ui/reviews";
-import reviews from "@/content/reviews.json";
 
 export const metadata: Metadata = {
   title: "무료 자료 받기 | 다잉클 클래스룸",
@@ -55,7 +54,7 @@ export default async function FreePage({
             href="#reviews"
             className="text-xs font-bold text-brand-700 underline"
           >
-            ⭐ 먼저 들은 분들 후기 {reviews.length}개 보기
+            ⭐ 먼저 들은 분들 후기 보기
           </a>
         </div>
         <ul className="grid w-full grid-cols-2 gap-2 text-left">

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { REVIEW_COUNT, ReviewMarquee, ReviewWall } from "@/app/_ui/reviews";
+import { ReviewMarquee, ReviewWall } from "@/app/_ui/reviews";
 import { requireStudent } from "@/lib/classroom/dal";
 import { PLANS, isPlanId } from "@/lib/classroom/plans";
 import { kstDate } from "@/lib/classroom/stats";
@@ -176,7 +176,7 @@ export default async function StudentHomePage() {
                 먼저 들은 분들의 진짜 후기
               </p>
               <p className="text-2xl font-extrabold">
-                ⭐ 후기 {REVIEW_COUNT}개
+                ⭐ 진짜 수강생 후기
               </p>
             </div>
             <a
