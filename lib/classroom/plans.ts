@@ -14,6 +14,13 @@ export const PLANS = {
   bootcamp: { name: "다잉클 부트캠프반", months: 3, courses: ["bootcamp"] as CourseId[] },
   // 예전에 판매한 6개월반 (부트캠프 + Level 1.0). 새로 팔지 않아서 업그레이드 안내에는 안 나온다
   combo6: { name: "다잉클 부트캠프 + 1.0반", months: 6, courses: ["bootcamp", "level1"] as CourseId[], legacy: true },
+  // 2.0까지 듣는 기존 학생용 (기간은 승인 후 종료일로 조정)
+  combo12: {
+    name: "다잉클 부트캠프 + 1.0 + 2.0반",
+    months: 12,
+    courses: ["bootcamp", "level1", "level2"] as CourseId[],
+    legacy: true,
+  },
   kit12: { name: "다잉클 워홀생존키트", months: 12, courses: ["bootcamp", "level1", "level2", "level3"] as CourseId[] },
   // shortcut: 초급반·중급반(드라마) 과정이 생기면 여기에 추가
   allinone: { name: "다잉클 All in one", months: 18, courses: ["bootcamp", "level1", "level2", "level3"] as CourseId[] },

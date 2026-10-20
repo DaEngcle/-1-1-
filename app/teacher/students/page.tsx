@@ -96,7 +96,14 @@ export default async function StudentsPage({
           <ul className="flex flex-col gap-2">
             {pendingStudents.map((p) => {
               const matches = noAccount.filter((s) => s.name.replace(/\s/g, "") === p.name.replace(/\s/g, ""));
-              const defaultPlan = isPlanId(p.plan) ? p.plan : isPlanId(p.requested_plan) ? p.requested_plan : "bootcamp";
+              const matchPlan = matches.map((m) => m.plan).find((pl) => isPlanId(pl));
+              const defaultPlan = isPlanId(p.plan)
+                ? p.plan
+                : isPlanId(p.requested_plan)
+                  ? p.requested_plan
+                  : isPlanId(matchPlan)
+                    ? matchPlan
+                    : "bootcamp";
               return (
               <li key={p.id} className="flex flex-col gap-2 rounded-xl border border-slate-200 bg-white p-3">
                 <div className="text-sm">
@@ -139,6 +146,28 @@ export default async function StudentsPage({
                     <SubmitButton className="rounded-lg bg-brand-600 px-3 py-1.5 text-sm font-bold text-white">
                       {matches.length ? "새 학생으로 승인" : "승인"}
                     </SubmitButton>
+                    {matches.map((m) => (
+                      <span
+                        key={m.id}
+                        className="flex w-full flex-wrap items-center gap-2 rounded-lg bg-violet-50 px-2 py-1.5 text-xs text-violet-900"
+                      >
+                        <span>
+                          📎 시트에서 가져온 <b>{m.name}</b> 카드가 있어요
+                          {isPlanId(m.plan) && ` (예전: ${PLANS[m.plan].name.replace("다잉클 ", "")}`}
+                          {m.access_until && ` ~${m.access_until}`}
+                          {isPlanId(m.plan) && ")"}
+                        </span>
+                        {/* 위에서 고른 수강권·시작일로 합친다 */}
+                        <SubmitButton
+                          formAction={mergeSignup}
+                          name="target_id"
+                          value={m.id}
+                          className="rounded-md bg-violet-600 px-2 py-1 font-bold text-white"
+                        >
+                          고른 수강권으로 이 카드와 합쳐서 승인
+                        </SubmitButton>
+                      </span>
+                    ))}
                   </form>
                   <form action={rejectStudent}>
                     <input type="hidden" name="id" value={p.id} />
@@ -147,27 +176,6 @@ export default async function StudentsPage({
                     </ConfirmButton>
                   </form>
                 </div>
-                {matches.map((m) => (
-                  <form
-                    key={m.id}
-                    action={mergeSignup}
-                    className="flex flex-wrap items-center gap-2 rounded-lg bg-violet-50 px-2 py-1.5 text-xs text-violet-900"
-                  >
-                    <input type="hidden" name="pending_id" value={p.id} />
-                    <input type="hidden" name="target_id" value={m.id} />
-                    <input type="hidden" name="plan" value={isPlanId(m.plan) ? m.plan : defaultPlan} />
-                    <input type="hidden" name="start" value={today} />
-                    <span>
-                      📎 시트에서 가져온 <b>{m.name}</b> 카드가 있어요
-                      {isPlanId(m.plan) && ` (${PLANS[m.plan].name.replace("다잉클 ", "")}`}
-                      {m.access_until && ` ~${m.access_until}`}
-                      {isPlanId(m.plan) && ")"}
-                    </span>
-                    <SubmitButton className="rounded-md bg-violet-600 px-2 py-1 font-bold text-white">
-                      이 카드와 합쳐서 승인
-                    </SubmitButton>
-                  </form>
-                ))}
               </li>
               );
             })}

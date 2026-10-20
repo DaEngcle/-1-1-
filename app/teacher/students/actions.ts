@@ -127,7 +127,8 @@ export async function approveStudent(formData: FormData) {
  */
 export async function mergeSignup(formData: FormData) {
   await requireTeacher();
-  const pendingId = String(formData.get("pending_id"));
+  // 승인 폼 안의 '합치기' 버튼으로 오면 신청서 id는 "id"로 온다
+  const pendingId = String(formData.get("pending_id") ?? formData.get("id"));
   const targetId = String(formData.get("target_id"));
   const plan = String(formData.get("plan"));
   const start = String(formData.get("start") || kstDate(new Date()));
@@ -151,7 +152,11 @@ export async function mergeSignup(formData: FormData) {
       is_active: true,
       stage: "enrolled",
       plan,
-      access_until: (target.access_until as string | null) ?? accessUntil(plan, start),
+      // 시트의 예전 종료일이 이미 지났으면 새 시작일 기준으로 다시 계산 (안 그러면 바로 '기간 만료')
+      access_until:
+        target.access_until && (target.access_until as string) >= kstDate(new Date())
+          ? (target.access_until as string)
+          : accessUntil(plan, start),
     })
     .eq("id", targetId);
   if (error) {
