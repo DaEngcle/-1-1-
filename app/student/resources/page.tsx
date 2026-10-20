@@ -21,7 +21,7 @@ export default async function ResourcesPage({
   const supabase = createServerSupabaseClient();
   const { data } = await supabase
     .from("resources")
-    .select("id, title, description, size_bytes, cover_path")
+    .select("id, title, description, size_bytes, cover_path, link_url")
     .eq("is_published", true)
     .order("sort_order")
     .order("created_at");
@@ -52,6 +52,9 @@ export default async function ResourcesPage({
             <a
               key={r.id}
               href={`/api/resources/${r.id}`}
+              {...(r.link_url
+                ? { target: "_blank", rel: "noopener noreferrer" }
+                : {})}
               className={`${cardClass} group flex flex-col gap-2 !p-3 hover:border-brand-300`}
             >
               {cover ? (
@@ -67,16 +70,22 @@ export default async function ResourcesPage({
                 </span>
               )}
               <p className="text-sm font-bold leading-snug text-zinc-900">
-                {bookIcon(i)} {r.title}
+                {r.link_url ? "✅" : bookIcon(i)} {r.title}
               </p>
               {r.description && (
                 <p className="text-xs text-zinc-600">{r.description}</p>
               )}
               <span className="mt-auto rounded-xl border-b-4 border-brand-800 bg-brand-600 px-3 py-1.5 text-center text-sm font-bold text-white">
-                ⬇ 무료로 받기{" "}
-                <span className="font-normal opacity-80">
-                  {formatSize(r.size_bytes)}
-                </span>
+                {r.link_url ? (
+                  "✅ 체크리스트 열기"
+                ) : (
+                  <>
+                    ⬇ 무료로 받기{" "}
+                    <span className="font-normal opacity-80">
+                      {formatSize(r.size_bytes)}
+                    </span>
+                  </>
+                )}
               </span>
             </a>
           );

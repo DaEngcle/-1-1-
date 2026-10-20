@@ -22,6 +22,12 @@ const THEME: Record<string, { tab: string; badge: string; icon: string }> = {
     badge: "bg-emerald-500 text-white",
     icon: "📗",
   },
+  // Level 3.0은 빨간색
+  level3: {
+    tab: "border-red-600 bg-red-500 text-white",
+    badge: "bg-red-500 text-white",
+    icon: "📕",
+  },
 };
 const DEFAULT_THEME = {
   tab: "border-brand-600 bg-brand-600 text-white",

@@ -59,9 +59,9 @@ export async function deleteResource(formData: FormData) {
   if (!isId(id)) return;
   const supabase = createServerSupabaseClient();
   const { data } = await supabase.from("resources").select("file_path").eq("id", id).maybeSingle();
-  if (data) await supabase.storage.from("resources").remove([data.file_path]);
+  if (data?.file_path) await supabase.storage.from("resources").remove([data.file_path]);
   const { data: cover } = await supabase.from("resources").select("cover_path").eq("id", id).maybeSingle();
-  if (cover?.cover_path) await supabase.storage.from("covers").remove([cover.cover_path]);
+  if (cover?.cover_path && !cover.cover_path.startsWith("/")) await supabase.storage.from("covers").remove([cover.cover_path]);
   await supabase.from("resources").delete().eq("id", id);
   revalidatePath("/teacher/resources");
   revalidatePath("/student/resources");
@@ -85,8 +85,26 @@ export async function setCover(resourceId: string, path: string) {
   const supabase = createServerSupabaseClient();
   const { data: old } = await supabase.from("resources").select("cover_path").eq("id", resourceId).maybeSingle();
   await supabase.from("resources").update({ cover_path: path }).eq("id", resourceId);
-  if (old?.cover_path && old.cover_path !== path) await supabase.storage.from("covers").remove([old.cover_path]);
+  if (old?.cover_path && old.cover_path !== path && !old.cover_path.startsWith("/")) {
+    await supabase.storage.from("covers").remove([old.cover_path]);
+  }
   revalidatePath("/teacher/resources");
   revalidatePath("/student/resources");
   return { ok: true };
+}
+
+/** 링크 자료 추가 (노션 체크리스트 등) */
+export async function addLinkResource(formData: FormData) {
+  await requireTeacher();
+  const title = String(formData.get("title") ?? "").normalize("NFC").trim().slice(0, 80);
+  const url = String(formData.get("url") ?? "").trim();
+  if (!title || !/^https:\/\/[^\s]+$/.test(url)) return;
+  const supabase = createServerSupabaseClient();
+  await supabase.from("resources").insert({
+    title,
+    description: String(formData.get("description") ?? "").normalize("NFC").trim().slice(0, 200) || null,
+    link_url: url,
+  });
+  revalidatePath("/teacher/resources");
+  revalidatePath("/student/resources");
 }

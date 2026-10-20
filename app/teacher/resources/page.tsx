@@ -1,14 +1,18 @@
 import { headers } from "next/headers";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { requireTeacher } from "@/lib/classroom/dal";
-import { cardClass } from "@/app/_ui/styles";
+import { cardClass, inputClass } from "@/app/_ui/styles";
 import { CopyButton } from "@/app/_ui/copy-button";
 import { ConfirmButton } from "@/app/_ui/confirm-button";
 import { SubmitButton } from "@/app/_ui/submit-button";
 import { ResourceUploadForm } from "./upload-form";
 import { CoverButtons } from "./cover-buttons";
 import { bookIcon, coverUrl } from "@/lib/classroom/resources";
-import { deleteResource, setResourcePublished } from "./actions";
+import {
+  addLinkResource,
+  deleteResource,
+  setResourcePublished,
+} from "./actions";
 
 export default async function TeacherResourcesPage() {
   await requireTeacher();
@@ -80,6 +84,41 @@ export default async function TeacherResourcesPage() {
         <ResourceUploadForm />
       </section>
 
+      <section className={cardClass}>
+        <h2 className="mb-1 font-bold text-zinc-900">
+          🔗 링크 자료 추가 (노션 체크리스트 등)
+        </h2>
+        <p className="mb-2 text-xs text-zinc-500">
+          노션 페이지는 &lsquo;공유 → 웹에 게시&rsquo;가 켜져 있어야 학생이 열
+          수 있어요. 누가 몇 번 열었는지도 기록돼요.
+        </p>
+        <form action={addLinkResource} className="flex flex-col gap-2">
+          <input
+            name="title"
+            required
+            maxLength={80}
+            placeholder="제목 (예: 호주 워홀 출국 준비 체크리스트)"
+            className={inputClass}
+          />
+          <input
+            name="description"
+            maxLength={200}
+            placeholder="한 줄 설명 (선택)"
+            className={inputClass}
+          />
+          <input
+            name="url"
+            type="url"
+            required
+            placeholder="https://..."
+            className={inputClass}
+          />
+          <SubmitButton className="self-start rounded-xl bg-brand-600 px-4 py-2 text-sm font-bold text-white">
+            링크 자료 추가
+          </SubmitButton>
+        </form>
+      </section>
+
       <section className="flex flex-col gap-2">
         {(rows ?? []).length === 0 && (
           <p className="text-sm text-zinc-500">아직 올린 자료가 없어요.</p>
@@ -113,11 +152,10 @@ export default async function TeacherResourcesPage() {
                     {r.description && (
                       <p className="text-sm text-zinc-600">{r.description}</p>
                     )}
-                    <p className="text-xs text-zinc-400">
-                      {r.file_name} ·{" "}
-                      {r.size_bytes
-                        ? `${(r.size_bytes / 1024 / 1024).toFixed(1)}MB`
-                        : ""}
+                    <p className="break-all text-xs text-zinc-400">
+                      {r.link_url
+                        ? `🔗 ${r.link_url}`
+                        : `${r.file_name} · ${r.size_bytes ? `${(r.size_bytes / 1024 / 1024).toFixed(1)}MB` : ""}`}
                     </p>
                   </div>
                 </div>
@@ -132,7 +170,7 @@ export default async function TeacherResourcesPage() {
                 >
                   미리 받아보기
                 </a>
-                <CoverButtons resourceId={r.id} />
+                {r.link_url ? null : <CoverButtons resourceId={r.id} />}
                 <form action={setResourcePublished}>
                   <input type="hidden" name="id" value={r.id} />
                   <input
