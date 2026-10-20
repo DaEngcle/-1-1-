@@ -31,11 +31,13 @@ export const checkStudent = cache(async () => {
   const session = await getSession();
   if (session?.role !== "student") return { denied: "expired" as StudentDenial };
   const supabase = createServerSupabaseClient();
-  const { data: student } = await supabase
+  const { data: student, error } = await supabase
     .from("students")
     .select("id, name, nickname, is_active, session_version, approval, plan, access_until, early_courses, cat_breed")
     .eq("id", session.studentId)
     .maybeSingle();
+  // DB 오류(예: 새 칸이 아직 없음)를 '로그인 만료'로 착각하지 않도록 기록
+  if (error) console.error("학생 정보 조회 실패:", error.message);
 
   if (!student || student.session_version !== session.v) return { denied: "expired" as StudentDenial };
   if (!student.is_active || student.approval === "rejected") return { denied: "inactive" as StudentDenial };
