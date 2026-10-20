@@ -3,6 +3,7 @@ import { createServerSupabaseClient } from "@/lib/supabase";
 import { requireStudent } from "@/lib/classroom/dal";
 import { cardClass } from "@/app/_ui/styles";
 import { bookIcon, coverUrl } from "@/lib/classroom/resources";
+import { discountRate, manwon } from "@/lib/classroom/price";
 
 function formatSize(bytes: number | null) {
   if (!bytes) return "";
@@ -21,10 +22,17 @@ export default async function ResourcesPage({
   const supabase = createServerSupabaseClient();
   const { data } = await supabase
     .from("resources")
-    .select("id, title, description, size_bytes, cover_path, link_url")
+    .select(
+      "id, title, description, size_bytes, cover_path, link_url, price, list_price",
+    )
     .eq("is_published", true)
     .order("sort_order")
     .order("created_at");
+  const { data: accessRows } = await supabase
+    .from("resource_access")
+    .select("resource_id")
+    .eq("student_id", student.id);
+  const owned = new Set((accessRows ?? []).map((a) => a.resource_id as string));
   const free = student.courses.length === 0;
 
   return (
@@ -48,10 +56,17 @@ export default async function ResourcesPage({
         )}
         {(data ?? []).map((r, i) => {
           const cover = coverUrl(r.cover_path);
+          // 유료 자료(아직 안 산 것)는 미리보기·구매 페이지로
+          const forSale = Boolean(r.price) && !owned.has(r.id);
+          const rate = discountRate(r.list_price, r.price);
           return (
             <a
               key={r.id}
-              href={`/api/resources/${r.id}`}
+              href={
+                forSale
+                  ? `/student/resources/${r.id}`
+                  : `/api/resources/${r.id}`
+              }
               {...(r.link_url
                 ? { target: "_blank", rel: "noopener noreferrer" }
                 : {})}
@@ -76,11 +91,19 @@ export default async function ResourcesPage({
                 <p className="text-xs text-zinc-600">{r.description}</p>
               )}
               <span className="mt-auto rounded-xl border-b-4 border-brand-800 bg-brand-600 px-3 py-1.5 text-center text-sm font-bold text-white">
-                {r.link_url ? (
+                {forSale ? (
+                  <>
+                    👀 미리보기 ·{" "}
+                    {rate > 0 && (
+                      <span className="text-[#ffd23f]">{rate}% </span>
+                    )}
+                    {manwon(r.price!)}
+                  </>
+                ) : r.link_url ? (
                   "✅ 체크리스트 열기"
                 ) : (
                   <>
-                    ⬇ 무료로 받기{" "}
+                    {r.price ? "⬇ 받기" : "⬇ 무료로 받기"}{" "}
                     <span className="font-normal opacity-80">
                       {formatSize(r.size_bytes)}
                     </span>

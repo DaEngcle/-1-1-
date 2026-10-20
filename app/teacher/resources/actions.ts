@@ -108,3 +108,42 @@ export async function addLinkResource(formData: FormData) {
   revalidatePath("/teacher/resources");
   revalidatePath("/student/resources");
 }
+
+/** 판매가·정가 저장 (판매가를 비우면 무료 자료) */
+export async function updatePrice(formData: FormData) {
+  await requireTeacher();
+  const id = String(formData.get("id"));
+  if (!isId(id)) return;
+  const num = (k: string) => {
+    const n = Number(String(formData.get(k) ?? "").replace(/[^0-9]/g, ""));
+    return n > 0 ? n : null;
+  };
+  const supabase = createServerSupabaseClient();
+  await supabase.from("resources").update({ price: num("price"), list_price: num("list_price") }).eq("id", id);
+  revalidatePath("/teacher/resources");
+  revalidatePath("/student/resources");
+}
+
+/** 결제 확인 → 자료 열어주기 */
+export async function grantAccess(formData: FormData) {
+  await requireTeacher();
+  const resourceId = String(formData.get("resource_id"));
+  const studentId = String(formData.get("student_id"));
+  if (!isId(resourceId) || !isId(studentId)) return;
+  const supabase = createServerSupabaseClient();
+  await supabase.from("resource_access").upsert({ resource_id: resourceId, student_id: studentId });
+  await supabase.from("resource_requests").delete().eq("resource_id", resourceId).eq("student_id", studentId);
+  revalidatePath("/teacher/resources");
+  revalidatePath("/student/resources");
+}
+
+/** 구매 신청 지우기 (안 사기로 한 경우) */
+export async function dismissRequest(formData: FormData) {
+  await requireTeacher();
+  const resourceId = String(formData.get("resource_id"));
+  const studentId = String(formData.get("student_id"));
+  if (!isId(resourceId) || !isId(studentId)) return;
+  const supabase = createServerSupabaseClient();
+  await supabase.from("resource_requests").delete().eq("resource_id", resourceId).eq("student_id", studentId);
+  revalidatePath("/teacher/resources");
+}

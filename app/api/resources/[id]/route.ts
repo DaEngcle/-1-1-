@@ -12,11 +12,21 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
   const supabase = createServerSupabaseClient();
   const { data: resource } = await supabase
     .from("resources")
-    .select("id, file_path, file_name, link_url, is_published")
+    .select("id, file_path, file_name, link_url, is_published, price")
     .eq("id", id)
     .maybeSingle();
   if (!resource || (!resource.is_published && !teacher)) {
     return NextResponse.json({ error: "not_found" }, { status: 404 });
+  }
+  // 유료 자료는 결제 확인 후 열어준 사람만
+  if (resource.price && student) {
+    const { data: access } = await supabase
+      .from("resource_access")
+      .select("resource_id")
+      .eq("resource_id", resource.id)
+      .eq("student_id", student.id)
+      .maybeSingle();
+    if (!access) return NextResponse.redirect(new URL(`/student/resources/${resource.id}`, request.url));
   }
   // 링크 자료(노션 체크리스트 등)는 기록만 남기고 그 주소로 보낸다
   if (resource.link_url) {

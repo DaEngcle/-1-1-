@@ -22,12 +22,17 @@ export default async function TeacherLayout({
   children: React.ReactNode;
 }) {
   await requireTeacher();
-  const { count } = await createServerSupabaseClient()
-    .from("students")
-    .select("id", { count: "exact", head: true })
-    .eq("approval", "pending");
+  const supabase = createServerSupabaseClient();
+  const [{ count }, { count: buyRequests }] = await Promise.all([
+    supabase.from("students").select("id", { count: "exact", head: true }).eq("approval", "pending"),
+    supabase.from("resource_requests").select("id", { count: "exact", head: true }),
+  ]);
   const nav = NAV.map((n) =>
-    n.href === "/teacher/students" && count ? { ...n, label: `학생 · 신청 ${count}` } : n,
+    n.href === "/teacher/students" && count
+      ? { ...n, label: `학생 · 신청 ${count}` }
+      : n.href === "/teacher/resources" && buyRequests
+        ? { ...n, label: `자료실 · 구매 ${buyRequests}` }
+        : n,
   );
   return (
     <AppShell title="다잉클 클래스룸 · 선생님" nav={nav}>

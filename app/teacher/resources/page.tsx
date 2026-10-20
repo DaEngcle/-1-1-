@@ -11,27 +11,41 @@ import { bookIcon, coverUrl } from "@/lib/classroom/resources";
 import {
   addLinkResource,
   deleteResource,
+  dismissRequest,
+  grantAccess,
   setResourcePublished,
+  updatePrice,
 } from "./actions";
+import { manwon } from "@/lib/classroom/price";
 
 export default async function TeacherResourcesPage() {
   await requireTeacher();
   const supabase = createServerSupabaseClient();
-  const [{ data: rows }, { data: downloads }, { count: freeMembers }] =
-    await Promise.all([
-      supabase
-        .from("resources")
-        .select("*")
-        .order("sort_order")
-        .order("created_at"),
-      supabase.from("resource_downloads").select("resource_id, student_id"),
-      supabase
-        .from("students")
-        .select("id", { count: "exact", head: true })
-        .eq("approval", "approved")
-        .neq("stage", "enrolled")
-        .not("password_hash", "is", null),
-    ]);
+  const [
+    { data: rows },
+    { data: downloads },
+    { count: freeMembers },
+    { data: requests },
+    { data: grants },
+  ] = await Promise.all([
+    supabase
+      .from("resources")
+      .select("*")
+      .order("sort_order")
+      .order("created_at"),
+    supabase.from("resource_downloads").select("resource_id, student_id"),
+    supabase
+      .from("students")
+      .select("id", { count: "exact", head: true })
+      .eq("approval", "approved")
+      .neq("stage", "enrolled")
+      .not("password_hash", "is", null),
+    supabase
+      .from("resource_requests")
+      .select("resource_id, student_id, created_at, students(name, phone)")
+      .order("created_at"),
+    supabase.from("resource_access").select("resource_id, students(name)"),
+  ]);
   const host = (await headers()).get("host") ?? "dingle-classroom.vercel.app";
   const freeUrl = `https://${host}/free`;
   const stats = new Map<string, { total: number; people: Set<string> }>();
@@ -192,6 +206,112 @@ export default async function TeacherResourcesPage() {
                   </ConfirmButton>
                 </form>
               </div>
+
+              {!r.link_url && (
+                <div className="flex flex-col gap-2 border-t border-slate-100 pt-2 text-xs">
+                  <form
+                    action={updatePrice}
+                    className="flex flex-wrap items-center gap-1.5"
+                  >
+                    <input type="hidden" name="id" value={r.id} />
+                    <span className="font-semibold text-zinc-700">💰 판매</span>
+                    <input
+                      name="list_price"
+                      defaultValue={r.list_price ?? ""}
+                      placeholder="정가"
+                      inputMode="numeric"
+                      className="w-24 rounded-lg border border-slate-200 px-2 py-1"
+                    />
+                    <span>→</span>
+                    <input
+                      name="price"
+                      defaultValue={r.price ?? ""}
+                      placeholder="판매가 (비우면 무료)"
+                      inputMode="numeric"
+                      className="w-36 rounded-lg border border-slate-200 px-2 py-1"
+                    />
+                    <SubmitButton className="rounded-lg border border-slate-300 px-2.5 py-1">
+                      저장
+                    </SubmitButton>
+                    <span className="text-zinc-500">
+                      {r.price
+                        ? `유료 · ${manwon(r.price)}${r.preview_count ? ` · 미리보기 ${r.preview_count}쪽` : ""}`
+                        : "무료 자료"}
+                    </span>
+                  </form>
+                  {(requests ?? [])
+                    .filter((q) => q.resource_id === r.id)
+                    .map((q) => {
+                      const who = q.students as unknown as {
+                        name: string;
+                        phone: string | null;
+                      } | null;
+                      return (
+                        <div
+                          key={q.student_id}
+                          className="flex flex-wrap items-center gap-2 rounded-lg bg-[#fff8db] px-2 py-1.5"
+                        >
+                          <span>
+                            🛒 <b>{who?.name}</b> {who?.phone} · 구매 신청{" "}
+                            {new Date(q.created_at).toLocaleDateString(
+                              "ko-KR",
+                              { timeZone: "Asia/Seoul" },
+                            )}
+                          </span>
+                          <form action={grantAccess}>
+                            <input
+                              type="hidden"
+                              name="resource_id"
+                              value={r.id}
+                            />
+                            <input
+                              type="hidden"
+                              name="student_id"
+                              value={q.student_id}
+                            />
+                            <SubmitButton className="rounded-md bg-green-600 px-2 py-1 font-bold text-white">
+                              결제 확인 · 열어주기
+                            </SubmitButton>
+                          </form>
+                          <form action={dismissRequest}>
+                            <input
+                              type="hidden"
+                              name="resource_id"
+                              value={r.id}
+                            />
+                            <input
+                              type="hidden"
+                              name="student_id"
+                              value={q.student_id}
+                            />
+                            <SubmitButton className="text-zinc-500 underline">
+                              신청 지우기
+                            </SubmitButton>
+                          </form>
+                        </div>
+                      );
+                    })}
+                  {r.price && (
+                    <p className="text-zinc-500">
+                      ✅ 구매자{" "}
+                      {
+                        (grants ?? []).filter((g) => g.resource_id === r.id)
+                          .length
+                      }
+                      명
+                      {(grants ?? []).some((g) => g.resource_id === r.id) &&
+                        `: ${(grants ?? [])
+                          .filter((g) => g.resource_id === r.id)
+                          .map(
+                            (g) =>
+                              (g.students as unknown as { name: string } | null)
+                                ?.name,
+                          )
+                          .join(", ")}`}
+                    </p>
+                  )}
+                </div>
+              )}
             </article>
           );
         })}
