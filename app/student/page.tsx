@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ReviewMarquee, ReviewWall } from "@/app/_ui/reviews";
 import { InstallAppCard } from "@/app/_ui/pwa";
+import { PushToggle } from "@/app/_ui/push-toggle";
 import { requireStudent } from "@/lib/classroom/dal";
 import { PLANS, isPlanId } from "@/lib/classroom/plans";
 import { kstDate } from "@/lib/classroom/stats";
@@ -140,6 +141,7 @@ export default async function StudentHomePage() {
       </section>
 
       <InstallAppCard />
+      <PushToggle />
 
       {student.courses.length === 0 && (
         <section className="flex flex-col gap-2 rounded-2xl bg-[#fff8db] p-4 text-zinc-900">

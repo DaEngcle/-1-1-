@@ -5,17 +5,28 @@ import { useEffect, useState } from "react";
 /** 서비스 워커 등록 (배포 환경에서만) */
 export function RegisterServiceWorker() {
   useEffect(() => {
-    if (process.env.NODE_ENV !== "production" || !("serviceWorker" in navigator)) return;
-    navigator.serviceWorker.register("/sw.js", { scope: "/", updateViaCache: "none" }).catch(() => undefined);
+    if (
+      process.env.NODE_ENV !== "production" ||
+      !("serviceWorker" in navigator)
+    )
+      return;
+    navigator.serviceWorker
+      .register("/sw.js", { scope: "/", updateViaCache: "none" })
+      .catch(() => undefined);
   }, []);
   return null;
 }
 
-type InstallEvent = Event & { prompt: () => Promise<void>; userChoice: Promise<{ outcome: string }> };
+type InstallEvent = Event & {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: string }>;
+};
 
 /** 학생 홈의 '앱으로 설치' 안내: 안드로이드·PC는 버튼, 아이폰은 방법 안내 */
 export function InstallAppCard() {
-  const [mode, setMode] = useState<"hidden" | "prompt" | "ios">("hidden");
+  const [mode, setMode] = useState<"hidden" | "prompt" | "ios" | "android">(
+    "hidden",
+  );
   const [evt, setEvt] = useState<InstallEvent | null>(null);
   const [open, setOpen] = useState(false);
 
@@ -29,9 +40,19 @@ export function InstallAppCard() {
     } catch {}
     if (standalone || dismissed) return;
     const ua = navigator.userAgent;
-    const ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+    const ios =
+      /iPhone|iPad|iPod/.test(ua) ||
+      (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
     // eslint-disable-next-line react-hooks/set-state-in-effect -- 기기 확인 후 한 번만
     if (ios) setMode("ios");
+    // 갤럭시 등 안드로이드: 크롬·삼성 인터넷은 '설치하기' 버튼이 뜨고, 카톡 안 브라우저 등 버튼이 안 뜨면 방법 안내
+    const android = /Android/.test(ua);
+    const fallback = android
+      ? window.setTimeout(
+          () => setMode((m) => (m === "hidden" ? "android" : m)),
+          2500,
+        )
+      : 0;
     const onPrompt = (e: Event) => {
       e.preventDefault();
       setEvt(e as InstallEvent);
@@ -43,6 +64,7 @@ export function InstallAppCard() {
     return () => {
       window.removeEventListener("beforeinstallprompt", onPrompt);
       window.removeEventListener("appinstalled", onInstalled);
+      if (fallback) window.clearTimeout(fallback);
     };
   }, []);
 
@@ -61,7 +83,9 @@ export function InstallAppCard() {
         <img src="/icon-192.png" alt="" className="h-11 w-11 rounded-xl" />
         <div className="flex-1">
           <p className="font-bold text-zinc-900">📲 다잉클을 앱처럼 쓰세요</p>
-          <p className="text-xs text-zinc-500">홈 화면 아이콘 한 번이면 바로 쉐도잉!</p>
+          <p className="text-xs text-zinc-500">
+            홈 화면 아이콘 한 번이면 바로 쉐도잉!
+          </p>
         </div>
         {mode === "prompt" ? (
           <button
@@ -86,6 +110,23 @@ export function InstallAppCard() {
           </button>
         )}
       </div>
+      {mode === "android" && open && (
+        <ol className="flex flex-col gap-1.5 rounded-xl bg-slate-50 p-3 text-sm text-zinc-700">
+          <li>
+            <b>크롬</b>: 오른쪽 위 <b>⋮</b> →{" "}
+            <b>&lsquo;홈 화면에 추가&rsquo;</b> 또는{" "}
+            <b>&lsquo;앱 설치&rsquo;</b>
+          </li>
+          <li>
+            <b>삼성 인터넷</b>: 아래 <b>≡</b> →{" "}
+            <b>&lsquo;현재 페이지 추가&rsquo;</b> → <b>&lsquo;홈 화면&rsquo;</b>
+          </li>
+          <li className="text-xs text-zinc-500">
+            카카오톡 안에서 열었다면 오른쪽 위 <b>⋮</b> → &lsquo;다른 브라우저로
+            열기&rsquo;를 먼저 눌러주세요.
+          </li>
+        </ol>
+      )}
       {mode === "ios" && open && (
         <ol className="flex flex-col gap-3">
           {[
@@ -99,9 +140,16 @@ export function InstallAppCard() {
               title: "아래로 내려서 홈 화면에 추가(Add to Home Screen)",
               note: "안 보이면 '더 보기(View More)'를 눌러주세요. 그다음 오른쪽 위 '추가'",
             },
-            { img: "/install/ios-3.jpg", title: "홈 화면에 생긴 다잉클 아이콘을 누르면 끝!", note: "" },
+            {
+              img: "/install/ios-3.jpg",
+              title: "홈 화면에 생긴 다잉클 아이콘을 누르면 끝!",
+              note: "",
+            },
           ].map((step, i) => (
-            <li key={step.img} className="flex flex-col gap-2 rounded-xl bg-slate-50 p-3">
+            <li
+              key={step.img}
+              className="flex flex-col gap-2 rounded-xl bg-slate-50 p-3"
+            >
               <p className="flex items-start gap-2 text-sm font-bold text-zinc-900">
                 <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-600 text-xs text-white">
                   {i + 1}
@@ -109,13 +157,24 @@ export function InstallAppCard() {
                 {step.title}
               </p>
               {/* eslint-disable-next-line @next/next/no-img-element -- 설치 방법 캡처 */}
-              <img src={step.img} alt={step.title} loading="lazy" className="w-full rounded-lg border border-slate-200" />
-              {step.note && <p className="text-xs text-zinc-500">{step.note}</p>}
+              <img
+                src={step.img}
+                alt={step.title}
+                loading="lazy"
+                className="w-full rounded-lg border border-slate-200"
+              />
+              {step.note && (
+                <p className="text-xs text-zinc-500">{step.note}</p>
+              )}
             </li>
           ))}
         </ol>
       )}
-      <button type="button" onClick={dismiss} className="self-end text-xs text-zinc-400 underline">
+      <button
+        type="button"
+        onClick={dismiss}
+        className="self-end text-xs text-zinc-400 underline"
+      >
         다시 보지 않기
       </button>
     </section>

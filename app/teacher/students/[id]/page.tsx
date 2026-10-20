@@ -11,7 +11,15 @@ import { LevelCard } from "@/app/_ui/level-card";
 import { Badges, StudyCalendar } from "@/app/_ui/engagement";
 import { resetLevelTest } from "../../level-tests/actions";
 import { ConfirmButton } from "@/app/_ui/confirm-button";
-import { addNote, deleteNote, setEarlyCourses, setStudentActive, updateMemo, updatePlan } from "../actions";
+import {
+  addNote,
+  deleteNote,
+  sendTeacherPush,
+  setEarlyCourses,
+  setStudentActive,
+  updateMemo,
+  updatePlan,
+} from "../actions";
 import { RegenerateCodeButton } from "../student-forms";
 import { CopyButton } from "@/app/_ui/copy-button";
 import { getRoster, nudgeMessage, STATUS_INFO } from "@/lib/classroom/roster";
@@ -22,7 +30,12 @@ import { ScoreTrendChart } from "@/app/_ui/score-trend-chart";
 import { SubmissionList } from "../../submission-list";
 import { cardClass } from "@/app/_ui/styles";
 import { requireTeacher } from "@/lib/classroom/dal";
-import { PROFILE_SELECT, STAGES, isStage, type Profile } from "@/lib/classroom/profile";
+import {
+  PROFILE_SELECT,
+  STAGES,
+  isStage,
+  type Profile,
+} from "@/lib/classroom/profile";
 import { ProfileFields } from "../../_ui/profile-fields";
 import { updateProfile } from "../../crm/actions";
 import { SubmitButton } from "@/app/_ui/submit-button";
@@ -37,23 +50,37 @@ export default async function TeacherStudentPage({
   const supabase = createServerSupabaseClient();
   const { data: student } = await supabase
     .from("students")
-    .select(`id, name, phone, memo, is_active, created_at, plan, access_until, early_courses, ${PROFILE_SELECT}`)
+    .select(
+      `id, name, phone, memo, is_active, created_at, plan, access_until, early_courses, ${PROFILE_SELECT}`,
+    )
     .eq("id", id)
-    .maybeSingle<{
-      id: string;
-      name: string;
-      phone: string | null;
-      memo: string | null;
-      is_active: boolean;
-      created_at: string;
-      plan: string | null;
-      access_until: string | null;
-      early_courses: string[] | null;
-    } & Profile>();
+    .maybeSingle<
+      {
+        id: string;
+        name: string;
+        phone: string | null;
+        memo: string | null;
+        is_active: boolean;
+        created_at: string;
+        plan: string | null;
+        access_until: string | null;
+        early_courses: string[] | null;
+      } & Profile
+    >();
   if (!student) notFound();
-  const [roster, { data: noteRows }, { data: cohortRows }, { data: buys }, { data: courseRows }] = await Promise.all([
+  const [
+    roster,
+    { data: noteRows },
+    { data: cohortRows },
+    { data: buys },
+    { data: courseRows },
+  ] = await Promise.all([
     getRoster(),
-    supabase.from("teacher_notes").select("id, body, created_at").eq("student_id", id).order("created_at", { ascending: false }),
+    supabase
+      .from("teacher_notes")
+      .select("id, body, created_at")
+      .eq("student_id", id)
+      .order("created_at", { ascending: false }),
     supabase.from("cohorts").select("id, name").order("created_at"),
     supabase
       .from("purchases")
@@ -62,27 +89,50 @@ export default async function TeacherStudentPage({
       .order("paid_on", { ascending: false }),
     supabase.from("courses").select("id, title, status").order("sort_order"),
   ]);
+  const [{ count: pushDevices }, { data: pushLogs }] = await Promise.all([
+    supabase
+      .from("push_subscriptions")
+      .select("id", { count: "exact", head: true })
+      .eq("student_id", id),
+    supabase
+      .from("push_log")
+      .select("kind, title, body, sent_at")
+      .eq("student_id", id)
+      .order("sent_at", { ascending: false })
+      .limit(5),
+  ]);
   const stage = isStage(student.stage) ? student.stage : "enrolled";
   const me = roster.find((r) => r.id === id);
   const host = (await headers()).get("host") ?? "dingle-classroom.vercel.app";
-  const [stats, progressMap, lessonRows, engagement, tests] = await Promise.all([
-    getStudentStats(id),
-    getCourseProgress([id]),
-    getLessonProgress(id),
-    getEngagement(id),
-    getTests(id),
-  ]);
+  const [stats, progressMap, lessonRows, engagement, tests] = await Promise.all(
+    [
+      getStudentStats(id),
+      getCourseProgress([id]),
+      getLessonProgress(id),
+      getEngagement(id),
+      getTests(id),
+    ],
+  );
   const [preAnswers, postAnswers] = await Promise.all([
     tests.pre ? getAnswers(tests.pre.id) : [],
     tests.post ? getAnswers(tests.post.id) : [],
   ]);
-  const testAudioPaths = [...preAnswers, ...postAnswers].map((a) => a.audio_path).filter((p): p is string => Boolean(p));
+  const testAudioPaths = [...preAnswers, ...postAnswers]
+    .map((a) => a.audio_path)
+    .filter((p): p is string => Boolean(p));
   const { data: signedTestAudio } = testAudioPaths.length
-    ? await supabase.storage.from("shadowing").createSignedUrls(testAudioPaths, 60 * 60)
+    ? await supabase.storage
+        .from("shadowing")
+        .createSignedUrls(testAudioPaths, 60 * 60)
     : { data: [] };
-  const audioUrl = new Map((signedTestAudio ?? []).map((x) => [x.path, x.signedUrl]));
+  const audioUrl = new Map(
+    (signedTestAudio ?? []).map((x) => [x.path, x.signedUrl]),
+  );
   const progress = progressMap.get(id)!;
-  const totalClasses = Object.values(stats.attendance).reduce((a, b) => a + b, 0);
+  const totalClasses = Object.values(stats.attendance).reduce(
+    (a, b) => a + b,
+    0,
+  );
 
   return (
     <>
@@ -91,18 +141,28 @@ export default async function TeacherStudentPage({
           ← 학생 목록
         </Link>
         <h1 className="text-xl font-bold text-zinc-900">{student.name}</h1>
-        <p className="text-xs text-zinc-500">{[student.phone, student.memo].filter(Boolean).join(" · ")}</p>
+        <p className="text-xs text-zinc-500">
+          {[student.phone, student.memo].filter(Boolean).join(" · ")}
+        </p>
       </div>
 
       {me && (
         <section className={`${cardClass} flex flex-col gap-3`}>
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <span className={`rounded-full border px-3 py-1 text-sm font-bold ${STATUS_INFO[me.status].tone}`}>
+            <span
+              className={`rounded-full border px-3 py-1 text-sm font-bold ${STATUS_INFO[me.status].tone}`}
+            >
               {STATUS_INFO[me.status].icon} {STATUS_INFO[me.status].label}
             </span>
             <span className="text-xs text-zinc-500">
-              최근 활동: {me.daysInactive == null ? "없음" : me.daysInactive === 0 ? "오늘" : `${me.daysInactive}일 전`} ·
-              이번 주 제출 {me.weekSubmissions}개 · 최근 7일 중 {me.week.filter(Boolean).length}일 공부
+              최근 활동:{" "}
+              {me.daysInactive == null
+                ? "없음"
+                : me.daysInactive === 0
+                  ? "오늘"
+                  : `${me.daysInactive}일 전`}{" "}
+              · 이번 주 제출 {me.weekSubmissions}개 · 최근 7일 중{" "}
+              {me.week.filter(Boolean).length}일 공부
             </span>
           </div>
           <div className="flex flex-wrap gap-2 text-xs">
@@ -125,7 +185,10 @@ export default async function TeacherStudentPage({
       <section className={cardClass}>
         <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
           <h2 className="font-bold text-zinc-900">🙋 프로필 (상담 정보)</h2>
-          <Link href="/teacher/crm" className={`rounded-full border px-2 py-0.5 text-xs font-semibold ${STAGES[stage].tone}`}>
+          <Link
+            href="/teacher/crm"
+            className={`rounded-full border px-2 py-0.5 text-xs font-semibold ${STAGES[stage].tone}`}
+          >
             {STAGES[stage].icon} {STAGES[stage].label}
           </Link>
         </div>
@@ -138,24 +201,85 @@ export default async function TeacherStudentPage({
         </form>
         {(buys ?? []).length > 0 && (
           <div className="mt-3 border-t border-slate-100 pt-2">
-            <h3 className="mb-1 text-sm font-bold text-zinc-800">💳 결제 기록</h3>
+            <h3 className="mb-1 text-sm font-bold text-zinc-800">
+              💳 결제 기록
+            </h3>
             <ul className="flex flex-col gap-1 text-xs text-zinc-600">
               {(buys ?? []).map((b) => (
                 <li key={b.id} className="flex flex-wrap gap-x-2">
                   <span className="text-zinc-400">{b.paid_on}</span>
                   <b className="text-zinc-800">{b.product}</b>
-                  {b.amount != null && <span>{Number(b.amount).toLocaleString("ko-KR")}원</span>}
+                  {b.amount != null && (
+                    <span>{Number(b.amount).toLocaleString("ko-KR")}원</span>
+                  )}
                   {b.kind && <span>· {b.kind}</span>}
                   {(b.starts_on || b.ends_on) && (
                     <span>
                       · {b.starts_on ?? "?"} ~ {b.ends_on ?? "?"}
                     </span>
                   )}
-                  {b.source && <span className="text-zinc-400">· {b.source}</span>}
+                  {b.source && (
+                    <span className="text-zinc-400">· {b.source}</span>
+                  )}
                 </li>
               ))}
             </ul>
           </div>
+        )}
+      </section>
+
+      <section className={cardClass}>
+        <h2 className="mb-1 font-bold text-zinc-900">🔔 알림 보내기</h2>
+        {pushDevices ? (
+          <>
+            <p className="mb-2 text-xs text-zinc-500">
+              이 학생은 휴대폰 {pushDevices}대에서 알림을 켰어요. 공부를 안 한
+              날은 저녁 8시쯤 자동 알림도 가요.
+            </p>
+            <form
+              action={sendTeacherPush}
+              className="flex flex-col gap-2 sm:flex-row"
+            >
+              <input type="hidden" name="id" value={student.id} />
+              <input
+                name="body"
+                required
+                maxLength={140}
+                placeholder="예: 오늘 Day 05 쉐도잉 꼭 올려줘요! 응원해요 💪"
+                className="flex-1 rounded-xl border border-slate-200 px-3 py-2 text-sm"
+              />
+              <SubmitButton className="rounded-xl bg-brand-600 px-4 py-2 text-sm font-bold text-white">
+                보내기
+              </SubmitButton>
+            </form>
+            {(pushLogs ?? []).length > 0 && (
+              <ul className="mt-2 flex flex-col gap-1 text-xs text-zinc-500">
+                {(pushLogs ?? []).map((l, i) => (
+                  <li key={i}>
+                    {new Date(l.sent_at).toLocaleString("ko-KR", {
+                      timeZone: "Asia/Seoul",
+                      dateStyle: "short",
+                      timeStyle: "short",
+                    })}{" "}
+                    ·{" "}
+                    {l.kind === "teacher"
+                      ? "선생님"
+                      : l.kind === "reminder"
+                        ? "자동 알림"
+                        : l.kind === "paused"
+                          ? "알림 쉼"
+                          : "안내"}{" "}
+                    · {l.body}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </>
+        ) : (
+          <p className="text-xs text-zinc-500">
+            아직 알림을 켜지 않았어요. 학생 홈의 &lsquo;🔔 알림 켜기&rsquo;를
+            누르면 여기서 보낼 수 있어요.
+          </p>
         )}
       </section>
 
@@ -176,23 +300,35 @@ export default async function TeacherStudentPage({
         </form>
         <ul className="mt-3 flex flex-col gap-2">
           {(noteRows ?? []).map((n) => (
-            <li key={n.id} className="flex items-start justify-between gap-2 rounded-xl bg-slate-50 px-3 py-2 text-sm">
+            <li
+              key={n.id}
+              className="flex items-start justify-between gap-2 rounded-xl bg-slate-50 px-3 py-2 text-sm"
+            >
               <span className="whitespace-pre-line text-zinc-800">
                 <span className="mr-2 text-xs text-zinc-400">
-                  {new Date(n.created_at).toLocaleString("ko-KR", { timeZone: "Asia/Seoul", dateStyle: "short", timeStyle: "short" })}
+                  {new Date(n.created_at).toLocaleString("ko-KR", {
+                    timeZone: "Asia/Seoul",
+                    dateStyle: "short",
+                    timeStyle: "short",
+                  })}
                 </span>
                 {n.body}
               </span>
               <form action={deleteNote}>
                 <input type="hidden" name="id" value={student.id} />
                 <input type="hidden" name="note_id" value={n.id} />
-                <ConfirmButton message="이 기록을 지울까요?" className="text-xs text-zinc-400 hover:text-red-600">
+                <ConfirmButton
+                  message="이 기록을 지울까요?"
+                  className="text-xs text-zinc-400 hover:text-red-600"
+                >
                   삭제
                 </ConfirmButton>
               </form>
             </li>
           ))}
-          {(noteRows ?? []).length === 0 && <li className="text-xs text-zinc-400">아직 기록이 없어요.</li>}
+          {(noteRows ?? []).length === 0 && (
+            <li className="text-xs text-zinc-400">아직 기록이 없어요.</li>
+          )}
         </ul>
       </section>
 
@@ -213,9 +349,17 @@ export default async function TeacherStudentPage({
         <div className="flex flex-wrap items-start gap-2">
           <form action={setStudentActive}>
             <input type="hidden" name="id" value={student.id} />
-            <input type="hidden" name="is_active" value={String(!student.is_active)} />
+            <input
+              type="hidden"
+              name="is_active"
+              value={String(!student.is_active)}
+            />
             <ConfirmButton
-              message={student.is_active ? "이 학생을 비활성화할까요? 로그인할 수 없게 돼요." : "이 학생을 다시 활성화할까요?"}
+              message={
+                student.is_active
+                  ? "이 학생을 비활성화할까요? 로그인할 수 없게 돼요."
+                  : "이 학생을 다시 활성화할까요?"
+              }
               className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm"
             >
               {student.is_active ? "비활성화" : "다시 활성화"}
@@ -229,9 +373,16 @@ export default async function TeacherStudentPage({
 
       <section className={cardClass}>
         <h2 className="mb-2 font-bold text-zinc-900">수강권</h2>
-        <form action={updatePlan} className="flex flex-wrap items-center gap-2 text-sm">
+        <form
+          action={updatePlan}
+          className="flex flex-wrap items-center gap-2 text-sm"
+        >
           <input type="hidden" name="id" value={student.id} />
-          <select name="plan" defaultValue={student.plan ?? "bootcamp"} className="rounded-lg border border-slate-200 px-2 py-1.5">
+          <select
+            name="plan"
+            defaultValue={student.plan ?? "bootcamp"}
+            className="rounded-lg border border-slate-200 px-2 py-1.5"
+          >
             {Object.entries(PLANS).map(([pid, p]) => (
               <option key={pid} value={pid}>
                 {p.name} ({p.months}개월)
@@ -253,28 +404,42 @@ export default async function TeacherStudentPage({
           </SubmitButton>
         </form>
         <p className="mt-1 text-xs text-zinc-500">
-          연장할 때는 종료일만 바꿔서 저장하세요. 종료일이 지나면 학생은 로그인할 수 없어요.
+          연장할 때는 종료일만 바꿔서 저장하세요. 종료일이 지나면 학생은
+          로그인할 수 없어요.
         </p>
         {(courseRows ?? []).some((c) => c.status !== "open") && (
-          <form action={setEarlyCourses} className="mt-3 flex flex-wrap items-center gap-3 border-t border-slate-100 pt-3 text-sm">
+          <form
+            action={setEarlyCourses}
+            className="mt-3 flex flex-wrap items-center gap-3 border-t border-slate-100 pt-3 text-sm"
+          >
             <input type="hidden" name="id" value={student.id} />
-            <span className="text-xs font-semibold text-zinc-700">🔑 준비 중인 과정 미리 열어주기</span>
+            <span className="text-xs font-semibold text-zinc-700">
+              🔑 준비 중인 과정 미리 열어주기
+            </span>
             {(courseRows ?? [])
               .filter((c) => c.status !== "open")
               .map((c) => (
-                <label key={c.id} className="flex items-center gap-1 text-xs text-zinc-700">
+                <label
+                  key={c.id}
+                  className="flex items-center gap-1 text-xs text-zinc-700"
+                >
                   <input
                     type="checkbox"
                     name="early"
                     value={c.id}
-                    defaultChecked={(student.early_courses ?? []).includes(c.id)}
+                    defaultChecked={(student.early_courses ?? []).includes(
+                      c.id,
+                    )}
                   />
                   {COURSE_SHORT[c.id] ?? c.title}
                 </label>
               ))}
-            <SubmitButton className="rounded-lg border border-slate-300 px-3 py-1 text-xs font-semibold">저장</SubmitButton>
+            <SubmitButton className="rounded-lg border border-slate-300 px-3 py-1 text-xs font-semibold">
+              저장
+            </SubmitButton>
             <span className="w-full text-xs text-zinc-500">
-              다른 학생에게는 계속 &lsquo;준비 중&rsquo;으로 보이고, 체크한 학생만 공개된 레슨을 볼 수 있어요.
+              다른 학생에게는 계속 &lsquo;준비 중&rsquo;으로 보이고, 체크한
+              학생만 공개된 레슨을 볼 수 있어요.
             </span>
           </form>
         )}
@@ -282,17 +447,35 @@ export default async function TeacherStudentPage({
 
       <section className="grid grid-cols-2 gap-3 sm:grid-cols-3">
         {[
-          ["🎬 영상 수강", `${progress.videoPercent}% (${progress.completedVideos}/${progress.videoLessons})`],
-          ["🎤 쉐도잉 제출", `${progress.submitPercent}% (${progress.submittedSentences}/${progress.sentences})`],
-          ["🔥 연속 학습", `${engagement.streak}일 (최고 ${engagement.bestStreak}일)`],
-          ["평균 점수", stats.averageScore != null ? `${stats.averageScore}점` : "-"],
+          [
+            "🎬 영상 수강",
+            `${progress.videoPercent}% (${progress.completedVideos}/${progress.videoLessons})`,
+          ],
+          [
+            "🎤 쉐도잉 제출",
+            `${progress.submitPercent}% (${progress.submittedSentences}/${progress.sentences})`,
+          ],
+          [
+            "🔥 연속 학습",
+            `${engagement.streak}일 (최고 ${engagement.bestStreak}일)`,
+          ],
+          [
+            "평균 점수",
+            stats.averageScore != null ? `${stats.averageScore}점` : "-",
+          ],
           ["연습 문장", `${stats.practicedSentences}개`],
           [
             "출결",
             totalClasses
-              ? (Object.keys(ATTENDANCE_LABEL) as (keyof typeof ATTENDANCE_LABEL)[])
+              ? (
+                  Object.keys(
+                    ATTENDANCE_LABEL,
+                  ) as (keyof typeof ATTENDANCE_LABEL)[]
+                )
                   .filter((k) => stats.attendance[k] > 0)
-                  .map((k) => `${ATTENDANCE_LABEL[k].label}${stats.attendance[k]}`)
+                  .map(
+                    (k) => `${ATTENDANCE_LABEL[k].label}${stats.attendance[k]}`,
+                  )
                   .join(" ")
               : "-",
           ],
@@ -318,9 +501,12 @@ export default async function TeacherStudentPage({
 
       {(tests.pre || tests.post) && (
         <section className={cardClass}>
-          <h2 className="mb-1 font-bold text-zinc-900">레벨테스트 말하기 답변</h2>
+          <h2 className="mb-1 font-bold text-zinc-900">
+            레벨테스트 말하기 답변
+          </h2>
           <p className="mb-2 text-xs text-zinc-500">
-            같은 질문에 수강 전·후 어떻게 대답했는지 들어보세요. 글자는 AI가 받아 적은 내용이에요.
+            같은 질문에 수강 전·후 어떻게 대답했는지 들어보세요. 글자는 AI가
+            받아 적은 내용이에요.
           </p>
           <ul className="flex flex-col divide-y divide-zinc-100">
             {SPEAKING.map((q) => {
@@ -328,28 +514,48 @@ export default async function TeacherStudentPage({
               const post = postAnswers.find((a) => a.question_id === q.id);
               return (
                 <li key={q.id} className="flex flex-col gap-1 py-2">
-                  <span className="text-sm font-medium text-zinc-900">{q.question}</span>
+                  <span className="text-sm font-medium text-zinc-900">
+                    {q.question}
+                  </span>
                   <div className="grid gap-1 sm:grid-cols-2">
                     {[
                       ["수강 전", pre],
                       ["수강 후", post],
                     ].map(([label, a]) => {
                       const ans = a as typeof pre;
-                      const url = ans?.audio_path ? audioUrl.get(ans.audio_path) : undefined;
+                      const url = ans?.audio_path
+                        ? audioUrl.get(ans.audio_path)
+                        : undefined;
                       return (
-                        <div key={label as string} className="flex flex-col gap-1 text-xs text-zinc-500">
+                        <div
+                          key={label as string}
+                          className="flex flex-col gap-1 text-xs text-zinc-500"
+                        >
                           <div className="flex items-center gap-2">
                             <span className="w-24 shrink-0">
                               {label as string} {ans ? `${ans.score}점` : "-"}
                             </span>
-                            {url && <audio src={url} controls preload="none" className="h-8 w-full" />}
+                            {url && (
+                              <audio
+                                src={url}
+                                controls
+                                preload="none"
+                                className="h-8 w-full"
+                              />
+                            )}
                           </div>
-                          {(ans?.detail as SpeakingDetail | null)?.transcript && (
+                          {(ans?.detail as SpeakingDetail | null)
+                            ?.transcript && (
                             <p className="rounded-lg bg-slate-50 px-2 py-1 text-zinc-700">
-                              &ldquo;{(ans!.detail as SpeakingDetail).transcript}&rdquo;
+                              &ldquo;
+                              {(ans!.detail as SpeakingDetail).transcript}
+                              &rdquo;
                               <span className="ml-1 text-zinc-400">
-                                · 발음 {(ans!.detail as SpeakingDetail).accuracy} · 유창성{" "}
-                                {(ans!.detail as SpeakingDetail).fluency} · 단어 {(ans!.detail as SpeakingDetail).uniqueWords}개
+                                · 발음{" "}
+                                {(ans!.detail as SpeakingDetail).accuracy} ·
+                                유창성 {(ans!.detail as SpeakingDetail).fluency}{" "}
+                                · 단어{" "}
+                                {(ans!.detail as SpeakingDetail).uniqueWords}개
                               </span>
                             </p>
                           )}
@@ -372,7 +578,8 @@ export default async function TeacherStudentPage({
                       message={`${t.kind === "pre" ? "수강 전" : "수강 후"} 테스트 결과와 녹음을 지울까요? 학생이 다시 봐야 해요.`}
                       className="text-xs text-red-600 underline"
                     >
-                      {t.kind === "pre" ? "수강 전" : "수강 후"} 테스트 초기화 (다시 보게 하기)
+                      {t.kind === "pre" ? "수강 전" : "수강 후"} 테스트 초기화
+                      (다시 보게 하기)
                     </ConfirmButton>
                   </form>
                 ),
@@ -388,7 +595,9 @@ export default async function TeacherStudentPage({
 
       <section className={cardClass}>
         <h2 className="mb-1 font-bold text-zinc-900">레슨별 진도</h2>
-        <p className="mb-2 text-xs text-zinc-500">공개된 레슨만 보여요. 영상은 90% 이상 보면 수강 완료예요.</p>
+        <p className="mb-2 text-xs text-zinc-500">
+          공개된 레슨만 보여요. 영상은 90% 이상 보면 수강 완료예요.
+        </p>
         {lessonRows.length === 0 ? (
           <p className="text-sm text-zinc-500">공개된 레슨이 없어요.</p>
         ) : (
@@ -402,27 +611,51 @@ export default async function TeacherStudentPage({
                 </tr>
               </thead>
               <tbody className="divide-y divide-zinc-100">
-                {lessonRows.map(({ lesson, videoPercent, videoCompleted, sentences, submitted }) => (
-                  <tr key={lesson.id}>
-                    <td className="py-1.5 pr-2">
-                      <span className="text-xs text-zinc-500">
-                        W{lesson.week_number} ·{" "}
-                        {lesson.kind === "day" ? `Day ${String(lesson.day_number).padStart(2, "0")}` : "Drill"}
-                      </span>{" "}
-                      <span className="text-zinc-800">{lesson.kind === "day" ? lesson.title : ""}</span>
-                    </td>
-                    <td className={`whitespace-nowrap py-1.5 pr-2 ${videoCompleted ? "text-green-700" : "text-zinc-600"}`}>
-                      {videoPercent == null ? "-" : videoCompleted ? "✅ 완료" : `${videoPercent}%`}
-                    </td>
-                    <td
-                      className={`whitespace-nowrap py-1.5 ${
-                        sentences > 0 && submitted === sentences ? "text-green-700" : "text-zinc-600"
-                      }`}
-                    >
-                      {sentences === 0 ? "-" : submitted === sentences ? "✅ 제출" : `${submitted}/${sentences}`}
-                    </td>
-                  </tr>
-                ))}
+                {lessonRows.map(
+                  ({
+                    lesson,
+                    videoPercent,
+                    videoCompleted,
+                    sentences,
+                    submitted,
+                  }) => (
+                    <tr key={lesson.id}>
+                      <td className="py-1.5 pr-2">
+                        <span className="text-xs text-zinc-500">
+                          W{lesson.week_number} ·{" "}
+                          {lesson.kind === "day"
+                            ? `Day ${String(lesson.day_number).padStart(2, "0")}`
+                            : "Drill"}
+                        </span>{" "}
+                        <span className="text-zinc-800">
+                          {lesson.kind === "day" ? lesson.title : ""}
+                        </span>
+                      </td>
+                      <td
+                        className={`whitespace-nowrap py-1.5 pr-2 ${videoCompleted ? "text-green-700" : "text-zinc-600"}`}
+                      >
+                        {videoPercent == null
+                          ? "-"
+                          : videoCompleted
+                            ? "✅ 완료"
+                            : `${videoPercent}%`}
+                      </td>
+                      <td
+                        className={`whitespace-nowrap py-1.5 ${
+                          sentences > 0 && submitted === sentences
+                            ? "text-green-700"
+                            : "text-zinc-600"
+                        }`}
+                      >
+                        {sentences === 0
+                          ? "-"
+                          : submitted === sentences
+                            ? "✅ 제출"
+                            : `${submitted}/${sentences}`}
+                      </td>
+                    </tr>
+                  ),
+                )}
               </tbody>
             </table>
           </div>
@@ -430,7 +663,9 @@ export default async function TeacherStudentPage({
       </section>
 
       <section className={cardClass}>
-        <h2 className="mb-2 font-bold text-zinc-900">최근 30일 평균 발음 점수</h2>
+        <h2 className="mb-2 font-bold text-zinc-900">
+          최근 30일 평균 발음 점수
+        </h2>
         <ScoreTrendChart data={stats.dailyScores} />
       </section>
 
@@ -438,7 +673,9 @@ export default async function TeacherStudentPage({
         <section className={cardClass}>
           <h2 className="mb-2 font-bold text-zinc-900">자주 틀리는 단어</h2>
           <p className="text-sm text-zinc-700">
-            {stats.weakWords.map((w) => `${w.word} (${w.count}회, 평균 ${w.avg}점)`).join(" · ")}
+            {stats.weakWords
+              .map((w) => `${w.word} (${w.count}회, 평균 ${w.avg}점)`)
+              .join(" · ")}
           </p>
         </section>
       )}

@@ -235,3 +235,14 @@ export async function setEarlyCourses(formData: FormData) {
   await supabase.from("students").update({ early_courses: courses }).eq("id", id);
   revalidatePath(`/teacher/students/${id}`);
 }
+
+/** 선생님이 학생 휴대폰으로 알림 보내기 */
+export async function sendTeacherPush(formData: FormData) {
+  await requireTeacher();
+  const id = String(formData.get("id"));
+  const body = String(formData.get("body") ?? "").trim().slice(0, 140);
+  if (!/^[0-9a-f-]{36}$/.test(id) || !body) return;
+  const { sendPushToStudent } = await import("@/lib/classroom/push");
+  await sendPushToStudent(id, { title: "💬 다니엘쌤", body, url: "/student", tag: "teacher" }, "teacher");
+  revalidatePath(`/teacher/students/${id}`);
+}
