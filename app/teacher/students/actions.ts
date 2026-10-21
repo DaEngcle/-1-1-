@@ -7,6 +7,7 @@ import { requireTeacher } from "@/lib/classroom/dal";
 import { generateLoginCode, hashLoginCode } from "@/lib/classroom/login-code";
 import { COURSE_IDS, accessUntil, isPlanId } from "@/lib/classroom/plans";
 import { kstDate } from "@/lib/classroom/stats";
+import { TALK_PASS } from "@/lib/classroom/interview-scenarios";
 import { randomBytes } from "node:crypto";
 import { hashPassword } from "@/lib/classroom/password";
 
@@ -292,4 +293,27 @@ export async function makeTempPassword(_prev: TempPasswordState, formData: FormD
     .eq("id", id);
   if (error) return { status: "error", message: "만들지 못했어요. 다시 시도해 주세요." };
   return { status: "success", password };
+}
+
+/** AI 면접 패스 열어주기: 오늘(또는 남은 기간 끝)부터 1개월 */
+export async function grantTalkPass(formData: FormData) {
+  await requireTeacher();
+  const id = String(formData.get("id"));
+  const supabase = createServerSupabaseClient();
+  const { data: st } = await supabase.from("students").select("talk_until").eq("id", id).maybeSingle();
+  const today = kstDate(new Date());
+  const from = st?.talk_until && (st.talk_until as string) >= today ? (st.talk_until as string) : today;
+  const d = new Date(`${from}T00:00:00Z`);
+  d.setUTCMonth(d.getUTCMonth() + TALK_PASS.months);
+  await supabase.from("students").update({ talk_until: d.toISOString().slice(0, 10) }).eq("id", id);
+  await supabase.from("talk_requests").delete().eq("student_id", id);
+  revalidatePath("/teacher/students");
+  revalidatePath(`/teacher/students/${id}`);
+}
+
+export async function dismissTalkRequest(formData: FormData) {
+  await requireTeacher();
+  const supabase = createServerSupabaseClient();
+  await supabase.from("talk_requests").delete().eq("student_id", String(formData.get("id")));
+  revalidatePath("/teacher/students");
 }

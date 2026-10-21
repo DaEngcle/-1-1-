@@ -1,9 +1,12 @@
 import Link from "next/link";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { requireStudent } from "@/lib/classroom/dal";
-import { DAILY_LIMIT, SCENARIOS } from "@/lib/classroom/interview-scenarios";
+import { SCENARIOS, TALK_PASS } from "@/lib/classroom/interview-scenarios";
+import { talkAccess } from "@/lib/classroom/talk-access";
+import { manwon } from "@/lib/classroom/price";
+import { SubmitButton } from "@/app/_ui/submit-button";
+import { requestTalkPass } from "./actions";
 import { aiReady } from "@/lib/classroom/interview-ai";
-import { kstDate } from "@/lib/classroom/stats";
 import { Interviewer } from "@/app/_ui/interviewer";
 
 const LEVEL_COLOR: Record<string, string> = {
@@ -15,12 +18,10 @@ const LEVEL_COLOR: Record<string, string> = {
 export default async function TalkPage() {
   const student = await requireStudent();
   const supabase = createServerSupabaseClient();
-  const todayStart = new Date(`${kstDate(new Date())}T00:00:00+09:00`).toISOString();
-  const [{ count }, { data: done }] = await Promise.all([
-    supabase.from("interview_sessions").select("id", { count: "exact", head: true }).eq("student_id", student.id).gte("created_at", todayStart),
+  const [access, { data: done }] = await Promise.all([
+    talkAccess(student),
     supabase.from("interview_sessions").select("scenario, feedback").eq("student_id", student.id).not("feedback", "is", null),
   ]);
-  const limit = student.courses.length === 0 ? DAILY_LIMIT.free : DAILY_LIMIT.student;
   const best = new Map<string, number>();
   for (const d of done ?? []) {
     const score = (d.feedback as { score?: number } | null)?.score ?? 0;
@@ -36,9 +37,36 @@ export default async function TalkPage() {
           호주 현지 매니저 캐릭터와 진짜처럼 말로 면접을 봐요. 끝나면 점수와 &lsquo;이렇게 말하면 더 좋아요&rsquo; 코칭이 나와요.
         </p>
         <p className="mt-1 text-xs font-semibold text-white/90">
-          {ready ? `오늘 ${Math.max(0, limit - (count ?? 0))}번 남았어요 (하루 ${limit}번)` : "🛠 AI 연결 준비 중이에요. 곧 열려요!"}
+          {!ready
+            ? "🛠 AI 연결 준비 중이에요. 곧 열려요!"
+            : access.kind === "free"
+              ? access.left > 0
+                ? "🎁 무료 체험 1번을 해볼 수 있어요!"
+                : "무료 체험을 다 썼어요. 아래 AI 면접 패스로 계속할 수 있어요."
+              : `오늘 ${access.left}번 남았어요 (하루 ${access.limit}번)${access.kind === "pass" ? ` · 패스 ~${access.passUntil}` : ""}`}
         </p>
       </section>
+
+      {ready && access.kind === "free" && access.left === 0 && (
+        <section className="flex flex-col gap-2 rounded-3xl border-2 border-amber-200 bg-[#FFF8E6] p-4">
+          <p className="text-lg font-extrabold text-zinc-900">🎟 {TALK_PASS.name}</p>
+          <p className="text-sm text-zinc-700">
+            7명의 면접관과 하루 3번까지 · 코칭 리포트 포함 · <b>{manwon(TALK_PASS.price)}</b>
+          </p>
+          <p className="text-xs text-zinc-500">수강생은 AI 면접이 무료예요 (하루 5번).</p>
+          {access.requested ? (
+            <p className="rounded-xl bg-green-50 px-3 py-2 text-sm text-green-800">
+              ✅ 신청 완료! 선생님이 카톡으로 결제 안내를 보내드려요. 확인되면 바로 열려요.
+            </p>
+          ) : (
+            <form action={requestTalkPass}>
+              <SubmitButton className="w-full rounded-xl border-b-4 border-amber-500 bg-[#ffd23f] px-5 py-3 font-extrabold text-zinc-900">
+                🛒 {manwon(TALK_PASS.price)}에 패스 신청하기
+              </SubmitButton>
+            </form>
+          )}
+        </section>
+      )}
 
       <section className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         {SCENARIOS.map((s) => (

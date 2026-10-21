@@ -236,6 +236,10 @@ export function scenario(id: string) {
   return SCENARIOS.find((s) => s.id === id) ?? null;
 }
 
-/** 하루에 할 수 있는 횟수 */
-export const DAILY_LIMIT = { student: 5, free: 1 };
+/** 하루에 할 수 있는 횟수: 수강생 · AI 면접 패스 */
+export const DAILY_LIMIT = { student: 5, pass: 3 };
+/** 무료회원 무료 체험 횟수 (전체 기간) */
+export const FREE_TRIALS = 1;
+/** AI 면접 패스 (계좌이체 → 선생님이 열어줌) */
+export const TALK_PASS = { price: 9900, months: 1, name: "AI 면접 패스 1개월" };
 export const MAX_TURNS = 10;

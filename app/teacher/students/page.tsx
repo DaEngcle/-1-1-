@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { createServerSupabaseClient, type Student } from "@/lib/supabase";
-import { approveStudent, mergeSignupInto, rejectStudent } from "./actions";
+import { approveStudent, dismissTalkRequest, grantTalkPass, mergeSignupInto, rejectStudent } from "./actions";
+import { TALK_PASS } from "@/lib/classroom/interview-scenarios";
+import { manwon } from "@/lib/classroom/price";
 import { PLANS, isPlanId, isTrialPlan } from "@/lib/classroom/plans";
 import { kstDate } from "@/lib/classroom/stats";
 import { ConfirmButton } from "@/app/_ui/confirm-button";
@@ -108,6 +110,10 @@ export default async function StudentsPage({
   );
   const today = kstDate(new Date());
   const params = await searchParams;
+  const { data: talkRequests } = await supabase
+    .from("talk_requests")
+    .select("student_id, created_at, students(name, phone)")
+    .order("created_at");
   const filter = FILTERS.includes(params.filter as Filter)
     ? (params.filter as Filter)
     : "all";
@@ -239,6 +245,36 @@ export default async function StudentsPage({
               찾는 학생이 없어요. 철자나 번호를 확인해 주세요.
             </p>
           )}
+        </section>
+      )}
+
+      {(talkRequests ?? []).length > 0 && (
+        <section className={`${cardClass} border-amber-200 bg-[#FFF8E6]`}>
+          <h2 className="mb-1 font-bold text-zinc-900">🎟 AI 면접 패스 신청 ({(talkRequests ?? []).length})</h2>
+          <p className="mb-2 text-xs text-zinc-600">
+            카톡으로 결제({manwon(TALK_PASS.price)}) 안내 → 입금 확인되면 &lsquo;열어주기&rsquo;. 오늘부터 {TALK_PASS.months}개월 열려요.
+          </p>
+          <div className="flex flex-col gap-1.5">
+            {(talkRequests ?? []).map((r) => {
+              const who = r.students as unknown as { name: string; phone: string | null } | null;
+              return (
+                <div key={r.student_id} className="flex flex-wrap items-center gap-2 rounded-lg bg-white px-2 py-1.5 text-sm">
+                  <a href={`/teacher/students/${r.student_id}`} className="font-bold underline-offset-2 hover:underline">
+                    {who?.name}
+                  </a>
+                  <span className="text-xs text-zinc-500">{who?.phone}</span>
+                  <form action={grantTalkPass} className="ml-auto">
+                    <input type="hidden" name="id" value={r.student_id} />
+                    <SubmitButton className="rounded-md bg-green-600 px-2 py-1 text-xs font-bold text-white">결제 확인 · 열어주기</SubmitButton>
+                  </form>
+                  <form action={dismissTalkRequest}>
+                    <input type="hidden" name="id" value={r.student_id} />
+                    <SubmitButton className="text-xs text-zinc-500 underline">지우기</SubmitButton>
+                  </form>
+                </div>
+              );
+            })}
+          </div>
         </section>
       )}
 
