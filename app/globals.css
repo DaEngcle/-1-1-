@@ -76,3 +76,19 @@ button:disabled {
 @media (prefers-reduced-motion: reduce) {
   .review-marquee { animation-duration: calc(var(--marquee-duration, 60s) * 1.6); }
 }
+
+/* 응원 고양이: 클로드 로딩 캐릭터처럼 살짝 움직이기 (도트 느낌이라 steps로 끊어서) */
+.cat-sprite { overflow: visible; }
+.cat-sprite .cat-bob { animation: cat-bob 1.2s steps(1, end) infinite; animation-delay: var(--cat-delay, 0s); }
+.cat-sprite .cat-eye { transform-box: fill-box; transform-origin: center; animation: cat-blink 4.2s steps(1, end) infinite; animation-delay: var(--cat-delay, 0s); }
+.cat-sprite .cat-tail { transform-box: fill-box; transform-origin: 0% 100%; animation: cat-tail 1.6s steps(1, end) infinite; animation-delay: var(--cat-delay, 0s); }
+.cat-sprite .cat-arm { transform-box: fill-box; transform-origin: 100% 100%; animation: cat-wave 0.5s steps(1, end) infinite; }
+.cat-sprite .cat-z { animation: cat-z 2s ease-in-out infinite; }
+.cat-happy .cat-bob, .cat-cheer .cat-bob { animation-duration: 0.6s; }
+.cat-sleepy .cat-bob { animation-duration: 2.4s; }
+.cat-sad .cat-bob { animation-duration: 2s; }
+@keyframes cat-bob { 0% { transform: translateY(0); } 50% { transform: translateY(-0.5px); } }
+@keyframes cat-blink { 0% { transform: scaleY(1); } 94% { transform: scaleY(0.15); } 97% { transform: scaleY(1); } }
+@keyframes cat-tail { 0% { transform: translateX(0); } 50% { transform: translateX(0.5px) skewX(-12deg); } }
+@keyframes cat-wave { 0% { transform: rotate(0); } 50% { transform: rotate(-14deg); } }
+@keyframes cat-z { 0% { opacity: 0; transform: translateY(0.8px); } 40% { opacity: 1; } 100% { opacity: 0; transform: translateY(-1.5px); } }

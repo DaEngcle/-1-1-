@@ -15,7 +15,7 @@ export function CatPicker({ current }: { current: CatBreed | null }) {
             current === id ? "border-brand-500 ring-2 ring-brand-200" : "border-slate-200 hover:border-brand-300"
           }`}
         >
-          <CatSprite breed={id} mood={current === id ? "happy" : "default"} className="h-16 w-20" />
+          <CatSprite breed={id} mood={current === id ? "happy" : "default"} className="h-16 w-20" delay={CAT_BREED_IDS.indexOf(id) * 0.37} />
           {CAT_BREEDS[id].name}
           {current === id && <span className="text-[10px] font-semibold text-brand-600">내 고양이</span>}
         </button>

@@ -75,7 +75,9 @@ const BASE = [
   "...ff.ff..ff.ff...",
 ];
 
-export type CatPixel = { x: number; y: number; w: number; h: number; fill: string };
+/** 움직임용 부위: 몸(통통 튐), 눈(깜빡), 발(가만히), 꼬리(살랑), 팔(흔들) */
+export type CatPart = "body" | "eye" | "feet" | "tail" | "arm";
+export type CatPixel = { x: number; y: number; w: number; h: number; fill: string; part: CatPart };
 
 /** 한 칸 = 1 단위. viewBox는 "-3 -3 24 18" */
 export function catPixels(breedId: CatBreed, mood: CatMood): { pixels: CatPixel[]; z: boolean } {
@@ -163,17 +165,22 @@ export function catPixels(breedId: CatBreed, mood: CatMood): { pixels: CatPixel[
   const pixels: CatPixel[] = [];
   grid.forEach((row, y) =>
     row.forEach((c, x) => {
-      if (c !== ".") pixels.push({ x, y, w: 1, h: 1, fill: color[c] });
+      if (c === ".") return;
+      const part: CatPart = y === 13 ? "feet" : "ewq".includes(c) ? "eye" : "body";
+      pixels.push({ x, y, w: 1, h: 1, fill: color[c], part });
     }),
   );
   const tail = B.point ?? B.dark;
-  pixels.push({ x: 17, y: 9, w: 1, h: 3, fill: tail }, { x: 18, y: 7, w: 1, h: 3, fill: tail });
+  pixels.push(
+    { x: 17, y: 9, w: 1, h: 3, fill: tail, part: "tail" },
+    { x: 18, y: 7, w: 1, h: 3, fill: tail, part: "tail" },
+  );
   if (mood === "cheer") {
     pixels.push(
-      { x: -1, y: 4, w: 1, h: 4, fill: B.dark },
-      { x: -2, y: 2, w: 1, h: 3, fill: B.dark },
-      { x: -3, y: -1, w: 1, h: 1, fill: "#FFC94A" },
-      { x: 19, y: 0, w: 1, h: 1, fill: "#FFC94A" },
+      { x: -1, y: 4, w: 1, h: 4, fill: B.dark, part: "arm" },
+      { x: -2, y: 2, w: 1, h: 3, fill: B.dark, part: "arm" },
+      { x: -3, y: -1, w: 1, h: 1, fill: "#FFC94A", part: "arm" },
+      { x: 19, y: 0, w: 1, h: 1, fill: "#FFC94A", part: "arm" },
     );
   }
   return { pixels, z: mood === "sleepy" };
