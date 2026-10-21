@@ -63,7 +63,7 @@ export const CAT_BREEDS = {
     eye: "#E9D43B", tuxedo: true, lid: "#E9D43B",
   },
   white: {
-    name: "하얀 고양이",
+    name: "오드아이",
     fur: "#FBFBFC", dark: "#D5D9E1", belly: "#FFFFFF", ear: "#FFB3C1",
     eye: "#3B82F6", eye2: "#E8B93B", pupil: "#1F2433", outline: "#C9CED8",
   },
