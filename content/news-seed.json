@@ -366,5 +366,235 @@
       }
     ],
     "image_url": "https://live-production.wcms.abc-cdn.net.au/88556f9347e5b5988f37e7ef10a437a8?impolicy=wcms_crop_resize&cropH=1177&cropW=2092&xPos=0&yPos=0&width=862&height=485"
+  },
+  {
+    "source_url": "https://www.abc.net.au/news/2026-10-22/domain-house-price-september-quarter/107289400",
+    "source_title": "House prices across capitals post steepest quarterly decline ever: Domain",
+    "title_ko": "호주 대도시 집값, 분기 기준 역대 가장 크게 떨어져",
+    "topic": "🏠 집·렌트",
+    "level": "보통",
+    "published_on": "2026-10-22",
+    "summary_en": "House prices have fallen in every Australian capital city. According to the property website Domain, prices dropped by 4.7 per cent last quarter. That is the steepest fall on record, and it is only the second time that prices have gone down in all capitals at once.",
+    "summary_ko": "호주 모든 주도(대도시)에서 집값이 떨어졌어요. 부동산 사이트 도메인에 따르면 지난 분기에 4.7% 떨어졌는데, 기록상 가장 큰 하락이에요. 모든 대도시 집값이 한꺼번에 내려간 건 이번이 두 번째예요.",
+    "expressions": [
+      {
+        "phrase": "fall / drop",
+        "meaning": "(가격이) 떨어지다",
+        "example": "Rents might drop a bit in winter.",
+        "example_ko": "겨울엔 월세가 좀 떨어질 수도 있어."
+      },
+      {
+        "phrase": "per cent",
+        "meaning": "퍼센트",
+        "example": "Prices went up by five per cent.",
+        "example_ko": "가격이 5% 올랐어.",
+        "note": "호주·영국은 per cent, 미국은 percent"
+      },
+      {
+        "phrase": "on record",
+        "meaning": "기록상, 역대",
+        "example": "It was the hottest day on record.",
+        "example_ko": "역대 가장 더운 날이었어."
+      },
+      {
+        "phrase": "quarter",
+        "meaning": "분기 (3개월)",
+        "example": "Sales were better last quarter.",
+        "example_ko": "지난 분기엔 매출이 더 좋았어."
+      },
+      {
+        "phrase": "at once",
+        "meaning": "한꺼번에, 동시에",
+        "example": "Don't do everything at once.",
+        "example_ko": "한꺼번에 다 하려고 하지 마."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "How much did house prices fall last quarter?",
+        "choices": [
+          "4.7 per cent",
+          "47 per cent",
+          "0.47 per cent"
+        ],
+        "answer": 0,
+        "explain": "4.7 per cent = 4.7%예요."
+      },
+      {
+        "question": "'the steepest fall on record'의 뜻은?",
+        "choices": [
+          "역대 가장 큰 하락",
+          "작은 하락",
+          "기록되지 않은 하락"
+        ],
+        "answer": 0,
+        "explain": "steepest = 가장 가파른, on record = 기록상."
+      },
+      {
+        "question": "'at once'와 비슷한 뜻은?",
+        "choices": [
+          "at the same time",
+          "once a week",
+          "at home"
+        ],
+        "answer": 0,
+        "explain": "at once = 한꺼번에, 동시에."
+      }
+    ],
+    "image_url": "https://live-production.wcms.abc-cdn.net.au/cf19755801452e0bb9408f193d5bdd5a?impolicy=wcms_watermark_news&cropH=3375&cropW=6000&xPos=0&yPos=313&width=862&height=485&imformat=generic"
+  },
+  {
+    "source_url": "https://www.abc.net.au/news/2026-10-22/e-scooter-and-e-bike-hospitalisations-on-the-rise-australia/107291604",
+    "source_title": "E-scooter hospitalisations more than tripled since 2019",
+    "title_ko": "전동 킥보드 사고로 입원한 사람, 2019년보다 3배 넘게 늘어",
+    "topic": "🛴 안전·생활",
+    "level": "쉬움",
+    "published_on": "2026-10-22",
+    "summary_en": "A new report from the Australian Institute of Health and Welfare looked at e-scooter injuries. It found that the number of people who ended up in hospital after e-scooter accidents has more than tripled since 2019. If you ride one in Australia, always wear a helmet and follow the local rules.",
+    "summary_ko": "호주 보건복지연구원(AIHW)이 전동 킥보드 부상에 대한 새 보고서를 냈어요. 전동 킥보드 사고로 병원에 입원한 사람이 2019년보다 3배 넘게 늘었대요. 호주에서 탄다면 헬멧은 꼭 쓰고, 그 지역 규칙을 지키세요.",
+    "expressions": [
+      {
+        "phrase": "e-scooter",
+        "meaning": "전동 킥보드",
+        "example": "I ride an e-scooter to work.",
+        "example_ko": "나 전동 킥보드 타고 출근해."
+      },
+      {
+        "phrase": "more than tripled",
+        "meaning": "3배 넘게 늘었다",
+        "example": "My rent has more than tripled since I arrived.",
+        "example_ko": "내가 온 뒤로 월세가 3배 넘게 올랐어.",
+        "note": "doubled = 2배, tripled = 3배"
+      },
+      {
+        "phrase": "end up in hospital",
+        "meaning": "결국 병원 신세를 지다",
+        "example": "He fell off his bike and ended up in hospital.",
+        "example_ko": "걔 자전거에서 넘어져서 결국 병원 갔어.",
+        "note": "호주·영국은 the 없이 in hospital"
+      },
+      {
+        "phrase": "wear a helmet",
+        "meaning": "헬멧을 쓰다",
+        "example": "You have to wear a helmet or you'll get fined.",
+        "example_ko": "헬멧 안 쓰면 벌금 내야 돼."
+      },
+      {
+        "phrase": "follow the rules",
+        "meaning": "규칙을 지키다",
+        "example": "Please follow the rules on the footpath.",
+        "example_ko": "인도에선 규칙 좀 지켜 주세요.",
+        "note": "footpath = 인도 (미국은 sidewalk)"
+      }
+    ],
+    "quiz": [
+      {
+        "question": "What has more than tripled since 2019?",
+        "choices": [
+          "E-scooter hospitalisations",
+          "E-scooter prices",
+          "Helmet sales"
+        ],
+        "answer": 0,
+        "explain": "전동 킥보드 사고로 입원한 사람 수가 3배 넘게 늘었어요."
+      },
+      {
+        "question": "'tripled'의 뜻은?",
+        "choices": [
+          "3배가 됐다",
+          "3번 넘어졌다",
+          "3명이 다쳤다"
+        ],
+        "answer": 0,
+        "explain": "double 2배, triple 3배."
+      },
+      {
+        "question": "호주에서 '인도'를 뭐라고 할까요?",
+        "choices": [
+          "footpath",
+          "freeway",
+          "roundabout"
+        ],
+        "answer": 0,
+        "explain": "footpath = 인도. 미국은 sidewalk."
+      }
+    ],
+    "image_url": "https://live-production.wcms.abc-cdn.net.au/021de7fa8787db914e66dcf918e8cb03?impolicy=wcms_watermark_news&cropH=2813&cropW=5000&xPos=0&yPos=260&width=862&height=485&imformat=generic"
+  },
+  {
+    "source_url": "https://www.abc.net.au/news/2026-10-21/tas-boags-launceston-last-beers-on-production-line/107282468",
+    "source_title": "Last drinks for Boag's as final Tasmanian beers roll off production line",
+    "title_ko": "타즈매니아 대표 맥주 '보그스', 고향 공장에서 마지막 맥주 생산",
+    "topic": "🍺 호주 문화",
+    "level": "보통",
+    "published_on": "2026-10-21",
+    "summary_en": "Boag's is a famous beer brand from Tasmania. Its brewery has been running for a very long time, even longer than Tasmania has had electricity. Now the last beers have rolled off the production line there, and this state icon will be brewed somewhere else.",
+    "summary_ko": "보그스는 타즈매니아의 유명한 맥주 브랜드예요. 이 양조장은 타즈매니아에 전기가 들어온 것보다도 더 오래 운영됐대요. 이제 그곳에서 마지막 맥주가 생산 라인을 떠났고, 이 지역 대표 맥주는 앞으로 다른 곳에서 만들어질 거예요.",
+    "expressions": [
+      {
+        "phrase": "last drinks",
+        "meaning": "(술집) 마지막 주문, 마감",
+        "example": "Last drinks, everyone! We close in ten minutes.",
+        "example_ko": "마지막 주문 받습니다! 10분 뒤에 닫아요.",
+        "note": "호주 펍에서 마감 전에 꼭 들어요"
+      },
+      {
+        "phrase": "brewery",
+        "meaning": "맥주 양조장",
+        "example": "Let's do a brewery tour this weekend.",
+        "example_ko": "이번 주말에 양조장 투어 가자."
+      },
+      {
+        "phrase": "roll off the production line",
+        "meaning": "생산 라인에서 나오다 (완성되다)",
+        "example": "The first cars rolled off the production line in May.",
+        "example_ko": "첫 차들이 5월에 생산됐어."
+      },
+      {
+        "phrase": "icon",
+        "meaning": "상징, 대표하는 것",
+        "example": "The Opera House is a Sydney icon.",
+        "example_ko": "오페라 하우스는 시드니의 상징이야."
+      },
+      {
+        "phrase": "somewhere else",
+        "meaning": "다른 곳에서",
+        "example": "Let's grab dinner somewhere else.",
+        "example_ko": "저녁은 다른 데서 먹자."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Where is Boag's beer from?",
+        "choices": [
+          "Tasmania",
+          "Queensland",
+          "New Zealand"
+        ],
+        "answer": 0,
+        "explain": "Boag's는 타즈매니아 맥주예요."
+      },
+      {
+        "question": "펍에서 'Last drinks!'라고 하면?",
+        "choices": [
+          "곧 마감이니 마지막 주문하세요",
+          "술이 다 떨어졌어요",
+          "건배해요"
+        ],
+        "answer": 0,
+        "explain": "마감 전에 마지막 주문을 받는다는 뜻이에요."
+      },
+      {
+        "question": "'The Opera House is a Sydney icon.'에서 icon의 뜻은?",
+        "choices": [
+          "상징",
+          "아이콘 그림",
+          "가게"
+        ],
+        "answer": 0,
+        "explain": "icon = 그 지역을 대표하는 상징."
+      }
+    ],
+    "image_url": "https://live-production.wcms.abc-cdn.net.au/ff04e1313458c678d710d38ee1baf161?impolicy=wcms_watermark_news&cropH=1080&cropW=1920&xPos=0&yPos=0&width=862&height=485&imformat=generic"
   }
 ]
