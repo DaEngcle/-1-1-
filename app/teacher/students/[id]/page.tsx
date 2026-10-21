@@ -24,7 +24,7 @@ import { RegenerateCodeButton, TempPasswordButton } from "../student-forms";
 import { CopyButton } from "@/app/_ui/copy-button";
 import { getRoster, nudgeMessage, STATUS_INFO } from "@/lib/classroom/roster";
 import { headers } from "next/headers";
-import { COURSE_SHORT, PLANS, isTrialPlan } from "@/lib/classroom/plans";
+import { COURSE_SHORT, PLANS, coursesForPlan, isTrialPlan } from "@/lib/classroom/plans";
 import { ATTENDANCE_LABEL } from "@/lib/classroom/attendance";
 import { ScoreTrendChart } from "@/app/_ui/score-trend-chart";
 import { SubmissionList } from "../../submission-list";
@@ -417,6 +417,21 @@ export default async function TeacherStudentPage({
           로그인할 수 없어요. (무료 체험은 끝나도 로그인은 되고, 강의만 잠겨서
           무료회원처럼 돼요. 결제하면 수강권만 바꿔 주세요.)
         </p>
+        {(() => {
+          // 수강권에 들어 있지만 아직 '준비 중'이라 미리 열어주기를 안 하면 안 보이는 과정
+          const hidden = (courseRows ?? []).filter(
+            (c) =>
+              c.status !== "open" &&
+              coursesForPlan(student.plan).includes(c.id as never) &&
+              !(student.early_courses ?? []).includes(c.id),
+          );
+          return hidden.length > 0 ? (
+            <p className="mt-3 rounded-lg bg-amber-50 p-2 text-xs font-semibold text-amber-800">
+              ⚠️ 이 수강권에 {hidden.map((c) => c.title).join(", ")}이(가) 들어 있지만 아직 &lsquo;준비 중&rsquo; 과정이라
+              학생에게 안 보여요. 보여주려면 아래 &lsquo;미리 열어주기&rsquo;에서 체크하고 저장하세요.
+            </p>
+          ) : null;
+        })()}
         {(courseRows ?? []).some((c) => c.status !== "open") && (
           <form
             action={setEarlyCourses}
