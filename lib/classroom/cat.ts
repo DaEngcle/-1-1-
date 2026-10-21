@@ -14,6 +14,14 @@ type Breed = {
   point?: string;
   mouth?: string;
   ragdoll?: boolean;
+  /** 턱시도: 하얀 주둥이·가슴·발 */
+  tuxedo?: boolean;
+  /** 오드아이: 오른쪽 눈 색 */
+  eye2?: string;
+  /** 감은 눈 색 (털이 검으면 밝게) */
+  lid?: string;
+  /** 흰 배경에서 안 묻히게 테두리 */
+  outline?: string;
 };
 
 export const CAT_BREEDS = {
@@ -46,6 +54,16 @@ export const CAT_BREEDS = {
     name: "랙돌",
     fur: "#F8F5F0", dark: "#8C7A6B", belly: "#FFFFFF", ear: "#8C7A6B",
     eye: "#3B82F6", pupil: "#1F2433", point: "#8C7A6B", ragdoll: true,
+  },
+  tuxedo: {
+    name: "턱시도",
+    fur: "#2E3038", dark: "#2E3038", belly: "#FFFFFF", ear: "#FF9DB0",
+    eye: "#E9D43B", tuxedo: true, lid: "#E9D43B",
+  },
+  white: {
+    name: "하얀 고양이",
+    fur: "#FBFBFC", dark: "#D5D9E1", belly: "#FFFFFF", ear: "#FFB3C1",
+    eye: "#3B82F6", eye2: "#E8B93B", pupil: "#1F2433", outline: "#C9CED8",
   },
 } satisfies Record<string, Breed>;
 
@@ -109,17 +127,24 @@ export function catPixels(breedId: CatBreed, mood: CatMood): { pixels: CatPixel[
     for (const x of [7, 8, 9, 10]) put(x, 5, "k");
   }
 
+  if (B.tuxedo) {
+    // 하얀 주둥이 (입이 보이게)
+    for (let y = 8; y <= 9; y++) for (let x = 6; x <= 11; x++) put(x, y, "b");
+    put(7, 7, "b"); put(8, 7, "b"); put(9, 7, "b"); put(10, 7, "b");
+  }
+
   // 눈
   if (mood === "happy" || mood === "cheer") {
-    put(4, 6, "m"); put(5, 5, "m"); put(6, 6, "m");
-    put(11, 6, "m"); put(12, 5, "m"); put(13, 6, "m");
+    put(4, 6, "l"); put(5, 5, "l"); put(6, 6, "l");
+    put(11, 6, "l"); put(12, 5, "l"); put(13, 6, "l");
   } else if (mood === "sleepy") {
-    for (const x of [4, 5, 6, 11, 12, 13]) put(x, 6, "m");
+    for (const x of [4, 5, 6, 11, 12, 13]) put(x, 6, "l");
   } else {
     const y0 = mood === "sad" ? 6 : 5;
     for (const x of [4, 5, 12, 13]) {
-      put(x, y0, "e");
-      put(x, y0 + 1, "e");
+      const c = x > 8 && B.eye2 ? "E" : "e";
+      put(x, y0, c);
+      put(x, y0 + 1, c);
     }
     if (!B.noShine) {
       put(4, y0, "w");
@@ -151,9 +176,11 @@ export function catPixels(breedId: CatBreed, mood: CatMood): { pixels: CatPixel[
     p: B.ear,
     c: "#FFB3C1",
     s: B.stripes ? B.dark : B.fur,
-    f: B.ragdoll ? "#FFFFFF" : (B.point ?? B.dark),
+    f: B.ragdoll || B.tuxedo ? "#FFFFFF" : (B.point ?? B.dark),
     k: B.point ?? B.dark,
     e: B.eye,
+    E: B.eye2 ?? B.eye,
+    l: B.lid ?? B.mouth ?? "#1F2433",
     q: B.pupil ?? B.eye,
     w: "#FFFFFF",
     m: B.mouth ?? "#1F2433",
@@ -166,10 +193,24 @@ export function catPixels(breedId: CatBreed, mood: CatMood): { pixels: CatPixel[
   grid.forEach((row, y) =>
     row.forEach((c, x) => {
       if (c === ".") return;
-      const part: CatPart = y === 13 ? "feet" : "ewq".includes(c) ? "eye" : "body";
+      const part: CatPart = y === 13 ? "feet" : "ewqE".includes(c) ? "eye" : "body";
       pixels.push({ x, y, w: 1, h: 1, fill: color[c], part });
     }),
   );
+  if (B.outline) {
+    // 몸 둘레 한 칸 테두리
+    const filled = new Set(pixels.map((p) => `${p.x},${p.y}`));
+    const edge = new Set<string>();
+    for (const p of [...pixels])
+      for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+        const k = `${p.x + dx},${p.y + dy}`;
+        if (!filled.has(k) && !edge.has(k)) {
+          edge.add(k);
+          const y = p.y + dy;
+          pixels.unshift({ x: p.x + dx, y, w: 1, h: 1, fill: B.outline, part: y >= 13 ? "feet" : "body" });
+        }
+      }
+  }
   const tail = B.point ?? B.dark;
   pixels.push(
     { x: 17, y: 9, w: 1, h: 3, fill: tail, part: "tail" },

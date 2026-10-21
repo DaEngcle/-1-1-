@@ -5,7 +5,7 @@ import { CatSprite } from "./cat";
 /** 고양이 6종 중 하나 고르기 (누르면 바로 저장) */
 export function CatPicker({ current }: { current: CatBreed | null }) {
   return (
-    <form action={chooseCat} className="grid grid-cols-3 gap-2 sm:grid-cols-6">
+    <form action={chooseCat} className="grid grid-cols-4 gap-2">
       {CAT_BREED_IDS.map((id) => (
         <button
           key={id}
