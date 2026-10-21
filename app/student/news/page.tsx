@@ -15,7 +15,7 @@ export default async function NewsListPage() {
   const [{ data: rows }, { data: reads }] = await Promise.all([
     supabase
       .from("news_lessons")
-      .select("id, source_title, title_ko, topic, level, published_on, expressions")
+      .select("id, source_title, title_ko, topic, level, published_on, expressions, image_url")
       .eq("is_published", true)
       .order("published_on", { ascending: false })
       .order("created_at", { ascending: false })
@@ -41,8 +41,17 @@ export default async function NewsListPage() {
             <Link
               key={n.id}
               href={`/student/news/${n.id}`}
-              className={`${cardClass} flex flex-col gap-1.5 hover:border-brand-300`}
+              className={`${cardClass} flex flex-col gap-1.5 overflow-hidden hover:border-brand-300`}
             >
+              {n.image_url && (
+                // eslint-disable-next-line @next/next/no-img-element -- ABC 대표 사진 (출처 표기)
+                <img
+                  src={n.image_url}
+                  alt=""
+                  loading="lazy"
+                  className="-mx-4 -mt-4 mb-1 aspect-[16/9] w-[calc(100%+2rem)] max-w-none object-cover"
+                />
+              )}
               <div className="flex flex-wrap items-center gap-1.5 text-xs">
                 <span className="rounded-full bg-slate-100 px-2 py-0.5 font-semibold text-zinc-700">{n.topic}</span>
                 <span className={`rounded-full px-2 py-0.5 font-semibold ${LEVEL_COLOR[n.level] ?? ""}`}>{n.level}</span>

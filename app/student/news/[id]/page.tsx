@@ -33,6 +33,14 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ id:
         </p>
       </header>
 
+      {n.image_url && (
+        <figure className="flex flex-col gap-1">
+          {/* eslint-disable-next-line @next/next/no-img-element -- ABC 대표 사진 (출처 표기) */}
+          <img src={n.image_url} alt="" className="aspect-[16/9] w-full rounded-2xl object-cover shadow-sm" />
+          <figcaption className="text-right text-[11px] text-zinc-400">사진: {n.source_name}</figcaption>
+        </figure>
+      )}
+
       <section className={`${cardClass} flex flex-col gap-2`}>
         <h2 className="font-bold text-zinc-900">① 쉬운 영어로 읽기</h2>
         <NewsSummary en={n.summary_en} ko={n.summary_ko} />

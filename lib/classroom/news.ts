@@ -26,6 +26,7 @@ export type NewsLesson = {
   expressions: NewsExpression[];
   quiz: NewsQuiz[];
   is_published: boolean;
+  image_url: string | null;
 };
 
 // ABC News 최신 기사 피드 (제목·짧은 소개·링크만 쓴다. 본문은 가져오지 않는다)
@@ -34,7 +35,7 @@ const FEEDS = [
   "https://www.abc.net.au/news/feed/45910/rss.xml",
 ];
 
-type Headline = { title: string; teaser: string; url: string; date: string };
+type Headline = { title: string; teaser: string; url: string; date: string; image: string | null };
 
 function decode(s: string) {
   return s
@@ -61,11 +62,15 @@ export async function fetchAbcHeadlines(): Promise<Headline[]> {
       if (!url || seen.has(url)) continue;
       seen.add(url);
       const pub = Date.parse(get("pubDate"));
+      // 16:9 대표 사진 (없으면 아무 사진)
+      const imgs = [...item.matchAll(/<media:content\s+url="([^"]+)"[^>]*?width="(\d+)"\s+height="(\d+)"/g)];
+      const wide = imgs.find((m) => Number(m[2]) / Number(m[3]) > 1.6) ?? imgs[0];
       out.push({
         title: get("title"),
         teaser: get("description").slice(0, 400),
         url,
         date: kstDate(Number.isNaN(pub) ? new Date() : new Date(pub)),
+        image: wide ? decode(wide[1]) : null,
       });
     }
   }
@@ -100,6 +105,11 @@ export async function ensureSeedNews() {
     .from("news_lessons")
     .upsert(seedNews, { onConflict: "source_url", ignoreDuplicates: true });
   if (error) console.error("기본 뉴스 넣기 실패:", error.message);
+  // 사진이 나중에 생긴 기본 뉴스는 사진만 채운다
+  for (const n of seedNews) {
+    if (!n.image_url) continue;
+    await supabase.from("news_lessons").update({ image_url: n.image_url }).eq("source_url", n.source_url).is("image_url", null);
+  }
 }
 
 /** ABC 헤드라인에서 레슨 count개를 Claude로 만들어 저장. 이미 있는 기사는 건너뛴다 */
@@ -127,7 +137,7 @@ export async function generateNewsLessons(count = 2): Promise<{ created: number;
     messages: [
       {
         role: "user",
-        content: `오늘 레슨 ${count}개를 만들어 주세요.\n\n${JSON.stringify(fresh)}`,
+        content: `오늘 레슨 ${count}개를 만들어 주세요.\n\n${JSON.stringify(fresh.map((h) => ({ title: h.title, teaser: h.teaser, url: h.url, date: h.date })))}`,
       },
     ],
   });
@@ -154,6 +164,7 @@ export async function generateNewsLessons(count = 2): Promise<{ created: number;
       topic: l.topic ?? "📰 뉴스",
       level: ["쉬움", "보통", "어려움"].includes(l.level ?? "") ? l.level! : "보통",
       published_on: byUrl.get(l.source_url!)!.date,
+      image_url: byUrl.get(l.source_url!)!.image,
       summary_en: l.summary_en!,
       summary_ko: l.summary_ko ?? "",
       expressions: l.expressions ?? [],

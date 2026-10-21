@@ -95,7 +95,7 @@ export default async function StudentHomePage() {
     getTests(student.id),
     createServerSupabaseClient()
       .from("news_lessons")
-      .select("id, title_ko, topic, level")
+      .select("id, title_ko, topic, level, image_url")
       .eq("is_published", true)
       .order("published_on", { ascending: false })
       .order("created_at", { ascending: false })
@@ -227,7 +227,12 @@ export default async function StudentHomePage() {
           href={`/student/news/${latestNews.id}`}
           className={`${cardClass} flex items-center gap-3 hover:border-brand-300`}
         >
-          <span className="text-3xl">📰</span>
+          {latestNews.image_url ? (
+            // eslint-disable-next-line @next/next/no-img-element -- ABC 대표 사진
+            <img src={latestNews.image_url} alt="" className="h-14 w-20 shrink-0 rounded-xl object-cover" />
+          ) : (
+            <span className="text-3xl">📰</span>
+          )}
           <span className="flex min-w-0 flex-col">
             <span className="text-xs font-semibold text-brand-600">
               오늘의 호주 뉴스 · {latestNews.level}
