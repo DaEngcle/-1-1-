@@ -12,7 +12,15 @@ type Ctx = typeof AudioContext;
  * (예전엔 MediaRecorder로 압축 녹음 → 변환했는데, 아이폰 사파리에서 변환할 때
  *  앞 0.5초만 남고 잘리는 일이 있어서 채점이 0점으로 나왔다)
  */
-export function useRecorder(maxSeconds: number) {
+export function useRecorder(
+  maxSeconds: number,
+  /** 녹음이 끝나면 (성공: WAV, 실패: null) */
+  onFinished?: (wav: Blob | null) => void,
+) {
+  const onFinishedRef = useRef(onFinished);
+  useEffect(() => {
+    onFinishedRef.current = onFinished;
+  });
   const [recording, setRecording] = useState(false);
   const [seconds, setSeconds] = useState(0);
   const [level, setLevel] = useState(0);
@@ -74,10 +82,12 @@ export function useRecorder(maxSeconds: number) {
 
     if (total / rate < 0.8) {
       setError("녹음이 너무 짧아요. 버튼을 누르고 문장을 끝까지 말한 다음 멈춰주세요.");
+      onFinishedRef.current?.(null);
       return;
     }
     if (peak < 0.01) {
       setError("소리가 거의 녹음되지 않았어요. 마이크를 손으로 막고 있지 않은지 확인하고 다시 녹음해주세요.");
+      onFinishedRef.current?.(null);
       return;
     }
     const wav = encodeWav16kMono(samples, rate);
@@ -86,6 +96,7 @@ export function useRecorder(maxSeconds: number) {
       if (old) URL.revokeObjectURL(old);
       return URL.createObjectURL(wav);
     });
+    onFinishedRef.current?.(wav);
   }
 
   async function start() {
@@ -135,6 +146,7 @@ export function useRecorder(maxSeconds: number) {
     } catch {
       release();
       setError("마이크 권한이 필요해요. 브라우저 설정에서 마이크를 허용해주세요.");
+      onFinishedRef.current?.(null);
     } finally {
       startingRef.current = false;
     }

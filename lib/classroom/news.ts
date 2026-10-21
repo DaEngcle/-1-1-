@@ -128,7 +128,7 @@ export async function generateNewsLessons(count = 2): Promise<{ created: number;
 
   const client = new Anthropic();
   const response = await client.beta.messages.create({
-    model: "claude-opus-5-5",
+    model: "claude-sonnet-5-5",
     max_tokens: 8000,
     output_config: { effort: "low" },
     betas: ["server-side-fallback-2026-07-01"],

@@ -3,8 +3,10 @@ import { getSpeechAudio, mp3Response } from "@/lib/classroom/speech-cache";
 import { getVerifiedStudent, isTeacher } from "@/lib/classroom/dal";
 import {
   TTS_SPEEDS,
+  TTS_VOICES,
   isAzureConfigured,
   type TtsSpeed,
+  type TtsVoice,
 } from "@/lib/classroom/azure-speech";
 
 const MAX_TEXT_LENGTH = 300;
@@ -28,9 +30,11 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "bad_request" }, { status: 400 });
   }
   const speed = speedParam as TtsSpeed;
+  const voiceParam = request.nextUrl.searchParams.get("voice") ?? "a";
+  const voice: TtsVoice = voiceParam in TTS_VOICES ? (voiceParam as TtsVoice) : "a";
 
   try {
-    return mp3Response(await getSpeechAudio(text, speed));
+    return mp3Response(await getSpeechAudio(text, speed, voice));
   } catch (e) {
     console.error(e);
     return NextResponse.json({ error: "tts_failed" }, { status: 502 });

@@ -8,6 +8,7 @@ export const metadata: Metadata = { title: "다잉클 클래스룸" };
 const NAV = [
   { href: "/student", label: "홈 · 내 성과" },
   { href: "/student/lessons", label: "강의 · 쉐도잉" },
+  { href: "/student/talk", label: "🎭 AI 면접" },
   { href: "/student/voca", label: "🎮 보카" },
   { href: "/student/league", label: "🏆 리그" },
   { href: "/student/news", label: "📰 뉴스로 공부" },

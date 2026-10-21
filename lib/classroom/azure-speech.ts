@@ -2,7 +2,18 @@ import "server-only";
 
 export const TTS_VOICE = "en-AU-NatashaNeural";
 // 대화 듣기용 두 목소리 (A: 여성, B: 남성)
-export const TTS_VOICES = { a: "en-AU-NatashaNeural", b: "en-AU-WilliamNeural" } as const;
+export const TTS_VOICES = {
+  a: "en-AU-NatashaNeural",
+  b: "en-AU-WilliamNeural",
+  // AI 면접관 목소리 (호주 억양)
+  carly: "en-AU-CarlyNeural",
+  duncan: "en-AU-DuncanNeural",
+  annette: "en-AU-AnnetteNeural",
+  ken: "en-AU-KenNeural",
+  elsie: "en-AU-ElsieNeural",
+  tina: "en-AU-TinaNeural",
+  tim: "en-AU-TimNeural",
+} as const;
 export type TtsVoice = keyof typeof TTS_VOICES;
 export const TTS_SPEEDS = { normal: "0%", slow: "-35%" } as const;
 export type TtsSpeed = keyof typeof TTS_SPEEDS;

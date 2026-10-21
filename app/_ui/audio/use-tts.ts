@@ -58,15 +58,15 @@ export function useTts() {
   );
 
   /** 서버 음성을 받아 캐시에 넣는다 (같은 문장은 한 번만 요청) */
-  const load = useCallback(async (text: string, speed: Speed) => {
-    const cacheKey = `${speed}:${text}`;
+  const load = useCallback(async (text: string, speed: Speed, voice = "a") => {
+    const cacheKey = `${voice}:${speed}:${text}`;
     const cached = cacheRef.current.get(cacheKey);
     if (cached) return cached;
     const pending = pendingRef.current.get(cacheKey);
     if (pending) return pending;
     const job = (async () => {
       try {
-        const res = await fetch(`/api/tts?speed=${speed}&text=${encodeURIComponent(text)}`);
+        const res = await fetch(`/api/tts?speed=${speed}&voice=${voice}&text=${encodeURIComponent(text)}`);
         if (res.ok) {
           const url = URL.createObjectURL(await res.blob());
           cacheRef.current.set(cacheKey, url);
@@ -86,19 +86,19 @@ export function useTts() {
 
   /** 미리 받아두기 (문제가 뜰 때 정답 문장을 준비) */
   const preload = useCallback(
-    (text: string | undefined, speed: Speed = "normal") => {
-      if (text && serverAvailable.current) void load(text, speed);
+    (text: string | undefined, speed: Speed = "normal", voice = "a") => {
+      if (text && serverAvailable.current) void load(text, speed, voice);
     },
     [load],
   );
 
   const play = useCallback(
-    async (text: string, speed: Speed = "normal", key = `${speed}:${text}`): Promise<void> => {
+    async (text: string, speed: Speed = "normal", key = `${speed}:${text}`, voice = "a"): Promise<void> => {
       stop();
       const id = playIdRef.current;
       if (serverAvailable.current) {
-        if (!cacheRef.current.has(`${speed}:${text}`)) setPlayingKey(key);
-        const url = await load(text, speed);
+        if (!cacheRef.current.has(`${voice}:${speed}:${text}`)) setPlayingKey(key);
+        const url = await load(text, speed, voice);
         if (id !== playIdRef.current) return; // 그사이 다른 소리를 틀었거나 멈춤
         if (url) {
           const audio = new Audio(url);

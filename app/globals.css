@@ -92,3 +92,11 @@ button:disabled {
 @keyframes cat-tail { 0% { transform: translateX(0); } 50% { transform: translateX(0.5px) skewX(-12deg); } }
 @keyframes cat-wave { 0% { transform: rotate(0); } 50% { transform: rotate(-14deg); } }
 @keyframes cat-z { 0% { opacity: 0; transform: translateY(0.8px); } 40% { opacity: 1; } 100% { opacity: 0; transform: translateY(-1.5px); } }
+
+/* AI 면접관: 눈 깜빡 · 말할 때 입 움직이기 */
+.iv-eyes { transform-box: fill-box; transform-origin: center; animation: iv-blink 4.6s steps(1, end) infinite; }
+.iv-mouth-open { opacity: 0; }
+.iv-talking .iv-mouth-open { animation: iv-talk 0.34s steps(1, end) infinite; }
+.iv-talking .iv-mouth-closed { animation: iv-talk 0.34s steps(1, end) infinite reverse; }
+@keyframes iv-blink { 0% { transform: scaleY(1); } 95% { transform: scaleY(0.12); } 98% { transform: scaleY(1); } }
+@keyframes iv-talk { 0% { opacity: 1; } 50% { opacity: 0; } }
