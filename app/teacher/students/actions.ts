@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { requireTeacher } from "@/lib/classroom/dal";
 import { generateLoginCode, hashLoginCode } from "@/lib/classroom/login-code";
@@ -127,44 +128,57 @@ export async function approveStudent(formData: FormData) {
  */
 export async function mergeSignup(formData: FormData) {
   await requireTeacher();
+  // 실패하면 이유를 화면 위에 띄운다 (조용히 아무 일도 안 일어나지 않게)
+  const fail = (why: string): never => {
+    console.error("학생 합치기 실패:", why);
+    redirect(`/teacher/students?merge_error=${encodeURIComponent(why)}`);
+  };
   // 승인 폼 안의 '합치기' 버튼으로 오면 신청서 id는 "id"로 온다
   const pendingId = String(formData.get("pending_id") ?? formData.get("id"));
-  const targetId = String(formData.get("target_id"));
+  const targetId = String(formData.get("target_id") ?? "");
   const plan = String(formData.get("plan"));
   const start = String(formData.get("start") || kstDate(new Date()));
-  if (!isPlanId(plan) || !/^\d{4}-\d{2}-\d{2}$/.test(start) || pendingId === targetId) return;
+  if (!targetId || targetId === "null") fail("합칠 카드 정보가 안 넘어왔어요");
+  if (!isPlanId(plan)) fail(`수강권을 알 수 없어요 (${plan})`);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(start)) fail(`시작일 형식이 이상해요 (${start})`);
+  if (pendingId === targetId) fail("같은 카드끼리는 합칠 수 없어요");
   const supabase = createServerSupabaseClient();
-  const [{ data: pending }, { data: target }] = await Promise.all([
+  const [{ data: pending, error: e1 }, { data: target, error: e2 }] = await Promise.all([
     supabase.from("students").select("phone, nickname, password_hash, privacy_agreed_at, approval").eq("id", pendingId).maybeSingle(),
     supabase.from("students").select("access_until, password_hash, login_code_hash").eq("id", targetId).maybeSingle(),
   ]);
-  if (!pending || pending.approval !== "pending" || !target || target.password_hash || target.login_code_hash) return;
+  if (e1 || e2) fail(`불러오기 오류: ${(e1 ?? e2)!.message}`);
+  if (!pending) fail("가입 신청서를 못 찾았어요");
+  if (pending!.approval !== "pending") fail("이미 처리된 신청이에요");
+  if (!target) fail("합칠 카드를 못 찾았어요");
+  if (target!.password_hash || target!.login_code_hash) fail("합칠 카드에 이미 로그인 정보가 있어요");
   // 전화번호는 한 사람만 쓸 수 있어서, 신청서의 번호를 먼저 비우고 옮긴 뒤 신청서를 지운다
-  await supabase.from("students").update({ phone: null, nickname: null }).eq("id", pendingId);
+  const { error: e3 } = await supabase.from("students").update({ phone: null, nickname: null }).eq("id", pendingId);
+  if (e3) fail(`신청서 정리 오류: ${e3.message}`);
   const { error } = await supabase
     .from("students")
     .update({
-      phone: pending.phone,
-      nickname: pending.nickname,
-      password_hash: pending.password_hash,
-      privacy_agreed_at: pending.privacy_agreed_at,
+      phone: pending!.phone,
+      nickname: pending!.nickname,
+      password_hash: pending!.password_hash,
+      privacy_agreed_at: pending!.privacy_agreed_at,
       approval: "approved",
       is_active: true,
       stage: "enrolled",
       plan,
       // 시트의 예전 종료일이 이미 지났으면 새 시작일 기준으로 다시 계산 (안 그러면 바로 '기간 만료')
       access_until:
-        target.access_until && (target.access_until as string) >= kstDate(new Date())
-          ? (target.access_until as string)
-          : accessUntil(plan, start),
+        target!.access_until && (target!.access_until as string) >= kstDate(new Date())
+          ? (target!.access_until as string)
+          : accessUntil(plan as Parameters<typeof accessUntil>[0], start),
     })
     .eq("id", targetId);
   if (error) {
-    console.error("학생 합치기 실패:", error);
-    await supabase.from("students").update({ phone: pending.phone, nickname: pending.nickname }).eq("id", pendingId);
-    return;
+    await supabase.from("students").update({ phone: pending!.phone, nickname: pending!.nickname }).eq("id", pendingId);
+    fail(`합치기 오류: ${error.message}`);
   }
-  await supabase.from("students").delete().eq("id", pendingId);
+  const { error: e4 } = await supabase.from("students").delete().eq("id", pendingId);
+  if (e4) console.error("신청서 지우기 실패:", e4.message);
   revalidatePath("/teacher/students");
   revalidatePath("/teacher/crm");
 }

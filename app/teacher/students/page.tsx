@@ -60,6 +60,7 @@ export default async function StudentsPage({
     sort?: string;
     cohort?: string;
     q?: string;
+    merge_error?: string;
   }>;
 }) {
   await requireTeacher();
@@ -239,6 +240,12 @@ export default async function StudentsPage({
             </p>
           )}
         </section>
+      )}
+
+      {params.merge_error && (
+        <p className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm font-semibold text-red-700">
+          ⚠️ 합쳐서 승인하지 못했어요: {params.merge_error}
+        </p>
       )}
 
       {pendingStudents.length > 0 && (
