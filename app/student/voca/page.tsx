@@ -47,10 +47,23 @@ export default async function VocaHomePage() {
         </span>
       </Link>
 
-      <div className="flex flex-col gap-1 rounded-3xl border-2 border-dashed border-slate-200 bg-white/60 p-4">
-        <span className="text-lg font-extrabold text-zinc-400">📚 과정별 단어</span>
-        <p className="text-sm text-zinc-400">부트캠프·Level 1.0·2.0에서 나온 단어로 복습해요. 곧 열려요!</p>
-      </div>
+      <Link
+        href="/student/voca/course"
+        className="flex flex-col gap-1 rounded-3xl border-2 border-sky-200 bg-white p-4 shadow-sm transition-transform active:translate-y-0.5"
+      >
+        <span className="text-lg font-extrabold text-zinc-900">📚 과정별 단어</span>
+        <p className="text-sm text-zinc-600">
+          부트캠프·Level 1.0·2.0 수업에서 쉐도잉한 문장으로 주차별 복습. 빈칸 채우기 + 듣고 뜻 고르기.
+        </p>
+      </Link>
+
+      <Link
+        href="/student/voca/slang"
+        className="flex flex-col gap-1 rounded-3xl border-2 border-teal-200 bg-white p-4 shadow-sm transition-transform active:translate-y-0.5"
+      >
+        <span className="text-lg font-extrabold text-zinc-900">🦘 호주 슬랭</span>
+        <p className="text-sm text-zinc-600">arvo, servo, no worries, Yeah nah… 호주에서 매일 듣는 말 60개.</p>
+      </Link>
     </>
   );
 }
