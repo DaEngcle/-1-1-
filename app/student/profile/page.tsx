@@ -3,6 +3,7 @@ import { requireStudent } from "@/lib/classroom/dal";
 import { NicknameForm } from "./nickname-form";
 import { cardClass } from "@/app/_ui/styles";
 import { CatPicker } from "@/app/_ui/cat-picker";
+import { CatNameForm } from "@/app/_ui/cat-name-form";
 
 export default async function StudentProfilePage() {
   const student = await requireStudent();
@@ -25,6 +26,12 @@ export default async function StudentProfilePage() {
           홈에서 매일 응원해주는 고양이예요. 누르면 바로 바뀌어요.
         </p>
         <CatPicker current={student.catBreed} />
+        {student.catBreed && (
+          <div className="mt-4 flex flex-col gap-1">
+            <p className="text-sm font-bold text-zinc-800">이름</p>
+            <CatNameForm current={student.catName} />
+          </div>
+        )}
       </section>
     </>
   );

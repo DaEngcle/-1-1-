@@ -7,6 +7,7 @@ import { PLANS, isPlanId } from "@/lib/classroom/plans";
 import { kstDate } from "@/lib/classroom/stats";
 import { CatSprite } from "@/app/_ui/cat";
 import { CatPicker } from "@/app/_ui/cat-picker";
+import { CatNameForm } from "@/app/_ui/cat-name-form";
 import type { CatMood } from "@/lib/classroom/cat";
 
 /** 오늘 상태에 따라 고양이 표정과 한마디 (듀오링고식) */
@@ -132,6 +133,9 @@ export default async function StudentHomePage() {
                 {nickname ?? student.name}님, 반가워요 👋
               </h1>
               <p className="rounded-2xl rounded-tl-sm bg-white px-3 py-2 text-sm font-bold text-brand-700 shadow-sm">
+                {student.catName && (
+                  <span className="block text-[11px] font-semibold text-brand-500">{student.catName}</span>
+                )}
                 {greeting.text}
               </p>
             </div>
@@ -199,6 +203,13 @@ export default async function StudentHomePage() {
             </p>
           </div>
           <CatPicker current={null} />
+        </section>
+      )}
+
+      {student.catBreed && !student.catName && (
+        <section className="flex flex-col gap-2 rounded-3xl border-2 border-dashed border-brand-200 bg-white p-4">
+          <p className="font-extrabold text-zinc-900">🐾 고양이 이름을 지어주세요!</p>
+          <CatNameForm current={null} />
         </section>
       )}
 

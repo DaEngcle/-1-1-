@@ -22,7 +22,7 @@ export default async function StudentLayout({
   const student = await requireStudent();
   return (
     <AppShell title={`다잉클 · ${student.nickname ?? student.name}`} nav={NAV}>
-      <CatProvider breed={student.catBreed}>{children}</CatProvider>
+      <CatProvider breed={student.catBreed} name={student.catName}>{children}</CatProvider>
     </AppShell>
   );
 }

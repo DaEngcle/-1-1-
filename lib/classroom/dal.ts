@@ -33,7 +33,7 @@ export const checkStudent = cache(async () => {
   const supabase = createServerSupabaseClient();
   const { data: student, error } = await supabase
     .from("students")
-    .select("id, name, nickname, is_active, session_version, approval, plan, access_until, early_courses, cat_breed")
+    .select("id, name, nickname, is_active, session_version, approval, plan, access_until, early_courses, cat_breed, cat_name")
     .eq("id", session.studentId)
     .maybeSingle();
   // DB 오류(예: 새 칸이 아직 없음)를 '로그인 만료'로 착각하지 않도록 기록
@@ -52,6 +52,7 @@ export const checkStudent = cache(async () => {
       nickname: (student.nickname as string | null) ?? null,
       /** 고른 응원 고양이 (아직 안 골랐으면 null) */
       catBreed: isCatBreed(student.cat_breed) ? student.cat_breed : null,
+      catName: (student.cat_name as string | null) ?? null,
       plan: (student.plan as string | null) ?? null,
       accessUntil: (student.access_until as string | null) ?? null,
       courses: coursesForPlan(student.plan),

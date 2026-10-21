@@ -54,7 +54,7 @@ export async function sendDailyReminders() {
   if (ids.length === 0) return { checked: 0, sent: 0, paused: 0 };
 
   const [{ data: students }, { data: daily }, { data: subRows }, { data: logs }] = await Promise.all([
-    supabase.from("students").select("id, name, nickname, is_active, approval").in("id", ids),
+    supabase.from("students").select("id, name, nickname, is_active, approval, cat_name").in("id", ids),
     supabase.from("daily_activity").select("student_id, day, watched_seconds").in("student_id", ids).gte("day", since),
     supabase.from("submissions").select("student_id, created_at").in("student_id", ids).gte("created_at", `${since}T00:00:00+09:00`),
     supabase.from("push_log").select("student_id, kind, sent_at").in("student_id", ids).gte("sent_at", `${addDays(today, -30)}T00:00:00+09:00`),
@@ -91,7 +91,10 @@ export async function sendDailyReminders() {
       if (n) paused++;
       continue;
     }
-    if (await sendPushToStudent(st.id, { ...msg, url: "/student/lessons", tag: "reminder" }, "reminder")) sent++;
+    // 고양이 이름이 있으면 고양이가 보내는 것처럼
+    const catName = st.cat_name as string | null;
+    const title = catName ? `${catName}: ${msg.title}` : msg.title;
+    if (await sendPushToStudent(st.id, { ...msg, title, url: "/student/lessons", tag: "reminder" }, "reminder")) sent++;
   }
   return { checked: ids.length, sent, paused };
 }

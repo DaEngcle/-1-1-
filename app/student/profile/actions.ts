@@ -36,3 +36,20 @@ export async function chooseCat(formData: FormData) {
   if (error) console.error("고양이 저장 실패:", error.message);
   revalidatePath("/student", "layout");
 }
+
+/** 고양이 이름 짓기 (1~10자) */
+export async function saveCatName(_prev: NicknameState, formData: FormData): Promise<NicknameState> {
+  const student = await requireStudent();
+  const name = String(formData.get("cat_name") ?? "").trim().replace(/\s+/g, " ");
+  if (name.length < 1 || [...name].length > 10) {
+    return { status: "error", message: "이름은 1~10자로 지어주세요." };
+  }
+  const supabase = createServerSupabaseClient();
+  const { error } = await supabase.from("students").update({ cat_name: name }).eq("id", student.id);
+  if (error) {
+    console.error("고양이 이름 저장 실패:", error.message);
+    return { status: "error", message: "저장 중 오류가 발생했어요." };
+  }
+  revalidatePath("/student", "layout");
+  return { status: "success", message: `이제 이름은 '${name}'! 🐾` };
+}

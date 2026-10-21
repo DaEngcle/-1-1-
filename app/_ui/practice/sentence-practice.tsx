@@ -9,7 +9,7 @@ import { useTts } from "@/app/_ui/audio/use-tts";
 import { toWav16kMono } from "@/app/_ui/audio/wav";
 import { useRecorder } from "@/app/_ui/audio/use-recorder";
 import { CatSprite } from "@/app/_ui/cat";
-import { useCatBreed } from "@/app/_ui/cat-context";
+import { useMyCat } from "@/app/_ui/cat-context";
 import type { CatMood } from "@/lib/classroom/cat";
 
 /** 점수에 따라 고양이 반응 */
@@ -51,7 +51,7 @@ function ScoreBadge({ label, value }: { label: string; value?: number | null }) 
 }
 
 function ResultView({ result, onPlayWord }: { result: PracticeResult; onPlayWord: (w: string) => void }) {
-  const breed = useCatBreed();
+  const cat = useMyCat();
   if (result.status === "failed") {
     return <p className="text-sm text-red-600">{result.error ?? "평가에 실패했어요. 다시 녹음해보세요."}</p>;
   }
@@ -73,10 +73,11 @@ function ResultView({ result, onPlayWord }: { result: PracticeResult; onPlayWord
 
   return (
     <div className="flex flex-col gap-3">
-      {breed && result.overall_score != null && (
+      {cat && result.overall_score != null && (
         <div className="flex items-center gap-2">
-          <CatSprite breed={breed} mood={catReaction(result.overall_score).mood} className="h-14 w-16 shrink-0" />
+          <CatSprite breed={cat.breed} mood={catReaction(result.overall_score).mood} className="h-14 w-16 shrink-0" />
           <p className="rounded-2xl rounded-tl-sm bg-brand-50 px-3 py-2 text-sm font-bold text-brand-700">
+            {cat.name && <span className="block text-[11px] font-semibold text-brand-500">{cat.name}</span>}
             {catReaction(result.overall_score).text}
           </p>
         </div>
