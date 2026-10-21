@@ -33,7 +33,10 @@ export default async function TeacherResourcesPage() {
       .select("*")
       .order("sort_order")
       .order("created_at"),
-    supabase.from("resource_downloads").select("resource_id, student_id"),
+    supabase
+      .from("resource_downloads")
+      .select("resource_id, student_id, created_at, students(name, phone, stage, plan)")
+      .order("created_at", { ascending: false }),
     supabase
       .from("students")
       .select("id", { count: "exact", head: true })
@@ -48,14 +51,45 @@ export default async function TeacherResourcesPage() {
   ]);
   const host = (await headers()).get("host") ?? "dingle-classroom.vercel.app";
   const freeUrl = `https://${host}/free`;
-  const stats = new Map<string, { total: number; people: Set<string> }>();
+  type Who = {
+    id: string;
+    name: string;
+    phone: string | null;
+    member: string;
+    count: number;
+    last: string;
+  };
+  const stats = new Map<
+    string,
+    { total: number; people: Set<string>; who: Map<string, Who> }
+  >();
+  // 최신순으로 오므로 처음 본 날짜가 마지막으로 받은 날
   for (const d of downloads ?? []) {
     const s = stats.get(d.resource_id) ?? {
       total: 0,
       people: new Set<string>(),
+      who: new Map<string, Who>(),
     };
     s.total++;
-    if (d.student_id) s.people.add(d.student_id);
+    if (d.student_id) {
+      s.people.add(d.student_id);
+      const st = d.students as unknown as {
+        name: string;
+        phone: string | null;
+        stage: string | null;
+        plan: string | null;
+      } | null;
+      const w = s.who.get(d.student_id) ?? {
+        id: d.student_id,
+        name: st?.name ?? "(지워진 학생)",
+        phone: st?.phone ?? null,
+        member: st?.stage === "enrolled" || st?.plan ? "수강생" : "무료회원",
+        count: 0,
+        last: d.created_at,
+      };
+      w.count++;
+      s.who.set(d.student_id, w);
+    }
     stats.set(d.resource_id, s);
   }
 
@@ -177,6 +211,50 @@ export default async function TeacherResourcesPage() {
                   ⬇ {s?.people.size ?? 0}명 · {s?.total ?? 0}회
                 </span>
               </div>
+              {s && s.who.size > 0 && (
+                <details className="rounded-xl bg-slate-50 px-3 py-2 text-sm">
+                  <summary className="cursor-pointer font-semibold text-brand-700">
+                    👀 받아간 사람 {s.who.size}명 보기
+                  </summary>
+                  <ul className="mt-2 flex flex-col divide-y divide-slate-200">
+                    {[...s.who.values()].map((w) => (
+                      <li
+                        key={w.id}
+                        className="flex flex-wrap items-center justify-between gap-x-3 gap-y-0.5 py-1.5"
+                      >
+                        <span className="flex items-center gap-1.5">
+                          <a
+                            href={`/teacher/students/${w.id}`}
+                            className="font-bold text-zinc-900 underline-offset-2 hover:underline"
+                          >
+                            {w.name}
+                          </a>
+                          <span
+                            className={`rounded-full px-1.5 py-0.5 text-[10px] font-bold ${
+                              w.member === "수강생"
+                                ? "bg-brand-50 text-brand-700"
+                                : "bg-[#fff8db] text-amber-800"
+                            }`}
+                          >
+                            {w.member}
+                          </span>
+                          {w.phone && (
+                            <span className="text-xs text-zinc-500">{w.phone}</span>
+                          )}
+                        </span>
+                        <span className="text-xs text-zinc-500">
+                          {w.count}회 · 마지막{" "}
+                          {new Date(w.last).toLocaleDateString("ko-KR", {
+                            timeZone: "Asia/Seoul",
+                            month: "numeric",
+                            day: "numeric",
+                          })}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </details>
+              )}
               <div className="flex flex-wrap items-center gap-2 text-xs">
                 <a
                   href={`/api/resources/${r.id}`}
