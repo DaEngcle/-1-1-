@@ -20,6 +20,8 @@ type Breed = {
   eye2?: string;
   /** 감은 눈 색 (털이 검으면 밝게) */
   lid?: string;
+  /** 장모종: 볼 털·귀 끝 털·풍성한 꼬리 */
+  fluffy?: boolean;
   /** 흰 배경에서 안 묻히게 테두리 */
   outline?: string;
 };
@@ -64,6 +66,11 @@ export const CAT_BREEDS = {
     name: "하얀 고양이",
     fur: "#FBFBFC", dark: "#D5D9E1", belly: "#FFFFFF", ear: "#FFB3C1",
     eye: "#3B82F6", eye2: "#E8B93B", pupil: "#1F2433", outline: "#C9CED8",
+  },
+  angora: {
+    name: "터키시 앙고라",
+    fur: "#FFFFFF", dark: "#CDD2DB", belly: "#FFFFFF", ear: "#FFC2CE",
+    eye: "#C2CF4E", pupil: "#3A4A1F", outline: "#C3C9D4", fluffy: true,
   },
 } satisfies Record<string, Breed>;
 
@@ -131,6 +138,11 @@ export function catPixels(breedId: CatBreed, mood: CatMood): { pixels: CatPixel[
     // 하얀 주둥이 (입이 보이게)
     for (let y = 8; y <= 9; y++) for (let x = 6; x <= 11; x++) put(x, y, "b");
     put(7, 7, "b"); put(8, 7, "b"); put(9, 7, "b"); put(10, 7, "b");
+  }
+
+  if (B.fluffy) {
+    // 볼 옆 복슬 털 + 귀 끝 털 + 턱 아래 목털
+    for (const [x, y] of [[0, 7], [0, 8], [0, 9], [17, 7], [17, 8], [17, 9], [1, 10], [16, 10], [3, 0], [14, 0]]) put(x, y, "#");
   }
 
   // 눈
@@ -212,6 +224,14 @@ export function catPixels(breedId: CatBreed, mood: CatMood): { pixels: CatPixel[
       }
   }
   const tail = B.point ?? B.dark;
+  if (B.fluffy) {
+    // 깃털처럼 풍성한 꼬리
+    pixels.push(
+      { x: 18, y: 9, w: 2, h: 3, fill: B.dark, part: "tail" },
+      { x: 19, y: 6, w: 2, h: 3, fill: B.dark, part: "tail" },
+      { x: 20, y: 4, w: 1, h: 2, fill: B.dark, part: "tail" },
+    );
+  }
   pixels.push(
     { x: 17, y: 9, w: 1, h: 3, fill: tail, part: "tail" },
     { x: 18, y: 7, w: 1, h: 3, fill: tail, part: "tail" },
