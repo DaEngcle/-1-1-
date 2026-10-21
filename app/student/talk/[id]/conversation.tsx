@@ -25,16 +25,22 @@ const MAX_ANSWER_SECONDS = 40;
 
 export function Conversation({ scenario: s, ready }: { scenario: Scenario; ready: boolean }) {
   const { play, stop, playingKey } = useTts();
-  const recorder = useRecorder(MAX_ANSWER_SECONDS, (wav) => {
-    if (wav) void sendAnswer(wav);
-    else setPhase("listening");
-  });
+  const recorder = useRecorder(
+    MAX_ANSWER_SECONDS,
+    (wav) => {
+      if (wav) void sendAnswer(wav);
+      else setPhase("listening");
+    },
+    { keepContext: true },
+  );
+  // 실전: 면접관 말이 끝나면 바로 마이크가 켜지고, 말을 멈추면 자동 전송 · 연습: 버튼으로
+  const [mode, setMode] = useState<"real" | "practice">("real");
   const cat = useMyCat();
   const [phase, setPhase] = useState<Phase>("intro");
   const [turns, setTurns] = useState<Turn[]>([]);
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [mood, setMood] = useState<"smile" | "neutral" | "thinking">("smile");
-  const [subtitles, setSubtitles] = useState(true);
+  const [subtitles, setSubtitles] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<Feedback | null>(null);
   const [ended, setEnded] = useState(false);
@@ -50,11 +56,14 @@ export function Conversation({ scenario: s, ready }: { scenario: Scenario; ready
     setPhase("talking");
     await play(text, "normal", `iv:${text}`, s.voice);
     if (last) void finish();
+    else if (mode === "real") startRecording();
     else setPhase("listening");
   }
 
   async function start() {
     setError(null);
+    // 지금(버튼을 누른 순간) 오디오를 켜 둬야, 나중에 손 안 대고 녹음이 시작된다 (아이폰)
+    recorder.prepare();
     setPhase("thinking");
     const res = await fetch("/api/interview/start", {
       method: "POST",
@@ -103,7 +112,7 @@ export function Conversation({ scenario: s, ready }: { scenario: Scenario; ready
     stop();
     setError(null);
     setPhase("recording");
-    void recorder.start();
+    void recorder.start({ autoStop: mode === "real" });
   }
 
   async function finish() {
@@ -162,8 +171,28 @@ export function Conversation({ scenario: s, ready }: { scenario: Scenario; ready
           </ul>
         </div>
         <div className="rounded-2xl bg-sky-50 p-3 text-xs leading-relaxed text-sky-900">
-          🎧 면접관이 말하면 듣고, <b>🎙 버튼을 눌러 말한 뒤 다시 눌러 끝내요.</b> 6~8번 주고받으면 면접이 끝나고 코칭
-          리포트가 나와요. 조용한 곳에서 해주세요!
+          🎧 6~8번 주고받으면 면접이 끝나고 코칭 리포트가 나와요. 자막은 꺼져 있어요 (진짜 면접처럼!). 안 들리면 💬
+          자막을 켜거나 🐢로 천천히 다시 들어요. 조용한 곳에서 해주세요!
+        </div>
+        <div className="grid grid-cols-2 gap-2">
+          {(
+            [
+              ["real", "🎧 실전 모드", "면접관 말이 끝나면 바로 대답. 말을 멈추면 자동으로 넘어가요."],
+              ["practice", "👆 연습 모드", "🎙 버튼을 눌러 말하고, 다시 눌러 끝내요. 생각할 시간이 있어요."],
+            ] as const
+          ).map(([id, title, desc]) => (
+            <button
+              key={id}
+              type="button"
+              onClick={() => setMode(id)}
+              className={`flex flex-col gap-1 rounded-2xl border-2 p-3 text-left ${
+                mode === id ? "border-[#6C5CFF] bg-[#F1EEFF]" : "border-slate-200 bg-white"
+              }`}
+            >
+              <span className="font-extrabold text-zinc-900">{title}</span>
+              <span className="text-xs text-zinc-600">{desc}</span>
+            </button>
+          ))}
         </div>
         {error && <p className="rounded-xl bg-rose-50 p-3 text-sm font-semibold text-rose-700">{error}</p>}
         <button
@@ -319,8 +348,12 @@ export function Conversation({ scenario: s, ready }: { scenario: Scenario; ready
             : phase === "thinking"
               ? "🤔 듣고 생각하는 중…"
               : phase === "recording"
-                ? "🎙 듣고 있어요. 다 말하면 버튼을 다시 눌러요"
-                : "당신 차례예요!"}
+                ? mode === "real"
+                  ? "🎙 듣고 있어요… 말을 멈추면 자동으로 보내요"
+                  : "🎙 듣고 있어요. 다 말하면 버튼을 다시 눌러요"
+                : mode === "real"
+                  ? "🎙 버튼을 눌러 다시 말해 주세요"
+                  : "당신 차례예요!"}
         </p>
       </div>
 
@@ -358,10 +391,10 @@ export function Conversation({ scenario: s, ready }: { scenario: Scenario; ready
           <button
             type="button"
             onClick={recorder.stop}
-            className="flex h-24 w-24 flex-col items-center justify-center rounded-full bg-rose-500 text-white shadow-[0_6px_0_#BE123C] active:translate-y-[3px] active:shadow-none"
+            className={`flex h-24 w-24 flex-col items-center justify-center rounded-full bg-rose-500 text-white shadow-[0_6px_0_#BE123C] active:translate-y-[3px] active:shadow-none ${mode === "real" ? "animate-pulse" : ""}`}
           >
-            <span className="text-3xl">■</span>
-            <span className="text-xs font-bold">{recorder.seconds}s · 끝내기</span>
+            <span className="text-3xl">{mode === "real" ? "✋" : "■"}</span>
+            <span className="text-xs font-bold">{mode === "real" ? "다 말했어요" : `${recorder.seconds}s · 끝내기`}</span>
           </button>
         ) : (
           <button

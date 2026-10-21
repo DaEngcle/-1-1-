@@ -479,7 +479,7 @@ function SpeakingItem({
             ) : (
               <button
                 type="button"
-                onClick={recorder.start}
+                onClick={() => recorder.start()}
                 disabled={busy}
                 className={`${btn} border-zinc-900 bg-zinc-900 text-white`}
               >

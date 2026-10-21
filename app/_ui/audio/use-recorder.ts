@@ -16,7 +16,10 @@ export function useRecorder(
   maxSeconds: number,
   /** 녹음이 끝나면 (성공: WAV, 실패: null) */
   onFinished?: (wav: Blob | null) => void,
+  /** keepContext: 오디오를 계속 켜 둔다 (화면을 안 눌러도 다음 녹음을 바로 시작할 수 있게 — 아이폰용) */
+  options: { keepContext?: boolean } = {},
 ) {
+  const keepContext = Boolean(options.keepContext);
   const onFinishedRef = useRef(onFinished);
   useEffect(() => {
     onFinishedRef.current = onFinished;
@@ -36,22 +39,39 @@ export function useRecorder(
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const activeRef = useRef(false);
   const startingRef = useRef(false);
+  const stopRef = useRef<() => void>(() => {});
 
-  function release() {
+  function release(closeContext = !keepContext) {
     if (timerRef.current) clearInterval(timerRef.current);
     timerRef.current = null;
     nodeRef.current?.disconnect();
     sourceRef.current?.disconnect();
     streamRef.current?.getTracks().forEach((t) => t.stop());
-    ctxRef.current?.close().catch(() => {});
+    if (closeContext) {
+      ctxRef.current?.close().catch(() => {});
+      ctxRef.current = null;
+    }
     nodeRef.current = null;
     sourceRef.current = null;
     streamRef.current = null;
-    ctxRef.current = null;
     activeRef.current = false;
   }
 
-  useEffect(() => release, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => () => release(true), []);
+
+  function makeContext() {
+    if (ctxRef.current && ctxRef.current.state !== "closed") return ctxRef.current;
+    const AudioCtx: Ctx =
+      window.AudioContext ?? (window as unknown as { webkitAudioContext: Ctx }).webkitAudioContext;
+    ctxRef.current = new AudioCtx();
+    return ctxRef.current;
+  }
+
+  /** 화면을 누른 순간에 미리 오디오를 켜 둔다 (그 뒤엔 자동으로 녹음 시작 가능) */
+  function prepare() {
+    void makeContext().resume().catch(() => {});
+  }
 
   function reset() {
     setBlob(null);
@@ -99,16 +119,16 @@ export function useRecorder(
     onFinishedRef.current?.(wav);
   }
 
-  async function start() {
+  /**
+   * autoStop: 말을 시작했다가 1.6초 조용하면 자동으로 끝낸다 (10초 동안 아무 말이 없어도 끝낸다)
+   */
+  async function start(opts: { autoStop?: boolean } = {}) {
     if (activeRef.current || startingRef.current) return;
     startingRef.current = true;
     setError(null);
     reset();
     // 아이폰은 '누른 그 순간'에 오디오를 켜야 해서, 권한을 묻기 전에 먼저 만든다
-    const AudioCtx: Ctx =
-      window.AudioContext ?? (window as unknown as { webkitAudioContext: Ctx }).webkitAudioContext;
-    const ctx = new AudioCtx();
-    ctxRef.current = ctx;
+    const ctx = makeContext();
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       streamRef.current = stream;
@@ -117,17 +137,32 @@ export function useRecorder(
       const node = ctx.createScriptProcessor(4096, 1, 1);
       chunksRef.current = [];
       let lastLevel = 0;
+      const startedAt = Date.now();
+      let spokeAt = 0; // 마지막으로 목소리가 들린 시각
+      let loudRun = 0; // 연속으로 목소리가 들린 횟수 (잡음 무시)
+      let spoke = false;
       node.onaudioprocess = (e) => {
         if (!activeRef.current) return;
         const data = e.inputBuffer.getChannelData(0);
         chunksRef.current.push(new Float32Array(data));
-        // 소리 크기 표시 (너무 자주 그리지 않게)
         let sum = 0;
         for (let i = 0; i < data.length; i += 16) sum += data[i] * data[i];
-        const rms = Math.min(1, Math.sqrt(sum / (data.length / 16)) * 6);
-        if (Math.abs(rms - lastLevel) > 0.05) {
-          lastLevel = rms;
-          setLevel(rms);
+        const raw = Math.sqrt(sum / (data.length / 16));
+        // 소리 크기 표시 (너무 자주 그리지 않게)
+        const shown = Math.min(1, raw * 6);
+        if (Math.abs(shown - lastLevel) > 0.05) {
+          lastLevel = shown;
+          setLevel(shown);
+        }
+        if (!opts.autoStop) return;
+        const now = Date.now();
+        if (raw > 0.025) {
+          loudRun++;
+          spokeAt = now;
+          if (loudRun >= 2) spoke = true;
+        } else loudRun = 0;
+        if ((spoke && now - spokeAt > 1600) || (!spoke && now - startedAt > 10000)) {
+          setTimeout(() => stopRef.current(), 0);
         }
       };
       source.connect(node);
@@ -144,7 +179,7 @@ export function useRecorder(
         if (elapsed >= maxSeconds) stop();
       }, 1000);
     } catch {
-      release();
+      release(true);
       setError("마이크 권한이 필요해요. 브라우저 설정에서 마이크를 허용해주세요.");
       onFinishedRef.current?.(null);
     } finally {
@@ -152,5 +187,9 @@ export function useRecorder(
     }
   }
 
-  return { recording, seconds, level, blob, url, error, start, stop, reset };
+  useEffect(() => {
+    stopRef.current = stop;
+  });
+
+  return { recording, seconds, level, blob, url, error, start, stop, reset, prepare };
 }
