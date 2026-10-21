@@ -14,6 +14,9 @@ export function useTts() {
   const cacheRef = useRef(new Map<string, string>());
   const serverAvailable = useRef(true);
   const loopRef = useRef(false);
+  // 재생 요청 번호: 소리를 받아오는 사이 다른 재생·정지가 오면 늦게 온 소리는 버린다
+  const playIdRef = useRef(0);
+  const pendingRef = useRef(new Map<string, Promise<string | null>>());
   const [playingKey, setPlayingKey] = useState<string | null>(null);
   const [loop, setLoopState] = useState(false);
 
@@ -23,6 +26,7 @@ export function useTts() {
   }, []);
 
   const stop = useCallback(() => {
+    playIdRef.current++;
     audioRef.current?.pause();
     if (typeof window !== "undefined") window.speechSynthesis?.cancel();
     setPlayingKey(null);
@@ -53,45 +57,77 @@ export function useTts() {
     [],
   );
 
-  const play = useCallback(
-    async (text: string, speed: Speed = "normal", key = `${speed}:${text}`) => {
-      stop();
-      if (serverAvailable.current) {
-        const cacheKey = `${speed}:${text}`;
-        let url = cacheRef.current.get(cacheKey);
-        if (!url) {
-          setPlayingKey(key);
-          const res = await fetch(
-            `/api/tts?speed=${speed}&text=${encodeURIComponent(text)}`,
-          );
-          if (res.ok) {
-            url = URL.createObjectURL(await res.blob());
-            cacheRef.current.set(cacheKey, url);
-          } else if (res.status === 503) {
-            serverAvailable.current = false;
-          }
+  /** 서버 음성을 받아 캐시에 넣는다 (같은 문장은 한 번만 요청) */
+  const load = useCallback(async (text: string, speed: Speed) => {
+    const cacheKey = `${speed}:${text}`;
+    const cached = cacheRef.current.get(cacheKey);
+    if (cached) return cached;
+    const pending = pendingRef.current.get(cacheKey);
+    if (pending) return pending;
+    const job = (async () => {
+      try {
+        const res = await fetch(`/api/tts?speed=${speed}&text=${encodeURIComponent(text)}`);
+        if (res.ok) {
+          const url = URL.createObjectURL(await res.blob());
+          cacheRef.current.set(cacheKey, url);
+          return url;
         }
+        if (res.status === 503) serverAvailable.current = false;
+      } catch {
+        // 네트워크 문제면 브라우저 음성으로
+      }
+      return null;
+    })();
+    pendingRef.current.set(cacheKey, job);
+    const url = await job;
+    pendingRef.current.delete(cacheKey);
+    return url;
+  }, []);
+
+  /** 미리 받아두기 (문제가 뜰 때 정답 문장을 준비) */
+  const preload = useCallback(
+    (text: string | undefined, speed: Speed = "normal") => {
+      if (text && serverAvailable.current) void load(text, speed);
+    },
+    [load],
+  );
+
+  const play = useCallback(
+    async (text: string, speed: Speed = "normal", key = `${speed}:${text}`): Promise<void> => {
+      stop();
+      const id = playIdRef.current;
+      if (serverAvailable.current) {
+        if (!cacheRef.current.has(`${speed}:${text}`)) setPlayingKey(key);
+        const url = await load(text, speed);
+        if (id !== playIdRef.current) return; // 그사이 다른 소리를 틀었거나 멈춤
         if (url) {
           const audio = new Audio(url);
           audioRef.current = audio;
-          audio.onended = () => {
-            if (loopRef.current) {
-              setTimeout(() => {
-                if (loopRef.current) void audio.play();
-              }, 600);
-            } else {
-              setPlayingKey(null);
-            }
-          };
           setPlayingKey(key);
-          await audio.play().catch(() => setPlayingKey(null));
-          return;
+          return new Promise<void>((resolve) => {
+            audio.onended = () => {
+              if (loopRef.current) {
+                setTimeout(() => {
+                  if (loopRef.current) void audio.play();
+                }, 600);
+              } else {
+                setPlayingKey(null);
+              }
+              resolve();
+            };
+            audio.onpause = () => resolve();
+            audio.play().catch(() => {
+              setPlayingKey(null);
+              resolve();
+            });
+          });
         }
       }
+      if (id !== playIdRef.current) return;
       speakWithBrowser(text, speed, key);
     },
-    [speakWithBrowser, stop],
+    [speakWithBrowser, stop, load],
   );
 
-  return { play, stop, playingKey, loop, setLoop };
+  return { play, stop, preload, playingKey, loop, setLoop };
 }

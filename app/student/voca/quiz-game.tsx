@@ -116,7 +116,7 @@ export function QuizGame({
   nextHref?: string | null;
 }) {
   const cat = useMyCat();
-  const { play } = useTts();
+  const { play, stop, preload } = useTts();
   const [questions, setQuestions] = useState<QuizQuestion[]>(() => build());
   const [retry, setRetry] = useState(false);
   const [i, setI] = useState(0);
@@ -133,10 +133,17 @@ export function QuizGame({
   const saved = useRef(false);
   const autoNext = useRef<ReturnType<typeof setTimeout> | null>(null);
   const q = questions[i];
+  const iRef = useRef(i);
+  iRef.current = i;
 
-  // 듣기 문제는 뜨자마자 읽어준다
+  // 듣기 문제는 뜨자마자 읽어주고, 정답 문장은 미리 받아둔다 (맞힌 순간 바로 나오게)
   useEffect(() => {
-    if (q?.speakOnShow && !done) play(q.speakOnShow);
+    if (!q || done) return;
+    preload(q.speak);
+    preload(q.speak, "slow");
+    const next = questions[i + 1];
+    preload(next?.speakOnShow);
+    if (q.speakOnShow) play(q.speakOnShow);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i, questions]);
 
@@ -184,8 +191,21 @@ export function QuizGame({
       setCombo(nCombo);
       setBestCombo((b) => Math.max(b, nCombo));
       setXp((x) => x + 10 + Math.min(combo, 5) * 2);
-      if (q.speak) play(q.speak);
-      autoNext.current = setTimeout(() => advance(nc, nw, hearts), q.speak ? 1600 : 1000);
+      // 정답 문장을 다 읽어준 뒤에 다음 문제로 (늦게 나와서 다음 문제에 겹치지 않게)
+      const at = i;
+      let moved = false;
+      const go = () => {
+        if (moved) return;
+        moved = true;
+        if (autoNext.current) clearTimeout(autoNext.current);
+        autoNext.current = setTimeout(() => {
+          if (at === iRef.current) advance(nc, nw, hearts);
+        }, 500);
+      };
+      if (q.speak) {
+        void play(q.speak).then(go);
+        autoNext.current = setTimeout(go, 7000); // 소리가 안 끝나도 7초 뒤엔 넘어감
+      } else go();
     } else {
       setWrong(nw);
       setCombo(0);
@@ -199,6 +219,7 @@ export function QuizGame({
   function advance(c = correct, w = wrong, h = hearts) {
     if (autoNext.current) clearTimeout(autoNext.current);
     autoNext.current = null;
+    stop(); // 앞 문제 소리가 다음 문제에 겹치지 않게
     if (h <= 0 || i + 1 >= questions.length) return finish(c, w);
     setPicked(null);
     setLeft(seconds);
@@ -206,6 +227,7 @@ export function QuizGame({
   }
 
   function restart(only?: string[]) {
+    stop();
     saved.current = false;
     setRetry(Boolean(only));
     setQuestions(build(only));
