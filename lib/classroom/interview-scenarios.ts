@@ -21,7 +21,7 @@ export type Scenario = {
   level: "쉬움" | "보통" | "어려움";
   name: string;
   roleKo: string;
-  voice: "carly" | "duncan" | "annette" | "ken" | "elsie" | "tina" | "tim";
+  voice: "freya" | "duncan" | "annette" | "ken" | "elsie" | "tina" | "tim";
   look: Look;
   /** 첫 인사 (AI 없이 바로 나온다) */
   opening: string;
@@ -43,7 +43,7 @@ export const SCENARIOS: Scenario[] = [
     level: "쉬움",
     name: "Mia",
     roleKo: "카페 매니저",
-    voice: "carly",
+    voice: "freya",
     look: { skin: "#F2C9A5", hair: "#5A3825", hairStyle: "bun", outfit: "#3D5A40", accent: "#E9D8B4", bg: "#FFE9C7" },
     opening: "Hey, thanks for coming in! I'm Mia, the manager here. Grab a seat. So, how's your day going so far?",
     persona: "warm, chatty and upbeat; uses casual Aussie words like 'no worries', 'heaps', 'reckon'",

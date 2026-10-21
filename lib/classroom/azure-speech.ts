@@ -6,7 +6,7 @@ export const TTS_VOICES = {
   a: "en-AU-NatashaNeural",
   b: "en-AU-WilliamNeural",
   // AI 면접관 목소리 (호주 억양)
-  carly: "en-AU-CarlyNeural",
+  freya: "en-AU-FreyaNeural", // (Carly는 아이 목소리라 쓰지 않는다)
   duncan: "en-AU-DuncanNeural",
   annette: "en-AU-AnnetteNeural",
   ken: "en-AU-KenNeural",
