@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { createServerSupabaseClient, type Student } from "@/lib/supabase";
 import { approveStudent, mergeSignupInto, rejectStudent } from "./actions";
-import { PLANS, isPlanId } from "@/lib/classroom/plans";
+import { PLANS, isPlanId, isTrialPlan } from "@/lib/classroom/plans";
 import { kstDate } from "@/lib/classroom/stats";
 import { ConfirmButton } from "@/app/_ui/confirm-button";
 import { CreateStudentForm } from "./student-forms";
@@ -569,13 +569,16 @@ export default async function StudentsPage({
                     {isPlanId(r.plan) && (
                       <span
                         className={`rounded px-1.5 py-0.5 ${
-                          r.daysLeft != null && r.daysLeft < 0
+                          isTrialPlan(r.plan)
+                            ? "bg-green-50 font-semibold text-green-700"
+                            : r.daysLeft != null && r.daysLeft < 0
                             ? "bg-red-50 text-red-700"
                             : r.daysLeft != null && r.daysLeft <= 14
                               ? "bg-amber-50 text-amber-800"
                               : "bg-slate-100 text-slate-700"
                         }`}
                       >
+                        {isTrialPlan(r.plan) && "🎁 "}
                         {PLANS[r.plan].name.replace("다잉클 ", "")}
                         {r.daysLeft != null &&
                           (r.daysLeft < 0 ? " · 만료" : ` · D-${r.daysLeft}`)}

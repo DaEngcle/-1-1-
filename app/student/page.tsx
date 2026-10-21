@@ -3,7 +3,7 @@ import { ReviewMarquee, ReviewWall } from "@/app/_ui/reviews";
 import { InstallAppCard } from "@/app/_ui/pwa";
 import { PushToggle } from "@/app/_ui/push-toggle";
 import { requireStudent } from "@/lib/classroom/dal";
-import { PLANS, isPlanId } from "@/lib/classroom/plans";
+import { PLANS, isPlanId, isTrialPlan } from "@/lib/classroom/plans";
 import { kstDate } from "@/lib/classroom/stats";
 import { CatSprite } from "@/app/_ui/cat";
 import { CatPicker } from "@/app/_ui/cat-picker";
@@ -161,9 +161,9 @@ export default async function StudentHomePage() {
           <span className="rounded-full bg-white/15 px-3 py-1">
             🔥 {engagement.streak}일 연속
           </span>
-          {isPlanId(student.plan) && (
+          {isPlanId(student.plan) && student.courses.length > 0 && (
             <span className="rounded-full bg-white/15 px-3 py-1">
-              🎫 {PLANS[student.plan].name.replace("다잉클 ", "")}
+              {isTrialPlan(student.plan) ? "🎁" : "🎫"} {PLANS[student.plan].name.replace("다잉클 ", "")}
               {student.accessUntil && ` · D-${daysLeft(student.accessUntil)}`}
             </span>
           )}

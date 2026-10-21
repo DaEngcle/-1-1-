@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { getSession } from "./session";
 import { teacherPasswordFingerprint } from "./login-code";
-import { coursesForPlan } from "./plans";
+import { coursesForPlan, isTrialPlan } from "./plans";
 import { kstDate } from "./stats";
 import { isCatBreed } from "./cat";
 
@@ -42,7 +42,10 @@ export const checkStudent = cache(async () => {
   if (!student || student.session_version !== session.v) return { denied: "expired" as StudentDenial };
   if (!student.is_active || student.approval === "rejected") return { denied: "inactive" as StudentDenial };
   if (student.approval !== "approved") return { denied: "pending" as StudentDenial };
-  if (student.access_until && student.access_until < kstDate(new Date())) {
+  const ended = Boolean(student.access_until && student.access_until < kstDate(new Date()));
+  // 무료 체험이 끝나면 로그인은 되고 강의만 잠긴다 (무료회원처럼)
+  const trialEnded = ended && isTrialPlan(student.plan);
+  if (ended && !trialEnded) {
     return { denied: "plan-ended" as StudentDenial };
   }
   return {
@@ -55,7 +58,7 @@ export const checkStudent = cache(async () => {
       catName: (student.cat_name as string | null) ?? null,
       plan: (student.plan as string | null) ?? null,
       accessUntil: (student.access_until as string | null) ?? null,
-      courses: coursesForPlan(student.plan),
+      courses: trialEnded ? [] : coursesForPlan(student.plan),
       /** 준비 중이어도 이 학생에게만 미리 열린 과정 */
       earlyCourses: ((student.early_courses as string[] | null) ?? []) as string[],
     },

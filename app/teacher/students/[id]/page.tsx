@@ -24,7 +24,7 @@ import { RegenerateCodeButton } from "../student-forms";
 import { CopyButton } from "@/app/_ui/copy-button";
 import { getRoster, nudgeMessage, STATUS_INFO } from "@/lib/classroom/roster";
 import { headers } from "next/headers";
-import { COURSE_SHORT, PLANS } from "@/lib/classroom/plans";
+import { COURSE_SHORT, PLANS, isTrialPlan } from "@/lib/classroom/plans";
 import { ATTENDANCE_LABEL } from "@/lib/classroom/attendance";
 import { ScoreTrendChart } from "@/app/_ui/score-trend-chart";
 import { SubmissionList } from "../../submission-list";
@@ -185,6 +185,11 @@ export default async function TeacherStudentPage({
       <section className={cardClass}>
         <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
           <h2 className="font-bold text-zinc-900">🙋 프로필 (상담 정보)</h2>
+          {isTrialPlan(student.plan) && (
+            <span className="rounded-full border border-green-200 bg-green-50 px-2 py-0.5 text-xs font-bold text-green-700">
+              🎁 무료 체험 1개월{student.access_until && ` (~${student.access_until})`}
+            </span>
+          )}
           <Link
             href="/teacher/crm"
             className={`rounded-full border px-2 py-0.5 text-xs font-semibold ${STAGES[stage].tone}`}
@@ -405,7 +410,8 @@ export default async function TeacherStudentPage({
         </form>
         <p className="mt-1 text-xs text-zinc-500">
           연장할 때는 종료일만 바꿔서 저장하세요. 종료일이 지나면 학생은
-          로그인할 수 없어요.
+          로그인할 수 없어요. (무료 체험은 끝나도 로그인은 되고, 강의만 잠겨서
+          무료회원처럼 돼요. 결제하면 수강권만 바꿔 주세요.)
         </p>
         {(courseRows ?? []).some((c) => c.status !== "open") && (
           <form
