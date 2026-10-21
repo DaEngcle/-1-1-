@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import { useTts } from "@/app/_ui/audio/use-tts";
-import type { Slang } from "@/lib/classroom/slang";
-import { QuizGame, shuffle, type QuizQuestion } from "../../quiz-game";
+import type { Phrase } from "@/lib/classroom/phrase-decks";
+import { QuizGame, shuffle, type QuizQuestion } from "../../../quiz-game";
 
-function buildQuestions(items: Slang[], only?: string[]): QuizQuestion[] {
+function buildQuestions(items: Phrase[], label: string, only?: string[]): QuizQuestion[] {
   const picked = only ? items.filter((x) => only.includes(x.term)) : shuffle(items);
   return picked.map((x) => {
     const others = shuffle(items.filter((o) => o.term !== x.term)).slice(0, 3);
@@ -14,9 +14,9 @@ function buildQuestions(items: Slang[], only?: string[]): QuizQuestion[] {
     if (kind === 0) {
       return {
         key: x.term,
-        label: "🦘 뜻 고르기",
+        label: `${label} · 뜻 고르기`,
         prompt: x.term,
-        hint: "이 호주 표현의 뜻은?",
+        hint: "이 표현의 뜻은?",
         answer: x.ko,
         choices: shuffle([x.ko, ...others.map((o) => o.ko)]),
         speak: x.term,
@@ -27,9 +27,9 @@ function buildQuestions(items: Slang[], only?: string[]): QuizQuestion[] {
     if (kind === 1) {
       return {
         key: x.term,
-        label: "🇦🇺 호주식으로 말하기",
+        label: `${label} · 영어로 말하면?`,
         prompt: `“${x.ko}”`,
-        hint: "호주 사람들은 뭐라고 할까요?",
+        hint: "영어로는 뭐라고 할까요?",
         answer: x.term,
         choices: shuffle([x.term, ...others.map((o) => o.term)]),
         speak: x.term,
@@ -40,7 +40,7 @@ function buildQuestions(items: Slang[], only?: string[]): QuizQuestion[] {
     const at = x.example.toLowerCase().indexOf(x.term.toLowerCase());
     return {
       key: x.term,
-      label: "✏️ 빈칸 채우기",
+      label: `${label} · 빈칸 채우기`,
       ...(at >= 0
         ? { blank: { before: x.example.slice(0, at), after: x.example.slice(at + x.term.length) } }
         : { prompt: x.example }),
@@ -53,7 +53,19 @@ function buildQuestions(items: Slang[], only?: string[]): QuizQuestion[] {
   });
 }
 
-export function SlangStudy({ setId, items, nextHref }: { setId: number; items: Slang[]; nextHref: string | null }) {
+export function PhraseStudy({
+  deckId,
+  quizLabel,
+  setId,
+  items,
+  nextHref,
+}: {
+  deckId: string;
+  quizLabel: string;
+  setId: number;
+  items: Phrase[];
+  nextHref: string | null;
+}) {
   const [mode, setMode] = useState<"study" | "game">("study");
   const [hide, setHide] = useState(false);
   const [shown, setShown] = useState<Set<string>>(new Set());
@@ -74,7 +86,7 @@ export function SlangStudy({ setId, items, nextHref }: { setId: number; items: S
         ))}
       </div>
       {mode === "game" ? (
-        <QuizGame key={setId} deck={`slang-${setId}`} nextHref={nextHref} build={(only) => buildQuestions(items, only)} />
+        <QuizGame key={setId} deck={`${deckId}-${setId}`} nextHref={nextHref} build={(only) => buildQuestions(items, quizLabel, only)} />
       ) : (
         <section className="flex flex-col gap-2">
           <div className="flex items-center justify-between gap-2">

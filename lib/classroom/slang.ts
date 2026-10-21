@@ -68,7 +68,7 @@ export const SLANG_SETS: { id: number; title: string; emoji: string; items: Slan
       s("crook", "아픈", "I'm feeling a bit crook today.", "오늘 몸이 좀 안 좋아."),
       s("dodgy", "수상한, 질 나쁜", "That rental ad looks a bit dodgy.", "그 집 광고 좀 수상해 보여."),
       s("fair dinkum", "진짜로, 정말이야", "Fair dinkum, I saw a kangaroo in the street!", "진짜야, 길에서 캥거루 봤어!"),
-      s("Strewth!", "세상에! 맙소사!", "Strewth, that's expensive!", "세상에, 그거 비싸다!"),
+      s("Strewth", "세상에! 맙소사!", "Strewth, that's expensive!", "세상에, 그거 비싸다!"),
       s("ripper", "최고의, 끝내주는", "That was a ripper of a weekend.", "끝내주는 주말이었어."),
       s("whinge", "징징대다, 불평하다", "Stop whingeing about the weather.", "날씨 가지고 그만 징징대."),
       s("devo", "엄청 아쉬운 (devastated)", "The café closed? I'm devo.", "그 카페 문 닫았어? 너무 아쉽다."),
@@ -106,7 +106,7 @@ export const SLANG_SETS: { id: number; title: string; emoji: string; items: Slan
       s("knock off", "퇴근하다, 일 끝내다", "What time do you knock off?", "몇 시에 퇴근해?"),
       s("have a go", "한번 해보다", "Just have a go, you'll be fine.", "그냥 한번 해봐, 괜찮을 거야."),
       s("a fair go", "공정한 기회", "Everyone deserves a fair go.", "누구나 공정한 기회를 받을 자격이 있어."),
-      s("chuck a sickie", "(꾀병으로) 아프다고 하고 쉬다", "He chucked a sickie on Monday.", "걔 월요일에 아프다고 하고 쉬었어."),
+      s("chuck a sickie", "(꾀병으로) 아프다고 하고 쉬다", "Did he chuck a sickie on Monday?", "걔 월요일에 아프다고 하고 쉰 거야?"),
     ],
   },
 ];

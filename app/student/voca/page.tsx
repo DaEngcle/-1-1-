@@ -2,6 +2,7 @@ import Link from "next/link";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { requireStudent } from "@/lib/classroom/dal";
 import { VERB_SETS } from "@/lib/classroom/verbs";
+import { PHRASE_DECKS } from "@/lib/classroom/phrase-decks";
 import { CatSprite } from "@/app/_ui/cat";
 
 export default async function VocaHomePage() {
@@ -57,13 +58,18 @@ export default async function VocaHomePage() {
         </p>
       </Link>
 
-      <Link
-        href="/student/voca/slang"
-        className="flex flex-col gap-1 rounded-3xl border-2 border-teal-200 bg-white p-4 shadow-sm transition-transform active:translate-y-0.5"
-      >
-        <span className="text-lg font-extrabold text-zinc-900">🦘 호주 슬랭</span>
-        <p className="text-sm text-zinc-600">arvo, servo, no worries, Yeah nah… 호주에서 매일 듣는 말 60개.</p>
-      </Link>
+{PHRASE_DECKS.map((d) => (
+        <Link
+          key={d.id}
+          href={`/student/voca/p/${d.id}`}
+          className="flex flex-col gap-1 rounded-3xl border-2 border-violet-100 bg-white p-4 shadow-sm transition-transform active:translate-y-0.5"
+        >
+          <span className="text-lg font-extrabold text-zinc-900">
+            {d.emoji} {d.title}
+          </span>
+          <p className="text-sm text-zinc-600">{d.desc}</p>
+        </Link>
+      ))}
     </>
   );
 }
