@@ -302,9 +302,21 @@ export function SentencePractice({
       <div className="flex flex-col gap-2 border-t border-zinc-100 pt-3">
         <div className="flex flex-wrap items-center gap-2">
           {recording ? (
-            <button type="button" onClick={recorder.stop} className={`${btn} border-red-400 bg-red-50 text-red-700`}>
-              ■ 녹음 끝내기 ({seconds}s)
-            </button>
+            <>
+              <button type="button" onClick={recorder.stop} className={`${btn} border-red-400 bg-red-50 text-red-700`}>
+                ■ 녹음 끝내기 ({seconds}s)
+              </button>
+              {/* 소리가 들어오는지 보여주는 막대 */}
+              <span className="flex h-6 items-end gap-0.5" aria-label="녹음 중인 소리 크기">
+                {[0.15, 0.35, 0.55, 0.75, 0.95].map((t) => (
+                  <span
+                    key={t}
+                    className={`w-1.5 rounded-full transition-all ${recorder.level >= t * 0.6 ? "bg-red-500" : "bg-zinc-200"}`}
+                    style={{ height: `${30 + t * 70}%` }}
+                  />
+                ))}
+              </span>
+            </>
           ) : (
             <button
               type="button"
