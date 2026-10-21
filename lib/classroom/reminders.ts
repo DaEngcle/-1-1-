@@ -55,13 +55,13 @@ export async function sendDailyReminders() {
 
   const [{ data: students }, { data: daily }, { data: subRows }, { data: logs }] = await Promise.all([
     supabase.from("students").select("id, name, nickname, is_active, approval, cat_name").in("id", ids),
-    supabase.from("daily_activity").select("student_id, day, watched_seconds").in("student_id", ids).gte("day", since),
+    supabase.from("daily_activity").select("student_id, day, watched_seconds, voca_plays").in("student_id", ids).gte("day", since),
     supabase.from("submissions").select("student_id, created_at").in("student_id", ids).gte("created_at", `${since}T00:00:00+09:00`),
     supabase.from("push_log").select("student_id, kind, sent_at").in("student_id", ids).gte("sent_at", `${addDays(today, -30)}T00:00:00+09:00`),
   ]);
   const studied = new Map<string, Set<string>>();
   const mark = (id: string, day: string) => studied.set(id, (studied.get(id) ?? new Set()).add(day));
-  for (const d of daily ?? []) if (d.watched_seconds > 0) mark(d.student_id, d.day);
+  for (const d of daily ?? []) if (d.watched_seconds > 0 || d.voca_plays > 0) mark(d.student_id, d.day);
   for (const s of subRows ?? []) mark(s.student_id, kstDate(s.created_at));
 
   let sent = 0;

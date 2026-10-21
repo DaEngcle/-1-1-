@@ -24,18 +24,22 @@ type SubRow = { created_at: string; status: string; overall_score: number | null
 
 interface DayActivity {
   watchedSeconds: number;
+  vocaPlays: number;
   submissions: number;
   bestScore: number;
 }
 
-function buildDays(watchRows: { day: string; watched_seconds: number }[], subs: SubRow[]) {
+function buildDays(watchRows: { day: string; watched_seconds: number; voca_plays?: number }[], subs: SubRow[]) {
   const days = new Map<string, DayActivity>();
   const get = (d: string) => {
     let v = days.get(d);
-    if (!v) days.set(d, (v = { watchedSeconds: 0, submissions: 0, bestScore: 0 }));
+    if (!v) days.set(d, (v = { watchedSeconds: 0, vocaPlays: 0, submissions: 0, bestScore: 0 }));
     return v;
   };
-  for (const w of watchRows) get(w.day).watchedSeconds += w.watched_seconds;
+  for (const w of watchRows) {
+    get(w.day).watchedSeconds += w.watched_seconds;
+    get(w.day).vocaPlays += w.voca_plays ?? 0;
+  }
   for (const s of subs) {
     const d = get(kstDate(s.created_at));
     d.submissions++;
@@ -92,8 +96,12 @@ export async function getEngagement(studentId: string): Promise<Engagement> {
   const supabase = createServerSupabaseClient();
   const [watchRows, subs, { data: attRows }, { count: completedVideos }, lessonRows, { data: tests }] =
     await Promise.all([
-      fetchAll<{ day: string; watched_seconds: number }>((from, to) =>
-        supabase.from("daily_activity").select("day, watched_seconds").eq("student_id", studentId).range(from, to),
+      fetchAll<{ day: string; watched_seconds: number; voca_plays: number }>((from, to) =>
+        supabase
+          .from("daily_activity")
+          .select("day, watched_seconds, voca_plays")
+          .eq("student_id", studentId)
+          .range(from, to),
       ),
       fetchAll<SubRow>((from, to) =>
         supabase
@@ -114,7 +122,7 @@ export async function getEngagement(studentId: string): Promise<Engagement> {
 
   const today = kstDate(new Date());
   const days = buildDays(watchRows, subs);
-  const studied = new Set([...days].filter(([, v]) => v.watchedSeconds > 0 || v.submissions > 0).map(([d]) => d));
+  const studied = new Set([...days].filter(([, v]) => v.watchedSeconds > 0 || v.submissions > 0 || v.vocaPlays > 0).map(([d]) => d));
   const { current, best } = streaks(studied, today);
   const attended = new Set(
     (attRows ?? []).filter((a) => a.status === "present" || a.status === "late").map((a) => a.class_date),
@@ -127,7 +135,7 @@ export async function getEngagement(studentId: string): Promise<Engagement> {
     const a = days.get(d);
     monthDays.push({
       day: d,
-      level: a?.submissions ? 2 : a?.watchedSeconds ? 1 : 0,
+      level: a?.submissions ? 2 : a?.watchedSeconds || a?.vocaPlays ? 1 : 0,
       attended: attended.has(d),
       future: d > today,
     });
@@ -268,6 +276,30 @@ export async function getWeeklyRanking({ masked }: { masked: boolean }): Promise
  * 실제로 재생한 시간을 오늘 날짜(한국 시간)에 더한다.
  * 브라우저가 보낸 값은 마지막 기록 이후 흐른 시간(2배속까지)만큼만 인정한다.
  */
+/** 보카 한 판을 오늘(한국 날짜) 학습으로 기록 — 연속 학습일에 들어간다 */
+export async function addVocaPlay(studentId: string) {
+  const supabase = createServerSupabaseClient();
+  const day = kstDate(new Date());
+  const { data } = await supabase
+    .from("daily_activity")
+    .select("voca_plays")
+    .eq("student_id", studentId)
+    .eq("day", day)
+    .maybeSingle();
+  if (data) {
+    await supabase
+      .from("daily_activity")
+      .update({ voca_plays: (data.voca_plays ?? 0) + 1 })
+      .eq("student_id", studentId)
+      .eq("day", day);
+  } else {
+    // updated_at은 영상 시간 부풀리기 방지용이라 건드리지 않도록 새 줄은 과거 시각으로
+    await supabase
+      .from("daily_activity")
+      .insert({ student_id: studentId, day, voca_plays: 1, updated_at: new Date(0).toISOString() });
+  }
+}
+
 export async function addWatchedSeconds(studentId: string, claimedSeconds: number) {
   if (!(claimedSeconds > 0)) return;
   const supabase = createServerSupabaseClient();

@@ -73,10 +73,10 @@ export async function getRoster(): Promise<RosterRow[]> {
     fetchAll<{ student_id: string; created_at: string; status: string; overall_score: number | null }>((from, to) =>
       supabase.from("submissions").select("student_id, created_at, status, overall_score").in("student_id", ids).range(from, to),
     ),
-    fetchAll<{ student_id: string; day: string; watched_seconds: number }>((from, to) =>
+    fetchAll<{ student_id: string; day: string; watched_seconds: number; voca_plays: number }>((from, to) =>
       supabase
         .from("daily_activity")
-        .select("student_id, day, watched_seconds")
+        .select("student_id, day, watched_seconds, voca_plays")
         .in("student_id", ids)
         .gte("day", since30)
         .range(from, to),
@@ -95,7 +95,7 @@ export async function getRoster(): Promise<RosterRow[]> {
     if (!lastDay.has(id) || day > lastDay.get(id)!) lastDay.set(id, day);
   };
   for (const s of subs) touch(s.student_id, kstDate(s.created_at));
-  for (const d of daily) if (d.watched_seconds > 0) touch(d.student_id, d.day);
+  for (const d of daily) if (d.watched_seconds > 0 || d.voca_plays > 0) touch(d.student_id, d.day);
   for (const v of videos) touch(v.student_id, kstDate(v.updated_at));
 
   const weekStart = addDays(today, -6);

@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { requireStudent } from "@/lib/classroom/dal";
 import { starsFor } from "@/lib/classroom/verbs";
+import { addVocaPlay } from "@/lib/classroom/engagement";
 
 /** 게임 한 판 결과 저장: 최고 점수·별은 더 좋을 때만 올린다 */
 export async function saveVocaResult(deck: string, percent: number, wrong: string[]) {
@@ -26,5 +27,7 @@ export async function saveVocaResult(deck: string, percent: number, wrong: strin
     wrong: wrong.slice(0, 20),
     updated_at: new Date().toISOString(),
   });
+  await addVocaPlay(student.id);
   revalidatePath("/student/voca", "layout");
+  revalidatePath("/student");
 }
