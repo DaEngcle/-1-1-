@@ -126,6 +126,12 @@ export async function approveStudent(formData: FormData) {
  * 가입 신청을 시트에서 가져온 기존 학생 카드와 합친다.
  * 신청서의 전화번호·비밀번호를 기존 카드로 옮기고, 신청서는 지운다 (프로필·메모·결제 기록 유지)
  */
+/** 합칠 카드 id를 버튼에 묶어서 쓴다: formAction={mergeSignupInto.bind(null, cardId)} */
+export async function mergeSignupInto(targetId: string, formData: FormData) {
+  formData.set("target_id", targetId);
+  return mergeSignup(formData);
+}
+
 export async function mergeSignup(formData: FormData) {
   await requireTeacher();
   // 실패하면 이유를 화면 위에 띄운다 (조용히 아무 일도 안 일어나지 않게)

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { createServerSupabaseClient, type Student } from "@/lib/supabase";
-import { approveStudent, mergeSignup, rejectStudent } from "./actions";
+import { approveStudent, mergeSignupInto, rejectStudent } from "./actions";
 import { PLANS, isPlanId } from "@/lib/classroom/plans";
 import { kstDate } from "@/lib/classroom/stats";
 import { ConfirmButton } from "@/app/_ui/confirm-button";
@@ -345,9 +345,7 @@ export default async function StudentsPage({
                           </span>
                           {/* 위에서 고른 수강권·시작일로 합친다 */}
                           <SubmitButton
-                            formAction={mergeSignup}
-                            name="target_id"
-                            value={m.id}
+                            formAction={mergeSignupInto.bind(null, m.id)}
                             className="rounded-md bg-violet-600 px-2 py-1 font-bold text-white"
                           >
                             고른 수강권으로 이 카드와 합쳐서 승인
