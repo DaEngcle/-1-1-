@@ -62,6 +62,13 @@ export function PhoneLoginForm() {
     <form action={action} className="flex w-full flex-col gap-3">
       <input name="phone" type="tel" inputMode="numeric" placeholder="휴대폰 번호" autoComplete="tel" required className={inputClass} />
       <input name="password" type="password" placeholder="비밀번호" autoComplete="current-password" required className={inputClass} />
+      <details className="text-xs text-zinc-500">
+        <summary className="cursor-pointer">비밀번호를 잊으셨나요?</summary>
+        <p className="mt-1">
+          다니엘쌤 카톡으로 &ldquo;비밀번호 잊었어요 + 이름&rdquo;을 보내주세요. 임시 비밀번호를 보내드려요. 로그인한 뒤
+          [내 정보 → 비밀번호 바꾸기]에서 새로 바꾸면 돼요.
+        </p>
+      </details>
       <SubmitButton disabled={pending} className={buttonClass}>
         {pending ? "확인 중..." : "로그인"}
       </SubmitButton>

@@ -7,6 +7,8 @@ import { requireTeacher } from "@/lib/classroom/dal";
 import { generateLoginCode, hashLoginCode } from "@/lib/classroom/login-code";
 import { COURSE_IDS, accessUntil, isPlanId } from "@/lib/classroom/plans";
 import { kstDate } from "@/lib/classroom/stats";
+import { randomBytes } from "node:crypto";
+import { hashPassword } from "@/lib/classroom/password";
 
 export type StudentFormState =
   | { status: "success"; name: string; code: string }
@@ -265,4 +267,29 @@ export async function sendTeacherPush(formData: FormData) {
   const { sendPushToStudent } = await import("@/lib/classroom/push");
   await sendPushToStudent(id, { title: "💬 다니엘쌤", body, url: "/student", tag: "teacher" }, "teacher");
   revalidatePath(`/teacher/students/${id}`);
+}
+
+export type TempPasswordState = { status: "success"; password: string } | { status: "error"; message: string } | undefined;
+
+/**
+ * 비밀번호를 잊은 학생: 임시 비밀번호를 만들어 선생님 화면에 한 번만 보여준다.
+ * 다른 기기에 로그인돼 있던 것도 로그아웃된다.
+ */
+export async function makeTempPassword(_prev: TempPasswordState, formData: FormData): Promise<TempPasswordState> {
+  await requireTeacher();
+  const id = String(formData.get("id"));
+  const supabase = createServerSupabaseClient();
+  const { data: cur } = await supabase.from("students").select("session_version, phone").eq("id", id).maybeSingle();
+  if (!cur) return { status: "error", message: "학생을 찾지 못했어요." };
+  if (!cur.phone) return { status: "error", message: "전화번호로 가입한 학생이 아니에요. 로그인 코드를 재발급해 주세요." };
+  // 헷갈리는 글자(0/o, 1/l/i)는 빼고 8자리
+  const chars = "abcdefghjkmnpqrstuvwxyz23456789";
+  const bytes = randomBytes(8);
+  const password = [...bytes].map((b) => chars[b % chars.length]).join("");
+  const { error } = await supabase
+    .from("students")
+    .update({ password_hash: await hashPassword(password), session_version: (cur.session_version ?? 1) + 1 })
+    .eq("id", id);
+  if (error) return { status: "error", message: "만들지 못했어요. 다시 시도해 주세요." };
+  return { status: "success", password };
 }

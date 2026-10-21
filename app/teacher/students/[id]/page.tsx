@@ -20,7 +20,7 @@ import {
   updateMemo,
   updatePlan,
 } from "../actions";
-import { RegenerateCodeButton } from "../student-forms";
+import { RegenerateCodeButton, TempPasswordButton } from "../student-forms";
 import { CopyButton } from "@/app/_ui/copy-button";
 import { getRoster, nudgeMessage, STATUS_INFO } from "@/lib/classroom/roster";
 import { headers } from "next/headers";
@@ -371,7 +371,11 @@ export default async function TeacherStudentPage({
             </ConfirmButton>
           </form>
           <div className="flex-1">
-            <RegenerateCodeButton id={student.id} name={student.name} />
+            {student.phone ? (
+              <TempPasswordButton id={student.id} name={student.name} />
+            ) : (
+              <RegenerateCodeButton id={student.id} name={student.name} />
+            )}
           </div>
         </div>
       </section>

@@ -3,9 +3,11 @@
 import { useActionState } from "react";
 import {
   createStudent,
+  makeTempPassword,
   regenerateCode,
   type StudentFormState,
 } from "./actions";
+import { CopyButton } from "@/app/_ui/copy-button";
 import {
   inputClass,
   primaryButtonClass,
@@ -76,6 +78,45 @@ export function RegenerateCodeButton({ id, name }: { id: string; name: string })
         코드 재발급
       </SubmitButton>
       <CodeNotice state={state} />
+    </form>
+  );
+}
+
+/** 비밀번호를 잊은 학생에게 임시 비밀번호 만들어 주기 */
+export function TempPasswordButton({ id, name }: { id: string; name: string }) {
+  const [state, action, pending] = useActionState(makeTempPassword, undefined);
+  const message =
+    state?.status === "success"
+      ? `${name}님, 다잉클 클래스룸 임시 비밀번호예요 🔑\n${state.password}\n\n휴대폰 번호 + 이 비밀번호로 로그인한 뒤, [내 정보 → 비밀번호 바꾸기]에서 꼭 새 비밀번호로 바꿔주세요!`
+      : "";
+  return (
+    <form
+      action={action}
+      onSubmit={(e) => {
+        if (!confirm(`${name} 학생의 비밀번호를 임시 비밀번호로 바꿀까요? 지금 로그인된 기기는 로그아웃돼요.`)) {
+          e.preventDefault();
+        }
+      }}
+      className="flex flex-col gap-2"
+    >
+      <input type="hidden" name="id" value={id} />
+      <SubmitButton disabled={pending} className={secondaryButtonClass}>
+        🔑 임시 비밀번호 만들기
+      </SubmitButton>
+      {state?.status === "error" && <p className="text-sm text-red-600">{state.message}</p>}
+      {state?.status === "success" && (
+        <div className="flex flex-col gap-2 rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm">
+          <p>
+            임시 비밀번호: <b className="font-mono text-lg tracking-wider">{state.password}</b>
+          </p>
+          <p className="text-xs text-zinc-600">이 화면을 벗어나면 다시 볼 수 없어요. 아래 버튼으로 복사해서 카톡으로 보내주세요.</p>
+          <CopyButton
+            text={message}
+            label="💬 카톡 안내 메시지 복사"
+            className="self-start rounded-lg bg-[#ffd23f] px-3 py-1.5 text-sm font-bold text-zinc-900"
+          />
+        </div>
+      )}
     </form>
   );
 }

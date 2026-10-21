@@ -14,6 +14,7 @@ const NAV = [
   { href: "/student/shadowing", label: "내 쉐도잉" },
   { href: "/student/level-test", label: "레벨테스트" },
   { href: "/student/pronunciation", label: "발음 가이드" },
+  { href: "/student/profile", label: "👤 내 정보" },
 ];
 
 export default async function StudentLayout({
