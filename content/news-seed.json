@@ -1,0 +1,111 @@
+[
+  {
+    "source_url": "https://www.abc.net.au/news/2026-10-21/kangaroo-rescued-from-sea-boston-bay-port-lincoln/107291116",
+    "source_title": "Fishers make unlikely catch after kangaroo spotted 3km from shore",
+    "title_ko": "바다 3km 밖에서 발견된 캥거루, 낚시하던 사람들이 구조",
+    "topic": "🦘 호주 생활",
+    "level": "쉬움",
+    "published_on": "2026-10-21",
+    "summary_en": "Some people went out fishing off the coast of Port Lincoln in South Australia. It was a normal, routine trip until they spotted something unusual in the water: a kangaroo, about 3 kilometres from the shore. Their fishing trip quickly turned into a rescue.",
+    "summary_ko": "남호주 포트링컨 앞바다로 낚시를 나간 사람들이 있었어요. 평범한 낚시였는데, 해안에서 약 3km 떨어진 바다에서 캥거루를 발견했어요. 낚시는 곧 구조 작전으로 바뀌었어요.",
+    "expressions": [
+      { "phrase": "spot", "meaning": "(찾기 어려운 걸) 발견하다, 보다", "example": "I spotted a koala on my way to work!", "example_ko": "출근길에 코알라 봤어!" },
+      { "phrase": "off the coast of ~", "meaning": "~ 앞바다에서", "example": "We went snorkelling off the coast of Cairns.", "example_ko": "케언즈 앞바다에서 스노클링 했어." },
+      { "phrase": "routine", "meaning": "늘 하던, 일상적인", "example": "It was just a routine shift at the café.", "example_ko": "그냥 평소 같은 카페 근무였어." },
+      { "phrase": "turn into ~", "meaning": "~로 바뀌다, ~가 되다", "example": "A quick coffee turned into a three-hour chat.", "example_ko": "커피 한 잔 하려다 세 시간 수다가 됐어." },
+      { "phrase": "unlikely", "meaning": "예상 밖의, 뜻밖의", "example": "We became unlikely friends at the hostel.", "example_ko": "우리는 호스텔에서 뜻밖에 친구가 됐어." }
+    ],
+    "quiz": [
+      { "question": "Where was the kangaroo?", "choices": ["In someone's backyard", "About 3km from the shore", "At the airport"], "answer": 1, "explain": "3 kilometres from the shore = 해안에서 3km 떨어진 바다예요." },
+      { "question": "'I spotted a koala.'에서 spot의 뜻은?", "choices": ["발견하다", "점을 찍다", "주차하다"], "answer": 0, "explain": "spot은 동사로 '(눈으로) 발견하다'예요." },
+      { "question": "'A quick chat turned into a party.'의 뜻은?", "choices": ["파티가 끝났다", "잠깐 수다가 파티가 됐다", "파티에 안 갔다"], "answer": 1, "explain": "turn into = ~로 바뀌다." }
+    ]
+  },
+  {
+    "source_url": "https://www.abc.net.au/news/2026-10-21/vic-premier-ben-carroll-forgot-to-pay-for-fuel/107291426",
+    "source_title": "Victorian premier settles bill after forgetting to pay at petrol station",
+    "title_ko": "주유소에서 계산을 깜빡한 빅토리아 주총리, 나중에 값 치러",
+    "topic": "⛽ 생활 영어",
+    "level": "쉬움",
+    "published_on": "2026-10-21",
+    "summary_en": "Ben Carroll, the premier (state leader) of Victoria, was running errands on Monday night. He got fuel at a petrol station in Melbourne but forgot to pay for it. He later settled the bill.",
+    "summary_ko": "빅토리아 주총리 벤 캐럴이 월요일 밤에 볼일을 보러 다니다가, 멜번의 한 주유소에서 기름을 넣고 돈 내는 걸 깜빡했어요. 나중에 값을 치렀어요.",
+    "expressions": [
+      { "phrase": "run errands", "meaning": "(장보기·은행 같은) 볼일을 보다", "example": "I'm just running some errands this arvo.", "example_ko": "오늘 오후에 볼일 좀 보고 있어.", "note": "arvo = afternoon (호주식 줄임말)" },
+      { "phrase": "petrol station / servo", "meaning": "주유소 (servo는 호주 구어)", "example": "Let's stop at the servo for snacks.", "example_ko": "주유소에 들러서 간식 사자.", "note": "미국은 gas station, 호주는 petrol station · servo" },
+      { "phrase": "settle the bill", "meaning": "계산하다, 값을 치르다", "example": "Can we settle the bill, please?", "example_ko": "계산할게요." },
+      { "phrase": "forget to ~", "meaning": "~하는 걸 깜빡하다", "example": "Don't forget to tap off when you get off the tram.", "example_ko": "트램에서 내릴 때 카드 찍는 거 잊지 마.", "note": "멜번 교통카드 Myki는 내릴 때 tap off!" },
+      { "phrase": "fuel", "meaning": "연료, 기름", "example": "Fuel is cheaper on Tuesdays in some cities.", "example_ko": "어떤 도시는 화요일에 기름값이 더 싸." }
+    ],
+    "quiz": [
+      { "question": "What did the premier forget to do?", "choices": ["Fill up his car", "Pay for the fuel", "Go home"], "answer": 1, "explain": "forgot to pay for fuel = 기름값 내는 걸 깜빡했어요." },
+      { "question": "호주 사람들이 주유소를 줄여서 부르는 말은?", "choices": ["servo", "arvo", "brekkie"], "answer": 0, "explain": "servo = service station. arvo는 오후, brekkie는 아침밥이에요." },
+      { "question": "'I'm running errands.'의 뜻은?", "choices": ["달리기 중이야", "볼일 보는 중이야", "실수하는 중이야"], "answer": 1, "explain": "run errands = 장보기·우체국 같은 볼일을 보다." }
+    ]
+  },
+  {
+    "source_url": "https://www.abc.net.au/news/2026-10-21/nsw-travel-western-sydney-international-airport-flight-savings/106785424",
+    "source_title": "Travellers weigh up the cost to get to Sydney's new airport opening this week",
+    "title_ko": "이번 주 문 여는 시드니 새 공항, 여행객들은 가는 비용을 따져보는 중",
+    "topic": "✈️ 여행",
+    "level": "보통",
+    "published_on": "2026-10-20",
+    "summary_en": "Western Sydney International Airport, a brand-new airport in Sydney's west, is about to open its doors to passengers. Travellers are now weighing up the costs: flights from the new airport might be cheaper, but they also need to think about how much it costs to get there.",
+    "summary_ko": "시드니 서쪽에 새로 지은 '웨스턴 시드니 국제공항'이 곧 승객을 받기 시작해요. 여행객들은 비용을 따져보고 있어요. 새 공항 비행기표가 더 쌀 수도 있지만, 공항까지 가는 비용도 생각해야 하니까요.",
+    "expressions": [
+      { "phrase": "weigh up", "meaning": "(장단점을) 따져보다", "example": "I'm weighing up whether to live in Sydney or Melbourne.", "example_ko": "시드니랑 멜번 중 어디 살지 따져보는 중이야." },
+      { "phrase": "brand-new", "meaning": "완전히 새것인", "example": "The hostel has a brand-new kitchen.", "example_ko": "그 호스텔 주방 완전 새거야." },
+      { "phrase": "open its doors", "meaning": "(가게·건물이) 문을 열다, 개장하다", "example": "The new café opens its doors next Monday.", "example_ko": "새 카페가 다음 주 월요일에 문을 열어." },
+      { "phrase": "be worth it", "meaning": "그럴 만한 가치가 있다", "example": "Is the cheap flight worth it if the taxi costs $80?", "example_ko": "택시비가 80불이면 싼 비행기표가 의미가 있을까?" },
+      { "phrase": "get to ~", "meaning": "~에 가다, 도착하다", "example": "How do I get to Central Station?", "example_ko": "센트럴역 어떻게 가요?" }
+    ],
+    "quiz": [
+      { "question": "Why are travellers weighing up the cost?", "choices": ["The airport is closing", "Flights may be cheaper, but getting there costs money", "Tickets are free"], "answer": 1, "explain": "표값은 쌀 수 있지만 공항까지 가는 비용도 생각해야 해서예요." },
+      { "question": "'weigh up'과 가장 비슷한 뜻은?", "choices": ["무게를 재다", "따져보다", "포기하다"], "answer": 1, "explain": "weigh up options = 선택지를 따져보다." }
+    ]
+  },
+  {
+    "source_url": "https://www.abc.net.au/news/2026-10-21/council-rejects-mcdonalds-phillip-island-proposal/107156522",
+    "source_title": "McDonald's bid for Phillip Island restaurant knocked back by council",
+    "title_ko": "필립 아일랜드에 맥도날드 열려던 계획, 시의회가 거절",
+    "topic": "🍟 동네 소식",
+    "level": "보통",
+    "published_on": "2026-10-21",
+    "summary_en": "McDonald's applied to open a restaurant on Phillip Island, in Victoria's south-east. In Australia, the local council often has to approve new businesses and buildings. This time, the council knocked back the application.",
+    "summary_ko": "맥도날드가 빅토리아 남동쪽 필립 아일랜드에 매장을 열겠다고 신청했어요. 호주에서는 새 가게나 건물을 지을 때 지역 시의회 허가가 필요한 경우가 많은데, 이번엔 시의회가 신청을 거절했어요.",
+    "expressions": [
+      { "phrase": "knock back", "meaning": "거절하다 (호주에서 자주 쓰는 구어)", "example": "I got knocked back for my first two job applications.", "example_ko": "처음 지원한 두 군데서 떨어졌어." },
+      { "phrase": "bid", "meaning": "(무언가를 얻으려는) 시도", "example": "Her bid to find a farm job paid off.", "example_ko": "농장 일 구하려던 그녀의 시도가 성공했어." },
+      { "phrase": "local council", "meaning": "지역 시의회, 구청", "example": "Call the local council about bin collection.", "example_ko": "쓰레기 수거는 구청에 전화해 봐." },
+      { "phrase": "apply / application", "meaning": "신청하다 / 신청서", "example": "I applied for a barista job yesterday.", "example_ko": "어제 바리스타 자리 지원했어." },
+      { "phrase": "fast food giant", "meaning": "대형 패스트푸드 기업 (giant = 거대 기업)", "example": "Tech giants are building data centres here.", "example_ko": "거대 IT 기업들이 여기에 데이터센터를 짓고 있어." }
+    ],
+    "quiz": [
+      { "question": "What did the council do?", "choices": ["Approved the restaurant", "Said no to the application", "Opened a new McDonald's"], "answer": 1, "explain": "knocked back = 거절했어요." },
+      { "question": "'I got knocked back.'을 자연스럽게 옮기면?", "choices": ["넘어졌어", "거절당했어", "되돌아왔어"], "answer": 1, "explain": "구직·신청에서 떨어졌을 때 자주 써요." },
+      { "question": "쓰레기 수거·주차 문제는 어디에 연락할까요?", "choices": ["local council", "petrol station", "airport"], "answer": 0, "explain": "local council이 동네 행정을 맡아요." }
+    ]
+  },
+  {
+    "source_url": "https://www.abc.net.au/news/2026-10-21/reserve-bank-hauser-warns-inflation-outlook-materially-worse/107288574",
+    "source_title": "Market puts chance of rate hike at more than 50pc after RBA deputy remarks",
+    "title_ko": "중앙은행 부총재 발언 뒤, '11월 금리 인상' 가능성 커져",
+    "topic": "💰 경제·물가",
+    "level": "어려움",
+    "published_on": "2026-10-21",
+    "summary_en": "The Reserve Bank of Australia (RBA) sets the main interest rate. Its deputy governor, Andrew Hauser, warned that the inflation outlook has become worse. After his remarks, the financial markets think a rate hike in November is more likely. A rate hike usually makes home loans more expensive.",
+    "summary_ko": "호주 중앙은행(RBA)이 기준금리를 정해요. 부총재 앤드루 하우저가 물가 전망이 더 나빠졌다고 경고했고, 그 발언 뒤로 시장은 11월에 금리가 오를 가능성이 더 높다고 보고 있어요. 금리가 오르면 보통 주택 대출 이자도 비싸져요.",
+    "expressions": [
+      { "phrase": "rate hike", "meaning": "금리 인상 (hike = 큰 폭의 인상)", "example": "Another rate hike could push rents up.", "example_ko": "금리가 또 오르면 월세도 오를 수 있어." },
+      { "phrase": "inflation", "meaning": "물가 상승, 인플레이션", "example": "Inflation is why my groceries cost more every week.", "example_ko": "물가가 올라서 장보기 비용이 매주 늘어." },
+      { "phrase": "cost of living", "meaning": "생활비", "example": "The cost of living in Sydney is pretty high.", "example_ko": "시드니는 생활비가 꽤 비싸." },
+      { "phrase": "outlook", "meaning": "전망", "example": "The job outlook for chefs is good right now.", "example_ko": "요즘 요리사 취업 전망이 좋아." },
+      { "phrase": "a nightmare", "meaning": "악몽 같은 상황, 최악", "example": "Finding a rental in Sydney is a nightmare.", "example_ko": "시드니에서 집 구하기는 진짜 최악이야." }
+    ],
+    "quiz": [
+      { "question": "What does the RBA decide?", "choices": ["Petrol prices", "The main interest rate", "Visa rules"], "answer": 1, "explain": "RBA는 기준금리(interest rate)를 정해요." },
+      { "question": "'rate hike'의 뜻은?", "choices": ["금리 인하", "금리 인상", "환율"], "answer": 1, "explain": "hike = 올리기. 반대말은 rate cut이에요." },
+      { "question": "'Finding a rental is a nightmare.'의 뜻은?", "choices": ["집 구하는 꿈을 꿨다", "집 구하기가 너무 힘들다", "집을 빨리 구했다"], "answer": 1, "explain": "a nightmare = 악몽처럼 힘든 상황." }
+    ]
+  }
+]

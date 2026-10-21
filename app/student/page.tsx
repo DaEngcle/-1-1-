@@ -41,6 +41,7 @@ import { cardClass } from "@/app/_ui/styles";
 import { ATTENDANCE_LABEL } from "@/lib/classroom/attendance";
 import { getEngagement, getWeeklyRanking } from "@/lib/classroom/engagement";
 import { getTests } from "@/lib/classroom/level-test-data";
+import { createServerSupabaseClient } from "@/lib/supabase";
 import { LevelCard } from "@/app/_ui/level-card";
 import {
   Badges,
@@ -86,12 +87,20 @@ function ProgressBar({ percent }: { percent: number }) {
 
 export default async function StudentHomePage() {
   const student = await requireStudent();
-  const [stats, progressMap, engagement, ranking, tests] = await Promise.all([
+  const [stats, progressMap, engagement, ranking, tests, { data: latestNews }] = await Promise.all([
     getStudentStats(student.id),
     getCourseProgress([student.id]),
     getEngagement(student.id),
     getWeeklyRanking({ masked: true }),
     getTests(student.id),
+    createServerSupabaseClient()
+      .from("news_lessons")
+      .select("id, title_ko, topic, level")
+      .eq("is_published", true)
+      .order("published_on", { ascending: false })
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle(),
   ]);
   const nickname = student.nickname;
   const progress = progressMap.get(student.id)!;
@@ -211,6 +220,23 @@ export default async function StudentHomePage() {
           <p className="font-extrabold text-zinc-900">🐾 고양이 이름을 지어주세요!</p>
           <CatNameForm current={null} />
         </section>
+      )}
+
+      {latestNews && (
+        <Link
+          href={`/student/news/${latestNews.id}`}
+          className={`${cardClass} flex items-center gap-3 hover:border-brand-300`}
+        >
+          <span className="text-3xl">📰</span>
+          <span className="flex min-w-0 flex-col">
+            <span className="text-xs font-semibold text-brand-600">
+              오늘의 호주 뉴스 · {latestNews.level}
+            </span>
+            <span className="truncate font-bold text-zinc-900">{latestNews.title_ko}</span>
+            <span className="text-xs text-zinc-500">쉬운 영어 요약 + 핵심 표현 5개 + 1분 퀴즈</span>
+          </span>
+          <span className="ml-auto shrink-0 text-xl text-brand-600">→</span>
+        </Link>
       )}
 
       <InstallAppCard />
