@@ -16,16 +16,64 @@ const BADGE_ICONS: Record<string, string> = {
   levelup: "🚀",
 };
 
-export function StudyCalendar({ month }: { month: Engagement["month"] }) {
+/** 별 메달 (공부한 날) */
+function StarCoin({ strong }: { strong: boolean }) {
   return (
-    <section className={cardClass}>
-      <div className="mb-2 flex items-center justify-between">
-        <h2 className="font-bold text-zinc-900">{month.label} 학습 달력</h2>
-        <span className="text-xs text-zinc-500">이번 달 {month.studiedDays}일 공부</span>
+    <svg viewBox="0 0 40 40" className="h-full w-full drop-shadow-sm">
+      <defs>
+        <linearGradient id={strong ? "coin-strong" : "coin-soft"} x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor={strong ? "#FFD84D" : "#BFE9FF"} />
+          <stop offset="0.55" stopColor={strong ? "#FFB86B" : "#A8C8FF"} />
+          <stop offset="1" stopColor={strong ? "#F49BD6" : "#C7B5FF"} />
+        </linearGradient>
+      </defs>
+      <circle cx="20" cy="20" r="18" fill={`url(#${strong ? "coin-strong" : "coin-soft"})`} />
+      <circle cx="20" cy="20" r="13.5" fill="#fff" opacity="0.9" />
+      <path
+        d="M20 10.5l2.9 6 6.5.9-4.7 4.5 1.1 6.5L20 25.3l-5.8 3.1 1.1-6.5-4.7-4.5 6.5-.9z"
+        fill={strong ? "#FFC53D" : "#8FB7FF"}
+        stroke={strong ? "#F59E0B" : "#6C8EF5"}
+        strokeWidth="1"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function StudyCalendar({
+  month,
+  streak,
+  bestStreak,
+  totalDays,
+  tier,
+}: {
+  month: Engagement["month"];
+  streak?: number;
+  bestStreak?: number;
+  totalDays?: number;
+  /** 현재 리그 (학생 홈에서만) */
+  tier?: React.ReactNode;
+}) {
+  const past = month.days.filter((d) => !d.future);
+  const perfect = past.length > 0 && past.every((d) => d.level > 0);
+  return (
+    <section className="overflow-hidden rounded-3xl border border-slate-200/80 bg-[#fffaf0] shadow-sm">
+      <div className="flex items-center justify-between px-4 pt-4">
+        <div>
+          <p className="text-xs font-semibold text-zinc-500">학습 달력</p>
+          <p className="text-3xl font-extrabold text-zinc-900">{month.label}</p>
+        </div>
+        {perfect ? (
+          <span className="rounded-full bg-gradient-to-r from-amber-400 to-pink-400 px-3 py-1 text-xs font-extrabold text-white shadow">
+            🏅 PERFECT
+          </span>
+        ) : (
+          <span className="text-xs text-zinc-500">이번 달 {month.studiedDays}일 공부</span>
+        )}
       </div>
-      <div className="grid grid-cols-7 gap-1 text-center">
+      <div className="m-3 grid grid-cols-7 gap-1.5 rounded-2xl bg-white p-3 text-center">
         {["월", "화", "수", "목", "금", "토", "일"].map((d) => (
-          <span key={d} className="text-[11px] text-zinc-400">
+          <span key={d} className="text-[11px] font-semibold text-zinc-400">
             {d}
           </span>
         ))}
@@ -35,32 +83,54 @@ export function StudyCalendar({ month }: { month: Engagement["month"] }) {
         {month.days.map((d) => (
           <span
             key={d.day}
-            title={d.level === 2 ? "쉐도잉 제출" : d.level === 1 ? "영상 시청" : undefined}
-            className={`relative flex aspect-square items-center justify-center rounded text-[11px] ${
-              d.level === 2
-                ? "bg-emerald-600 font-semibold text-white"
-                : d.level === 1
-                  ? "bg-emerald-200 text-emerald-900"
-                  : d.future
-                    ? "border border-dashed border-zinc-200 text-zinc-300"
-                    : "bg-zinc-100 text-zinc-500"
-            }`}
+            title={d.level === 2 ? "쉐도잉까지 완료" : d.level === 1 ? "공부함" : undefined}
+            className="relative flex aspect-square items-center justify-center text-[11px]"
           >
-            {Number(d.day.slice(8))}
-            {d.attended && <span className="absolute right-0.5 top-0 text-[9px]">✓</span>}
+            {d.level > 0 ? (
+              <StarCoin strong={d.level === 2} />
+            ) : (
+              <span className={d.future ? "text-zinc-200" : "text-zinc-400"}>{Number(d.day.slice(8))}</span>
+            )}
+            {d.attended && <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-emerald-500 ring-2 ring-white" title="수업 출석" />}
           </span>
         ))}
       </div>
-      <div className="mt-2 flex flex-wrap gap-3 text-[11px] text-zinc-500">
-        <span>
-          <span className="mr-1 inline-block h-2.5 w-2.5 rounded-sm bg-emerald-200 align-middle" />
-          영상 시청
+      {streak != null && (
+        <div className="grid grid-cols-3 divide-x divide-amber-100 border-t border-amber-100 bg-white/70 py-3 text-center">
+          <div className="flex flex-col items-center justify-center gap-0.5">
+            {tier ?? <span className="text-2xl">🔥</span>}
+            <span className="text-[11px] text-zinc-500">현재 리그</span>
+          </div>
+          <div className="flex flex-col items-center justify-center">
+            {streak > 0 && streak >= (bestStreak ?? 0) && (
+              <span className="text-[10px] font-bold text-violet-500">신기록!</span>
+            )}
+            <span className="text-3xl font-extrabold text-violet-600">{streak}</span>
+            <span className="text-[11px] text-zinc-500">연속 학습일</span>
+          </div>
+          <div className="flex flex-col items-center justify-center">
+            <span className="text-3xl font-extrabold text-zinc-700">{totalDays ?? 0}</span>
+            <span className="text-[11px] text-zinc-500">총 학습일</span>
+          </div>
+        </div>
+      )}
+      <div className="flex flex-wrap gap-3 px-4 pb-3 text-[11px] text-zinc-500">
+        <span className="flex items-center gap-1">
+          <span className="inline-block h-3.5 w-3.5">
+            <StarCoin strong={false} />
+          </span>
+          공부함
         </span>
-        <span>
-          <span className="mr-1 inline-block h-2.5 w-2.5 rounded-sm bg-emerald-600 align-middle" />
-          쉐도잉 제출
+        <span className="flex items-center gap-1">
+          <span className="inline-block h-3.5 w-3.5">
+            <StarCoin strong />
+          </span>
+          쉐도잉까지
         </span>
-        <span>✓ 수업 출석</span>
+        <span className="flex items-center gap-1">
+          <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
+          수업 출석
+        </span>
       </div>
     </section>
   );

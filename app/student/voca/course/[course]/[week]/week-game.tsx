@@ -35,7 +35,8 @@ function buildQuestions(sentences: Sentence[], only?: string[]): QuizQuestion[] 
       const others = shuffle(pool.filter((o) => o.translation !== p.translation)).slice(0, 3).map((o) => o.translation);
       return {
         key: p.key,
-        prompt: <b>🎧 잘 듣고, 무슨 뜻인지 골라보세요</b>,
+        label: "🎧 듣고 뜻 고르기",
+        prompt: "무슨 뜻일까요?",
         answer: p.translation,
         choices: shuffle([p.translation, ...others]),
         speakOnShow: p.sentence,
@@ -48,25 +49,16 @@ function buildQuestions(sentences: Sentence[], only?: string[]): QuizQuestion[] 
     const answer = target.clean.toLowerCase();
     const wrong = shuffle(allWords.filter((w) => w !== answer && Math.abs(w.length - answer.length) <= 4)).slice(0, 3);
     const tokens = p.sentence.split(/\s+/);
+    const word = tokens[target.idx];
+    const at = word.indexOf(target.clean);
+    const pre = tokens.slice(0, target.idx).join(" ");
+    const rest = tokens.slice(target.idx + 1).join(" ");
+    const before = (pre ? `${pre} ` : "") + word.slice(0, at);
+    const after = word.slice(at + target.clean.length) + (rest ? ` ${rest}` : "");
     return {
       key: p.key,
-      prompt: (
-        <span>
-          {tokens.map((t, n) =>
-            n === target.idx ? (
-              <span key={n}>
-                {t.slice(0, t.indexOf(target.clean))}
-                <span className="mx-0.5 inline-block min-w-16 rounded-md border-b-4 border-violet-400 bg-violet-50 px-2 font-bold text-violet-400">
-                  ?
-                </span>
-                {t.slice(t.indexOf(target.clean) + target.clean.length)}{" "}
-              </span>
-            ) : (
-              <span key={n}>{t} </span>
-            ),
-          )}
-        </span>
-      ),
+      label: "✏️ 빈칸 채우기",
+      blank: { before, after },
       hint: `💬 ${p.translation}`,
       answer,
       choices: shuffle([answer, ...wrong]),

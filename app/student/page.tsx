@@ -39,16 +39,14 @@ import { getCourseProgress } from "@/lib/classroom/progress";
 import { ScoreTrendChart } from "@/app/_ui/score-trend-chart";
 import { cardClass } from "@/app/_ui/styles";
 import { ATTENDANCE_LABEL } from "@/lib/classroom/attendance";
-import { getEngagement, getWeeklyRanking } from "@/lib/classroom/engagement";
+import { getEngagement, getSeasonRanking } from "@/lib/classroom/engagement";
+import { LeagueCard } from "@/app/_ui/league";
+import { TierEmblem } from "@/app/_ui/tier-emblem";
+import { tierFor } from "@/lib/classroom/league";
 import { getTests } from "@/lib/classroom/level-test-data";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { LevelCard } from "@/app/_ui/level-card";
-import {
-  Badges,
-  Missions,
-  StudyCalendar,
-  WeeklyRanking,
-} from "@/app/_ui/engagement";
+import { Badges, Missions, StudyCalendar } from "@/app/_ui/engagement";
 
 function StatTile({
   label,
@@ -91,7 +89,7 @@ export default async function StudentHomePage() {
     getStudentStats(student.id),
     getCourseProgress([student.id]),
     getEngagement(student.id),
-    getWeeklyRanking({ masked: true }),
+    getSeasonRanking({ masked: true }),
     getTests(student.id),
     createServerSupabaseClient()
       .from("news_lessons")
@@ -109,6 +107,8 @@ export default async function StudentHomePage() {
     0,
   );
   const attended = stats.attendance.present + stats.attendance.late;
+  const meRank = ranking.find((r) => r.studentId === student.id);
+  const myTier = tierFor(meRank?.xp ?? 0, meRank?.rank ?? 99);
   const greeting = catGreeting(
     nickname ?? student.name,
     engagement.streak,
@@ -344,10 +344,16 @@ export default async function StudentHomePage() {
 
       <div className="grid gap-3 sm:grid-cols-2">
         <Missions missions={engagement.missions} />
-        <WeeklyRanking rows={ranking} meId={student.id} />
+        <LeagueCard rows={ranking} meId={student.id} />
       </div>
 
-      <StudyCalendar month={engagement.month} />
+      <StudyCalendar
+        month={engagement.month}
+        streak={engagement.streak}
+        bestStreak={engagement.bestStreak}
+        totalDays={engagement.totalDays}
+        tier={<TierEmblem tier={myTier.id} className="h-9 w-9" />}
+      />
 
       <Badges badges={engagement.badges} />
 

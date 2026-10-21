@@ -83,6 +83,8 @@ export interface CalendarDay {
 
 export interface Engagement {
   streak: number;
+  /** 지금까지 공부한 날 수 */
+  totalDays: number;
   bestStreak: number;
   month: { label: string; firstWeekday: number; days: CalendarDay[]; studiedDays: number };
   missions: { label: string; done: boolean }[];
@@ -193,6 +195,7 @@ export async function getEngagement(studentId: string): Promise<Engagement> {
       : null,
     streak: current,
     bestStreak: best,
+    totalDays: studied.size,
     month: {
       label: `${Number(today.slice(5, 7))}월`,
       firstWeekday,
@@ -216,6 +219,7 @@ export interface RankRow {
   name: string;
   xp: number;
   rank: number;
+  catBreed: string | null;
 }
 
 /**
@@ -223,18 +227,31 @@ export interface RankRow {
  * masked=true(학생 화면): 닉네임, 없으면 이름 가운데를 가림. false(선생님): 실명 (닉네임)
  */
 export async function getWeeklyRanking({ masked }: { masked: boolean }): Promise<RankRow[]> {
+  return getRanking({ masked, start: weekStart() });
+}
+
+/** 이번 달 시즌(1일~말일) 포인트 순위 — 리그 티어용 */
+export async function getSeasonRanking({ masked }: { masked: boolean }): Promise<RankRow[]> {
+  return getRanking({ masked, start: `${kstDate(new Date()).slice(0, 8)}01` });
+}
+
+/** start(한국 날짜)부터 지금까지 학습 포인트 순위 */
+async function getRanking({ masked, start }: { masked: boolean; start: string }): Promise<RankRow[]> {
   const supabase = createServerSupabaseClient();
-  const start = weekStart();
   const startIso = new Date(`${start}T00:00:00+09:00`).toISOString();
   const [{ data: students }, watchRows, subs] = await Promise.all([
     supabase
       .from("students")
-      .select("id, name, nickname")
+      .select("id, name, nickname, cat_breed")
       .eq("is_active", true)
       // 시트에서 가져왔지만 아직 가입 안 한 학생은 랭킹에서 뺀다
       .or("password_hash.not.is.null,login_code_hash.not.is.null"),
-    fetchAll<{ student_id: string; watched_seconds: number }>((from, to) =>
-      supabase.from("daily_activity").select("student_id, watched_seconds").gte("day", start).range(from, to),
+    fetchAll<{ student_id: string; watched_seconds: number; voca_points: number }>((from, to) =>
+      supabase
+        .from("daily_activity")
+        .select("student_id, watched_seconds, voca_points")
+        .gte("day", start)
+        .range(from, to),
     ),
     fetchAll<{ student_id: string; status: string; overall_score: number | null }>((from, to) =>
       supabase
@@ -247,7 +264,7 @@ export async function getWeeklyRanking({ masked }: { masked: boolean }): Promise
 
   const xp = new Map<string, number>();
   const add = (id: string, n: number) => xp.set(id, (xp.get(id) ?? 0) + n);
-  for (const w of watchRows) add(w.student_id, Math.floor(w.watched_seconds / 60));
+  for (const w of watchRows) add(w.student_id, Math.floor(w.watched_seconds / 60) + (w.voca_points ?? 0));
   for (const s of subs) {
     add(s.student_id, XP_PER_SUBMISSION);
     if (s.status === "scored" && Number(s.overall_score) >= HIGH_SCORE) add(s.student_id, XP_HIGH_SCORE_BONUS);
@@ -262,6 +279,7 @@ export async function getWeeklyRanking({ masked }: { masked: boolean }): Promise
           ? `${s.name} (${s.nickname})`
           : (s.name as string),
       xp: xp.get(s.id) ?? 0,
+      catBreed: (s.cat_breed as string | null) ?? null,
     }))
     .sort((a, b) => b.xp - a.xp || a.name.localeCompare(b.name));
   // 같은 점수는 같은 등수
@@ -277,26 +295,33 @@ export async function getWeeklyRanking({ masked }: { masked: boolean }): Promise
  * 브라우저가 보낸 값은 마지막 기록 이후 흐른 시간(2배속까지)만큼만 인정한다.
  */
 /** 보카 한 판을 오늘(한국 날짜) 학습으로 기록 — 연속 학습일에 들어간다 */
-export async function addVocaPlay(studentId: string) {
+export async function addVocaPlay(studentId: string, points = 0) {
   const supabase = createServerSupabaseClient();
   const day = kstDate(new Date());
   const { data } = await supabase
     .from("daily_activity")
-    .select("voca_plays")
+    .select("voca_plays, voca_points")
     .eq("student_id", studentId)
     .eq("day", day)
     .maybeSingle();
   if (data) {
     await supabase
       .from("daily_activity")
-      .update({ voca_plays: (data.voca_plays ?? 0) + 1 })
+      // 보카 포인트는 하루 100P까지만 (랭킹 쏠림 방지)
+      .update({ voca_plays: (data.voca_plays ?? 0) + 1, voca_points: Math.min(100, (data.voca_points ?? 0) + points) })
       .eq("student_id", studentId)
       .eq("day", day);
   } else {
     // updated_at은 영상 시간 부풀리기 방지용이라 건드리지 않도록 새 줄은 과거 시각으로
     await supabase
       .from("daily_activity")
-      .insert({ student_id: studentId, day, voca_plays: 1, updated_at: new Date(0).toISOString() });
+      .insert({
+        student_id: studentId,
+        day,
+        voca_plays: 1,
+        voca_points: Math.min(100, points),
+        updated_at: new Date(0).toISOString(),
+      });
   }
 }
 

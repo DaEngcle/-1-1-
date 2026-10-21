@@ -7,7 +7,7 @@ import { starsFor } from "@/lib/classroom/verbs";
 import { addVocaPlay } from "@/lib/classroom/engagement";
 
 /** 게임 한 판 결과 저장: 최고 점수·별은 더 좋을 때만 올린다 */
-export async function saveVocaResult(deck: string, percent: number, wrong: string[]) {
+export async function saveVocaResult(deck: string, percent: number, wrong: string[], count = 10) {
   const student = await requireStudent();
   if (!/^[a-z0-9-]{1,40}$/.test(deck)) return;
   const score = Math.max(0, Math.min(100, Math.round(percent)));
@@ -27,7 +27,9 @@ export async function saveVocaResult(deck: string, percent: number, wrong: strin
     wrong: wrong.slice(0, 20),
     updated_at: new Date().toISOString(),
   });
-  await addVocaPlay(student.id);
+  // 맞힌 문제당 2P (한 판 최대 30P)
+  const points = Math.min(30, Math.round((score / 100) * Math.max(1, Math.min(15, count))) * 2);
+  await addVocaPlay(student.id, points);
   revalidatePath("/student/voca", "layout");
   revalidatePath("/student");
 }

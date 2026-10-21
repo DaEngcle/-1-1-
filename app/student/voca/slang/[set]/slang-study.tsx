@@ -14,25 +14,22 @@ function buildQuestions(items: Slang[], only?: string[]): QuizQuestion[] {
     if (kind === 0) {
       return {
         key: x.term,
-        prompt: (
-          <>
-            <b className="text-teal-700">{x.term}</b>는 무슨 뜻?
-          </>
-        ),
+        label: "🦘 뜻 고르기",
+        prompt: x.term,
+        hint: "이 호주 표현의 뜻은?",
         answer: x.ko,
         choices: shuffle([x.ko, ...others.map((o) => o.ko)]),
         speak: x.term,
         review,
+        note: x.note,
       };
     }
     if (kind === 1) {
       return {
         key: x.term,
-        prompt: (
-          <>
-            <b className="text-teal-700">“{x.ko}”</b>를 호주식으로?
-          </>
-        ),
+        label: "🇦🇺 호주식으로 말하기",
+        prompt: `“${x.ko}”`,
+        hint: "호주 사람들은 뭐라고 할까요?",
         answer: x.term,
         choices: shuffle([x.term, ...others.map((o) => o.term)]),
         speak: x.term,
@@ -41,21 +38,12 @@ function buildQuestions(items: Slang[], only?: string[]): QuizQuestion[] {
     }
     // 예문 빈칸
     const at = x.example.toLowerCase().indexOf(x.term.toLowerCase());
-    const blanked =
-      at >= 0 ? (
-        <>
-          {x.example.slice(0, at)}
-          <span className="mx-0.5 inline-block min-w-16 rounded-md border-b-4 border-teal-400 bg-teal-50 px-2 font-bold text-teal-400">
-            ?
-          </span>
-          {x.example.slice(at + x.term.length)}
-        </>
-      ) : (
-        x.example
-      );
     return {
       key: x.term,
-      prompt: <span>{blanked}</span>,
+      label: "✏️ 빈칸 채우기",
+      ...(at >= 0
+        ? { blank: { before: x.example.slice(0, at), after: x.example.slice(at + x.term.length) } }
+        : { prompt: x.example }),
       hint: `💬 ${x.example_ko}`,
       answer: x.term,
       choices: shuffle([x.term, ...others.map((o) => o.term)]),
@@ -86,7 +74,7 @@ export function SlangStudy({ setId, items, nextHref }: { setId: number; items: S
         ))}
       </div>
       {mode === "game" ? (
-        <QuizGame key={setId} deck={`slang-${setId}`} accent="teal" nextHref={nextHref} build={(only) => buildQuestions(items, only)} />
+        <QuizGame key={setId} deck={`slang-${setId}`} nextHref={nextHref} build={(only) => buildQuestions(items, only)} />
       ) : (
         <section className="flex flex-col gap-2">
           <div className="flex items-center justify-between gap-2">
