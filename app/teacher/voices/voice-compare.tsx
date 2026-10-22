@@ -5,7 +5,9 @@ import { cardClass, inputClass } from "@/app/_ui/styles";
 
 const VOICES = [
   { id: "a", name: "Freya", note: "쉐도잉 기본 · 호주 여성", now: true },
-  { id: "b", name: "Duncan", note: "쉐도잉 기본 · 호주 남성", now: true },
+  { id: "b", name: "Andrew (호주 억양)", note: "쉐도잉 기본 · 남성", now: true },
+  { id: "ava_au", name: "Ava (호주 억양)", note: "여성 후보" },
+  { id: "duncan", name: "Duncan", note: "호주 남성" },
 
   { id: "ava_hd", name: "Ava HD", note: "최신 고품질 · 미국 여성" },
   { id: "emma_hd", name: "Emma HD", note: "최신 고품질 · 미국 여성" },

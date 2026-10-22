@@ -4,7 +4,8 @@ export const TTS_VOICE = "en-AU-FreyaNeural";
 // 쉐도잉·대화 듣기용 두 목소리 (A: 여성, B: 남성). 예전엔 Natasha·William (AI 같다는 의견이 있어 바꿈)
 export const TTS_VOICES = {
   a: "en-AU-FreyaNeural",
-  b: "en-AU-DuncanNeural",
+  // Andrew(다국어 목소리)에게 호주 억양으로 읽게 한다 (아래 AU_ACCENT)
+  b: "en-US-AndrewMultilingualNeural",
   // AI 면접관 목소리 (호주 억양)
   freya: "en-AU-FreyaNeural", // (Carly는 아이 목소리라 쓰지 않는다)
   duncan: "en-AU-DuncanNeural",
@@ -20,7 +21,11 @@ export const TTS_VOICES = {
   brian_hd: "en-US-Brian:DragonHDLatestNeural",
   ava_ml: "en-US-AvaMultilingualNeural",
   andrew_ml: "en-US-AndrewMultilingualNeural",
+  andrew_au: "en-US-AndrewMultilingualNeural",
+  ava_au: "en-US-AvaMultilingualNeural",
 } as const;
+/** 다국어 목소리에 호주 억양(en-AU)을 입힐 목소리들 */
+const AU_ACCENT = new Set<string>(["b", "andrew_au", "ava_au"]);
 export type TtsVoice = keyof typeof TTS_VOICES;
 export const TTS_SPEEDS = { normal: "0%", slow: "-25%" } as const;
 export type TtsSpeed = keyof typeof TTS_SPEEDS;
@@ -52,7 +57,8 @@ export async function synthesizeSpeech(text: string, speed: TtsSpeed, voice: Tts
   const name = TTS_VOICES[voice];
   const lang = name.slice(0, 5);
   // 보통 속도는 그대로 읽게 둔다 (속도 태그를 안 씌우는 게 더 자연스럽다)
-  const body = speed === "normal" ? escapeXml(text) : `<prosody rate="${TTS_SPEEDS[speed]}">${escapeXml(text)}</prosody>`;
+  let body = speed === "normal" ? escapeXml(text) : `<prosody rate="${TTS_SPEEDS[speed]}">${escapeXml(text)}</prosody>`;
+  if (AU_ACCENT.has(voice)) body = `<lang xml:lang="en-AU">${body}</lang>`;
   const ssml = `<speak version="1.0" xml:lang="${lang}"><voice name="${name}">${body}</voice></speak>`;
 
   const res = await fetch(

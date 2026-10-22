@@ -5,7 +5,7 @@ import { TTS_VOICES, synthesizeSpeech, type TtsSpeed, type TtsVoice } from "./az
 
 /** 원어민 음성 mp3. 같은 문장·속도·목소리는 Storage(tts 버킷)에 한 번만 만들어 둔다 */
 export async function getSpeechAudio(text: string, speed: TtsSpeed, voice: TtsVoice = "a") {
-  const hash = createHash("sha256").update(`${TTS_VOICES[voice]}|${speed}|${text}`).digest("hex");
+  const hash = createHash("sha256").update(`${TTS_VOICES[voice]}${voice.endsWith("_au") || voice === "b" ? "|en-AU" : ""}|${speed}|${text}`).digest("hex");
   const path = `${hash}.mp3`;
   const supabase = createServerSupabaseClient();
 
