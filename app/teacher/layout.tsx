@@ -15,6 +15,7 @@ const NAV = [
   { href: "/teacher/submissions", label: "쉐도잉 제출" },
   { href: "/teacher/level-tests", label: "레벨·랭킹" },
   { href: "/teacher/attendance", label: "출결" },
+  { href: "/teacher/feedback", label: "학생 의견" },
   { href: "/teacher/voices", label: "목소리" },
 ];
 
@@ -25,16 +26,19 @@ export default async function TeacherLayout({
 }) {
   await requireTeacher();
   const supabase = createServerSupabaseClient();
-  const [{ count }, { count: buyRequests }] = await Promise.all([
+  const [{ count }, { count: buyRequests }, { count: newFeedback }] = await Promise.all([
     supabase.from("students").select("id", { count: "exact", head: true }).eq("approval", "pending"),
     supabase.from("resource_requests").select("id", { count: "exact", head: true }),
+    supabase.from("student_feedback").select("id", { count: "exact", head: true }).eq("done", false),
   ]);
   const nav = NAV.map((n) =>
     n.href === "/teacher/students" && count
       ? { ...n, label: `학생 · 신청 ${count}` }
       : n.href === "/teacher/resources" && buyRequests
         ? { ...n, label: `자료실 · 구매 ${buyRequests}` }
-        : n,
+        : n.href === "/teacher/feedback" && newFeedback
+          ? { ...n, label: `학생 의견 · 새 ${newFeedback}` }
+          : n,
   );
   return (
     <AppShell title="다잉클 클래스룸 · 선생님" nav={nav}>
