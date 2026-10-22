@@ -15,6 +15,7 @@ const NAV = [
   { href: "/teacher/submissions", label: "쉐도잉 제출" },
   { href: "/teacher/level-tests", label: "레벨·랭킹" },
   { href: "/teacher/attendance", label: "출결" },
+  { href: "/teacher/voices", label: "목소리" },
 ];
 
 export default async function TeacherLayout({

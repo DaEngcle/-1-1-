@@ -13,6 +13,13 @@ export const TTS_VOICES = {
   elsie: "en-AU-ElsieNeural",
   tina: "en-AU-TinaNeural",
   tim: "en-AU-TimNeural",
+  // 더 자연스러운 목소리 후보 (선생님 '목소리 비교' 화면에서 들어보고 고른다)
+  ava_hd: "en-US-Ava:DragonHDLatestNeural",
+  andrew_hd: "en-US-Andrew:DragonHDLatestNeural",
+  emma_hd: "en-US-Emma:DragonHDLatestNeural",
+  brian_hd: "en-US-Brian:DragonHDLatestNeural",
+  ava_ml: "en-US-AvaMultilingualNeural",
+  andrew_ml: "en-US-AndrewMultilingualNeural",
 } as const;
 export type TtsVoice = keyof typeof TTS_VOICES;
 export const TTS_SPEEDS = { normal: "0%", slow: "-35%" } as const;
@@ -42,10 +49,11 @@ export async function synthesizeSpeech(text: string, speed: TtsSpeed, voice: Tts
   const config = getConfig();
   if (!config) throw new Error("Azure Speech가 설정되지 않았습니다.");
 
-  const ssml =
-    `<speak version="1.0" xml:lang="en-AU"><voice name="${TTS_VOICES[voice]}">` +
-    `<prosody rate="${TTS_SPEEDS[speed]}">${escapeXml(text)}</prosody>` +
-    `</voice></speak>`;
+  const name = TTS_VOICES[voice];
+  const lang = name.slice(0, 5);
+  // 보통 속도는 그대로 읽게 둔다 (속도 태그를 안 씌우는 게 더 자연스럽다)
+  const body = speed === "normal" ? escapeXml(text) : `<prosody rate="${TTS_SPEEDS[speed]}">${escapeXml(text)}</prosody>`;
+  const ssml = `<speak version="1.0" xml:lang="${lang}"><voice name="${name}">${body}</voice></speak>`;
 
   const res = await fetch(
     `https://${config.region}.tts.speech.microsoft.com/cognitiveservices/v1`,
