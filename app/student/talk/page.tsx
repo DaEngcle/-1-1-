@@ -7,7 +7,7 @@ import { manwon } from "@/lib/classroom/price";
 import { SubmitButton } from "@/app/_ui/submit-button";
 import { requestTalkPass } from "./actions";
 import { aiReady } from "@/lib/classroom/interview-ai";
-import { Interviewer } from "@/app/_ui/interviewer";
+import { InterviewerFace } from "@/app/_ui/interviewer-video";
 
 const LEVEL_COLOR: Record<string, string> = {
   쉬움: "bg-green-50 text-green-700",
@@ -75,7 +75,7 @@ export default async function TalkPage() {
             href={`/student/talk/${s.id}`}
             className="flex items-center gap-3 rounded-3xl border border-slate-200 bg-white p-3 shadow-sm transition-transform hover:border-sky-300 active:translate-y-0.5"
           >
-            <Interviewer look={s.look} className="h-24 w-24 shrink-0" />
+            <InterviewerFace id={s.id} look={s.look} className="h-24 w-24 shrink-0" />
             <span className="flex min-w-0 flex-col gap-1">
               <span className="font-extrabold text-zinc-900">
                 {s.emoji} {s.title}

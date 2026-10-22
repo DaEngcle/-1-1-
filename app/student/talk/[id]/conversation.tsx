@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { useTts } from "@/app/_ui/audio/use-tts";
 import { useRecorder } from "@/app/_ui/audio/use-recorder";
 import { Interviewer } from "@/app/_ui/interviewer";
+import { InterviewerFace, InterviewerVideo, hasInterviewerVideo } from "@/app/_ui/interviewer-video";
 import { CatSprite } from "@/app/_ui/cat";
 import { useMyCat } from "@/app/_ui/cat-context";
 import type { Scenario } from "@/lib/classroom/interview-scenarios";
@@ -141,7 +142,11 @@ export function Conversation({ scenario: s, ready }: { scenario: Scenario; ready
     return (
       <section className="flex flex-col gap-4">
         <div className="flex flex-col items-center gap-2 rounded-[28px] p-5 text-center" style={{ background: s.look.bg }}>
-          <Interviewer look={s.look} className="h-44 w-44" />
+          {hasInterviewerVideo(s.id) ? (
+            <InterviewerVideo id={s.id} className="aspect-video w-full rounded-2xl shadow-sm" />
+          ) : (
+            <Interviewer look={s.look} className="h-44 w-44" />
+          )}
           <p className="text-xl font-extrabold text-zinc-900">
             {s.emoji} {s.title}
           </p>
@@ -213,13 +218,13 @@ export function Conversation({ scenario: s, ready }: { scenario: Scenario; ready
       <section className="flex flex-col gap-3">
         {phase === "reporting" ? (
           <div className="flex flex-col items-center gap-3 rounded-[28px] bg-white p-8 text-center shadow-sm">
-            <Interviewer look={s.look} mood="thinking" className="h-32 w-32" />
+            <InterviewerFace id={s.id} look={s.look} className="h-32 w-32" />
             <p className="animate-pulse font-bold text-zinc-700">{s.name}가 면접 결과를 정리하고 있어요…</p>
           </div>
         ) : feedback ? (
           <>
             <div className="flex flex-col items-center gap-2 rounded-[28px] p-5 text-center shadow-sm" style={{ background: s.look.bg }}>
-              <Interviewer look={s.look} className="h-28 w-28" />
+              <InterviewerFace id={s.id} look={s.look} className="h-28 w-28" />
               <p className="text-2xl font-extrabold text-zinc-900">{feedback.result}</p>
               <p className="text-5xl font-black text-[#6C5CFF]">
                 {feedback.score}
@@ -341,7 +346,11 @@ export function Conversation({ scenario: s, ready }: { scenario: Scenario; ready
       </div>
 
       <div className="flex flex-col items-center">
-        <Interviewer look={s.look} talking={talking} mood={phase === "thinking" ? "thinking" : mood} className="h-48 w-48 drop-shadow-lg" />
+        {hasInterviewerVideo(s.id) ? (
+          <InterviewerVideo id={s.id} talking={talking} className="aspect-video w-full rounded-3xl shadow-lg" />
+        ) : (
+          <Interviewer look={s.look} talking={talking} mood={phase === "thinking" ? "thinking" : mood} className="h-48 w-48 drop-shadow-lg" />
+        )}
         <p className="mt-1 h-5 text-sm font-semibold text-zinc-500">
           {phase === "talking"
             ? `${s.name}가 말하는 중…`
