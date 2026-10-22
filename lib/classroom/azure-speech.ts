@@ -1,10 +1,10 @@
 import "server-only";
 
-export const TTS_VOICE = "en-AU-NatashaNeural";
-// 대화 듣기용 두 목소리 (A: 여성, B: 남성)
+export const TTS_VOICE = "en-AU-FreyaNeural";
+// 쉐도잉·대화 듣기용 두 목소리 (A: 여성, B: 남성). 예전엔 Natasha·William (AI 같다는 의견이 있어 바꿈)
 export const TTS_VOICES = {
-  a: "en-AU-NatashaNeural",
-  b: "en-AU-WilliamNeural",
+  a: "en-AU-FreyaNeural",
+  b: "en-AU-DuncanNeural",
   // AI 면접관 목소리 (호주 억양)
   freya: "en-AU-FreyaNeural", // (Carly는 아이 목소리라 쓰지 않는다)
   duncan: "en-AU-DuncanNeural",
@@ -22,7 +22,7 @@ export const TTS_VOICES = {
   andrew_ml: "en-US-AndrewMultilingualNeural",
 } as const;
 export type TtsVoice = keyof typeof TTS_VOICES;
-export const TTS_SPEEDS = { normal: "0%", slow: "-35%" } as const;
+export const TTS_SPEEDS = { normal: "0%", slow: "-25%" } as const;
 export type TtsSpeed = keyof typeof TTS_SPEEDS;
 
 function getConfig() {

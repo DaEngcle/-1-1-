@@ -4,16 +4,15 @@ import { useRef, useState } from "react";
 import { cardClass, inputClass } from "@/app/_ui/styles";
 
 const VOICES = [
-  { id: "a", name: "Natasha", note: "지금 쓰는 목소리 · 호주 여성", now: true },
-  { id: "b", name: "William", note: "지금 쓰는 목소리 · 호주 남성", now: true },
+  { id: "a", name: "Freya", note: "쉐도잉 기본 · 호주 여성", now: true },
+  { id: "b", name: "Duncan", note: "쉐도잉 기본 · 호주 남성", now: true },
+
   { id: "ava_hd", name: "Ava HD", note: "최신 고품질 · 미국 여성" },
   { id: "emma_hd", name: "Emma HD", note: "최신 고품질 · 미국 여성" },
   { id: "andrew_hd", name: "Andrew HD", note: "최신 고품질 · 미국 남성" },
   { id: "brian_hd", name: "Brian HD", note: "최신 고품질 · 미국 남성" },
   { id: "ava_ml", name: "Ava", note: "대화체 · 미국 여성" },
   { id: "andrew_ml", name: "Andrew", note: "대화체 · 미국 남성" },
-  { id: "freya", name: "Freya", note: "호주 여성 (AI 면접 Mia)" },
-  { id: "duncan", name: "Duncan", note: "호주 남성 (AI 면접 Marco)" },
 ];
 
 export function VoiceCompare() {
