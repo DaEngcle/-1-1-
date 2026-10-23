@@ -121,7 +121,7 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     id: "carpenter",
-    title: "건설 현장 (목수·라보러) 면접",
+    title: "건설 현장 (목수·레이버러) 면접",
     emoji: "🔨",
     job: "carpenter's labourer",
     place: "a residential building site in Perth",
