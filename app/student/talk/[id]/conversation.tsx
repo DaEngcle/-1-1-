@@ -55,9 +55,13 @@ export function Conversation({ scenario: s, ready }: { scenario: Scenario; ready
   /** 면접관 말하기 → 끝나면 학생 차례 (마지막이면 리포트) */
   async function say(text: string, last = false) {
     setPhase("talking");
-    await play(text, "normal", `iv:${text}`, s.voice);
+    const heard = await play(text, "normal", `iv:${text}`, s.voice);
     if (last) void finish();
-    else if (mode === "real") startRecording();
+    else if (!heard) {
+      // 소리가 안 나왔는데 녹음부터 시작하면 안 된다 → 직접 듣고 시작하게
+      setPhase("listening");
+      setError("면접관 말이 재생되지 않았어요. 🔊 버튼으로 듣고 🎙 버튼을 눌러 대답해 주세요.");
+    } else if (mode === "real") startRecording();
     else setPhase("listening");
   }
 

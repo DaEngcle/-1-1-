@@ -65,10 +65,18 @@ Rules:
 - Speak natural Australian English, but keep it simple and clear. 1-2 short sentences, max 30 words.
 - React briefly to what they just said (like a real person), then ask ONE question.
 - If their answer is very short or unclear, gently ask a follow-up or rephrase more simply. If it's empty or makes no sense, say you didn't catch that and ask again.
+- NEVER ask again about something already asked or already answered in the conversation (check the whole conversation, including details they volunteered). Move on to a NEW topic from the list.
+- If they ask you to repeat or say they didn't understand, repeat ONLY your last question in simpler words (don't start a new or old topic).
 - Never correct their English and never speak Korean. Stay in character.
 - After about 6-8 questions${mustEnd ? " (you must finish NOW)" : ""}, wrap up warmly: tell them what happens next (e.g. trial shift, call back) and say goodbye. Then set "done" to true.
 Reply ONLY with JSON: {"reply": "...", "done": false, "mood": "smile" | "neutral" | "thinking"}`;
-  const text = await ask("claude-haiku-5-5", system, `Conversation so far:\n${transcriptText(turns, s)}\n\nYour next line as ${s.name}:`, 300);
+  const askedBefore = turns.filter((t) => t.role === "ai").map((t, i) => `${i + 1}. ${t.text}`).join("\n");
+  const text = await ask(
+    "claude-haiku-5-5",
+    system,
+    `Conversation so far:\n${transcriptText(turns, s)}\n\nThings you already said/asked (don't repeat these topics):\n${askedBefore}\n\nYour next line as ${s.name}:`,
+    300,
+  );
   const data = parseJson<{ reply?: string; done?: boolean; mood?: string }>(text);
   const reply = (data?.reply ?? text.replace(/[{}"]/g, "")).trim().slice(0, 400);
   return {
