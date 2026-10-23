@@ -4,6 +4,19 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 export type Speed = "normal" | "slow";
 
+// 아주 짧은 무음 (재생 풀기용)
+const SILENT_WAV =
+  "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=";
+
+/** 재생기 하나를 계속 다시 쓴다 (없으면 만든다) */
+function reuseAudio(el: HTMLAudioElement | null, src: string) {
+  const audio = el ?? new Audio();
+  audio.onended = null;
+  audio.onpause = null;
+  audio.src = src;
+  return audio;
+}
+
 /**
  * 원어민 음성 재생 훅.
  * 서버 TTS(/api/tts, Azure 호주 음성)를 우선 사용하고,
@@ -110,7 +123,9 @@ export function useTts() {
         const url = await load(text, speed, voice);
         if (id !== playIdRef.current) return false; // 그사이 다른 소리를 틀었거나 멈춤
         if (url) {
-          const audio = new Audio(url);
+          // 같은 재생기를 계속 쓴다: 처음 화면을 누를 때 풀어 둔(unlock) 재생기는
+          // 아이폰에서도 나중에 손 안 대고 다시 소리를 낼 수 있다
+          const audio = reuseAudio(audioRef.current, url);
           audioRef.current = audio;
           setPlayingKey(key);
           return new Promise<boolean>((resolve) => {
@@ -141,5 +156,12 @@ export function useTts() {
     [speakWithBrowser, stop, load],
   );
 
-  return { play, stop, preload, playingKey, loop, setLoop };
+  /** 버튼을 누른 순간 불러서 소리 재생을 풀어 둔다 (이후 자동 재생이 막히지 않게) */
+  const unlock = useCallback(() => {
+    const audio = reuseAudio(audioRef.current, SILENT_WAV);
+    audioRef.current = audio;
+    void audio.play().catch(() => {});
+  }, []);
+
+  return { play, stop, preload, unlock, playingKey, loop, setLoop };
 }

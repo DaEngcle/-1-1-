@@ -25,7 +25,7 @@ type Phase = "intro" | "talking" | "listening" | "recording" | "thinking" | "rep
 const MAX_ANSWER_SECONDS = 40;
 
 export function Conversation({ scenario: s, ready }: { scenario: Scenario; ready: boolean }) {
-  const { play, stop, playingKey } = useTts();
+  const { play, stop, unlock, playingKey } = useTts();
   const recorder = useRecorder(
     MAX_ANSWER_SECONDS,
     (wav) => {
@@ -69,6 +69,7 @@ export function Conversation({ scenario: s, ready }: { scenario: Scenario; ready
     setError(null);
     // 지금(버튼을 누른 순간) 오디오를 켜 둬야, 나중에 손 안 대고 녹음이 시작된다 (아이폰)
     recorder.prepare();
+    unlock();
     setPhase("thinking");
     const res = await fetch("/api/interview/start", {
       method: "POST",
@@ -115,6 +116,7 @@ export function Conversation({ scenario: s, ready }: { scenario: Scenario; ready
 
   function startRecording() {
     stop();
+    unlock();
     setError(null);
     setPhase("recording");
     void recorder.start({ autoStop: mode === "real" });
