@@ -6,7 +6,13 @@ import { cardClass, inputClass } from "@/app/_ui/styles";
 const VOICES = [
   { id: "a", name: "Freya", note: "쉐도잉 기본 · 호주 여성", now: true },
   { id: "b", name: "Andrew (호주 억양)", note: "쉐도잉 기본 · 남성", now: true },
-  { id: "ava_au", name: "Ava (호주 억양)", note: "여성 후보" },
+  { id: "ava_au", name: "Ava (호주 억양)", note: "AI 면접 Mia" },
+  { id: "andrew_au", name: "Andrew (호주 억양)", note: "AI 면접 Marco" },
+  { id: "emma_au", name: "Emma (호주 억양)", note: "AI 면접 Sophie" },
+  { id: "brian_au", name: "Brian (호주 억양)", note: "AI 면접 Gaz" },
+  { id: "serena_au", name: "Serena (호주 억양)", note: "AI 면접 Bec" },
+  { id: "phoebe_au", name: "Phoebe (호주 억양)", note: "AI 면접 Jess" },
+  { id: "davis_au", name: "Davis (호주 억양)", note: "AI 면접 Liam" },
   { id: "duncan", name: "Duncan", note: "호주 남성" },
 
   { id: "ava_hd", name: "Ava HD", note: "최신 고품질 · 미국 여성" },
@@ -32,6 +38,9 @@ export function VoiceCompare() {
       setErrors((e) => ({ ...e, [voice]: "이 목소리는 지금 쓸 수 없어요" }));
       setPlayingKey(null);
       return;
+    }
+    if (res.headers.get("X-Voice-Fallback")) {
+      setErrors((e) => ({ ...e, [voice]: "이 목소리는 안 돼서 기존 호주 목소리로 나와요" }));
     }
     const audio = new Audio(URL.createObjectURL(await res.blob()));
     audioRef.current = audio;

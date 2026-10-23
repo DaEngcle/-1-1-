@@ -105,10 +105,17 @@ export function useRecorder(
       onFinishedRef.current?.(null);
       return;
     }
-    if (peak < 0.01) {
-      setError("소리가 거의 녹음되지 않았어요. 마이크를 손으로 막고 있지 않은지 확인하고 다시 녹음해주세요.");
+    if (peak < 0.003) {
+      // 켜 둔 오디오가 먹통이 됐을 수 있어서, 다음 녹음은 마이크를 새로 연다
+      release(true);
+      setError("소리가 거의 녹음되지 않았어요. 🎙 버튼을 눌러 다시 말해 주세요. (마이크를 새로 켤게요)");
       onFinishedRef.current?.(null);
       return;
+    }
+    // 작게 녹음됐으면 크게 키워서 보낸다 (조용한 마이크도 알아듣게)
+    if (peak < 0.3) {
+      const gain = Math.min(8, 0.6 / peak);
+      for (let i = 0; i < samples.length; i++) samples[i] *= gain;
     }
     const wav = encodeWav16kMono(samples, rate);
     setBlob(wav);
@@ -122,7 +129,8 @@ export function useRecorder(
   /**
    * autoStop: 말을 시작했다가 1.6초 조용하면 자동으로 끝낸다 (10초 동안 아무 말이 없어도 끝낸다)
    */
-  async function start(opts: { autoStop?: boolean } = {}) {
+  async function start(opts: { autoStop?: boolean; retried?: boolean } = {}) {
+    const retried = Boolean(opts.retried);
     if (activeRef.current || startingRef.current) return;
     startingRef.current = true;
     setError(null);
@@ -141,10 +149,29 @@ export function useRecorder(
       let spokeAt = 0; // 마지막으로 목소리가 들린 시각
       let loudRun = 0; // 연속으로 목소리가 들린 횟수 (잡음 무시)
       let spoke = false;
+      let anySignal = false;
       node.onaudioprocess = (e) => {
         if (!activeRef.current) return;
         const data = e.inputBuffer.getChannelData(0);
         chunksRef.current.push(new Float32Array(data));
+        if (!anySignal) {
+          for (let i = 0; i < data.length; i += 8) {
+            if (data[i] !== 0) {
+              anySignal = true;
+              break;
+            }
+          }
+          // 2초 동안 완전한 0만 들어오면 마이크가 먹통 → 새로 연다 (한 번만)
+          if (!anySignal && !retried && Date.now() - startedAt > 2000) {
+            activeRef.current = false;
+            setTimeout(() => {
+              release(true);
+              setRecording(false);
+              void start({ ...opts, retried: true });
+            }, 0);
+            return;
+          }
+        }
         let sum = 0;
         for (let i = 0; i < data.length; i += 16) sum += data[i] * data[i];
         const raw = Math.sqrt(sum / (data.length / 16));

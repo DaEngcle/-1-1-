@@ -23,9 +23,29 @@ export const TTS_VOICES = {
   andrew_ml: "en-US-AndrewMultilingualNeural",
   andrew_au: "en-US-AndrewMultilingualNeural",
   ava_au: "en-US-AvaMultilingualNeural",
+  // AI 면접관용: 사람 같은 다국어 목소리 + 호주 억양
+  emma_au: "en-US-EmmaMultilingualNeural",
+  brian_au: "en-US-BrianMultilingualNeural",
+  serena_au: "en-US-SerenaMultilingualNeural",
+  phoebe_au: "en-US-PhoebeMultilingualNeural",
+  davis_au: "en-US-DavisMultilingualNeural",
 } as const;
 /** 다국어 목소리에 호주 억양(en-AU)을 입힐 목소리들 */
-const AU_ACCENT = new Set<string>(["b", "andrew_au", "ava_au"]);
+export function hasAuAccent(voice: string) {
+  return voice === "b" || voice.endsWith("_au");
+}
+/** 새 목소리가 안 되면(지역 미지원 등) 대신 쓸 기존 호주 목소리 */
+const FALLBACK: Partial<Record<TtsVoiceKey, TtsVoiceKey>> = {
+  b: "duncan",
+  ava_au: "freya",
+  andrew_au: "duncan",
+  emma_au: "annette",
+  brian_au: "ken",
+  serena_au: "elsie",
+  phoebe_au: "tina",
+  davis_au: "tim",
+};
+type TtsVoiceKey = keyof typeof TTS_VOICES;
 export type TtsVoice = keyof typeof TTS_VOICES;
 export const TTS_SPEEDS = { normal: "0%", slow: "-25%" } as const;
 export type TtsSpeed = keyof typeof TTS_SPEEDS;
@@ -50,7 +70,12 @@ function escapeXml(text: string) {
 }
 
 /** Azure 신경망 TTS로 mp3 생성 */
-export async function synthesizeSpeech(text: string, speed: TtsSpeed, voice: TtsVoice = "a") {
+export async function synthesizeSpeech(
+  text: string,
+  speed: TtsSpeed,
+  voice: TtsVoice = "a",
+  opts: { noFallback?: boolean } = {},
+): Promise<Uint8Array & { fellBack?: boolean }> {
   const config = getConfig();
   if (!config) throw new Error("Azure Speech가 설정되지 않았습니다.");
 
@@ -58,7 +83,7 @@ export async function synthesizeSpeech(text: string, speed: TtsSpeed, voice: Tts
   const lang = name.slice(0, 5);
   // 보통 속도는 그대로 읽게 둔다 (속도 태그를 안 씌우는 게 더 자연스럽다)
   let body = speed === "normal" ? escapeXml(text) : `<prosody rate="${TTS_SPEEDS[speed]}">${escapeXml(text)}</prosody>`;
-  if (AU_ACCENT.has(voice)) body = `<lang xml:lang="en-AU">${body}</lang>`;
+  if (hasAuAccent(voice)) body = `<lang xml:lang="en-AU">${body}</lang>`;
   const ssml = `<speak version="1.0" xml:lang="${lang}"><voice name="${name}">${body}</voice></speak>`;
 
   const res = await fetch(
@@ -75,7 +100,14 @@ export async function synthesizeSpeech(text: string, speed: TtsSpeed, voice: Tts
     },
   );
   if (!res.ok) {
-    throw new Error(`Azure TTS 실패: ${res.status} ${await res.text()}`);
+    const detail = `${res.status} ${await res.text()}`;
+    const fallback = FALLBACK[voice];
+    if (fallback && !opts.noFallback) {
+      console.error(`Azure TTS ${voice} 실패 → ${fallback}로 대신: ${detail}`);
+      const audio = await synthesizeSpeech(text, speed, fallback);
+      return Object.assign(audio, { fellBack: true });
+    }
+    throw new Error(`Azure TTS 실패: ${detail}`);
   }
   return new Uint8Array(await res.arrayBuffer());
 }

@@ -21,7 +21,8 @@ export type Scenario = {
   level: "쉬움" | "보통" | "어려움";
   name: string;
   roleKo: string;
-  voice: "freya" | "duncan" | "annette" | "ken" | "elsie" | "tina" | "tim";
+  /** azure-speech.ts의 TTS_VOICES 키 (사람 같은 다국어 목소리 + 호주 억양) */
+  voice: "ava_au" | "andrew_au" | "emma_au" | "brian_au" | "serena_au" | "phoebe_au" | "davis_au";
   look: Look;
   /** 첫 인사 (AI 없이 바로 나온다) */
   opening: string;
@@ -43,7 +44,7 @@ export const SCENARIOS: Scenario[] = [
     level: "쉬움",
     name: "Mia",
     roleKo: "카페 매니저",
-    voice: "freya",
+    voice: "ava_au",
     look: { skin: "#F2C9A5", hair: "#5A3825", hairStyle: "bun", outfit: "#3D5A40", accent: "#E9D8B4", bg: "#FFE9C7" },
     opening: "Hey, thanks for coming in! I'm Mia, the manager here. Grab a seat. So, how's your day going so far?",
     persona: "warm, chatty and upbeat; uses casual Aussie words like 'no worries', 'heaps', 'reckon'",
@@ -71,7 +72,7 @@ export const SCENARIOS: Scenario[] = [
     level: "보통",
     name: "Marco",
     roleKo: "헤드 셰프",
-    voice: "duncan",
+    voice: "andrew_au",
     look: { skin: "#E0B08A", hair: "#2B2B2B", hairStyle: "short", outfit: "#FFFFFF", accent: "#1F2937", hat: "chef", beard: true, bg: "#FFE1DC" },
     opening: "G'day, I'm Marco, head chef. We haven't got long before service, so let's crack on. Tell me a bit about your kitchen experience?",
     persona: "busy and direct but fair; short sentences; kitchen slang like 'service', 'prep', 'behind'",
@@ -99,7 +100,7 @@ export const SCENARIOS: Scenario[] = [
     level: "보통",
     name: "Sophie",
     roleKo: "프런트 오피스 매니저",
-    voice: "annette",
+    voice: "emma_au",
     look: { skin: "#F5D3B8", hair: "#C68A3C", hairStyle: "long", outfit: "#1E3A5F", accent: "#D4AF37", glasses: true, bg: "#DCE9FF" },
     opening: "Good morning, and welcome. I'm Sophie, the front office manager. Thanks for applying. Could you start by introducing yourself?",
     persona: "polite, professional and calm; slightly more formal language",
@@ -127,7 +128,7 @@ export const SCENARIOS: Scenario[] = [
     level: "어려움",
     name: "Gaz",
     roleKo: "현장 반장",
-    voice: "ken",
+    voice: "brian_au",
     look: { skin: "#D9A47A", hair: "#8A5A2B", hairStyle: "buzz", outfit: "#F97316", accent: "#FDE047", hat: "hardhat", beard: true, bg: "#FFE8CC" },
     opening: "Mate, how ya going? I'm Gaz, I run the site. Quick chat, then I'll show you around. You got your White Card?",
     persona: "very laid-back, strong Aussie slang ('mate', 'arvo', 'smoko', 'no dramas'), talks fast but friendly",
@@ -155,7 +156,7 @@ export const SCENARIOS: Scenario[] = [
     level: "쉬움",
     name: "Bec",
     roleKo: "농장 슈퍼바이저",
-    voice: "elsie",
+    voice: "serena_au",
     look: { skin: "#EDBE95", hair: "#B5651D", hairStyle: "ponytail", outfit: "#4D7C0F", accent: "#FACC15", hat: "brim", bg: "#E6F7D9" },
     opening: "Hi there! I'm Bec, I look after the pickers. Thanks for calling back. So, have you done any farm work before?",
     persona: "friendly, practical and straight to the point; explains things simply",
@@ -183,7 +184,7 @@ export const SCENARIOS: Scenario[] = [
     level: "보통",
     name: "Jess",
     roleKo: "매장 매니저",
-    voice: "tina",
+    voice: "phoebe_au",
     look: { skin: "#C98E62", hair: "#1F1A17", hairStyle: "curly", outfit: "#BE185D", accent: "#FBCFE8", bg: "#FCE7F3" },
     opening: "Hi! Welcome in, I'm Jess. Love that you dropped your resume off in person. So, what kind of shopping do you like doing?",
     persona: "bubbly and friendly; likes people with energy; casual",
@@ -211,7 +212,7 @@ export const SCENARIOS: Scenario[] = [
     level: "쉬움",
     name: "Liam",
     roleKo: "하우스메이트",
-    voice: "tim",
+    voice: "davis_au",
     look: { skin: "#F1C7A2", hair: "#D4A017", hairStyle: "short", outfit: "#0EA5E9", accent: "#FFFFFF", hat: "cap", bg: "#D9F2FF" },
     opening: "Hey, you must be here about the room! I'm Liam. Come in, come in. So, where are you from?",
     persona: "chilled surfer type, relaxed and friendly; asks about lifestyle more than money",
