@@ -7,7 +7,7 @@ import type { CatBreed, CatMood } from "@/lib/classroom/cat";
 import { ITEMS, SLOT_KIND, SLOT_LABEL, type HouseItem, type Layout, type Slot } from "@/lib/classroom/cat-house";
 import { buyItem, saveLayout } from "./actions";
 
-type Target = "wall" | "floor" | "window" | Slot;
+type Target = "wall" | "floor" | "window" | "hat" | "outfit" | Slot;
 const TARGETS: { id: Target; label: string }[] = [
   { id: "window", label: "🪟 창밖" },
   { id: "wall", label: "🧱 벽지" },
@@ -17,17 +17,22 @@ const TARGETS: { id: Target; label: string }[] = [
   { id: "front", label: SLOT_LABEL.front },
   { id: "wallL", label: SLOT_LABEL.wallL },
   { id: "wallR", label: SLOT_LABEL.wallR },
+  { id: "ceiling", label: "💡 " + SLOT_LABEL.ceiling },
+  { id: "hat", label: "🎩 모자" },
+  { id: "outfit", label: "👕 옷" },
 ];
 
 const RARITY: Record<HouseItem["rarity"], string> = {
   기본: "bg-zinc-100 text-zinc-600",
   일반: "bg-sky-50 text-sky-700",
   레어: "bg-violet-100 text-violet-700",
+  전설: "bg-amber-100 text-amber-800",
 };
 
 function kindOf(t: Target): HouseItem["kind"] {
-  return t === "wall" || t === "floor" || t === "window" ? t : SLOT_KIND[t];
+  return t === "wall" || t === "floor" || t === "window" || t === "hat" || t === "outfit" ? t : SLOT_KIND[t];
 }
+const isWear = (t: Target): t is "hat" | "outfit" => t === "hat" || t === "outfit";
 
 export function HouseEditor({
   initial,
@@ -35,12 +40,14 @@ export function HouseEditor({
   balance,
   breed,
   mood,
+  guest,
 }: {
   initial: Layout;
   owned: string[];
   balance: number;
   breed: CatBreed | null;
   mood: CatMood;
+  guest: CatBreed | null;
 }) {
   const router = useRouter();
   const [layout, setLayout] = useState(initial);
@@ -50,12 +57,24 @@ export function HouseEditor({
   const own = new Set(owned);
   const dirty = JSON.stringify(layout) !== JSON.stringify(initial);
   const kind = kindOf(target);
-  const current = target === "wall" || target === "floor" || target === "window" ? layout[target] : layout.slots[target];
+  const current =
+    target === "wall" || target === "floor" || target === "window"
+      ? layout[target]
+      : isWear(target)
+        ? layout.wear[target]
+        : layout.slots[target];
+  const removable = isWear(target) || target in SLOT_KIND;
 
   function place(id: string | null) {
     setMsg(null);
     setLayout((l) => {
       if (target === "wall" || target === "floor" || target === "window") return id ? { ...l, [target]: id } : l;
+      if (isWear(target)) {
+        const wear = { ...l.wear };
+        if (id) wear[target] = id;
+        else delete wear[target];
+        return { ...l, wear };
+      }
       const slots = { ...l.slots };
       if (id) slots[target] = id;
       else delete slots[target];
@@ -84,7 +103,7 @@ export function HouseEditor({
 
   return (
     <div className="flex flex-col gap-3">
-      <CatRoom layout={layout} breed={breed} mood={mood} highlight={target in SLOT_KIND ? (target as Slot) : null} className="shadow-lg" />
+      <CatRoom layout={layout} breed={breed} mood={mood} guest={guest} highlight={target in SLOT_KIND ? (target as Slot) : null} className="shadow-lg" />
 
       <div className="flex items-center justify-between gap-2">
         <span className="rounded-full bg-amber-100 px-3 py-1 text-sm font-extrabold text-amber-800">🐟 츄르 {balance}</span>
@@ -113,7 +132,7 @@ export function HouseEditor({
       </div>
 
       <ul className="grid grid-cols-3 gap-2 sm:grid-cols-4">
-        {target in SLOT_KIND && (
+        {removable && (
           <li>
             <button
               type="button"
@@ -121,7 +140,7 @@ export function HouseEditor({
               className={`flex h-full w-full flex-col items-center justify-center gap-1 rounded-2xl border-2 bg-white p-2 text-xs font-semibold ${current ? "border-transparent text-zinc-500" : "border-violet-500 text-violet-700"}`}
             >
               <span className="text-2xl">∅</span>
-              비우기
+              {isWear(target) ? "벗기" : "비우기"}
             </button>
           </li>
         )}

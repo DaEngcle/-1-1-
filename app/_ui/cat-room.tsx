@@ -56,7 +56,7 @@ function Floor({ id }: { id: string }) {
 function Window({ id }: { id: string }) {
   const scene = ITEM_BY_ID.get(id)?.scene ?? "bondi";
   const X = 24;
-  const Y = 4;
+  const Y = 9;
   const inner: React.ReactNode[] = [];
   const r = (k: string, x: number, y: number, w: number, h: number, fill: string) =>
     inner.push(<rect key={k} x={X + x} y={Y + y} width={w} height={h} fill={fill} />);
@@ -112,6 +112,8 @@ function placed(slot: Slot, art: Art) {
       return { x: Math.round(55 - w / 2), y: 38 - h };
     case "front":
       return { x: Math.round(32 - w / 2), y: 43 - h };
+    case "ceiling":
+      return { x: Math.round(32 - w / 2), y: 0 };
   }
 }
 
@@ -121,10 +123,13 @@ export function CatRoom({
   breed,
   mood = "default",
   highlight,
+  guest,
   className = "",
 }: {
   layout: Layout;
   breed: CatBreed | null;
+  /** 놀러 온 손님 고양이 */
+  guest?: CatBreed | null;
   mood?: CatMood;
   /** 꾸미기 중에 고른 자리 표시 */
   highlight?: Slot | null;
@@ -136,6 +141,7 @@ export function CatRoom({
     floorL: [1, 18, 16, 20],
     floorR: [47, 18, 16, 20],
     front: [18, 36, 28, 8],
+    ceiling: [21, 0, 22, 9],
   };
   return (
     <div className={`relative w-full overflow-hidden rounded-3xl ${className}`} style={{ aspectRatio: `${W} / ${H}` }}>
@@ -143,7 +149,7 @@ export function CatRoom({
         <Wall id={layout.wall} />
         <Floor id={layout.floor} />
         <Window id={layout.window} />
-        {(["wallL", "wallR", "floorL", "floorR", "front"] as Slot[]).map((slot) => {
+        {(["wallL", "wallR", "floorL", "floorR", "front", "ceiling"] as Slot[]).map((slot) => {
           const art = layout.slots[slot] ? ITEM_BY_ID.get(layout.slots[slot]!)?.art : undefined;
           if (!art) return null;
           const p = placed(slot, art);
@@ -162,9 +168,20 @@ export function CatRoom({
           />
         )}
       </svg>
+      {guest && (
+        <div className="absolute" style={{ left: `${(40 / W) * 100}%`, top: `${(29 / H) * 100}%`, width: `${(12 / W) * 100}%` }}>
+          <CatSprite breed={guest} mood="happy" className="h-auto w-full" delay={0.5} />
+        </div>
+      )}
       {breed && (
         <div className="absolute" style={{ left: `${(23 / W) * 100}%`, top: `${(25 / H) * 100}%`, width: `${(18 / W) * 100}%` }}>
-          <CatSprite breed={breed} mood={mood} className="h-auto w-full" />
+          <CatSprite
+            breed={breed}
+            mood={mood}
+            className="h-auto w-full"
+            hat={layout.wear?.hat ? ITEM_BY_ID.get(layout.wear.hat)?.art : undefined}
+            outfit={layout.wear?.outfit ? ITEM_BY_ID.get(layout.wear.outfit)?.art : undefined}
+          />
         </div>
       )}
     </div>
@@ -177,7 +194,7 @@ export function ItemPreview({ id, className = "h-14 w-14" }: { id: string; class
   if (!it) return null;
   if (it.kind === "window") {
     return (
-      <svg viewBox="22 2 20 18" className={className} shapeRendering="crispEdges" aria-hidden>
+      <svg viewBox="22 7 20 18" className={className} shapeRendering="crispEdges" aria-hidden>
         <Window id={id} />
       </svg>
     );

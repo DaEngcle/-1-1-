@@ -2,14 +2,22 @@ import "server-only";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { fetchAll } from "./progress";
 import { addDays, kstDate } from "./stats";
-import { maskName } from "./engagement";
 import type { CatBreed } from "./cat";
-import { DEFAULT_LAYOUT, FREE_ITEMS, churuForDay, normalizeLayout, type Layout } from "./cat-house";
+import { maskName, weekStart } from "./engagement";
+import {
+  DEFAULT_LAYOUT,
+  FREE_ITEMS,
+  POSTCARD_MIN,
+  churuForDay,
+  normalizeLayout,
+  postcardFor,
+  type Layout,
+} from "./cat-house";
 
 /** 공부 기록으로 번 츄르 · 쓴 츄르 · 마지막 공부일 */
 export async function getChuru(studentId: string) {
   const supabase = createServerSupabaseClient();
-  const [acts, subs, { data: items }] = await Promise.all([
+  const [acts, subs, { data: items }, { count: likesGot }, { count: likesGave }, { data: boxes }] = await Promise.all([
     fetchAll<{ day: string; watched_seconds: number; voca_points: number | null }>((from, to) =>
       supabase.from("daily_activity").select("day, watched_seconds, voca_points").eq("student_id", studentId).range(from, to),
     ),
@@ -17,6 +25,9 @@ export async function getChuru(studentId: string) {
       supabase.from("submissions").select("created_at").eq("student_id", studentId).range(from, to),
     ),
     supabase.from("cat_items").select("item_id, price").eq("student_id", studentId),
+    supabase.from("cat_room_likes").select("owner_id", { count: "exact", head: true }).eq("owner_id", studentId),
+    supabase.from("cat_room_likes").select("owner_id", { count: "exact", head: true }).eq("liker_id", studentId),
+    supabase.from("cat_boxes").select("week, item_id, churu").eq("student_id", studentId),
   ]);
   const days = new Map<string, { submissions: number; watchedSeconds: number; vocaPoints: number }>();
   const get = (d: string) => {
@@ -34,12 +45,27 @@ export async function getChuru(studentId: string) {
   let earned = 0;
   let last: string | null = null;
   const today = kstDate(new Date());
+  const week = weekStart(today);
   let todayEarned = 0;
+  let weekDays = 0;
+  const postcardDays: string[] = [];
   for (const [day, v] of days) {
     const c = churuForDay(v);
     earned += c;
     if (day === today) todayEarned = c;
     if (c > 0 && (!last || day > last)) last = day;
+    if (c > 0 && day >= week) weekDays++;
+    if (c >= POSTCARD_MIN) postcardDays.push(day);
+  }
+  // 친밀도는 공부로 번 츄르만 센다 (선물·상자 제외)
+  const studyEarned = earned;
+  // 꾹꾹이: 받으면 +3, 누르면 +1 / 깜짝 상자 츄르
+  earned += (likesGot ?? 0) * 3 + (likesGave ?? 0) + (boxes ?? []).reduce((n, b) => n + (b.churu ?? 0), 0);
+  postcardDays.sort();
+  const postcards = new Map<string, string>(); // 엽서 id → 처음 받은 날
+  for (const d of postcardDays) {
+    const p = postcardFor(studentId, d);
+    if (!postcards.has(p.id)) postcards.set(p.id, d);
   }
   const spent = (items ?? []).reduce((n, i) => n + (i.price ?? 0), 0);
   let daysSince: number | null = null;
@@ -54,6 +80,11 @@ export async function getChuru(studentId: string) {
     todayEarned,
     owned: new Set<string>([...FREE_ITEMS, ...(items ?? []).map((i) => i.item_id as string)]),
     daysSince,
+    studyEarned,
+    weekDays,
+    boxOpened: (boxes ?? []).some((b) => b.week === week),
+    postcards,
+    todayPostcard: todayEarned >= POSTCARD_MIN ? postcardFor(studentId, today) : null,
   };
 }
 

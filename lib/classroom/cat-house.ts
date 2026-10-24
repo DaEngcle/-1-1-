@@ -1,7 +1,8 @@
 // 고양이 집 (미니룸): 공부로 모은 츄르로 방을 꾸민다. 픽셀아트는 문자 격자 + 팔레트.
-// 아이템을 늘릴 땐 ITEMS에 추가만 하면 된다 (가격·종류·그림).
+// 아이템을 늘릴 땐 BASE_ITEMS나 cat-house-items.json에 추가만 하면 된다 (가격·종류·그림).
+import EXTRA_ITEMS from "@/content/cat-house-items.json";
 
-export type Slot = "wallL" | "wallR" | "floorL" | "floorR" | "front";
+export type Slot = "wallL" | "wallR" | "floorL" | "floorR" | "front" | "ceiling";
 export type Kind = "wall" | "floor" | "window" | Slot;
 
 export type Art = { rows: string[]; pal: Record<string, string> };
@@ -10,9 +11,10 @@ export type HouseItem = {
   id: string;
   name: string;
   /** wall/floor/window는 방 배경, 나머지는 놓을 수 있는 자리 */
-  kind: "wall" | "floor" | "window" | "wallItem" | "floorItem" | "frontItem";
+  kind: "wall" | "floor" | "window" | "wallItem" | "floorItem" | "frontItem" | "lightItem" | "hat" | "outfit";
   price: number;
-  rarity: "기본" | "일반" | "레어";
+  rarity: "기본" | "일반" | "레어" | "전설";
+  desc?: string;
   art?: Art;
   /** 벽지·바닥: 두 가지 색 무늬 / 창문: 풍경 */
   colors?: string[];
@@ -26,6 +28,7 @@ export const SLOT_KIND: Record<Slot, HouseItem["kind"]> = {
   floorL: "floorItem",
   floorR: "floorItem",
   front: "frontItem",
+  ceiling: "lightItem",
 };
 export const SLOT_LABEL: Record<Slot, string> = {
   wallL: "왼쪽 벽",
@@ -33,9 +36,10 @@ export const SLOT_LABEL: Record<Slot, string> = {
   floorL: "왼쪽 바닥",
   floorR: "오른쪽 바닥",
   front: "앞쪽 바닥",
+  ceiling: "천장",
 };
 
-export const ITEMS: HouseItem[] = [
+const BASE_ITEMS: HouseItem[] = [
   // 벽지
   { id: "wall-cream", name: "크림 벽지", kind: "wall", price: 0, rarity: "기본", colors: ["#FFF4E0", "#FBEBD0"], pattern: "plain" },
   { id: "wall-sky", name: "하늘 줄무늬 벽지", kind: "wall", price: 50, rarity: "일반", colors: ["#DCEFFF", "#C5E2FA"], pattern: "stripe" },
@@ -213,6 +217,8 @@ export const ITEMS: HouseItem[] = [
   },
 ];
 
+export const ITEMS: HouseItem[] = [...BASE_ITEMS, ...(EXTRA_ITEMS as HouseItem[])];
+
 export const ITEM_BY_ID = new Map(ITEMS.map((i) => [i.id, i]));
 export const FREE_ITEMS = ITEMS.filter((i) => i.price === 0).map((i) => i.id);
 
@@ -221,9 +227,11 @@ export type Layout = {
   floor: string;
   window: string;
   slots: Partial<Record<Slot, string>>;
+  /** 고양이가 입은 모자·옷 */
+  wear: { hat?: string; outfit?: string };
 };
 
-export const DEFAULT_LAYOUT: Layout = { wall: "wall-cream", floor: "floor-wood", window: "window-bondi", slots: {} };
+export const DEFAULT_LAYOUT: Layout = { wall: "wall-cream", floor: "floor-wood", window: "window-bondi", slots: {}, wear: {} };
 
 /** 저장된 배치를 안전하게 읽는다 (없는 아이템·잘못된 자리는 버린다) */
 export function normalizeLayout(raw: unknown): Layout {
@@ -235,11 +243,17 @@ export function normalizeLayout(raw: unknown): Layout {
     const id = ok(r.slots?.[s], SLOT_KIND[s]);
     if (id) slots[s] = id;
   }
+  const wear: Layout["wear"] = {};
+  const hat = ok(r.wear?.hat, "hat");
+  const outfit = ok(r.wear?.outfit, "outfit");
+  if (hat) wear.hat = hat;
+  if (outfit) wear.outfit = outfit;
   return {
     wall: ok(r.wall, "wall") ?? DEFAULT_LAYOUT.wall,
     floor: ok(r.floor, "floor") ?? DEFAULT_LAYOUT.floor,
     window: ok(r.window, "window") ?? DEFAULT_LAYOUT.window,
     slots,
+    wear,
   };
 }
 
@@ -262,3 +276,94 @@ export function catMoodFor(daysSince: number | null) {
   if (daysSince !== null && daysSince <= 3) return { mood: "sad" as const, label: "심심", line: "심심해… 한 문장만 같이 할래?" };
   return { mood: "sleepy" as const, label: "낮잠", line: "창가에서 낮잠 자는 중… 오면 깨워 줘! 💤" };
 }
+
+// ---------- 친밀도 (누적, 절대 안 줄어든다) ----------
+const LEVELS = [0, 100, 300, 600, 1000, 1500, 2200, 3000, 4000, 5500, 7500];
+export const AFFINITY_LINES = [
+  "안녕! 앞으로 잘 부탁해 🐾",
+  "너 목소리 들으면 기분이 좋아져!",
+  "오늘 배운 문장 나한테도 말해 줘!",
+  "호주 가면 나도 데려가 줄 거지? ✈️",
+  "플랫화이트 한 잔 하면서 쉐도잉 어때? ☕",
+  "너 발음 진짜 늘었다! 원어민인 줄 🐱",
+  "우리 벌써 이렇게 친해졌네 💛",
+  "면접 연습 하는 거 봤어. 완전 멋있었어!",
+  "너라면 호주에서 뭐든 할 수 있어 🦘",
+  "평생 친구 하자 💜",
+  "이제 나는 너의 최고 파트너야 👑",
+];
+export function affinity(totalEarned: number) {
+  let level = 1;
+  for (let i = 0; i < LEVELS.length; i++) if (totalEarned >= LEVELS[i]) level = i + 1;
+  const next = LEVELS[level] ?? null;
+  return {
+    level,
+    next: next === null ? null : next - totalEarned,
+    line: AFFINITY_LINES[Math.min(level, AFFINITY_LINES.length) - 1],
+  };
+}
+
+// ---------- 엽서 (공부한 날 고양이가 호주 여행 다녀옴) ----------
+export const POSTCARDS = [
+  { id: "bondi", emoji: "🏖️", place: "본다이 비치", city: "시드니", note: "파도 소리 들으면서 낮잠 잤어!" },
+  { id: "opera", emoji: "🎭", place: "오페라하우스", city: "시드니", note: "지붕이 조개껍데기 같아!" },
+  { id: "harbour", emoji: "🌉", place: "하버 브리지", city: "시드니", note: "다리 위에서 불꽃놀이 봤어 🎆" },
+  { id: "tram", emoji: "🚋", place: "시티 서클 트램", city: "멜버른", note: "무료 트램 타고 한 바퀴!" },
+  { id: "laneway", emoji: "☕", place: "디그레이브스 골목", city: "멜버른", note: "플랫화이트 냄새 최고…" },
+  { id: "greatocean", emoji: "🌊", place: "그레이트 오션 로드", city: "빅토리아", note: "12사도 바위 봤어!" },
+  { id: "uluru", emoji: "🪨", place: "울루루", city: "노던 테리토리", note: "노을에 바위가 빨개졌어 🌅" },
+  { id: "reef", emoji: "🐠", place: "그레이트 배리어 리프", city: "케언스", note: "니모 찾았다!" },
+  { id: "rottnest", emoji: "🦫", place: "로트네스트 섬", city: "퍼스", note: "쿼카랑 셀카 찍었어 📸" },
+  { id: "goldcoast", emoji: "🏄", place: "서퍼스 파라다이스", city: "골드코스트", note: "서핑 배웠어! (물 무서웠어)" },
+  { id: "farm", emoji: "🍓", place: "딸기 농장", city: "퀸즐랜드", note: "세컨 비자 88일 화이팅!" },
+  { id: "tasmania", emoji: "🌲", place: "크레이들 마운틴", city: "태즈메이니아", note: "웜뱃이 정말 동글동글해!" },
+] as const;
+/** 엽서를 받으려면 그날 모아야 하는 츄르 */
+export const POSTCARD_MIN = 30;
+/** 그날의 엽서 (학생·날짜마다 정해진다) */
+export function postcardFor(studentId: string, day: string) {
+  let h = 0;
+  for (const ch of `${studentId}:${day}`) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+  return POSTCARDS[h % POSTCARDS.length];
+}
+
+// ---------- 손님 고양이 (아이템을 놓으면 찾아온다: 네코 아츠메) ----------
+export const GUESTS = [
+  { id: "melbourne", name: "멜번냥", breed: "russian", needs: ["quokka", "tram-poster"], line: "트램 타고 놀러 왔어! 🚋" },
+  { id: "surfer", name: "서퍼냥", breed: "cheese", needs: ["surfboard", "beach-towel"], line: "파도 좋던데? 🏄" },
+  { id: "barista", name: "바리스타냥", breed: "tuxedo", needs: ["flat-white"], line: "라떼 아트 배우러 왔어 ☕" },
+  { id: "farmer", name: "농장냥", breed: "angora", needs: ["wattle", "eucalyptus"], line: "88일 채우는 중이야 🍓" },
+  { id: "boxcat", name: "상자냥", breed: "white", needs: ["box"], line: "상자다!!! 여기 내 자리야 📦" },
+  { id: "gamer", name: "게이머냥", breed: "siamese", needs: ["arcade"], line: "한 판만 하고 갈게 🕹️" },
+] as const;
+export function guestFor(layout: Layout) {
+  const placed = new Set(Object.values(layout.slots));
+  return GUESTS.find((g) => g.needs.some((n) => placed.has(n))) ?? null;
+}
+
+// ---------- 방 점수 (세트 보너스: 동물의 숲 해피홈) ----------
+const SETS: Record<string, string[]> = {
+  "🦘 호주 세트": ["kangaroo", "map", "frame-opera", "surfboard", "quokka", "wombat", "boomerang", "tram-poster", "window-opera", "window-uluru", "southern-cross", "opera-shelf", "wattle", "eucalyptus"],
+  "☕ 카페 세트": ["flat-white", "timtam", "vegemite-toast", "shelf", "apron", "beanbag", "plant"],
+  "🕯️ 아늑 세트": ["fairy-lights", "moon-lamp", "mushroom-lamp", "rug", "cushion", "bed", "hammock", "dot-rug"],
+};
+export function roomScore(layout: Layout) {
+  const ids = [layout.wall, layout.floor, layout.window, ...Object.values(layout.slots), layout.wear.hat, layout.wear.outfit].filter(
+    (x): x is string => Boolean(x),
+  );
+  const pts = { 기본: 0, 일반: 10, 레어: 25, 전설: 60 } as const;
+  let score = ids.reduce((n, id) => n + (pts[ITEM_BY_ID.get(id)?.rarity ?? "기본"] ?? 0), 0);
+  const sets: string[] = [];
+  for (const [name, members] of Object.entries(SETS)) {
+    if (ids.filter((id) => members.includes(id)).length >= 3) {
+      sets.push(name);
+      score += 50;
+    }
+  }
+  const trophy = score >= 250 ? "🏆 골드" : score >= 150 ? "🥈 실버" : score >= 70 ? "🥉 브론즈" : null;
+  return { score, sets, trophy };
+}
+
+// ---------- 주간 깜짝 상자 (무료·확률 공개) ----------
+export const BOX_ODDS = { 일반: 75, 레어: 22, 전설: 3 } as const;
+export const BOX_MIN_DAYS = 3;

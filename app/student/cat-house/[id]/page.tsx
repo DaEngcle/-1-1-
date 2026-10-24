@@ -6,6 +6,7 @@ import { maskName } from "@/lib/classroom/engagement";
 import { CatRoom } from "@/app/_ui/cat-room";
 import type { CatBreed } from "@/lib/classroom/cat";
 import { getRoom, likedToday } from "@/lib/classroom/cat-house-data";
+import { guestFor, roomScore } from "@/lib/classroom/cat-house";
 import { LikeButton } from "./like-button";
 
 export default async function VisitRoomPage({ params }: { params: Promise<{ id: string }> }) {
@@ -29,7 +30,18 @@ export default async function VisitRoomPage({ params }: { params: Promise<{ id: 
       <h1 className="text-2xl font-extrabold text-zinc-900">
         🏠 {(owner.cat_name as string | null) ?? "고양이"}의 집 <span className="text-base font-semibold text-zinc-500">· {name}</span>
       </h1>
-      <CatRoom layout={layout} breed={owner.cat_breed as CatBreed | null} mood="happy" className="shadow-lg" />
+      <CatRoom
+        layout={layout}
+        breed={owner.cat_breed as CatBreed | null}
+        mood="happy"
+        guest={(guestFor(layout)?.breed as CatBreed | undefined) ?? null}
+        className="shadow-lg"
+      />
+      <p className="text-center text-sm text-zinc-600">
+        방 점수 {roomScore(layout).score}
+        {roomScore(layout).trophy ? ` · ${roomScore(layout).trophy} 하우스` : ""}
+        {roomScore(layout).sets.length ? ` · ${roomScore(layout).sets.join(" · ")}` : ""}
+      </p>
       <LikeButton ownerId={id} likes={likes} liked={liked || id === me.id} />
     </>
   );

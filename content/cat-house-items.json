@@ -1,0 +1,1049 @@
+[
+ {
+  "id": "box",
+  "name": "골판지 상자",
+  "kind": "floorItem",
+  "price": 20,
+  "rarity": "일반",
+  "desc": "고양이라면 못 참는 바로 그 상자! 택배 오면 제일 먼저 들어가요.",
+  "art": {
+   "rows": [
+    "FF..........FF",
+    "fFF........FFf",
+    ".fFF......FFf.",
+    ".kkkkkkkkkkkk.",
+    ".cddddddddddc.",
+    ".cCCCCttCCCCc.",
+    ".cCCCCttCCCCc.",
+    ".cCCCCCCCCCCc.",
+    ".cCCCCCCCCCCc.",
+    ".cSSSSSSSSSSc.",
+    ".cccccccccccc."
+   ],
+   "pal": {
+    "f": "#B07A45",
+    "F": "#E2B47C",
+    "k": "#8B5E34",
+    "d": "#6B4423",
+    "c": "#8B5E34",
+    "C": "#D9A066",
+    "t": "#F2DDB0",
+    "S": "#C08A50"
+   }
+  }
+ },
+ {
+  "id": "hammock",
+  "name": "해먹 침대",
+  "kind": "floorItem",
+  "price": 120,
+  "rarity": "레어",
+  "desc": "알록달록 해먹에서 살랑살랑 흔들리며 낮잠 자요. 호주 바닷가 휴양 느낌!",
+  "art": {
+   "rows": [
+    "WW............WW",
+    "Wwr..........rwW",
+    "Ww.r........r.wW",
+    "Ww..r......r..wW",
+    "Ww..RR....RR..wW",
+    "Ww..YRR..RRY..wW",
+    "Ww..TYRRRRYT..wW",
+    "Ww...TYYYYT...wW",
+    "Ww....TTTT....wW",
+    "Ww....t..t....wW",
+    "Ww............wW",
+    "Ww............wW",
+    "WWWWWWWWWWWWWWWW",
+    "BB............BB"
+   ],
+   "pal": {
+    "W": "#8B5A2B",
+    "w": "#B07A45",
+    "B": "#5E4329",
+    "r": "#D9C29A",
+    "R": "#E85D4A",
+    "Y": "#FFD45C",
+    "T": "#4FB3A9",
+    "t": "#3E978E"
+   }
+  }
+ },
+ {
+  "id": "bunk",
+  "name": "백패커 이층침대",
+  "kind": "floorItem",
+  "price": 180,
+  "rarity": "레어",
+  "desc": "호주 백패커스 호스텔의 그 이층침대! 배낭 하나 메고 워홀 떠나는 기분이에요.",
+  "art": {
+   "rows": [
+    "N..............N",
+    "N.ww...........N",
+    "NnnnnnnnnnnnnnnN",
+    "NTTTTTTTTTTTTTTN",
+    "NNNNNNNNNNNNNNNN",
+    "N...........n..N",
+    "N...........nnnN",
+    "N...........n..N",
+    "N.....ooo...nnnN",
+    "N....oOOOo..n..N",
+    "N....oFFFo..nnnN",
+    "N....oOkOo..n..N",
+    "Nww..oPPPo..nnnN",
+    "Nww..ooooo..n..N",
+    "NGGGGGGGGGGGnnnN",
+    "NNNNNNNNNNNNNNNN",
+    "N...........n..N",
+    "N...........n..N"
+   ],
+   "pal": {
+    "N": "#2E3A6B",
+    "n": "#6A7FC4",
+    "w": "#FFFFFF",
+    "T": "#4FB3A9",
+    "G": "#F3C94F",
+    "o": "#9C4520",
+    "O": "#F08A3C",
+    "F": "#D06A2A",
+    "k": "#FFE07A",
+    "P": "#F7AE6A"
+   }
+  }
+ },
+ {
+  "id": "beanbag",
+  "name": "빈백 소파",
+  "kind": "floorItem",
+  "price": 80,
+  "rarity": "일반",
+  "desc": "머스터드색 빈백에 폭 파묻히면 고양이도 스르르 녹아요.",
+  "art": {
+   "rows": [
+    ".....dddd.....",
+    "....dMMMMd....",
+    "...dMLMMMMd...",
+    "...dLMMMMMd...",
+    "..dMLMMMMMMd..",
+    "..dLMmmmmMMd..",
+    ".dMLmmmmmmMMd.",
+    ".dLMMmmmmMMMd.",
+    "dMLMMMMMMMMMMd",
+    "dMMMMMMMMMMMMd",
+    "dSMMMMMMMMMMSd",
+    ".dSSSSSSSSSSd.",
+    "..dddddddddd.."
+   ],
+   "pal": {
+    "d": "#8A5F14",
+    "M": "#E3B23C",
+    "L": "#F6D884",
+    "m": "#C99528",
+    "S": "#B88420"
+   }
+  }
+ },
+ {
+  "id": "opera-shelf",
+  "name": "오페라하우스 책장",
+  "kind": "floorItem",
+  "price": 500,
+  "rarity": "전설",
+  "desc": "책장 꼭대기에 하얀 돛 지붕이 활짝! 시드니 오페라하우스를 품은 전설의 책장이에요.",
+  "art": {
+   "rows": [
+    "......g.........",
+    ".....gw....g....",
+    "....gwW...gw....",
+    "...gwwW..gwW..g.",
+    "..gwwwW.gwwW.gw.",
+    ".gwwwwWgwwwWgwW.",
+    "pppppppppppppppp",
+    "SSSSSSSSSSSSSSSS",
+    "SrrBbbBBggByyBBS",
+    "SrrybbBgggByypBS",
+    "SrrybbggggByypBS",
+    "SSSSSSSSSSSSSSSS",
+    "SBBnnBrrBBuuuBBS",
+    "SkknnBrryyuuuBBS",
+    "SkknnBrryyuuuGGS",
+    "SSSSSSSSSSSSSSSS",
+    "SggBBBpyybbBrrBS",
+    "SggBnnpyybbrrrBS",
+    "SggBnnpyybbrrrBS",
+    "SSSSSSSSSSSSSSSS"
+   ],
+   "pal": {
+    "g": "#A39C90",
+    "w": "#FFFFFF",
+    "W": "#DDD7CB",
+    "p": "#E3C08C",
+    "S": "#7A4A25",
+    "B": "#B98454",
+    "r": "#E85D4A",
+    "b": "#4F86C6",
+    "y": "#F3C94F",
+    "n": "#4FB3A9",
+    "u": "#9A6BD0",
+    "k": "#F28CA8",
+    "G": "#5BA35B"
+   }
+  }
+ },
+ {
+  "id": "arcade",
+  "name": "레트로 아케이드기",
+  "kind": "floorItem",
+  "price": 300,
+  "rarity": "전설",
+  "desc": "화면이 반짝반짝 빛나는 보라색 오락기! 버튼을 누르면 뿅뿅 소리가 날 것 같아요.",
+  "art": {
+   "rows": [
+    ".DDDDDDDDDDDD.",
+    ".DmmMmmmmMmmD.",
+    ".DPPPPPPPPPPD.",
+    ".DPkkkkkkkkPD.",
+    ".DPkGGGGGGkPD.",
+    ".DPkGxGGxGkPD.",
+    ".DPkGGxxGGkPD.",
+    ".DPkGxGGxGkPD.",
+    ".DPkkkkkkkkPD.",
+    ".DPPrPPPPPPPD.",
+    "DLLLsLLRLYLLLD",
+    "DDDDDDDDDDDDDD",
+    ".DPPPPPPPPPPD.",
+    ".DPPPkkkkPPPD.",
+    ".DPPPkmmkPPPD.",
+    ".DPPPkkkkPPPD.",
+    ".DPPPPPPPPPPD.",
+    ".DPPPPPPPPPPD.",
+    ".DDDDDDDDDDDD."
+   ],
+   "pal": {
+    "D": "#43246F",
+    "P": "#7B4BC4",
+    "L": "#A982EA",
+    "m": "#FFD45C",
+    "M": "#FF7FB0",
+    "k": "#1E1530",
+    "G": "#7FF5E0",
+    "x": "#FF5FA2",
+    "r": "#E8423A",
+    "s": "#2B2B2B",
+    "R": "#FF4F5E",
+    "Y": "#FFE14D"
+   }
+  }
+ },
+ {
+  "id": "eucalyptus",
+  "name": "유칼립투스 화분",
+  "kind": "floorItem",
+  "price": 50,
+  "rarity": "일반",
+  "desc": "코알라가 제일 좋아하는 동글동글 은빛 잎사귀. 은은한 숲 향기가 나요.",
+  "art": {
+   "rows": [
+    "...Ll.......",
+    "...ld.sLl.Ll",
+    "Lls...sld.ld",
+    "lds.Lls...s.",
+    "...sldsLlsLl",
+    ".Lls..sldsld",
+    ".ld.Lls..s..",
+    "....ldsLll..",
+    "..Ll.ssldd..",
+    "..ld.sss....",
+    "...Ll.ssLl..",
+    "..oooooooo..",
+    ".oOOOOOOOOo.",
+    "..oPPPPPPo..",
+    "..oPPPPPPo..",
+    "...oPPPPo...",
+    "...oooooo..."
+   ],
+   "pal": {
+    "s": "#7D6B5C",
+    "L": "#D3E4DA",
+    "l": "#9CBFAE",
+    "d": "#6F927F",
+    "o": "#9A4F2C",
+    "O": "#E0915C",
+    "P": "#C96E3E"
+   }
+  }
+ },
+ {
+  "id": "wattle",
+  "name": "와틀 꽃 화분",
+  "kind": "floorItem",
+  "price": 130,
+  "rarity": "레어",
+  "desc": "호주 국화 골든 와틀! 보송보송 노란 꽃방울이 방을 환하게 밝혀요.",
+  "art": {
+   "rows": [
+    ".....Yy......",
+    ".....yo.Yy.Yy",
+    "Yy..YyGgyo.yo",
+    "yoYyyoG..YyG.",
+    ".Gyo..GgYyo.g",
+    "g.GYy.Ggyo.g.",
+    "YygyogGYy.gYy",
+    "yo.gG.Gyo..yo",
+    ".g..YyG.Yy.g.",
+    ".YyGyoG.yoGYy",
+    ".yo.GGGGG..yo",
+    "......G......",
+    "..ccccccccc..",
+    ".cwwwwwwwwwc.",
+    "..cbbbbbbbc..",
+    "..cwwwwwwwc..",
+    "...cwwwwwc...",
+    "...ccccccc..."
+   ],
+   "pal": {
+    "G": "#4A7A30",
+    "g": "#7DB356",
+    "y": "#F7C82B",
+    "Y": "#FFEC8A",
+    "o": "#E0A21E",
+    "c": "#8C8C99",
+    "w": "#F6F3EC",
+    "b": "#4F86C6"
+   }
+  }
+ },
+ {
+  "id": "catgrass",
+  "name": "캣그라스",
+  "kind": "floorItem",
+  "price": 25,
+  "rarity": "일반",
+  "desc": "고양이 소화를 돕는 싱그러운 새싹 풀. 작지만 냠냠 인기 만점!",
+  "art": {
+   "rows": [
+    "..G...G..G",
+    ".gG.G.gG.G",
+    ".gGgGggGgG",
+    "gGgGgGgGgg",
+    "bLLLLLLLLb",
+    "bBBBBBBBBb",
+    ".bBBBBBBb.",
+    "..bbbbbb.."
+   ],
+   "pal": {
+    "g": "#3DB54A",
+    "G": "#8EE86A",
+    "b": "#3F6FB8",
+    "B": "#6E9BE0",
+    "L": "#A9C7F2"
+   }
+  }
+ },
+ {
+  "id": "quokka",
+  "name": "쿼카 인형",
+  "kind": "floorItem",
+  "price": 140,
+  "rarity": "레어",
+  "desc": "세상에서 가장 행복한 동물 쿼카! 늘 방긋 웃는 얼굴에 기분이 좋아져요.",
+  "art": {
+   "rows": [
+    "..ee...ee..",
+    "..ekkkkke..",
+    ".kkkkkkkkk.",
+    ".kxkkkkkxk.",
+    ".kckFnFkck.",
+    ".kkmFFFmkk.",
+    "..kkmmmkk..",
+    "..kKKKKKk..",
+    ".kkhKKKhkk.",
+    "kkkKKKKKkkk",
+    "kkkKKKKKkkk",
+    "kkkkKKKkkkk",
+    ".fff...fff."
+   ],
+   "pal": {
+    "k": "#A87449",
+    "K": "#E6C9A0",
+    "F": "#CDA27A",
+    "n": "#3B2A1A",
+    "m": "#3B2A1A",
+    "x": "#24160C",
+    "e": "#7E5030",
+    "c": "#F2A0A8",
+    "f": "#7E5030",
+    "h": "#7E5030"
+   }
+  }
+ },
+ {
+  "id": "wombat",
+  "name": "웜뱃 인형",
+  "kind": "floorItem",
+  "price": 140,
+  "rarity": "레어",
+  "desc": "통통한 엉덩이가 매력인 웜뱃! 꼭 껴안으면 포근한 감자 같아요.",
+  "art": {
+   "rows": [
+    ".oo.oo........",
+    "oeooeoooooooo.",
+    "owwwwwwwwwwwwo",
+    "owxwwwwwwwwwwo",
+    "nnwwwwwwwwwwwo",
+    "nnnwwwLLLLLwwo",
+    ".ooLLLLLLLLLo.",
+    ".oww.oo..ow.o.",
+    ".dd..dd..dd.d."
+   ],
+   "pal": {
+    "o": "#5E4F42",
+    "e": "#C9A2A0",
+    "w": "#9A8774",
+    "L": "#B9A897",
+    "x": "#1E1612",
+    "n": "#3A2E26",
+    "d": "#3A2E26"
+   }
+  }
+ },
+ {
+  "id": "dot-rug",
+  "name": "원주민 점묘 러그",
+  "kind": "frontItem",
+  "price": 140,
+  "rarity": "레어",
+  "desc": "호주 원주민 점묘화처럼 동글동글 점이 원을 그리는 따뜻한 러그예요.",
+  "art": {
+   "rows": [
+    ".....BBBBBBBBBBBBBB.....",
+    "..BBBwowowowowowowoBBB..",
+    "BBBowowByByByByByowowBBB",
+    "BBowowByBwwwwwwyByowowBB",
+    "BBBowowByByByByByowowBBB",
+    "..BBBwowowowowowowoBBB..",
+    ".....BBBBBBBBBBBBBB....."
+   ],
+   "pal": {
+    "B": "#7A3B1C",
+    "o": "#E37B2E",
+    "w": "#FFF4E2",
+    "y": "#F7C04A"
+   }
+  }
+ },
+ {
+  "id": "beach-towel",
+  "name": "비치 타월",
+  "kind": "frontItem",
+  "price": 70,
+  "rarity": "일반",
+  "desc": "본다이 비치에 깔던 빨강·하양 줄무늬 타월과 쪼리 한 켤레!",
+  "art": {
+   "rows": [
+    ".dddddddddddddd.........",
+    ".dRRwwRRwwRRwwRd..T...T.",
+    ".dRRwwRRwwRRwwRd.TkT.TkT",
+    "dRRwwRRwwRRwwRd..kTk.kTk",
+    "dRRwwRRwwRRwwRd..TTT.TTT",
+    "dRRwwRRwwRRwwRd..TTT.TTT",
+    "dddddddddddddd....T...T."
+   ],
+   "pal": {
+    "d": "#B23A2E",
+    "R": "#E8483A",
+    "w": "#FFF8EE",
+    "T": "#FFD45C",
+    "k": "#3F8FD9"
+   }
+  }
+ },
+ {
+  "id": "flat-white",
+  "name": "플랫화이트",
+  "kind": "frontItem",
+  "price": 15,
+  "rarity": "일반",
+  "desc": "호주 카페의 자랑 플랫화이트. 하트 라떼아트가 동동 떠 있어요.",
+  "art": {
+   "rows": [
+    ".ggggggg..",
+    "gbbWbWbbg.",
+    "gbbWWWbbgh",
+    "gbbbWbbbgh",
+    ".gwwwwwgh.",
+    "..gwwwg...",
+    "sssssssss."
+   ],
+   "pal": {
+    "g": "#B9A994",
+    "b": "#C08552",
+    "W": "#FFF6E8",
+    "w": "#FFFFFF",
+    "h": "#B9A994",
+    "s": "#E3D6C3"
+   }
+  }
+ },
+ {
+  "id": "timtam",
+  "name": "팀탐 상자",
+  "kind": "frontItem",
+  "price": 20,
+  "rarity": "일반",
+  "desc": "호주 국민 초코 과자 팀탐! 고양이는 못 먹지만 상자는 좋아해요.",
+  "art": {
+   "rows": [
+    ".LLLLLLLLLL.",
+    "dRRRRRRRRRRd",
+    "dRyyyyyyyyRd",
+    "dRcCcCcCRRRd",
+    "dRccccccRyRd",
+    "dRRRRRRRRRRd",
+    ".dddddddddd."
+   ],
+   "pal": {
+    "L": "#F26B5E",
+    "R": "#D62F2F",
+    "d": "#8E1A1A",
+    "y": "#F0C75A",
+    "c": "#4E2C18",
+    "C": "#7A4A2A"
+   }
+  }
+ },
+ {
+  "id": "vegemite-toast",
+  "name": "베지마이트 토스트",
+  "kind": "frontItem",
+  "price": 20,
+  "rarity": "일반",
+  "desc": "호주식 아침의 상징! 노릇한 토스트에 짭짤한 베지마이트를 쓱쓱.",
+  "art": {
+   "rows": [
+    ".cccccccc.",
+    "cyyyyyyyyc",
+    "cyKKkKKKyc",
+    "cyKKKKKkyc",
+    ".cyKKKKyc.",
+    ".cyyyyyyc.",
+    ".cccccccc."
+   ],
+   "pal": {
+    "c": "#A8652A",
+    "y": "#F2C46A",
+    "K": "#2A1A0E",
+    "k": "#6A4A2E"
+   }
+  }
+ },
+ {
+  "id": "boomerang",
+  "name": "부메랑",
+  "kind": "frontItem",
+  "price": 40,
+  "rarity": "일반",
+  "desc": "던지면 다시 돌아오는 호주의 부메랑. 고양이 앞발로 툭 쳐 보고 싶어요.",
+  "art": {
+   "rows": [
+    "dd..........dd",
+    "dOOd......dOOd",
+    ".dOwOd..dOwOd.",
+    "..dOOOddOOOd..",
+    "...dOwOOwOd...",
+    "....dOOOOd....",
+    ".....dddd....."
+   ],
+   "pal": {
+    "d": "#9C4A1A",
+    "O": "#EE8A36",
+    "w": "#FFF1DC"
+   }
+  }
+ },
+ {
+  "id": "passport",
+  "name": "워홀 여권",
+  "kind": "frontItem",
+  "price": 60,
+  "rarity": "일반",
+  "desc": "호주 워킹홀리데이 비자 도장이 쾅! 꿈을 향한 첫 여권이에요.",
+  "art": {
+   "rows": [
+    "NNNNNNNooooo",
+    "NnnnnnNppppp",
+    "NnnyynNGGGGp",
+    "NnyyyyNGppGp",
+    "NnnyynNGGGGp",
+    "NnnnnnNpllpp",
+    "NNNNNNNooooo"
+   ],
+   "pal": {
+    "N": "#1E2A55",
+    "n": "#2F4085",
+    "y": "#E8C35A",
+    "p": "#FFF8EA",
+    "G": "#2E9E4F",
+    "o": "#C9BBA0",
+    "l": "#A8A39A"
+   }
+  }
+ },
+ {
+  "id": "corkboard",
+  "name": "엽서 코르크보드",
+  "kind": "wallItem",
+  "price": 60,
+  "rarity": "일반",
+  "desc": "호주 곳곳에서 보낸 엽서 네 장을 꽂아 둔 추억 보드",
+  "art": {
+   "rows": [
+    "oooooooooooooo",
+    "oBBBBBBdBBBBBo",
+    "oBwwwBBBBpppBo",
+    "oBwrwBBBBpypBo",
+    "oBwwwBdBBpppBo",
+    "oBBBBBBBBBBBBo",
+    "oBBkkkBBmmmBBo",
+    "oBBkgkBBmwmBdo",
+    "oBdkkkBBmmmBBo",
+    "oBBBBBBBBBBBBo",
+    "oooooooooooooo"
+   ],
+   "pal": {
+    "o": "#7A4E2A",
+    "B": "#C9925A",
+    "d": "#A8743F",
+    "w": "#FFF8EC",
+    "r": "#E85D4A",
+    "p": "#F9C6D2",
+    "y": "#FFD45C",
+    "k": "#BFE3FF",
+    "g": "#3F9B58",
+    "m": "#CDEFD9"
+   }
+  }
+ },
+ {
+  "id": "tram-poster",
+  "name": "트램 포스터",
+  "kind": "wallItem",
+  "price": 70,
+  "rarity": "일반",
+  "desc": "덜컹덜컹 멜버른 시티서클 초록 트램 포스터",
+  "art": {
+   "rows": [
+    "oooooooooooooo",
+    "oCCCCCCCCCCCCo",
+    "oCCCCCkCCCCCCo",
+    "oCCCCkCkCCCCCo",
+    "oCGGGGGGGGGGCo",
+    "oCYYYYYYYYYYCo",
+    "oCGwwGwwGwwGCo",
+    "oCGwwGwwGwwGCo",
+    "oCGGGGGGGGGGCo",
+    "oCCkkCCCCkkCCo",
+    "oSSSSSSSSSSSSo",
+    "oooooooooooooo"
+   ],
+   "pal": {
+    "o": "#5E4329",
+    "C": "#FFF4E0",
+    "k": "#3A3A3A",
+    "G": "#2E8B57",
+    "Y": "#F2C230",
+    "w": "#CFEAFF",
+    "S": "#A9A9A9"
+   }
+  }
+ },
+ {
+  "id": "cat-clock",
+  "name": "고양이 시계",
+  "kind": "wallItem",
+  "price": 110,
+  "rarity": "레어",
+  "desc": "꼬리를 살랑이며 공부 시간을 알려 주는 까만 고양이 시계",
+  "art": {
+   "rows": [
+    "..k........k..",
+    "..kk......kk..",
+    "..kpkkkkkkpk..",
+    ".kkkkkkkkkkkk.",
+    ".kkYqkkkkYqkk.",
+    ".kkkkkppkkkkk.",
+    ".kkkwwwwwwkkk.",
+    ".kkwwwwrwwwkk.",
+    ".kkwwwwrrrwkkk",
+    ".kkkwwwwwwkkk.",
+    "..kkkkkkkkkk.k",
+    "...ww....ww.k."
+   ],
+   "pal": {
+    "k": "#2E3038",
+    "p": "#FF9DB0",
+    "Y": "#E9D43B",
+    "q": "#1F2433",
+    "w": "#FFFFFF",
+    "r": "#E85D4A"
+   }
+  }
+ },
+ {
+  "id": "certificate",
+  "name": "수료증 액자",
+  "kind": "wallItem",
+  "price": 200,
+  "rarity": "레어",
+  "desc": "열심히 공부한 증거! 금빛 액자에 넣은 수료증",
+  "art": {
+   "rows": [
+    "GGGGGGGGGGGGGG",
+    "GgYYYYYYYYYYgG",
+    "GYccccccccccYG",
+    "GYcccddddcccYG",
+    "GYccccccccccYG",
+    "GYcllllllllcYG",
+    "GYclllllllccYG",
+    "GYcllllccrrcYG",
+    "GYcccccccrrcYG",
+    "GYcccccccRRcYG",
+    "GgYYYYYYYYYYgG",
+    "GGGGGGGGGGGGGG"
+   ],
+   "pal": {
+    "G": "#B8860B",
+    "Y": "#F2C230",
+    "g": "#FFF1A8",
+    "c": "#FFF8EC",
+    "d": "#5E4329",
+    "l": "#B9AFA2",
+    "r": "#E85D4A",
+    "R": "#B83A2C"
+   }
+  }
+ },
+ {
+  "id": "fairy-lights",
+  "name": "꼬마전구 줄조명",
+  "kind": "lightItem",
+  "price": 50,
+  "rarity": "일반",
+  "desc": "천장에 축 늘어진 노란 꼬마전구, 쉐어하우스 감성",
+  "art": {
+   "rows": [
+    "w..................w",
+    ".ww..............ww.",
+    "..Ywww........wwwY..",
+    "..y..YwwwwwwwwY..y..",
+    ".....y..Y..Y..y.....",
+    "........y..y........"
+   ],
+   "pal": {
+    "w": "#3F6B45",
+    "Y": "#FFD45C",
+    "y": "#FFF1A8"
+   }
+  }
+ },
+ {
+  "id": "mushroom-lamp",
+  "name": "버섯 무드등",
+  "kind": "floorItem",
+  "price": 90,
+  "rarity": "레어",
+  "desc": "빨간 갓에 하얀 점, 은은하게 빛나는 버섯 무드등",
+  "art": {
+   "rows": [
+    "....gggggg....",
+    "..ggrrrrrrgg..",
+    ".grrRRwwRRRrg.",
+    "grRRRRwwRRwRrg",
+    "grRwwRRRRRRRrg",
+    "grRwwRRRwwRRrg",
+    "gruuuuuuuuuurg",
+    ".gg..sSSs..gg.",
+    ".....sSSs.....",
+    ".....sSSs.....",
+    "....bbbbbb....",
+    "...bBBBBBBb..."
+   ],
+   "pal": {
+    "g": "#FFF1A8",
+    "r": "#A83A2C",
+    "R": "#E85D4A",
+    "w": "#FFFFFF",
+    "u": "#F5E6C8",
+    "s": "#D9C29A",
+    "S": "#FFF8EC",
+    "b": "#7A5A3A",
+    "B": "#B07A45"
+   }
+  }
+ },
+ {
+  "id": "moon-lamp",
+  "name": "달 조명",
+  "kind": "lightItem",
+  "price": 110,
+  "rarity": "레어",
+  "desc": "끈에 매달린 동글동글 크림색 달, 꿈나라 직행",
+  "art": {
+   "rows": [
+    "....s....",
+    "..ooooo..",
+    ".occcGGo.",
+    "occccGGco",
+    "ocGGcccco",
+    "ocGGccGco",
+    ".occccco.",
+    "..ooooo.."
+   ],
+   "pal": {
+    "s": "#8C7A6B",
+    "o": "#D9B26A",
+    "c": "#FFF4D6",
+    "G": "#C9C2B4"
+   }
+  }
+ },
+ {
+  "id": "southern-cross",
+  "name": "남십자성 천장등",
+  "kind": "lightItem",
+  "price": 400,
+  "rarity": "전설",
+  "desc": "호주 국기에도 있는 남십자성 다섯 별이 반짝이는 밤하늘 천장등",
+  "art": {
+   "rows": [
+    "GGGGGGGGGGGGGGGGGGGG",
+    "GNNNNNNNNwNNdNNNdNNG",
+    "GNNNwNNNwwwNNNpNNNNG",
+    "GNNwwwNNNwNNNpwpNNNG",
+    "GNNNwNNNwNNNNNpNNNNG",
+    "GNNNNNNwwwNNpNNNNdNG",
+    "GNdNNNdNwNNNNNNNNNNG",
+    "GGGGGGGGGGGGGGGGGGGG"
+   ],
+   "pal": {
+    "G": "#D9B26A",
+    "N": "#1E2A5A",
+    "w": "#FFFFFF",
+    "p": "#BFD4FF",
+    "d": "#5A6FA8"
+   }
+  }
+ },
+ {
+  "id": "cork-hat",
+  "name": "코르크 모자",
+  "kind": "hat",
+  "price": 60,
+  "rarity": "일반",
+  "desc": "코르크가 대롱대롱, 파리 쫓는 오지 부시맨 모자",
+  "art": {
+   "rows": [
+    "....hhhhhh....",
+    "...hHHHHHHh...",
+    "...hbbbbbbh...",
+    "hhhhhhhhhhhhhh",
+    "s....s..s....s",
+    "c....c..c....c"
+   ],
+   "pal": {
+    "h": "#7A4E2A",
+    "H": "#A9703F",
+    "b": "#4A3020",
+    "s": "#5E4329",
+    "c": "#E0B074"
+   }
+  }
+ },
+ {
+  "id": "beanie",
+  "name": "바리스타 비니",
+  "kind": "hat",
+  "price": 40,
+  "rarity": "일반",
+  "desc": "멜버른 카페 바리스타처럼 폭 눌러쓴 니트 비니",
+  "art": {
+   "rows": [
+    "......pp......",
+    "....kkkkkk....",
+    "..kkKkKkKkkk..",
+    ".kkKkKkKkKkkk.",
+    "rrrrrrrrrrrrrr",
+    "rRrRrRrRrRrRrR"
+   ],
+   "pal": {
+    "p": "#FFF4E0",
+    "k": "#8B5A3C",
+    "K": "#A9704D",
+    "r": "#6B4430",
+    "R": "#8B5A3C"
+   }
+  }
+ },
+ {
+  "id": "straw-hat",
+  "name": "밀짚모자",
+  "kind": "hat",
+  "price": 50,
+  "rarity": "일반",
+  "desc": "농장 워홀 필수템, 햇볕 막아 주는 밀짚모자",
+  "art": {
+   "rows": [
+    "....oooooo....",
+    "...yYyYyYyy...",
+    "...rrrrrrrr...",
+    "yyyyyyyyyyyyyy",
+    ".yYyYyYyYyYyY."
+   ],
+   "pal": {
+    "o": "#C9A040",
+    "y": "#E8C66A",
+    "Y": "#F7DE95",
+    "r": "#E85D4A"
+   }
+  }
+ },
+ {
+  "id": "santa-hat",
+  "name": "산타 모자",
+  "kind": "hat",
+  "price": 150,
+  "rarity": "레어",
+  "desc": "한여름 크리스마스! 호주식 산타 모자",
+  "art": {
+   "rows": [
+    "...........ww.",
+    "........rrrww.",
+    "....rrrrrrr...",
+    "..rrrRrrrrrr..",
+    "wwwwwwwwwwwwww",
+    "wWwWwWwWwWwWwW"
+   ],
+   "pal": {
+    "r": "#D93A3A",
+    "R": "#F06060",
+    "w": "#FFFFFF",
+    "W": "#E3E6EC"
+   }
+  }
+ },
+ {
+  "id": "crown",
+  "name": "왕관",
+  "kind": "hat",
+  "price": 350,
+  "rarity": "전설",
+  "desc": "공부왕 고양이에게만 허락된 반짝반짝 금관",
+  "art": {
+   "rows": [
+    ".w....ww....w.",
+    ".gg..gGGg..gg.",
+    ".gGggGGGGggGg.",
+    ".gGGGGGGGGGGg.",
+    ".gGrGGbbGGrGg.",
+    ".oooooooooooo."
+   ],
+   "pal": {
+    "w": "#FFF8D0",
+    "g": "#E0A820",
+    "G": "#FFD45C",
+    "r": "#E85D4A",
+    "b": "#3B82F6",
+    "o": "#B8860B"
+   }
+  }
+ },
+ {
+  "id": "apron",
+  "name": "바리스타 앞치마",
+  "kind": "outfit",
+  "price": 90,
+  "rarity": "레어",
+  "desc": "플랫화이트 한 잔 뽑아 줄 것 같은 까만 앞치마",
+  "art": {
+   "rows": [
+    "...k......k...",
+    "..skkkkkkkks..",
+    "...kkwwwkkk...",
+    "...kkwwwwkk...",
+    "...KKKKKKKK..."
+   ],
+   "pal": {
+    "k": "#2E3038",
+    "K": "#1A1B20",
+    "s": "#8B5A3C",
+    "w": "#FFF4E0"
+   }
+  }
+ },
+ {
+  "id": "scarf",
+  "name": "빨간 목도리",
+  "kind": "outfit",
+  "price": 40,
+  "rarity": "일반",
+  "desc": "멜버른 겨울바람도 끄떡없는 포근한 빨간 목도리",
+  "art": {
+   "rows": [
+    ".rrrrrrrrrrrr.",
+    "rrRrrRrrRrrRrr",
+    ".ddddddddrrdd.",
+    ".........rR...",
+    ".........dd..."
+   ],
+   "pal": {
+    "r": "#D93A3A",
+    "R": "#F06060",
+    "d": "#A82828"
+   }
+  }
+ },
+ {
+  "id": "aloha",
+  "name": "하와이안 셔츠",
+  "kind": "outfit",
+  "price": 120,
+  "rarity": "레어",
+  "desc": "골드코스트 휴가 모드, 꽃무늬 하와이안 셔츠",
+  "art": {
+   "rows": [
+    "..sssc..csss..",
+    ".sfssssbssfss.",
+    "sfyfsssbsfyfss",
+    "ssfssfsbssfsss",
+    "ssssfyfbssssss"
+   ],
+   "pal": {
+    "s": "#2BB3A3",
+    "c": "#FFF8EC",
+    "f": "#FF8FAB",
+    "y": "#FFD45C",
+    "b": "#FFFFFF"
+   }
+  }
+ },
+ {
+  "id": "hi-vis",
+  "name": "하이비즈 조끼",
+  "kind": "outfit",
+  "price": 70,
+  "rarity": "일반",
+  "desc": "건설 현장 워홀 감성, 반사띠 번쩍이는 주황 조끼",
+  "art": {
+   "rows": [
+    "..ooo....ooo..",
+    ".ooooo..ooooo.",
+    ".SSSSS..SSSSS.",
+    ".ooooo..ooooo.",
+    ".SSSSS..SSSSS."
+   ],
+   "pal": {
+    "o": "#FF7A1A",
+    "S": "#E3E6EC"
+   }
+  }
+ }
+]

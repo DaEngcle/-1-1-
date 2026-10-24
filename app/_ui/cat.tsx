@@ -1,5 +1,19 @@
 import { catPixels, type CatBreed, type CatMood, type CatPart } from "@/lib/classroom/cat";
 
+/** 모자·옷 그림 (고양이 집에서 입힌 것) */
+type WearArt = { rows: string[]; pal: Record<string, string> };
+
+function wearRects(art: WearArt, x0: number, y0: number, key: string) {
+  const out: React.ReactNode[] = [];
+  art.rows.forEach((row, y) => {
+    for (let x = 0; x < row.length; x++) {
+      const fill = art.pal[row[x]];
+      if (fill) out.push(<rect key={`${key}${x}-${y}`} x={x0 + x} y={y0 + y} width={1} height={1} fill={fill} />);
+    }
+  });
+  return out;
+}
+
 const PARTS: CatPart[] = ["tail", "arm", "feet", "body", "eye"];
 
 /**
@@ -12,6 +26,8 @@ export function CatSprite({
   className = "h-20 w-24",
   title,
   delay = 0,
+  hat,
+  outfit,
 }: {
   breed: CatBreed;
   mood?: CatMood;
@@ -19,6 +35,10 @@ export function CatSprite({
   title?: string;
   /** 여러 마리가 같이 있을 때 박자를 어긋나게 (초) */
   delay?: number;
+  /** 머리 위 모자 (가로 14 이하, 맨 아래 줄이 머리 위에 닿는다) */
+  hat?: WearArt;
+  /** 목·몸에 입는 옷 (가로 14 이하) */
+  outfit?: WearArt;
 }) {
   const { pixels, z } = catPixels(breed, mood);
   return (
@@ -51,6 +71,12 @@ export function CatSprite({
           g
         );
       })}
+      {(hat || outfit) && (
+        <g className="cat-bob">
+          {outfit && wearRects(outfit, 2, 9, "o")}
+          {hat && wearRects(hat, Math.round(9 - Math.max(...hat.rows.map((r) => r.length)) / 2), 3 - hat.rows.length, "h")}
+        </g>
+      )}
       {z && (
         <text className="cat-z" x={16} y={-0.2} fontFamily="Menlo,monospace" fontWeight={900} fontSize={2.4} fill="#2453EB">
           z
