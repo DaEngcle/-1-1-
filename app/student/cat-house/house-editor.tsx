@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useTransition } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { CatRoom, ItemPreview } from "@/app/_ui/cat-room";
 import type { CatBreed, CatMood } from "@/lib/classroom/cat";
@@ -75,7 +76,10 @@ export function HouseEditor({
   /** 화면 좌표 → 방 좌표 */
   function toRoom(e: { clientX: number; clientY: number }) {
     const r = svgRef.current!.getBoundingClientRect();
-    return { x: ((e.clientX - r.left) / r.width) * ROOM_W, y: ((e.clientY - r.top) / r.height) * ROOM_H };
+    return {
+      x: ((e.clientX - r.left) / r.width) * ROOM_W,
+      y: ((e.clientY - r.top) / r.height) * ROOM_H,
+    };
   }
 
   function onItemPointerDown(i: number, e: React.PointerEvent<SVGGElement>) {
@@ -193,35 +197,61 @@ export function HouseEditor({
   return (
     <div className="flex flex-col gap-3">
       {confirm && (
-        <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 p-4 sm:items-center" onClick={() => setConfirm(null)}>
-          <div className="w-full max-w-sm rounded-3xl bg-white p-5 text-center shadow-2xl" onClick={(e) => e.stopPropagation()}>
+        <div
+          className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 p-4 sm:items-center"
+          onClick={() => setConfirm(null)}
+        >
+          <div
+            className="w-full max-w-sm rounded-3xl bg-white p-5 text-center shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="mx-auto mb-2 flex h-20 w-20 items-center justify-center rounded-2xl bg-zinc-50">
               <ItemPreview id={confirm.id} className="h-16 w-16" />
             </div>
-            <p className="text-lg font-extrabold text-zinc-900">{confirm.name}</p>
-            {confirm.desc && <p className="mt-0.5 text-sm text-zinc-500">{confirm.desc}</p>}
+            <p className="text-lg font-extrabold text-zinc-900">
+              {confirm.name}
+            </p>
+            {confirm.desc && (
+              <p className="mt-0.5 text-sm text-zinc-500">{confirm.desc}</p>
+            )}
             <p className="mt-2 text-sm text-zinc-700">
               🐟 츄르 <b>{confirm.price}</b>개로 살까요? (지금 {balance}개)
             </p>
             {balance < confirm.price && (
-              <p className="mt-1 text-sm font-semibold text-rose-600">츄르가 {confirm.price - balance}개 모자라요. 공부하면 모여요!</p>
+              <p className="mt-1 text-sm font-semibold text-rose-600">
+                츄르가 {confirm.price - balance}개 모자라요. 쉐도잉 1문장에
+                5개씩 모여요!
+              </p>
             )}
             <div className="mt-4 grid grid-cols-2 gap-2">
-              <button type="button" onClick={() => setConfirm(null)} className="rounded-2xl bg-zinc-100 py-3 font-bold text-zinc-700">
-                취소
-              </button>
               <button
                 type="button"
-                disabled={balance < confirm.price || pending}
-                onClick={() => {
-                  const it = confirm;
-                  setConfirm(null);
-                  buy(it);
-                }}
-                className="rounded-2xl bg-violet-600 py-3 font-bold text-white disabled:bg-zinc-300"
+                onClick={() => setConfirm(null)}
+                className="rounded-2xl bg-zinc-100 py-3 font-bold text-zinc-700"
               >
-                살게요
+                취소
               </button>
+              {balance < confirm.price ? (
+                <Link
+                  href="/student/shadowing"
+                  className="rounded-2xl bg-violet-600 py-3 text-center font-bold text-white"
+                >
+                  🐟 츄르 모으러 가기
+                </Link>
+              ) : (
+                <button
+                  type="button"
+                  disabled={pending}
+                  onClick={() => {
+                    const it = confirm;
+                    setConfirm(null);
+                    buy(it);
+                  }}
+                  className="rounded-2xl bg-violet-600 py-3 font-bold text-white disabled:bg-zinc-300"
+                >
+                  살게요
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -237,11 +267,16 @@ export function HouseEditor({
         svgRef={svgRef}
         className="shadow-lg"
       />
-      <p className="-mt-1 text-center text-xs text-zinc-400">물건을 손가락으로 끌어서 옮겨요 · 바닥 앞쪽에 둔 물건이 고양이 앞에 보여요</p>
+      <p className="-mt-1 text-center text-xs text-zinc-400">
+        물건을 손가락으로 끌어서 옮겨요 · 바닥 앞쪽에 둔 물건이 고양이 앞에
+        보여요
+      </p>
 
       {selItem && (
         <div className="flex flex-wrap items-center gap-2 rounded-2xl bg-violet-50 p-2">
-          <span className="text-sm font-bold text-violet-800">{ITEM_BY_ID.get(selItem.id)?.name}</span>
+          <span className="text-sm font-bold text-violet-800">
+            {ITEM_BY_ID.get(selItem.id)?.name}
+          </span>
           <span className="ml-auto flex gap-1">
             {[
               ["◀", -1, 0],
@@ -258,13 +293,25 @@ export function HouseEditor({
                 {l}
               </button>
             ))}
-            <button type="button" onClick={() => reorder(1)} className="rounded-lg bg-white px-2 text-xs font-bold text-violet-700 shadow-sm">
+            <button
+              type="button"
+              onClick={() => reorder(1)}
+              className="rounded-lg bg-white px-2 text-xs font-bold text-violet-700 shadow-sm"
+            >
               앞으로
             </button>
-            <button type="button" onClick={() => reorder(-1)} className="rounded-lg bg-white px-2 text-xs font-bold text-violet-700 shadow-sm">
+            <button
+              type="button"
+              onClick={() => reorder(-1)}
+              className="rounded-lg bg-white px-2 text-xs font-bold text-violet-700 shadow-sm"
+            >
               뒤로
             </button>
-            <button type="button" onClick={removeSel} className="rounded-lg bg-white px-2 text-xs font-bold text-rose-600 shadow-sm">
+            <button
+              type="button"
+              onClick={removeSel}
+              className="rounded-lg bg-white px-2 text-xs font-bold text-rose-600 shadow-sm"
+            >
               빼기
             </button>
           </span>
@@ -272,7 +319,9 @@ export function HouseEditor({
       )}
 
       <div className="flex items-center justify-between gap-2">
-        <span className="rounded-full bg-amber-100 px-3 py-1 text-sm font-extrabold text-amber-800">🐟 츄르 {balance}</span>
+        <span className="rounded-full bg-amber-100 px-3 py-1 text-sm font-extrabold text-amber-800">
+          🐟 츄르 {balance}
+        </span>
         <span className="text-xs text-zinc-500">
           놓은 물건 {layout.items.length}/{MAX_PLACED}
         </span>
@@ -285,7 +334,11 @@ export function HouseEditor({
           {pending ? "저장 중…" : dirty ? "방 저장하기" : "저장됨"}
         </button>
       </div>
-      {msg && <p className="rounded-xl bg-violet-50 p-2 text-center text-sm font-semibold text-violet-800">{msg}</p>}
+      {msg && (
+        <p className="rounded-xl bg-violet-50 p-2 text-center text-sm font-semibold text-violet-800">
+          {msg}
+        </p>
+      )}
 
       <div className="-mx-1 flex gap-1.5 overflow-x-auto px-1 pb-1">
         {TABS.map((t) => (
@@ -318,8 +371,14 @@ export function HouseEditor({
                 className={`flex w-full flex-col items-center gap-1 rounded-2xl border-2 bg-white p-2 text-center shadow-sm ${on ? "border-violet-500" : "border-transparent"}`}
               >
                 <ItemPreview id={it.id} className="h-14 w-14" />
-                <span className="line-clamp-1 text-xs font-bold text-zinc-900">{it.name}</span>
-                <span className={`rounded-full px-1.5 py-0.5 text-[10px] font-bold ${RARITY[it.rarity]}`}>{it.rarity}</span>
+                <span className="line-clamp-1 text-xs font-bold text-zinc-900">
+                  {it.name}
+                </span>
+                <span
+                  className={`rounded-full px-1.5 py-0.5 text-[10px] font-bold ${RARITY[it.rarity]}`}
+                >
+                  {it.rarity}
+                </span>
                 {has ? (
                   <span className="text-[11px] font-semibold text-emerald-700">
                     {on
@@ -335,7 +394,11 @@ export function HouseEditor({
                           : "바꾸기"}
                   </span>
                 ) : (
-                  <span className={`text-[11px] font-bold ${balance >= it.price ? "text-amber-700" : "text-zinc-400"}`}>🐟 {it.price} 사기</span>
+                  <span
+                    className={`text-[11px] font-bold ${balance >= it.price ? "text-amber-700" : "text-zinc-400"}`}
+                  >
+                    🐟 {it.price} 사기
+                  </span>
                 )}
               </button>
             </li>
