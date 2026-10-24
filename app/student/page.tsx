@@ -130,8 +130,8 @@ export default async function StudentHomePage() {
         {student.catBreed ? (
           <div className="relative flex items-center gap-3">
             <Link
-              href="/student/profile#cat"
-              aria-label="고양이 바꾸기"
+              href="/student/cat-house"
+              aria-label="고양이 집 가기"
               className="shrink-0 rounded-2xl bg-white/15 p-1.5"
             >
               <CatSprite breed={student.catBreed} mood={greeting.mood} className="h-16 w-20" />

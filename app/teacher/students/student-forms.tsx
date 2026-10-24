@@ -87,7 +87,7 @@ export function TempPasswordButton({ id, name }: { id: string; name: string }) {
   const [state, action, pending] = useActionState(makeTempPassword, undefined);
   const message =
     state?.status === "success"
-      ? `${name}님, 다잉클 클래스룸 임시 비밀번호예요 🔑\n${state.password}\n\n휴대폰 번호 + 이 비밀번호로 로그인한 뒤, [내 정보 → 비밀번호 바꾸기]에서 꼭 새 비밀번호로 바꿔주세요!`
+      ? `${name}님, 다잉클 클래스룸 임시 비밀번호예요 🔑\n${state.password}\n\n휴대폰 번호 + 이 비밀번호로 로그인한 뒤, [더보기 → 설정 → 비밀번호 바꾸기]에서 꼭 새 비밀번호로 바꿔주세요!`
       : "";
   return (
     <form

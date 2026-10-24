@@ -224,7 +224,7 @@ export async function getEngagement(studentId: string): Promise<Engagement> {
   };
 }
 
-function maskName(name: string) {
+export function maskName(name: string) {
   const chars = [...name];
   if (chars.length <= 1) return name;
   if (chars.length === 2) return `${chars[0]}*`;

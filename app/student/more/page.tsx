@@ -63,6 +63,20 @@ export default async function MorePage() {
         <LineIcon name="chevron" className="ml-auto h-5 w-5 shrink-0 text-zinc-300" />
       </Link>
 
+      <Link
+        href="/student/cat-house"
+        className="flex items-center gap-4 rounded-[28px] bg-gradient-to-br from-violet-500 to-fuchsia-500 p-5 text-white shadow-md"
+      >
+        <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/20">
+          <LineIcon name="house" className="h-7 w-7" />
+        </span>
+        <span className="flex flex-col">
+          <span className="text-lg font-extrabold">{student.catName ?? "고양이"}의 집 꾸미기</span>
+          <span className="text-sm text-white/85">공부로 모은 츄르 🐟로 가구 사기 · 친구 방 구경</span>
+        </span>
+        <LineIcon name="chevron" className="ml-auto h-5 w-5 shrink-0 text-white/70" />
+      </Link>
+
       {SECTIONS.map((sec) => (
         <section key={sec.title} className="rounded-[28px] bg-white px-5 pt-4 pb-1 shadow-sm">
           <p className="mb-1 text-sm font-semibold text-zinc-400">{sec.title}</p>
