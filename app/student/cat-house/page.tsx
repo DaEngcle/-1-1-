@@ -59,7 +59,7 @@ export default async function CatHousePage() {
             {rooms.map((r) => (
               <li key={r.id}>
                 <Link href={`/student/cat-house/${r.id}`} className="flex flex-col gap-1 rounded-2xl bg-white p-2 shadow-sm">
-                  <RoomThumb id={r.id} breed={r.breed} />
+                  <CatRoom layout={r.layout} breed={r.breed} className="rounded-xl" />
                   <span className="truncate text-sm font-bold text-zinc-900">{r.catName ?? "고양이"} · {r.name}</span>
                   <span className="text-xs text-zinc-500">🐾 꾹꾹이 {r.likes}</span>
                 </Link>
@@ -72,7 +72,3 @@ export default async function CatHousePage() {
   );
 }
 
-async function RoomThumb({ id, breed }: { id: string; breed: Parameters<typeof CatRoom>[0]["breed"] }) {
-  const { layout } = await getRoom(id);
-  return <CatRoom layout={layout} breed={breed} className="rounded-xl" />;
-}

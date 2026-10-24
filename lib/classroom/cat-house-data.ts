@@ -49,6 +49,8 @@ export async function getChuru(studentId: string) {
   }
   return {
     balance: Math.max(0, earned - spent),
+    /** 번 것보다 많이 썼는지 (동시 구매 확인용) */
+    spentOver: spent > earned,
     todayEarned,
     owned: new Set<string>([...FREE_ITEMS, ...(items ?? []).map((i) => i.item_id as string)]),
     daysSince,
@@ -69,7 +71,7 @@ export async function listRooms(excludeId: string) {
   const supabase = createServerSupabaseClient();
   const { data } = await supabase
     .from("cat_rooms")
-    .select("student_id, likes, updated_at, students(name, nickname, cat_breed, cat_name, is_active)")
+    .select("student_id, layout, likes, updated_at, students(name, nickname, cat_breed, cat_name, is_active)")
     .neq("student_id", excludeId)
     .order("updated_at", { ascending: false })
     .limit(40);
@@ -89,6 +91,7 @@ export async function listRooms(excludeId: string) {
         catName: s.cat_name,
         breed: s.cat_breed as CatBreed | null,
         likes: r.likes ?? 0,
+        layout: normalizeLayout(r.layout),
       };
     })
     .filter((r) => r !== null);

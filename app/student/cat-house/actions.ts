@@ -19,6 +19,12 @@ export async function buyItem(itemId: string) {
     .from("cat_items")
     .insert({ student_id: student.id, item_id: itemId, price: item.price });
   if (error) return { ok: false, message: "사지 못했어요. 다시 해 주세요." };
+  // 동시에 여러 개를 사서 츄르가 모자라게 되면 방금 산 것을 되돌린다
+  const after = await getChuru(student.id);
+  if (after.balance < 0 || after.spentOver) {
+    await createServerSupabaseClient().from("cat_items").delete().eq("student_id", student.id).eq("item_id", itemId);
+    return { ok: false, message: "츄르가 모자라요. 다시 확인해 주세요 🐟" };
+  }
   revalidatePath("/student/cat-house");
   return { ok: true, message: `${item.name} 샀어요! 방에 놓아 보세요 🏠` };
 }
