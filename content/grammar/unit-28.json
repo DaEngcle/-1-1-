@@ -22,7 +22,7 @@
     },
     {
       "title": "be going to와 비교",
-      "body": "계획을 말할 때는 be going to와 뜻이 거의 같아요. 하지만 날씨처럼 사람이 정할 수 없는 일에는 be -ing를 쓰지 않아요. It's going to rain tomorrow. (O) / It's raining tomorrow. (X)"
+      "body": "계획을 말할 때는 be going to와 뜻이 거의 같아요. 날씨처럼 사람이 정할 수 없는 일을 예측할 때는 be going to나 will을 쓰는 게 자연스러워요. (It's going to rain tomorrow.)"
     }
   ],
   "formula": [
@@ -36,11 +36,6 @@
       "wrong": "I meeting my friend tomorrow.",
       "right": "I'm meeting my friend tomorrow.",
       "why": "한국어에는 be동사에 해당하는 말이 없어서 자주 빠뜨려요. -ing 앞에 am / is / are를 꼭 넣으세요."
-    },
-    {
-      "wrong": "It's raining tomorrow.",
-      "right": "It's going to rain tomorrow.",
-      "why": "be -ing 미래는 사람이 정해 둔 약속·일정에만 써요. 날씨 예측은 be going to나 will을 써요."
     },
     {
       "wrong": "What do you do tonight?",

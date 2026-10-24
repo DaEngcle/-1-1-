@@ -150,6 +150,9 @@ export const GRAMMAR_UNITS: GrammarUnit[] = ([u01, u02, u03, u04, u05, u06, u07,
   video: LECTURES[u.unit].video,
 }));
 
+/** 지금 학생에게 공개하는 유닛 수 (21~60강 내용은 만들어 두었고, 숫자만 올리면 열린다) */
+export const OPEN_GRAMMAR_UNITS = 20;
+
 /** 무료회원은 앞 유닛까지만 */
 export const FREE_GRAMMAR_UNITS = 3;
 
@@ -157,11 +160,12 @@ export const FREE_GRAMMAR_UNITS = 3;
 export const grammarDeck = (unit: number) => `grammar-${unit}`;
 
 export function grammarUnit(n: number) {
+  if (n > OPEN_GRAMMAR_UNITS) return null;
   return GRAMMAR_UNITS.find((u) => u.unit === n) ?? null;
 }
 
-/** 유닛 묶음 (목록 화면 소제목) */
-export const GRAMMAR_PARTS = [
+/** 유닛 묶음 (목록 화면 소제목). 공개한 유닛만 보여준다 */
+const ALL_PARTS = [
   { title: "be동사 · 현재진행", units: [1, 2, 3, 4, 5, 6] },
   { title: "현재 시제", units: [7, 8, 9, 10, 11, 12] },
   { title: "과거 시제", units: [13, 14, 15, 16, 17, 18, 19] },
@@ -172,3 +176,7 @@ export const GRAMMAR_PARTS = [
   { title: "-ing와 to 동사원형", units: [46, 47, 48, 49, 50, 51, 52] },
   { title: "명사 · 관사 · 대명사", units: [53, 54, 55, 56, 57, 58, 59, 60] },
 ];
+
+export const GRAMMAR_PARTS = ALL_PARTS.map((p) => ({ ...p, units: p.units.filter((n) => n <= OPEN_GRAMMAR_UNITS) })).filter(
+  (p) => p.units.length > 0,
+);

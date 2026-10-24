@@ -2,7 +2,7 @@ import Link from "next/link";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { requireStudent } from "@/lib/classroom/dal";
 import { hasFullVoca } from "@/lib/classroom/verbs";
-import { FREE_GRAMMAR_UNITS, GRAMMAR_PARTS, grammarDeck, grammarUnit } from "@/lib/classroom/grammar";
+import { FREE_GRAMMAR_UNITS, GRAMMAR_PARTS, OPEN_GRAMMAR_UNITS, grammarDeck, grammarUnit } from "@/lib/classroom/grammar";
 
 export default async function GrammarPage() {
   const student = await requireStudent();
@@ -13,18 +13,18 @@ export default async function GrammarPage() {
     .like("deck", "grammar-%");
   const byDeck = new Map((data ?? []).map((r) => [r.deck as string, r]));
   const free = !hasFullVoca(student);
-  const cleared = (data ?? []).filter((r) => (r.stars ?? 0) > 0).length;
+  const cleared = (data ?? []).filter((r) => (r.stars ?? 0) > 0 && Number(String(r.deck).slice(8)) <= OPEN_GRAMMAR_UNITS).length;
 
   return (
     <>
       <section className="flex items-center gap-3 rounded-3xl bg-gradient-to-br from-amber-400 to-orange-500 p-5 text-white shadow-lg">
         <span className="text-5xl">🐤</span>
         <span className="flex flex-col gap-1">
-          <span className="text-xl font-extrabold">기초 문법 60강</span>
+          <span className="text-xl font-extrabold">기초 문법</span>
           <span className="text-sm text-amber-50">
             다니엘 쌤 강의 → 개념 → 예문 → 문제 12개. 80점이 넘으면 별을 받아요. 아무 유닛부터 시작해도 돼요.
           </span>
-          <span className="text-xs font-bold text-white/90">{cleared}/60 유닛 클리어</span>
+          <span className="text-xs font-bold text-white/90">{cleared}/{OPEN_GRAMMAR_UNITS} 유닛 클리어</span>
         </span>
       </section>
 
