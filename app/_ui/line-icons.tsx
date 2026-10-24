@@ -85,6 +85,13 @@ const PATHS: Record<string, React.ReactNode> = {
   ),
   logout: <path d="M10 5H6.5A1.5 1.5 0 0 0 5 6.5v11A1.5 1.5 0 0 0 6.5 19H10M14 8l4 4-4 4M18 12H9.5" />,
   chevron: <path d="m9.5 6 6 6-6 6" />,
+  settings: (
+    <>
+      <circle cx="12" cy="12" r="3" />
+      <path d="M12 3.5v2M12 18.5v2M3.5 12h2M18.5 12h2M6 6l1.4 1.4M16.6 16.6 18 18M6 18l1.4-1.4M16.6 7.4 18 6" />
+    </>
+  ),
+  house: <path d="M4 11 12 4.5 20 11M6 9.5V19a1 1 0 0 0 1 1h3.5v-5h3v5H17a1 1 0 0 0 1-1V9.5" />,
 };
 
 export function LineIcon({ name, className = "h-6 w-6" }: { name: string; className?: string }) {

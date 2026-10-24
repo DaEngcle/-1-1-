@@ -4,9 +4,7 @@ import { NicknameForm } from "./nickname-form";
 import { cardClass } from "@/app/_ui/styles";
 import { CatPicker } from "@/app/_ui/cat-picker";
 import { CatNameForm } from "@/app/_ui/cat-name-form";
-import { PasswordForm } from "./password-form";
-import { PushToggle } from "@/app/_ui/push-toggle";
-import { InstallAppCard } from "@/app/_ui/pwa";
+
 
 export default async function StudentProfilePage() {
   const student = await requireStudent();
@@ -37,13 +35,13 @@ export default async function StudentProfilePage() {
           </div>
         )}
       </section>
-      <h2 id="notify" className="scroll-mt-6 text-xl font-extrabold text-zinc-900">🔔 알림·앱 설치</h2>
-      <PushToggle />
-      <InstallAppCard />
-      <h2 id="password" className="scroll-mt-6 text-xl font-extrabold text-zinc-900">🔑 비밀번호 바꾸기</h2>
-      <section className={cardClass}>
-        <PasswordForm />
-      </section>
+      <p className="text-sm text-zinc-500">
+        알림·비밀번호는{" "}
+        <Link href="/student/settings" className="font-semibold text-brand-700 underline">
+          설정
+        </Link>
+        에서 바꿀 수 있어요.
+      </p>
     </>
   );
 }

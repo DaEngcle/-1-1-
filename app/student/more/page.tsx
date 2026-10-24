@@ -29,8 +29,7 @@ const SECTIONS: { title: string; items: Item[] }[] = [
     title: "계정",
     items: [
       { href: "/student/profile", icon: "user", title: "내 정보", sub: "닉네임·고양이 바꾸기" },
-      { href: "/student/profile#notify", icon: "bell", title: "알림·앱 설치", sub: "학습 알림 켜기·홈 화면에 추가" },
-      { href: "/student/profile#password", icon: "key", title: "비밀번호 바꾸기", sub: "로그인 비밀번호 변경" },
+      { href: "/student/settings", icon: "settings", title: "설정", sub: "알림·해석·자막·효과음·비밀번호" },
     ],
   },
 ];

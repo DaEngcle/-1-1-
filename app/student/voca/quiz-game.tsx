@@ -7,6 +7,7 @@ import { CatSprite } from "@/app/_ui/cat";
 import { useMyCat } from "@/app/_ui/cat-context";
 import { starsFor } from "@/lib/classroom/verbs";
 import { saveVocaResult } from "./actions";
+import { readPref } from "@/app/_ui/prefs";
 
 /** 게임 한 문제 */
 export type QuizQuestion = {
@@ -43,6 +44,7 @@ export function shuffle<T>(xs: T[]): T[] {
 }
 
 function beep(ok: boolean) {
+  if (!readPref("gameSound")) return;
   try {
     const Ctx = window.AudioContext ?? (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
     const ctx = new Ctx();

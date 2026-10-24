@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useTts } from "@/app/_ui/audio/use-tts";
 import { useRecorder } from "@/app/_ui/audio/use-recorder";
+import { usePref } from "@/app/_ui/prefs";
 import { Interviewer } from "@/app/_ui/interviewer";
 import { InterviewerFace, InterviewerVideo, hasInterviewerVideo } from "@/app/_ui/interviewer-video";
 import { CatSprite } from "@/app/_ui/cat";
@@ -54,7 +55,9 @@ export function Conversation({ scenario: s, ready }: { scenario: Scenario; ready
   const [turns, setTurns] = useState<Turn[]>([]);
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [mood, setMood] = useState<"smile" | "neutral" | "thinking">("smile");
-  const [subtitles, setSubtitles] = useState(false);
+  const subtitlesPref = usePref("interviewSubtitles");
+  const [subtitlesToggled, setSubtitlesToggled] = useState<boolean | null>(null);
+  const subtitles = subtitlesToggled ?? subtitlesPref;
   const [error, setError] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<Feedback | null>(null);
   const [ended, setEnded] = useState(false);
@@ -361,7 +364,7 @@ export function Conversation({ scenario: s, ready }: { scenario: Scenario; ready
         <span>
           {s.emoji} {s.name} · {s.roleKo}
         </span>
-        <button type="button" onClick={() => setSubtitles((v) => !v)} className="rounded-full bg-white/80 px-3 py-1 shadow-sm">
+        <button type="button" onClick={() => setSubtitlesToggled(!subtitles)} className="rounded-full bg-white/80 px-3 py-1 shadow-sm">
           {subtitles ? "💬 자막 끄기" : "💬 자막 켜기"}
         </button>
       </div>

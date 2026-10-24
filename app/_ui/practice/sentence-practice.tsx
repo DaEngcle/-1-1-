@@ -1,5 +1,7 @@
 "use client";
 
+import { usePref } from "@/app/_ui/prefs";
+
 import Link from "next/link";
 import { useState } from "react";
 import type { WordResult } from "@/lib/classroom/azure-speech";
@@ -178,7 +180,10 @@ export function SentencePractice({
   initialResult: PracticeResult | null;
 }) {
   const { play, stop, playingKey, loop, setLoop } = useTts();
-  const [showTranslation, setShowTranslation] = useState(false);
+  // 처음엔 설정값(해석 항상 보기)을 따르고, 누르면 그 문장만 바뀐다
+  const showKoPref = usePref("showTranslation");
+  const [toggledKo, setShowTranslation] = useState<boolean | null>(null);
+  const showTranslation = toggledKo ?? showKoPref;
   const recorder = useRecorder(MAX_RECORD_SECONDS);
   const { recording, seconds, url: recordedUrl, blob: recordedBlob } = recorder;
   const [submitting, setSubmitting] = useState(false);
@@ -270,7 +275,7 @@ export function SentencePractice({
         </button>
         <button
           type="button"
-          onClick={() => setShowTranslation((v) => !v)}
+          onClick={() => setShowTranslation(!showTranslation)}
           disabled={!translation && !note}
           className={`${tool} ${showTranslation ? "border-brand-400 bg-brand-50 text-brand-700" : "border-zinc-300 bg-white"}`}
         >
