@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { requireStudent } from "@/lib/classroom/dal";
 import { kstDate } from "@/lib/classroom/stats";
-import { BOX_MIN_DAYS, BOX_ODDS, ITEMS, ITEM_BY_ID, SLOT_KIND, normalizeLayout, type Layout } from "@/lib/classroom/cat-house";
+import { BOX_MIN_DAYS, BOX_ODDS, ITEMS, ITEM_BY_ID, normalizeLayout, type Layout } from "@/lib/classroom/cat-house";
 import { weekStart } from "@/lib/classroom/engagement";
 import { getChuru, getRoom } from "@/lib/classroom/cat-house-data";
 
@@ -35,13 +35,9 @@ export async function saveLayout(raw: Layout) {
   const student = await requireStudent();
   const layout = normalizeLayout(raw);
   const { owned } = await getChuru(student.id);
-  const used = [layout.wall, layout.floor, layout.window, ...Object.values(layout.slots), layout.wear.hat, layout.wear.outfit];
+  // normalizeLayout이 종류·위치·개수를 이미 맞춰 준다. 여기선 가진 것만 놓았는지 확인
+  const used = [layout.wall, layout.floor, layout.window, ...layout.items.map((p) => p.id), layout.wear.hat, layout.wear.outfit];
   if (used.some((id) => id && !owned.has(id))) return { ok: false, message: "아직 안 산 아이템이 있어요." };
-  for (const [slot, id] of Object.entries(layout.slots)) {
-    if (id && ITEM_BY_ID.get(id)?.kind !== SLOT_KIND[slot as keyof typeof SLOT_KIND]) {
-      return { ok: false, message: "그 자리에는 놓을 수 없어요." };
-    }
-  }
   const { error } = await createServerSupabaseClient()
     .from("cat_rooms")
     .upsert({ student_id: student.id, layout, updated_at: new Date().toISOString() });

@@ -1,26 +1,35 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { CatRoom, ItemPreview } from "@/app/_ui/cat-room";
 import type { CatBreed, CatMood } from "@/lib/classroom/cat";
-import { ITEMS, SLOT_KIND, SLOT_LABEL, type HouseItem, type Layout, type Slot } from "@/lib/classroom/cat-house";
+import {
+  ITEMS,
+  ITEM_BY_ID,
+  MAX_PLACED,
+  ROOM_H,
+  ROOM_W,
+  clampPlace,
+  defaultPlace,
+  type HouseItem,
+  type Layout,
+} from "@/lib/classroom/cat-house";
 import { buyItem, saveLayout } from "./actions";
 
-type Target = "wall" | "floor" | "window" | "hat" | "outfit" | Slot;
-const TARGETS: { id: Target; label: string }[] = [
+type Tab = HouseItem["kind"];
+const TABS: { id: Tab; label: string }[] = [
+  { id: "floorItem", label: "🛋️ 가구" },
+  { id: "frontItem", label: "☕ 소품" },
+  { id: "wallItem", label: "🖼️ 벽장식" },
+  { id: "lightItem", label: "💡 조명" },
   { id: "window", label: "🪟 창밖" },
   { id: "wall", label: "🧱 벽지" },
   { id: "floor", label: "🟫 바닥" },
-  { id: "floorL", label: SLOT_LABEL.floorL },
-  { id: "floorR", label: SLOT_LABEL.floorR },
-  { id: "front", label: SLOT_LABEL.front },
-  { id: "wallL", label: SLOT_LABEL.wallL },
-  { id: "wallR", label: SLOT_LABEL.wallR },
-  { id: "ceiling", label: "💡 " + SLOT_LABEL.ceiling },
   { id: "hat", label: "🎩 모자" },
   { id: "outfit", label: "👕 옷" },
 ];
+const PLACEABLE: Tab[] = ["floorItem", "frontItem", "wallItem", "lightItem"];
 
 const RARITY: Record<HouseItem["rarity"], string> = {
   기본: "bg-zinc-100 text-zinc-600",
@@ -28,11 +37,6 @@ const RARITY: Record<HouseItem["rarity"], string> = {
   레어: "bg-violet-100 text-violet-700",
   전설: "bg-amber-100 text-amber-800",
 };
-
-function kindOf(t: Target): HouseItem["kind"] {
-  return t === "wall" || t === "floor" || t === "window" || t === "hat" || t === "outfit" ? t : SLOT_KIND[t];
-}
-const isWear = (t: Target): t is "hat" | "outfit" => t === "hat" || t === "outfit";
 
 export function HouseEditor({
   initial,
@@ -51,37 +55,109 @@ export function HouseEditor({
 }) {
   const router = useRouter();
   const [layout, setLayout] = useState(initial);
-  const [target, setTarget] = useState<Target>("floorL");
+  const [tab, setTab] = useState<Tab>("floorItem");
+  const [sel, setSel] = useState<number | null>(null);
   const [msg, setMsg] = useState<string | null>(null);
-  // 사기 전에 한 번 물어본다 (바로 사지지 않게)
   const [confirm, setConfirm] = useState<HouseItem | null>(null);
   const [pending, start] = useTransition();
+  const svgRef = useRef<SVGSVGElement | null>(null);
+  const drag = useRef<{ i: number; dx: number; dy: number } | null>(null);
   const own = new Set(owned);
   const dirty = JSON.stringify(layout) !== JSON.stringify(initial);
-  const kind = kindOf(target);
-  const current =
-    target === "wall" || target === "floor" || target === "window"
-      ? layout[target]
-      : isWear(target)
-        ? layout.wear[target]
-        : layout.slots[target];
-  const removable = isWear(target) || target in SLOT_KIND;
+  const placedIds = new Set(layout.items.map((p) => p.id));
+  const selItem = sel !== null ? layout.items[sel] : null;
 
-  function place(id: string | null) {
-    setMsg(null);
+  /** 화면 좌표 → 방 좌표 */
+  function toRoom(e: { clientX: number; clientY: number }) {
+    const r = svgRef.current!.getBoundingClientRect();
+    return { x: ((e.clientX - r.left) / r.width) * ROOM_W, y: ((e.clientY - r.top) / r.height) * ROOM_H };
+  }
+
+  function onItemPointerDown(i: number, e: React.PointerEvent<SVGGElement>) {
+    e.preventDefault();
+    setSel(i);
+    const p = layout.items[i];
+    const at = toRoom(e);
+    drag.current = { i, dx: at.x - p.x, dy: at.y - p.y };
+    const move = (ev: PointerEvent) => {
+      const d = drag.current;
+      if (!d) return;
+      const pt = toRoom(ev);
+      setLayout((l) => {
+        const items = [...l.items];
+        const q = clampPlace(items[d.i].id, pt.x - d.dx, pt.y - d.dy);
+        if (q) items[d.i] = q;
+        return { ...l, items };
+      });
+    };
+    const up = () => {
+      drag.current = null;
+      window.removeEventListener("pointermove", move);
+      window.removeEventListener("pointerup", up);
+    };
+    window.addEventListener("pointermove", move);
+    window.addEventListener("pointerup", up);
+  }
+
+  function nudge(dx: number, dy: number) {
+    if (sel === null) return;
     setLayout((l) => {
-      if (target === "wall" || target === "floor" || target === "window") return id ? { ...l, [target]: id } : l;
-      if (isWear(target)) {
-        const wear = { ...l.wear };
-        if (id) wear[target] = id;
-        else delete wear[target];
-        return { ...l, wear };
-      }
-      const slots = { ...l.slots };
-      if (id) slots[target] = id;
-      else delete slots[target];
-      return { ...l, slots };
+      const items = [...l.items];
+      const p = items[sel];
+      const q = clampPlace(p.id, p.x + dx, p.y + dy);
+      if (q) items[sel] = q;
+      return { ...l, items };
     });
+  }
+
+  function reorder(delta: number) {
+    if (sel === null) return;
+    const to = sel + delta;
+    if (to < 0 || to >= layout.items.length) return;
+    setLayout((l) => {
+      const items = [...l.items];
+      [items[sel], items[to]] = [items[to], items[sel]];
+      return { ...l, items };
+    });
+    setSel(to);
+  }
+
+  function removeSel() {
+    if (sel === null) return;
+    setLayout((l) => ({ ...l, items: l.items.filter((_, i) => i !== sel) }));
+    setSel(null);
+  }
+
+  /** 가진 아이템을 고르면: 놓여 있으면 선택, 아니면 방에 놓기 / 배경·옷은 바꾸기 */
+  function use(it: HouseItem) {
+    setMsg(null);
+    if (it.kind === "wall" || it.kind === "floor" || it.kind === "window") {
+      setLayout((l) => ({ ...l, [it.kind]: it.id }));
+      return;
+    }
+    if (it.kind === "hat" || it.kind === "outfit") {
+      const k = it.kind;
+      setLayout((l) => {
+        const wear = { ...l.wear };
+        if (wear[k] === it.id) delete wear[k];
+        else wear[k] = it.id;
+        return { ...l, wear };
+      });
+      return;
+    }
+    const idx = layout.items.findIndex((p) => p.id === it.id);
+    if (idx >= 0) {
+      setSel(idx);
+      return;
+    }
+    if (layout.items.length >= MAX_PLACED) {
+      setMsg(`방에는 ${MAX_PLACED}개까지 놓을 수 있어요.`);
+      return;
+    }
+    const p = defaultPlace(it.id, layout.items.length);
+    if (!p) return;
+    setLayout((l) => ({ ...l, items: [...l.items, p] }));
+    setSel(layout.items.length);
   }
 
   function buy(it: HouseItem) {
@@ -89,7 +165,7 @@ export function HouseEditor({
       const r = await buyItem(it.id);
       setMsg(r.message);
       if (r.ok) {
-        place(it.id);
+        use(it);
         router.refresh();
       }
     });
@@ -102,6 +178,8 @@ export function HouseEditor({
       if (r.ok) router.refresh();
     });
   }
+
+  const list = ITEMS.filter((i) => i.kind === tab);
 
   return (
     <div className="flex flex-col gap-3">
@@ -139,10 +217,56 @@ export function HouseEditor({
           </div>
         </div>
       )}
-      <CatRoom layout={layout} breed={breed} mood={mood} guest={guest} highlight={target in SLOT_KIND ? (target as Slot) : null} className="shadow-lg" />
+
+      <CatRoom
+        layout={layout}
+        breed={breed}
+        mood={mood}
+        guest={guest}
+        selected={sel}
+        onItemPointerDown={onItemPointerDown}
+        svgRef={svgRef}
+        className="shadow-lg"
+      />
+      <p className="-mt-1 text-center text-xs text-zinc-400">물건을 손가락으로 끌어서 옮겨요 · 바닥 앞쪽에 둔 물건이 고양이 앞에 보여요</p>
+
+      {selItem && (
+        <div className="flex flex-wrap items-center gap-2 rounded-2xl bg-violet-50 p-2">
+          <span className="text-sm font-bold text-violet-800">{ITEM_BY_ID.get(selItem.id)?.name}</span>
+          <span className="ml-auto flex gap-1">
+            {[
+              ["◀", -1, 0],
+              ["▲", 0, -1],
+              ["▼", 0, 1],
+              ["▶", 1, 0],
+            ].map(([l, dx, dy]) => (
+              <button
+                key={l as string}
+                type="button"
+                onClick={() => nudge(dx as number, dy as number)}
+                className="h-8 w-8 rounded-lg bg-white text-sm font-bold text-violet-700 shadow-sm"
+              >
+                {l}
+              </button>
+            ))}
+            <button type="button" onClick={() => reorder(1)} className="rounded-lg bg-white px-2 text-xs font-bold text-violet-700 shadow-sm">
+              앞으로
+            </button>
+            <button type="button" onClick={() => reorder(-1)} className="rounded-lg bg-white px-2 text-xs font-bold text-violet-700 shadow-sm">
+              뒤로
+            </button>
+            <button type="button" onClick={removeSel} className="rounded-lg bg-white px-2 text-xs font-bold text-rose-600 shadow-sm">
+              빼기
+            </button>
+          </span>
+        </div>
+      )}
 
       <div className="flex items-center justify-between gap-2">
         <span className="rounded-full bg-amber-100 px-3 py-1 text-sm font-extrabold text-amber-800">🐟 츄르 {balance}</span>
+        <span className="text-xs text-zinc-500">
+          놓은 물건 {layout.items.length}/{MAX_PLACED}
+        </span>
         <button
           type="button"
           onClick={save}
@@ -155,12 +279,12 @@ export function HouseEditor({
       {msg && <p className="rounded-xl bg-violet-50 p-2 text-center text-sm font-semibold text-violet-800">{msg}</p>}
 
       <div className="-mx-1 flex gap-1.5 overflow-x-auto px-1 pb-1">
-        {TARGETS.map((t) => (
+        {TABS.map((t) => (
           <button
             key={t.id}
             type="button"
-            onClick={() => setTarget(t.id)}
-            className={`shrink-0 rounded-full px-3 py-1.5 text-sm font-semibold ${target === t.id ? "bg-violet-600 text-white" : "bg-white text-zinc-700 shadow-sm"}`}
+            onClick={() => setTab(t.id)}
+            className={`shrink-0 rounded-full px-3 py-1.5 text-sm font-semibold ${tab === t.id ? "bg-violet-600 text-white" : "bg-white text-zinc-700 shadow-sm"}`}
           >
             {t.label}
           </button>
@@ -168,34 +292,39 @@ export function HouseEditor({
       </div>
 
       <ul className="grid grid-cols-3 gap-2 sm:grid-cols-4">
-        {removable && (
-          <li>
-            <button
-              type="button"
-              onClick={() => place(null)}
-              className={`flex h-full w-full flex-col items-center justify-center gap-1 rounded-2xl border-2 bg-white p-2 text-xs font-semibold ${current ? "border-transparent text-zinc-500" : "border-violet-500 text-violet-700"}`}
-            >
-              <span className="text-2xl">∅</span>
-              {isWear(target) ? "벗기" : "비우기"}
-            </button>
-          </li>
-        )}
-        {ITEMS.filter((i) => i.kind === kind).map((it) => {
+        {list.map((it) => {
           const has = own.has(it.id);
-          const on = current === it.id;
+          const on =
+            it.kind === "wall" || it.kind === "floor" || it.kind === "window"
+              ? layout[it.kind] === it.id
+              : it.kind === "hat" || it.kind === "outfit"
+                ? layout.wear[it.kind] === it.id
+                : placedIds.has(it.id);
           return (
             <li key={it.id}>
               <button
                 type="button"
                 disabled={pending}
-                onClick={() => (has ? place(it.id) : setConfirm(it))}
+                onClick={() => (has ? use(it) : setConfirm(it))}
                 className={`flex w-full flex-col items-center gap-1 rounded-2xl border-2 bg-white p-2 text-center shadow-sm ${on ? "border-violet-500" : "border-transparent"}`}
               >
                 <ItemPreview id={it.id} className="h-14 w-14" />
                 <span className="line-clamp-1 text-xs font-bold text-zinc-900">{it.name}</span>
                 <span className={`rounded-full px-1.5 py-0.5 text-[10px] font-bold ${RARITY[it.rarity]}`}>{it.rarity}</span>
                 {has ? (
-                  <span className="text-[11px] font-semibold text-emerald-700">{on ? "놓여 있음" : "놓기"}</span>
+                  <span className="text-[11px] font-semibold text-emerald-700">
+                    {on
+                      ? PLACEABLE.includes(it.kind)
+                        ? "방에 있음 · 고르기"
+                        : it.kind === "hat" || it.kind === "outfit"
+                          ? "입는 중 · 벗기"
+                          : "사용 중"
+                      : PLACEABLE.includes(it.kind)
+                        ? "놓기"
+                        : it.kind === "hat" || it.kind === "outfit"
+                          ? "입히기"
+                          : "바꾸기"}
+                  </span>
                 ) : (
                   <span className={`text-[11px] font-bold ${balance >= it.price ? "text-amber-700" : "text-zinc-400"}`}>🐟 {it.price} 사기</span>
                 )}

@@ -28,6 +28,7 @@ export function CatSprite({
   delay = 0,
   hat,
   outfit,
+  place,
 }: {
   breed: CatBreed;
   mood?: CatMood;
@@ -39,12 +40,15 @@ export function CatSprite({
   hat?: WearArt;
   /** 목·몸에 입는 옷 (가로 14 이하) */
   outfit?: WearArt;
+  /** 다른 그림(방) 안에 넣을 때 위치·크기 (SVG 좌표) */
+  place?: { x: number; y: number; width: number };
 }) {
   const { pixels, z } = catPixels(breed, mood);
   return (
     <svg
       viewBox="-3 -3 24 18"
-      className={`cat-sprite cat-${mood} ${className}`}
+      {...(place ? { x: place.x, y: place.y, width: place.width, height: (place.width * 18) / 24 } : {})}
+      className={`cat-sprite cat-${mood} ${place ? "" : className}`}
       style={{ "--cat-delay": `${-delay}s` } as React.CSSProperties}
       shapeRendering="crispEdges"
       role={title ? "img" : undefined}

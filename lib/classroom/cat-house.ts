@@ -2,8 +2,20 @@
 // 아이템을 늘릴 땐 BASE_ITEMS나 cat-house-items.json에 추가만 하면 된다 (가격·종류·그림).
 import EXTRA_ITEMS from "@/content/cat-house-items.json";
 
+/** 예전(작은 방) 자리 이름. 저장된 옛 배치를 새 방으로 옮길 때만 쓴다 */
 export type Slot = "wallL" | "wallR" | "floorL" | "floorR" | "front" | "ceiling";
-export type Kind = "wall" | "floor" | "window" | Slot;
+
+/** 넓은 방 크기 (픽셀). 벽 0~WALL_H, 그 아래가 바닥 */
+export const ROOM_W = 96;
+export const ROOM_H = 60;
+export const WALL_H = 36;
+/** 방에 놓을 수 있는 최대 개수 */
+export const MAX_PLACED = 24;
+
+/** 방에 놓인 아이템 하나: 그림 왼쪽 위 좌표 */
+export type Placed = { id: string; x: number; y: number };
+export type PlaceKind = "wallItem" | "floorItem" | "frontItem" | "lightItem";
+export const PLACE_KINDS: PlaceKind[] = ["floorItem", "frontItem", "wallItem", "lightItem"];
 
 export type Art = { rows: string[]; pal: Record<string, string> };
 
@@ -20,23 +32,6 @@ export type HouseItem = {
   colors?: string[];
   pattern?: "stripe" | "check" | "dots" | "plank" | "tile" | "plain";
   scene?: "bondi" | "opera" | "uluru";
-};
-
-export const SLOT_KIND: Record<Slot, HouseItem["kind"]> = {
-  wallL: "wallItem",
-  wallR: "wallItem",
-  floorL: "floorItem",
-  floorR: "floorItem",
-  front: "frontItem",
-  ceiling: "lightItem",
-};
-export const SLOT_LABEL: Record<Slot, string> = {
-  wallL: "왼쪽 벽",
-  wallR: "오른쪽 벽",
-  floorL: "왼쪽 바닥",
-  floorR: "오른쪽 바닥",
-  front: "앞쪽 바닥",
-  ceiling: "천장",
 };
 
 const BASE_ITEMS: HouseItem[] = [
@@ -226,22 +221,79 @@ export type Layout = {
   wall: string;
   floor: string;
   window: string;
-  slots: Partial<Record<Slot, string>>;
+  /** 방에 놓은 것들 (앞에 있는 게 뒤에 그려진다) */
+  items: Placed[];
   /** 고양이가 입은 모자·옷 */
   wear: { hat?: string; outfit?: string };
 };
 
-export const DEFAULT_LAYOUT: Layout = { wall: "wall-cream", floor: "floor-wood", window: "window-bondi", slots: {}, wear: {} };
+export const DEFAULT_LAYOUT: Layout = { wall: "wall-cream", floor: "floor-wood", window: "window-bondi", items: [], wear: {} };
 
-/** 저장된 배치를 안전하게 읽는다 (없는 아이템·잘못된 자리는 버린다) */
+export function artSize(art: Art) {
+  return { w: Math.max(...art.rows.map((r) => r.length)), h: art.rows.length };
+}
+
+/** 종류마다 놓을 수 있는 범위 안으로 좌표를 맞춘다 */
+export function clampPlace(id: string, x: number, y: number): Placed | null {
+  const it = ITEM_BY_ID.get(id);
+  if (!it?.art || !(PLACE_KINDS as string[]).includes(it.kind)) return null;
+  const { w, h } = artSize(it.art);
+  const cx = Math.round(Math.min(Math.max(x, 0), ROOM_W - w));
+  let cy = Math.round(y);
+  if (it.kind === "lightItem") cy = 0;
+  else if (it.kind === "wallItem") cy = Math.min(Math.max(cy, 2), WALL_H - 2 - h);
+  else cy = Math.min(Math.max(cy, WALL_H + 2 - h), ROOM_H - h); // 바닥: 발이 바닥 안에
+  return { id, x: cx, y: cy };
+}
+
+/** 새로 놓을 때 기본 위치 */
+export function defaultPlace(id: string, n = 0): Placed | null {
+  const it = ITEM_BY_ID.get(id);
+  if (!it?.art) return null;
+  const { w, h } = artSize(it.art);
+  const x = 10 + ((n * 17) % (ROOM_W - 20));
+  if (it.kind === "lightItem") return clampPlace(id, x, 0);
+  if (it.kind === "wallItem") return clampPlace(id, x, 10);
+  if (it.kind === "frontItem") return clampPlace(id, x - w / 2, ROOM_H - 2 - h);
+  return clampPlace(id, x - w / 2, WALL_H + 12 - h);
+}
+
+/** 예전 작은 방의 자리 → 새 방 좌표 */
+const OLD_SLOT_POS: Record<Slot, (w: number, h: number) => [number, number]> = {
+  wallL: (w, h) => [16 - w / 2, 14 - h / 2],
+  wallR: (w, h) => [80 - w / 2, 14 - h / 2],
+  floorL: (w, h) => [14 - w / 2, WALL_H + 12 - h],
+  floorR: (w, h) => [82 - w / 2, WALL_H + 12 - h],
+  front: (w, h) => [48 - w / 2, ROOM_H - 1 - h],
+  ceiling: (w) => [48 - w / 2, 0],
+};
+
+/** 저장된 배치를 안전하게 읽는다 (없는 아이템·잘못된 위치는 고치거나 버린다) */
 export function normalizeLayout(raw: unknown): Layout {
-  const r = (raw ?? {}) as Partial<Layout>;
+  const r = (raw ?? {}) as Partial<Layout> & { slots?: Partial<Record<Slot, string>> };
   const ok = (id: unknown, kind: HouseItem["kind"]) =>
     typeof id === "string" && ITEM_BY_ID.get(id)?.kind === kind ? id : undefined;
-  const slots: Layout["slots"] = {};
-  for (const s of Object.keys(SLOT_KIND) as Slot[]) {
-    const id = ok(r.slots?.[s], SLOT_KIND[s]);
-    if (id) slots[s] = id;
+  const items: Placed[] = [];
+  const seen = new Set<string>();
+  const push = (p: Placed | null) => {
+    if (p && !seen.has(p.id) && items.length < MAX_PLACED) {
+      seen.add(p.id);
+      items.push(p);
+    }
+  };
+  if (Array.isArray(r.items)) {
+    for (const p of r.items as unknown[]) {
+      const q = p as Partial<Placed>;
+      if (typeof q?.id === "string" && Number.isFinite(q.x) && Number.isFinite(q.y)) push(clampPlace(q.id, q.x!, q.y!));
+    }
+  } else if (r.slots) {
+    for (const [slot, id] of Object.entries(r.slots)) {
+      const art = id ? ITEM_BY_ID.get(id)?.art : undefined;
+      if (!id || !art || !(slot in OLD_SLOT_POS)) continue;
+      const { w, h } = artSize(art);
+      const [x, y] = OLD_SLOT_POS[slot as Slot](w, h);
+      push(clampPlace(id, x, y));
+    }
   }
   const wear: Layout["wear"] = {};
   const hat = ok(r.wear?.hat, "hat");
@@ -252,7 +304,7 @@ export function normalizeLayout(raw: unknown): Layout {
     wall: ok(r.wall, "wall") ?? DEFAULT_LAYOUT.wall,
     floor: ok(r.floor, "floor") ?? DEFAULT_LAYOUT.floor,
     window: ok(r.window, "window") ?? DEFAULT_LAYOUT.window,
-    slots,
+    items,
     wear,
   };
 }
@@ -337,7 +389,7 @@ export const GUESTS = [
   { id: "gamer", name: "게이머냥", breed: "siamese", needs: ["arcade"], line: "한 판만 하고 갈게 🕹️" },
 ] as const;
 export function guestFor(layout: Layout) {
-  const placed = new Set(Object.values(layout.slots));
+  const placed = new Set(layout.items.map((p) => p.id));
   return GUESTS.find((g) => g.needs.some((n) => placed.has(n))) ?? null;
 }
 
@@ -348,9 +400,13 @@ const SETS: Record<string, string[]> = {
   "🕯️ 아늑 세트": ["fairy-lights", "moon-lamp", "mushroom-lamp", "rug", "cushion", "bed", "hammock", "dot-rug"],
 };
 export function roomScore(layout: Layout) {
-  const ids = [layout.wall, layout.floor, layout.window, ...Object.values(layout.slots), layout.wear.hat, layout.wear.outfit].filter(
-    (x): x is string => Boolean(x),
-  );
+  const ids = [
+    ...new Set(
+      [layout.wall, layout.floor, layout.window, ...layout.items.map((p) => p.id), layout.wear.hat, layout.wear.outfit].filter(
+        (x): x is string => Boolean(x),
+      ),
+    ),
+  ];
   const pts = { 기본: 0, 일반: 10, 레어: 25, 전설: 60 } as const;
   let score = ids.reduce((n, id) => n + (pts[ITEM_BY_ID.get(id)?.rarity ?? "기본"] ?? 0), 0);
   const sets: string[] = [];

@@ -1,6 +1,6 @@
 import { CatSprite } from "@/app/_ui/cat";
 import type { CatBreed, CatMood } from "@/lib/classroom/cat";
-import { ITEM_BY_ID, type Art, type Layout, type Slot } from "@/lib/classroom/cat-house";
+import { ITEM_BY_ID, ROOM_H, ROOM_W, WALL_H, artSize, type Art, type Layout } from "@/lib/classroom/cat-house";
 
 /** 픽셀 그림 (문자 격자) → 사각형들. 같은 줄에서 같은 색은 한 칸으로 합친다 */
 function Pixels({ art, x, y }: { art: Art; x: number; y: number }) {
@@ -19,9 +19,8 @@ function Pixels({ art, x, y }: { art: Art; x: number; y: number }) {
   return <g>{rects}</g>;
 }
 
-const W = 64;
-const H = 44;
-const WALL_H = 28;
+const W = ROOM_W;
+const H = ROOM_H;
 
 function Wall({ id }: { id: string }) {
   const it = ITEM_BY_ID.get(id);
@@ -55,7 +54,7 @@ function Floor({ id }: { id: string }) {
 
 function Window({ id }: { id: string }) {
   const scene = ITEM_BY_ID.get(id)?.scene ?? "bondi";
-  const X = 24;
+  const X = 40;
   const Y = 9;
   const inner: React.ReactNode[] = [];
   const r = (k: string, x: number, y: number, w: number, h: number, fill: string) =>
@@ -97,93 +96,86 @@ function Window({ id }: { id: string }) {
   );
 }
 
-/** 자리마다 그림을 놓을 위치: 벽은 가운데 맞춤, 바닥은 바닥선에 맞춤 */
-function placed(slot: Slot, art: Art) {
-  const w = Math.max(...art.rows.map((r) => r.length));
-  const h = art.rows.length;
-  switch (slot) {
-    case "wallL":
-      return { x: Math.round(11 - w / 2), y: Math.round(11 - h / 2) };
-    case "wallR":
-      return { x: Math.round(53 - w / 2), y: Math.round(11 - h / 2) };
-    case "floorL":
-      return { x: Math.round(9 - w / 2), y: 38 - h };
-    case "floorR":
-      return { x: Math.round(55 - w / 2), y: 38 - h };
-    case "front":
-      return { x: Math.round(32 - w / 2), y: 43 - h };
-    case "ceiling":
-      return { x: Math.round(32 - w / 2), y: 0 };
-  }
-}
+/** 고양이 크기·위치 (방 좌표) */
+const CAT = { x: 37, width: 22, base: 56 };
+const GUEST = { x: 64, width: 15, base: 52 };
 
-/** 고양이 방 한 장면 (서버·클라이언트 공용). 고양이는 위에 겹쳐서 살짝 움직인다 */
+/** 고양이 방 한 장면 (서버·클라이언트 공용). 바닥 물건은 아래쪽(앞)에 있을수록 나중에 그려진다 */
 export function CatRoom({
   layout,
   breed,
   mood = "default",
-  highlight,
   guest,
+  selected,
+  onItemPointerDown,
+  svgRef,
   className = "",
 }: {
   layout: Layout;
   breed: CatBreed | null;
+  mood?: CatMood;
   /** 놀러 온 손님 고양이 */
   guest?: CatBreed | null;
-  mood?: CatMood;
-  /** 꾸미기 중에 고른 자리 표시 */
-  highlight?: Slot | null;
+  /** 꾸미기에서 고른 물건 (방 안 순서) */
+  selected?: number | null;
+  /** 꾸미기: 물건을 눌렀을 때 (끌어서 옮기기) */
+  onItemPointerDown?: (index: number, e: React.PointerEvent<SVGGElement>) => void;
+  svgRef?: React.Ref<SVGSVGElement>;
   className?: string;
 }) {
-  const box: Record<Slot, [number, number, number, number]> = {
-    wallL: [4, 4, 14, 14],
-    wallR: [46, 4, 14, 14],
-    floorL: [1, 18, 16, 20],
-    floorR: [47, 18, 16, 20],
-    front: [18, 36, 28, 8],
-    ceiling: [21, 0, 22, 9],
-  };
+  type Node = { z: number; order: number; el: React.ReactNode };
+  const nodes: Node[] = [];
+  layout.items.forEach((p, i) => {
+    const it = ITEM_BY_ID.get(p.id);
+    if (!it?.art) return;
+    const { w, h } = artSize(it.art);
+    const back = it.kind === "wallItem" || it.kind === "lightItem";
+    nodes.push({
+      z: back ? -1 : p.y + h,
+      order: i,
+      el: (
+        <g
+          key={`i${i}`}
+          onPointerDown={onItemPointerDown ? (e) => onItemPointerDown(i, e) : undefined}
+          style={onItemPointerDown ? { cursor: "grab", touchAction: "none" } : undefined}
+        >
+          <Pixels art={it.art} x={p.x} y={p.y} />
+          {selected === i && (
+            <rect x={p.x - 0.5} y={p.y - 0.5} width={w + 1} height={h + 1} fill="none" stroke="#6C5CFF" strokeWidth={0.5} strokeDasharray="1.2 0.8" />
+          )}
+          {onItemPointerDown && <rect x={p.x} y={p.y} width={w} height={h} fill="transparent" />}
+        </g>
+      ),
+    });
+  });
+  const hat = layout.wear?.hat ? ITEM_BY_ID.get(layout.wear.hat)?.art : undefined;
+  const outfit = layout.wear?.outfit ? ITEM_BY_ID.get(layout.wear.outfit)?.art : undefined;
+  if (guest) {
+    const gh = (GUEST.width * 18) / 24;
+    nodes.push({
+      z: GUEST.base,
+      order: 998,
+      el: <CatSprite key="guest" breed={guest} mood="happy" delay={0.5} place={{ x: GUEST.x, y: GUEST.base - gh, width: GUEST.width }} />,
+    });
+  }
+  if (breed) {
+    const ch = (CAT.width * 18) / 24;
+    nodes.push({
+      z: CAT.base,
+      order: 999,
+      el: <CatSprite key="cat" breed={breed} mood={mood} hat={hat} outfit={outfit} place={{ x: CAT.x, y: CAT.base - ch, width: CAT.width }} />,
+    });
+  }
+  nodes.sort((a, b) => a.z - b.z || a.order - b.order);
+
   return (
     <div className={`relative w-full overflow-hidden rounded-3xl ${className}`} style={{ aspectRatio: `${W} / ${H}` }}>
-      <svg viewBox={`0 0 ${W} ${H}`} className="absolute inset-0 h-full w-full" shapeRendering="crispEdges" aria-hidden>
+      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="absolute inset-0 h-full w-full select-none" shapeRendering="crispEdges">
         <Wall id={layout.wall} />
         <Floor id={layout.floor} />
         <Window id={layout.window} />
-        {(["wallL", "wallR", "floorL", "floorR", "front", "ceiling"] as Slot[]).map((slot) => {
-          const art = layout.slots[slot] ? ITEM_BY_ID.get(layout.slots[slot]!)?.art : undefined;
-          if (!art) return null;
-          const p = placed(slot, art);
-          return <Pixels key={slot} art={art} x={p.x} y={p.y} />;
-        })}
-        {highlight && (
-          <rect
-            x={box[highlight][0]}
-            y={box[highlight][1]}
-            width={box[highlight][2]}
-            height={box[highlight][3]}
-            fill="none"
-            stroke="#6C5CFF"
-            strokeWidth={0.6}
-            strokeDasharray="1.2 0.8"
-          />
-        )}
+        {nodes.map((n) => n.el)}
       </svg>
-      {guest && (
-        <div className="absolute" style={{ left: `${(40 / W) * 100}%`, top: `${(29 / H) * 100}%`, width: `${(12 / W) * 100}%` }}>
-          <CatSprite breed={guest} mood="happy" className="h-auto w-full" delay={0.5} />
-        </div>
-      )}
-      {breed && (
-        <div className="absolute" style={{ left: `${(23 / W) * 100}%`, top: `${(25 / H) * 100}%`, width: `${(18 / W) * 100}%` }}>
-          <CatSprite
-            breed={breed}
-            mood={mood}
-            className="h-auto w-full"
-            hat={layout.wear?.hat ? ITEM_BY_ID.get(layout.wear.hat)?.art : undefined}
-            outfit={layout.wear?.outfit ? ITEM_BY_ID.get(layout.wear.outfit)?.art : undefined}
-          />
-        </div>
-      )}
     </div>
   );
 }
@@ -194,7 +186,7 @@ export function ItemPreview({ id, className = "h-14 w-14" }: { id: string; class
   if (!it) return null;
   if (it.kind === "window") {
     return (
-      <svg viewBox="22 7 20 18" className={className} shapeRendering="crispEdges" aria-hidden>
+      <svg viewBox="38 7 20 18" className={className} shapeRendering="crispEdges" aria-hidden>
         <Window id={id} />
       </svg>
     );
