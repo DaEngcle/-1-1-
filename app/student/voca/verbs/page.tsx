@@ -31,12 +31,11 @@ export default async function VerbSetsPage() {
         ))}
       </div>
       <section className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-        {VERB_SETS.map((set, i) => {
+        {VERB_SETS.map((set) => {
           const p = byDeck.get(`verbs-${set.id}`);
           const locked = free && set.id > FREE_VERB_SETS;
-          // 앞 세트를 별 1개 이상 깨야 다음 세트가 열려요 (첫 세트는 항상 열림)
-          const prev = i === 0 || (byDeck.get(`verbs-${VERB_SETS[i - 1].id}`)?.stars ?? 0) > 0;
-          const open = !locked && prev;
+          // 순서대로 잠그지 않는다: 아무 세트나 골라서 할 수 있다 (무료회원만 앞 세트까지)
+          const open = !locked;
           const body = (
             <>
               <span
@@ -55,8 +54,6 @@ export default async function VerbSetsPage() {
                 </span>
                 {locked ? (
                   <span className="text-xs font-semibold text-amber-700">수강생 전용이에요</span>
-                ) : !prev ? (
-                  <span className="text-xs text-zinc-400">앞 세트를 먼저 깨면 열려요</span>
                 ) : null}
               </span>
               <span className="ml-auto shrink-0 text-lg tracking-tight">
