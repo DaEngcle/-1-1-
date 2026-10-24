@@ -53,6 +53,8 @@ export function HouseEditor({
   const [layout, setLayout] = useState(initial);
   const [target, setTarget] = useState<Target>("floorL");
   const [msg, setMsg] = useState<string | null>(null);
+  // 사기 전에 한 번 물어본다 (바로 사지지 않게)
+  const [confirm, setConfirm] = useState<HouseItem | null>(null);
   const [pending, start] = useTransition();
   const own = new Set(owned);
   const dirty = JSON.stringify(layout) !== JSON.stringify(initial);
@@ -103,6 +105,40 @@ export function HouseEditor({
 
   return (
     <div className="flex flex-col gap-3">
+      {confirm && (
+        <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 p-4 sm:items-center" onClick={() => setConfirm(null)}>
+          <div className="w-full max-w-sm rounded-3xl bg-white p-5 text-center shadow-2xl" onClick={(e) => e.stopPropagation()}>
+            <div className="mx-auto mb-2 flex h-20 w-20 items-center justify-center rounded-2xl bg-zinc-50">
+              <ItemPreview id={confirm.id} className="h-16 w-16" />
+            </div>
+            <p className="text-lg font-extrabold text-zinc-900">{confirm.name}</p>
+            {confirm.desc && <p className="mt-0.5 text-sm text-zinc-500">{confirm.desc}</p>}
+            <p className="mt-2 text-sm text-zinc-700">
+              🐟 츄르 <b>{confirm.price}</b>개로 살까요? (지금 {balance}개)
+            </p>
+            {balance < confirm.price && (
+              <p className="mt-1 text-sm font-semibold text-rose-600">츄르가 {confirm.price - balance}개 모자라요. 공부하면 모여요!</p>
+            )}
+            <div className="mt-4 grid grid-cols-2 gap-2">
+              <button type="button" onClick={() => setConfirm(null)} className="rounded-2xl bg-zinc-100 py-3 font-bold text-zinc-700">
+                취소
+              </button>
+              <button
+                type="button"
+                disabled={balance < confirm.price || pending}
+                onClick={() => {
+                  const it = confirm;
+                  setConfirm(null);
+                  buy(it);
+                }}
+                className="rounded-2xl bg-violet-600 py-3 font-bold text-white disabled:bg-zinc-300"
+              >
+                살게요
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <CatRoom layout={layout} breed={breed} mood={mood} guest={guest} highlight={target in SLOT_KIND ? (target as Slot) : null} className="shadow-lg" />
 
       <div className="flex items-center justify-between gap-2">
@@ -152,7 +188,7 @@ export function HouseEditor({
               <button
                 type="button"
                 disabled={pending}
-                onClick={() => (has ? place(it.id) : buy(it))}
+                onClick={() => (has ? place(it.id) : setConfirm(it))}
                 className={`flex w-full flex-col items-center gap-1 rounded-2xl border-2 bg-white p-2 text-center shadow-sm ${on ? "border-violet-500" : "border-transparent"}`}
               >
                 <ItemPreview id={it.id} className="h-14 w-14" />
