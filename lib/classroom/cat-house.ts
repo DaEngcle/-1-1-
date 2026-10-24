@@ -217,7 +217,7 @@ const BASE_ITEMS: HouseItem[] = [
   },
 ];
 
-export const ITEMS: HouseItem[] = [...BASE_ITEMS, ...(EXTRA_ITEMS as HouseItem[])];
+export const ITEMS: HouseItem[] = [...BASE_ITEMS, ...(EXTRA_ITEMS as unknown as HouseItem[])];
 
 export const ITEM_BY_ID = new Map(ITEMS.map((i) => [i.id, i]));
 export const FREE_ITEMS = ITEMS.filter((i) => i.price === 0).map((i) => i.id);
