@@ -23,7 +23,7 @@ export default async function StudentShadowingPage({
       <div className="flex flex-col gap-1">
         <h1 className="text-xl font-bold text-zinc-900">🎤 내 쉐도잉</h1>
         <p className="text-sm text-zinc-600">
-          이번 주 <b>{weekCount}개</b> / 목표 {WEEKLY_SHADOWING_GOAL}개 · 지금까지 총 {totalSubmitted}개 제출했어요.
+          이번 주 <b>{weekCount}문장</b> / 목표 {WEEKLY_SHADOWING_GOAL}문장 · 지금까지 총 {totalSubmitted}문장 제출했어요.
         </p>
       </div>
 
