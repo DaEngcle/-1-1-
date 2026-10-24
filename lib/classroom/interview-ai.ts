@@ -52,14 +52,72 @@ function transcriptText(turns: Turn[], s: Scenario) {
   return turns.map((t) => `${t.role === "ai" ? s.name : "Candidate"}: ${t.text}`).join("\n");
 }
 
+/** 대화(세션)마다 같은 값이 나오는 작은 난수 → 면접마다 상황·순서가 달라지되, 한 면접 안에서는 일정하게 */
+function seeded(key: string) {
+  let h = 2166136261;
+  for (let i = 0; i < key.length; i++) h = Math.imul(h ^ key.charCodeAt(i), 16777619);
+  return () => {
+    h = Math.imul(h ^ (h >>> 15), 2246822507);
+    h = Math.imul(h ^ (h >>> 13), 3266489909);
+    return ((h ^= h >>> 16) >>> 0) / 4294967296;
+  };
+}
+
+const MOODS = [
+  "in a good mood, relaxed and chatty today",
+  "a bit busy and rushed today, but still kind",
+  "curious and asks lots of follow-up questions",
+  "friendly but a little tired after a long shift",
+  "very warm and encouraging, likes to make people comfortable",
+];
+const SITUATIONS: Record<string, string[]> = {
+  cafe: ["right after the morning rush", "on a quiet Tuesday afternoon", "while a new coffee machine is being installed", "on a busy Saturday with a queue outside"],
+  chef: ["an hour before dinner service", "during a slow lunch shift", "while the kitchen is short-staffed this week", "after a big catering order"],
+  hotel: ["on a busy check-in afternoon", "early in the morning at the front desk", "during a conference week when the hotel is full", "on a calm weekday"],
+  carpenter: ["at smoko on site", "first thing in the morning at the site gate", "on a very hot day on site", "while waiting for a delivery of timber"],
+  farm: ["at the start of strawberry season", "on a rainy day when picking stopped", "at the packing shed during a break", "on the phone, then in person at the farm office"],
+  retail: ["just before a big sale weekend", "on a quiet weekday morning", "while new stock is being unpacked", "after a busy Saturday"],
+  sharehouse: ["in the living room with the other housemates out", "on the balcony with a view of the beach", "right after a surf in the morning", "on a Sunday afternoon BBQ day"],
+};
+
+export function sessionFlavor(s: Scenario, key: string) {
+  const rand = seeded(`${s.id}:${key}`);
+  const topics = [...s.topics];
+  for (let i = topics.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1));
+    [topics[i], topics[j]] = [topics[j], topics[i]];
+  }
+  const situations = SITUATIONS[s.id] ?? ["on a normal day"];
+  return {
+    topics,
+    mood: MOODS[Math.floor(rand() * MOODS.length)],
+    situation: situations[Math.floor(rand() * situations.length)],
+  };
+}
+
+function systemPrompt(s: Scenario, key: string) {
+  const f = sessionFlavor(s, key);
+  return `You are ${s.name}, the ${s.roleKo === "하우스메이트" ? "person living in" : "person hiring for"} ${s.job} at ${s.place}, Australia.
+You are having a real, spoken ${s.id === "sharehouse" ? "chat with someone who wants a room" : "job interview"} with a Korean working holiday maker whose English is beginner-to-intermediate.
+Personality: ${s.persona}. Today you are ${f.mood}. It's ${f.situation}.
+Topics to cover naturally, roughly in this order (skip anything already covered): ${f.topics.join("; ")}.
+Sound like a real person talking, not a script: vary your wording every time, sometimes use small natural reactions ("Oh nice", "Right", "Gotcha", "Ah, fair enough", "No worries"), refer to specific details they just said, and now and then ask a short follow-up about their answer instead of jumping to a new topic. Never repeat a sentence you already said.`;
+}
+
+/** 첫 인사 (면접마다 다르게). 실패하면 기본 인사 */
+export async function interviewerOpening(s: Scenario, key: string) {
+  const system = `${systemPrompt(s, key)}
+Write ONLY your first line as ${s.name}: greet them, say your name and role in a natural way that fits today's situation, and ask one easy opening question. 1-2 short sentences, max 30 words, simple clear Australian English. Plain text only.`;
+  const text = await ask("claude-sonnet-5-5", system, `Example of the usual opening (do NOT copy it, make it different): "${s.opening}"`, 120);
+  const line = text.replace(/^["']|["']$/g, "").trim();
+  return line.length > 5 ? line.slice(0, 300) : s.opening;
+}
+
 /** 면접관의 다음 말 */
-export async function interviewerReply(s: Scenario, turns: Turn[]) {
+export async function interviewerReply(s: Scenario, turns: Turn[], key = "") {
   const asked = turns.filter((t) => t.role === "ai").length;
   const mustEnd = asked >= MAX_TURNS - 1;
-  const system = `You are ${s.name}, the ${s.roleKo === "하우스메이트" ? "person living in" : "person hiring for"} ${s.job} at ${s.place}, Australia.
-You are having a real, spoken ${s.id === "sharehouse" ? "chat with someone who wants a room" : "job interview"} with a Korean working holiday maker whose English is beginner-to-intermediate.
-Personality: ${s.persona}.
-Topics to cover naturally, one at a time: ${s.topics.join("; ")}.
+  const system = `${systemPrompt(s, key)}
 
 Rules:
 - Speak natural Australian English, but keep it simple and clear. 1-2 short sentences, max 30 words.
@@ -72,7 +130,7 @@ Rules:
 Reply ONLY with JSON: {"reply": "...", "done": false, "mood": "smile" | "neutral" | "thinking"}`;
   const askedBefore = turns.filter((t) => t.role === "ai").map((t, i) => `${i + 1}. ${t.text}`).join("\n");
   const text = await ask(
-    "claude-haiku-5-5",
+    "claude-sonnet-5-5",
     system,
     `Conversation so far:\n${transcriptText(turns, s)}\n\nThings you already said/asked (don't repeat these topics):\n${askedBefore}\n\nYour next line as ${s.name}:`,
     300,

@@ -36,7 +36,7 @@ export function AppShell({
           <NavLinks items={nav} />
         </div>
       </header>
-      <main className={`mx-auto flex w-full max-w-3xl flex-1 flex-col gap-5 px-4 py-6 ${bottomNav ? "pb-24 sm:pb-6" : ""}`}>
+      <main className={`mx-auto flex w-full max-w-3xl flex-1 flex-col gap-5 px-4 py-6 ${bottomNav ? "pb-32 sm:pb-6" : ""}`}>
         {children}
       </main>
       {bottomNav && <BottomNav items={nav} primary={bottomNav} />}

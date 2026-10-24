@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
 
   const turns = [...((session.transcript as Turn[]) ?? []), { role: "me" as const, text: heard }];
   try {
-    const next = await interviewerReply(s, turns);
+    const next = await interviewerReply(s, turns, sessionId);
     turns.push({ role: "ai", text: next.reply });
     await supabase.from("interview_sessions").update({ transcript: turns }).eq("id", sessionId);
     return NextResponse.json({ heard, reply: next.reply, done: next.done, mood: next.mood });

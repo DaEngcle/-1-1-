@@ -63,7 +63,7 @@ export function FeedbackPrompt() {
   }
 
   return (
-    <div className="fixed inset-x-0 bottom-16 z-50 flex justify-center p-3 sm:bottom-4">
+    <div className="fixed inset-x-0 bottom-24 z-50 flex justify-center p-3 sm:bottom-4">
       <div className="w-full max-w-md rounded-3xl border border-slate-200 bg-white p-4 shadow-2xl">
         {state === "done" ? (
           <p className="py-3 text-center font-bold text-zinc-900">고마워요! 꼭 읽어볼게요 🙏</p>

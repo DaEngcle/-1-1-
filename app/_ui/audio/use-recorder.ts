@@ -60,6 +60,22 @@ export function useRecorder(
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => () => release(true), []);
 
+  // 다른 앱으로 나가면 오디오·마이크를 완전히 끈다 (돌아와서 누르면 새로 켠다)
+  useEffect(() => {
+    function onHide() {
+      if (document.visibilityState !== "hidden") return;
+      if (activeRef.current) {
+        // 말하다가 나간 녹음은 보내지 않고 버린다
+        chunksRef.current = [];
+        stopRef.current();
+      }
+      else if (!startingRef.current) release(true);
+    }
+    document.addEventListener("visibilitychange", onHide);
+    return () => document.removeEventListener("visibilitychange", onHide);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   function makeContext() {
     if (ctxRef.current && ctxRef.current.state !== "closed") return ctxRef.current;
     const AudioCtx: Ctx =
@@ -101,7 +117,13 @@ export function useRecorder(
     for (let i = 0; i < samples.length; i++) peak = Math.max(peak, Math.abs(samples[i]));
 
     if (total / rate < 0.8) {
-      setError("녹음이 너무 짧아요. 버튼을 누르고 문장을 끝까지 말한 다음 멈춰주세요.");
+      // 데이터가 거의 없으면 오디오가 멈춘 것일 수 있어서, 다음 녹음은 새로 연다
+      release(true);
+      setError(
+        total === 0
+          ? "마이크 소리가 들어오지 않았어요. 🎙 버튼을 한 번 더 눌러 주세요. (마이크를 새로 켤게요)"
+          : "녹음이 너무 짧아요. 버튼을 누르고 문장을 끝까지 말한 다음 멈춰주세요.",
+      );
       onFinishedRef.current?.(null);
       return;
     }
@@ -135,6 +157,11 @@ export function useRecorder(
     startingRef.current = true;
     setError(null);
     reset();
+    // 앱을 나갔다 오면 아이폰이 켜 둔 오디오를 멈춰(interrupted) 버린다 → 새로 만든다
+    if (ctxRef.current && ctxRef.current.state !== "running") {
+      ctxRef.current.close().catch(() => {});
+      ctxRef.current = null;
+    }
     // 아이폰은 '누른 그 순간'에 오디오를 켜야 해서, 권한을 묻기 전에 먼저 만든다
     const ctx = makeContext();
     try {
@@ -199,6 +226,17 @@ export function useRecorder(
       activeRef.current = true;
       setRecording(true);
       setSeconds(0);
+      // 오디오가 멈춰 있으면 녹음 데이터가 아예 안 들어온다 → 1.5초 뒤 한 번 새로 연다
+      if (!retried) {
+        setTimeout(() => {
+          if (activeRef.current && chunksRef.current.length === 0) {
+            activeRef.current = false;
+            release(true);
+            setRecording(false);
+            void start({ ...opts, retried: true });
+          }
+        }, 1500);
+      }
       let elapsed = 0;
       timerRef.current = setInterval(() => {
         elapsed++;

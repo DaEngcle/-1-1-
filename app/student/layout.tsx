@@ -23,11 +23,11 @@ const NAV = [
 
 // 휴대폰 아래 탭바에 둘 자주 쓰는 메뉴 (나머지는 '더보기')
 const BOTTOM_NAV = [
-  { href: "/student", icon: "🏠", label: "홈" },
-  { href: "/student/lessons", icon: "🎬", label: "강의" },
-  { href: "/student/talk", icon: "🎭", label: "AI 면접" },
-  { href: "/student/voca", icon: "🎮", label: "보카" },
-  { href: "/student/league", icon: "🏆", label: "리그" },
+  { href: "/student", icon: "home", label: "홈" },
+  { href: "/student/lessons", icon: "play", label: "강의" },
+  { href: "/student/talk", icon: "talk", label: "AI 면접" },
+  { href: "/student/voca", icon: "cards", label: "보카" },
+  { href: "/student/league", icon: "trophy", label: "리그" },
 ];
 
 export default async function StudentLayout({

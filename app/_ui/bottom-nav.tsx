@@ -6,6 +6,67 @@ import { useState } from "react";
 
 type Item = { href: string; label: string };
 
+/** 아래 탭바 아이콘 (선으로 그린 아이콘. 이모지 대신) */
+const ICON_PATHS: Record<string, React.ReactNode> = {
+  home: (
+    <>
+      <path d="M4 10.5 12 4l8 6.5V19a1 1 0 0 1-1 1h-4.5v-5.5h-5V20H5a1 1 0 0 1-1-1z" />
+    </>
+  ),
+  play: (
+    <>
+      <rect x="3.5" y="5" width="17" height="14" rx="3.5" />
+      <path d="m10.5 9.5 4 2.5-4 2.5z" />
+    </>
+  ),
+  talk: (
+    <>
+      <path d="M5 6.5A2.5 2.5 0 0 1 7.5 4h9A2.5 2.5 0 0 1 19 6.5v6a2.5 2.5 0 0 1-2.5 2.5H11l-4 3.5V15h0A2.5 2.5 0 0 1 5 12.5z" />
+      <path d="M9 9.5h.01M12 9.5h.01M15 9.5h.01" />
+    </>
+  ),
+  cards: (
+    <>
+      <rect x="4" y="7" width="12" height="13" rx="2.5" />
+      <path d="M8 4h9.5A2.5 2.5 0 0 1 20 6.5V16" />
+      <path d="M7.5 13.5h5" />
+    </>
+  ),
+  trophy: (
+    <>
+      <path d="M8 4h8v5a4 4 0 0 1-8 0z" />
+      <path d="M8 6H5.5a2.5 2.5 0 0 0 2.6 3.5M16 6h2.5a2.5 2.5 0 0 1-2.6 3.5" />
+      <path d="M12 13v3.5M8.5 20h7M10 16.5h4V20h-4z" />
+    </>
+  ),
+  more: (
+    <>
+      <rect x="4" y="4" width="6.5" height="6.5" rx="2" />
+      <rect x="13.5" y="4" width="6.5" height="6.5" rx="2" />
+      <rect x="4" y="13.5" width="6.5" height="6.5" rx="2" />
+      <rect x="13.5" y="13.5" width="6.5" height="6.5" rx="2" />
+    </>
+  ),
+};
+
+function NavIcon({ name, className = "" }: { name: string; className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={`h-6 w-6 ${className}`}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.8}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      {ICON_PATHS[name] ?? ICON_PATHS.more}
+    </svg>
+  );
+}
+
+
 /** 가장 길게 일치하는 메뉴 하나만 활성 (/student 와 /student/lessons 구분) */
 function activeHref(items: Item[], pathname: string) {
   return items
@@ -36,7 +97,7 @@ export function BottomNav({ items, primary }: { items: Item[]; primary: { href: 
       {open && (
         <div className="fixed inset-0 z-30 bg-black/30 sm:hidden" onClick={() => setOpen(false)}>
           <div
-            className="absolute inset-x-0 bottom-0 rounded-t-3xl bg-white p-4 pb-24 shadow-2xl"
+            className="absolute inset-x-0 bottom-0 rounded-t-3xl bg-white p-4 pb-28 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <p className="mb-2 text-sm font-bold text-zinc-500">더보기</p>
@@ -62,8 +123,8 @@ export function BottomNav({ items, primary }: { items: Item[]; primary: { href: 
           </div>
         </div>
       )}
-      <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur sm:hidden">
-        <ul className="grid grid-cols-6">
+      <nav className="fixed inset-x-3 bottom-[calc(10px+env(safe-area-inset-bottom))] z-40 sm:hidden">
+        <ul className="grid grid-cols-6 gap-1 rounded-[28px] border border-white/70 bg-white/95 p-1.5 shadow-[0_8px_30px_rgba(15,23,42,0.14)] backdrop-blur">
           {primary.map((p) => {
             const on = p.href === active && !open;
             return (
@@ -71,9 +132,11 @@ export function BottomNav({ items, primary }: { items: Item[]; primary: { href: 
                 <Link
                   href={p.href}
                   onClick={() => setOpen(false)}
-                  className={`flex flex-col items-center gap-0.5 py-2 text-[11px] font-semibold ${on ? "text-brand-600" : "text-zinc-500"}`}
+                  className={`flex flex-col items-center gap-0.5 rounded-[22px] py-2 text-[11px] font-semibold transition-colors ${
+                    on ? "bg-zinc-900 text-white" : "text-zinc-400"
+                  }`}
                 >
-                  <span className={`text-xl ${on ? "" : "opacity-70 grayscale"}`}>{p.icon}</span>
+                  <NavIcon name={p.icon} className={on ? "text-[#8EB4FF]" : ""} />
                   {p.label}
                 </Link>
               </li>
@@ -83,11 +146,11 @@ export function BottomNav({ items, primary }: { items: Item[]; primary: { href: 
             <button
               type="button"
               onClick={() => setOpen((v) => !v)}
-              className={`flex w-full flex-col items-center gap-0.5 py-2 text-[11px] font-semibold ${
-                open || moreActive ? "text-brand-600" : "text-zinc-500"
+              className={`flex w-full flex-col items-center gap-0.5 rounded-[22px] py-2 text-[11px] font-semibold transition-colors ${
+                open || moreActive ? "bg-zinc-900 text-white" : "text-zinc-400"
               }`}
             >
-              <span className="text-xl">☰</span>
+              <NavIcon name="more" className={open || moreActive ? "text-[#8EB4FF]" : ""} />
               더보기
             </button>
           </li>
