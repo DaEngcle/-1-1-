@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { requireStudent } from "@/lib/classroom/dal";
-import { FREE_VERB_SETS, PATTERN_INFO, VERB_SETS } from "@/lib/classroom/verbs";
+import { FREE_VERB_SETS, PATTERN_INFO, VERB_SETS, hasFullVoca } from "@/lib/classroom/verbs";
 
 export default async function VerbSetsPage() {
   const student = await requireStudent();
@@ -12,7 +12,7 @@ export default async function VerbSetsPage() {
     .eq("student_id", student.id)
     .like("deck", "verbs-%");
   const byDeck = new Map((data ?? []).map((r) => [r.deck as string, r]));
-  const free = student.courses.length === 0;
+  const free = !hasFullVoca(student);
 
   return (
     <>

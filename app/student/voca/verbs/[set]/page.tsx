@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { requireStudent } from "@/lib/classroom/dal";
-import { FREE_VERB_SETS, verbSet, VERB_SETS } from "@/lib/classroom/verbs";
+import { FREE_VERB_SETS, verbSet, VERB_SETS, hasFullVoca } from "@/lib/classroom/verbs";
 import { VerbStudy } from "./verb-study";
 
 export default async function VerbSetPage({ params }: { params: Promise<{ set: string }> }) {
@@ -9,7 +9,7 @@ export default async function VerbSetPage({ params }: { params: Promise<{ set: s
   const { set: raw } = await params;
   const set = verbSet(Number(raw));
   if (!set) notFound();
-  if (student.courses.length === 0 && set.id > FREE_VERB_SETS) redirect("/student/voca/verbs");
+  if (!hasFullVoca(student) && set.id > FREE_VERB_SETS) redirect("/student/voca/verbs");
   const next = VERB_SETS.find((s) => s.id === set.id + 1);
 
   return (

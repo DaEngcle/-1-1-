@@ -255,7 +255,20 @@ export async function setEarlyCourses(formData: FormData) {
     .map(String)
     .filter((c) => (COURSE_IDS as readonly string[]).includes(c));
   const supabase = createServerSupabaseClient();
-  await supabase.from("students").update({ early_courses: courses }).eq("id", id);
+  // '보카 전체 열기'(voca) 표시는 과정 체크와 따로 관리하니 그대로 둔다
+  const { data: row } = await supabase.from("students").select("early_courses").eq("id", id).maybeSingle();
+  const keep = ((row?.early_courses as string[] | null) ?? []).filter((c) => c === "voca");
+  await supabase.from("students").update({ early_courses: [...courses, ...keep] }).eq("id", id);
+  revalidatePath(`/teacher/students/${id}`);
+}
+
+/** 수강권 없는 학생(예: 초급반)에게 보카 세트 전체 열어주기 / 닫기 */
+export async function setVocaFull(id: string, on: boolean) {
+  await requireTeacher();
+  const supabase = createServerSupabaseClient();
+  const { data: row } = await supabase.from("students").select("early_courses").eq("id", id).maybeSingle();
+  const rest = ((row?.early_courses as string[] | null) ?? []).filter((c) => c !== "voca");
+  await supabase.from("students").update({ early_courses: on ? [...rest, "voca"] : rest }).eq("id", id);
   revalidatePath(`/teacher/students/${id}`);
 }
 

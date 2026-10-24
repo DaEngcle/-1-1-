@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { requireStudent } from "@/lib/classroom/dal";
 import { phraseDeck } from "@/lib/classroom/phrase-decks";
-import { FREE_VERB_SETS } from "@/lib/classroom/verbs";
+import { FREE_VERB_SETS, hasFullVoca } from "@/lib/classroom/verbs";
 
 export default async function PhraseDeckPage({ params }: { params: Promise<{ deck: string }> }) {
   const student = await requireStudent();
@@ -16,7 +16,7 @@ export default async function PhraseDeckPage({ params }: { params: Promise<{ dec
     .eq("student_id", student.id)
     .like("deck", `${deck.id}-%`);
   const stars = new Map((data ?? []).map((r) => [r.deck as string, r.stars as number]));
-  const free = student.courses.length === 0;
+  const free = !hasFullVoca(student);
   const total = deck.sets.reduce((n, x) => n + x.items.length, 0);
 
   return (
