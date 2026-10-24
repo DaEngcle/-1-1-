@@ -267,6 +267,14 @@ const OLD_SLOT_POS: Record<Slot, (w: number, h: number) => [number, number]> = {
   front: (w, h) => [48 - w / 2, ROOM_H - 1 - h],
   ceiling: (w) => [48 - w / 2, 0],
 };
+const OLD_SLOT_KIND: Record<Slot, HouseItem["kind"]> = {
+  wallL: "wallItem",
+  wallR: "wallItem",
+  floorL: "floorItem",
+  floorR: "floorItem",
+  front: "frontItem",
+  ceiling: "lightItem",
+};
 
 /** 저장된 배치를 안전하게 읽는다 (없는 아이템·잘못된 위치는 고치거나 버린다) */
 export function normalizeLayout(raw: unknown): Layout {
@@ -288,9 +296,14 @@ export function normalizeLayout(raw: unknown): Layout {
     }
   } else if (r.slots) {
     for (const [slot, id] of Object.entries(r.slots)) {
-      const art = id ? ITEM_BY_ID.get(id)?.art : undefined;
-      if (!id || !art || !(slot in OLD_SLOT_POS)) continue;
-      const { w, h } = artSize(art);
+      const it = id ? ITEM_BY_ID.get(id) : undefined;
+      if (!id || !it?.art || !(slot in OLD_SLOT_POS)) continue;
+      // 자리 종류와 아이템 종류가 다르면 그 아이템 종류의 기본 자리에 놓는다
+      if (OLD_SLOT_KIND[slot as Slot] !== it.kind) {
+        push(defaultPlace(id, items.length));
+        continue;
+      }
+      const { w, h } = artSize(it.art);
       const [x, y] = OLD_SLOT_POS[slot as Slot](w, h);
       push(clampPlace(id, x, y));
     }

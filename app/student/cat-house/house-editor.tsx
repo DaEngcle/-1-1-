@@ -156,7 +156,8 @@ export function HouseEditor({
     }
     const p = defaultPlace(it.id, layout.items.length);
     if (!p) return;
-    setLayout((l) => ({ ...l, items: [...l.items, p] }));
+    // 지금 화면의 목록 기준으로 같이 바꿔야 선택 번호가 어긋나지 않는다
+    setLayout({ ...layout, items: [...layout.items, p] });
     setSel(layout.items.length);
   }
 
