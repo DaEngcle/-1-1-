@@ -1,0 +1,236 @@
+{
+  "unit": 20,
+  "title": "현재완료 (1) have / has + p.p.",
+  "emoji": "✅",
+  "goal": "have / has + p.p.로 '~했다(그래서 지금)', '~해 왔다', '~한 적 있다'를 말할 수 있어요.",
+  "points": [
+    {
+      "title": "have / has + p.p.",
+      "body": "현재완료는 과거의 일이 지금까지 이어지거나 지금과 연결될 때 써요. 뜻은 '~했다(그래서 지금 ~하다)', '~해 왔다', '~한 적 있다'예요."
+    },
+    {
+      "title": "have일까 has일까",
+      "body": "I, You, We, They는 have, He, She, It은 has예요. 줄여서 I've, She's, 부정은 haven't, hasn't라고 해요."
+    },
+    {
+      "title": "p.p.(과거분사) 만들기",
+      "body": "p.p.는 동사의 세 번째 모양이에요. live처럼 규칙동사는 과거형과 같고(lived), 불규칙동사는 따로 외워요: go-went-gone, eat-ate-eaten, know-knew-known, meet-met-met."
+    },
+    {
+      "title": "since + 시점, for + 기간",
+      "body": "'~부터 (지금까지)'는 since + 시점(since 2008), '~동안'은 for + 기간(for five years)이에요."
+    },
+    {
+      "title": "already / yet / ever",
+      "body": "already(이미)는 보통 긍정문에, yet(아직)은 부정문·의문문 끝에 써요. Have you ever ~?는 '~해 본 적 있어?'예요."
+    }
+  ],
+  "formula": [
+    "I / You / We / They + have + p.p.",
+    "He / She / It + has + p.p.",
+    "주어 + haven't / hasn't + p.p.",
+    "Have / Has + 주어 + p.p. ...?"
+  ],
+  "mistakes": [
+    {
+      "wrong": "I have live in Sydney since 2024.",
+      "right": "I have lived in Sydney since 2024.",
+      "why": "have 뒤에는 동사원형이 아니라 p.p.(lived)가 와요."
+    },
+    {
+      "wrong": "She have finished her shift.",
+      "right": "She has finished her shift.",
+      "why": "He, She, It은 have가 아니라 has예요."
+    },
+    {
+      "wrong": "I have worked here since three months.",
+      "right": "I have worked here for three months.",
+      "why": "한국어로 둘 다 '~째/동안'처럼 들려서 헷갈려요. 기간(three months)은 for, 시작 시점(2024, Monday)은 since예요."
+    }
+  ],
+  "examples": [
+    {
+      "en": "She has washed the dishes.",
+      "ko": "그녀가 설거지를 했어요. (그래서 지금 그릇이 깨끗해요)"
+    },
+    {
+      "en": "I have lived in LA since 2008.",
+      "ko": "나는 2008년부터 (지금까지) LA에 살고 있어요."
+    },
+    {
+      "en": "We haven't been to Egypt before.",
+      "ko": "우리는 전에 이집트에 가 본 적이 없어요."
+    },
+    {
+      "en": "Bob has watched that TV show for five years. He never misses it.",
+      "ko": "Bob은 5년 동안 그 TV 프로그램을 봐 왔어요. 한 번도 빼먹지 않아요."
+    },
+    {
+      "en": "I have already eaten lunch.",
+      "ko": "나는 이미 점심을 먹었어요."
+    },
+    {
+      "en": "Have you ever been to Japan?",
+      "ko": "너 일본에 가 본 적 있어?"
+    },
+    {
+      "en": "He hasn't finished his homework yet.",
+      "ko": "그는 아직 숙제를 끝내지 못했어요."
+    },
+    {
+      "en": "We have known each other for ten years.",
+      "ko": "우리는 10년 동안 서로 알고 지냈어요."
+    }
+  ],
+  "quiz": [
+    {
+      "type": "blank",
+      "sentence": "She ___ washed the dishes.",
+      "answer": "has",
+      "choices": [
+        "has",
+        "have",
+        "is",
+        "did"
+      ],
+      "ko": "그녀가 설거지를 했어요.",
+      "why": "She는 has + p.p."
+    },
+    {
+      "type": "blank",
+      "sentence": "I have lived in Melbourne ___ 2024.",
+      "answer": "since",
+      "choices": [
+        "since",
+        "for",
+        "ago",
+        "yet"
+      ],
+      "ko": "나는 2024년부터 멜버른에 살고 있어요.",
+      "why": "2024는 시작 시점이니까 since"
+    },
+    {
+      "type": "blank",
+      "sentence": "We have known each other ___ ten years.",
+      "answer": "for",
+      "choices": [
+        "for",
+        "since",
+        "ago",
+        "already"
+      ],
+      "ko": "우리는 10년 동안 서로 알고 지냈어요.",
+      "why": "ten years는 기간이니까 for"
+    },
+    {
+      "type": "blank",
+      "sentence": "He hasn't finished his homework ___.",
+      "answer": "yet",
+      "choices": [
+        "yet",
+        "since",
+        "ago",
+        "for"
+      ],
+      "ko": "그는 아직 숙제를 끝내지 못했어요.",
+      "why": "부정문 끝의 '아직'은 yet"
+    },
+    {
+      "type": "blank",
+      "sentence": "I have already ___ lunch.",
+      "answer": "eaten",
+      "choices": [
+        "eaten",
+        "ate",
+        "eat",
+        "eating"
+      ],
+      "ko": "나는 이미 점심을 먹었어요.",
+      "why": "have 뒤에는 p.p. (eat-ate-eaten)"
+    },
+    {
+      "type": "translate",
+      "ko": "너 퍼스에 가 본 적 있어?",
+      "answer": "Have you ever been to Perth?",
+      "choices": [
+        "Has you ever been to Perth?",
+        "Have you ever went to Perth?",
+        "Have you ever been to Perth?",
+        "Did you ever been to Perth?"
+      ],
+      "why": "'~해 본 적 있어?'는 Have you ever + p.p.?"
+    },
+    {
+      "type": "translate",
+      "ko": "그녀는 3년 동안 카페에서 일해 왔어요.",
+      "answer": "She has worked at a café for three years.",
+      "choices": [
+        "She have worked at a café for three years.",
+        "She has worked at a café for three years.",
+        "She has worked at a café since three years.",
+        "She has work at a café for three years."
+      ],
+      "why": "She는 has + p.p., 기간은 for"
+    },
+    {
+      "type": "translate",
+      "ko": "그들은 아직 숙제를 끝내지 못했어요.",
+      "answer": "They haven't finished their homework yet.",
+      "choices": [
+        "They hasn't finished their homework yet.",
+        "They haven't finish their homework yet.",
+        "They haven't finished their homework since.",
+        "They haven't finished their homework yet."
+      ],
+      "why": "They는 haven't + p.p., '아직'은 yet"
+    },
+    {
+      "type": "translate",
+      "ko": "나는 2023년부터 쉐어하우스에 살고 있어요.",
+      "answer": "I have lived in a share house since 2023.",
+      "choices": [
+        "I have lived in a share house since 2023.",
+        "I have lived in a share house for 2023.",
+        "I has lived in a share house since 2023.",
+        "I have live in a share house since 2023."
+      ],
+      "why": "I는 have + p.p., 시작 시점은 since"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "I have met Sam before.",
+      "choices": [
+        "I have meet Sam before.",
+        "I has met Sam before.",
+        "I have met Sam before.",
+        "I have meeted Sam before."
+      ],
+      "why": "meet의 p.p.는 met"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Has she bought the tickets yet?",
+      "choices": [
+        "Have she bought the tickets yet?",
+        "Has she buy the tickets yet?",
+        "Has she buyed the tickets yet?",
+        "Has she bought the tickets yet?"
+      ],
+      "why": "She는 Has로 묻고, buy의 p.p.는 bought"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "We have known Mia for five years.",
+      "choices": [
+        "We have knew Mia for five years.",
+        "We have known Mia since five years.",
+        "We has known Mia for five years.",
+        "We have known Mia for five years."
+      ],
+      "why": "know의 p.p.는 known, 기간은 for"
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "unit": 10,
+  "title": "명령문 & Let's (Please ~ / Don't ~ / Let's ~)",
+  "emoji": "👉",
+  "goal": "'~하세요', '~하지 마세요', '같이 ~해요'를 영어로 말하고 알아들을 수 있어요.",
+  "points": [
+    { "title": "동사로 바로 시작해요", "body": "'~하세요, ~해'라고 시킬 때는 주어 없이 동사원형으로 시작해요. Wait here. / Open the door." },
+    { "title": "Please로 부드럽게", "body": "Please를 앞이나 뒤에 붙이면 공손해져요. Please wait here. / Wait here, please. 일할 때나 손님한테는 꼭 붙여 주세요." },
+    { "title": "하지 마세요 = Don't", "body": "'~하지 마세요'는 Don't + 동사원형이에요. Don't run. / Don't touch it. Not이나 No로 시작하지 않아요." },
+    { "title": "be동사 명령은 Be", "body": "careful(조심하는), late(늦은)처럼 상태를 말할 때는 Be를 써요. Be careful! / Don't be late! 'Don't late'처럼 be를 빼면 틀려요." },
+    { "title": "같이 해요 = Let's", "body": "'우리 같이 ~해요/하자'는 Let's + 동사원형이에요. Let's go to the beach! '~하지 말자'는 Let's not + 동사원형이에요." }
+  ],
+  "formula": [
+    "(Please) + 동사원형 + ... (+ please)",
+    "Don't + 동사원형 + ...",
+    "Be / Don't be + 상태 말 (careful, late, shy ...)",
+    "Let's (not) + 동사원형 + ..."
+  ],
+  "mistakes": [
+    { "wrong": "Don't late for work.", "right": "Don't be late for work.", "why": "'늦지 마'를 그대로 옮기면 be가 빠져요. late는 동사가 아니라서 Don't be late로 써요." },
+    { "wrong": "Let's going to the beach.", "right": "Let's go to the beach.", "why": "'가자'를 진행형처럼 느껴서 ing를 붙이기 쉬워요. Let's 뒤에는 항상 동사원형이에요." },
+    { "wrong": "No touch the coffee machine.", "right": "Don't touch the coffee machine.", "why": "'만지지 마'의 '마'를 No로 바꾸는 실수예요. 하지 말라고 할 때는 Don't + 동사원형이에요." }
+  ],
+  "examples": [
+    { "en": "Please wait here.", "ko": "여기서 기다려 주세요." },
+    { "en": "Wash your hands before work.", "ko": "일 시작하기 전에 손 씻으세요." },
+    { "en": "Turn left at the next corner, please.", "ko": "다음 모퉁이에서 왼쪽으로 가 주세요." },
+    { "en": "Don't touch the hot pan.", "ko": "뜨거운 팬 만지지 마세요." },
+    { "en": "Don't be late for your interview.", "ko": "면접에 늦지 마세요." },
+    { "en": "Be careful! The floor is wet.", "ko": "조심하세요! 바닥이 젖었어요." },
+    { "en": "Let's go to the beach this weekend.", "ko": "이번 주말에 해변 가요." },
+    { "en": "Let's not eat out tonight.", "ko": "오늘 저녁은 외식하지 말자." }
+  ],
+  "quiz": [
+    { "type": "blank", "sentence": "___ the door, please.", "answer": "Close", "choices": ["Closes", "Close", "Closing", "To close"], "ko": "문 좀 닫아 주세요.", "why": "명령문은 동사원형으로 시작" },
+    { "type": "blank", "sentence": "___ run in the kitchen.", "answer": "Don't", "choices": ["Not", "No", "Don't", "Doesn't"], "ko": "주방에서 뛰지 마세요.", "why": "하지 마세요 = Don't + 동사원형" },
+    { "type": "blank", "sentence": "Let's ___ lunch together.", "answer": "have", "choices": ["have", "having", "to have", "has"], "ko": "같이 점심 먹어요.", "why": "Let's 뒤에는 동사원형" },
+    { "type": "blank", "sentence": "Don't ___ late tomorrow.", "answer": "be", "choices": ["is", "are", "being", "be"], "ko": "내일 늦지 마세요.", "why": "late는 동사가 아니라서 Don't be late" },
+    { "type": "blank", "sentence": "___ careful! The road is busy.", "answer": "Be", "choices": ["Is", "Be", "Are", "Being"], "ko": "조심하세요! 길에 차가 많아요.", "why": "상태를 시킬 때는 Be + careful" },
+    { "type": "translate", "ko": "신발 벗어 주세요.", "answer": "Please take off your shoes.", "choices": ["Please takes off your shoes.", "Please taking off your shoes.", "Please take off your shoes.", "Please to take off your shoes."], "why": "Please + 동사원형" },
+    { "type": "translate", "ko": "여기에 주차하지 마세요.", "answer": "Don't park here.", "choices": ["Don't park here.", "Not park here.", "No park here.", "Don't parking here."], "why": "Don't + 동사원형" },
+    { "type": "translate", "ko": "트램 타자.", "answer": "Let's take the tram.", "choices": ["Let's taking the tram.", "Let's takes the tram.", "Let's to take the tram.", "Let's take the tram."], "why": "Let's + 동사원형" },
+    { "type": "translate", "ko": "걱정하지 마세요.", "answer": "Don't worry.", "choices": ["Don't worries.", "Don't worry.", "No worry.", "Not worry."], "why": "Don't + 동사원형. 참고로 호주에서 자주 듣는 'No worries!'는 '괜찮아요, 천만에요'라는 정해진 표현이에요" },
+    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "Don't be shy.", "choices": ["Don't shy.", "Not be shy.", "Don't be shy.", "Don't are shy."], "why": "shy는 상태라서 Don't be + shy" },
+    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "Let's meet at the station.", "choices": ["Let's meet at the station.", "Let's meeting at the station.", "Let's meets at the station.", "Let's to meet at the station."], "why": "Let's 뒤에는 동사원형" },
+    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "Please sit down.", "choices": ["Please sits down.", "Please sitting down.", "Please to sit down.", "Please sit down."], "why": "Please 뒤에는 동사원형" }
+  ]
+}

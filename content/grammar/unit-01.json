@@ -1,0 +1,47 @@
+{
+  "unit": 1,
+  "title": "be동사 현재 (am / is / are)",
+  "emoji": "🙋",
+  "goal": "am / is / are를 골라 써서 나와 다른 사람을 영어로 소개할 수 있어요.",
+  "points": [
+    { "title": "be동사가 뭐예요?", "body": "be동사는 '~이에요', '~에 있어요'라는 뜻을 만드는 말이에요. 주어(문장의 주인공)에 따라 am, is, are 중 하나를 골라 써요." },
+    { "title": "I는 항상 am", "body": "나(I) 뒤에는 항상 am을 써요. I am Minji.(저는 민지예요.)처럼요." },
+    { "title": "한 사람·한 개는 is", "body": "he, she, it처럼 한 사람이나 물건 하나가 주인공이면 is를 써요. my boss, Sydney, this café도 하나라서 is예요." },
+    { "title": "you와 여러 명은 are", "body": "you, we, they나 my housemates처럼 여러 명이 주인공이면 are를 써요. you는 한 명이어도 are예요." },
+    { "title": "줄여서 말하기", "body": "말할 때는 보통 줄여서 I'm, you're, he's, she's, it's, we're, they're라고 해요. 뜻은 똑같아요." }
+  ],
+  "formula": [
+    "I + am + ...",
+    "He / She / It (한 명·한 개) + is + ...",
+    "You / We / They (여러 명) + are + ..."
+  ],
+  "mistakes": [
+    { "wrong": "I is from Korea.", "right": "I am from Korea.", "why": "주어가 하나라서 is를 쓰기 쉬운데, I 뒤에는 무조건 am이에요. 'I am'을 한 덩어리로 외워 두세요." },
+    { "wrong": "She a barista.", "right": "She is a barista.", "why": "한국어 '~예요'에 해당하는 말을 빼먹기 쉬워요. 영어는 be동사를 꼭 넣어야 문장이 돼요." },
+    { "wrong": "My housemates is nice.", "right": "My housemates are nice.", "why": "끝에 -s가 붙은 housemates는 여러 명이라 are를 써요. 주인공이 몇 명인지 먼저 확인하세요." }
+  ],
+  "examples": [
+    { "en": "I am from Seoul.", "ko": "저는 서울에서 왔어요." },
+    { "en": "I'm on a working holiday in Australia.", "ko": "저는 호주에서 워킹홀리데이 중이에요." },
+    { "en": "My manager is very kind.", "ko": "우리 매니저는 정말 친절해요." },
+    { "en": "The café is near the beach.", "ko": "그 카페는 해변 근처에 있어요." },
+    { "en": "You are a great barista.", "ko": "당신은 정말 훌륭한 바리스타예요." },
+    { "en": "We are housemates.", "ko": "우리는 같은 집에 사는 하우스메이트예요." },
+    { "en": "They're from Japan.", "ko": "그 사람들은 일본에서 왔어요." },
+    { "en": "It's hot today.", "ko": "오늘 날씨가 더워요." }
+  ],
+  "quiz": [
+    { "type": "blank", "sentence": "I ___ in Melbourne now.", "answer": "am", "choices": ["am", "is", "are", "be"], "ko": "저는 지금 멜버른에 있어요.", "why": "주어가 I면 항상 am을 써요." },
+    { "type": "blank", "sentence": "My boss ___ from Brisbane.", "answer": "is", "choices": ["am", "is", "are", "be"], "ko": "우리 사장님은 브리즈번 출신이에요.", "why": "my boss는 한 사람이라 is를 써요." },
+    { "type": "blank", "sentence": "We ___ at the beach.", "answer": "are", "choices": ["am", "is", "are", "be"], "ko": "우리는 해변에 있어요.", "why": "we(우리)는 여러 명이라 are를 써요." },
+    { "type": "blank", "sentence": "The tram ___ very slow today.", "answer": "is", "choices": ["am", "is", "are", "be"], "ko": "오늘 트램이 정말 느려요.", "why": "the tram은 하나라서 is를 써요." },
+    { "type": "blank", "sentence": "You ___ my favourite housemate.", "answer": "are", "choices": ["am", "is", "are", "be"], "ko": "당신은 제가 제일 좋아하는 하우스메이트예요.", "why": "you는 한 명이어도 항상 are를 써요." },
+    { "type": "translate", "ko": "저는 피곤해요.", "answer": "I am tired.", "choices": ["I am tired.", "I is tired.", "I are tired.", "I tired."], "why": "I 뒤에는 am을 꼭 넣어야 해요." },
+    { "type": "translate", "ko": "그는 제 매니저예요.", "answer": "He is my manager.", "choices": ["He is my manager.", "He are my manager.", "He am my manager.", "He my manager."], "why": "he(그)는 한 사람이라 is를 써요." },
+    { "type": "translate", "ko": "그들은 농장에 있어요.", "answer": "They are at the farm.", "choices": ["They are at the farm.", "They is at the farm.", "They am at the farm.", "They at the farm."], "why": "they(그들)는 여러 명이라 are를 써요." },
+    { "type": "translate", "ko": "이 카페는 아주 바빠요.", "answer": "This café is very busy.", "choices": ["This café is very busy.", "This café are very busy.", "This café am very busy.", "This café very busy."], "why": "this café는 하나라서 is를 써요." },
+    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "We are from Korea.", "choices": ["We are from Korea.", "We is from Korea.", "We am from Korea.", "We from Korea are."], "why": "we는 are, 그리고 be동사는 주어 바로 뒤에 와요." },
+    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "It's a nice day.", "choices": ["It's a nice day.", "It a nice day.", "It are a nice day.", "It am a nice day."], "why": "it is를 줄이면 it's예요. be동사를 빼면 안 돼요." },
+    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "My housemates are friendly.", "choices": ["My housemates are friendly.", "My housemates is friendly.", "My housemates am friendly.", "My housemates friendly."], "why": "housemates는 여러 명이라 are를 써요." }
+  ]
+}

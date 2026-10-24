@@ -1,0 +1,46 @@
+{
+  "unit": 3,
+  "title": "일반동사 현재 (I work / They live)",
+  "emoji": "💼",
+  "goal": "I, you, we, they와 일반동사를 써서 내 일상과 습관을 영어로 말할 수 있어요.",
+  "points": [
+    { "title": "일반동사가 뭐예요?", "body": "work(일하다), live(살다), like(좋아하다)처럼 하는 일이나 상태를 나타내는 말이에요. am, is, are가 아닌 동사를 일반동사라고 불러요." },
+    { "title": "주어 + 동사 그대로", "body": "I, you, we, they 뒤에는 동사를 모양 그대로 써요. I work. / They live in Sydney." },
+    { "title": "am, is, are와 같이 쓰지 않기", "body": "'일해요'를 I am work라고 하지 않아요. 일반동사가 있으면 am, is, are는 빼요." },
+    { "title": "현재형은 습관과 사실", "body": "현재형은 매일 하는 일이나 늘 그런 사실을 말할 때 써요. every day(매일), on weekends(주말마다) 같은 말과 잘 어울려요." },
+    { "title": "여러 명이 주인공일 때", "body": "my housemates, Tom and I처럼 여러 명이 주인공이어도 they처럼 동사를 그대로 써요." }
+  ],
+  "formula": [
+    "I / You / We / They + 동사 + ...",
+    "여러 명 (my friends, Tom and I) + 동사 + ..."
+  ],
+  "mistakes": [
+    { "wrong": "I am work at a café.", "right": "I work at a café.", "why": "'일해요'의 '~요'를 am으로 옮기기 쉬워요. 일반동사가 있으면 am, is, are는 빼요." },
+    { "wrong": "I live Sydney.", "right": "I live in Sydney.", "why": "'시드니에 살아요'의 '~에'를 빼먹기 쉬워요. 사는 곳을 말할 때는 live in + 장소예요." },
+    { "wrong": "We every day swim.", "right": "We swim every day.", "why": "한국어처럼 '매일'을 동사 앞에 두기 쉬운데, every day는 보통 문장 끝에 와요." }
+  ],
+  "examples": [
+    { "en": "I work at a café in Melbourne.", "ko": "저는 멜버른에 있는 카페에서 일해요." },
+    { "en": "We live in a share house.", "ko": "우리는 쉐어하우스에 살아요." },
+    { "en": "They start work at 6 am.", "ko": "그 사람들은 아침 6시에 일을 시작해요." },
+    { "en": "I take the tram every day.", "ko": "저는 매일 트램을 타요." },
+    { "en": "You speak English very well.", "ko": "영어를 정말 잘하시네요." },
+    { "en": "My housemates cook dinner together.", "ko": "제 하우스메이트들은 같이 저녁을 만들어 먹어요." },
+    { "en": "We go to the beach on weekends.", "ko": "우리는 주말마다 해변에 가요." },
+    { "en": "I buy groceries at the supermarket on Sundays.", "ko": "저는 일요일마다 마트에서 장을 봐요." }
+  ],
+  "quiz": [
+    { "type": "blank", "sentence": "I ___ at a farm.", "answer": "work", "choices": ["work", "works", "am work", "working"], "ko": "저는 농장에서 일해요.", "why": "I 뒤에는 동사를 그대로 써요. am은 넣지 않아요." },
+    { "type": "blank", "sentence": "They ___ in Perth.", "answer": "live", "choices": ["live", "lives", "are live", "living"], "ko": "그들은 퍼스에 살아요.", "why": "they 뒤에는 동사 그대로 live를 써요." },
+    { "type": "blank", "sentence": "We ___ coffee every morning.", "answer": "drink", "choices": ["drink", "drinks", "are drink", "drinking"], "ko": "우리는 매일 아침 커피를 마셔요.", "why": "we 뒤에는 동사 그대로 drink를 써요." },
+    { "type": "blank", "sentence": "My housemates ___ the kitchen on Sundays.", "answer": "clean", "choices": ["clean", "cleans", "is clean", "cleaning"], "ko": "제 하우스메이트들은 일요일마다 부엌을 청소해요.", "why": "housemates는 여러 명이라 they처럼 동사 그대로 써요." },
+    { "type": "blank", "sentence": "I ___ the tram to work.", "answer": "take", "choices": ["take", "takes", "am take", "taking"], "ko": "저는 트램을 타고 출근해요.", "why": "I 뒤에는 동사 그대로 take를 써요." },
+    { "type": "translate", "ko": "저는 매일 영어를 공부해요.", "answer": "I study English every day.", "choices": ["I study English every day.", "I am study English every day.", "I studies English every day.", "I every day study English."], "why": "I + 동사 그대로, every day는 문장 끝에 와요." },
+    { "type": "translate", "ko": "우리는 쉐어하우스에 살아요.", "answer": "We live in a share house.", "choices": ["We live in a share house.", "We are live in a share house.", "We lives in a share house.", "We live a share house."], "why": "we + live, 그리고 사는 곳 앞에는 in이 필요해요." },
+    { "type": "translate", "ko": "그들은 해변에서 수영해요.", "answer": "They swim at the beach.", "choices": ["They swim at the beach.", "They swims at the beach.", "They are swim at the beach.", "They swimming at the beach."], "why": "they 뒤에는 동사 그대로 swim을 써요." },
+    { "type": "translate", "ko": "요리를 정말 잘하시네요.", "answer": "You cook very well.", "choices": ["You cook very well.", "You cooks very well.", "You are cook very well.", "You very well cook."], "why": "you + 동사 그대로, very well은 동사 뒤에 와요." },
+    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "I like Australian coffee.", "choices": ["I like Australian coffee.", "I am like Australian coffee.", "I likes Australian coffee.", "I liking Australian coffee."], "why": "일반동사 like가 있으니 am은 빼고 동사 그대로 써요." },
+    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "We work on weekends.", "choices": ["We work on weekends.", "We are work on weekends.", "We works on weekends.", "We on weekends work."], "why": "we + work, on weekends는 문장 끝에 와요." },
+    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "Tom and I play tennis.", "choices": ["Tom and I play tennis.", "Tom and I plays tennis.", "Tom and I are play tennis.", "Tom and I playing tennis."], "why": "Tom and I는 두 명(=we)이라 동사 그대로 play를 써요." }
+  ]
+}

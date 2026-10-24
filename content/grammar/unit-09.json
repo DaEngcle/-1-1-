@@ -1,0 +1,47 @@
+{
+  "unit": 9,
+  "title": "There is / There are (~이 있다)",
+  "emoji": "🏠",
+  "goal": "'근처에 마트가 있어요', '방이 세 개 있어요'처럼 어디에 무엇이 있는지 말하고 물어볼 수 있어요.",
+  "points": [
+    { "title": "There is / There are = ~이 있어요", "body": "어디에 무엇이 있다고 말할 때 There is / There are로 시작해요. 여기서 there는 '거기'라는 뜻이 아니라 문장을 여는 말이에요." },
+    { "title": "하나면 is, 여러 개면 are", "body": "하나이거나 milk·water처럼 셀 수 없는 것은 There is(There's), 둘 이상이면 There are를 써요. There is a café. / There are two cafés." },
+    { "title": "없어요 = isn't / aren't", "body": "'~이 없어요'는 There isn't / There aren't예요. any와 같이 쓰면 '하나도 없어요'라는 느낌이에요. There aren't any eggs. / There isn't any milk." },
+    { "title": "있어요? = Is there / Are there", "body": "is/are를 there 앞으로 옮기면 질문이에요. Is there a bus stop near here? 대답은 Yes, there is. / No, there aren't.처럼 해요." }
+  ],
+  "formula": [
+    "There is (There's) + 하나 / 셀 수 없는 것",
+    "There are + 둘 이상",
+    "There isn't / There aren't + ...",
+    "Is there + ...? / Are there + ...?"
+  ],
+  "mistakes": [
+    { "wrong": "There is two bedrooms.", "right": "There are two bedrooms.", "why": "There is를 한 덩어리로 외워서 개수를 신경 안 쓰기 쉬워요. 뒤에 오는 것이 둘 이상이면 are예요." },
+    { "wrong": "Have a bus stop near here?", "right": "Is there a bus stop near here?", "why": "'있어요?'를 have로 바로 옮기는 실수예요. 장소에 무엇이 있는지 물을 땐 Is there / Are there로 물어요." },
+    { "wrong": "There aren't any milk.", "right": "There isn't any milk.", "why": "milk는 하나, 둘 셀 수 없는 것이라 is를 써요. water, bread, sugar도 마찬가지예요." }
+  ],
+  "examples": [
+    { "en": "There's a café next to my share house.", "ko": "우리 쉐어하우스 옆에 카페가 있어요." },
+    { "en": "There are three bedrooms in this house.", "ko": "이 집에는 방이 세 개 있어요." },
+    { "en": "There's some milk in the fridge.", "ko": "냉장고에 우유가 좀 있어요." },
+    { "en": "There aren't any eggs.", "ko": "계란이 하나도 없어요." },
+    { "en": "There isn't a tram stop near my house.", "ko": "우리 집 근처에는 트램 정류장이 없어요." },
+    { "en": "Is there a supermarket near here?", "ko": "이 근처에 마트 있어요?" },
+    { "en": "Are there any jobs at the farm?", "ko": "그 농장에 일자리 있어요?" },
+    { "en": "Is there Wi-Fi here? — Yes, there is.", "ko": "여기 와이파이 있어요? — 네, 있어요." }
+  ],
+  "quiz": [
+    { "type": "blank", "sentence": "There ___ a bus stop near my house.", "answer": "is", "choices": ["is", "are", "have", "has"], "ko": "우리 집 근처에 버스 정류장이 있어요.", "why": "a bus stop은 하나라서 There is" },
+    { "type": "blank", "sentence": "There ___ two bathrooms in the house.", "answer": "are", "choices": ["is", "has", "are", "am"], "ko": "그 집에는 화장실이 두 개 있어요.", "why": "two bathrooms는 둘 이상이라 There are" },
+    { "type": "blank", "sentence": "___ there a Coles near here?", "answer": "Is", "choices": ["Are", "Is", "Do", "Has"], "ko": "이 근처에 콜스(마트) 있어요?", "why": "하나를 물을 때 Is there ~?" },
+    { "type": "blank", "sentence": "There ___ any bread in the kitchen.", "answer": "isn't", "choices": ["aren't", "don't", "not", "isn't"], "ko": "부엌에 빵이 하나도 없어요.", "why": "bread는 셀 수 없는 것이라 isn't" },
+    { "type": "blank", "sentence": "Are there any chairs? — Yes, there ___.", "answer": "are", "choices": ["is", "have", "are", "do"], "ko": "의자 있어요? — 네, 있어요.", "why": "Are there로 물었으니 Yes, there are." },
+    { "type": "translate", "ko": "냉장고에 우유가 있어요.", "answer": "There's some milk in the fridge.", "choices": ["There are some milk in the fridge.", "There's some milk in the fridge.", "There has some milk in the fridge.", "It have some milk in the fridge."], "why": "milk는 셀 수 없어서 There is(There's)" },
+    { "type": "translate", "ko": "이 근처에 해변이 있어요?", "answer": "Is there a beach near here?", "choices": ["Are there a beach near here?", "Have a beach near here?", "There a beach near here?", "Is there a beach near here?"], "why": "하나를 물을 때 Is there + a ~?" },
+    { "type": "translate", "ko": "방에 창문이 두 개 있어요.", "answer": "There are two windows in the room.", "choices": ["There are two windows in the room.", "There is two windows in the room.", "There have two windows in the room.", "There are two window in the room."], "why": "둘 이상이면 There are, window도 windows로" },
+    { "type": "translate", "ko": "오늘은 버스가 하나도 없어요.", "answer": "There aren't any buses today.", "choices": ["There isn't any buses today.", "There don't have buses today.", "There aren't any buses today.", "There aren't any bus today."], "why": "buses는 여러 개라서 There aren't any + 복수" },
+    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "There are five people in my share house.", "choices": ["There is five people in my share house.", "There have five people in my share house.", "There are five peoples in my share house.", "There are five people in my share house."], "why": "people은 여러 명이라 are, 이미 복수라서 s를 붙이지 않아요" },
+    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "Is there a toilet on this train?", "choices": ["Is there a toilet on this train?", "Are there a toilet on this train?", "There is toilet on this train?", "Has there a toilet on this train?"], "why": "a toilet은 하나라서 Is there ~?" },
+    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "There isn't any sugar.", "choices": ["There aren't any sugar.", "There isn't any sugar.", "There not any sugar.", "There don't any sugar."], "why": "sugar는 셀 수 없어서 There isn't any" }
+  ]
+}

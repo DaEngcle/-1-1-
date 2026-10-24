@@ -1,0 +1,232 @@
+{
+  "unit": 18,
+  "title": "과거진행 부정문·의문문 (wasn't ~ing / Were you ~ing?)",
+  "emoji": "🤔",
+  "goal": "'~하고 있지 않았어요', '~하고 있었어요?'를 말하고 짧게 대답할 수 있어요.",
+  "points": [
+    {
+      "title": "부정문은 wasn't / weren't + -ing",
+      "body": "was 뒤에 not을 붙이면 돼요. was not = wasn't, were not = weren't. I wasn't sleeping.(나는 자고 있지 않았어요)처럼 써요."
+    },
+    {
+      "title": "의문문은 Was / Were를 맨 앞에",
+      "body": "was와 were를 주어 앞으로 보내면 질문이 돼요. You were working. → Were you working?"
+    },
+    {
+      "title": "Did가 아니라 Was / Were",
+      "body": "-ing가 있는 문장은 Did를 쓰지 않아요. 'Did you sleeping?'이 아니라 'Were you sleeping?'이에요."
+    },
+    {
+      "title": "짧은 대답",
+      "body": "Was로 물으면 was / wasn't, Were로 물으면 were / weren't로 대답해요. Yes, she was. / No, they weren't."
+    }
+  ],
+  "formula": [
+    "I / He / She / It + wasn't + 동사-ing",
+    "You / We / They + weren't + 동사-ing",
+    "Was / Were + 주어 + 동사-ing ...?",
+    "Yes, 주어 + was/were. / No, 주어 + wasn't/weren't."
+  ],
+  "mistakes": [
+    {
+      "wrong": "Did you sleeping?",
+      "right": "Were you sleeping?",
+      "why": "'~하고 있었니?'는 Did가 아니라 Was/Were로 시작해요. -ing와 Did는 같이 못 써요."
+    },
+    {
+      "wrong": "They wasn't eating.",
+      "right": "They weren't eating.",
+      "why": "They, We, You는 부정문에서도 weren't예요."
+    },
+    {
+      "wrong": "\"Was Diane washing her car?\" \"Yes, she did.\"",
+      "right": "\"Was Diane washing her car?\" \"Yes, she was.\"",
+      "why": "Was로 물었으니 대답도 was로 해요. 한국어로는 둘 다 '응'이라 헷갈려요."
+    }
+  ],
+  "examples": [
+    {
+      "en": "\"Did I wake you?\" \"No, I wasn't sleeping.\"",
+      "ko": "\"내가 너 깨웠어?\" \"아니, 안 자고 있었어.\""
+    },
+    {
+      "en": "Ken wasn't jogging at 8. He was at home.",
+      "ko": "Ken은 8시에 조깅하고 있지 않았어요. 집에 있었어요."
+    },
+    {
+      "en": "\"Sorry I'm late.\" \"Don't worry. We weren't waiting long.\"",
+      "ko": "\"늦어서 미안해.\" \"괜찮아. 우리 오래 안 기다렸어.\""
+    },
+    {
+      "en": "Nick and Joe weren't eating. They were still looking at the menu.",
+      "ko": "Nick과 Joe는 먹고 있지 않았어요. 아직 메뉴를 보고 있었어요."
+    },
+    {
+      "en": "Was I talking too loudly?",
+      "ko": "내가 너무 크게 말하고 있었어?"
+    },
+    {
+      "en": "\"Was Lou driving?\" \"No. I was driving.\"",
+      "ko": "\"Lou가 운전하고 있었어?\" \"아니. 내가 운전하고 있었어.\""
+    },
+    {
+      "en": "\"Were you working in LA in 2010?\" \"No, I was in Seattle.\"",
+      "ko": "\"너 2010년에 LA에서 일하고 있었어?\" \"아니, 난 시애틀에 있었어.\""
+    },
+    {
+      "en": "\"Was Diane washing her car when you saw her?\" \"Yes, she was.\"",
+      "ko": "\"네가 Diane을 봤을 때 그녀는 세차하고 있었어?\" \"응, 하고 있었어.\""
+    }
+  ],
+  "quiz": [
+    {
+      "type": "blank",
+      "sentence": "Ken ___ jogging at 8. He was at home.",
+      "answer": "wasn't",
+      "choices": [
+        "wasn't",
+        "weren't",
+        "didn't",
+        "isn't"
+      ],
+      "ko": "Ken은 8시에 조깅하고 있지 않았어요. 집에 있었어요.",
+      "why": "Ken은 한 명이고 과거니까 wasn't + -ing"
+    },
+    {
+      "type": "blank",
+      "sentence": "___ you working on the farm last summer?",
+      "answer": "Were",
+      "choices": [
+        "Were",
+        "Was",
+        "Did",
+        "Are"
+      ],
+      "ko": "너 지난여름에 농장에서 일하고 있었어?",
+      "why": "you는 Were로 묻고, -ing가 있으면 Did는 못 써요"
+    },
+    {
+      "type": "blank",
+      "sentence": "\"Was Lou driving?\" \"No, he ___.\"",
+      "answer": "wasn't",
+      "choices": [
+        "wasn't",
+        "didn't",
+        "weren't",
+        "isn't"
+      ],
+      "ko": "\"Lou가 운전하고 있었어?\" \"아니, 안 하고 있었어.\"",
+      "why": "Was로 물으면 wasn't로 대답"
+    },
+    {
+      "type": "blank",
+      "sentence": "We weren't ___ long.",
+      "answer": "waiting",
+      "choices": [
+        "waiting",
+        "wait",
+        "waited",
+        "waits"
+      ],
+      "ko": "우리 오래 안 기다렸어.",
+      "why": "weren't 뒤에는 동사-ing"
+    },
+    {
+      "type": "blank",
+      "sentence": "___ I talking too loudly?",
+      "answer": "Was",
+      "choices": [
+        "Was",
+        "Were",
+        "Did",
+        "Do"
+      ],
+      "ko": "내가 너무 크게 말하고 있었어?",
+      "why": "I는 Was로 질문해요"
+    },
+    {
+      "type": "translate",
+      "ko": "Nick과 Joe는 먹고 있지 않았어요.",
+      "answer": "Nick and Joe weren't eating.",
+      "choices": [
+        "Nick and Joe wasn't eating.",
+        "Nick and Joe weren't eating.",
+        "Nick and Joe didn't eating.",
+        "Nick and Joe weren't eat."
+      ],
+      "why": "두 사람이니까 weren't + eating"
+    },
+    {
+      "type": "translate",
+      "ko": "내가 전화했을 때 너 자고 있었어?",
+      "answer": "Were you sleeping when I called?",
+      "choices": [
+        "Was you sleeping when I called?",
+        "Did you sleeping when I called?",
+        "Were you sleeping when I called?",
+        "Were you sleep when I called?"
+      ],
+      "why": "you는 Were + 주어 + 동사-ing"
+    },
+    {
+      "type": "translate",
+      "ko": "그녀는 트램을 기다리고 있지 않았어요.",
+      "answer": "She wasn't waiting for the tram.",
+      "choices": [
+        "She weren't waiting for the tram.",
+        "She didn't waiting for the tram.",
+        "She wasn't wait for the tram.",
+        "She wasn't waiting for the tram."
+      ],
+      "why": "She는 wasn't + waiting"
+    },
+    {
+      "type": "translate",
+      "ko": "\"네 하우스메이트들 TV 보고 있었어?\" \"응, 보고 있었어.\"",
+      "answer": "\"Were your housemates watching TV?\" \"Yes, they were.\"",
+      "choices": [
+        "\"Were your housemates watching TV?\" \"Yes, they were.\"",
+        "\"Were your housemates watching TV?\" \"Yes, they did.\"",
+        "\"Was your housemates watching TV?\" \"Yes, they was.\"",
+        "\"Did your housemates watching TV?\" \"Yes, they did.\""
+      ],
+      "why": "housemates는 여럿이니까 Were로 묻고 were로 대답"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "I wasn't listening to music.",
+      "choices": [
+        "I weren't listening to music.",
+        "I didn't listening to music.",
+        "I wasn't listening to music.",
+        "I wasn't listen to music."
+      ],
+      "why": "I는 wasn't + listening"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Was it raining in Melbourne?",
+      "choices": [
+        "Were it raining in Melbourne?",
+        "Did it raining in Melbourne?",
+        "Was it rain in Melbourne?",
+        "Was it raining in Melbourne?"
+      ],
+      "why": "It은 Was + it + raining"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "\"Were they working?\" \"No, they weren't.\"",
+      "choices": [
+        "\"Were they working?\" \"No, they wasn't.\"",
+        "\"Were they working?\" \"No, they weren't.\"",
+        "\"Were they working?\" \"No, they didn't.\"",
+        "\"Were they working?\" \"No, they aren't.\""
+      ],
+      "why": "Were로 물으면 weren't로 대답"
+    }
+  ]
+}

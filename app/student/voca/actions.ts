@@ -31,5 +31,6 @@ export async function saveVocaResult(deck: string, percent: number, wrong: strin
   const points = Math.min(30, Math.round((score / 100) * Math.max(1, Math.min(15, count))) * 2);
   await addVocaPlay(student.id, points);
   revalidatePath("/student/voca", "layout");
+  revalidatePath("/student/grammar", "layout");
   revalidatePath("/student");
 }

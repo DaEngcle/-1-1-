@@ -165,7 +165,7 @@ export const VERB_SETS: { id: number; title: string; verbs: Verb[] }[] = [
 /** 무료회원은 앞 2세트만 */
 export const FREE_VERB_SETS = 2;
 
-/** 보카 세트를 전부 열 수 있는지: 수강권이 있거나, 선생님이 '보카 전체 열기'를 해 준 학생 (예: 초급반) */
+/** 보카·기초 문법을 전부 열 수 있는지: 수강권이 있거나, 선생님이 '보카 전체 열기'를 해 준 학생 (예: 초급반) */
 export function hasFullVoca(student: { courses: readonly string[]; earlyCourses: readonly string[] }) {
   return student.courses.length > 0 || student.earlyCourses.includes("voca");
 }

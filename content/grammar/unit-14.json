@@ -1,0 +1,48 @@
+{
+  "unit": 14,
+  "title": "be동사 과거 부정문·의문문 (wasn't / Were you ~?)",
+  "emoji": "❓",
+  "goal": "wasn't / weren't로 '~이 아니었어요, ~에 없었어요'라고 말하고, Was / Were로 지난 일을 물어보고 대답할 수 있어요.",
+  "points": [
+    { "title": "부정문: was / were + not", "body": "'~이 아니었어요', '~에 없었어요'는 was / were 뒤에 not을 붙여요. 줄이면 was not = wasn't, were not = weren't예요." },
+    { "title": "누가 wasn't, 누가 weren't?", "body": "I, he, she, it은 wasn't, we, you, they는 weren't를 써요. 앞 유닛의 was / were와 짝이 똑같아요." },
+    { "title": "의문문: was / were를 맨 앞으로", "body": "'~이었어요?', '~에 있었어요?'는 was / were를 주어 앞으로 보내요. You were busy. → Were you busy? / Tom was at his desk. → Was Tom at his desk?" },
+    { "title": "짧게 대답하기", "body": "Yes, I was. / No, I wasn't.처럼 was / were로 짧게 대답해요. Were you ~?로 물으면 나에 대한 질문이니까 I was / I wasn't로 대답해요." },
+    { "title": "꼭 Yes / No만 하지 않아도 돼요", "body": "실제 대화에서는 \"Not really.(별로요.)\"처럼 부드럽게 대답하기도 해요." }
+  ],
+  "formula": [
+    "I / He / She / It + was not (= wasn't) + ...",
+    "We / You / They + were not (= weren't) + ...",
+    "Was + I / he / she / it + ...?",
+    "Were + we / you / they + ...?"
+  ],
+  "mistakes": [
+    { "wrong": "I not was at home.", "right": "I wasn't at home.", "why": "한국어는 '안'이 앞에 오지만, 영어는 not이 was / were 뒤에 와요." },
+    { "wrong": "Was you busy yesterday?", "right": "Were you busy yesterday?", "why": "you는 한 명이어도 항상 were예요. 질문에서도 Were you ~?" },
+    { "wrong": "\"Were you tired?\" \"Yes, I were.\"", "right": "\"Were you tired?\" \"Yes, I was.\"", "why": "질문은 Were you였지만, 대답의 주어는 I니까 was로 바꿔요." }
+  ],
+  "examples": [
+    { "en": "I was not good at math in high school.", "ko": "나는 고등학교 때 수학을 잘 못했어요." },
+    { "en": "My vacation was fun, but it wasn't very long.", "ko": "휴가는 즐거웠지만 그리 길지 않았어요." },
+    { "en": "Melanie and I weren't friends a year ago. Now we're best friends.", "ko": "Melanie와 나는 1년 전에는 친구가 아니었어요. 지금은 가장 친한 친구예요." },
+    { "en": "\"You weren't at the office last week.\" \"I was on a business trip.\"", "ko": "\"지난주에 사무실에 없었네요.\" \"출장 중이었어요.\"" },
+    { "en": "Was Tom at his desk this morning?", "ko": "Tom이 오늘 아침에 자리에 있었나요?" },
+    { "en": "\"Were you busy yesterday?\" \"Not really.\"", "ko": "\"어제 바빴어요?\" \"별로 안 바빴어요.\"" },
+    { "en": "\"Were you at the mall last night?\" \"Yes, I was.\"", "ko": "\"어젯밤에 쇼핑몰에 있었어요?\" \"네, 있었어요.\"" },
+    { "en": "\"Was the movie good?\" \"No, it wasn't.\"", "ko": "\"그 영화 좋았어요?\" \"아니요, 별로였어요.\"" }
+  ],
+  "quiz": [
+    { "type": "blank", "sentence": "I ___ at work yesterday. It was my day off.", "answer": "wasn't", "choices": ["wasn't", "weren't", "don't", "not"], "ko": "어제는 직장에 없었어요. 쉬는 날이었거든요.", "why": "I의 과거 부정은 wasn't." },
+    { "type": "blank", "sentence": "___ you at the beach last weekend?", "answer": "Were", "choices": ["Were", "Was", "Are", "Did"], "ko": "지난 주말에 해변에 있었어요?", "why": "you의 과거 질문은 Were you ~?" },
+    { "type": "blank", "sentence": "___ the bus late yesterday morning?", "answer": "Was", "choices": ["Was", "Were", "Is", "Does"], "ko": "어제 아침에 버스가 늦었어요?", "why": "the bus는 하나니까 Was. yesterday morning은 과거예요." },
+    { "type": "blank", "sentence": "The rooms ___ clean last night.", "answer": "weren't", "choices": ["weren't", "wasn't", "isn't", "not"], "ko": "어젯밤에 방들이 깨끗하지 않았어요.", "why": "the rooms는 여러 개라 weren't." },
+    { "type": "blank", "sentence": "\"Was the movie good?\" \"No, it ___.\"", "answer": "wasn't", "choices": ["wasn't", "weren't", "isn't", "didn't"], "ko": "\"그 영화 좋았어요?\" \"아니요, 별로였어요.\"", "why": "Was로 물으면 wasn't로 대답해요. it은 wasn't." },
+    { "type": "translate", "ko": "어제 바빴어요?", "answer": "Were you busy yesterday?", "choices": ["Were you busy yesterday?", "Was you busy yesterday?", "Are you busy yesterday?", "Did you busy yesterday?"], "why": "you는 were. 질문이니까 Were를 맨 앞에." },
+    { "type": "translate", "ko": "우리는 1년 전에 친구가 아니었어요.", "answer": "We weren't friends a year ago.", "choices": ["We weren't friends a year ago.", "We wasn't friends a year ago.", "We aren't friends a year ago.", "We not were friends a year ago."], "why": "We의 과거 부정은 weren't. not은 were 뒤에 와요." },
+    { "type": "translate", "ko": "Tom이 오늘 아침에 자리에 있었나요?", "answer": "Was Tom at his desk this morning?", "choices": ["Was Tom at his desk this morning?", "Were Tom at his desk this morning?", "Did Tom at his desk this morning?", "Was Tom his desk this morning?"], "why": "Tom은 한 명이니까 Was. '~에 있었다'는 at + 장소." },
+    { "type": "translate", "ko": "그 호텔은 별로 좋지 않았어요.", "answer": "The hotel wasn't very nice.", "choices": ["The hotel wasn't very nice.", "The hotel weren't very nice.", "The hotel didn't very nice.", "The hotel not was very nice."], "why": "the hotel은 하나니까 wasn't. not very nice = 별로 좋지 않은." },
+    { "type": "fix", "prompt": "\"Were you at the mall last night?\"에 맞는 대답을 고르세요.", "answer": "Yes, I was.", "choices": ["Yes, I was.", "Yes, I were.", "Yes, I am.", "Yes, you were."], "why": "나에 대한 질문이니까 주어는 I, 그래서 was." },
+    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "My parents weren't in Korea last month.", "choices": ["My parents weren't in Korea last month.", "My parents wasn't in Korea last month.", "My parents didn't in Korea last month.", "My parents not were in Korea last month."], "why": "my parents는 여러 명이라 weren't." },
+    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "Was it cold in Melbourne yesterday?", "choices": ["Was it cold in Melbourne yesterday?", "Were it cold in Melbourne yesterday?", "Is it cold in Melbourne yesterday?", "Was cold it in Melbourne yesterday?"], "why": "it은 was. 질문은 Was + it + cold 순서." }
+  ]
+}

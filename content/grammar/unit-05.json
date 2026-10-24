@@ -1,0 +1,48 @@
+{
+  "unit": 5,
+  "title": "일반동사 부정문·의문문 (don't / doesn't / Do ~? / Does ~?)",
+  "emoji": "🙅",
+  "goal": "일반동사로 '~하지 않아요'라고 말하고, '~해요?'라고 묻고 짧게 대답할 수 있어요.",
+  "points": [
+    { "title": "안 한다고 할 때: don't", "body": "I, you, we, they는 동사 앞에 don't(do not)를 넣어요. I don't drink coffee.(저는 커피를 안 마셔요.)" },
+    { "title": "he, she, it은 doesn't", "body": "he, she, it은 doesn't(does not)를 써요. 이때 동사는 -s 없이 원래 모양으로 돌아가요. She doesn't work on Sundays." },
+    { "title": "물어볼 때: Do / Does", "body": "문장 맨 앞에 Do나 Does를 붙여요. he, she, it이면 Does, 나머지는 Do예요. Does에 -s가 이미 있어서 뒤의 동사는 원래 모양 그대로 써요." },
+    { "title": "짧게 대답하기", "body": "Yes, I do. / No, I don't. / Yes, she does. / No, she doesn't.처럼 do나 does로 대답해요." },
+    { "title": "be동사 문장과 구별하기", "body": "am, is, are 문장은 not을 붙이거나 순서를 바꾸고, 일반동사 문장은 do / does를 써요. Are you tired? / Do you like it?" }
+  ],
+  "formula": [
+    "I / You / We / They + don't + 동사 원래 모양",
+    "He / She / It + doesn't + 동사 원래 모양 (-s 없이)",
+    "Do + I / you / we / they + 동사 원래 모양 ...? / Does + he / she / it + 동사 원래 모양 ...?",
+    "Yes, 주어 + do / does. / No, 주어 + don't / doesn't."
+  ],
+  "mistakes": [
+    { "wrong": "She doesn't works on Mondays.", "right": "She doesn't work on Mondays.", "why": "앞 유닛에서 배운 -s를 습관처럼 붙이기 쉬워요. doesn't가 -s를 가져가니 동사는 원래 모양으로 써요." },
+    { "wrong": "Does he likes coffee?", "right": "Does he like coffee?", "why": "Does가 앞에 오면 동사의 -s는 빼요. -s는 한 문장에 한 번만이라고 기억하세요." },
+    { "wrong": "I not like spicy food.", "right": "I don't like spicy food.", "why": "한국어 '안'처럼 not만 넣기 쉬운데, 일반동사는 don't를 동사 앞에 넣어야 해요." }
+  ],
+  "examples": [
+    { "en": "I don't eat meat.", "ko": "저는 고기를 안 먹어요." },
+    { "en": "We don't work on public holidays.", "ko": "우리는 공휴일에는 일 안 해요." },
+    { "en": "My housemate doesn't cook.", "ko": "제 하우스메이트는 요리를 안 해요." },
+    { "en": "Do you have a car?", "ko": "차 있으세요?" },
+    { "en": "Does this tram go to the city?", "ko": "이 트램 시내로 가요?" },
+    { "en": "Do you like Vegemite? — No, I don't.", "ko": "베지마이트 좋아하세요? — 아니요, 안 좋아해요." },
+    { "en": "Does she speak Korean? — Yes, she does.", "ko": "그녀는 한국어를 할 줄 알아요? — 네, 해요." },
+    { "en": "The shop doesn't open on Sundays.", "ko": "그 가게는 일요일에 문을 안 열어요." }
+  ],
+  "quiz": [
+    { "type": "blank", "sentence": "I ___ drink coffee.", "answer": "don't", "choices": ["don't", "doesn't", "am not", "not"], "ko": "저는 커피를 안 마셔요.", "why": "I는 don't를 동사 앞에 넣어요." },
+    { "type": "blank", "sentence": "He ___ live in Sydney.", "answer": "doesn't", "choices": ["doesn't", "don't", "isn't", "not"], "ko": "그는 시드니에 살지 않아요.", "why": "he는 doesn't를 써요. 일반동사 문장이라 isn't는 안 돼요." },
+    { "type": "blank", "sentence": "___ you work on weekends?", "answer": "Do", "choices": ["Do", "Does", "Are", "Is"], "ko": "주말에 일하세요?", "why": "you가 주인공인 일반동사 질문은 Do로 시작해요." },
+    { "type": "blank", "sentence": "Does she ___ at the farm?", "answer": "work", "choices": ["work", "works", "working", "worked"], "ko": "그녀는 농장에서 일해요?", "why": "Does 뒤에는 동사 원래 모양을 써요." },
+    { "type": "blank", "sentence": "Do they like the beach? — Yes, they ___.", "answer": "do", "choices": ["do", "does", "are", "like"], "ko": "그들은 해변을 좋아해요? — 네, 좋아해요.", "why": "Do로 물으면 Yes, they do.처럼 do로 대답해요." },
+    { "type": "translate", "ko": "그녀는 고기를 안 먹어요.", "answer": "She doesn't eat meat.", "choices": ["She doesn't eat meat.", "She doesn't eats meat.", "She don't eat meat.", "She isn't eat meat."], "why": "she는 doesn't + 동사 원래 모양(eat)이에요." },
+    { "type": "translate", "ko": "이 버스 시내로 가요?", "answer": "Does this bus go to the city?", "choices": ["Does this bus go to the city?", "Do this bus go to the city?", "Does this bus goes to the city?", "Is this bus go to the city?"], "why": "this bus는 하나(=it)라서 Does, 뒤에는 원래 모양 go예요." },
+    { "type": "translate", "ko": "우리는 차가 없어요.", "answer": "We don't have a car.", "choices": ["We don't have a car.", "We doesn't have a car.", "We aren't have a car.", "We don't has a car."], "why": "we는 don't + 동사 원래 모양(have)이에요." },
+    { "type": "translate", "ko": "영어 하세요? — 네, 해요.", "answer": "Do you speak English? — Yes, I do.", "choices": ["Do you speak English? — Yes, I do.", "Do you speak English? — Yes, I am.", "Does you speak English? — Yes, I do.", "Are you speak English? — Yes, I do."], "why": "you는 Do로 묻고, 대답도 do로 해요." },
+    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "My manager doesn't drink coffee.", "choices": ["My manager doesn't drink coffee.", "My manager don't drink coffee.", "My manager doesn't drinks coffee.", "My manager not drink coffee."], "why": "my manager는 한 사람이라 doesn't, 뒤에는 원래 모양 drink예요." },
+    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "Do your housemates cook?", "choices": ["Do your housemates cook?", "Does your housemates cook?", "Do your housemates cooks?", "Are your housemates cook?"], "why": "housemates는 여러 명(=they)이라 Do로 묻고, 동사는 원래 모양이에요." },
+    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "Does he play soccer? — No, he doesn't.", "choices": ["Does he play soccer? — No, he doesn't.", "Does he play soccer? — No, he don't.", "Does he plays soccer? — No, he doesn't.", "Do he play soccer? — No, he doesn't."], "why": "he는 Does로 묻고 doesn't로 대답해요. Does 뒤 동사는 원래 모양이에요." }
+  ]
+}

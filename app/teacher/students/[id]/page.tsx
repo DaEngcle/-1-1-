@@ -439,12 +439,12 @@ export default async function TeacherStudentPage({
             className="mt-3 flex flex-wrap items-center gap-2 border-t border-slate-100 pt-3 text-sm"
           >
             <span className="text-xs font-semibold text-zinc-700">
-              🎮 보카 세트 {(student.early_courses ?? []).includes("voca") ? "전체 열림" : "1~2세트만 열림 (무료회원)"}
+              🎮 보카·🐤 문법 {(student.early_courses ?? []).includes("voca") ? "전체 열림" : "앞부분만 열림 (무료회원)"}
             </span>
             <SubmitButton className="rounded-lg border border-slate-300 px-3 py-1 text-xs font-semibold">
               {(student.early_courses ?? []).includes("voca") ? "다시 잠그기" : "전체 열어주기"}
             </SubmitButton>
-            <span className="w-full text-xs text-zinc-500">수강권 없이 초급반만 듣는 학생 등에게 보카를 다 열어줄 때 써요.</span>
+            <span className="w-full text-xs text-zinc-500">수강권 없이 초급반만 듣는 학생 등에게 보카와 기초 문법을 다 열어줄 때 써요.</span>
           </form>
         )}
         {(courseRows ?? []).some((c) => c.status !== "open") && (

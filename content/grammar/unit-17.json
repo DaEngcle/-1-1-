@@ -1,0 +1,235 @@
+{
+  "unit": 17,
+  "title": "과거진행 (was / were + -ing)",
+  "emoji": "⏳",
+  "goal": "was / were + -ing로 과거 어느 순간에 '~하고 있었어요'를 말할 수 있어요.",
+  "points": [
+    {
+      "title": "과거의 '하고 있던' 일",
+      "body": "과거진행은 과거의 어느 한 순간에 한창 하고 있던 일을 말해요. '어제 9시에 나는 일하고 있었어요'처럼요."
+    },
+    {
+      "title": "was일까 were일까",
+      "body": "I, He, She, It처럼 한 사람(하나)이면 was, You, We, They처럼 여럿이거나 you면 were를 써요. 앞에서 배운 be동사 과거형 규칙과 똑같아요."
+    },
+    {
+      "title": "동사에 -ing 붙이기",
+      "body": "대부분 동사 뒤에 -ing만 붙이면 돼요(work → working). e로 끝나면 e를 빼고(make → making), swim처럼 짧은 동사는 끝 글자를 한 번 더 써요(swim → swimming)."
+    },
+    {
+      "title": "when과 단짝",
+      "body": "'내가 ~했을 때 ~하고 있었다'는 'when + 주어 + 과거형'과 같이 써요. He was cooking when I called.처럼 when 쪽은 그냥 과거형이에요."
+    },
+    {
+      "title": "과거 vs 과거진행",
+      "body": "I cooked dinner.는 '저녁을 했다(끝난 일)', I was cooking dinner.는 '저녁을 하던 중이었다'는 느낌이에요."
+    }
+  ],
+  "formula": [
+    "I / He / She / It + was + 동사-ing",
+    "You / We / They + were + 동사-ing",
+    "주어 + was/were + 동사-ing + when + 주어 + 과거형"
+  ],
+  "mistakes": [
+    {
+      "wrong": "They was watching TV.",
+      "right": "They were watching TV.",
+      "why": "They, We, You는 were예요. 주어가 여럿이면 were인지 꼭 확인하세요."
+    },
+    {
+      "wrong": "She was cook dinner.",
+      "right": "She was cooking dinner.",
+      "why": "한국어 '~하고 있었다'를 was만으로 표현하면 안 돼요. was 뒤의 동사에 반드시 -ing를 붙여요."
+    },
+    {
+      "wrong": "I was makeing coffee.",
+      "right": "I was making coffee.",
+      "why": "e로 끝나는 동사는 e를 빼고 -ing를 붙여요(make → making)."
+    }
+  ],
+  "examples": [
+    {
+      "en": "I was working at the café at 9 am yesterday.",
+      "ko": "나는 어제 오전 9시에 카페에서 일하고 있었어요."
+    },
+    {
+      "en": "My housemates were watching TV when I got home.",
+      "ko": "내가 집에 왔을 때 하우스메이트들은 TV를 보고 있었어요."
+    },
+    {
+      "en": "It was raining all morning.",
+      "ko": "아침 내내 비가 오고 있었어요."
+    },
+    {
+      "en": "She was waiting for the tram at 8 o'clock.",
+      "ko": "그녀는 8시에 트램을 기다리고 있었어요."
+    },
+    {
+      "en": "We were swimming at the beach yesterday afternoon.",
+      "ko": "우리는 어제 오후에 해변에서 수영하고 있었어요."
+    },
+    {
+      "en": "He was cooking dinner when I called him.",
+      "ko": "내가 전화했을 때 그는 저녁을 만들고 있었어요."
+    },
+    {
+      "en": "At 10 am, they were picking strawberries on the farm.",
+      "ko": "오전 10시에 그들은 농장에서 딸기를 따고 있었어요."
+    },
+    {
+      "en": "I was studying English at this time yesterday.",
+      "ko": "나는 어제 이 시간에 영어 공부를 하고 있었어요."
+    }
+  ],
+  "quiz": [
+    {
+      "type": "blank",
+      "sentence": "I ___ working at the café at 9 am yesterday.",
+      "answer": "was",
+      "choices": [
+        "was",
+        "were",
+        "is",
+        "be"
+      ],
+      "ko": "나는 어제 오전 9시에 카페에서 일하고 있었어요.",
+      "why": "주어가 I이고 어제 일이니까 was + -ing"
+    },
+    {
+      "type": "blank",
+      "sentence": "My housemates ___ watching TV when I got home.",
+      "answer": "were",
+      "choices": [
+        "were",
+        "was",
+        "is",
+        "be"
+      ],
+      "ko": "내가 집에 왔을 때 하우스메이트들은 TV를 보고 있었어요.",
+      "why": "housemates는 여러 명이니까 were"
+    },
+    {
+      "type": "blank",
+      "sentence": "She was ___ for the tram at 8 o'clock.",
+      "answer": "waiting",
+      "choices": [
+        "waiting",
+        "wait",
+        "waited",
+        "waits"
+      ],
+      "ko": "그녀는 8시에 트램을 기다리고 있었어요.",
+      "why": "was 뒤에는 동사-ing"
+    },
+    {
+      "type": "blank",
+      "sentence": "We were ___ at the beach yesterday afternoon.",
+      "answer": "swimming",
+      "choices": [
+        "swimming",
+        "swiming",
+        "swim",
+        "swam"
+      ],
+      "ko": "우리는 어제 오후에 해변에서 수영하고 있었어요.",
+      "why": "swim은 m을 한 번 더 써서 swimming"
+    },
+    {
+      "type": "blank",
+      "sentence": "It ___ raining all morning yesterday.",
+      "answer": "was",
+      "choices": [
+        "was",
+        "were",
+        "are",
+        "did"
+      ],
+      "ko": "어제 아침 내내 비가 오고 있었어요.",
+      "why": "It은 was, 과거 일이니까 was + -ing"
+    },
+    {
+      "type": "translate",
+      "ko": "그는 어젯밤 10시에 요리하고 있었어요.",
+      "answer": "He was cooking at 10 last night.",
+      "choices": [
+        "He were cooking at 10 last night.",
+        "He was cook at 10 last night.",
+        "He was cooking at 10 last night.",
+        "He is cooking at 10 last night."
+      ],
+      "why": "He는 was, 그리고 동사는 cooking"
+    },
+    {
+      "type": "translate",
+      "ko": "그들은 농장에서 딸기를 따고 있었어요.",
+      "answer": "They were picking strawberries on the farm.",
+      "choices": [
+        "They was picking strawberries on the farm.",
+        "They were picking strawberries on the farm.",
+        "They were pick strawberries on the farm.",
+        "They picking strawberries on the farm."
+      ],
+      "why": "They는 were + 동사-ing, were를 빼면 안 돼요"
+    },
+    {
+      "type": "translate",
+      "ko": "내가 전화했을 때 너는 자고 있었어.",
+      "answer": "You were sleeping when I called.",
+      "choices": [
+        "You was sleeping when I called.",
+        "You were sleep when I called.",
+        "You are sleeping when I called.",
+        "You were sleeping when I called."
+      ],
+      "why": "You는 were, when 뒤는 과거형 called"
+    },
+    {
+      "type": "translate",
+      "ko": "우리는 어제 이 시간에 영어 공부를 하고 있었어요.",
+      "answer": "We were studying English at this time yesterday.",
+      "choices": [
+        "We were studying English at this time yesterday.",
+        "We was studying English at this time yesterday.",
+        "We were study English at this time yesterday.",
+        "We are studying English at this time yesterday."
+      ],
+      "why": "We는 were + studying, yesterday라서 과거"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "My boss was talking on the phone.",
+      "choices": [
+        "My boss were talking on the phone.",
+        "My boss was talk on the phone.",
+        "My boss was talking on the phone.",
+        "My boss talking on the phone."
+      ],
+      "why": "boss는 한 명이니까 was + talking"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "The kids were playing on the beach.",
+      "choices": [
+        "The kids was playing on the beach.",
+        "The kids were play on the beach.",
+        "The kids was play on the beach.",
+        "The kids were playing on the beach."
+      ],
+      "why": "kids는 여럿이니까 were + playing"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "I was making coffee when you came in.",
+      "choices": [
+        "I was make coffee when you came in.",
+        "I were making coffee when you came in.",
+        "I was making coffee when you came in.",
+        "I was makeing coffee when you came in."
+      ],
+      "why": "I는 was, make는 e를 빼고 making"
+    }
+  ]
+}

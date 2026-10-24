@@ -1,0 +1,46 @@
+{
+  "unit": 7,
+  "title": "현재진행 부정문·의문문 (I'm not ~ / Are you ~ing?)",
+  "emoji": "🤔",
+  "goal": "'지금 ~하고 있지 않아요'라고 말하고, 'Are you ~ing?'로 묻고 짧게 대답할 수 있어요.",
+  "points": [
+    { "title": "부정은 be 뒤에 not", "body": "'~하고 있지 않아요'는 am/is/are 뒤에 not을 넣어요. I'm not working. / He isn't sleeping. / They aren't listening." },
+    { "title": "질문은 be를 맨 앞으로", "body": "be동사를 주어 앞으로 옮기면 질문이 돼요. You are working. → Are you working? 진행형 질문에는 Do/Does를 쓰지 않아요." },
+    { "title": "짧게 대답하기", "body": "질문의 be동사로 대답해요. Yes, I am. / No, I'm not. / Yes, she is. / No, she isn't. 'Yes'로 대답할 때는 끝을 I'm처럼 줄이지 않아요." },
+    { "title": "What are you doing?", "body": "'뭐 하고 있어요?'는 What are you doing?이라고 해요. 친구한테 정말 자주 쓰는 말이니 통째로 외워 두세요." }
+  ],
+  "formula": [
+    "주어 + am/is/are + not + 동사ing",
+    "Am / Is / Are + 주어 + 동사ing?",
+    "Yes, 주어 + am/is/are. / No, 주어 + am/is/are + not."
+  ],
+  "mistakes": [
+    { "wrong": "I don't working today.", "right": "I'm not working today.", "why": "부정문이면 무조건 don't를 쓰는 습관 때문이에요. 동사ing가 있으면 be동사 + not으로 만들어요." },
+    { "wrong": "Do you waiting for the tram?", "right": "Are you waiting for the tram?", "why": "질문은 Do로 시작한다고 외워서 생기는 실수예요. 진행형 질문은 Are/Is/Am으로 시작해요." },
+    { "wrong": "Yes, I'm.", "right": "Yes, I am.", "why": "줄임말을 쓰다 보면 대답 끝까지 줄이기 쉬워요. 문장 끝에 오는 am/is/are는 줄이지 않아요." }
+  ],
+  "examples": [
+    { "en": "I'm not working right now.", "ko": "저 지금은 일 안 하고 있어요." },
+    { "en": "She isn't sleeping. She's watching TV.", "ko": "그녀는 자고 있지 않아요. TV를 보고 있어요." },
+    { "en": "We aren't using the washing machine.", "ko": "우리는 세탁기 안 쓰고 있어요." },
+    { "en": "Are you looking for a room?", "ko": "방 구하고 있어요?" },
+    { "en": "Is it raining outside?", "ko": "밖에 비 오고 있어요?" },
+    { "en": "Are they working on the farm this week?", "ko": "그 사람들 이번 주에 농장에서 일하고 있어요?" },
+    { "en": "Is he coming? — No, he isn't.", "ko": "그 사람 오고 있어요? — 아니요, 안 오고 있어요." },
+    { "en": "What are you doing? — I'm making lunch.", "ko": "뭐 하고 있어요? — 점심 만들고 있어요." }
+  ],
+  "quiz": [
+    { "type": "blank", "sentence": "I'm ___ watching TV.", "answer": "not", "choices": ["no", "not", "don't", "isn't"], "ko": "저는 TV 안 보고 있어요.", "why": "I'm 뒤에 not을 넣어 부정" },
+    { "type": "blank", "sentence": "___ you waiting for the tram?", "answer": "Are", "choices": ["Are", "Is", "Do", "Am"], "ko": "트램 기다리고 있어요?", "why": "you의 be동사는 are, 질문이라 맨 앞으로" },
+    { "type": "blank", "sentence": "___ she working at the café now?", "answer": "Is", "choices": ["Are", "Does", "Is", "Am"], "ko": "그녀는 지금 카페에서 일하고 있어요?", "why": "she의 be동사는 is, 진행형 질문에는 Does를 쓰지 않아요" },
+    { "type": "blank", "sentence": "They ___ listening to me.", "answer": "aren't", "choices": ["isn't", "don't", "not", "aren't"], "ko": "그 사람들은 제 말을 안 듣고 있어요.", "why": "They는 are → 부정은 aren't" },
+    { "type": "blank", "sentence": "Are you cooking? — Yes, I ___.", "answer": "am", "choices": ["do", "am", "are", "is"], "ko": "요리하고 있어요? — 네, 하고 있어요.", "why": "I로 대답하니까 Yes, I am." },
+    { "type": "translate", "ko": "그는 자고 있지 않아요.", "answer": "He isn't sleeping.", "choices": ["He doesn't sleeping.", "He not sleeping.", "He isn't sleep.", "He isn't sleeping."], "why": "He is + not + 동사ing → He isn't sleeping." },
+    { "type": "translate", "ko": "비가 오고 있어요?", "answer": "Is it raining?", "choices": ["Is it raining?", "Does it raining?", "Is it rain?", "Are it raining?"], "why": "It은 is, 질문이라 Is를 맨 앞으로" },
+    { "type": "translate", "ko": "방을 찾고 있어요?", "answer": "Are you looking for a room?", "choices": ["Do you looking for a room?", "Are you looking for a room?", "Are you look for a room?", "Is you looking for a room?"], "why": "Are + you + 동사ing?" },
+    { "type": "translate", "ko": "우리는 TV를 보고 있지 않아요.", "answer": "We aren't watching TV.", "choices": ["We don't watching TV.", "We isn't watching TV.", "We aren't watching TV.", "We aren't watch TV."], "why": "We는 are → aren't + 동사ing" },
+    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "Is your housemate cooking now?", "choices": ["Does your housemate cooking now?", "Are your housemate cooking now?", "Is your housemate cook now?", "Is your housemate cooking now?"], "why": "your housemate는 한 사람이라 Is, 동사에 ing" },
+    { "type": "fix", "prompt": "'Are you working now?'에 대한 맞는 대답을 고르세요.", "answer": "Yes, I am.", "choices": ["Yes, I'm.", "Yes, I am.", "Yes, I do.", "Yes, I working."], "why": "Are로 물으면 be동사로 대답하고, 끝의 am은 줄이지 않아요" },
+    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "I'm not using the bathroom.", "choices": ["I amn't using the bathroom.", "I don't using the bathroom.", "I'm not use the bathroom.", "I'm not using the bathroom."], "why": "I am not은 I'm not으로 줄여요(amn't라는 말은 없어요)" }
+  ]
+}
