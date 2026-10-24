@@ -97,8 +97,8 @@ function Window({ id }: { id: string }) {
 }
 
 /** 고양이 크기·위치 (방 좌표) */
-const CAT = { x: 37, width: 22, base: 56 };
-const GUEST = { x: 64, width: 15, base: 52 };
+const CAT = { x: 35, width: 26, base: 55 };
+const GUEST = { x: 64, width: 17, base: 52 };
 
 /** 고양이 방 한 장면 (서버·클라이언트 공용). 바닥 물건은 아래쪽(앞)에 있을수록 나중에 그려진다 */
 export function CatRoom({
