@@ -1,0 +1,236 @@
+{
+  "unit": 58,
+  "title": "the를 쓰지 않는 경우(1) (I like dogs / have breakfast)",
+  "emoji": "🚫",
+  "goal": "일반적인 것, 식사, 운동, 교통수단, go to school 같은 표현에서 the를 빼고 말할 수 있어요.",
+  "points": [
+    {
+      "title": "'~라는 것 전체'를 말할 때",
+      "body": "개 전체, 커피 전체처럼 일반적으로 말할 때는 the 없이 복수명사나 셀 수 없는 명사를 그대로 써요. I like dogs. Coffee is expensive here. the dogs라고 하면 '그 개들'이라는 특정한 개가 돼요."
+    },
+    {
+      "title": "식사 이름 앞에는 the X",
+      "body": "breakfast, lunch, dinner 앞에는 보통 the나 a를 쓰지 않아요. have breakfast(아침을 먹다), have dinner(저녁을 먹다)."
+    },
+    {
+      "title": "운동·과목·언어 앞에도 the X",
+      "body": "play soccer, play tennis, study English, study maths처럼 운동, 과목, 언어 이름 앞에는 the를 쓰지 않아요."
+    },
+    {
+      "title": "by + 교통수단",
+      "body": "'~를 타고'는 by bus, by train, by tram, by car처럼 by 바로 뒤에 the나 a 없이 써요. 걸어서는 on foot이에요."
+    },
+    {
+      "title": "원래 목적으로 가는 장소",
+      "body": "공부하러 학교에 가면 go to school, 일하러 가면 go to work, 자러 가면 go to bed라고 해요. 집에 가다는 go home (to도 the도 없어요)."
+    }
+  ],
+  "formula": [
+    "복수명사 / 셀 수 없는 명사 = 그것 전체 (I like dogs.)",
+    "have + breakfast / lunch / dinner",
+    "play + 운동, study + 과목·언어",
+    "by + bus / train / car, go to + school / work / bed, go home"
+  ],
+  "mistakes": [
+    {
+      "wrong": "I have the breakfast at 7.",
+      "right": "I have breakfast at 7.",
+      "why": "식사 이름 앞에는 the를 붙이지 않아요."
+    },
+    {
+      "wrong": "I go to work by the bus.",
+      "right": "I go to work by bus.",
+      "why": "'~를 타고'는 by 뒤에 바로 교통수단을 써요."
+    },
+    {
+      "wrong": "Let's go to home.",
+      "right": "Let's go home.",
+      "why": "home은 '집으로'라는 뜻까지 들어 있어서 to를 쓰지 않아요."
+    }
+  ],
+  "examples": [
+    {
+      "en": "I love dogs.",
+      "ko": "저는 개를 정말 좋아해요."
+    },
+    {
+      "en": "Rent is expensive in Sydney.",
+      "ko": "시드니는 집세가 비싸요."
+    },
+    {
+      "en": "We have dinner together on Fridays.",
+      "ko": "우리는 금요일마다 같이 저녁을 먹어요."
+    },
+    {
+      "en": "My housemate plays soccer on weekends.",
+      "ko": "제 하우스메이트는 주말마다 축구를 해요."
+    },
+    {
+      "en": "I go to work by tram.",
+      "ko": "저는 트램을 타고 출근해요."
+    },
+    {
+      "en": "I study English every night.",
+      "ko": "저는 매일 밤 영어를 공부해요."
+    },
+    {
+      "en": "She goes to bed at 11.",
+      "ko": "그녀는 11시에 자요."
+    },
+    {
+      "en": "I finished my shift and went home.",
+      "ko": "저는 근무를 마치고 집에 갔어요."
+    }
+  ],
+  "quiz": [
+    {
+      "type": "blank",
+      "sentence": "I usually have ___ at 8 a.m.",
+      "answer": "breakfast",
+      "choices": [
+        "breakfast",
+        "the breakfast",
+        "a breakfast",
+        "breakfasts"
+      ],
+      "ko": "저는 보통 아침 8시에 아침을 먹어요.",
+      "why": "식사 이름 앞에는 the나 a를 쓰지 않아요."
+    },
+    {
+      "type": "blank",
+      "sentence": "I go to the farm ___ car.",
+      "answer": "by",
+      "choices": [
+        "by",
+        "by the",
+        "by a",
+        "on the"
+      ],
+      "ko": "저는 차를 타고 농장에 가요.",
+      "why": "'~를 타고'는 by + 교통수단이에요."
+    },
+    {
+      "type": "blank",
+      "sentence": "My housemate plays ___ every Saturday.",
+      "answer": "tennis",
+      "choices": [
+        "tennis",
+        "the tennis",
+        "a tennis",
+        "tennises"
+      ],
+      "ko": "제 하우스메이트는 토요일마다 테니스를 쳐요.",
+      "why": "운동 이름 앞에는 the를 쓰지 않아요."
+    },
+    {
+      "type": "blank",
+      "sentence": "I'm tired. I'm going to go ___.",
+      "answer": "home",
+      "choices": [
+        "home",
+        "to home",
+        "to the home",
+        "the home"
+      ],
+      "ko": "피곤해요. 집에 갈 거예요.",
+      "why": "go home에는 to도 the도 없어요."
+    },
+    {
+      "type": "blank",
+      "sentence": "___ are cute animals.",
+      "answer": "Koalas",
+      "choices": [
+        "Koalas",
+        "The koala",
+        "Koala",
+        "A koalas"
+      ],
+      "ko": "코알라는 귀여운 동물이에요.",
+      "why": "코알라 전체를 말하니까 the 없이 복수형 Koalas예요."
+    },
+    {
+      "type": "translate",
+      "ko": "저는 매일 영어를 공부해요.",
+      "answer": "I study English every day.",
+      "choices": [
+        "I study English every day.",
+        "I study the English every day.",
+        "I study an English every day.",
+        "I study English every the day."
+      ],
+      "why": "언어 이름 앞에는 the를 쓰지 않아요."
+    },
+    {
+      "type": "translate",
+      "ko": "그녀는 버스를 타고 학교에 가요.",
+      "answer": "She goes to school by bus.",
+      "choices": [
+        "She goes to school by bus.",
+        "She goes to school by the bus.",
+        "She goes to school by a bus.",
+        "She goes school by bus."
+      ],
+      "why": "by bus에는 the가 없고, go 뒤에는 to school이에요."
+    },
+    {
+      "type": "translate",
+      "ko": "우리는 같이 점심을 먹었어요.",
+      "answer": "We had lunch together.",
+      "choices": [
+        "We had lunch together.",
+        "We had the lunch together.",
+        "We had a lunch together.",
+        "We had lunches together."
+      ],
+      "why": "식사 이름 앞에는 the나 a를 쓰지 않아요."
+    },
+    {
+      "type": "translate",
+      "ko": "저는 커피를 좋아해요.",
+      "answer": "I like coffee.",
+      "choices": [
+        "I like coffee.",
+        "I like a coffees.",
+        "I like the coffees.",
+        "I like an coffee."
+      ],
+      "why": "커피라는 것 전체를 말할 때는 the 없이 coffee예요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "I go to bed at midnight.",
+      "choices": [
+        "I go to bed at midnight.",
+        "I go to a bed at midnight.",
+        "I go the bed at midnight.",
+        "I go to bed at the midnight."
+      ],
+      "why": "자러 갈 때는 go to bed, 자정은 at midnight이에요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "He goes to work by train.",
+      "choices": [
+        "He goes to work by train.",
+        "He goes to work by the train.",
+        "He goes to the work by train.",
+        "He goes to work by a train."
+      ],
+      "why": "go to work, by train 둘 다 the 없이 써요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "We play basketball after school.",
+      "choices": [
+        "We play basketball after school.",
+        "We play the basketball after school.",
+        "We play a basketball after school.",
+        "We play basketball after the school."
+      ],
+      "why": "운동 이름과 after school에는 the를 쓰지 않아요."
+    }
+  ]
+}

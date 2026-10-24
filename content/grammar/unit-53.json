@@ -1,0 +1,235 @@
+{
+  "unit": 53,
+  "title": "셀 수 있는 명사, 셀 수 없는 명사 (a job / work)",
+  "emoji": "🍞",
+  "goal": "셀 수 있는 명사와 셀 수 없는 명사를 구별해서 a/an과 -s를 바르게 쓸 수 있어요.",
+  "points": [
+    {
+      "title": "셀 수 있는 명사",
+      "body": "하나, 둘 셀 수 있는 것이에요. 하나일 때는 앞에 a/an을 붙이고, 여러 개일 때는 -s를 붙여요. a job, two jobs / an apple, three apples."
+    },
+    {
+      "title": "셀 수 없는 명사",
+      "body": "물·우유처럼 액체, 쌀·설탕처럼 알갱이, 돈이나 음악처럼 하나하나 세지 않는 것이에요. 앞에 a/an을 못 붙이고 -s도 안 붙여요. water, milk, rice, money, music."
+    },
+    {
+      "title": "한국인이 헷갈리는 셀 수 없는 명사",
+      "body": "advice(조언), information(정보), homework(숙제), furniture(가구), luggage(짐), bread(빵)는 영어에서 셀 수 없어요. an advice (X), informations (X)."
+    },
+    {
+      "title": "셀 수 없는 명사는 단수 취급",
+      "body": "셀 수 없는 명사가 주어면 is를 써요. The water is cold. Money is important. The information is on the website."
+    },
+    {
+      "title": "비슷한 뜻, 다른 종류",
+      "body": "job(일자리)은 셀 수 있고 work(일)는 셀 수 없어요. I'm looking for a job. = I'm looking for work. a work (X)."
+    }
+  ],
+  "formula": [
+    "셀 수 있는 명사: a/an + 명사 / 명사 + -s",
+    "셀 수 없는 명사: a/an X, -s X",
+    "셀 수 없는 명사 + is (단수 취급)"
+  ],
+  "mistakes": [
+    {
+      "wrong": "I need an advice.",
+      "right": "I need advice.",
+      "why": "한국어로는 '조언 하나'라고 할 수 있지만, advice는 셀 수 없어서 an도 -s도 붙이지 않아요."
+    },
+    {
+      "wrong": "I have a lot of homeworks.",
+      "right": "I have a lot of homework.",
+      "why": "homework는 셀 수 없어서 아무리 많아도 -s를 붙이지 않아요."
+    },
+    {
+      "wrong": "The information are on the website.",
+      "right": "The information is on the website.",
+      "why": "셀 수 없는 명사는 하나로 취급해서 is를 써요."
+    }
+  ],
+  "examples": [
+    {
+      "en": "I need a job.",
+      "ko": "일자리가 필요해요."
+    },
+    {
+      "en": "I'm looking for work in Melbourne.",
+      "ko": "멜버른에서 일을 찾고 있어요."
+    },
+    {
+      "en": "Water is free at this café.",
+      "ko": "이 카페에서는 물이 무료예요."
+    },
+    {
+      "en": "Can I have some bread, please?",
+      "ko": "빵 좀 주시겠어요?"
+    },
+    {
+      "en": "My housemate gave me good advice.",
+      "ko": "하우스메이트가 좋은 조언을 해 줬어요."
+    },
+    {
+      "en": "I bought an apple and some milk.",
+      "ko": "사과 하나랑 우유를 좀 샀어요."
+    },
+    {
+      "en": "The information is on the website.",
+      "ko": "그 정보는 웹사이트에 있어요."
+    },
+    {
+      "en": "Money isn't everything.",
+      "ko": "돈이 전부는 아니에요."
+    }
+  ],
+  "quiz": [
+    {
+      "type": "blank",
+      "sentence": "Can you give me ___ information about the job?",
+      "answer": "some",
+      "choices": [
+        "some",
+        "an",
+        "a",
+        "many"
+      ],
+      "ko": "그 일자리에 대한 정보를 좀 주시겠어요?",
+      "why": "information은 셀 수 없어서 a/an이나 many를 쓰지 않아요. some은 써도 돼요."
+    },
+    {
+      "type": "blank",
+      "sentence": "The water ___ really cold.",
+      "answer": "is",
+      "choices": [
+        "is",
+        "are",
+        "be",
+        "am"
+      ],
+      "ko": "물이 정말 차가워요.",
+      "why": "셀 수 없는 명사 water는 단수 취급 → is"
+    },
+    {
+      "type": "blank",
+      "sentence": "I'm looking for ___ job.",
+      "answer": "a",
+      "choices": [
+        "a",
+        "an",
+        "many",
+        "much"
+      ],
+      "ko": "일자리를 찾고 있어요.",
+      "why": "job은 셀 수 있고 자음 소리로 시작 → a job"
+    },
+    {
+      "type": "blank",
+      "sentence": "I have a lot of ___ tonight.",
+      "answer": "homework",
+      "choices": [
+        "homework",
+        "homeworks",
+        "a homework",
+        "homeworkes"
+      ],
+      "ko": "오늘 밤에 숙제가 많아요.",
+      "why": "homework는 셀 수 없어서 -s 없이 homework"
+    },
+    {
+      "type": "blank",
+      "sentence": "She bought two ___ at the market.",
+      "answer": "apples",
+      "choices": [
+        "apples",
+        "apple",
+        "an apple",
+        "applees"
+      ],
+      "ko": "그녀는 시장에서 사과 두 개를 샀어요.",
+      "why": "apple은 셀 수 있어서 두 개면 apples"
+    },
+    {
+      "type": "translate",
+      "ko": "조언 고마워요.",
+      "answer": "Thanks for your advice.",
+      "choices": [
+        "Thanks for your advice.",
+        "Thanks for your advices.",
+        "Thanks for your an advice.",
+        "Thanks for your a advice."
+      ],
+      "why": "advice는 셀 수 없어서 -s도 a/an도 안 붙여요."
+    },
+    {
+      "type": "translate",
+      "ko": "돈이 좀 필요해요.",
+      "answer": "I need some money.",
+      "choices": [
+        "I need some money.",
+        "I need a money.",
+        "I need some moneys.",
+        "I need an money."
+      ],
+      "why": "money는 셀 수 없는 명사예요."
+    },
+    {
+      "type": "translate",
+      "ko": "제 짐이 너무 무거워요.",
+      "answer": "My luggage is too heavy.",
+      "choices": [
+        "My luggage is too heavy.",
+        "My luggages are too heavy.",
+        "My luggage are too heavy.",
+        "My a luggage is too heavy."
+      ],
+      "why": "luggage는 셀 수 없어서 -s 없이, 동사는 is"
+    },
+    {
+      "type": "translate",
+      "ko": "셰어하우스에 가구가 많아요.",
+      "answer": "There is a lot of furniture in the share house.",
+      "choices": [
+        "There is a lot of furniture in the share house.",
+        "There are a lot of furnitures in the share house.",
+        "There is a lot of furnitures in the share house.",
+        "There are a furniture in the share house."
+      ],
+      "why": "furniture는 셀 수 없어서 -s 없이, There is"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "I need some information about the visa.",
+      "choices": [
+        "I need some information about the visa.",
+        "I need an information about the visa.",
+        "I need some informations about the visa.",
+        "I need a informations about the visa."
+      ],
+      "why": "information은 a/an도 -s도 안 붙여요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Rice is cheap at this supermarket.",
+      "choices": [
+        "Rice is cheap at this supermarket.",
+        "Rices are cheap at this supermarket.",
+        "A rice is cheap at this supermarket.",
+        "Rice are cheap at this supermarket."
+      ],
+      "why": "rice는 셀 수 없어서 -s 없이, 동사는 is"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "I'm looking for work.",
+      "choices": [
+        "I'm looking for work.",
+        "I'm looking for a work.",
+        "I'm looking for job.",
+        "I'm looking for an work."
+      ],
+      "why": "work(일)는 셀 수 없어서 a 없이. job은 셀 수 있어서 a job이 필요해요."
+    }
+  ]
+}

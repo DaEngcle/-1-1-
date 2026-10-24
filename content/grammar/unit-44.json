@@ -1,0 +1,236 @@
+{
+  "unit": 44,
+  "title": "how",
+  "emoji": "🤔",
+  "goal": "how로 방법·상태를 묻고, how much / many / old / long / often / far로 숫자와 정도를 물어볼 수 있어요.",
+  "points": [
+    {
+      "title": "how = 어떻게 / 어때요",
+      "body": "방법을 물을 때(How do you get to work? 출근 어떻게 해요?)와 상태·느낌을 물을 때(How was your day? 하루 어땠어요?) 써요."
+    },
+    {
+      "title": "호주식 인사 How are you going?",
+      "body": "How are you?와 같은 뜻으로 호주에서는 How are you going?이나 How's it going?을 정말 많이 써요. 대답은 Good, thanks!"
+    },
+    {
+      "title": "how + 형용사 = 얼마나 ~?",
+      "body": "how old(몇 살), how long(얼마나 오래 / 길게), how often(얼마나 자주), how far(얼마나 멀리)처럼 뒤에 말을 붙여 정도를 물어요."
+    },
+    {
+      "title": "how much와 how many",
+      "body": "가격이나 셀 수 없는 양은 how much(How much is this?), 하나 둘 셀 수 있는 것의 개수는 how many + 복수명사(How many housemates?)예요."
+    },
+    {
+      "title": "순서는 똑같아요",
+      "body": "How + be동사 + 주어? 또는 How + do / does / did + 주어 + 동사원형? 앞에서 배운 질문 순서 그대로예요."
+    }
+  ],
+  "formula": [
+    "How + be동사 + 주어? (상태 / 느낌)",
+    "How + do / does / did + 주어 + 동사원형? (방법)",
+    "How + old / long / often / far + ...?",
+    "How much + ...? / How many + 복수명사 + ...?"
+  ],
+  "mistakes": [
+    {
+      "wrong": "How much people work here?",
+      "right": "How many people work here?",
+      "why": "사람처럼 하나 둘 셀 수 있는 것의 수는 how many로 물어요."
+    },
+    {
+      "wrong": "How you go to work?",
+      "right": "How do you get to work?",
+      "why": "how 뒤에도 do가 필요해요. '출근하다'는 get to work가 자연스러워요."
+    },
+    {
+      "wrong": "How long time will you stay?",
+      "right": "How long will you stay?",
+      "why": "how long 자체가 '얼마나 오래'라서 time을 붙이지 않아요."
+    }
+  ],
+  "examples": [
+    {
+      "en": "How are you going? – Good, thanks!",
+      "ko": "잘 지내요? – 잘 지내요, 고마워요!"
+    },
+    {
+      "en": "How was your first day at work?",
+      "ko": "출근 첫날 어땠어요?"
+    },
+    {
+      "en": "How do you get to work? – By tram.",
+      "ko": "출근 어떻게 해요? – 트램 타요."
+    },
+    {
+      "en": "How much is this sandwich?",
+      "ko": "이 샌드위치 얼마예요?"
+    },
+    {
+      "en": "How many housemates do you have?",
+      "ko": "하우스메이트가 몇 명이에요?"
+    },
+    {
+      "en": "How long will you stay in Australia?",
+      "ko": "호주에 얼마나 있을 거예요?"
+    },
+    {
+      "en": "How often do you go to the beach?",
+      "ko": "해변에 얼마나 자주 가요?"
+    },
+    {
+      "en": "How far is the station from here?",
+      "ko": "여기서 역까지 얼마나 멀어요?"
+    }
+  ],
+  "quiz": [
+    {
+      "type": "blank",
+      "sentence": "___ was the party? – It was great!",
+      "answer": "How",
+      "choices": [
+        "How",
+        "Who",
+        "Does",
+        "Did"
+      ],
+      "ko": "파티 어땠어요? – 정말 좋았어요!",
+      "why": "상태·느낌을 물으니까 How"
+    },
+    {
+      "type": "blank",
+      "sentence": "How ___ is this T-shirt? – It's $20.",
+      "answer": "much",
+      "choices": [
+        "much",
+        "many",
+        "long",
+        "often"
+      ],
+      "ko": "이 티셔츠 얼마예요? – 20달러예요.",
+      "why": "가격은 how much"
+    },
+    {
+      "type": "blank",
+      "sentence": "How ___ eggs do we need?",
+      "answer": "many",
+      "choices": [
+        "many",
+        "much",
+        "long",
+        "old"
+      ],
+      "ko": "달걀이 몇 개 필요해요?",
+      "why": "셀 수 있는 eggs(복수) → how many"
+    },
+    {
+      "type": "blank",
+      "sentence": "How ___ are you? – I'm 26.",
+      "answer": "old",
+      "choices": [
+        "old",
+        "many",
+        "long",
+        "often"
+      ],
+      "ko": "몇 살이에요? – 26살이에요.",
+      "why": "나이는 how old"
+    },
+    {
+      "type": "blank",
+      "sentence": "How ___ you get to the farm? – By car.",
+      "answer": "did",
+      "choices": [
+        "did",
+        "were",
+        "was",
+        "are"
+      ],
+      "ko": "농장에 어떻게 갔어요? – 차로요.",
+      "why": "일반동사 get의 과거 질문 → did + 동사원형"
+    },
+    {
+      "type": "translate",
+      "ko": "헬스장에 얼마나 자주 가요?",
+      "answer": "How often do you go to the gym?",
+      "choices": [
+        "How often do you go to the gym?",
+        "How often you go to the gym?",
+        "How often do you goes to the gym?",
+        "How many do you go to the gym?"
+      ],
+      "why": "빈도는 How often + do + 주어 + 동사원형"
+    },
+    {
+      "type": "translate",
+      "ko": "이 사과들 얼마예요?",
+      "answer": "How much are these apples?",
+      "choices": [
+        "How much are these apples?",
+        "How many are these apples?",
+        "How much these apples are?",
+        "How much is these apples?"
+      ],
+      "why": "가격은 How much, these apples는 복수라서 are"
+    },
+    {
+      "type": "translate",
+      "ko": "주말 어땠어요?",
+      "answer": "How was your weekend?",
+      "choices": [
+        "How was your weekend?",
+        "How your weekend was?",
+        "How did your weekend?",
+        "How were your weekend?"
+      ],
+      "why": "How + be동사 과거(was) + 주어"
+    },
+    {
+      "type": "translate",
+      "ko": "비행 시간이 얼마나 돼요?",
+      "answer": "How long is the flight?",
+      "choices": [
+        "How long is the flight?",
+        "How long the flight is?",
+        "How long does the flight?",
+        "How much long is the flight?"
+      ],
+      "why": "길이·시간은 How long + be동사 + 주어"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "How many people work here?",
+      "choices": [
+        "How many people work here?",
+        "How much people work here?",
+        "How many people works here?",
+        "How many peoples work here?"
+      ],
+      "why": "사람 수는 how many, people은 이미 복수"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "How do you spell your name?",
+      "choices": [
+        "How do you spell your name?",
+        "How you spell your name?",
+        "How do you spells your name?",
+        "How does you spell your name?"
+      ],
+      "why": "How + do + you + 동사원형"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "How far is your share house from the city?",
+      "choices": [
+        "How far is your share house from the city?",
+        "How far your share house is from the city?",
+        "How far does your share house from the city?",
+        "How long far is your share house from the city?"
+      ],
+      "why": "How far + be동사 + 주어 순서"
+    }
+  ]
+}

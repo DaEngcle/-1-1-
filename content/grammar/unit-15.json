@@ -4,11 +4,26 @@
   "emoji": "📖",
   "goal": "일반동사의 과거형(-ed와 불규칙 동사)으로 어제, 지난주에 한 일을 말할 수 있어요.",
   "points": [
-    { "title": "과거형은 주어와 상관없이 같아요", "body": "현재형은 He walks처럼 -s가 붙지만, 과거형은 I walked, He walked, They walked처럼 주어가 누구든 모양이 같아요." },
-    { "title": "규칙 동사: 끝에 -ed", "body": "대부분의 동사는 끝에 -ed를 붙여요. clean → cleaned, finish → finished, watch → watched, wait → waited. e로 끝나면 -d만 붙여요. live → lived, die → died." },
-    { "title": "모양이 살짝 바뀌는 규칙 동사", "body": "'자음 + y'로 끝나면 y를 i로 바꾸고 -ed: study → studied. plan처럼 '모음 하나 + 자음 하나'로 끝나는 짧은 동사는 마지막 자음을 한 번 더 쓰고 -ed: plan → planned, stop → stopped." },
-    { "title": "불규칙 동사: 통째로 외우기", "body": "-ed를 쓰지 않고 모양이 완전히 바뀌는 동사도 있어요. have → had, get → got, buy → bought, go → went. 자주 쓰는 동사일수록 불규칙이 많으니 하나씩 외워 두세요." },
-    { "title": "과거 시간 표현", "body": "yesterday(어제), last Friday(지난 금요일), last week(지난주), a month ago(한 달 전), this morning(오늘 아침), in 1890(1890년에) 같은 말과 함께 과거형을 써요." }
+    {
+      "title": "과거형은 주어와 상관없이 같아요",
+      "body": "현재형은 He walks처럼 -s가 붙지만, 과거형은 I walked, He walked, They walked처럼 주어가 누구든 모양이 같아요."
+    },
+    {
+      "title": "규칙 동사: 끝에 -ed",
+      "body": "대부분의 동사는 끝에 -ed를 붙여요. clean → cleaned, finish → finished, watch → watched, wait → waited. e로 끝나면 -d만 붙여요. live → lived, die → died."
+    },
+    {
+      "title": "모양이 살짝 바뀌는 규칙 동사",
+      "body": "'자음 + y'로 끝나면 y를 i로 바꾸고 -ed: study → studied. plan처럼 '모음 하나 + 자음 하나'로 끝나는 짧은 동사는 마지막 자음을 한 번 더 쓰고 -ed: plan → planned, stop → stopped."
+    },
+    {
+      "title": "불규칙 동사: 통째로 외우기",
+      "body": "-ed를 쓰지 않고 모양이 완전히 바뀌는 동사도 있어요. have → had, get → got, buy → bought, go → went. 자주 쓰는 동사일수록 불규칙이 많으니 하나씩 외워 두세요."
+    },
+    {
+      "title": "과거 시간 표현",
+      "body": "yesterday(어제), last Friday(지난 금요일), last week(지난주), a month ago(한 달 전), this morning(오늘 아침), in 1890(1890년에) 같은 말과 함께 과거형을 써요."
+    }
   ],
   "formula": [
     "주어 + 동사 과거형 + ... (모든 주어 같은 모양)",
@@ -17,32 +32,205 @@
     "불규칙: have → had · get → got · buy → bought · go → went"
   ],
   "mistakes": [
-    { "wrong": "I goed to the beach yesterday.", "right": "I went to the beach yesterday.", "why": "go는 불규칙 동사라 -ed를 붙이지 않아요. go의 과거는 went." },
-    { "wrong": "She studyed English last night.", "right": "She studied English last night.", "why": "'자음 + y'로 끝나는 동사는 y를 i로 바꾸고 -ed를 붙여요." },
-    { "wrong": "He walk to work yesterday.", "right": "He walked to work yesterday.", "why": "한국어는 '어제'만 있어도 과거가 느껴지지만, 영어는 동사를 꼭 과거형으로 바꿔야 해요." }
+    {
+      "wrong": "I goed to the beach yesterday.",
+      "right": "I went to the beach yesterday.",
+      "why": "go는 불규칙 동사라 -ed를 붙이지 않아요. go의 과거는 went."
+    },
+    {
+      "wrong": "She studyed English last night.",
+      "right": "She studied English last night.",
+      "why": "'자음 + y'로 끝나는 동사는 y를 i로 바꾸고 -ed를 붙여요."
+    },
+    {
+      "wrong": "He walk to work yesterday.",
+      "right": "He walked to work yesterday.",
+      "why": "한국어는 '어제'만 있어도 과거가 느껴지지만, 영어는 동사를 꼭 과거형으로 바꿔야 해요."
+    }
   ],
   "examples": [
-    { "en": "He walked to school yesterday.", "ko": "그는 어제 학교에 걸어갔어요." },
-    { "en": "I cleaned the house last Friday.", "ko": "지난 금요일에 집을 청소했어요." },
-    { "en": "The soccer game finished at 5 o'clock yesterday.", "ko": "어제 축구 경기는 5시에 끝났어요." },
-    { "en": "Vincent van Gogh died in 1890.", "ko": "빈센트 반 고흐는 1890년에 세상을 떠났어요." },
-    { "en": "We planned our vacation a month ago.", "ko": "우리는 한 달 전에 휴가 계획을 세웠어요." },
-    { "en": "Emily had bacon and eggs for breakfast this morning.", "ko": "Emily는 오늘 아침으로 베이컨과 달걀을 먹었어요." },
-    { "en": "\"I bought a new sofa last week.\" \"It's really nice.\"", "ko": "\"나 지난주에 새 소파 샀어.\" \"진짜 좋다.\"" },
-    { "en": "We went to the beach and watched the sunset.", "ko": "우리는 해변에 가서 노을을 봤어요." }
+    {
+      "en": "He walked to school yesterday.",
+      "ko": "그는 어제 학교에 걸어갔어요."
+    },
+    {
+      "en": "I cleaned the house last Friday.",
+      "ko": "지난 금요일에 집을 청소했어요."
+    },
+    {
+      "en": "The soccer game finished at 5 o'clock yesterday.",
+      "ko": "어제 축구 경기는 5시에 끝났어요."
+    },
+    {
+      "en": "Vincent van Gogh died in 1890.",
+      "ko": "빈센트 반 고흐는 1890년에 세상을 떠났어요."
+    },
+    {
+      "en": "We planned our vacation a month ago.",
+      "ko": "우리는 한 달 전에 휴가 계획을 세웠어요."
+    },
+    {
+      "en": "Emily had bacon and eggs for breakfast this morning.",
+      "ko": "Emily는 오늘 아침으로 베이컨과 달걀을 먹었어요."
+    },
+    {
+      "en": "\"I bought a new sofa last week.\" \"It's really nice.\"",
+      "ko": "\"나 지난주에 새 소파 샀어.\" \"진짜 좋다.\""
+    },
+    {
+      "en": "We went to the beach and watched the sunset.",
+      "ko": "우리는 해변에 가서 노을을 봤어요."
+    }
   ],
   "quiz": [
-    { "type": "blank", "sentence": "I ___ the kitchen last night.", "answer": "cleaned", "choices": ["cleaned", "clean", "cleans", "cleaning"], "ko": "어젯밤에 부엌을 청소했어요.", "why": "last night은 과거니까 clean + -ed = cleaned." },
-    { "type": "blank", "sentence": "We ___ to Sydney last month.", "answer": "went", "choices": ["went", "goed", "go", "goes"], "ko": "우리는 지난달에 시드니에 갔어요.", "why": "go는 불규칙 동사. 과거형은 went." },
-    { "type": "blank", "sentence": "She ___ English at a language school last year.", "answer": "studied", "choices": ["studied", "studyed", "study", "studies"], "ko": "그녀는 작년에 어학원에서 영어를 공부했어요.", "why": "study는 y를 i로 바꾸고 -ed → studied." },
-    { "type": "blank", "sentence": "He ___ a new phone yesterday.", "answer": "bought", "choices": ["bought", "buyed", "buys", "buy"], "ko": "그는 어제 새 휴대폰을 샀어요.", "why": "buy는 불규칙 동사. 과거형은 bought." },
-    { "type": "blank", "sentence": "They ___ for the tram for 30 minutes this morning.", "answer": "waited", "choices": ["waited", "wait", "waits", "waitted"], "ko": "그들은 오늘 아침에 트램을 30분 동안 기다렸어요.", "why": "wait + -ed = waited. t를 두 번 쓰지 않아요." },
-    { "type": "translate", "ko": "나는 어제 농장에서 일했어요.", "answer": "I worked on a farm yesterday.", "choices": ["I worked on a farm yesterday.", "I work on a farm yesterday.", "I workd on a farm yesterday.", "I was work on a farm yesterday."], "why": "work + -ed = worked. 일반동사 과거에는 was를 같이 쓰지 않아요." },
-    { "type": "translate", "ko": "우리는 한 달 전에 휴가 계획을 세웠어요.", "answer": "We planned our vacation a month ago.", "choices": ["We planned our vacation a month ago.", "We plan our vacation a month ago.", "We planning our vacation a month ago.", "We were plan our vacation a month ago."], "why": "plan은 n을 한 번 더 쓰고 -ed → planned." },
-    { "type": "translate", "ko": "Emily는 오늘 아침으로 베이컨과 달걀을 먹었어요.", "answer": "Emily had bacon and eggs for breakfast this morning.", "choices": ["Emily had bacon and eggs for breakfast this morning.", "Emily haved bacon and eggs for breakfast this morning.", "Emily have bacon and eggs for breakfast this morning.", "Emily was have bacon and eggs for breakfast this morning."], "why": "have는 불규칙 동사. 과거형은 had. '먹다'라는 뜻으로도 써요." },
-    { "type": "translate", "ko": "그는 지난주에 새 소파를 샀어요.", "answer": "He bought a new sofa last week.", "choices": ["He bought a new sofa last week.", "He buyed a new sofa last week.", "He buy a new sofa last week.", "He buys a new sofa last week."], "why": "buy의 과거형은 bought. last week가 있으니 과거형을 써요." },
-    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "I got a job at a cafe last week.", "choices": ["I got a job at a cafe last week.", "I getted a job at a cafe last week.", "I get a job at a cafe last week.", "I was get a job at a cafe last week."], "why": "get은 불규칙 동사. 과거형은 got." },
-    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "My housemate lived in Brisbane two years ago.", "choices": ["My housemate lived in Brisbane two years ago.", "My housemate liveed in Brisbane two years ago.", "My housemate live in Brisbane two years ago.", "My housemate was live in Brisbane two years ago."], "why": "live는 e로 끝나니까 -d만 붙여요 → lived." },
-    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "He watched a movie and laughed a lot.", "choices": ["He watched a movie and laughed a lot.", "He watch a movie and laughed a lot.", "He watched a movie and laughd a lot.", "He watchd a movie and laughed a lot."], "why": "watch → watched, laugh → laughed. 두 동사 모두 과거형으로 -ed를 붙여요." }
+    {
+      "type": "blank",
+      "sentence": "I ___ the kitchen last night.",
+      "answer": "cleaned",
+      "choices": [
+        "cleaned",
+        "clean",
+        "cleans",
+        "cleaning"
+      ],
+      "ko": "어젯밤에 부엌을 청소했어요.",
+      "why": "last night은 과거니까 clean + -ed = cleaned."
+    },
+    {
+      "type": "blank",
+      "sentence": "We ___ to Sydney last month.",
+      "answer": "went",
+      "choices": [
+        "went",
+        "goed",
+        "go",
+        "goes"
+      ],
+      "ko": "우리는 지난달에 시드니에 갔어요.",
+      "why": "go는 불규칙 동사. 과거형은 went."
+    },
+    {
+      "type": "blank",
+      "sentence": "She ___ English at a language school last year.",
+      "answer": "studied",
+      "choices": [
+        "studied",
+        "studyed",
+        "study",
+        "studies"
+      ],
+      "ko": "그녀는 작년에 어학원에서 영어를 공부했어요.",
+      "why": "study는 y를 i로 바꾸고 -ed → studied."
+    },
+    {
+      "type": "blank",
+      "sentence": "He ___ a new phone yesterday.",
+      "answer": "bought",
+      "choices": [
+        "bought",
+        "buyed",
+        "buys",
+        "buy"
+      ],
+      "ko": "그는 어제 새 휴대폰을 샀어요.",
+      "why": "buy는 불규칙 동사. 과거형은 bought."
+    },
+    {
+      "type": "blank",
+      "sentence": "They ___ for the tram for 30 minutes this morning.",
+      "answer": "waited",
+      "choices": [
+        "waited",
+        "wait",
+        "waits",
+        "waitted"
+      ],
+      "ko": "그들은 오늘 아침에 트램을 30분 동안 기다렸어요.",
+      "why": "wait + -ed = waited. t를 두 번 쓰지 않아요."
+    },
+    {
+      "type": "translate",
+      "ko": "나는 어제 농장에서 일했어요.",
+      "answer": "I worked on a farm yesterday.",
+      "choices": [
+        "I worked on a farm yesterday.",
+        "I work on a farm yesterday.",
+        "I workd on a farm yesterday.",
+        "I was work on a farm yesterday."
+      ],
+      "why": "work + -ed = worked. 일반동사 과거에는 was를 같이 쓰지 않아요."
+    },
+    {
+      "type": "translate",
+      "ko": "우리는 한 달 전에 휴가 계획을 세웠어요.",
+      "answer": "We planned our vacation a month ago.",
+      "choices": [
+        "We planned our vacation a month ago.",
+        "We plan our vacation a month ago.",
+        "We planning our vacation a month ago.",
+        "We were plan our vacation a month ago."
+      ],
+      "why": "plan은 n을 한 번 더 쓰고 -ed → planned."
+    },
+    {
+      "type": "translate",
+      "ko": "Emily는 오늘 아침으로 베이컨과 달걀을 먹었어요.",
+      "answer": "Emily had bacon and eggs for breakfast this morning.",
+      "choices": [
+        "Emily had bacon and eggs for breakfast this morning.",
+        "Emily haved bacon and eggs for breakfast this morning.",
+        "Emily have bacon and eggs for breakfast this morning.",
+        "Emily was have bacon and eggs for breakfast this morning."
+      ],
+      "why": "have는 불규칙 동사. 과거형은 had. '먹다'라는 뜻으로도 써요."
+    },
+    {
+      "type": "translate",
+      "ko": "그는 지난주에 새 소파를 샀어요.",
+      "answer": "He bought a new sofa last week.",
+      "choices": [
+        "He bought a new sofa last week.",
+        "He buyed a new sofa last week.",
+        "He buy a new sofa last week.",
+        "He buys a new sofa last week."
+      ],
+      "why": "buy의 과거형은 bought. last week가 있으니 과거형을 써요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "I got a job at a cafe last week.",
+      "choices": [
+        "I got a job at a cafe last week.",
+        "I getted a job at a cafe last week.",
+        "I get a job at a cafe last week.",
+        "I was get a job at a cafe last week."
+      ],
+      "why": "get은 불규칙 동사. 과거형은 got."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "My housemate lived in Brisbane two years ago.",
+      "choices": [
+        "My housemate lived in Brisbane two years ago.",
+        "My housemate liveed in Brisbane two years ago.",
+        "My housemate live in Brisbane two years ago.",
+        "My housemate was live in Brisbane two years ago."
+      ],
+      "why": "live는 e로 끝나니까 -d만 붙여요 → lived."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "He watched a movie and laughed a lot.",
+      "choices": [
+        "He watched a movie and laughed a lot.",
+        "He watch a movie and laughed a lot.",
+        "He watched a movie and laughd a lot.",
+        "He watchd a movie and laughed a lot."
+      ],
+      "why": "watch → watched, laugh → laughed. 두 동사 모두 과거형으로 -ed를 붙여요."
+    }
   ]
 }

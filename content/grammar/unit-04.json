@@ -1,47 +1,235 @@
 {
   "unit": 4,
-  "title": "3인칭 단수 -s / -es (She works / He goes)",
-  "emoji": "👩‍🍳",
-  "goal": "he, she, it이 주인공일 때 동사에 -s / -es를 붙여 다른 사람의 일상을 말할 수 있어요.",
+  "title": "현재진행 (be + -ing: I'm working)",
+  "emoji": "🏃",
+  "goal": "지금 하고 있는 일과 요즘 하고 있는 일을 'I'm working.'처럼 말할 수 있어요.",
   "points": [
-    { "title": "3인칭 단수가 뭐예요?", "body": "나(I)와 너(you)가 아닌 한 사람이나 한 개를 말해요. he, she, it, my boss, the café 같은 것들이에요." },
-    { "title": "대부분은 -s", "body": "이럴 때는 동사 끝에 -s를 붙여요. work → works, live → lives, like → likes." },
-    { "title": "-es를 붙이는 동사", "body": "-o, -s, -sh, -ch, -x로 끝나는 동사는 -es를 붙여요. go → goes, do → does, miss → misses, wash → washes, watch → watches, fix → fixes." },
-    { "title": "-y로 끝나는 동사", "body": "a, e, i, o, u가 아닌 글자 + y로 끝나면 y를 i로 바꾸고 -es를 붙여요(study → studies). play처럼 a, e, i, o, u + y면 그냥 -s예요(play → plays)." },
-    { "title": "have는 has", "body": "have는 -s를 붙이지 않고 모양이 바뀌어서 has가 돼요. She has a car." }
+    {
+      "title": "지금 하고 있는 일",
+      "body": "'~하고 있어요'는 be동사(am/is/are) + 동사ing로 말해요. I'm working.은 '저 지금 일하고 있어요'라는 뜻이에요."
+    },
+    {
+      "title": "be동사는 주어에 맞춰요",
+      "body": "I는 am, He/She/It은 is, You/We/They는 are를 써요. 말할 때는 I'm, She's, They're처럼 줄여서 많이 써요."
+    },
+    {
+      "title": "-ing 붙이는 법",
+      "body": "대부분은 그냥 ing를 붙여요(work → working). e로 끝나면 e를 빼고 붙이고(make → making), sit·run·swim처럼 짧은 단어는 끝 글자를 한 번 더 써요(sitting, running, swimming)."
+    },
+    {
+      "title": "요즘 하고 있는 일에도 써요",
+      "body": "꼭 이 순간이 아니어도, 요즘 계속하고 있는 일에도 써요. I'm looking for a job these days.는 '요즘 일자리를 찾고 있어요'예요."
+    },
+    {
+      "title": "-ing를 안 쓰는 동사",
+      "body": "know(알다), like(좋아하다), want(원하다)처럼 마음이나 상태를 나타내는 동사는 보통 -ing로 쓰지 않아요. I'm knowing (X) → I know (O)."
+    }
   ],
   "formula": [
-    "He / She / It (한 명·한 개) + 동사-s",
-    "-o, -s, -sh, -ch, -x로 끝나면 + -es (goes, watches)",
-    "a·e·i·o·u가 아닌 글자 + y → -ies (studies) / have → has"
+    "I + am + 동사ing",
+    "He / She / It + is + 동사ing",
+    "You / We / They + are + 동사ing"
   ],
   "mistakes": [
-    { "wrong": "She work at a bakery.", "right": "She works at a bakery.", "why": "한국어에는 이런 규칙이 없어서 -s를 자주 빼먹어요. he, she, it이면 동사 끝을 꼭 확인하세요." },
-    { "wrong": "He gos to the beach.", "right": "He goes to the beach.", "why": "go, do처럼 -o로 끝나는 동사는 -s가 아니라 -es를 붙여요." },
-    { "wrong": "My boss haves a dog.", "right": "My boss has a dog.", "why": "have는 규칙대로 바뀌지 않아요. he, she, it이면 has로 외워 두세요." }
+    {
+      "wrong": "I working now.",
+      "right": "I'm working now.",
+      "why": "한국어 '일하고 있어요'에는 be동사가 안 보여서 빼먹기 쉬워요. 동사ing 앞에 꼭 am/is/are를 넣으세요."
+    },
+    {
+      "wrong": "She is make coffee.",
+      "right": "She is making coffee.",
+      "why": "be동사 뒤에 동사원형을 그대로 쓰면 틀려요. '~하고 있다'는 반드시 동사에 ing를 붙여요."
+    },
+    {
+      "wrong": "I'm knowing his name.",
+      "right": "I know his name.",
+      "why": "'알고 있다'를 그대로 옮기면 진행형이 되기 쉬운데, know는 상태라서 그냥 I know로 써요."
+    }
   ],
   "examples": [
-    { "en": "She works at a café in Bondi.", "ko": "그녀는 본다이에 있는 카페에서 일해요." },
-    { "en": "My housemate goes to the gym every day.", "ko": "제 하우스메이트는 매일 헬스장에 가요." },
-    { "en": "He watches TV at night.", "ko": "그는 밤에 TV를 봐요." },
-    { "en": "The tram stops near my house.", "ko": "트램이 우리 집 근처에 서요." },
-    { "en": "My manager has two kids.", "ko": "우리 매니저는 아이가 둘 있어요." },
-    { "en": "Jin studies English after work.", "ko": "진은 퇴근 후에 영어를 공부해요." },
-    { "en": "She washes the dishes after dinner.", "ko": "그녀는 저녁을 먹고 나서 설거지를 해요." },
-    { "en": "The farm opens at 5 am.", "ko": "그 농장은 새벽 5시에 일을 시작해요." }
+    {
+      "en": "I'm working at a café in Sydney.",
+      "ko": "저는 시드니에 있는 카페에서 일하고 있어요."
+    },
+    {
+      "en": "She's making a flat white.",
+      "ko": "그녀는 플랫화이트를 만들고 있어요."
+    },
+    {
+      "en": "My housemates are cooking dinner.",
+      "ko": "쉐어하우스 친구들이 저녁을 만들고 있어요."
+    },
+    {
+      "en": "We're waiting for the tram.",
+      "ko": "우리는 트램을 기다리고 있어요."
+    },
+    {
+      "en": "It's raining in Melbourne.",
+      "ko": "멜버른에 비가 오고 있어요."
+    },
+    {
+      "en": "He's swimming at Bondi Beach.",
+      "ko": "그는 본다이 비치에서 수영하고 있어요."
+    },
+    {
+      "en": "They're picking strawberries on a farm.",
+      "ko": "그들은 농장에서 딸기를 따고 있어요."
+    },
+    {
+      "en": "I'm looking for a job these days.",
+      "ko": "저는 요즘 일자리를 찾고 있어요."
+    }
   ],
   "quiz": [
-    { "type": "blank", "sentence": "She ___ at a hotel.", "answer": "works", "choices": ["works", "work", "workes", "is work"], "ko": "그녀는 호텔에서 일해요.", "why": "she가 주인공이면 work에 -s를 붙여 works예요." },
-    { "type": "blank", "sentence": "He ___ to the beach every weekend.", "answer": "goes", "choices": ["goes", "go", "gos", "going"], "ko": "그는 주말마다 해변에 가요.", "why": "go는 -o로 끝나서 -es를 붙여 goes예요." },
-    { "type": "blank", "sentence": "My housemate ___ TV at night.", "answer": "watches", "choices": ["watches", "watch", "watchs", "watchies"], "ko": "제 하우스메이트는 밤에 TV를 봐요.", "why": "watch는 -ch로 끝나서 -es를 붙여 watches예요." },
-    { "type": "blank", "sentence": "Mina ___ English every day.", "answer": "studies", "choices": ["studies", "study", "studys", "studyes"], "ko": "미나는 매일 영어를 공부해요.", "why": "study는 d + y로 끝나서 y를 i로 바꾸고 -es를 붙여요." },
-    { "type": "blank", "sentence": "My boss ___ a big car.", "answer": "has", "choices": ["has", "have", "haves", "is have"], "ko": "우리 사장님은 큰 차가 있어요.", "why": "he, she, it이면 have는 has로 바뀌어요." },
-    { "type": "translate", "ko": "그는 시드니에 살아요.", "answer": "He lives in Sydney.", "choices": ["He lives in Sydney.", "He live in Sydney.", "He is live in Sydney.", "He livs in Sydney."], "why": "he가 주인공이면 live에 -s를 붙여 lives예요." },
-    { "type": "translate", "ko": "그녀는 매일 아침 커피를 마셔요.", "answer": "She drinks coffee every morning.", "choices": ["She drinks coffee every morning.", "She drink coffee every morning.", "She drinkes coffee every morning.", "She is drink coffee every morning."], "why": "drink는 그냥 -s를 붙여 drinks예요." },
-    { "type": "translate", "ko": "제 하우스메이트는 저녁을 요리해요.", "answer": "My housemate cooks dinner.", "choices": ["My housemate cooks dinner.", "My housemate cook dinner.", "My housemate cookes dinner.", "My housemate is cook dinner."], "why": "my housemate는 한 사람이라 cook에 -s를 붙여요." },
-    { "type": "translate", "ko": "그는 차를 고치는 일을 해요.", "answer": "He fixes cars.", "choices": ["He fixes cars.", "He fixs cars.", "He fix cars.", "He fixies cars."], "why": "fix는 -x로 끝나서 -es를 붙여 fixes예요." },
-    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "She plays tennis on Sundays.", "choices": ["She plays tennis on Sundays.", "She plaies tennis on Sundays.", "She play tennis on Sundays.", "She is play tennis on Sundays."], "why": "play는 a + y로 끝나서 y를 바꾸지 않고 -s만 붙여요." },
-    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "The café opens at 7 am.", "choices": ["The café opens at 7 am.", "The café open at 7 am.", "The café openes at 7 am.", "The café opening at 7 am."], "why": "the café는 하나라서 open에 -s를 붙여 opens예요." },
-    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "My friend misses Korea.", "choices": ["My friend misses Korea.", "My friend miss Korea.", "My friend misss Korea.", "My friend missies Korea."], "why": "miss는 -s로 끝나서 -es를 붙여 misses예요." }
+    {
+      "type": "blank",
+      "sentence": "I ___ cleaning the kitchen.",
+      "answer": "am",
+      "choices": [
+        "am",
+        "is",
+        "are",
+        "do"
+      ],
+      "ko": "저는 부엌을 청소하고 있어요.",
+      "why": "주어가 I면 am + 동사ing"
+    },
+    {
+      "type": "blank",
+      "sentence": "My boss ___ talking on the phone.",
+      "answer": "is",
+      "choices": [
+        "are",
+        "is",
+        "am",
+        "does"
+      ],
+      "ko": "우리 사장님이 통화하고 있어요.",
+      "why": "My boss는 한 사람(he/she)이라 is"
+    },
+    {
+      "type": "blank",
+      "sentence": "We ___ waiting for the bus.",
+      "answer": "are",
+      "choices": [
+        "is",
+        "am",
+        "are",
+        "do"
+      ],
+      "ko": "우리는 버스를 기다리고 있어요.",
+      "why": "주어가 We면 are"
+    },
+    {
+      "type": "blank",
+      "sentence": "She is ___ a sandwich.",
+      "answer": "making",
+      "choices": [
+        "make",
+        "makes",
+        "maked",
+        "making"
+      ],
+      "ko": "그녀는 샌드위치를 만들고 있어요.",
+      "why": "make처럼 e로 끝나면 e를 빼고 ing → making"
+    },
+    {
+      "type": "blank",
+      "sentence": "The kids are ___ in the sea.",
+      "answer": "swimming",
+      "choices": [
+        "swimming",
+        "swiming",
+        "swim",
+        "swims"
+      ],
+      "ko": "아이들이 바다에서 수영하고 있어요.",
+      "why": "swim은 끝 글자 m을 한 번 더 쓰고 ing → swimming"
+    },
+    {
+      "type": "translate",
+      "ko": "저는 지금 이메일을 쓰고 있어요.",
+      "answer": "I'm writing an email now.",
+      "choices": [
+        "I writing an email now.",
+        "I'm writing an email now.",
+        "I'm write an email now.",
+        "I'm writeing an email now."
+      ],
+      "why": "I'm + 동사ing, write는 e를 빼고 writing"
+    },
+    {
+      "type": "translate",
+      "ko": "그는 트램을 기다리고 있어요.",
+      "answer": "He is waiting for the tram.",
+      "choices": [
+        "He are waiting for the tram.",
+        "He waiting for the tram.",
+        "He is waiting for the tram.",
+        "He is wait for the tram."
+      ],
+      "why": "He는 is, 그리고 동사에 ing"
+    },
+    {
+      "type": "translate",
+      "ko": "우리는 해변에서 쉬고 있어요.",
+      "answer": "We're relaxing on the beach.",
+      "choices": [
+        "We're relax on the beach.",
+        "We relaxing on the beach.",
+        "We is relaxing on the beach.",
+        "We're relaxing on the beach."
+      ],
+      "why": "We는 are(We're) + 동사ing"
+    },
+    {
+      "type": "translate",
+      "ko": "비가 오고 있어요.",
+      "answer": "It's raining.",
+      "choices": [
+        "It's raining.",
+        "It raining.",
+        "It's rain.",
+        "It are raining."
+      ],
+      "why": "날씨는 It으로 말하고, It is + raining"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "They are working on a farm.",
+      "choices": [
+        "They is working on a farm.",
+        "They working on a farm.",
+        "They are work on a farm.",
+        "They are working on a farm."
+      ],
+      "why": "They는 are, 그리고 동사에 ing"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "She's running to the station.",
+      "choices": [
+        "She's runing to the station.",
+        "She's running to the station.",
+        "She running to the station.",
+        "She's runs to the station."
+      ],
+      "why": "run은 n을 한 번 더 쓰고 ing → running"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "I know her name.",
+      "choices": [
+        "I'm knowing her name.",
+        "I am know her name.",
+        "I know her name.",
+        "I knowing her name."
+      ],
+      "why": "know(알다)는 상태라서 진행형으로 쓰지 않고 그냥 I know"
+    }
   ]
 }

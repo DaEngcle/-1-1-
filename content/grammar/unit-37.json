@@ -1,0 +1,172 @@
+{
+  "unit": 37,
+  "title": "should (2) (I don't think you should ~ / Should I ~?)",
+  "emoji": "🤔",
+  "goal": "I think / I don't think you should ~로 부드럽게 의견을 말하고, Should I ~?로 상대의 조언을 물어볼 수 있어요.",
+  "points": [
+    {
+      "title": "I think you should ~",
+      "body": "should 앞에 I think를 붙이면 '~하는 게 좋을 것 같아요'처럼 더 부드러운 조언이 돼요. (I think you should take the job.)"
+    },
+    {
+      "title": "I don't think you should ~",
+      "body": "'~ 안 하는 게 좋을 것 같아요'는 영어로 보통 think를 부정해서 I don't think you should ~라고 해요. I think you shouldn't ~보다 이 말이 훨씬 자연스러워요."
+    },
+    {
+      "title": "Should I ~? = 제가 ~할까요?",
+      "body": "should를 주어 앞으로 보내면 '~해야 할까요? / ~할까요?'라는 질문이 돼요. 대답은 Yes, you should. / No, you shouldn't.예요. do는 쓰지 않아요."
+    },
+    {
+      "title": "Do you think I should ~?",
+      "body": "상대의 의견을 정중하게 물을 때는 Do you think I should ~?라고 해요. 이때 뒷부분은 질문 순서가 아니라 I should 순서 그대로예요."
+    }
+  ],
+  "formula": [
+    "I think + 주어 + should + 동사원형",
+    "I don't think + 주어 + should + 동사원형",
+    "Should + 주어 + 동사원형 ~?",
+    "Do you think + 주어 + should + 동사원형 ~?"
+  ],
+  "mistakes": [
+    {
+      "wrong": "Do I should bring my resume?",
+      "right": "Should I bring my resume?",
+      "why": "should가 있는 질문은 do를 쓰지 않고 should를 맨 앞으로 보내요."
+    },
+    {
+      "wrong": "I think you not should go.",
+      "right": "I don't think you should go.",
+      "why": "not을 should 앞에 넣을 수 없어요. '안 하는 게 좋을 것 같다'는 I don't think you should ~가 가장 자연스러워요."
+    },
+    {
+      "wrong": "Should I to call him?",
+      "right": "Should I call him?",
+      "why": "질문에서도 should 뒤에는 to 없이 동사원형이에요."
+    }
+  ],
+  "examples": [
+    {
+      "en": "I think you should take the job.",
+      "ko": "그 일자리를 잡는 게 좋을 것 같아요."
+    },
+    {
+      "en": "I don't think you should drive tonight. You're tired.",
+      "ko": "오늘 밤엔 운전 안 하는 게 좋을 것 같아요. 피곤하잖아요."
+    },
+    {
+      "en": "Should I bring my resume to the interview?",
+      "ko": "면접에 이력서를 가져가야 할까요?"
+    },
+    {
+      "en": "Should we take the tram or walk?",
+      "ko": "트램 탈까요, 아니면 걸어갈까요?"
+    },
+    {
+      "en": "Do you think I should move to Brisbane?",
+      "ko": "제가 브리즈번으로 이사하는 게 좋을까요?"
+    },
+    {
+      "en": "I don't think she should quit her job.",
+      "ko": "그녀가 일을 그만두지 않는 게 좋을 것 같아요."
+    },
+    {
+      "en": "A: Should I tell my housemate? B: Yes, you should.",
+      "ko": "A: 하우스메이트한테 말할까요? B: 네, 그러는 게 좋아요."
+    },
+    {
+      "en": "I think we should book the hostel now.",
+      "ko": "지금 호스텔을 예약하는 게 좋을 것 같아요."
+    }
+  ],
+  "quiz": [
+    {
+      "type": "blank",
+      "sentence": "___ I wear a shirt to the interview?",
+      "answer": "Should",
+      "choices": ["Should", "Does", "Am", "Is"],
+      "ko": "면접에 셔츠를 입고 가야 할까요?",
+      "why": "조언을 구하는 질문은 Should I ~?예요."
+    },
+    {
+      "type": "blank",
+      "sentence": "I don't think you ___ eat that.",
+      "answer": "should",
+      "choices": ["should", "don't should", "should to", "shoulds"],
+      "ko": "그거 안 먹는 게 좋을 것 같아요.",
+      "why": "I don't think you should + 동사원형. 부정은 이미 don't think에 있어요."
+    },
+    {
+      "type": "blank",
+      "sentence": "Should we ___ a taxi?",
+      "answer": "get",
+      "choices": ["get", "gets", "to get", "getting"],
+      "ko": "우리 택시 탈까요?",
+      "why": "Should + 주어 + 동사원형이에요."
+    },
+    {
+      "type": "blank",
+      "sentence": "A: Should I call her? B: No, you ___.",
+      "answer": "shouldn't",
+      "choices": ["shouldn't", "don't", "aren't", "should"],
+      "ko": "A: 그녀에게 전화할까요? B: 아니요, 안 하는 게 좋아요.",
+      "why": "Should로 물으면 No, you shouldn't.로 대답해요."
+    },
+    {
+      "type": "blank",
+      "sentence": "I ___ think you should buy a car. Public transport is fine.",
+      "answer": "don't",
+      "choices": ["don't", "doesn't", "not", "am not"],
+      "ko": "차는 안 사는 게 좋을 것 같아요. 대중교통으로 충분해요.",
+      "why": "주어가 I라서 I don't think ~예요."
+    },
+    {
+      "type": "translate",
+      "ko": "제가 창문을 열까요?",
+      "answer": "Should I open the window?",
+      "choices": ["Should I open the window?", "Do I should open the window?", "Should I to open the window?", "Should I opening the window?"],
+      "why": "Should + I + 동사원형 ~? 순서예요."
+    },
+    {
+      "type": "translate",
+      "ko": "그녀에게 사과하는 게 좋을 것 같아요.",
+      "answer": "I think you should say sorry to her.",
+      "choices": ["I think you should say sorry to her.", "I think you should to say sorry to her.", "I think you shoulds say sorry to her.", "I think should you say sorry to her."],
+      "why": "I think + you should + 동사원형. 질문이 아니니 should you로 뒤집지 않아요."
+    },
+    {
+      "type": "translate",
+      "ko": "우리 지금 떠나지 않는 게 좋을 것 같아요.",
+      "answer": "I don't think we should leave now.",
+      "choices": ["I don't think we should leave now.", "I think we don't should leave now.", "I don't think we should leaving now.", "I not think we should leave now."],
+      "why": "'~ 안 하는 게 좋을 것 같다'는 I don't think + 주어 + should + 동사원형이에요."
+    },
+    {
+      "type": "translate",
+      "ko": "제가 매니저에게 물어보는 게 좋을까요?",
+      "answer": "Do you think I should ask the manager?",
+      "choices": ["Do you think I should ask the manager?", "Do you think should I ask the manager?", "Do you think I should asking the manager?", "Are you think I should ask the manager?"],
+      "why": "Do you think 뒤에는 I should 순서 그대로 + 동사원형이에요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Should I take an umbrella?",
+      "choices": ["Should I take an umbrella?", "Do I should take an umbrella?", "Should I takes an umbrella?", "Should I to take an umbrella?"],
+      "why": "should 질문에는 do가 필요 없고, 뒤에는 동사원형이에요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "I don't think he should work so late.",
+      "choices": ["I don't think he should work so late.", "I think he not should work so late.", "I don't think he should works so late.", "I doesn't think he should work so late."],
+      "why": "I don't think + he should + 동사원형이에요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Should we bring something to the barbecue?",
+      "choices": ["Should we bring something to the barbecue?", "Should we to bring something to the barbecue?", "Do we should bring something to the barbecue?", "Should we brings something to the barbecue?"],
+      "why": "Should + we + 동사원형 ~? 순서예요."
+    }
+  ]
+}

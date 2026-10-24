@@ -1,0 +1,236 @@
+{
+  "unit": 55,
+  "title": "단수·복수 주의할 명사 (jeans / people / news)",
+  "emoji": "👖",
+  "goal": "jeans, people, news처럼 헷갈리는 명사에 맞는 동사(is / are)를 쓰고, a pair of로 셀 수 있어요.",
+  "points": [
+    {
+      "title": "두 부분으로 된 물건은 항상 복수",
+      "body": "jeans(청바지), shorts(반바지), trousers(바지), glasses(안경), sunglasses(선글라스), scissors(가위)는 다리나 날이 두 개라서 항상 복수예요. 그래서 동사도 are를 써요. My jeans are new."
+    },
+    {
+      "title": "하나는 a pair of",
+      "body": "이런 물건 하나를 말할 때는 a jeans (X)가 아니라 a pair of jeans(청바지 한 벌)라고 해요. a pair of sunglasses, two pairs of shorts."
+    },
+    {
+      "title": "people과 police는 복수",
+      "body": "people(사람들)은 person의 복수형이고, police(경찰)도 복수로 써요. 그래서 is가 아니라 are예요. People are friendly here. The police are here."
+    },
+    {
+      "title": "-s로 끝나도 단수인 명사",
+      "body": "news(뉴스)와 maths(수학)는 -s로 끝나지만 하나로 취급해서 is를 써요. The news is on at six."
+    },
+    {
+      "title": "단수와 복수가 같은 명사",
+      "body": "sheep(양), fish(물고기)는 하나든 여러 마리든 모양이 같아요. one sheep, ten sheep / one fish, five fish."
+    }
+  ],
+  "formula": [
+    "jeans / shorts / glasses / scissors + are",
+    "a pair of + jeans / shorts / glasses / scissors",
+    "people / police + are",
+    "news / maths + is · sheep, fish: 단수 = 복수"
+  ],
+  "mistakes": [
+    {
+      "wrong": "My jeans is too big.",
+      "right": "My jeans are too big.",
+      "why": "청바지는 한 벌이어도 jeans가 복수형이라 are를 써요."
+    },
+    {
+      "wrong": "The people is very friendly here.",
+      "right": "The people are very friendly here.",
+      "why": "people은 이미 '사람들'이라는 복수라서 is가 아니라 are예요."
+    },
+    {
+      "wrong": "I bought a jeans.",
+      "right": "I bought a pair of jeans.",
+      "why": "jeans 앞에 a를 바로 붙일 수 없어요. 한 벌은 a pair of jeans예요."
+    }
+  ],
+  "examples": [
+    {
+      "en": "These jeans are too long for me.",
+      "ko": "이 청바지는 저한테 너무 길어요."
+    },
+    {
+      "en": "I bought a pair of sunglasses for the beach.",
+      "ko": "해변에서 쓰려고 선글라스를 하나 샀어요."
+    },
+    {
+      "en": "Where are the scissors?",
+      "ko": "가위 어디 있어요?"
+    },
+    {
+      "en": "People in Australia are really friendly.",
+      "ko": "호주 사람들은 정말 친절해요."
+    },
+    {
+      "en": "The police are at the train station.",
+      "ko": "경찰이 기차역에 있어요."
+    },
+    {
+      "en": "The news is on TV at six.",
+      "ko": "뉴스는 6시에 TV에서 해요."
+    },
+    {
+      "en": "There are hundreds of sheep on this farm.",
+      "ko": "이 농장에는 양이 수백 마리 있어요."
+    },
+    {
+      "en": "My shorts are wet from the rain.",
+      "ko": "비 때문에 반바지가 젖었어요."
+    }
+  ],
+  "quiz": [
+    {
+      "type": "blank",
+      "sentence": "My new jeans ___ really comfortable.",
+      "answer": "are",
+      "choices": [
+        "are",
+        "is",
+        "am",
+        "be"
+      ],
+      "ko": "새 청바지가 정말 편해요.",
+      "why": "jeans는 항상 복수 → are"
+    },
+    {
+      "type": "blank",
+      "sentence": "The news ___ good today.",
+      "answer": "is",
+      "choices": [
+        "is",
+        "are",
+        "am",
+        "be"
+      ],
+      "ko": "오늘 뉴스는 좋아요.",
+      "why": "news는 -s로 끝나도 단수 → is"
+    },
+    {
+      "type": "blank",
+      "sentence": "There are 500 ___ on the farm.",
+      "answer": "sheep",
+      "choices": [
+        "sheep",
+        "sheeps",
+        "sheepes",
+        "a sheep"
+      ],
+      "ko": "농장에 양이 500마리 있어요.",
+      "why": "sheep은 단수와 복수가 같아요."
+    },
+    {
+      "type": "blank",
+      "sentence": "I bought a ___ of shorts.",
+      "answer": "pair",
+      "choices": [
+        "pair",
+        "piece",
+        "one",
+        "two"
+      ],
+      "ko": "반바지를 한 벌 샀어요.",
+      "why": "두 부분으로 된 옷 하나는 a pair of"
+    },
+    {
+      "type": "blank",
+      "sentence": "The police ___ looking for the driver.",
+      "answer": "are",
+      "choices": [
+        "are",
+        "is",
+        "am",
+        "be"
+      ],
+      "ko": "경찰이 그 운전자를 찾고 있어요.",
+      "why": "police는 복수로 써요 → are"
+    },
+    {
+      "type": "translate",
+      "ko": "가위 좀 빌릴 수 있을까요?",
+      "answer": "Can I borrow your scissors?",
+      "choices": [
+        "Can I borrow your scissors?",
+        "Can I borrow your scissor?",
+        "Can I borrow a scissors?",
+        "Can I borrow your scissorses?"
+      ],
+      "why": "가위는 항상 scissors. a를 바로 붙이지 않아요."
+    },
+    {
+      "type": "translate",
+      "ko": "제 안경 어디 있어요?",
+      "answer": "Where are my glasses?",
+      "choices": [
+        "Where are my glasses?",
+        "Where is my glasses?",
+        "Where am my glasses?",
+        "Where are my glass?"
+      ],
+      "why": "안경은 glasses(복수) → Where are"
+    },
+    {
+      "type": "translate",
+      "ko": "해변에서 물고기를 다섯 마리 잡았어요.",
+      "answer": "I caught five fish at the beach.",
+      "choices": [
+        "I caught five fish at the beach.",
+        "I caught five fishs at the beach.",
+        "I caught five a fish at the beach.",
+        "I caught five fishies at the beach."
+      ],
+      "why": "fish는 여러 마리여도 fish"
+    },
+    {
+      "type": "translate",
+      "ko": "사람들이 줄을 서서 기다리고 있어요.",
+      "answer": "People are waiting in line.",
+      "choices": [
+        "People are waiting in line.",
+        "People is waiting in line.",
+        "A people are waiting in line.",
+        "People am waiting in line."
+      ],
+      "why": "people은 복수 → are, a를 붙이지 않아요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "The people at my work are nice.",
+      "choices": [
+        "The people at my work are nice.",
+        "The people at my work is nice.",
+        "The peoples at my work is nice.",
+        "The person at my work are nice."
+      ],
+      "why": "people은 복수 → are"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "I need a pair of new shorts.",
+      "choices": [
+        "I need a pair of new shorts.",
+        "I need a new shorts.",
+        "I need a pair of new short.",
+        "I need a pair new shorts."
+      ],
+      "why": "반바지 한 벌은 a pair of + shorts"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Maths is my favourite subject.",
+      "choices": [
+        "Maths is my favourite subject.",
+        "Maths are my favourite subject.",
+        "A maths is my favourite subject.",
+        "Maths am my favourite subject."
+      ],
+      "why": "maths는 -s로 끝나도 단수 → is"
+    }
+  ]
+}

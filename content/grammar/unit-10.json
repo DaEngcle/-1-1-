@@ -1,48 +1,236 @@
 {
   "unit": 10,
-  "title": "명령문 & Let's (Please ~ / Don't ~ / Let's ~)",
-  "emoji": "👉",
-  "goal": "'~하세요', '~하지 마세요', '같이 ~해요'를 영어로 말하고 알아들을 수 있어요.",
+  "title": "현재 시제 의문문 (Do you ~? / Does she ~?)",
+  "emoji": "🤔",
+  "goal": "일반동사로 '~해요?'를 Do you ~? / Does she ~?로 묻고, 짧게 대답할 수 있어요.",
   "points": [
-    { "title": "동사로 바로 시작해요", "body": "'~하세요, ~해'라고 시킬 때는 주어 없이 동사원형으로 시작해요. Wait here. / Open the door." },
-    { "title": "Please로 부드럽게", "body": "Please를 앞이나 뒤에 붙이면 공손해져요. Please wait here. / Wait here, please. 일할 때나 손님한테는 꼭 붙여 주세요." },
-    { "title": "하지 마세요 = Don't", "body": "'~하지 마세요'는 Don't + 동사원형이에요. Don't run. / Don't touch it. Not이나 No로 시작하지 않아요." },
-    { "title": "be동사 명령은 Be", "body": "careful(조심하는), late(늦은)처럼 상태를 말할 때는 Be를 써요. Be careful! / Don't be late! 'Don't late'처럼 be를 빼면 틀려요." },
-    { "title": "같이 해요 = Let's", "body": "'우리 같이 ~해요/하자'는 Let's + 동사원형이에요. Let's go to the beach! '~하지 말자'는 Let's not + 동사원형이에요." }
+    {
+      "title": "I, you, we, they는 Do로 시작",
+      "body": "일반동사 문장을 질문으로 만들 때는 맨 앞에 Do를 붙여요. You like coffee. → Do you like coffee?"
+    },
+    {
+      "title": "he, she, it은 Does로 시작",
+      "body": "he, she, it(한 명·한 개)이면 Does를 붙여요. Does에 -s가 있으니 뒤의 동사는 원래 모양으로 써요. Does she work here?"
+    },
+    {
+      "title": "짧게 대답하기",
+      "body": "do / does로 대답해요. Yes, I do. / No, I don't. / Yes, she does. / No, she doesn't."
+    },
+    {
+      "title": "be동사 질문과 구별하기",
+      "body": "Are you tired?처럼 동사가 없으면 be동사로, Do you like it?처럼 일반동사가 있으면 Do / Does로 물어요. 한 질문에 Are와 Do를 같이 쓰지 않아요."
+    },
+    {
+      "title": "Where, What으로 묻기",
+      "body": "Where, What을 맨 앞에 두고 그 뒤에 do / does + 주어 + 동사를 써요. Where do you live?(어디 살아요?) / What does she do?(그녀는 무슨 일을 해요?)"
+    }
   ],
   "formula": [
-    "(Please) + 동사원형 + ... (+ please)",
-    "Don't + 동사원형 + ...",
-    "Be / Don't be + 상태 말 (careful, late, shy ...)",
-    "Let's (not) + 동사원형 + ..."
+    "Do + I / you / we / they + 동사 원래 모양 ...?",
+    "Does + he / she / it + 동사 원래 모양 ...?",
+    "Yes, 주어 + do / does. / No, 주어 + don't / doesn't.",
+    "Where / What + do / does + 주어 + 동사 원래 모양?"
   ],
   "mistakes": [
-    { "wrong": "Don't late for work.", "right": "Don't be late for work.", "why": "'늦지 마'를 그대로 옮기면 be가 빠져요. late는 동사가 아니라서 Don't be late로 써요." },
-    { "wrong": "Let's going to the beach.", "right": "Let's go to the beach.", "why": "'가자'를 진행형처럼 느껴서 ing를 붙이기 쉬워요. Let's 뒤에는 항상 동사원형이에요." },
-    { "wrong": "No touch the coffee machine.", "right": "Don't touch the coffee machine.", "why": "'만지지 마'의 '마'를 No로 바꾸는 실수예요. 하지 말라고 할 때는 Don't + 동사원형이에요." }
+    {
+      "wrong": "Does he likes coffee?",
+      "right": "Does he like coffee?",
+      "why": "Does가 앞에 오면 동사의 -s는 빼요. -s는 한 문장에 한 번만이라고 기억하세요."
+    },
+    {
+      "wrong": "Are you speak English?",
+      "right": "Do you speak English?",
+      "why": "be동사 질문과 헷갈리기 쉬워요. 일반동사(speak)가 있으면 Do로 물어요."
+    },
+    {
+      "wrong": "Do you like Vegemite? — Yes, I like.",
+      "right": "Do you like Vegemite? — Yes, I do.",
+      "why": "한국어처럼 동사로 대답하기 쉬운데, 짧은 대답은 do / does로 해요."
+    }
   ],
   "examples": [
-    { "en": "Please wait here.", "ko": "여기서 기다려 주세요." },
-    { "en": "Wash your hands before work.", "ko": "일 시작하기 전에 손 씻으세요." },
-    { "en": "Turn left at the next corner, please.", "ko": "다음 모퉁이에서 왼쪽으로 가 주세요." },
-    { "en": "Don't touch the hot pan.", "ko": "뜨거운 팬 만지지 마세요." },
-    { "en": "Don't be late for your interview.", "ko": "면접에 늦지 마세요." },
-    { "en": "Be careful! The floor is wet.", "ko": "조심하세요! 바닥이 젖었어요." },
-    { "en": "Let's go to the beach this weekend.", "ko": "이번 주말에 해변 가요." },
-    { "en": "Let's not eat out tonight.", "ko": "오늘 저녁은 외식하지 말자." }
+    {
+      "en": "Do you have a car?",
+      "ko": "차 있으세요?"
+    },
+    {
+      "en": "Does this tram go to the city?",
+      "ko": "이 트램 시내로 가요?"
+    },
+    {
+      "en": "Do you like Vegemite? — No, I don't.",
+      "ko": "베지마이트 좋아하세요? — 아니요, 안 좋아해요."
+    },
+    {
+      "en": "Does she speak Korean? — Yes, she does.",
+      "ko": "그녀는 한국어를 할 줄 알아요? — 네, 해요."
+    },
+    {
+      "en": "Do they work on weekends? — Yes, they do.",
+      "ko": "그 사람들 주말에 일해요? — 네, 일해요."
+    },
+    {
+      "en": "Does the café open early? — No, it doesn't.",
+      "ko": "그 카페 일찍 열어요? — 아니요, 일찍 안 열어요."
+    },
+    {
+      "en": "Where do you live? — I live in a share house in Bondi.",
+      "ko": "어디 살아요? — 본다이에 있는 쉐어하우스에 살아요."
+    },
+    {
+      "en": "What does your housemate do? — He's a chef.",
+      "ko": "하우스메이트는 무슨 일 해요? — 요리사예요."
+    }
   ],
   "quiz": [
-    { "type": "blank", "sentence": "___ the door, please.", "answer": "Close", "choices": ["Closes", "Close", "Closing", "To close"], "ko": "문 좀 닫아 주세요.", "why": "명령문은 동사원형으로 시작" },
-    { "type": "blank", "sentence": "___ run in the kitchen.", "answer": "Don't", "choices": ["Not", "No", "Don't", "Doesn't"], "ko": "주방에서 뛰지 마세요.", "why": "하지 마세요 = Don't + 동사원형" },
-    { "type": "blank", "sentence": "Let's ___ lunch together.", "answer": "have", "choices": ["have", "having", "to have", "has"], "ko": "같이 점심 먹어요.", "why": "Let's 뒤에는 동사원형" },
-    { "type": "blank", "sentence": "Don't ___ late tomorrow.", "answer": "be", "choices": ["is", "are", "being", "be"], "ko": "내일 늦지 마세요.", "why": "late는 동사가 아니라서 Don't be late" },
-    { "type": "blank", "sentence": "___ careful! The road is busy.", "answer": "Be", "choices": ["Is", "Be", "Are", "Being"], "ko": "조심하세요! 길에 차가 많아요.", "why": "상태를 시킬 때는 Be + careful" },
-    { "type": "translate", "ko": "신발 벗어 주세요.", "answer": "Please take off your shoes.", "choices": ["Please takes off your shoes.", "Please taking off your shoes.", "Please take off your shoes.", "Please to take off your shoes."], "why": "Please + 동사원형" },
-    { "type": "translate", "ko": "여기에 주차하지 마세요.", "answer": "Don't park here.", "choices": ["Don't park here.", "Not park here.", "No park here.", "Don't parking here."], "why": "Don't + 동사원형" },
-    { "type": "translate", "ko": "트램 타자.", "answer": "Let's take the tram.", "choices": ["Let's taking the tram.", "Let's takes the tram.", "Let's to take the tram.", "Let's take the tram."], "why": "Let's + 동사원형" },
-    { "type": "translate", "ko": "걱정하지 마세요.", "answer": "Don't worry.", "choices": ["Don't worries.", "Don't worry.", "No worry.", "Not worry."], "why": "Don't + 동사원형. 참고로 호주에서 자주 듣는 'No worries!'는 '괜찮아요, 천만에요'라는 정해진 표현이에요" },
-    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "Don't be shy.", "choices": ["Don't shy.", "Not be shy.", "Don't be shy.", "Don't are shy."], "why": "shy는 상태라서 Don't be + shy" },
-    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "Let's meet at the station.", "choices": ["Let's meet at the station.", "Let's meeting at the station.", "Let's meets at the station.", "Let's to meet at the station."], "why": "Let's 뒤에는 동사원형" },
-    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "Please sit down.", "choices": ["Please sits down.", "Please sitting down.", "Please to sit down.", "Please sit down."], "why": "Please 뒤에는 동사원형" }
+    {
+      "type": "blank",
+      "sentence": "___ you work on weekends?",
+      "answer": "Do",
+      "choices": [
+        "Is",
+        "Are",
+        "Does",
+        "Do"
+      ],
+      "ko": "주말에 일하세요?",
+      "why": "you가 주인공인 일반동사 질문은 Do로 시작해요."
+    },
+    {
+      "type": "blank",
+      "sentence": "Does she ___ at the farm?",
+      "answer": "work",
+      "choices": [
+        "working",
+        "works",
+        "is work",
+        "work"
+      ],
+      "ko": "그녀는 농장에서 일해요?",
+      "why": "Does 뒤에는 동사 원래 모양을 써요."
+    },
+    {
+      "type": "blank",
+      "sentence": "Do they like the beach? — Yes, they ___.",
+      "answer": "do",
+      "choices": [
+        "are",
+        "do",
+        "does",
+        "like"
+      ],
+      "ko": "그 사람들 해변 좋아해요? — 네, 좋아해요.",
+      "why": "Do로 물으면 Yes, they do.처럼 do로 대답해요."
+    },
+    {
+      "type": "blank",
+      "sentence": "___ your boss speak Korean?",
+      "answer": "Does",
+      "choices": [
+        "Are",
+        "Do",
+        "Is",
+        "Does"
+      ],
+      "ko": "사장님이 한국어 하세요?",
+      "why": "your boss는 한 사람(=he/she)이라 Does로 시작해요."
+    },
+    {
+      "type": "blank",
+      "sentence": "Does he cook? — No, he ___.",
+      "answer": "doesn't",
+      "choices": [
+        "don't",
+        "not",
+        "doesn't",
+        "isn't"
+      ],
+      "ko": "그 사람 요리해요? — 아니요, 안 해요.",
+      "why": "Does로 물었으니 No, he doesn't.로 대답해요."
+    },
+    {
+      "type": "translate",
+      "ko": "이 버스 시내로 가요?",
+      "answer": "Does this bus go to the city?",
+      "choices": [
+        "Is this bus go to the city?",
+        "Do this bus go to the city?",
+        "Does this bus go to the city?",
+        "Does this bus goes to the city?"
+      ],
+      "why": "this bus는 하나(=it)라서 Does, 뒤에는 원래 모양 go예요."
+    },
+    {
+      "type": "translate",
+      "ko": "영어 하세요? — 네, 해요.",
+      "answer": "Do you speak English? — Yes, I do.",
+      "choices": [
+        "Do you speak English? — Yes, I do.",
+        "Are you speak English? — Yes, I do.",
+        "Does you speak English? — Yes, I do.",
+        "Do you speak English? — Yes, I am."
+      ],
+      "why": "you는 Do로 묻고, 대답도 do로 해요."
+    },
+    {
+      "type": "translate",
+      "ko": "어디 사세요?",
+      "answer": "Where do you live?",
+      "choices": [
+        "Where do you live?",
+        "Where does you live?",
+        "Where you live?",
+        "Where are you live?"
+      ],
+      "why": "Where + do + you + live 순서예요."
+    },
+    {
+      "type": "translate",
+      "ko": "그녀는 커피 좋아해요? — 아니요, 안 좋아해요.",
+      "answer": "Does she like coffee? — No, she doesn't.",
+      "choices": [
+        "Does she like coffee? — No, she isn't.",
+        "Does she like coffee? — No, she doesn't.",
+        "Does she likes coffee? — No, she doesn't.",
+        "Do she like coffee? — No, she doesn't."
+      ],
+      "why": "she는 Does로 묻고 doesn't로 대답해요. Does 뒤 동사는 원래 모양이에요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Do your housemates cook?",
+      "choices": [
+        "Do your housemates cook?",
+        "Does your housemates cook?",
+        "Are your housemates cook?",
+        "Do your housemates cooks?"
+      ],
+      "why": "housemates는 여러 명(=they)이라 Do로 묻고, 동사는 원래 모양이에요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Does he play soccer? — No, he doesn't.",
+      "choices": [
+        "Does he plays soccer? — No, he doesn't.",
+        "Does he play soccer? — No, he doesn't.",
+        "Do he play soccer? — No, he doesn't.",
+        "Does he play soccer? — No, he don't."
+      ],
+      "why": "he는 Does로 묻고 doesn't로 대답해요. Does 뒤 동사는 원래 모양이에요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "What does she do?",
+      "choices": [
+        "What does she do?",
+        "What do she do?",
+        "What does she does?",
+        "What she does do?"
+      ],
+      "why": "What + does + she + do(원래 모양) 순서예요. '그녀는 무슨 일을 해요?'라는 뜻이에요."
+    }
   ]
 }

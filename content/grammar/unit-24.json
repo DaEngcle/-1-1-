@@ -1,0 +1,236 @@
+{
+  "unit": 24,
+  "title": "just, already, yet",
+  "emoji": "⏱️",
+  "goal": "현재완료에 just(방금), already(벌써), yet(아직)을 붙여 일이 끝났는지 아닌지 말할 수 있어요.",
+  "points": [
+    {
+      "title": "just = 방금",
+      "body": "have / has와 p.p. 사이에 just를 넣으면 '방금 ~했다'예요. I've just finished my shift.(방금 근무 끝났어요)"
+    },
+    {
+      "title": "already = 벌써, 이미",
+      "body": "already도 have / has와 p.p. 사이에 넣어요. 생각보다 빨리 끝났을 때 써요. She has already paid the rent.(벌써 집세 냈어요)"
+    },
+    {
+      "title": "yet = 아직 (부정문)",
+      "body": "부정문 끝에 yet을 붙이면 '아직 ~ 안 했다'예요. I haven't found a job yet.(아직 일자리 못 구했어요)"
+    },
+    {
+      "title": "yet = 벌써? / 이제? (의문문)",
+      "body": "의문문 끝의 yet은 '벌써(이제) ~했어?'라는 뜻이에요. Have you had lunch yet? 대답은 Yes, I have. / Not yet.(아직이요)"
+    },
+    {
+      "title": "자리 정리",
+      "body": "just와 already는 have와 p.p. 사이, yet은 문장 맨 끝이에요. 긍정문의 '이미'는 already, 부정문의 '아직'은 yet이에요."
+    }
+  ],
+  "formula": [
+    "주어 + have / has + just + p.p. (방금 ~했다)",
+    "주어 + have / has + already + p.p. (벌써 ~했다)",
+    "주어 + haven't / hasn't + p.p. + yet (아직 안 했다)",
+    "Have / Has + 주어 + p.p. + yet? (벌써 ~했어?)"
+  ],
+  "mistakes": [
+    {
+      "wrong": "I have finished just my shift.",
+      "right": "I have just finished my shift.",
+      "why": "just는 문장 뒤쪽이 아니라 have와 p.p. 사이에 넣어요."
+    },
+    {
+      "wrong": "I have paid the rent yet.",
+      "right": "I have already paid the rent.",
+      "why": "긍정문에서 '이미/벌써'는 already예요. yet은 부정문과 의문문에 써요."
+    },
+    {
+      "wrong": "She hasn't called me already.",
+      "right": "She hasn't called me yet.",
+      "why": "부정문의 '아직'은 yet이고, 문장 맨 끝에 와요."
+    }
+  ],
+  "examples": [
+    {
+      "en": "I've just finished my shift.",
+      "ko": "나는 방금 근무를 끝냈어요."
+    },
+    {
+      "en": "The bus has just left.",
+      "ko": "버스가 방금 떠났어요."
+    },
+    {
+      "en": "She has already paid the rent.",
+      "ko": "그녀는 벌써 집세를 냈어요."
+    },
+    {
+      "en": "We've already booked our tickets to Cairns.",
+      "ko": "우리는 이미 케언즈 가는 표를 예매했어요."
+    },
+    {
+      "en": "I haven't found a job yet.",
+      "ko": "나는 아직 일자리를 못 구했어요."
+    },
+    {
+      "en": "Has Mina called you yet?",
+      "ko": "미나가 벌써 너한테 전화했어?"
+    },
+    {
+      "en": "\"Have you had lunch yet?\" \"Not yet.\"",
+      "ko": "\"점심 먹었어?\" \"아직.\""
+    },
+    {
+      "en": "He hasn't replied to my message yet.",
+      "ko": "그는 아직 내 메시지에 답장을 안 했어요."
+    }
+  ],
+  "quiz": [
+    {
+      "type": "blank",
+      "sentence": "I've ___ finished my shift. I'm so tired.",
+      "answer": "just",
+      "choices": [
+        "just",
+        "yet",
+        "since",
+        "ago"
+      ],
+      "ko": "방금 근무가 끝났어요. 너무 피곤해요.",
+      "why": "'방금'은 have와 p.p. 사이의 just"
+    },
+    {
+      "type": "blank",
+      "sentence": "She hasn't paid the rent ___.",
+      "answer": "yet",
+      "choices": [
+        "yet",
+        "already",
+        "just",
+        "ago"
+      ],
+      "ko": "그녀는 아직 집세를 안 냈어요.",
+      "why": "부정문 끝의 '아직'은 yet"
+    },
+    {
+      "type": "blank",
+      "sentence": "Don't worry. I have ___ booked the hostel.",
+      "answer": "already",
+      "choices": [
+        "already",
+        "yet",
+        "ever",
+        "since"
+      ],
+      "ko": "걱정 마. 내가 벌써 호스텔 예약했어.",
+      "why": "긍정문의 '벌써/이미'는 already"
+    },
+    {
+      "type": "blank",
+      "sentence": "Have you found a job ___?",
+      "answer": "yet",
+      "choices": [
+        "yet",
+        "just",
+        "ago",
+        "since"
+      ],
+      "ko": "이제 일자리 구했어?",
+      "why": "의문문 끝의 '벌써/이제'는 yet"
+    },
+    {
+      "type": "blank",
+      "sentence": "The tram has just ___.",
+      "answer": "left",
+      "choices": [
+        "left",
+        "leave",
+        "leaved",
+        "leaving"
+      ],
+      "ko": "트램이 방금 떠났어요.",
+      "why": "has just 뒤에는 p.p. (leave-left-left)"
+    },
+    {
+      "type": "translate",
+      "ko": "나는 방금 집에 왔어요.",
+      "answer": "I've just got home.",
+      "choices": [
+        "I've got just home.",
+        "I've just get home.",
+        "I've just got home.",
+        "I've just getting home."
+      ],
+      "why": "just는 have와 p.p.(got) 사이"
+    },
+    {
+      "type": "translate",
+      "ko": "그는 아직 이메일을 안 읽었어요.",
+      "answer": "He hasn't read the email yet.",
+      "choices": [
+        "He hasn't read the email already.",
+        "He hasn't readed the email yet.",
+        "He haven't read the email yet.",
+        "He hasn't read the email yet."
+      ],
+      "why": "부정문 + yet, read의 p.p.는 read"
+    },
+    {
+      "type": "translate",
+      "ko": "너 벌써 그 영화 봤어?",
+      "answer": "Have you seen the movie yet?",
+      "choices": [
+        "Have you saw the movie yet?",
+        "Have you seen the movie yet?",
+        "Did you seen the movie yet?",
+        "Have you seen yet the movie?"
+      ],
+      "why": "의문문의 yet은 문장 맨 끝, see의 p.p.는 seen"
+    },
+    {
+      "type": "translate",
+      "ko": "우리는 이미 저녁을 먹었어요.",
+      "answer": "We have already had dinner.",
+      "choices": [
+        "We have already had dinner.",
+        "We have had dinner yet.",
+        "We have already have dinner.",
+        "We has already had dinner."
+      ],
+      "why": "긍정문의 '이미'는 have already + p.p.(had)"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "I've just made a coffee for you.",
+      "choices": [
+        "I've just make a coffee for you.",
+        "I just've made a coffee for you.",
+        "I've just made a coffee for you.",
+        "I've just maked a coffee for you."
+      ],
+      "why": "have just + p.p., make의 p.p.는 made"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Has the package arrived yet?",
+      "choices": [
+        "Has the package arrived just?",
+        "Have the package arrived yet?",
+        "Has the package arrive yet?",
+        "Has the package arrived yet?"
+      ],
+      "why": "의문문 끝은 yet, the package는 Has + p.p."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "My housemate has already cleaned the kitchen.",
+      "choices": [
+        "My housemate has cleaned already the kitchen.",
+        "My housemate has yet cleaned the kitchen.",
+        "My housemate has already cleaned the kitchen.",
+        "My housemate have already cleaned the kitchen."
+      ],
+      "why": "already는 has와 p.p. 사이, My housemate는 has"
+    }
+  ]
+}

@@ -1,0 +1,235 @@
+{
+  "unit": 46,
+  "title": "-ing (1) 주어 (Swimming is fun.)",
+  "emoji": "🏊",
+  "goal": "동사에 -ing를 붙여 '~하는 것'을 만들고, 그것을 문장 맨 앞 주어로 쓸 수 있어요.",
+  "points": [
+    {
+      "title": "동사 + -ing = '~하는 것'",
+      "body": "동사 끝에 -ing를 붙이면 '~하는 것, ~하기'라는 이름처럼 쓸 수 있어요. swim(수영하다) → swimming(수영하는 것), cook(요리하다) → cooking(요리하는 것)."
+    },
+    {
+      "title": "문장 맨 앞 주어로",
+      "body": "이 -ing를 문장 맨 앞에 두면 '~하는 것은'이 돼요. Swimming is fun.(수영하는 건 재밌어요.) 동사원형(Swim)은 주어 자리에 못 와요."
+    },
+    {
+      "title": "뒤에 말을 붙여도 OK",
+      "body": "Working on a farm(농장에서 일하는 것), Learning English(영어를 배우는 것)처럼 -ing 뒤에 말을 붙여 길게 만들 수 있어요. 이 덩어리 전체가 주어예요."
+    },
+    {
+      "title": "주어는 '하나'로 취급",
+      "body": "-ing 주어는 아무리 길어도 하나로 봐요. 그래서 is / was / doesn't를 쓰고, 일반동사엔 -s를 붙여요. Making new friends is easy.(friends를 보고 are를 쓰면 안 돼요.)"
+    },
+    {
+      "title": "-ing 만드는 법 복습",
+      "body": "대부분 그냥 + ing (work → working). e로 끝나면 e를 빼고 (make → making). 짧은 단어는 끝 자음을 한 번 더 (swim → swimming, run → running)."
+    }
+  ],
+  "formula": [
+    "동사-ing (+ 말) + is / was + ...",
+    "동사-ing (+ 말) + 동사-s + ...",
+    "동사-ing (+ 말) + isn't / wasn't + ..."
+  ],
+  "mistakes": [
+    {
+      "wrong": "Swim in the ocean is fun.",
+      "right": "Swimming in the ocean is fun.",
+      "why": "한국어 '수영하는 건'을 동사원형으로 옮기는 실수예요. 주어 자리에는 -ing(Swimming)를 써요."
+    },
+    {
+      "wrong": "Making new friends are easy here.",
+      "right": "Making new friends is easy here.",
+      "why": "friends가 여러 명이라 are를 쓰기 쉬운데, 진짜 주어는 Making(~하는 것) 하나예요. is를 써요."
+    },
+    {
+      "wrong": "Learning English take time.",
+      "right": "Learning English takes time.",
+      "why": "-ing 주어는 하나로 보니까 일반동사에 -s를 붙여요."
+    }
+  ],
+  "examples": [
+    {
+      "en": "Swimming at Bondi Beach is fun.",
+      "ko": "본다이 비치에서 수영하는 건 재밌어요."
+    },
+    {
+      "en": "Working on a farm is hard.",
+      "ko": "농장에서 일하는 건 힘들어요."
+    },
+    {
+      "en": "Cooking at home saves money.",
+      "ko": "집에서 요리하면 돈이 절약돼요."
+    },
+    {
+      "en": "Making coffee is my favourite part of the job.",
+      "ko": "커피 만드는 게 제 일에서 제일 좋아하는 부분이에요."
+    },
+    {
+      "en": "Finding a room in Sydney isn't easy.",
+      "ko": "시드니에서 방 구하는 건 쉽지 않아요."
+    },
+    {
+      "en": "Learning English takes time.",
+      "ko": "영어를 배우는 건 시간이 걸려요."
+    },
+    {
+      "en": "Walking to work was a good idea.",
+      "ko": "걸어서 출근한 건 좋은 생각이었어요."
+    },
+    {
+      "en": "Is living in a share house fun?",
+      "ko": "쉐어하우스에 사는 거 재밌어요?"
+    }
+  ],
+  "quiz": [
+    {
+      "type": "blank",
+      "sentence": "___ in the ocean is fun.",
+      "answer": "Swimming",
+      "choices": [
+        "Swimming",
+        "Swim",
+        "Swims",
+        "Swam"
+      ],
+      "ko": "바다에서 수영하는 건 재밌어요.",
+      "why": "주어 자리에는 동사-ing를 써요. swim은 m을 한 번 더 써서 swimming."
+    },
+    {
+      "type": "blank",
+      "sentence": "Making new friends ___ easy here.",
+      "answer": "is",
+      "choices": [
+        "is",
+        "are",
+        "am",
+        "be"
+      ],
+      "ko": "여기서는 새 친구를 사귀는 게 쉬워요.",
+      "why": "진짜 주어는 Making(~하는 것) 하나라서 is예요."
+    },
+    {
+      "type": "blank",
+      "sentence": "Cooking at home ___ money.",
+      "answer": "saves",
+      "choices": [
+        "saves",
+        "save",
+        "saving",
+        "to save"
+      ],
+      "ko": "집에서 요리하면 돈이 절약돼요.",
+      "why": "-ing 주어는 하나로 보니까 동사에 -s를 붙여 saves."
+    },
+    {
+      "type": "blank",
+      "sentence": "___ a job in Australia isn't easy.",
+      "answer": "Getting",
+      "choices": [
+        "Getting",
+        "Get",
+        "Gets",
+        "Got"
+      ],
+      "ko": "호주에서 일자리를 구하는 건 쉽지 않아요.",
+      "why": "'구하는 것'이 주어니까 Getting. get은 t를 한 번 더 써요."
+    },
+    {
+      "type": "blank",
+      "sentence": "Working at night ___ really tiring.",
+      "answer": "was",
+      "choices": [
+        "was",
+        "were",
+        "did",
+        "does"
+      ],
+      "ko": "밤에 일하는 건 정말 피곤했어요.",
+      "why": "-ing 주어는 하나라서 과거면 was예요."
+    },
+    {
+      "type": "translate",
+      "ko": "요리하는 건 재밌어요.",
+      "answer": "Cooking is fun.",
+      "choices": [
+        "Cooking is fun.",
+        "Cook is fun.",
+        "Cooking are fun.",
+        "Cooks is fun."
+      ],
+      "why": "주어는 Cooking, 하나니까 is."
+    },
+    {
+      "type": "translate",
+      "ko": "영어를 배우는 건 시간이 걸려요.",
+      "answer": "Learning English takes time.",
+      "choices": [
+        "Learning English takes time.",
+        "Learn English takes time.",
+        "Learning English take time.",
+        "Learning English taking time."
+      ],
+      "why": "주어 Learning English는 하나라서 takes."
+    },
+    {
+      "type": "translate",
+      "ko": "해변을 걷는 건 기분이 좋아요.",
+      "answer": "Walking on the beach feels good.",
+      "choices": [
+        "Walking on the beach feels good.",
+        "Walk on the beach feels good.",
+        "Walking on the beach feel good.",
+        "Walking on the beach is feel good."
+      ],
+      "why": "주어는 Walking ~, 동사는 feels(-s)예요. is와 feel을 같이 쓰지 않아요."
+    },
+    {
+      "type": "translate",
+      "ko": "쉐어하우스에 사는 건 저렴해요.",
+      "answer": "Living in a share house is cheap.",
+      "choices": [
+        "Living in a share house is cheap.",
+        "Live in a share house is cheap.",
+        "Living in a share house are cheap.",
+        "Lives in a share house is cheap."
+      ],
+      "why": "live는 e를 빼고 living. 주어가 하나라서 is."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Running every morning is good for you.",
+      "choices": [
+        "Running every morning is good for you.",
+        "Run every morning is good for you.",
+        "Running every morning are good for you.",
+        "Runing every morning is good for you."
+      ],
+      "why": "run은 n을 한 번 더 써서 running, 주어가 하나라서 is."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Taking the tram is easy.",
+      "choices": [
+        "Taking the tram is easy.",
+        "Take the tram is easy.",
+        "Taking the tram are easy.",
+        "Takeing the tram is easy."
+      ],
+      "why": "take는 e를 빼고 taking, 동사는 is예요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Finding a cheap room wasn't easy.",
+      "choices": [
+        "Finding a cheap room wasn't easy.",
+        "Find a cheap room wasn't easy.",
+        "Finding a cheap room weren't easy.",
+        "Finding a cheap room didn't easy."
+      ],
+      "why": "주어는 Finding ~(하나), 과거 부정은 wasn't예요."
+    }
+  ]
+}

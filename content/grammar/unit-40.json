@@ -1,0 +1,236 @@
+{
+  "unit": 40,
+  "title": "의문사가 없는 의문문 (Are you ~? / Do you ~?)",
+  "emoji": "❓",
+  "goal": "be동사, 일반동사, 조동사 문장으로 Yes / No 질문을 만들고 짧게 대답할 수 있어요.",
+  "points": [
+    {
+      "title": "Yes / No로 대답하는 질문",
+      "body": "who, what 같은 의문사 없이 '~예요? / ~해요?'라고 묻는 질문이에요. 대답은 Yes나 No로 시작해요."
+    },
+    {
+      "title": "be동사 문장은 be동사를 맨 앞으로",
+      "body": "You are tired. → Are you tired? 과거도 같아요. It was fun. → Was it fun?"
+    },
+    {
+      "title": "일반동사 문장은 Do / Does / Did를 맨 앞에",
+      "body": "Do(I / you / we / they), Does(he / she / it), Did(과거)를 앞에 놓고 동사는 동사원형으로 써요. Does she work here?"
+    },
+    {
+      "title": "조동사·현재완료는 그 단어를 앞으로",
+      "body": "Can you ~? Will you ~? Should I ~?처럼 조동사를 앞으로 보내요. 현재완료는 Have you ~? / Has she ~? + p.p.예요."
+    },
+    {
+      "title": "짧은 대답은 질문 단어 그대로",
+      "body": "Are you ~? → Yes, I am. / No, I'm not. Does he ~? → Yes, he does. / No, he doesn't. Can you ~? → Yes, I can. / No, I can't."
+    }
+  ],
+  "formula": [
+    "Am / Is / Are / Was / Were + 주어 + ...?",
+    "Do / Does / Did + 주어 + 동사원형 ...?",
+    "Can / Will / Should + 주어 + 동사원형 ...?",
+    "Have / Has + 주어 + p.p. ...?"
+  ],
+  "mistakes": [
+    {
+      "wrong": "Do you are a student?",
+      "right": "Are you a student?",
+      "why": "be동사 문장은 do를 쓰지 않고 be동사(Are)만 앞으로 보내요."
+    },
+    {
+      "wrong": "Does she works here?",
+      "right": "Does she work here?",
+      "why": "Does가 이미 -s를 맡았으니 뒤 동사는 동사원형이에요."
+    },
+    {
+      "wrong": "Did you went to the party?",
+      "right": "Did you go to the party?",
+      "why": "Did가 과거를 맡으니까 뒤 동사는 과거형이 아니라 동사원형이에요."
+    }
+  ],
+  "examples": [
+    {
+      "en": "Are you on a working holiday visa?",
+      "ko": "워킹홀리데이 비자로 오셨어요?"
+    },
+    {
+      "en": "Is this seat free?",
+      "ko": "이 자리 비어 있어요?"
+    },
+    {
+      "en": "Do you have a tax file number?",
+      "ko": "택스 파일 넘버(TFN) 있으세요?"
+    },
+    {
+      "en": "Does this tram go to the city?",
+      "ko": "이 트램 시내로 가요?"
+    },
+    {
+      "en": "Did you sleep well?",
+      "ko": "잘 잤어요?"
+    },
+    {
+      "en": "Can I pay by card?",
+      "ko": "카드로 계산해도 돼요?"
+    },
+    {
+      "en": "Have you ever been to Uluru?",
+      "ko": "울루루에 가 본 적 있어요?"
+    },
+    {
+      "en": "Will you be at home tonight?",
+      "ko": "오늘 밤에 집에 있을 거예요?"
+    }
+  ],
+  "quiz": [
+    {
+      "type": "blank",
+      "sentence": "___ you from Korea?",
+      "answer": "Are",
+      "choices": [
+        "Are",
+        "Do",
+        "Is",
+        "Does"
+      ],
+      "ko": "한국에서 왔어요?",
+      "why": "from Korea는 be동사 문장, 주어 you → Are"
+    },
+    {
+      "type": "blank",
+      "sentence": "___ your housemate cook every day?",
+      "answer": "Does",
+      "choices": [
+        "Does",
+        "Do",
+        "Is",
+        "Are"
+      ],
+      "ko": "하우스메이트가 매일 요리해요?",
+      "why": "일반동사 cook + 주어 your housemate(he / she) → Does"
+    },
+    {
+      "type": "blank",
+      "sentence": "___ you call the manager yesterday?",
+      "answer": "Did",
+      "choices": [
+        "Did",
+        "Do",
+        "Were",
+        "Have"
+      ],
+      "ko": "어제 매니저한테 전화했어요?",
+      "why": "yesterday(과거) + 동사원형 call → Did"
+    },
+    {
+      "type": "blank",
+      "sentence": "___ she ever worked on a farm?",
+      "answer": "Has",
+      "choices": [
+        "Has",
+        "Have",
+        "Did",
+        "Does"
+      ],
+      "ko": "그녀는 농장에서 일해 본 적 있어요?",
+      "why": "worked(p.p.) + ever → 현재완료, 주어 she → Has"
+    },
+    {
+      "type": "blank",
+      "sentence": "A: Is the beach far from here? B: No, it ___.",
+      "answer": "isn't",
+      "choices": [
+        "isn't",
+        "doesn't",
+        "not",
+        "aren't"
+      ],
+      "ko": "A: 해변이 여기서 멀어요? B: 아니요, 안 멀어요.",
+      "why": "Is로 물었으니 대답도 be동사로 → No, it isn't."
+    },
+    {
+      "type": "translate",
+      "ko": "그는 바리스타예요?",
+      "answer": "Is he a barista?",
+      "choices": [
+        "Is he a barista?",
+        "Does he a barista?",
+        "Are he a barista?",
+        "Do he is a barista?"
+      ],
+      "why": "be동사 문장, 주어 he → Is를 앞으로"
+    },
+    {
+      "type": "translate",
+      "ko": "이 버스 본다이 비치 가요?",
+      "answer": "Does this bus go to Bondi Beach?",
+      "choices": [
+        "Does this bus go to Bondi Beach?",
+        "Does this bus goes to Bondi Beach?",
+        "Is this bus go to Bondi Beach?",
+        "Do this bus go to Bondi Beach?"
+      ],
+      "why": "this bus(it) → Does + 동사원형 go"
+    },
+    {
+      "type": "translate",
+      "ko": "영어 할 줄 알아요?",
+      "answer": "Can you speak English?",
+      "choices": [
+        "Can you speak English?",
+        "Can you speaking English?",
+        "Do you can speak English?",
+        "Are you can speak English?"
+      ],
+      "why": "조동사 Can을 앞으로, 뒤에는 동사원형"
+    },
+    {
+      "type": "translate",
+      "ko": "어제 일하러 갔어요?",
+      "answer": "Did you go to work yesterday?",
+      "choices": [
+        "Did you go to work yesterday?",
+        "Did you went to work yesterday?",
+        "Do you went to work yesterday?",
+        "Were you go to work yesterday?"
+      ],
+      "why": "과거 질문은 Did + 동사원형"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Do you like your job?",
+      "choices": [
+        "Do you like your job?",
+        "Are you like your job?",
+        "Do you likes your job?",
+        "Does you like your job?"
+      ],
+      "why": "일반동사 like + 주어 you → Do + 동사원형"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Was the interview hard?",
+      "choices": [
+        "Was the interview hard?",
+        "Did the interview hard?",
+        "Were the interview hard?",
+        "Was the interview was hard?"
+      ],
+      "why": "hard는 상태라서 be동사 문장, 단수 과거 → Was"
+    },
+    {
+      "type": "fix",
+      "prompt": "'Do you have a car?'에 대한 맞는 대답을 고르세요.",
+      "answer": "No, I don't.",
+      "choices": [
+        "No, I don't.",
+        "No, I'm not.",
+        "No, I can't.",
+        "No, I doesn't."
+      ],
+      "why": "Do로 물었으니 대답도 do로 → No, I don't."
+    }
+  ]
+}

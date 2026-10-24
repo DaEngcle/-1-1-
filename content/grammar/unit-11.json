@@ -1,48 +1,235 @@
 {
   "unit": 11,
-  "title": "미래 will (I'll ~ / Will you ~?)",
-  "emoji": "🔮",
-  "goal": "will로 '~할게요', '~할 거예요'라고 말하고, Will you ~?로 묻거나 부탁할 수 있어요.",
+  "title": "현재 진행 시제 vs 현재 시제 (I'm working / I work)",
+  "emoji": "🔄",
+  "goal": "'평소에 하는 일'은 현재 시제로, '지금 하고 있는 일'은 현재진행으로 구별해서 말할 수 있어요.",
   "points": [
-    { "title": "will = 앞으로 할 일", "body": "will은 '~할게요', '~할 거예요'라는 뜻으로 앞으로의 일을 말해요. 그 자리에서 바로 정한 일, 약속, 주문할 때 특히 많이 써요." },
-    { "title": "will 뒤에는 동사원형", "body": "주어가 누구든 will 모양은 그대로이고, 뒤에는 항상 동사원형이 와요. He will go (O), He will goes (X). will에도 -s를 붙이지 않아요." },
-    { "title": "줄여서 I'll", "body": "말할 때는 거의 줄여서 써요. I will = I'll, you will = you'll, he will = he'll, she will = she'll, we will = we'll, they will = they'll, it will = it'll." },
-    { "title": "부정은 won't", "body": "'~안 할게요, ~안 할 거예요'는 will not, 줄여서 won't예요. I won't be late. (안 늦을게요.)" },
-    { "title": "질문은 Will you ~?", "body": "will을 주어 앞으로 보내면 질문이 돼요. Will you ~?는 '~해 줄래요?'라는 부탁으로도 써요. 대답은 Yes, I will. / No, I won't. (Yes, I'll.처럼 끝에서 줄이면 안 돼요.)" }
+    {
+      "title": "현재 시제 = 평소·습관·늘 그런 일",
+      "body": "매일, 보통, 늘 하는 일이나 변하지 않는 사실은 현재 시제로 말해요. I work at a café.(나는 카페에서 일해요) 처럼요."
+    },
+    {
+      "title": "현재진행 = 지금 이 순간 하는 중",
+      "body": "말하는 바로 지금 하고 있는 일은 am / is / are + 동사-ing로 말해요. I'm making a coffee.(지금 커피 만드는 중이에요)"
+    },
+    {
+      "title": "요즘 잠깐 하는 일도 현재진행",
+      "body": "늘 그런 건 아니고 이번 주, 요즘처럼 잠깐 하는 일도 현재진행을 써요. I live in Brisbane, but this week I'm staying in Sydney."
+    },
+    {
+      "title": "신호 단어로 구별하기",
+      "body": "usually, always, often, every day, on Sundays가 보이면 현재 시제, now, right now, at the moment, Look!, Listen!이 보이면 현재진행일 때가 많아요."
+    },
+    {
+      "title": "질문도 똑같이",
+      "body": "평소를 물을 땐 Do / Does ~?, 지금 하는 중인지 물을 땐 Am / Is / Are ~ -ing?예요. What do you do?는 '무슨 일 해요?', What are you doing?은 '지금 뭐 해요?'예요."
+    }
   ],
   "formula": [
-    "주어 + will + 동사원형",
-    "I will = I'll / will not = won't",
-    "Will + 주어 + 동사원형 ~?",
-    "Yes, 주어 + will. / No, 주어 + won't."
+    "평소·습관: 주어 + 동사(-s) (I work / She works)",
+    "지금 하는 중: 주어 + am / is / are + 동사-ing",
+    "usually, every day, always → 현재 / now, right now, at the moment → 현재진행"
   ],
   "mistakes": [
-    { "wrong": "I will goes to the beach.", "right": "I will go to the beach.", "why": "will 뒤에는 무조건 동사원형이에요. goes, going 말고 go." },
-    { "wrong": "She wills call you.", "right": "She will call you.", "why": "주어가 She여도 will에는 -s를 붙이지 않아요." },
-    { "wrong": "Will you helping me?", "right": "Will you help me?", "why": "질문에서도 will 뒤에는 동사원형이에요. -ing를 붙이지 마세요." }
+    {
+      "wrong": "Look! It rains.",
+      "right": "Look! It's raining.",
+      "why": "한국어는 '비 와'처럼 둘 다 같은 말이라 헷갈려요. 지금 눈앞에서 일어나는 일은 is + -ing로 말해요."
+    },
+    {
+      "wrong": "Every morning she is taking the tram to work.",
+      "right": "Every morning she takes the tram to work.",
+      "why": "매일 하는 습관은 진행형이 아니라 현재 시제(takes)로 말해요."
+    },
+    {
+      "wrong": "Where do you go now?",
+      "right": "Where are you going now?",
+      "why": "'지금 어디 가는 중이야?'는 지금 하는 일이니까 Are you ~ing?로 물어요."
+    }
   ],
   "examples": [
-    { "en": "I'll have a flat white, please.", "ko": "플랫화이트 한 잔 주세요." },
-    { "en": "I'll call you after work.", "ko": "퇴근하고 전화할게요." },
-    { "en": "It will be hot tomorrow.", "ko": "내일은 더울 거예요." },
-    { "en": "She'll start her new job on Monday.", "ko": "그녀는 월요일에 새 일을 시작할 거예요." },
-    { "en": "I won't be late again.", "ko": "다시는 안 늦을게요." },
-    { "en": "Will you open the window, please?", "ko": "창문 좀 열어 줄래요?" },
-    { "en": "\"Will you be home tonight?\" \"Yes, I will.\"", "ko": "\"오늘 밤에 집에 있을 거예요?\" \"네, 있을 거예요.\"" },
-    { "en": "We'll take the tram to the beach.", "ko": "우리는 트램을 타고 해변에 갈 거예요." }
+    {
+      "en": "I work at a café in Sydney.",
+      "ko": "나는 시드니에 있는 카페에서 일해요."
+    },
+    {
+      "en": "Right now, I'm making a flat white for a customer.",
+      "ko": "지금은 손님에게 드릴 플랫화이트를 만들고 있어요."
+    },
+    {
+      "en": "My housemate usually cooks dinner at 7.",
+      "ko": "우리 하우스메이트는 보통 7시에 저녁을 요리해요."
+    },
+    {
+      "en": "Look! She's cooking pasta in the kitchen.",
+      "ko": "봐! 그녀가 부엌에서 파스타를 요리하고 있어."
+    },
+    {
+      "en": "It often rains in Melbourne, but it isn't raining now.",
+      "ko": "멜버른은 비가 자주 오지만, 지금은 비가 안 와요."
+    },
+    {
+      "en": "Do you take the tram every day?",
+      "ko": "너 매일 트램 타?"
+    },
+    {
+      "en": "What are you doing at the moment?",
+      "ko": "지금 뭐 하고 있어?"
+    },
+    {
+      "en": "I live in Brisbane, but this week I'm staying with a friend in Sydney.",
+      "ko": "나는 브리즈번에 살지만, 이번 주에는 시드니에서 친구 집에 머물고 있어요."
+    }
   ],
   "quiz": [
-    { "type": "blank", "sentence": "I ___ call you tomorrow.", "answer": "will", "choices": ["will", "am", "does", "wills"], "ko": "내일 전화할게요.", "why": "앞으로 할 일은 will + 동사원형. will에는 -s를 붙이지 않아요." },
-    { "type": "blank", "sentence": "She will ___ you at the station.", "answer": "meet", "choices": ["meet", "meets", "meeting", "met"], "ko": "그녀가 역에서 당신을 만날 거예요.", "why": "will 뒤에는 동사원형 meet." },
-    { "type": "blank", "sentence": "Don't worry. I ___ be late.", "answer": "won't", "choices": ["won't", "don't", "isn't", "not"], "ko": "걱정 마요. 안 늦을게요.", "why": "'안 ~할게요'는 will not = won't + 동사원형." },
-    { "type": "blank", "sentence": "___ you come to the party tomorrow?", "answer": "Will", "choices": ["Will", "Are", "Is", "Does"], "ko": "내일 파티에 올 거예요?", "why": "미래 질문은 Will + 주어 + 동사원형." },
-    { "type": "blank", "sentence": "Thanks! ___ see you on Monday.", "answer": "I'll", "choices": ["I'll", "I'm", "Me", "I'm will"], "ko": "고마워요! 월요일에 봐요.", "why": "I will을 줄이면 I'll. 뒤에 동사원형 see가 와요." },
-    { "type": "translate", "ko": "내일 다시 올게요.", "answer": "I'll come back tomorrow.", "choices": ["I'll come back tomorrow.", "I'll comes back tomorrow.", "I'll coming back tomorrow.", "I will to come back tomorrow."], "why": "I'll 뒤에는 to 없이 동사원형 come." },
-    { "type": "translate", "ko": "그들은 오늘 밤에 일하지 않을 거예요.", "answer": "They won't work tonight.", "choices": ["They won't work tonight.", "They will not works tonight.", "They don't will work tonight.", "They won't working tonight."], "why": "부정은 won't + 동사원형. don't와 will을 같이 쓰지 않아요." },
-    { "type": "translate", "ko": "창문 좀 닫아 줄래요?", "answer": "Will you close the window?", "choices": ["Will you close the window?", "Will you closes the window?", "Are you close the window?", "Will you to close the window?"], "why": "부탁은 Will you + 동사원형 ~?" },
-    { "type": "translate", "ko": "그는 내일 바쁠 거예요.", "answer": "He will be busy tomorrow.", "choices": ["He will be busy tomorrow.", "He will busy tomorrow.", "He will is busy tomorrow.", "He wills be busy tomorrow."], "why": "busy 같은 상태는 will 뒤에 be를 꼭 넣어요. is가 아니라 원형 be." },
-    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "We will go to the beach on Saturday.", "choices": ["We will go to the beach on Saturday.", "We will going to the beach on Saturday.", "We will goes to the beach on Saturday.", "We wills go to the beach on Saturday."], "why": "will + 동사원형 go. will은 모양이 바뀌지 않아요." },
-    { "type": "fix", "prompt": "\"Will you be at home tonight?\"에 맞는 대답을 고르세요.", "answer": "Yes, I will.", "choices": ["Yes, I will.", "Yes, I'll.", "Yes, I do.", "Yes, I am will."], "why": "짧은 대답은 Yes, I will. 문장 끝에서는 I'll로 줄이지 않아요." },
-    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "She won't eat meat.", "choices": ["She won't eat meat.", "She won't eats meat.", "She doesn't will eat meat.", "She willn't eat meat."], "why": "will not의 줄임말은 won't이고, 뒤에는 동사원형 eat." }
+    {
+      "type": "blank",
+      "sentence": "Look! It ___ outside.",
+      "answer": "is raining",
+      "choices": [
+        "is raining",
+        "rains",
+        "rain",
+        "raining"
+      ],
+      "ko": "봐! 밖에 비가 오고 있어.",
+      "why": "Look!처럼 지금 눈앞의 일은 is + -ing"
+    },
+    {
+      "type": "blank",
+      "sentence": "She usually ___ the tram to work.",
+      "answer": "takes",
+      "choices": [
+        "takes",
+        "take",
+        "is take",
+        "taking"
+      ],
+      "ko": "그녀는 보통 트램을 타고 출근해요.",
+      "why": "usually는 평소 습관 → 현재 시제, She는 takes"
+    },
+    {
+      "type": "blank",
+      "sentence": "Shh! The baby ___.",
+      "answer": "is sleeping",
+      "choices": [
+        "is sleeping",
+        "sleeps",
+        "sleep",
+        "sleeping"
+      ],
+      "ko": "쉿! 아기가 자고 있어요.",
+      "why": "지금 자는 중이니까 is + -ing"
+    },
+    {
+      "type": "blank",
+      "sentence": "I ___ my emails right now.",
+      "answer": "am checking",
+      "choices": [
+        "am checking",
+        "check",
+        "checks",
+        "am check"
+      ],
+      "ko": "나는 지금 이메일을 확인하고 있어요.",
+      "why": "right now는 현재진행 신호, am + -ing"
+    },
+    {
+      "type": "blank",
+      "sentence": "What ___ you usually do on weekends?",
+      "answer": "do",
+      "choices": [
+        "do",
+        "are",
+        "does",
+        "is"
+      ],
+      "ko": "너는 주말에 보통 뭐 해?",
+      "why": "usually는 평소 일 → Do you ~? 로 물어요"
+    },
+    {
+      "type": "translate",
+      "ko": "나는 보통 아침 6시에 일어나요.",
+      "answer": "I usually get up at 6 a.m.",
+      "choices": [
+        "I am usually get up at 6 a.m.",
+        "I usually gets up at 6 a.m.",
+        "I usually get up at 6 a.m.",
+        "I usually getting up at 6 a.m."
+      ],
+      "why": "평소 습관은 현재 시제, I 뒤에는 동사원형 get"
+    },
+    {
+      "type": "translate",
+      "ko": "지금 뭐 하고 있어?",
+      "answer": "What are you doing now?",
+      "choices": [
+        "What do you do now?",
+        "What are you doing now?",
+        "What are you do now?",
+        "What is you doing now?"
+      ],
+      "why": "지금 하는 중인 일은 are you + -ing"
+    },
+    {
+      "type": "translate",
+      "ko": "그는 이번 주에 친구 집에 머물고 있어요.",
+      "answer": "He is staying at his friend's place this week.",
+      "choices": [
+        "He stay at his friend's place this week.",
+        "He are staying at his friend's place this week.",
+        "He is stay at his friend's place this week.",
+        "He is staying at his friend's place this week."
+      ],
+      "why": "이번 주에만 잠깐 하는 일은 is + -ing"
+    },
+    {
+      "type": "translate",
+      "ko": "그녀는 고기를 안 먹어요. 채식주의자예요.",
+      "answer": "She doesn't eat meat. She's a vegetarian.",
+      "choices": [
+        "She doesn't eat meat. She's a vegetarian.",
+        "She don't eat meat. She's a vegetarian.",
+        "She doesn't eats meat. She's a vegetarian.",
+        "She not eat meat. She's a vegetarian."
+      ],
+      "why": "늘 그런 사실은 현재 시제, She의 부정은 doesn't + 동사원형"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Listen! Someone is knocking on the door.",
+      "choices": [
+        "Listen! Someone knocks on the door.",
+        "Listen! Someone knocking on the door.",
+        "Listen! Someone is knocking on the door.",
+        "Listen! Someone are knocking on the door."
+      ],
+      "why": "Listen!은 지금 일어나는 일 → is + -ing"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "My manager always opens the café at 7.",
+      "choices": [
+        "My manager always open the café at 7.",
+        "My manager always opens the café at 7.",
+        "My manager is always open the café at 7.",
+        "My manager always opening the café at 7."
+      ],
+      "why": "always는 습관 → 현재 시제, My manager는 opens"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Are you waiting for the tram?",
+      "choices": [
+        "Do you waiting for the tram?",
+        "Are you wait for the tram?",
+        "Is you waiting for the tram?",
+        "Are you waiting for the tram?"
+      ],
+      "why": "지금 기다리는 중인지 물을 땐 Are you + -ing?"
+    }
   ]
 }

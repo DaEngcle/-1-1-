@@ -20,11 +20,11 @@ export default async function GrammarPage() {
       <section className="flex items-center gap-3 rounded-3xl bg-gradient-to-br from-amber-400 to-orange-500 p-5 text-white shadow-lg">
         <span className="text-5xl">🐤</span>
         <span className="flex flex-col gap-1">
-          <span className="text-xl font-extrabold">기초 문법 20유닛</span>
+          <span className="text-xl font-extrabold">기초 문법 60강</span>
           <span className="text-sm text-amber-50">
-            개념 → 예문 듣기 → 문제 12개. 80점이 넘으면 별을 받아요. 아무 유닛부터 시작해도 돼요.
+            다니엘 쌤 강의 → 개념 → 예문 → 문제 12개. 80점이 넘으면 별을 받아요. 아무 유닛부터 시작해도 돼요.
           </span>
-          <span className="text-xs font-bold text-white/90">{cleared}/20 유닛 클리어</span>
+          <span className="text-xs font-bold text-white/90">{cleared}/60 유닛 클리어</span>
         </span>
       </section>
 
@@ -45,7 +45,7 @@ export default async function GrammarPage() {
                   </span>
                   <span className="flex min-w-0 flex-col">
                     <span className="text-xs font-bold text-amber-700">Unit {n}</span>
-                    <span className="font-bold leading-snug text-zinc-900">{u.title}</span>
+                    <span className="font-bold leading-snug text-zinc-900">{u.lecture}</span>
                     {locked ? (
                       <span className="text-xs font-semibold text-amber-700">수강생 전용이에요</span>
                     ) : p ? (

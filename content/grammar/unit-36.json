@@ -1,0 +1,175 @@
+{
+  "unit": 36,
+  "title": "would like (to) (I'd like a coffee / I'd like to ~)",
+  "emoji": "☕",
+  "goal": "I'd like ~로 공손하게 주문·요청하고, Would you like ~?로 상대에게 권하거나 물어볼 수 있어요.",
+  "points": [
+    {
+      "title": "would like = want의 공손한 말",
+      "body": "would like는 '~을 원해요, ~하고 싶어요'를 정중하게 말하는 표현이에요. 보통 줄여서 I'd like[아이드 라이크]라고 해요. 카페 주문, 면접, 가게에서 아주 많이 써요."
+    },
+    {
+      "title": "I'd like + 물건",
+      "body": "원하는 물건을 말할 때는 would like 뒤에 바로 명사를 써요. (I'd like a flat white, please.)"
+    },
+    {
+      "title": "I'd like to + 동사원형",
+      "body": "하고 싶은 행동을 말할 때는 would like to + 동사원형이에요. (I'd like to open an account.) 주어가 she여도 likes가 아니라 like예요."
+    },
+    {
+      "title": "Would you like ~? = ~하실래요?",
+      "body": "상대에게 권할 때는 Would you like + 명사? / Would you like to + 동사원형?이에요. 대답은 Yes, please. / No, thank you.가 자연스러워요."
+    },
+    {
+      "title": "Do you like ~?와 달라요",
+      "body": "Do you like coffee?는 '커피 좋아해요?'(취향), Would you like a coffee?는 '커피 드릴까요?'(권유)예요."
+    }
+  ],
+  "formula": [
+    "주어 + would like ('d like) + 명사",
+    "주어 + would like ('d like) + to + 동사원형",
+    "Would you like + 명사 ~? / Would you like to + 동사원형 ~?"
+  ],
+  "mistakes": [
+    {
+      "wrong": "I'd like order a flat white.",
+      "right": "I'd like to order a flat white.",
+      "why": "행동(order)이 오면 like 뒤에 to가 꼭 필요해요. I'd like to + 동사원형으로 기억하세요."
+    },
+    {
+      "wrong": "Do you like a cup of tea? (차 한 잔 드릴까요?)",
+      "right": "Would you like a cup of tea?",
+      "why": "권할 때는 Would you like ~?를 써요. Do you like ~?는 '좋아하냐'고 취향을 묻는 말이에요."
+    },
+    {
+      "wrong": "She'd likes to come.",
+      "right": "She'd like to come.",
+      "why": "would 뒤에는 동사원형이 와서 주어가 she여도 like 그대로예요."
+    }
+  ],
+  "examples": [
+    {
+      "en": "I'd like a flat white, please.",
+      "ko": "플랫 화이트 한 잔 주세요."
+    },
+    {
+      "en": "I'd like to open a bank account.",
+      "ko": "은행 계좌를 만들고 싶어요."
+    },
+    {
+      "en": "Would you like some water?",
+      "ko": "물 좀 드릴까요?"
+    },
+    {
+      "en": "Would you like to come to the beach with us?",
+      "ko": "우리랑 같이 해변에 갈래요?"
+    },
+    {
+      "en": "We'd like a table for two, please.",
+      "ko": "두 명 자리 부탁드려요."
+    },
+    {
+      "en": "She'd like to work on a farm.",
+      "ko": "그녀는 농장에서 일하고 싶어 해요."
+    },
+    {
+      "en": "I'd like to apply for the kitchen hand job.",
+      "ko": "주방 보조 자리에 지원하고 싶어요."
+    },
+    {
+      "en": "A: Would you like a bag? B: No, thank you.",
+      "ko": "A: 봉투 필요하세요? B: 아니요, 괜찮아요."
+    }
+  ],
+  "quiz": [
+    {
+      "type": "blank",
+      "sentence": "I'd like ___ buy a ticket to Bondi.",
+      "answer": "to",
+      "choices": ["to", "for", "the", "at"],
+      "ko": "본다이 가는 표를 사고 싶어요.",
+      "why": "행동(buy)이 오면 would like to + 동사원형이에요."
+    },
+    {
+      "type": "blank",
+      "sentence": "___ you like some cake?",
+      "answer": "Would",
+      "choices": ["Would", "Are", "Is", "Does"],
+      "ko": "케이크 좀 드실래요?",
+      "why": "권할 때는 Would you like ~?예요."
+    },
+    {
+      "type": "blank",
+      "sentence": "She would ___ to visit Uluru.",
+      "answer": "like",
+      "choices": ["like", "likes", "liking", "liked"],
+      "ko": "그녀는 울루루에 가 보고 싶어 해요.",
+      "why": "would 뒤에는 동사원형 like가 와요."
+    },
+    {
+      "type": "blank",
+      "sentence": "We'd like ___ table by the window.",
+      "answer": "a",
+      "choices": ["a", "to", "to a", "at"],
+      "ko": "창가 자리로 부탁드려요.",
+      "why": "원하는 것이 물건(table)이면 would like 뒤에 바로 명사(a table)가 와요."
+    },
+    {
+      "type": "blank",
+      "sentence": "A: Would you like a drink? B: Yes, ___.",
+      "answer": "please",
+      "choices": ["please", "I like", "I'd like", "I would like to"],
+      "ko": "A: 음료 드릴까요? B: 네, 주세요.",
+      "why": "Would you like ~?에는 Yes, please.로 대답하는 게 자연스러워요."
+    },
+    {
+      "type": "translate",
+      "ko": "라테 한 잔 주세요.",
+      "answer": "I'd like a latte, please.",
+      "choices": ["I'd like a latte, please.", "I'd like to a latte, please.", "I'd likes a latte, please.", "I'd liking a latte, please."],
+      "why": "물건을 원할 때는 I'd like + 명사예요. to는 필요 없어요."
+    },
+    {
+      "type": "translate",
+      "ko": "매니저와 이야기하고 싶어요.",
+      "answer": "I'd like to speak to the manager.",
+      "choices": ["I'd like to speak to the manager.", "I'd like speak to the manager.", "I'd like speaking to the manager.", "I'd likes to speak to the manager."],
+      "why": "하고 싶은 행동은 I'd like to + 동사원형이에요."
+    },
+    {
+      "type": "translate",
+      "ko": "저랑 저녁 같이 드실래요?",
+      "answer": "Would you like to have dinner with me?",
+      "choices": ["Would you like to have dinner with me?", "Would you like have dinner with me?", "Do you would like to have dinner with me?", "Would you likes to have dinner with me?"],
+      "why": "행동을 권할 때는 Would you like to + 동사원형 ~?이에요."
+    },
+    {
+      "type": "translate",
+      "ko": "그는 시드니에 살고 싶어 해요.",
+      "answer": "He'd like to live in Sydney.",
+      "choices": ["He'd like to live in Sydney.", "He'd likes to live in Sydney.", "He'd like live in Sydney.", "He would to like live in Sydney."],
+      "why": "주어가 He여도 would like to + 동사원형이에요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Would you like a receipt?",
+      "choices": ["Would you like a receipt?", "Would you likes a receipt?", "Would like you a receipt?", "Do you would like a receipt?"],
+      "why": "질문은 Would + you + like 순서예요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "They'd like to try kangaroo meat.",
+      "choices": ["They'd like to try kangaroo meat.", "They'd like try kangaroo meat.", "They'd liking to try kangaroo meat.", "They'd likes to try kangaroo meat."],
+      "why": "would like to + 동사원형이에요."
+    },
+    {
+      "type": "fix",
+      "prompt": "카페 손님에게 '커피 드릴까요?'라고 권하는 맞는 문장을 고르세요.",
+      "answer": "Would you like a coffee?",
+      "choices": ["Would you like a coffee?", "Would you like to a coffee?", "Would you liking a coffee?", "Would like you a coffee?"],
+      "why": "물건을 권할 때는 Would you like + 명사?예요."
+    }
+  ]
+}

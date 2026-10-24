@@ -1,0 +1,236 @@
+{
+  "unit": 29,
+  "title": "can과 could (할 수 있어요 / 할 수 있었어요)",
+  "emoji": "💪",
+  "goal": "can으로 지금 할 수 있는 일과 못 하는 일을, could로 예전에 할 수 있었던 일과 못 했던 일을 말할 수 있어요.",
+  "points": [
+    {
+      "title": "can = ~할 수 있어요",
+      "body": "할 수 있는 일은 can + 동사원형으로 말해요. I can make coffee.는 '저 커피 만들 수 있어요'예요. 동사원형은 -s, -ing, -ed가 안 붙은 기본 모양이에요."
+    },
+    {
+      "title": "can은 모양이 안 바뀌어요",
+      "body": "주어가 He / She여도 can에 s를 붙이지 않고, 뒤 동사에도 s를 붙이지 않아요. She can drive. (O) / She cans drive. (X) / She can drives. (X)"
+    },
+    {
+      "title": "못 해요 = can't",
+      "body": "'~할 수 없어요, 못 해요'는 can't(= cannot) + 동사원형이에요. I can't swim.처럼 써요."
+    },
+    {
+      "title": "could = ~할 수 있었어요 (과거)",
+      "body": "could는 can의 과거형이에요. 예전에 할 수 있었던 일은 could, 못 했던 일은 couldn't + 동사원형이에요. I couldn't sleep last night. (어젯밤에 잠을 못 잤어요)"
+    },
+    {
+      "title": "질문과 대답",
+      "body": "can / could를 맨 앞으로 옮기면 질문이에요. Can you drive? — Yes, I can. / No, I can't. 과거는 Could you ~? — Yes, I could. / No, I couldn't. do / did는 필요 없어요."
+    }
+  ],
+  "formula": [
+    "주어 + can / can't + 동사원형 (지금)",
+    "주어 + could / couldn't + 동사원형 (과거)",
+    "Can / Could + 주어 + 동사원형?",
+    "Yes, 주어 + can(could). / No, 주어 + can't(couldn't)."
+  ],
+  "mistakes": [
+    {
+      "wrong": "She can speaks English.",
+      "right": "She can speak English.",
+      "why": "She 뒤에는 동사에 s를 붙인다고 배워서 헷갈려요. can 뒤 동사는 항상 동사원형이에요."
+    },
+    {
+      "wrong": "Do you can swim?",
+      "right": "Can you swim?",
+      "why": "질문을 Do로 시작하는 습관 때문이에요. can이 있으면 Can을 맨 앞에 두면 끝이에요."
+    },
+    {
+      "wrong": "I can't find my keys yesterday.",
+      "right": "I couldn't find my keys yesterday.",
+      "why": "yesterday처럼 지나간 일이면 can't가 아니라 과거형 couldn't를 써요."
+    }
+  ],
+  "examples": [
+    {
+      "en": "I can make coffee.",
+      "ko": "저는 커피를 만들 수 있어요."
+    },
+    {
+      "en": "She can speak English and Korean.",
+      "ko": "그녀는 영어랑 한국어를 할 수 있어요."
+    },
+    {
+      "en": "I can't drive a manual car.",
+      "ko": "저는 수동 차는 운전 못 해요."
+    },
+    {
+      "en": "Can you lift heavy boxes? — Yes, I can.",
+      "ko": "무거운 상자 들 수 있어요? — 네, 들 수 있어요."
+    },
+    {
+      "en": "I could swim when I was five.",
+      "ko": "저는 다섯 살 때 수영할 수 있었어요."
+    },
+    {
+      "en": "I couldn't sleep last night. It was too hot.",
+      "ko": "어젯밤에 잠을 못 잤어요. 너무 더웠어요."
+    },
+    {
+      "en": "We couldn't find a parking spot at the beach.",
+      "ko": "해변에서 주차 자리를 못 찾았어요."
+    },
+    {
+      "en": "Could you understand the Aussie accent at first? — No, I couldn't.",
+      "ko": "처음에 호주 억양 알아들을 수 있었어요? — 아니요, 못 알아들었어요."
+    }
+  ],
+  "quiz": [
+    {
+      "type": "blank",
+      "sentence": "I ___ speak a little English.",
+      "answer": "can",
+      "choices": [
+        "can",
+        "cans",
+        "am",
+        "to"
+      ],
+      "ko": "저는 영어를 조금 할 수 있어요.",
+      "why": "할 수 있다 = can + 동사원형."
+    },
+    {
+      "type": "blank",
+      "sentence": "She can ___ a car.",
+      "answer": "drive",
+      "choices": [
+        "drives",
+        "driving",
+        "drive",
+        "to drive"
+      ],
+      "ko": "그녀는 차를 운전할 수 있어요.",
+      "why": "can 뒤에는 She여도 동사원형."
+    },
+    {
+      "type": "blank",
+      "sentence": "Sorry, I ___ come to work today. I'm sick.",
+      "answer": "can't",
+      "choices": [
+        "don't can",
+        "can't",
+        "not can",
+        "can't to"
+      ],
+      "ko": "죄송해요, 오늘 출근 못 해요. 아파요.",
+      "why": "못 한다 = can't + 동사원형."
+    },
+    {
+      "type": "blank",
+      "sentence": "I ___ sleep last night. My housemate was too loud.",
+      "answer": "couldn't",
+      "choices": [
+        "can't",
+        "don't could",
+        "couldn't to",
+        "couldn't"
+      ],
+      "ko": "어젯밤에 잠을 못 잤어요. 쉐어메이트가 너무 시끄러웠어요.",
+      "why": "last night은 과거니까 couldn't + 동사원형."
+    },
+    {
+      "type": "blank",
+      "sentence": "When he was young, he ___ run really fast.",
+      "answer": "could",
+      "choices": [
+        "can",
+        "could",
+        "cans",
+        "coulds"
+      ],
+      "ko": "그는 어렸을 때 정말 빨리 달릴 수 있었어요.",
+      "why": "When he was young은 과거니까 could. could에도 s는 안 붙어요."
+    },
+    {
+      "type": "translate",
+      "ko": "그는 수영을 못 해요.",
+      "answer": "He can't swim.",
+      "choices": [
+        "He can't swims.",
+        "He doesn't can swim.",
+        "He not can swim.",
+        "He can't swim."
+      ],
+      "why": "He여도 can't + 동사원형."
+    },
+    {
+      "type": "translate",
+      "ko": "저는 어젯밤에 열쇠를 못 찾았어요.",
+      "answer": "I couldn't find my keys last night.",
+      "choices": [
+        "I couldn't find my keys last night.",
+        "I can't find my keys last night.",
+        "I couldn't found my keys last night.",
+        "I didn't could find my keys last night."
+      ],
+      "why": "과거에 못 한 일은 couldn't + 동사원형. found가 아니라 find."
+    },
+    {
+      "type": "translate",
+      "ko": "우리는 주말에 일할 수 있어요.",
+      "answer": "We can work on weekends.",
+      "choices": [
+        "We can working on weekends.",
+        "We cans work on weekends.",
+        "We can work on weekends.",
+        "We can to work on weekends."
+      ],
+      "why": "can + 동사원형, can은 모양이 안 바뀌어요."
+    },
+    {
+      "type": "translate",
+      "ko": "운전할 수 있어요? — 네, 할 수 있어요.",
+      "answer": "Can you drive? — Yes, I can.",
+      "choices": [
+        "Do you can drive? — Yes, I do.",
+        "Can you drive? — Yes, I do.",
+        "Can you drive? — Yes, I can.",
+        "Can you driving? — Yes, I can."
+      ],
+      "why": "Can으로 물으면 can으로 대답해요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "My housemate can cook Thai food.",
+      "choices": [
+        "My housemate can cook Thai food.",
+        "My housemate cans cook Thai food.",
+        "My housemate can cooks Thai food.",
+        "My housemate can to cook Thai food."
+      ],
+      "why": "can에도, 뒤 동사에도 s를 붙이지 않아요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Can she drive a truck?",
+      "choices": [
+        "Does she can drive a truck?",
+        "Can she drives a truck?",
+        "Cans she drive a truck?",
+        "Can she drive a truck?"
+      ],
+      "why": "Can + 주어 + 동사원형? Does는 필요 없어요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "She could read when she was four.",
+      "choices": [
+        "She could reads when she was four.",
+        "She could read when she was four.",
+        "She can read when she was four.",
+        "She could to read when she was four."
+      ],
+      "why": "when she was four는 과거니까 could + 동사원형."
+    }
+  ]
+}

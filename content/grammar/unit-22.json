@@ -1,0 +1,235 @@
+{
+  "unit": 22,
+  "title": "현재완료 시제(3) 계속 (for / since / How long ~?)",
+  "emoji": "📅",
+  "goal": "have / has + p.p. + for / since로 '~한 지 얼마나 됐다'를 말하고, How long ~?으로 물어볼 수 있어요.",
+  "points": [
+    {
+      "title": "과거부터 지금까지 계속",
+      "body": "예전에 시작해서 지금도 계속되는 일은 have / has + p.p.로 말해요. I have lived in Sydney for two years.는 2년 전부터 지금도 시드니에 산다는 뜻이에요."
+    },
+    {
+      "title": "for + 기간",
+      "body": "for 뒤에는 얼마 동안인지 기간이 와요: for two years, for six months, for a long time."
+    },
+    {
+      "title": "since + 시작 시점",
+      "body": "since 뒤에는 언제부터인지 시작한 때가 와요: since March, since 2023, since last week, since high school. '~부터'라고 from을 쓰지 않아요."
+    },
+    {
+      "title": "How long have you + p.p.?",
+      "body": "'~한 지 얼마나 됐어요?'는 How long have you + p.p.?예요. 대답은 For six months. / Since January.처럼 짧게 해도 돼요."
+    },
+    {
+      "title": "현재 시제로 말하지 않기",
+      "body": "한국어로 '여기 산 지 2년 됐어요'라고 해서 I live here for two years.라고 하면 틀려요. 지금까지 이어진 기간은 꼭 have + p.p.예요. be동사는 have been이에요."
+    }
+  ],
+  "formula": [
+    "주어 + have / has + p.p. + for + 기간",
+    "주어 + have / has + p.p. + since + 시작 시점",
+    "How long + have / has + 주어 + p.p.?"
+  ],
+  "mistakes": [
+    {
+      "wrong": "I live in Sydney for two years.",
+      "right": "I have lived in Sydney for two years.",
+      "why": "'산 지 2년 됐다'는 지금까지 이어진 일이라 현재 시제가 아니라 have + p.p.로 말해요."
+    },
+    {
+      "wrong": "How long are you in Australia?",
+      "right": "How long have you been in Australia?",
+      "why": "'호주에 온 지 얼마나 됐어요?'는 How long have you been ~?이에요. be동사의 p.p.는 been."
+    },
+    {
+      "wrong": "I have been here from last Monday.",
+      "right": "I have been here since last Monday.",
+      "why": "한국어 '~부터' 때문에 from을 쓰기 쉬워요. 현재완료와 함께 쓰는 '~부터'는 since예요."
+    }
+  ],
+  "examples": [
+    {
+      "en": "I have lived in Sydney for two years.",
+      "ko": "나는 시드니에 산 지 2년 됐어요."
+    },
+    {
+      "en": "She has worked at this café since March.",
+      "ko": "그녀는 3월부터 이 카페에서 일해 왔어요."
+    },
+    {
+      "en": "\"How long have you been in Australia?\" \"For six months.\"",
+      "ko": "\"호주에 온 지 얼마나 됐어요?\" \"6개월 됐어요.\""
+    },
+    {
+      "en": "We have known each other since high school.",
+      "ko": "우리는 고등학교 때부터 서로 알고 지냈어요."
+    },
+    {
+      "en": "He has had this car for ten years.",
+      "ko": "그는 이 차를 10년째 가지고 있어요."
+    },
+    {
+      "en": "It has been hot since last week.",
+      "ko": "지난주부터 계속 더워요."
+    },
+    {
+      "en": "\"How long has your housemate lived here?\" \"Since 2022.\"",
+      "ko": "\"너희 하우스메이트는 여기 산 지 얼마나 됐어?\" \"2022년부터.\""
+    },
+    {
+      "en": "I haven't seen my family for a year.",
+      "ko": "나는 1년 동안 가족을 못 봤어요."
+    }
+  ],
+  "quiz": [
+    {
+      "type": "blank",
+      "sentence": "I have lived in Perth ___ 2023.",
+      "answer": "since",
+      "choices": [
+        "since",
+        "for",
+        "from",
+        "ago"
+      ],
+      "ko": "나는 2023년부터 퍼스에 살고 있어요.",
+      "why": "2023은 시작 시점 → since"
+    },
+    {
+      "type": "blank",
+      "sentence": "She has worked on the farm ___ three months.",
+      "answer": "for",
+      "choices": [
+        "for",
+        "since",
+        "from",
+        "ago"
+      ],
+      "ko": "그녀는 3개월째 농장에서 일하고 있어요.",
+      "why": "three months는 기간 → for"
+    },
+    {
+      "type": "blank",
+      "sentence": "How long ___ you known Sam?",
+      "answer": "have",
+      "choices": [
+        "have",
+        "are",
+        "do",
+        "did"
+      ],
+      "ko": "Sam이랑 안 지 얼마나 됐어?",
+      "why": "How long + have + 주어 + p.p.?"
+    },
+    {
+      "type": "blank",
+      "sentence": "My brother ___ been in Brisbane since January.",
+      "answer": "has",
+      "choices": [
+        "has",
+        "have",
+        "is",
+        "was"
+      ],
+      "ko": "우리 형은 1월부터 브리즈번에 있어요.",
+      "why": "My brother는 has + p.p."
+    },
+    {
+      "type": "blank",
+      "sentence": "We haven't seen each other ___ a long time.",
+      "answer": "for",
+      "choices": [
+        "for",
+        "since",
+        "from",
+        "during"
+      ],
+      "ko": "우리는 오랫동안 서로 못 봤어요.",
+      "why": "a long time은 기간 → for"
+    },
+    {
+      "type": "translate",
+      "ko": "나는 호주에 온 지 1년 됐어요.",
+      "answer": "I have been in Australia for a year.",
+      "choices": [
+        "I am in Australia for a year.",
+        "I have been in Australia since a year.",
+        "I have be in Australia for a year.",
+        "I have been in Australia for a year."
+      ],
+      "why": "지금까지 이어진 기간은 have been + for"
+    },
+    {
+      "type": "translate",
+      "ko": "멜버른에 산 지 얼마나 됐어요?",
+      "answer": "How long have you lived in Melbourne?",
+      "choices": [
+        "How long do you live in Melbourne?",
+        "How long have you lived in Melbourne?",
+        "How long have you live in Melbourne?",
+        "How long you have lived in Melbourne?"
+      ],
+      "why": "How long have you + p.p.?"
+    },
+    {
+      "type": "translate",
+      "ko": "그녀는 지난 월요일부터 계속 아파요.",
+      "answer": "She has been sick since last Monday.",
+      "choices": [
+        "She has been sick since last Monday.",
+        "She is sick since last Monday.",
+        "She has been sick for last Monday.",
+        "She have been sick since last Monday."
+      ],
+      "why": "She는 has been, 시작 시점은 since"
+    },
+    {
+      "type": "translate",
+      "ko": "우리는 10년째 친구로 지내고 있어요.",
+      "answer": "We have been friends for ten years.",
+      "choices": [
+        "We are friends for ten years.",
+        "We have been friends since ten years.",
+        "We has been friends for ten years.",
+        "We have been friends for ten years."
+      ],
+      "why": "We는 have been, 기간은 for"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "I have worked here since last summer.",
+      "choices": [
+        "I have worked here from last summer.",
+        "I work here since last summer.",
+        "I have worked here since last summer.",
+        "I have worked here for last summer."
+      ],
+      "why": "시작 시점(last summer)은 since, 앞에는 have + p.p."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "How long has she had her dog?",
+      "choices": [
+        "How long does she have her dog?",
+        "How long has she have her dog?",
+        "How long have she had her dog?",
+        "How long has she had her dog?"
+      ],
+      "why": "she는 has, have의 p.p.는 had"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "He has known me for five years.",
+      "choices": [
+        "He knows me for five years.",
+        "He has knew me for five years.",
+        "He has known me for five years.",
+        "He is known me for five years."
+      ],
+      "why": "has + p.p.(known) + for + 기간"
+    }
+  ]
+}

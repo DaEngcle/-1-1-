@@ -1,0 +1,235 @@
+{
+  "unit": 23,
+  "title": "과거 시제 vs 현재완료(have p.p.)",
+  "emoji": "🆚",
+  "goal": "끝난 때를 말하면 과거 시제, 지금과 연결되면 현재완료로 골라 쓸 수 있어요.",
+  "points": [
+    {
+      "title": "과거 시제 = 끝난 때를 콕 집을 때",
+      "body": "yesterday, last week, two days ago, in 2022처럼 '언제'가 분명한 끝난 일은 과거 시제로 말해요. I arrived in Sydney last week."
+    },
+    {
+      "title": "현재완료 = 지금과 연결될 때",
+      "body": "언제인지 말하지 않고, 그 일이 지금과 이어질 때(경험·결과·계속) have / has + p.p.를 써요. I have lost my phone.(잃어버려서 지금 없어요)"
+    },
+    {
+      "title": "ago, yesterday, last ~, When ~?",
+      "body": "이런 말은 끝난 과거를 가리키니까 현재완료와 같이 쓰지 않아요. I have arrived yesterday.(X) / When have you started?(X)"
+    },
+    {
+      "title": "대화는 현재완료로 묻고 과거로 이어가기",
+      "body": "Have you ever been to Cairns?로 경험을 물은 뒤, 자세한 이야기는 Yes, I went there last year.처럼 과거 시제로 해요."
+    },
+    {
+      "title": "지금도 계속? 이미 끝?",
+      "body": "I lived in Seoul for five years.는 지금은 서울에 안 산다는 뜻, I have lived in Sydney for two years.는 지금도 시드니에 산다는 뜻이에요."
+    }
+  ],
+  "formula": [
+    "과거: 주어 + 과거형 + yesterday / last ~ / ~ ago / in 2022",
+    "현재완료: 주어 + have / has + p.p. (때를 말하지 않을 때)",
+    "When + did + 주어 + 동사원형? (When + have p.p.? X)"
+  ],
+  "mistakes": [
+    {
+      "wrong": "I have arrived in Sydney last week.",
+      "right": "I arrived in Sydney last week.",
+      "why": "last week처럼 끝난 때를 말하면 현재완료가 아니라 과거 시제를 써요."
+    },
+    {
+      "wrong": "When have you started your new job?",
+      "right": "When did you start your new job?",
+      "why": "When(언제)은 끝난 때를 묻는 말이라 did + 동사원형으로 물어요."
+    },
+    {
+      "wrong": "I have lived in Seoul for five years, but now I live in Sydney.",
+      "right": "I lived in Seoul for five years, but now I live in Sydney.",
+      "why": "지금은 서울에 안 사니까 이미 끝난 일 → 과거 시제(lived)예요."
+    }
+  ],
+  "examples": [
+    {
+      "en": "I lost my phone yesterday.",
+      "ko": "나는 어제 휴대폰을 잃어버렸어요."
+    },
+    {
+      "en": "I have lost my phone, so I need a new one.",
+      "ko": "휴대폰을 잃어버려서 (지금 없어서) 새 게 필요해요."
+    },
+    {
+      "en": "She came to Australia two years ago.",
+      "ko": "그녀는 2년 전에 호주에 왔어요."
+    },
+    {
+      "en": "She has been in Australia for two years.",
+      "ko": "그녀는 호주에 온 지 2년 됐어요."
+    },
+    {
+      "en": "\"Have you ever been to Cairns?\" \"Yes, I went there last year.\"",
+      "ko": "\"케언즈 가 본 적 있어?\" \"응, 작년에 갔어.\""
+    },
+    {
+      "en": "When did you start your new job?",
+      "ko": "새 일은 언제 시작했어요?"
+    },
+    {
+      "en": "I worked at a hotel in Seoul for three years, but now I work at a café.",
+      "ko": "나는 서울에서 3년 동안 호텔에서 일했지만, 지금은 카페에서 일해요."
+    },
+    {
+      "en": "We have finished the cleaning. The kitchen looks great.",
+      "ko": "우리 청소 다 했어요. 부엌이 정말 깔끔해 보여요."
+    }
+  ],
+  "quiz": [
+    {
+      "type": "blank",
+      "sentence": "I ___ my passport last night.",
+      "answer": "lost",
+      "choices": [
+        "lost",
+        "have lost",
+        "lose",
+        "losed"
+      ],
+      "ko": "나는 어젯밤에 여권을 잃어버렸어요.",
+      "why": "last night은 끝난 때 → 과거 시제 lost"
+    },
+    {
+      "type": "blank",
+      "sentence": "She ___ in Sydney since 2023.",
+      "answer": "has lived",
+      "choices": [
+        "has lived",
+        "lived",
+        "lives",
+        "is living"
+      ],
+      "ko": "그녀는 2023년부터 시드니에 살고 있어요.",
+      "why": "since + 시점으로 지금까지 계속 → has + p.p."
+    },
+    {
+      "type": "blank",
+      "sentence": "When ___ you arrive in Perth?",
+      "answer": "did",
+      "choices": [
+        "did",
+        "have",
+        "has",
+        "were"
+      ],
+      "ko": "퍼스에 언제 도착했어요?",
+      "why": "When은 끝난 때를 물어서 did + 동사원형"
+    },
+    {
+      "type": "blank",
+      "sentence": "I ___ to Uluru two years ago.",
+      "answer": "went",
+      "choices": [
+        "went",
+        "have been",
+        "have gone",
+        "go"
+      ],
+      "ko": "나는 2년 전에 울루루에 갔어요.",
+      "why": "two years ago는 끝난 때 → 과거 시제 went"
+    },
+    {
+      "type": "blank",
+      "sentence": "\"Have you ever tried Tim Tams?\" \"Yes, I ___ some yesterday.\"",
+      "answer": "ate",
+      "choices": [
+        "ate",
+        "have eaten",
+        "eat",
+        "eaten"
+      ],
+      "ko": "\"팀탐 먹어 본 적 있어?\" \"응, 어제 좀 먹었어.\"",
+      "why": "yesterday가 있으니 과거 시제 ate"
+    },
+    {
+      "type": "translate",
+      "ko": "나는 지난주에 새 일을 시작했어요.",
+      "answer": "I started a new job last week.",
+      "choices": [
+        "I have started a new job last week.",
+        "I started a new job last week.",
+        "I have start a new job last week.",
+        "I start a new job last week."
+      ],
+      "why": "last week은 끝난 때 → 과거 시제 started"
+    },
+    {
+      "type": "translate",
+      "ko": "그는 호주에 산 지 5년 됐어요. (지금도 살아요)",
+      "answer": "He has lived in Australia for five years.",
+      "choices": [
+        "He lived in Australia for five years.",
+        "He has lived in Australia since five years.",
+        "He has lived in Australia for five years.",
+        "He lives in Australia for five years."
+      ],
+      "why": "지금도 계속 사니까 has + p.p. + for"
+    },
+    {
+      "type": "translate",
+      "ko": "너 언제 이 사진 찍었어?",
+      "answer": "When did you take this photo?",
+      "choices": [
+        "When have you taken this photo?",
+        "When did you took this photo?",
+        "When you took this photo?",
+        "When did you take this photo?"
+      ],
+      "why": "When ~?은 did + 동사원형(take)"
+    },
+    {
+      "type": "translate",
+      "ko": "나는 열쇠를 잃어버렸어요. (그래서 지금 없어요)",
+      "answer": "I have lost my keys.",
+      "choices": [
+        "I have lose my keys.",
+        "I has lost my keys.",
+        "I have lost my keys.",
+        "I have losted my keys."
+      ],
+      "why": "결과가 지금까지 이어지면 have + p.p.(lost)"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "We moved into this share house a month ago.",
+      "choices": [
+        "We have moved into this share house a month ago.",
+        "We moved into this share house a month ago.",
+        "We move into this share house a month ago.",
+        "We did moved into this share house a month ago."
+      ],
+      "why": "a month ago는 끝난 때 → 과거 시제 moved"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "I have never seen a platypus.",
+      "choices": [
+        "I have never saw a platypus.",
+        "I didn't never see a platypus.",
+        "I have never see a platypus.",
+        "I have never seen a platypus."
+      ],
+      "why": "경험(한 번도 없다)은 have never + p.p.(seen)"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Tom has broken his arm, so he isn't working this week.",
+      "choices": [
+        "Tom has broke his arm, so he isn't working this week.",
+        "Tom have broken his arm, so he isn't working this week.",
+        "Tom has broken his arm yesterday, so he isn't working this week.",
+        "Tom has broken his arm, so he isn't working this week."
+      ],
+      "why": "yesterday와 현재완료는 같이 못 써요. 때를 빼면 has + p.p.(broken)"
+    }
+  ]
+}

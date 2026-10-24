@@ -19,7 +19,7 @@ export default async function GrammarUnitPage({ params }: { params: Promise<{ un
         ← 문법 유닛 목록
       </Link>
       <h1 className="text-xl font-extrabold text-zinc-900">
-        {unit.emoji} Unit {unit.unit} · {unit.title}
+        {unit.emoji} Unit {unit.unit} · {unit.lecture}
       </h1>
       <GrammarStudy unit={unit} nextUnit={next && (hasFullVoca(student) || next.unit <= FREE_GRAMMAR_UNITS) ? next.unit : null} />
     </>

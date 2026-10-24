@@ -1,0 +1,236 @@
+{
+  "unit": 42,
+  "title": "which",
+  "emoji": "👉",
+  "goal": "which로 정해진 몇 개 중에서 '어느 것'인지 물어볼 수 있어요.",
+  "points": [
+    {
+      "title": "which = 어느 것 / 어느",
+      "body": "몇 개의 선택지 중에서 고를 때 써요. Which one do you want? (어느 걸로 할래요?)"
+    },
+    {
+      "title": "which + 명사",
+      "body": "Which bus(어느 버스), Which room(어느 방), Which size(어느 사이즈)처럼 뒤에 명사를 붙여서 물어요."
+    },
+    {
+      "title": "what과 which 차이",
+      "body": "선택지가 정해져 있지 않고 넓게 물으면 what(What's your name?), 눈앞의 몇 개 중에서 고르면 which(Which one is yours?)를 써요."
+    },
+    {
+      "title": "A or B로 선택지를 붙여요",
+      "body": "Which do you want, tea or coffee?처럼 질문 끝에 선택지를 붙이면 더 분명해져요."
+    },
+    {
+      "title": "which가 주어일 때는 do 없이",
+      "body": "'어느 것이 ~해요?'처럼 which + 명사가 주어면 do / does 없이 바로 동사를 써요. Which bus goes to the airport?"
+    }
+  ],
+  "formula": [
+    "Which (+ 명사) + do / does / did + 주어 + 동사원형?",
+    "Which (+ 명사) + be동사 + ...?",
+    "Which (+ 명사) + 동사 ...? (어느 것이 ~?)",
+    "Which ..., A or B?"
+  ],
+  "mistakes": [
+    {
+      "wrong": "Which one you want?",
+      "right": "Which one do you want?",
+      "why": "which 뒤에도 Yes / No 질문 순서가 필요해요. do를 넣으세요."
+    },
+    {
+      "wrong": "Which bus does goes to the city?",
+      "right": "Which bus goes to the city?",
+      "why": "'어느 버스가'가 주어라서 does 없이 동사에 -s만 붙여요."
+    },
+    {
+      "wrong": "Which is your name?",
+      "right": "What is your name?",
+      "why": "이름은 몇 개 중에서 고르는 게 아니라서 which가 아니라 what을 써요."
+    }
+  ],
+  "examples": [
+    {
+      "en": "Which bus goes to the airport?",
+      "ko": "어느 버스가 공항에 가요?"
+    },
+    {
+      "en": "Which one do you want, the red one or the blue one?",
+      "ko": "빨간 거랑 파란 거 중에 어느 걸로 할래요?"
+    },
+    {
+      "en": "Which size would you like?",
+      "ko": "어느 사이즈로 드릴까요?"
+    },
+    {
+      "en": "Which room is yours?",
+      "ko": "어느 방이 당신 방이에요?"
+    },
+    {
+      "en": "Which day do you work, Saturday or Sunday?",
+      "ko": "토요일이랑 일요일 중 어느 날 일해요?"
+    },
+    {
+      "en": "Which café did you go to?",
+      "ko": "어느 카페에 갔어요?"
+    },
+    {
+      "en": "Which platform does the train leave from?",
+      "ko": "기차가 몇 번 승강장에서 출발해요?"
+    },
+    {
+      "en": "Which shoes are on sale?",
+      "ko": "어느 신발이 세일 중이에요?"
+    }
+  ],
+  "quiz": [
+    {
+      "type": "blank",
+      "sentence": "___ do you want, tea or coffee?",
+      "answer": "Which",
+      "choices": [
+        "Which",
+        "Who",
+        "Do",
+        "Are"
+      ],
+      "ko": "차랑 커피 중에 어느 걸로 할래요?",
+      "why": "두 개 중에서 고르니까 Which"
+    },
+    {
+      "type": "blank",
+      "sentence": "Which bus ___ to Manly?",
+      "answer": "goes",
+      "choices": [
+        "goes",
+        "go",
+        "is go",
+        "going"
+      ],
+      "ko": "어느 버스가 맨리에 가요?",
+      "why": "Which bus가 주어 → do 없이 동사에 -s"
+    },
+    {
+      "type": "blank",
+      "sentence": "Which room ___ you like?",
+      "answer": "do",
+      "choices": [
+        "do",
+        "does",
+        "are",
+        "is"
+      ],
+      "ko": "어느 방이 마음에 들어요?",
+      "why": "일반동사 like + 주어 you → do"
+    },
+    {
+      "type": "blank",
+      "sentence": "Which one ___ you buy yesterday?",
+      "answer": "did",
+      "choices": [
+        "did",
+        "do",
+        "were",
+        "does"
+      ],
+      "ko": "어제 어느 걸 샀어요?",
+      "why": "yesterday(과거) + 동사원형 buy → did"
+    },
+    {
+      "type": "blank",
+      "sentence": "___ one is your bag, this one or that one?",
+      "answer": "Which",
+      "choices": [
+        "Which",
+        "Who",
+        "Do",
+        "Are"
+      ],
+      "ko": "이거랑 저거 중에 어느 게 당신 가방이에요?",
+      "why": "정해진 두 개 중 고르니까 Which"
+    },
+    {
+      "type": "translate",
+      "ko": "어느 쪽이 해변이에요?",
+      "answer": "Which way is the beach?",
+      "choices": [
+        "Which way is the beach?",
+        "Which way the beach is?",
+        "Which way does the beach?",
+        "Who way is the beach?"
+      ],
+      "why": "Which way + be동사 + 주어 순서"
+    },
+    {
+      "type": "translate",
+      "ko": "어느 걸로 고를 거예요?",
+      "answer": "Which one will you choose?",
+      "choices": [
+        "Which one will you choose?",
+        "Which one you will choose?",
+        "Which one will you chose?",
+        "Which one do you will choose?"
+      ],
+      "why": "Which one + will + 주어 + 동사원형"
+    },
+    {
+      "type": "translate",
+      "ko": "어느 트램이 시내로 가요?",
+      "answer": "Which tram goes to the city?",
+      "choices": [
+        "Which tram goes to the city?",
+        "Which tram does goes to the city?",
+        "Which tram go to the city?",
+        "Which tram is go to the city?"
+      ],
+      "why": "'어느 트램이'가 주어 → 바로 goes"
+    },
+    {
+      "type": "translate",
+      "ko": "어느 농장에서 일했어요?",
+      "answer": "Which farm did you work on?",
+      "choices": [
+        "Which farm did you work on?",
+        "Which farm you worked on?",
+        "Which farm did you worked on?",
+        "Which farm were you work on?"
+      ],
+      "why": "과거 질문 → Which farm + did + 주어 + 동사원형"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Which colour do you like, green or blue?",
+      "choices": [
+        "Which colour do you like, green or blue?",
+        "Which colour you like, green or blue?",
+        "Which colour does you like, green or blue?",
+        "Which colour do you likes, green or blue?"
+      ],
+      "why": "Which colour + do + you + 동사원형 like"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Which shop sells SIM cards?",
+      "choices": [
+        "Which shop sells SIM cards?",
+        "Which shop does sells SIM cards?",
+        "Which shop sell SIM cards?",
+        "Which shop selling SIM cards?"
+      ],
+      "why": "'어느 가게가'가 주어 → does 없이 sells"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Which is your phone?",
+      "choices": [
+        "Which is your phone?",
+        "Which your phone is?",
+        "Which does your phone?",
+        "Which are your phone?"
+      ],
+      "why": "Which + be동사(is) + 주어 순서, your phone은 단수"
+    }
+  ]
+}

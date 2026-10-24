@@ -1,0 +1,170 @@
+{
+  "unit": 35,
+  "title": "should (조언·충고: You should ~)",
+  "emoji": "💡",
+  "goal": "should와 shouldn't로 '~하는 게 좋겠어요 / ~ 안 하는 게 좋겠어요'라고 부드럽게 조언할 수 있어요.",
+  "points": [
+    {
+      "title": "should = ~하는 게 좋겠어요",
+      "body": "should + 동사원형은 '~하는 게 좋아요, ~해야 해요'라는 부드러운 조언이에요. 친구에게 추천하거나 충고할 때 딱 좋아요."
+    },
+    {
+      "title": "모양은 늘 should",
+      "body": "주어가 뭐든 should는 그대로예요. 뒤에는 to 없이 바로 동사원형이 와요. (She should rest. O / She shoulds rest. X)"
+    },
+    {
+      "title": "shouldn't = ~ 안 하는 게 좋겠어요",
+      "body": "should 뒤에 not을 붙이면 '~하지 않는 게 좋아요'예요. 줄여서 shouldn't[슈든트]라고 해요."
+    },
+    {
+      "title": "must와 비교",
+      "body": "must는 '꼭 해야 한다'는 강한 의무나 규칙, should는 '하는 게 좋다'는 조언이에요. 친구에게 충고할 때 must를 쓰면 명령처럼 들릴 수 있어요."
+    }
+  ],
+  "formula": [
+    "주어 + should + 동사원형",
+    "주어 + shouldn't (should not) + 동사원형"
+  ],
+  "mistakes": [
+    {
+      "wrong": "You should to wear sunscreen.",
+      "right": "You should wear sunscreen.",
+      "why": "'have to'처럼 to를 넣기 쉬운데, should 뒤에는 바로 동사원형이에요."
+    },
+    {
+      "wrong": "She shoulds rest.",
+      "right": "She should rest.",
+      "why": "주어가 she여도 should에는 -s가 붙지 않아요."
+    },
+    {
+      "wrong": "You don't should stay up late.",
+      "right": "You shouldn't stay up late.",
+      "why": "should의 부정은 don't를 쓰지 않고 should 뒤에 not을 붙여요."
+    }
+  ],
+  "examples": [
+    {
+      "en": "You should wear sunscreen at the beach.",
+      "ko": "해변에서는 선크림을 바르는 게 좋아요."
+    },
+    {
+      "en": "You should open a bank account first.",
+      "ko": "먼저 은행 계좌를 만드는 게 좋아요."
+    },
+    {
+      "en": "You shouldn't swim at night.",
+      "ko": "밤에는 수영하지 않는 게 좋아요."
+    },
+    {
+      "en": "He should get a TFN before he starts work.",
+      "ko": "그는 일을 시작하기 전에 TFN(세금 번호)을 받는 게 좋아요."
+    },
+    {
+      "en": "We should leave now. The tram is coming.",
+      "ko": "우리 지금 나가는 게 좋겠어요. 트램이 오고 있어요."
+    },
+    {
+      "en": "You shouldn't drink too much coffee.",
+      "ko": "커피를 너무 많이 마시지 않는 게 좋아요."
+    },
+    {
+      "en": "She should practise her English every day.",
+      "ko": "그녀는 매일 영어를 연습하는 게 좋아요."
+    },
+    {
+      "en": "I should call my parents more often.",
+      "ko": "부모님께 더 자주 전화해야겠어요."
+    }
+  ],
+  "quiz": [
+    {
+      "type": "blank",
+      "sentence": "You look tired. You should ___ some rest.",
+      "answer": "get",
+      "choices": ["get", "gets", "to get", "getting"],
+      "ko": "피곤해 보여요. 좀 쉬는 게 좋겠어요.",
+      "why": "should 뒤에는 동사원형이에요."
+    },
+    {
+      "type": "blank",
+      "sentence": "It's really hot. You ___ drink more water.",
+      "answer": "should",
+      "choices": ["should", "shoulds", "should to", "are should"],
+      "ko": "정말 더워요. 물을 더 마시는 게 좋아요.",
+      "why": "should는 모양이 바뀌지 않고 to도 붙지 않아요."
+    },
+    {
+      "type": "blank",
+      "sentence": "You ___ eat that. It's old.",
+      "answer": "shouldn't",
+      "choices": ["shouldn't", "should", "don't should", "not should"],
+      "ko": "그거 먹지 않는 게 좋아요. 오래됐어요.",
+      "why": "'하지 않는 게 좋다'는 shouldn't예요. don't should나 not should는 틀려요."
+    },
+    {
+      "type": "blank",
+      "sentence": "She should ___ for the job. She's a great barista.",
+      "answer": "apply",
+      "choices": ["apply", "applies", "applying", "applied"],
+      "ko": "그녀는 그 일자리에 지원하는 게 좋겠어요. 정말 훌륭한 바리스타거든요.",
+      "why": "주어가 She여도 should 뒤에는 동사원형이에요."
+    },
+    {
+      "type": "blank",
+      "sentence": "He ___ work so much. He's always tired.",
+      "answer": "shouldn't",
+      "choices": ["shouldn't", "doesn't should", "not should", "shouldn't to"],
+      "ko": "그는 일을 그렇게 많이 하지 않는 게 좋겠어요. 늘 피곤해하거든요.",
+      "why": "부정은 shouldn't + 동사원형. to나 doesn't는 필요 없어요."
+    },
+    {
+      "type": "translate",
+      "ko": "너는 병원에 가 보는 게 좋겠어.",
+      "answer": "You should see a doctor.",
+      "choices": ["You should see a doctor.", "You should to see a doctor.", "You should sees a doctor.", "You shoulds see a doctor."],
+      "why": "should + 동사원형. 병원에 가 보다 = see a doctor."
+    },
+    {
+      "type": "translate",
+      "ko": "밤늦게 혼자 걷지 않는 게 좋아요.",
+      "answer": "You shouldn't walk alone late at night.",
+      "choices": ["You shouldn't walk alone late at night.", "You don't should walk alone late at night.", "You shouldn't walking alone late at night.", "You not should walk alone late at night."],
+      "why": "shouldn't + 동사원형이에요."
+    },
+    {
+      "type": "translate",
+      "ko": "그는 이력서를 고치는 게 좋겠어요.",
+      "answer": "He should change his resume.",
+      "choices": ["He should change his resume.", "He shoulds change his resume.", "He should changes his resume.", "He should changing his resume."],
+      "why": "주어가 He여도 should + 동사원형이에요."
+    },
+    {
+      "type": "translate",
+      "ko": "우리 마트에 가야겠어요.",
+      "answer": "We should go to the supermarket.",
+      "choices": ["We should go to the supermarket.", "We should to go to the supermarket.", "We should going to the supermarket.", "We should goes to the supermarket."],
+      "why": "should 바로 뒤에 동사원형 go가 와요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "You should bring a jacket. It's cold.",
+      "choices": ["You should bring a jacket. It's cold.", "You should brings a jacket. It's cold.", "You should to bring a jacket. It's cold.", "You should bringing a jacket. It's cold."],
+      "why": "should + 동사원형 bring이에요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "She shouldn't spend all her money.",
+      "choices": ["She shouldn't spend all her money.", "She don't should spend all her money.", "She shouldn't spends all her money.", "She shouldn't to spend all her money."],
+      "why": "shouldn't 뒤에는 -s나 to 없이 동사원형이에요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "My friend should try Tim Tams.",
+      "choices": ["My friend should try Tim Tams.", "My friend shoulds try Tim Tams.", "My friend should tries Tim Tams.", "My friend should trying Tim Tams."],
+      "why": "should는 그대로, 뒤에는 동사원형 try예요."
+    }
+  ]
+}

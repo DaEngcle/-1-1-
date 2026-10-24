@@ -1,0 +1,236 @@
+{
+  "unit": 43,
+  "title": "where, when, why",
+  "emoji": "🗺️",
+  "goal": "where(어디), when(언제), why(왜)로 장소·시간·이유를 묻고 because로 이유를 대답할 수 있어요.",
+  "points": [
+    {
+      "title": "where / when / why 뜻",
+      "body": "where는 '어디', when은 '언제', why는 '왜'예요."
+    },
+    {
+      "title": "순서는 의문사 + Yes / No 질문",
+      "body": "Do you live? → Where do you live? / Did she start? → When did she start? / Are you late? → Why are you late?"
+    },
+    {
+      "title": "why에는 because로 대답",
+      "body": "Why ~?라고 물으면 Because + 주어 + 동사로 이유를 말해요. Why are you tired? – Because I worked late."
+    },
+    {
+      "title": "Where ... from?",
+      "body": "출신을 물을 때는 Where are you from?, 물건이 어디서 왔는지는 Where is this from?처럼 from을 끝에 붙여요."
+    },
+    {
+      "title": "when과 what time",
+      "body": "when은 날짜·요일·때를 넓게 묻고, 정확한 시각은 what time으로도 물어요. When is your day off? / What time does it start?"
+    }
+  ],
+  "formula": [
+    "Where / When / Why + be동사 + 주어 ...?",
+    "Where / When / Why + do / does / did + 주어 + 동사원형?",
+    "Where / When / Why + will / can / should + 주어 + 동사원형?",
+    "Why ...? → Because + 주어 + 동사 ..."
+  ],
+  "mistakes": [
+    {
+      "wrong": "Where you live?",
+      "right": "Where do you live?",
+      "why": "의문사 뒤에도 do가 필요해요. 한국어엔 없는 말이라 자주 빠뜨려요."
+    },
+    {
+      "wrong": "When does she started?",
+      "right": "When did she start?",
+      "why": "과거는 did가 맡고, 뒤 동사는 동사원형이에요."
+    },
+    {
+      "wrong": "Why you are late?",
+      "right": "Why are you late?",
+      "why": "질문에서는 be동사를 주어 앞으로 보내요."
+    }
+  ],
+  "examples": [
+    {
+      "en": "Where are you from?",
+      "ko": "어디서 왔어요?"
+    },
+    {
+      "en": "Where do you work?",
+      "ko": "어디서 일해요?"
+    },
+    {
+      "en": "Where is the bus stop?",
+      "ko": "버스 정류장이 어디예요?"
+    },
+    {
+      "en": "When does your shift start?",
+      "ko": "근무 언제 시작해요?"
+    },
+    {
+      "en": "When did you arrive in Australia?",
+      "ko": "호주에 언제 도착했어요?"
+    },
+    {
+      "en": "Why are you tired? – Because I worked late.",
+      "ko": "왜 피곤해요? – 늦게까지 일해서요."
+    },
+    {
+      "en": "Why did you leave your last job?",
+      "ko": "왜 전 직장을 그만뒀어요?"
+    },
+    {
+      "en": "When will you move out?",
+      "ko": "언제 이사 나갈 거예요?"
+    }
+  ],
+  "quiz": [
+    {
+      "type": "blank",
+      "sentence": "___ do you live? – In Bondi.",
+      "answer": "Where",
+      "choices": [
+        "Where",
+        "When",
+        "Why",
+        "Who"
+      ],
+      "ko": "어디 살아요? – 본다이요.",
+      "why": "장소로 대답했으니 Where"
+    },
+    {
+      "type": "blank",
+      "sentence": "___ is your birthday? – In May.",
+      "answer": "When",
+      "choices": [
+        "When",
+        "Where",
+        "Why",
+        "Which"
+      ],
+      "ko": "생일이 언제예요? – 5월이요.",
+      "why": "시간(달)으로 대답했으니 When"
+    },
+    {
+      "type": "blank",
+      "sentence": "___ are you late? – Because I missed the tram.",
+      "answer": "Why",
+      "choices": [
+        "Why",
+        "Where",
+        "When",
+        "Who"
+      ],
+      "ko": "왜 늦었어요? – 트램을 놓쳐서요.",
+      "why": "Because로 이유를 대답했으니 Why"
+    },
+    {
+      "type": "blank",
+      "sentence": "Where ___ she work?",
+      "answer": "does",
+      "choices": [
+        "does",
+        "do",
+        "is",
+        "are"
+      ],
+      "ko": "그녀는 어디서 일해요?",
+      "why": "일반동사 work + 주어 she → does"
+    },
+    {
+      "type": "blank",
+      "sentence": "When ___ you arrive in Melbourne? – Last week.",
+      "answer": "did",
+      "choices": [
+        "did",
+        "do",
+        "were",
+        "are"
+      ],
+      "ko": "멜버른에 언제 도착했어요? – 지난주요.",
+      "why": "과거 + 동사원형 arrive → did"
+    },
+    {
+      "type": "translate",
+      "ko": "화장실이 어디예요?",
+      "answer": "Where is the toilet?",
+      "choices": [
+        "Where is the toilet?",
+        "Where the toilet is?",
+        "Where does the toilet?",
+        "When is the toilet?"
+      ],
+      "why": "Where + be동사 + 주어 순서"
+    },
+    {
+      "type": "translate",
+      "ko": "왜 웃고 있어요?",
+      "answer": "Why are you laughing?",
+      "choices": [
+        "Why are you laughing?",
+        "Why you are laughing?",
+        "Why do you laughing?",
+        "Why are you laugh?"
+      ],
+      "why": "진행형 질문 are you laughing 앞에 Why"
+    },
+    {
+      "type": "translate",
+      "ko": "언제 시드니로 이사 왔어요?",
+      "answer": "When did you move to Sydney?",
+      "choices": [
+        "When did you move to Sydney?",
+        "When did you moved to Sydney?",
+        "When you moved to Sydney?",
+        "When do you moved to Sydney?"
+      ],
+      "why": "과거 질문 → When + did + 주어 + 동사원형"
+    },
+    {
+      "type": "translate",
+      "ko": "제가 어디서 기다려야 해요?",
+      "answer": "Where should I wait?",
+      "choices": [
+        "Where should I wait?",
+        "Where I should wait?",
+        "Where should I waiting?",
+        "Where do I should wait?"
+      ],
+      "why": "조동사 should를 주어 앞으로, 뒤에는 동사원형"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Why did you call me?",
+      "choices": [
+        "Why did you call me?",
+        "Why you called me?",
+        "Why did you called me?",
+        "Why do you called me?"
+      ],
+      "why": "과거 질문 → Why + did + 주어 + 동사원형"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "When does the market open?",
+      "choices": [
+        "When does the market open?",
+        "When the market opens?",
+        "When does the market opens?",
+        "When do the market open?"
+      ],
+      "why": "the market(it) → does + 동사원형 open"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Where were you last night?",
+      "choices": [
+        "Where were you last night?",
+        "Where was you last night?",
+        "Where did you last night?",
+        "Where you were last night?"
+      ],
+      "why": "과거 + 주어 you → were를 주어 앞으로"
+    }
+  ]
+}

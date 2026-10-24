@@ -1,0 +1,236 @@
+{
+  "unit": 49,
+  "title": "-ing와 to 동사원형 모두 가능한 동사 (I like cooking / to cook)",
+  "emoji": "🔀",
+  "goal": "like, start처럼 -ing와 to가 둘 다 되는 동사를 쓰고, remember / forget / try는 뜻 차이에 맞게 고를 수 있어요.",
+  "points": [
+    {
+      "title": "둘 다 OK, 뜻도 거의 같음",
+      "body": "like, love, hate, start, begin, continue 뒤에는 -ing와 to + 동사원형을 둘 다 쓸 수 있어요. I like cooking. = I like to cook. / It started raining. = It started to rain."
+    },
+    {
+      "title": "would like는 to만",
+      "body": "like는 둘 다 되지만 would like(~하고 싶어요)는 to만 써요. I'd like to order.(O) / I'd like ordering.(X)"
+    },
+    {
+      "title": "remember / forget: 뜻이 달라져요",
+      "body": "to + 동사원형은 '앞으로 해야 할 일', -ing는 '이미 한 일'이에요. Remember to lock the door.(문 잠그는 거 잊지 마세요.) / I remember meeting her.(그녀를 만났던 게 기억나요.)"
+    },
+    {
+      "title": "try: 애쓰다 vs 시험 삼아 해 보다",
+      "body": "try to + 동사원형은 '~하려고 애쓰다', try + -ing는 '(방법으로) 한번 해 보다'예요. I'm trying to save money.(돈을 모으려고 노력 중이에요.) / Try turning it off and on again.(껐다가 다시 켜 보세요.)"
+    },
+    {
+      "title": "어떤 형태든 동사원형만은 X",
+      "body": "둘 다 되는 동사라도 동사를 그냥 붙이면 틀려요. It started rain.(X) → It started raining. / It started to rain.(O)"
+    }
+  ],
+  "formula": [
+    "like / love / hate / start / begin / continue + 동사-ing 또는 to + 동사원형",
+    "would like + to + 동사원형 (to만 가능)",
+    "remember / forget + to 동사원형 = 앞으로 할 일 / + 동사-ing = 이미 한 일",
+    "try + to 동사원형 = 애쓰다 / try + 동사-ing = 시험 삼아 해 보다"
+  ],
+  "mistakes": [
+    {
+      "wrong": "I'd like having a flat white.",
+      "right": "I'd like to have a flat white.",
+      "why": "like는 -ing도 되지만 would like는 to만 돼요. 카페에서 주문할 때 꼭 to를 쓰세요."
+    },
+    {
+      "wrong": "Don't forget locking the door.",
+      "right": "Don't forget to lock the door.",
+      "why": "앞으로 할 일을 잊지 말라는 뜻이니까 forget + to + 동사원형이에요."
+    },
+    {
+      "wrong": "It started rain.",
+      "right": "It started raining.",
+      "why": "start 뒤에 동사원형을 바로 쓰면 안 돼요. raining 또는 to rain으로 써요."
+    }
+  ],
+  "examples": [
+    {
+      "en": "I like cooking Korean food for my housemates.",
+      "ko": "하우스메이트들에게 한국 음식 해 주는 걸 좋아해요."
+    },
+    {
+      "en": "I love to swim at Manly Beach.",
+      "ko": "맨리 비치에서 수영하는 걸 정말 좋아해요."
+    },
+    {
+      "en": "She hates waking up early.",
+      "ko": "그녀는 일찍 일어나는 걸 싫어해요."
+    },
+    {
+      "en": "It started raining at lunchtime.",
+      "ko": "점심때 비가 오기 시작했어요."
+    },
+    {
+      "en": "Remember to bring your passport to the interview.",
+      "ko": "면접에 여권 가져오는 거 잊지 마세요."
+    },
+    {
+      "en": "I remember meeting him at the hostel.",
+      "ko": "호스텔에서 그를 만났던 게 기억나요."
+    },
+    {
+      "en": "I'm trying to save money for my trip.",
+      "ko": "여행 경비를 모으려고 노력하고 있어요."
+    },
+    {
+      "en": "Try turning it off and on again.",
+      "ko": "껐다가 다시 켜 보세요."
+    }
+  ],
+  "quiz": [
+    {
+      "type": "blank",
+      "sentence": "I like ___ in the park.",
+      "answer": "running",
+      "choices": [
+        "running",
+        "run",
+        "runs",
+        "ran"
+      ],
+      "ko": "공원에서 달리는 걸 좋아해요.",
+      "why": "like 뒤에는 -ing나 to + 동사원형. 보기 중에는 running만 맞아요."
+    },
+    {
+      "type": "blank",
+      "sentence": "It began ___ at 3 p.m.",
+      "answer": "to rain",
+      "choices": [
+        "to rain",
+        "rain",
+        "rains",
+        "rained"
+      ],
+      "ko": "오후 3시에 비가 오기 시작했어요.",
+      "why": "begin 뒤에는 to + 동사원형이나 -ing. 동사를 바로 붙이면 안 돼요."
+    },
+    {
+      "type": "blank",
+      "sentence": "I'd like ___ a table for two.",
+      "answer": "to book",
+      "choices": [
+        "to book",
+        "booking",
+        "book",
+        "booked"
+      ],
+      "ko": "두 명 자리를 예약하고 싶어요.",
+      "why": "would like는 to만 써요."
+    },
+    {
+      "type": "blank",
+      "sentence": "Don't forget ___ the lights when you leave.",
+      "answer": "to turn off",
+      "choices": [
+        "to turn off",
+        "turning off",
+        "turn off",
+        "turned off"
+      ],
+      "ko": "나갈 때 불 끄는 거 잊지 마세요.",
+      "why": "앞으로 할 일을 잊지 말라는 뜻이라 forget + to."
+    },
+    {
+      "type": "blank",
+      "sentence": "I remember ___ him at a party last year.",
+      "answer": "meeting",
+      "choices": [
+        "meeting",
+        "to meet",
+        "meet",
+        "met"
+      ],
+      "ko": "작년에 파티에서 그를 만났던 게 기억나요.",
+      "why": "이미 한 일(작년)을 기억하는 거라 remember + -ing."
+    },
+    {
+      "type": "translate",
+      "ko": "저는 일찍 일어나는 게 싫어요.",
+      "answer": "I hate getting up early.",
+      "choices": [
+        "I hate getting up early.",
+        "I hate get up early.",
+        "I hate gets up early.",
+        "I hate to getting up early."
+      ],
+      "why": "hate + -ing(또는 to + 동사원형). to 뒤에 -ing를 쓰면 안 돼요."
+    },
+    {
+      "type": "translate",
+      "ko": "내일 우유 사는 거 잊지 마세요.",
+      "answer": "Remember to buy milk tomorrow.",
+      "choices": [
+        "Remember to buy milk tomorrow.",
+        "Remember buying milk tomorrow.",
+        "Remember buy milk tomorrow.",
+        "Remember to buying milk tomorrow."
+      ],
+      "why": "앞으로(내일) 할 일이니까 remember + to + 동사원형."
+    },
+    {
+      "type": "translate",
+      "ko": "그녀는 영어를 배우기 시작했어요.",
+      "answer": "She started learning English.",
+      "choices": [
+        "She started learning English.",
+        "She started learn English.",
+        "She started to learning English.",
+        "She starts learned English."
+      ],
+      "why": "start + -ing(또는 to + 동사원형)."
+    },
+    {
+      "type": "translate",
+      "ko": "커피 한 잔 마시고 싶어요.",
+      "answer": "I'd like to have a coffee.",
+      "choices": [
+        "I'd like to have a coffee.",
+        "I'd like having a coffee.",
+        "I'd like have a coffee.",
+        "I'd like to having a coffee."
+      ],
+      "why": "would like + to + 동사원형."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "I'm trying to find a job.",
+      "choices": [
+        "I'm trying to find a job.",
+        "I'm trying find a job.",
+        "I'm trying to finding a job.",
+        "I'm try to find a job."
+      ],
+      "why": "'~하려고 애쓰다'는 try + to + 동사원형. 진행형은 I'm trying."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "We continued to work after lunch.",
+      "choices": [
+        "We continued to work after lunch.",
+        "We continued to working after lunch.",
+        "We continued worked after lunch.",
+        "We continue to worked after lunch."
+      ],
+      "why": "continue + to + 동사원형(또는 -ing). to 뒤는 원형이에요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "She loves swimming in the ocean.",
+      "choices": [
+        "She loves swimming in the ocean.",
+        "She loves swim in the ocean.",
+        "She loves to swimming in the ocean.",
+        "She love swimming in the ocean."
+      ],
+      "why": "love + -ing. 주어가 She라서 loves예요."
+    }
+  ]
+}

@@ -1,0 +1,236 @@
+{
+  "unit": 51,
+  "title": "make / have / let + 사람 + 동사원형 (She let me use it.)",
+  "emoji": "👉",
+  "goal": "make, have, let을 써서 '~하게 만들다', '~하게 시키다', '~하게 해 주다'를 말할 수 있어요.",
+  "points": [
+    {
+      "title": "make = 억지로 ~하게 하다",
+      "body": "make + 사람 + 동사원형은 '(싫어도) ~하게 만들다'라는 뜻이에요. My boss made me work on Sunday. 또 '어떤 것 때문에 ~하게 되다'라는 뜻으로도 써요. The movie made me cry. (그 영화 때문에 울었어요.)"
+    },
+    {
+      "title": "have = 일을 시키다",
+      "body": "have + 사람 + 동사원형은 '(일이나 역할로) ~하게 시키다'예요. 매니저, 셰프, 선생님처럼 시킬 수 있는 사람이 자주 써요. The chef had me cut the onions."
+    },
+    {
+      "title": "let = ~하게 해 주다 (허락)",
+      "body": "let + 사람 + 동사원형은 '~하게 해 주다, ~하도록 허락하다'예요. My housemate let me use her laptop. Let me ~는 '제가 ~할게요'라는 뜻으로도 많이 써요. Let me help you."
+    },
+    {
+      "title": "to 없이 동사원형만!",
+      "body": "50강의 want / ask + 사람 + to와 달리, make / have / let 뒤에는 to를 쓰지 않아요. made me to work (X) → made me work (O)."
+    },
+    {
+      "title": "과거여도 뒤 동사는 원형",
+      "body": "과거형은 made, had, let이에요 (let은 과거도 let). 과거라도 뒤에 오는 동사는 그대로 원형이에요. She let me used (X) → She let me use (O)."
+    }
+  ],
+  "formula": [
+    "make + 사람 + 동사원형 (억지로 ~하게 하다)",
+    "have + 사람 + 동사원형 (~하게 시키다)",
+    "let + 사람 + 동사원형 (~하게 해 주다)",
+    "과거: made / had / let + 사람 + 동사원형"
+  ],
+  "mistakes": [
+    {
+      "wrong": "My boss made me to work on Sunday.",
+      "right": "My boss made me work on Sunday.",
+      "why": "'~하도록'을 to로 옮기기 쉬운데, make 뒤에는 to 없이 동사원형만 써요."
+    },
+    {
+      "wrong": "Please let me to know.",
+      "right": "Please let me know.",
+      "why": "let 뒤에도 to를 쓰지 않아요. Let me know.는 '알려 주세요'라는 아주 흔한 표현이에요."
+    },
+    {
+      "wrong": "She let me used her car.",
+      "right": "She let me use her car.",
+      "why": "과거 이야기라도 let 뒤 동사는 원형이에요. 과거는 앞의 let(과거형도 let)이 이미 보여 줘요."
+    }
+  ],
+  "examples": [
+    {
+      "en": "My manager made me work late on Friday.",
+      "ko": "매니저가 금요일에 저를 늦게까지 일하게 했어요."
+    },
+    {
+      "en": "The sad movie made me cry.",
+      "ko": "그 슬픈 영화 때문에 울었어요."
+    },
+    {
+      "en": "My housemate let me use her hair dryer.",
+      "ko": "하우스메이트가 자기 드라이기를 쓰게 해 줬어요."
+    },
+    {
+      "en": "Let me help you with your bags.",
+      "ko": "가방 드는 거 제가 도와드릴게요."
+    },
+    {
+      "en": "The chef had me cut the onions.",
+      "ko": "셰프가 저한테 양파를 썰게 했어요."
+    },
+    {
+      "en": "Please let me know your answer by Monday.",
+      "ko": "월요일까지 답을 알려 주세요."
+    },
+    {
+      "en": "The farm owner didn't let us take a break.",
+      "ko": "농장 주인이 우리를 쉬게 해 주지 않았어요."
+    },
+    {
+      "en": "My boss makes me wear a uniform.",
+      "ko": "사장님은 저한테 유니폼을 입게 해요."
+    }
+  ],
+  "quiz": [
+    {
+      "type": "blank",
+      "sentence": "My boss made me ___ on Sunday.",
+      "answer": "work",
+      "choices": [
+        "work",
+        "to work",
+        "working",
+        "works"
+      ],
+      "ko": "사장님이 저를 일요일에 일하게 했어요.",
+      "why": "make + 사람 뒤에는 to 없이 동사원형 work"
+    },
+    {
+      "type": "blank",
+      "sentence": "My housemate ___ me use her laptop.",
+      "answer": "let",
+      "choices": [
+        "let",
+        "allowed",
+        "letting",
+        "said"
+      ],
+      "ko": "하우스메이트가 노트북을 쓰게 해 줬어요.",
+      "why": "'~하게 해 주다'는 let + 사람 + 동사원형. allow는 allowed me to use처럼 to가 필요해요."
+    },
+    {
+      "type": "blank",
+      "sentence": "That sad song makes me ___.",
+      "answer": "cry",
+      "choices": [
+        "cry",
+        "to cry",
+        "crying",
+        "cried"
+      ],
+      "ko": "그 슬픈 노래는 나를 울게 해요.",
+      "why": "make + 사람 + 동사원형 → makes me cry"
+    },
+    {
+      "type": "blank",
+      "sentence": "The chef had me ___ the dishes.",
+      "answer": "wash",
+      "choices": [
+        "wash",
+        "to wash",
+        "washes",
+        "washed"
+      ],
+      "ko": "셰프가 저한테 설거지를 시켰어요.",
+      "why": "have + 사람 + 동사원형 → had me wash"
+    },
+    {
+      "type": "blank",
+      "sentence": "___ me know when you arrive.",
+      "answer": "Let",
+      "choices": [
+        "Let",
+        "Make",
+        "Have",
+        "Want"
+      ],
+      "ko": "도착하면 알려 주세요.",
+      "why": "'알려 주세요'는 Let me know. let이 '~하게 해 주다'예요."
+    },
+    {
+      "type": "translate",
+      "ko": "매니저가 저를 늦게까지 일하게 했어요.",
+      "answer": "My manager made me work late.",
+      "choices": [
+        "My manager made me work late.",
+        "My manager made me to work late.",
+        "My manager made me working late.",
+        "My manager made me worked late."
+      ],
+      "why": "made me 뒤에는 동사원형 work"
+    },
+    {
+      "type": "translate",
+      "ko": "제가 도와드릴게요.",
+      "answer": "Let me help you.",
+      "choices": [
+        "Let me help you.",
+        "Let me to help you.",
+        "Let me helping you.",
+        "Let me helps you."
+      ],
+      "why": "Let me + 동사원형 = 제가 ~할게요"
+    },
+    {
+      "type": "translate",
+      "ko": "엄마는 제가 혼자 여행하게 해 주지 않았어요.",
+      "answer": "My mum didn't let me travel alone.",
+      "choices": [
+        "My mum didn't let me travel alone.",
+        "My mum didn't let me to travel alone.",
+        "My mum didn't let me traveled alone.",
+        "My mum didn't let me travels alone."
+      ],
+      "why": "let + 사람 + 동사원형. 부정문이어도 travel은 원형"
+    },
+    {
+      "type": "translate",
+      "ko": "선생님이 우리에게 그 문장을 다시 읽게 했어요.",
+      "answer": "The teacher had us read the sentence again.",
+      "choices": [
+        "The teacher had us read the sentence again.",
+        "The teacher had us to read the sentence again.",
+        "The teacher had we read the sentence again.",
+        "The teacher had us reads the sentence again."
+      ],
+      "why": "have + 사람(목적격 us) + 동사원형 read"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "The movie made me laugh.",
+      "choices": [
+        "The movie made me laugh.",
+        "The movie made me to laugh.",
+        "The movie made me laughing.",
+        "The movie made to me laugh."
+      ],
+      "why": "made + 사람 + 동사원형 laugh"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Can you let me know your address?",
+      "choices": [
+        "Can you let me know your address?",
+        "Can you let me to know your address?",
+        "Can you let me knowing your address?",
+        "Can you let to me know your address?"
+      ],
+      "why": "let me know가 한 덩어리. to를 넣지 않아요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "The supervisor had me check the boxes.",
+      "choices": [
+        "The supervisor had me check the boxes.",
+        "The supervisor had me checked the boxes.",
+        "The supervisor had me to check the boxes.",
+        "The supervisor had to me check the boxes."
+      ],
+      "why": "had + 사람 + 동사원형 check"
+    }
+  ]
+}

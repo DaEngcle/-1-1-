@@ -1,0 +1,236 @@
+{
+  "unit": 30,
+  "title": "Can I ~?, Can you ~? (해도 돼요? / 해 줄래요?)",
+  "emoji": "🙏",
+  "goal": "Can I ~?로 허락을 구하고, Can you ~?로 부탁하고, Could로 더 공손하게 말하고 대답할 수 있어요.",
+  "points": [
+    {
+      "title": "Can I ~? = 제가 ~해도 돼요?",
+      "body": "내가 뭔가를 해도 되는지 허락을 구할 때 Can I + 동사원형?을 써요. Can I sit here? (여기 앉아도 돼요?)"
+    },
+    {
+      "title": "Can you ~? = ~해 줄 수 있어요?",
+      "body": "상대에게 뭔가를 해 달라고 부탁할 때 Can you + 동사원형?을 써요. Can you help me? (좀 도와줄 수 있어요?)"
+    },
+    {
+      "title": "Could로 더 공손하게",
+      "body": "Could I ~? / Could you ~?는 같은 뜻인데 더 정중해요. 여기서 could는 과거가 아니라 공손한 말투예요. 처음 보는 사람, 손님, 매니저에게 쓰기 좋아요."
+    },
+    {
+      "title": "please를 붙이면 더 부드러워요",
+      "body": "문장 끝에 please를 붙이면 훨씬 친절하게 들려요. 카페에서는 Can I have a flat white, please?처럼 주문해요."
+    },
+    {
+      "title": "대답하는 법",
+      "body": "좋다고 할 때는 Sure. / Of course. / No problem.처럼 짧게 말해요. 거절할 때는 Sorry, ...로 시작하고 이유를 붙이면 자연스러워요. (Sorry, I'm busy right now.)"
+    }
+  ],
+  "formula": [
+    "Can / Could + I + 동사원형 ~? (제가 ~해도 돼요?)",
+    "Can / Could + you + 동사원형 ~? (~해 줄 수 있어요?)",
+    "좋아요: Sure. / Of course. / No problem.",
+    "안 돼요: Sorry, + 이유"
+  ],
+  "mistakes": [
+    {
+      "wrong": "Can I sitting here?",
+      "right": "Can I sit here?",
+      "why": "'앉아도'를 -ing로 바꾸기 쉬운데, Can I 뒤에는 항상 동사원형이에요."
+    },
+    {
+      "wrong": "Do you can help me?",
+      "right": "Can you help me?",
+      "why": "질문을 Do로 시작하는 습관 때문이에요. Can을 맨 앞에 두면 바로 질문이 돼요."
+    },
+    {
+      "wrong": "Could you to open the window?",
+      "right": "Could you open the window?",
+      "why": "'~해 주다'를 to로 이어 쓰기 쉬운데, Could you 바로 뒤에 동사원형을 써요."
+    }
+  ],
+  "examples": [
+    {
+      "en": "Can I have a flat white, please?",
+      "ko": "플랫 화이트 한 잔 주세요."
+    },
+    {
+      "en": "Can I try this on?",
+      "ko": "이거 입어 봐도 돼요?"
+    },
+    {
+      "en": "Can I use your charger? — Sure.",
+      "ko": "충전기 좀 써도 돼요? — 그럼요."
+    },
+    {
+      "en": "Can you help me with this box?",
+      "ko": "이 상자 좀 같이 들어 줄 수 있어요?"
+    },
+    {
+      "en": "Could you say that again, please?",
+      "ko": "다시 한번 말씀해 주시겠어요?"
+    },
+    {
+      "en": "Could I leave work early today?",
+      "ko": "오늘 일찍 퇴근해도 될까요?"
+    },
+    {
+      "en": "Can you turn down the music, please? — Oh, sorry. No problem.",
+      "ko": "음악 소리 좀 줄여 줄래요? — 아, 미안해요. 그럴게요."
+    },
+    {
+      "en": "Could you tell me the way to the station? — Of course.",
+      "ko": "역으로 가는 길 좀 알려 주시겠어요? — 물론이죠."
+    }
+  ],
+  "quiz": [
+    {
+      "type": "blank",
+      "sentence": "___ I sit here?",
+      "answer": "Can",
+      "choices": [
+        "Can",
+        "Cans",
+        "Do",
+        "Am"
+      ],
+      "ko": "여기 앉아도 돼요?",
+      "why": "허락을 구할 때 Can I + 동사원형?"
+    },
+    {
+      "type": "blank",
+      "sentence": "Can you ___ me, please?",
+      "answer": "help",
+      "choices": [
+        "helps",
+        "helping",
+        "help",
+        "to help"
+      ],
+      "ko": "좀 도와줄 수 있어요?",
+      "why": "Can you 뒤에는 동사원형."
+    },
+    {
+      "type": "blank",
+      "sentence": "Could I ___ a glass of water, please?",
+      "answer": "have",
+      "choices": [
+        "has",
+        "have",
+        "having",
+        "to have"
+      ],
+      "ko": "물 한 잔 주시겠어요?",
+      "why": "Could I + 동사원형. 공손하게 부탁하는 말이에요."
+    },
+    {
+      "type": "blank",
+      "sentence": "___ you open the door for me, please?",
+      "answer": "Could",
+      "choices": [
+        "Do",
+        "Are",
+        "Coulds",
+        "Could"
+      ],
+      "ko": "문 좀 열어 주시겠어요?",
+      "why": "공손한 부탁은 Could you + 동사원형?"
+    },
+    {
+      "type": "blank",
+      "sentence": "A: Can I use your phone? B: ___ Here you are.",
+      "answer": "Sure.",
+      "choices": [
+        "Yes, I can.",
+        "Sure.",
+        "No, I don't.",
+        "Yes, I do."
+      ],
+      "ko": "A: 전화기 좀 써도 돼요? B: 그럼요. 여기 있어요.",
+      "why": "허락해 줄 때는 Sure. / Of course.처럼 대답해요."
+    },
+    {
+      "type": "translate",
+      "ko": "여기 앉아도 돼요?",
+      "answer": "Can I sit here?",
+      "choices": [
+        "Can I sitting here?",
+        "Do I can sit here?",
+        "Can I sits here?",
+        "Can I sit here?"
+      ],
+      "why": "허락을 구할 때 Can I + 동사원형?"
+    },
+    {
+      "type": "translate",
+      "ko": "좀 도와줄 수 있어요?",
+      "answer": "Can you help me?",
+      "choices": [
+        "Can you help me?",
+        "Can you helping me?",
+        "Do you can help me?",
+        "Can you to help me?"
+      ],
+      "why": "부탁할 때 Can you + 동사원형?"
+    },
+    {
+      "type": "translate",
+      "ko": "(공손하게) 다시 한번 말씀해 주시겠어요?",
+      "answer": "Could you say that again, please?",
+      "choices": [
+        "Could you says that again, please?",
+        "Could you to say that again, please?",
+        "Could you say that again, please?",
+        "Do you could say that again, please?"
+      ],
+      "why": "공손한 부탁은 Could you + 동사원형 ~, please?"
+    },
+    {
+      "type": "translate",
+      "ko": "창문 좀 열어도 돼요?",
+      "answer": "Can I open the window?",
+      "choices": [
+        "Can I opening the window?",
+        "Do I can open the window?",
+        "Can I open the window?",
+        "Can I opens the window?"
+      ],
+      "why": "내가 해도 되는지 물을 때 Can I + 동사원형?"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Can I try this jacket on?",
+      "choices": [
+        "Can I try this jacket on?",
+        "Can I trying this jacket on?",
+        "Do I can try this jacket on?",
+        "Can I tries this jacket on?"
+      ],
+      "why": "Can I + 동사원형? Do는 필요 없어요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Could you pass me the salt, please?",
+      "choices": [
+        "Could you passes me the salt, please?",
+        "Could you passing me the salt, please?",
+        "Could you to pass me the salt, please?",
+        "Could you pass me the salt, please?"
+      ],
+      "why": "Could you 뒤에는 동사원형."
+    },
+    {
+      "type": "fix",
+      "prompt": "\"Can you drive me to work tomorrow?\"에 맞는 대답을 고르세요.",
+      "answer": "Sure, no problem.",
+      "choices": [
+        "Sure, I do.",
+        "Sure, no problem.",
+        "Yes, you can.",
+        "No, I don't can."
+      ],
+      "why": "부탁을 들어줄 때는 Sure, no problem. you can은 '당신이 해도 돼요'라는 허락이라 여기엔 안 맞아요."
+    }
+  ]
+}

@@ -1,0 +1,235 @@
+{
+  "unit": 31,
+  "title": "might (~할지도 몰라요)",
+  "emoji": "🤔",
+  "goal": "확실하지 않은 일을 might로 '~할지도 몰라요', '~일지도 몰라요'라고 말할 수 있어요.",
+  "points": [
+    {
+      "title": "might = ~할지도 몰라요",
+      "body": "확실하지 않은 일을 말할 때 might + 동사원형을 써요. I might go to the beach tomorrow.는 '내일 해변에 갈지도 몰라요'예요."
+    },
+    {
+      "title": "might는 모양이 안 바뀌어요",
+      "body": "주어가 He / She여도 might에 s를 붙이지 않고, 뒤 동사도 동사원형 그대로예요. He might come. (O) / He mights come. (X) / He might comes. (X)"
+    },
+    {
+      "title": "might not = 안 할지도 몰라요",
+      "body": "'안 ~할지도 몰라요'는 might 뒤에 not을 붙여요. I might not go. don't might처럼 쓰지 않고, 보통 줄이지 않고 might not 그대로 써요."
+    },
+    {
+      "title": "will과 비교",
+      "body": "will은 거의 확실할 때, might는 반반일 때 써요. It will rain.은 '비가 올 거예요', It might rain.은 '비가 올지도 몰라요'예요."
+    },
+    {
+      "title": "might be = ~일지도 몰라요",
+      "body": "상태나 장소를 추측할 때는 might be를 써요. He might be tired. (피곤할지도 몰라요) / She might be at home. (집에 있을지도 몰라요)"
+    }
+  ],
+  "formula": [
+    "주어 + might + 동사원형",
+    "주어 + might not + 동사원형",
+    "주어 + might be + 형용사 / 장소"
+  ],
+  "mistakes": [
+    {
+      "wrong": "She might comes later.",
+      "right": "She might come later.",
+      "why": "She 뒤에 s를 붙이는 습관 때문이에요. might 뒤 동사는 항상 동사원형이에요."
+    },
+    {
+      "wrong": "I might to go shopping.",
+      "right": "I might go shopping.",
+      "why": "'~할지도'를 to로 이어 쓰기 쉬운데, might 바로 뒤에 동사원형을 써요."
+    },
+    {
+      "wrong": "I don't might go.",
+      "right": "I might not go.",
+      "why": "부정을 don't로 만드는 습관 때문이에요. might의 부정은 might 뒤에 not을 붙여요."
+    }
+  ],
+  "examples": [
+    {
+      "en": "I might go to the beach tomorrow.",
+      "ko": "내일 해변에 갈지도 몰라요."
+    },
+    {
+      "en": "Take an umbrella. It might rain.",
+      "ko": "우산 챙겨요. 비가 올지도 몰라요."
+    },
+    {
+      "en": "She might move to Melbourne next year.",
+      "ko": "그녀는 내년에 멜버른으로 이사할지도 몰라요."
+    },
+    {
+      "en": "I might not finish work on time today.",
+      "ko": "오늘 제시간에 일을 못 끝낼지도 몰라요."
+    },
+    {
+      "en": "Jake isn't answering. He might be asleep.",
+      "ko": "Jake가 전화를 안 받아요. 자고 있을지도 몰라요."
+    },
+    {
+      "en": "We might not have enough money for a car.",
+      "ko": "차 살 돈이 부족할지도 몰라요."
+    },
+    {
+      "en": "The tram might be late. Let's leave now.",
+      "ko": "트램이 늦을지도 몰라요. 지금 나가요."
+    },
+    {
+      "en": "I'm not sure. I might stay home tonight.",
+      "ko": "잘 모르겠어요. 오늘 밤엔 집에 있을지도 몰라요."
+    }
+  ],
+  "quiz": [
+    {
+      "type": "blank",
+      "sentence": "It ___ rain this afternoon.",
+      "answer": "might",
+      "choices": [
+        "might",
+        "mights",
+        "is",
+        "to"
+      ],
+      "ko": "오늘 오후에 비가 올지도 몰라요.",
+      "why": "확실하지 않을 때 might + 동사원형."
+    },
+    {
+      "type": "blank",
+      "sentence": "He might ___ late tonight.",
+      "answer": "be",
+      "choices": [
+        "is",
+        "being",
+        "be",
+        "to be"
+      ],
+      "ko": "그는 오늘 밤에 늦을지도 몰라요.",
+      "why": "might 뒤에는 동사원형. is의 동사원형은 be."
+    },
+    {
+      "type": "blank",
+      "sentence": "I ___ not go to the party. I'm really tired.",
+      "answer": "might",
+      "choices": [
+        "don't",
+        "might",
+        "am",
+        "doesn't"
+      ],
+      "ko": "파티에 안 갈지도 몰라요. 정말 피곤해요.",
+      "why": "부정은 might not + 동사원형."
+    },
+    {
+      "type": "blank",
+      "sentence": "She might ___ a new job soon.",
+      "answer": "get",
+      "choices": [
+        "gets",
+        "getting",
+        "to get",
+        "get"
+      ],
+      "ko": "그녀는 곧 새 일자리를 구할지도 몰라요.",
+      "why": "She여도 might 뒤에는 동사원형."
+    },
+    {
+      "type": "blank",
+      "sentence": "Take a jacket. It ___ be cold at night.",
+      "answer": "might",
+      "choices": [
+        "mights",
+        "might",
+        "is",
+        "does"
+      ],
+      "ko": "재킷 챙겨요. 밤에 추울지도 몰라요.",
+      "why": "might be + 형용사로 추측해요. might에는 s가 안 붙어요."
+    },
+    {
+      "type": "translate",
+      "ko": "내일 비가 올지도 몰라요.",
+      "answer": "It might rain tomorrow.",
+      "choices": [
+        "It might rains tomorrow.",
+        "It mights rain tomorrow.",
+        "It might to rain tomorrow.",
+        "It might rain tomorrow."
+      ],
+      "why": "It might + 동사원형."
+    },
+    {
+      "type": "translate",
+      "ko": "그는 오늘 밤에 안 올지도 몰라요.",
+      "answer": "He might not come tonight.",
+      "choices": [
+        "He might not come tonight.",
+        "He doesn't might come tonight.",
+        "He might not comes tonight.",
+        "He not might come tonight."
+      ],
+      "why": "부정은 might not + 동사원형."
+    },
+    {
+      "type": "translate",
+      "ko": "그녀는 집에 있을지도 몰라요.",
+      "answer": "She might be at home.",
+      "choices": [
+        "She might is at home.",
+        "She mights be at home.",
+        "She might be at home.",
+        "She might at home."
+      ],
+      "why": "장소를 추측할 때 might be + 장소. be를 빠뜨리면 안 돼요."
+    },
+    {
+      "type": "translate",
+      "ko": "저는 퍼스로 이사할지도 몰라요.",
+      "answer": "I might move to Perth.",
+      "choices": [
+        "I might moving to Perth.",
+        "I might to move to Perth.",
+        "I might move to Perth.",
+        "I am might move to Perth."
+      ],
+      "why": "might + 동사원형. am은 필요 없어요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "We might go camping this weekend.",
+      "choices": [
+        "We might go camping this weekend.",
+        "We might going camping this weekend.",
+        "We might to go camping this weekend.",
+        "We mights go camping this weekend."
+      ],
+      "why": "might + 동사원형 go."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "My boss might not be happy about it.",
+      "choices": [
+        "My boss might not is happy about it.",
+        "My boss doesn't might be happy about it.",
+        "My boss mights not be happy about it.",
+        "My boss might not be happy about it."
+      ],
+      "why": "might not + be. don't / doesn't는 쓰지 않아요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "The bus might be late today.",
+      "choices": [
+        "The bus might is late today.",
+        "The bus might be late today.",
+        "The bus might late today.",
+        "The bus might being late today."
+      ],
+      "why": "상태를 추측할 때 might be + 형용사."
+    }
+  ]
+}

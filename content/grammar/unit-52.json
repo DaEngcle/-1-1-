@@ -1,0 +1,235 @@
+{
+  "unit": 52,
+  "title": "목적을 나타내는 to (I came here to study.)",
+  "emoji": "🎯",
+  "goal": "to + 동사원형으로 '~하려고, ~하러'라고 이유와 목적을 말할 수 있어요.",
+  "points": [
+    {
+      "title": "to + 동사원형 = ~하려고, ~하러",
+      "body": "어떤 일을 '왜' 하는지 말할 때 to + 동사원형을 붙여요. I went to the shop to buy milk. (우유를 사러 가게에 갔어요.)"
+    },
+    {
+      "title": "동사 앞에는 for가 아니라 to",
+      "body": "한국인은 '~하기 위해'를 for로 옮기기 쉬워요. 하지만 동사 앞에는 to를 써요. for buy (X), for buying (X) → to buy (O)."
+    },
+    {
+      "title": "명사 앞에는 for",
+      "body": "'~을 위해, ~하러'에서 뒤가 명사면 for를 써요. I went to the café for a coffee. / I went to the café to have a coffee. 둘 다 맞아요."
+    },
+    {
+      "title": "Why ~? 질문에 To ~.로 대답",
+      "body": "'왜요?'라는 질문에 짧게 To + 동사원형으로 대답할 수 있어요. Why are you learning English? — To get a better job."
+    },
+    {
+      "title": "문장 앞에 올 때는 쉼표",
+      "body": "목적을 먼저 말하고 싶으면 문장 앞에 두고 쉼표를 찍어요. To save money, I cook at home. (돈을 아끼려고 집에서 요리해요.)"
+    }
+  ],
+  "formula": [
+    "주어 + 동사 ~ + to + 동사원형 (~하려고 / ~하러)",
+    "for + 명사 / to + 동사원형",
+    "Why ~? → To + 동사원형."
+  ],
+  "mistakes": [
+    {
+      "wrong": "I went to the shop for buy milk.",
+      "right": "I went to the shop to buy milk.",
+      "why": "'~하러'를 for로 옮기기 쉬워요. 뒤에 동사가 오면 to + 동사원형이에요."
+    },
+    {
+      "wrong": "I came to Australia for improving my English.",
+      "right": "I came to Australia to improve my English.",
+      "why": "사람이 무언가를 하는 목적은 for + -ing가 아니라 to + 동사원형으로 말해요."
+    },
+    {
+      "wrong": "I'm saving money for to travel.",
+      "right": "I'm saving money to travel.",
+      "why": "for와 to를 같이 쓰지 않아요. to 하나만 쓰면 돼요."
+    }
+  ],
+  "examples": [
+    {
+      "en": "I came to Australia to improve my English.",
+      "ko": "영어 실력을 늘리려고 호주에 왔어요."
+    },
+    {
+      "en": "I went to the supermarket to buy some bread.",
+      "ko": "빵을 사러 마트에 갔어요."
+    },
+    {
+      "en": "She works at a café to save money for travel.",
+      "ko": "그녀는 여행 경비를 모으려고 카페에서 일해요."
+    },
+    {
+      "en": "We took the tram to go to the beach.",
+      "ko": "우리는 해변에 가려고 트램을 탔어요."
+    },
+    {
+      "en": "I called the manager to ask about the job.",
+      "ko": "그 일자리에 대해 물어보려고 매니저에게 전화했어요."
+    },
+    {
+      "en": "He gets up at 5 a.m. to work on the farm.",
+      "ko": "그는 농장에서 일하려고 새벽 5시에 일어나요."
+    },
+    {
+      "en": "A: Why are you learning English? B: To get a better job.",
+      "ko": "A: 왜 영어를 배워요? B: 더 좋은 일자리를 구하려고요."
+    },
+    {
+      "en": "I use this app to practise speaking.",
+      "ko": "말하기 연습을 하려고 이 앱을 써요."
+    }
+  ],
+  "quiz": [
+    {
+      "type": "blank",
+      "sentence": "I went to the bank ___ open an account.",
+      "answer": "to",
+      "choices": [
+        "to",
+        "for",
+        "because",
+        "so"
+      ],
+      "ko": "계좌를 만들려고 은행에 갔어요.",
+      "why": "'~하려고' + 동사 open → to open"
+    },
+    {
+      "type": "blank",
+      "sentence": "She came to Sydney to ___ a job.",
+      "answer": "find",
+      "choices": [
+        "find",
+        "finding",
+        "finds",
+        "to find"
+      ],
+      "ko": "그녀는 일자리를 구하려고 시드니에 왔어요.",
+      "why": "to 뒤에는 동사원형 find"
+    },
+    {
+      "type": "blank",
+      "sentence": "I'm saving money ___ buy a car.",
+      "answer": "to",
+      "choices": [
+        "to",
+        "for",
+        "for to",
+        "so"
+      ],
+      "ko": "차를 사려고 돈을 모으고 있어요.",
+      "why": "동사 buy 앞에는 to. for to처럼 같이 쓰지 않아요."
+    },
+    {
+      "type": "blank",
+      "sentence": "I called her to ___ sorry.",
+      "answer": "say",
+      "choices": [
+        "say",
+        "said",
+        "saying",
+        "says"
+      ],
+      "ko": "미안하다고 말하려고 그녀에게 전화했어요.",
+      "why": "to 뒤에는 항상 동사원형 say"
+    },
+    {
+      "type": "blank",
+      "sentence": "I went to the café ___ a coffee.",
+      "answer": "for",
+      "choices": [
+        "for",
+        "to",
+        "at",
+        "by"
+      ],
+      "ko": "커피 한 잔 하러 카페에 갔어요.",
+      "why": "뒤에 명사(a coffee)가 오면 for"
+    },
+    {
+      "type": "translate",
+      "ko": "영어를 배우려고 호주에 왔어요.",
+      "answer": "I came to Australia to learn English.",
+      "choices": [
+        "I came to Australia to learn English.",
+        "I came to Australia for learn English.",
+        "I came to Australia learn English.",
+        "I came to Australia for to learn English."
+      ],
+      "why": "목적은 to + 동사원형 learn"
+    },
+    {
+      "type": "translate",
+      "ko": "우유를 사러 마트에 갔어요.",
+      "answer": "I went to the supermarket to buy milk.",
+      "choices": [
+        "I went to the supermarket to buy milk.",
+        "I went to the supermarket to bought milk.",
+        "I went to the supermarket for buy milk.",
+        "I went to the supermarket to buying milk."
+      ],
+      "why": "과거 문장이어도 to 뒤는 동사원형 buy"
+    },
+    {
+      "type": "translate",
+      "ko": "돈을 모으려고 농장에서 일해요.",
+      "answer": "I work on a farm to save money.",
+      "choices": [
+        "I work on a farm to save money.",
+        "I work on a farm for save money.",
+        "I work on a farm to saving money.",
+        "I work on a farm to saves money."
+      ],
+      "why": "to + 동사원형 save"
+    },
+    {
+      "type": "translate",
+      "ko": "(왜 시드니에 가냐는 질문에) 친구 만나러요.",
+      "answer": "To meet my friend.",
+      "choices": [
+        "To meet my friend.",
+        "For meet my friend.",
+        "To meeting my friend.",
+        "To meets my friend."
+      ],
+      "why": "Why ~? 질문에는 To + 동사원형으로 짧게 대답해요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "I'm studying hard to pass the test.",
+      "choices": [
+        "I'm studying hard to pass the test.",
+        "I'm studying hard for pass the test.",
+        "I'm studying hard to passing the test.",
+        "I'm studying hard for to pass the test."
+      ],
+      "why": "'~하려고'는 to + 동사원형 pass"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "She took a taxi to get to the interview on time.",
+      "choices": [
+        "She took a taxi to get to the interview on time.",
+        "She took a taxi for get to the interview on time.",
+        "She took a taxi to got to the interview on time.",
+        "She took a taxi to getting to the interview on time."
+      ],
+      "why": "to 뒤에는 동사원형 get"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "To save money, I cook at home.",
+      "choices": [
+        "To save money, I cook at home.",
+        "For save money, I cook at home.",
+        "To saving money, I cook at home.",
+        "Save money to, I cook at home."
+      ],
+      "why": "목적을 앞에 둘 때도 To + 동사원형, 그리고 쉼표"
+    }
+  ]
+}

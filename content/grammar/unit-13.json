@@ -4,10 +4,22 @@
   "emoji": "⏪",
   "goal": "was / were로 '~이었어요', '~에 있었어요'라고 지난 일을 말할 수 있어요.",
   "points": [
-    { "title": "was / were = be동사의 과거", "body": "am / is / are의 과거 모양이 was / were예요. '~이었어요', '~했어요(상태)', '~에 있었어요'라는 뜻이에요." },
-    { "title": "I, He, She, It → was", "body": "I, he, she, it, 그리고 한 사람·한 개(Tom, the coffee)는 was를 써요. am과 is가 과거에는 둘 다 was가 돼요." },
-    { "title": "You, We, They → were", "body": "you, we, they, 그리고 여러 사람·여러 개(my housemates)는 were를 써요. are의 과거가 were예요." },
-    { "title": "과거 시간 표현과 같이", "body": "yesterday(어제), last night(어젯밤), last week(지난주), two days ago(이틀 전), this morning(오늘 아침) 같은 말이 나오면 was / were를 써요." }
+    {
+      "title": "was / were = be동사의 과거",
+      "body": "am / is / are의 과거 모양이 was / were예요. '~이었어요', '~했어요(상태)', '~에 있었어요'라는 뜻이에요."
+    },
+    {
+      "title": "I, He, She, It → was",
+      "body": "I, he, she, it, 그리고 한 사람·한 개(Tom, the coffee)는 was를 써요. am과 is가 과거에는 둘 다 was가 돼요."
+    },
+    {
+      "title": "You, We, They → were",
+      "body": "you, we, they, 그리고 여러 사람·여러 개(my housemates)는 were를 써요. are의 과거가 were예요."
+    },
+    {
+      "title": "과거 시간 표현과 같이",
+      "body": "yesterday(어제), last night(어젯밤), last week(지난주), two days ago(이틀 전), this morning(오늘 아침) 같은 말이 나오면 was / were를 써요."
+    }
   ],
   "formula": [
     "I / He / She / It + was + ...",
@@ -15,32 +27,205 @@
     "am, is → was / are → were"
   ],
   "mistakes": [
-    { "wrong": "I were tired yesterday.", "right": "I was tired yesterday.", "why": "I는 am의 과거인 was를 써요. were는 you / we / they용이에요." },
-    { "wrong": "We was at the beach.", "right": "We were at the beach.", "why": "We는 여러 명이라 were. 주어가 여러 명이면 were라고 기억하세요." },
-    { "wrong": "She is sick yesterday.", "right": "She was sick yesterday.", "why": "한국어는 '어제'만 있어도 과거가 느껴지지만, 영어는 동사도 과거(was)로 바꿔야 해요." }
+    {
+      "wrong": "I were tired yesterday.",
+      "right": "I was tired yesterday.",
+      "why": "I는 am의 과거인 was를 써요. were는 you / we / they용이에요."
+    },
+    {
+      "wrong": "We was at the beach.",
+      "right": "We were at the beach.",
+      "why": "We는 여러 명이라 were. 주어가 여러 명이면 were라고 기억하세요."
+    },
+    {
+      "wrong": "She is sick yesterday.",
+      "right": "She was sick yesterday.",
+      "why": "한국어는 '어제'만 있어도 과거가 느껴지지만, 영어는 동사도 과거(was)로 바꿔야 해요."
+    }
   ],
   "examples": [
-    { "en": "I was tired after work yesterday.", "ko": "어제 퇴근하고 피곤했어요." },
-    { "en": "The coffee was really good.", "ko": "커피가 정말 맛있었어요." },
-    { "en": "We were at Bondi Beach last weekend.", "ko": "우리는 지난 주말에 본다이 비치에 있었어요." },
-    { "en": "My housemates were very kind.", "ko": "쉐어하우스 친구들이 정말 친절했어요." },
-    { "en": "It was cold and windy this morning.", "ko": "오늘 아침은 춥고 바람이 많이 불었어요." },
-    { "en": "She was a nurse in Korea.", "ko": "그녀는 한국에서 간호사였어요." },
-    { "en": "The tram was full last night.", "ko": "어젯밤 트램은 사람으로 꽉 찼어요." },
-    { "en": "You were great at the interview!", "ko": "면접에서 정말 잘했어요!" }
+    {
+      "en": "I was tired after work yesterday.",
+      "ko": "어제 퇴근하고 피곤했어요."
+    },
+    {
+      "en": "The coffee was really good.",
+      "ko": "커피가 정말 맛있었어요."
+    },
+    {
+      "en": "We were at Bondi Beach last weekend.",
+      "ko": "우리는 지난 주말에 본다이 비치에 있었어요."
+    },
+    {
+      "en": "My housemates were very kind.",
+      "ko": "쉐어하우스 친구들이 정말 친절했어요."
+    },
+    {
+      "en": "It was cold and windy this morning.",
+      "ko": "오늘 아침은 춥고 바람이 많이 불었어요."
+    },
+    {
+      "en": "She was a nurse in Korea.",
+      "ko": "그녀는 한국에서 간호사였어요."
+    },
+    {
+      "en": "The tram was full last night.",
+      "ko": "어젯밤 트램은 사람으로 꽉 찼어요."
+    },
+    {
+      "en": "You were great at the interview!",
+      "ko": "면접에서 정말 잘했어요!"
+    }
   ],
   "quiz": [
-    { "type": "blank", "sentence": "I ___ at home last night.", "answer": "was", "choices": ["was", "were", "am", "is"], "ko": "나는 어젯밤에 집에 있었어요.", "why": "I + 과거 = was. last night이 있으니 am은 안 돼요." },
-    { "type": "blank", "sentence": "They ___ at the farm yesterday.", "answer": "were", "choices": ["were", "was", "are", "is"], "ko": "그들은 어제 농장에 있었어요.", "why": "They + 과거 = were." },
-    { "type": "blank", "sentence": "The weather ___ nice last weekend.", "answer": "was", "choices": ["was", "were", "is", "are"], "ko": "지난 주말에 날씨가 좋았어요.", "why": "the weather는 하나니까 was. last weekend는 과거예요." },
-    { "type": "blank", "sentence": "You ___ late yesterday.", "answer": "were", "choices": ["were", "was", "are", "is"], "ko": "당신은 어제 늦었어요.", "why": "You는 한 명이어도 항상 were." },
-    { "type": "blank", "sentence": "My parents ___ in Sydney two weeks ago.", "answer": "were", "choices": ["were", "was", "are", "is"], "ko": "부모님은 2주 전에 시드니에 계셨어요.", "why": "my parents는 여러 명이라 were. two weeks ago는 과거." },
-    { "type": "translate", "ko": "어제 너무 바빴어요.", "answer": "I was very busy yesterday.", "choices": ["I was very busy yesterday.", "I were very busy yesterday.", "I am very busy yesterday.", "I busy was yesterday."], "why": "I + was + busy. 어제니까 과거형 was." },
-    { "type": "translate", "ko": "우리는 어젯밤에 카페에 있었어요.", "answer": "We were at the cafe last night.", "choices": ["We were at the cafe last night.", "We was at the cafe last night.", "We are at the cafe last night.", "We were the cafe last night."], "why": "We + were + at + 장소. '~에'는 at을 써요." },
-    { "type": "translate", "ko": "그 영화는 재미있었어요.", "answer": "The movie was fun.", "choices": ["The movie was fun.", "The movie were fun.", "The movie fun was.", "The movie did fun."], "why": "영화 한 편이니까 was. 순서는 주어 + was + fun." },
-    { "type": "translate", "ko": "그들은 1년 전에 학생이었어요.", "answer": "They were students a year ago.", "choices": ["They were students a year ago.", "They was students a year ago.", "They are students a year ago.", "They were student a year ago."], "why": "They는 were, 여러 명이니까 students." },
-    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "My boss was happy yesterday.", "choices": ["My boss was happy yesterday.", "My boss were happy yesterday.", "My boss is happy yesterday.", "My boss happy was yesterday."], "why": "my boss는 한 명이니까 was. yesterday가 있으니 is는 안 돼요." },
-    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "The shops were closed last Sunday.", "choices": ["The shops were closed last Sunday.", "The shops was closed last Sunday.", "The shops is closed last Sunday.", "The shops closed were last Sunday."], "why": "the shops는 여러 개라 were." },
-    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "It was rainy two days ago.", "choices": ["It was rainy two days ago.", "It were rainy two days ago.", "It is rainy two days ago.", "It rainy was two days ago."], "why": "It은 was. two days ago는 과거예요." }
+    {
+      "type": "blank",
+      "sentence": "I ___ at home last night.",
+      "answer": "was",
+      "choices": [
+        "was",
+        "were",
+        "am",
+        "is"
+      ],
+      "ko": "나는 어젯밤에 집에 있었어요.",
+      "why": "I + 과거 = was. last night이 있으니 am은 안 돼요."
+    },
+    {
+      "type": "blank",
+      "sentence": "They ___ at the farm yesterday.",
+      "answer": "were",
+      "choices": [
+        "were",
+        "was",
+        "are",
+        "is"
+      ],
+      "ko": "그들은 어제 농장에 있었어요.",
+      "why": "They + 과거 = were."
+    },
+    {
+      "type": "blank",
+      "sentence": "The weather ___ nice last weekend.",
+      "answer": "was",
+      "choices": [
+        "was",
+        "were",
+        "is",
+        "are"
+      ],
+      "ko": "지난 주말에 날씨가 좋았어요.",
+      "why": "the weather는 하나니까 was. last weekend는 과거예요."
+    },
+    {
+      "type": "blank",
+      "sentence": "You ___ late yesterday.",
+      "answer": "were",
+      "choices": [
+        "were",
+        "was",
+        "are",
+        "is"
+      ],
+      "ko": "당신은 어제 늦었어요.",
+      "why": "You는 한 명이어도 항상 were."
+    },
+    {
+      "type": "blank",
+      "sentence": "My parents ___ in Sydney two weeks ago.",
+      "answer": "were",
+      "choices": [
+        "were",
+        "was",
+        "are",
+        "is"
+      ],
+      "ko": "부모님은 2주 전에 시드니에 계셨어요.",
+      "why": "my parents는 여러 명이라 were. two weeks ago는 과거."
+    },
+    {
+      "type": "translate",
+      "ko": "어제 너무 바빴어요.",
+      "answer": "I was very busy yesterday.",
+      "choices": [
+        "I was very busy yesterday.",
+        "I were very busy yesterday.",
+        "I am very busy yesterday.",
+        "I busy was yesterday."
+      ],
+      "why": "I + was + busy. 어제니까 과거형 was."
+    },
+    {
+      "type": "translate",
+      "ko": "우리는 어젯밤에 카페에 있었어요.",
+      "answer": "We were at the cafe last night.",
+      "choices": [
+        "We were at the cafe last night.",
+        "We was at the cafe last night.",
+        "We are at the cafe last night.",
+        "We were the cafe last night."
+      ],
+      "why": "We + were + at + 장소. '~에'는 at을 써요."
+    },
+    {
+      "type": "translate",
+      "ko": "그 영화는 재미있었어요.",
+      "answer": "The movie was fun.",
+      "choices": [
+        "The movie was fun.",
+        "The movie were fun.",
+        "The movie fun was.",
+        "The movie did fun."
+      ],
+      "why": "영화 한 편이니까 was. 순서는 주어 + was + fun."
+    },
+    {
+      "type": "translate",
+      "ko": "그들은 1년 전에 학생이었어요.",
+      "answer": "They were students a year ago.",
+      "choices": [
+        "They were students a year ago.",
+        "They was students a year ago.",
+        "They are students a year ago.",
+        "They were student a year ago."
+      ],
+      "why": "They는 were, 여러 명이니까 students."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "My boss was happy yesterday.",
+      "choices": [
+        "My boss was happy yesterday.",
+        "My boss were happy yesterday.",
+        "My boss is happy yesterday.",
+        "My boss happy was yesterday."
+      ],
+      "why": "my boss는 한 명이니까 was. yesterday가 있으니 is는 안 돼요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "The shops were closed last Sunday.",
+      "choices": [
+        "The shops were closed last Sunday.",
+        "The shops was closed last Sunday.",
+        "The shops is closed last Sunday.",
+        "The shops closed were last Sunday."
+      ],
+      "why": "the shops는 여러 개라 were."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "It was rainy two days ago.",
+      "choices": [
+        "It was rainy two days ago.",
+        "It were rainy two days ago.",
+        "It is rainy two days ago.",
+        "It rainy was two days ago."
+      ],
+      "why": "It은 was. two days ago는 과거예요."
+    }
   ]
 }

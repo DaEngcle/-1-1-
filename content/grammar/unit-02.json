@@ -1,46 +1,46 @@
 {
   "unit": 2,
-  "title": "be동사 부정문·의문문 (isn't / Are you ~?)",
-  "emoji": "🤔",
-  "goal": "be동사로 '~가 아니에요'라고 말하고, '~예요?'라고 묻고 짧게 대답할 수 있어요.",
+  "title": "be동사 부정문 (I'm not / isn't / aren't)",
+  "emoji": "🙅",
+  "goal": "am / is / are 뒤에 not을 붙여 '~가 아니에요', '~하지 않아요', '~에 없어요'라고 말할 수 있어요.",
   "points": [
     {
-      "title": "아니라고 할 때는 not",
-      "body": "am, is, are 바로 뒤에 not을 붙이면 '~가 아니에요', '~에 없어요'라는 뜻이 돼요. I am not tired.(저는 안 피곤해요.)처럼요."
+      "title": "not은 be동사 바로 뒤에",
+      "body": "am, is, are 바로 뒤에 not을 넣으면 '~가 아니에요', '~하지 않아요', '~에 없어요'라는 뜻이 돼요. I am not tired.(저는 안 피곤해요.)"
     },
     {
       "title": "줄여서 말하기",
-      "body": "is not은 isn't, are not은 aren't로 줄여요. am not은 amn't로 줄이지 않고 I'm not이라고 해요."
+      "body": "is not은 isn't, are not은 aren't로 줄여요. 말할 때는 거의 줄여서 써요."
     },
     {
-      "title": "물어볼 때는 순서 바꾸기",
-      "body": "am, is, are를 주어 앞으로 보내고 끝에 물음표를 붙이면 질문이 돼요. You are busy. → Are you busy?"
+      "title": "am not은 I'm not",
+      "body": "am not은 따로 줄이는 말이 없어서 I'm not이라고 해요. amn't라는 말은 영어에 없어요."
     },
     {
-      "title": "짧게 대답하기",
-      "body": "Yes, I am. / No, I'm not.처럼 대답해요. Yes로 대답할 때는 줄이지 않고 Yes, I am.이라고 해요."
+      "title": "줄이는 방법은 두 가지",
+      "body": "He isn't는 He's not, They aren't는 They're not이라고 해도 돼요. 주어와 be동사를 먼저 줄이고 not을 붙인 거예요. 뜻은 똑같아요."
     }
   ],
   "formula": [
-    "주어 + am / is / are + not + ...",
-    "Am / Is / Are + 주어 + ...?",
-    "Yes, 주어 + am / is / are. / No, I'm not · he isn't · they aren't."
+    "I + am not (I'm not) + ...",
+    "He / She / It + is not (isn't) + ...",
+    "You / We / They + are not (aren't) + ..."
   ],
   "mistakes": [
     {
       "wrong": "I amn't hungry.",
       "right": "I'm not hungry.",
-      "why": "isn't, aren't처럼 amn't도 될 것 같지만 영어에는 없는 말이에요. I'm not으로 줄여요."
+      "why": "isn't, aren't처럼 amn't도 될 것 같지만 영어에 없는 말이에요. I'm not으로 줄여요."
     },
     {
-      "wrong": "Is you busy?",
-      "right": "Are you busy?",
-      "why": "순서를 바꾸면서 be동사를 헷갈리기 쉬워요. 질문에서도 you는 항상 are예요."
+      "wrong": "She not busy today.",
+      "right": "She isn't busy today.",
+      "why": "한국어 '안 바빠요'처럼 not만 넣기 쉬워요. not 앞에 꼭 is를 넣어요."
     },
     {
-      "wrong": "Yes, I'm.",
-      "right": "Yes, I am.",
-      "why": "짧은 대답이 Yes로 끝날 때는 줄임말을 쓰지 않아요. No, I'm not.처럼 No일 때만 줄여요."
+      "wrong": "We isn't late.",
+      "right": "We aren't late.",
+      "why": "isn't를 아무 주어에나 쓰기 쉬워요. we, you, they는 aren't예요."
     }
   ],
   "examples": [
@@ -57,24 +57,24 @@
       "ko": "우리 안 늦었어요."
     },
     {
-      "en": "Are you a new barista?",
-      "ko": "새로 온 바리스타세요?"
+      "en": "My housemate isn't at home now.",
+      "ko": "제 하우스메이트는 지금 집에 없어요."
     },
     {
-      "en": "Is the tram stop near here?",
-      "ko": "트램 정류장이 이 근처에 있어요?"
+      "en": "This coffee isn't hot.",
+      "ko": "이 커피 안 뜨거워요."
     },
     {
-      "en": "Is your room big? — No, it isn't.",
-      "ko": "방이 커요? — 아니요, 안 커요."
+      "en": "They aren't Australian. They're from Japan.",
+      "ko": "그 사람들은 호주 사람이 아니에요. 일본에서 왔어요."
     },
     {
-      "en": "Are they your housemates? — Yes, they are.",
-      "ko": "저 사람들이 당신 하우스메이트예요? — 네, 맞아요."
+      "en": "I'm not a tourist. I'm on a working holiday.",
+      "ko": "저는 관광객이 아니에요. 워킹홀리데이 중이에요."
     },
     {
-      "en": "Am I late? — No, you aren't.",
-      "ko": "제가 늦었나요? — 아니요, 안 늦었어요."
+      "en": "The beach isn't far from here.",
+      "ko": "해변은 여기서 멀지 않아요."
     }
   ],
   "quiz": [
@@ -83,65 +83,65 @@
       "sentence": "My housemate ___ at home now.",
       "answer": "isn't",
       "choices": [
-        "isn't",
         "aren't",
         "amn't",
-        "not"
+        "not",
+        "isn't"
       ],
       "ko": "제 하우스메이트는 지금 집에 없어요.",
       "why": "한 사람(my housemate)이라 is not을 줄인 isn't를 써요."
     },
     {
       "type": "blank",
-      "sentence": "___ you from Korea?",
-      "answer": "Are",
-      "choices": [
-        "Are",
-        "Is",
-        "Am",
-        "Be"
-      ],
-      "ko": "한국에서 오셨어요?",
-      "why": "you는 are라서 질문도 Are you ~?로 시작해요."
-    },
-    {
-      "type": "blank",
       "sentence": "I ___ not hungry.",
       "answer": "am",
       "choices": [
-        "am",
+        "be",
         "is",
-        "are",
-        "be"
+        "am",
+        "are"
       ],
       "ko": "저는 배 안 고파요.",
       "why": "I는 am이고, 그 뒤에 not을 붙여요."
     },
     {
       "type": "blank",
-      "sentence": "___ the beach far from here?",
-      "answer": "Is",
+      "sentence": "They ___ my friends. They're my co-workers.",
+      "answer": "aren't",
       "choices": [
-        "Is",
-        "Are",
-        "Am",
-        "Be"
+        "isn't",
+        "aren't",
+        "not",
+        "amn't"
       ],
-      "ko": "해변이 여기서 멀어요?",
-      "why": "the beach는 하나라서 Is로 물어봐요."
+      "ko": "그 사람들은 제 친구가 아니에요. 직장 동료예요.",
+      "why": "they는 are라서 are not을 줄인 aren't를 써요."
     },
     {
       "type": "blank",
-      "sentence": "Are you tired? — No, I'm ___.",
+      "sentence": "This room ___ big.",
+      "answer": "isn't",
+      "choices": [
+        "aren't",
+        "not",
+        "am not",
+        "isn't"
+      ],
+      "ko": "이 방은 크지 않아요.",
+      "why": "this room은 하나라서 isn't를 써요. not만 쓰면 be동사가 빠져요."
+    },
+    {
+      "type": "blank",
+      "sentence": "I'm ___ tired.",
       "answer": "not",
       "choices": [
         "not",
+        "no",
         "isn't",
-        "aren't",
-        "no"
+        "aren't"
       ],
-      "ko": "피곤해요? — 아니요, 안 피곤해요.",
-      "why": "I'm 뒤에는 not만 붙여서 I'm not이라고 해요."
+      "ko": "저는 안 피곤해요.",
+      "why": "I'm(I am) 뒤에는 not만 붙여요."
     },
     {
       "type": "translate",
@@ -150,82 +150,82 @@
       "choices": [
         "The café isn't expensive.",
         "The café aren't expensive.",
-        "The café not expensive.",
-        "The café amn't expensive."
+        "The café amn't expensive.",
+        "The café not expensive."
       ],
-      "why": "the café는 하나라서 isn't를 써요. not만 쓰면 be동사가 빠져요."
-    },
-    {
-      "type": "translate",
-      "ko": "학생이세요?",
-      "answer": "Are you a student?",
-      "choices": [
-        "Are you a student?",
-        "Is you a student?",
-        "Am you a student?",
-        "Are a student you?"
-      ],
-      "why": "you는 are, 질문은 Are + you 순서예요."
+      "why": "the café는 하나라서 isn't를 써요."
     },
     {
       "type": "translate",
       "ko": "그들은 바쁘지 않아요.",
       "answer": "They aren't busy.",
       "choices": [
-        "They aren't busy.",
         "They isn't busy.",
-        "They not busy.",
-        "They amn't busy."
+        "They amn't busy.",
+        "They aren't busy.",
+        "They not busy."
       ],
-      "why": "they는 are라서 are not을 줄인 aren't를 써요."
+      "why": "they는 are라서 aren't를 써요."
     },
     {
       "type": "translate",
-      "ko": "그녀가 당신 매니저예요? — 네, 맞아요.",
-      "answer": "Is she your manager? — Yes, she is.",
+      "ko": "저는 학생이 아니에요.",
+      "answer": "I'm not a student.",
       "choices": [
-        "Is she your manager? — Yes, she is.",
-        "Is she your manager? — Yes, she's.",
-        "Are she your manager? — Yes, she is.",
-        "Is she your manager? — Yes, she isn't."
+        "I'm not a student.",
+        "I isn't a student.",
+        "I amn't a student.",
+        "I not a student."
       ],
-      "why": "she는 is로 묻고, Yes 대답은 줄이지 않고 Yes, she is.라고 해요."
+      "why": "I am not은 I'm not으로 줄여요."
+    },
+    {
+      "type": "translate",
+      "ko": "우리 안 늦었어요.",
+      "answer": "We aren't late.",
+      "choices": [
+        "We not late.",
+        "We aren't late.",
+        "We isn't late.",
+        "We amn't late."
+      ],
+      "why": "we는 are라서 aren't를 써요."
     },
     {
       "type": "fix",
       "prompt": "맞는 문장을 고르세요.",
-      "answer": "I'm not a tourist.",
+      "answer": "My boss is not Australian.",
       "choices": [
-        "I'm not a tourist.",
-        "I amn't a tourist.",
-        "I not a tourist.",
-        "I isn't a tourist."
+        "My boss are not Australian.",
+        "My boss is no Australian.",
+        "My boss is not Australian.",
+        "My boss not is Australian."
       ],
-      "why": "am not은 I'm not으로 줄여요. amn't라는 말은 없어요."
+      "why": "not은 be동사(is) 바로 뒤에 와요. my boss는 한 사람이라 is예요."
     },
     {
       "type": "fix",
       "prompt": "맞는 문장을 고르세요.",
-      "answer": "Are we late?",
+      "answer": "My parents aren't in Australia.",
       "choices": [
-        "Are we late?",
-        "Is we late?",
-        "Am we late?",
-        "Are late we?"
+        "My parents not in Australia.",
+        "My parents isn't in Australia.",
+        "My parents amn't in Australia.",
+        "My parents aren't in Australia."
       ],
-      "why": "we는 are, 질문은 Are + we 순서예요."
+      "why": "my parents는 두 사람(=they)이라 aren't를 써요."
     },
     {
       "type": "fix",
       "prompt": "맞는 문장을 고르세요.",
-      "answer": "Is it your bag? — No, it isn't.",
+      "answer": "It isn't cold today.",
       "choices": [
-        "Is it your bag? — No, it isn't.",
-        "Is it your bag? — No, it aren't.",
-        "Are it your bag? — No, it isn't.",
-        "Is it your bag? — No, it not."
+        "It not cold today.",
+        "It amn't cold today.",
+        "It isn't cold today.",
+        "It aren't cold today."
       ],
-      "why": "it은 is로 묻고 is로 대답해요. 아니면 No, it isn't.예요."
+      "why": "it은 is라서 isn't를 써요."
     }
   ]
 }

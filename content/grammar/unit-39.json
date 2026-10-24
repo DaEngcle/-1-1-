@@ -1,0 +1,236 @@
+{
+  "unit": 39,
+  "title": "부정문 (isn't / don't / can't)",
+  "emoji": "🙅",
+  "goal": "be동사, 일반동사, 조동사 문장을 한 번에 정리해서 '~이 아니에요 / ~하지 않아요'를 정확하게 말할 수 있어요.",
+  "points": [
+    {
+      "title": "be동사 문장은 be동사 뒤에 not",
+      "body": "am / is / are / was / were 바로 뒤에 not을 붙여요. 줄이면 isn't, aren't, wasn't, weren't예요. I am not은 I'm not으로만 줄여요."
+    },
+    {
+      "title": "일반동사 문장은 don't / doesn't / didn't",
+      "body": "like, work 같은 일반동사는 앞에 don't(I / you / we / they), doesn't(he / she / it), didn't(과거, 모든 주어)를 넣어요. 그 뒤 동사는 항상 동사원형이에요."
+    },
+    {
+      "title": "조동사 문장은 조동사 뒤에 not",
+      "body": "will, can, should, must 같은 조동사(동사를 도와주는 말) 뒤에 not을 붙여요. won't(will not), can't, shouldn't, mustn't처럼 줄여 말해요. 뒤에는 동사원형이 와요."
+    },
+    {
+      "title": "진행형·현재완료도 같은 원리",
+      "body": "진행형은 be동사가 있으니 I'm not working.처럼 be동사 뒤에 not. 현재완료는 have / has 뒤에 not을 붙여 I haven't finished.처럼 말해요."
+    },
+    {
+      "title": "not은 딱 한 번, 동사원형 확인",
+      "body": "don't, can't, didn't를 쓰면 이미 시제와 -s를 그쪽이 맡아요. 그래서 He doesn't likes (X), I didn't went (X)처럼 뒤 동사를 바꾸면 안 돼요."
+    }
+  ],
+  "formula": [
+    "주어 + am / is / are / was / were + not + ...",
+    "주어 + don't / doesn't / didn't + 동사원형",
+    "주어 + won't / can't / shouldn't / mustn't + 동사원형",
+    "주어 + haven't / hasn't + p.p."
+  ],
+  "mistakes": [
+    {
+      "wrong": "I don't tired.",
+      "right": "I'm not tired.",
+      "why": "tired 같은 상태는 be동사 문장이에요. be동사 문장에는 don't를 쓰지 않고 be동사 뒤에 not을 붙여요."
+    },
+    {
+      "wrong": "He doesn't likes coffee.",
+      "right": "He doesn't like coffee.",
+      "why": "doesn't에 이미 -s가 들어 있어서 뒤 동사는 동사원형으로 써요."
+    },
+    {
+      "wrong": "I didn't went to work yesterday.",
+      "right": "I didn't go to work yesterday.",
+      "why": "didn't가 과거를 맡으니까 뒤 동사는 과거형이 아니라 동사원형이에요."
+    }
+  ],
+  "examples": [
+    {
+      "en": "I'm not from Sydney.",
+      "ko": "저는 시드니 출신이 아니에요."
+    },
+    {
+      "en": "The tram isn't crowded today.",
+      "ko": "오늘은 트램이 붐비지 않아요."
+    },
+    {
+      "en": "My housemate doesn't eat meat.",
+      "ko": "제 하우스메이트는 고기를 안 먹어요."
+    },
+    {
+      "en": "We didn't work last Sunday.",
+      "ko": "우리는 지난 일요일에 일 안 했어요."
+    },
+    {
+      "en": "I can't swim very well.",
+      "ko": "저는 수영을 잘 못해요."
+    },
+    {
+      "en": "You shouldn't swim here. The waves are big.",
+      "ko": "여기서는 수영하지 않는 게 좋아요. 파도가 커요."
+    },
+    {
+      "en": "Don't worry. She won't be late.",
+      "ko": "걱정 마세요. 그녀는 늦지 않을 거예요."
+    },
+    {
+      "en": "I haven't found a job yet.",
+      "ko": "아직 일자리를 못 구했어요."
+    }
+  ],
+  "quiz": [
+    {
+      "type": "blank",
+      "sentence": "My manager ___ in the office now.",
+      "answer": "isn't",
+      "choices": [
+        "isn't",
+        "doesn't",
+        "aren't",
+        "don't"
+      ],
+      "ko": "매니저님은 지금 사무실에 안 계세요.",
+      "why": "'~에 있다'는 be동사 문장이고 주어가 단수라서 isn't"
+    },
+    {
+      "type": "blank",
+      "sentence": "He ___ work on weekends.",
+      "answer": "doesn't",
+      "choices": [
+        "doesn't",
+        "don't",
+        "isn't",
+        "not"
+      ],
+      "ko": "그는 주말에 일 안 해요.",
+      "why": "일반동사 work + 주어 He → doesn't"
+    },
+    {
+      "type": "blank",
+      "sentence": "We ___ go to the beach yesterday.",
+      "answer": "didn't",
+      "choices": [
+        "didn't",
+        "don't",
+        "weren't",
+        "doesn't"
+      ],
+      "ko": "우리는 어제 해변에 안 갔어요.",
+      "why": "yesterday(과거) + 일반동사 go → didn't + 동사원형"
+    },
+    {
+      "type": "blank",
+      "sentence": "You ___ park here. It's a bus stop.",
+      "answer": "can't",
+      "choices": [
+        "can't",
+        "aren't",
+        "doesn't",
+        "can not to"
+      ],
+      "ko": "여기 주차하면 안 돼요. 버스 정류장이에요.",
+      "why": "조동사 can 뒤에 not → can't + 동사원형"
+    },
+    {
+      "type": "blank",
+      "sentence": "I ___ been to Perth.",
+      "answer": "haven't",
+      "choices": [
+        "haven't",
+        "hasn't",
+        "didn't",
+        "don't"
+      ],
+      "ko": "저는 퍼스에 가 본 적이 없어요.",
+      "why": "been(p.p.) 앞에는 have / has. 주어가 I라서 haven't"
+    },
+    {
+      "type": "translate",
+      "ko": "저는 피곤하지 않아요.",
+      "answer": "I'm not tired.",
+      "choices": [
+        "I'm not tired.",
+        "I don't tired.",
+        "I not tired.",
+        "I'm don't tired."
+      ],
+      "why": "tired는 be동사 문장 → I'm not"
+    },
+    {
+      "type": "translate",
+      "ko": "그녀는 운전을 못 해요.",
+      "answer": "She can't drive.",
+      "choices": [
+        "She can't drive.",
+        "She can't drives.",
+        "She doesn't can drive.",
+        "She not can drive."
+      ],
+      "why": "can't 뒤에는 주어가 She여도 동사원형"
+    },
+    {
+      "type": "translate",
+      "ko": "그들은 어젯밤에 집에 없었어요.",
+      "answer": "They weren't at home last night.",
+      "choices": [
+        "They weren't at home last night.",
+        "They wasn't at home last night.",
+        "They didn't at home last night.",
+        "They aren't at home last night."
+      ],
+      "why": "과거 + 주어 They → weren't"
+    },
+    {
+      "type": "translate",
+      "ko": "내일은 비가 안 올 거예요.",
+      "answer": "It won't rain tomorrow.",
+      "choices": [
+        "It won't rain tomorrow.",
+        "It won't rains tomorrow.",
+        "It doesn't will rain tomorrow.",
+        "It willn't rain tomorrow."
+      ],
+      "why": "will not의 줄임말은 won't, 뒤에는 동사원형"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "My sister doesn't live in Brisbane.",
+      "choices": [
+        "My sister doesn't live in Brisbane.",
+        "My sister don't live in Brisbane.",
+        "My sister doesn't lives in Brisbane.",
+        "My sister not lives in Brisbane."
+      ],
+      "why": "주어 My sister(she) → doesn't + 동사원형 live"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "I didn't see the email.",
+      "choices": [
+        "I didn't see the email.",
+        "I didn't saw the email.",
+        "I don't saw the email.",
+        "I not saw the email."
+      ],
+      "why": "didn't 뒤에는 과거형 saw가 아니라 동사원형 see"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "The shop isn't busy today.",
+      "choices": [
+        "The shop isn't busy today.",
+        "The shop doesn't busy today.",
+        "The shop not is busy today.",
+        "The shop aren't busy today."
+      ],
+      "why": "busy는 상태라서 be동사 문장 → isn't"
+    }
+  ]
+}

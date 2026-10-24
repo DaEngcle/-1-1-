@@ -1,0 +1,236 @@
+{
+  "unit": 41,
+  "title": "who와 what",
+  "emoji": "🕵️",
+  "goal": "who(누구)와 what(무엇)으로 사람과 물건·일에 대해 질문할 수 있어요.",
+  "points": [
+    {
+      "title": "who는 사람, what은 물건·일",
+      "body": "who는 '누구', what은 '무엇 / 뭐'예요. Who is she? (그녀는 누구예요?) What is this? (이거 뭐예요?)"
+    },
+    {
+      "title": "의문사 + Yes / No 질문 순서",
+      "body": "앞에서 배운 Yes / No 질문 앞에 who / what만 붙이면 돼요. Do you do? → What do you do? / Did you meet? → Who did you meet?"
+    },
+    {
+      "title": "'누가 / 무엇이'를 물을 때는 do 없이",
+      "body": "who / what 자체가 주어(문장의 주인공)면 do / does / did 없이 바로 동사가 와요. 현재면 동사에 -s를 붙여요. Who lives here? What happened?"
+    },
+    {
+      "title": "what + 명사",
+      "body": "What time(몇 시), What colour(무슨 색), What kind of(어떤 종류의)처럼 what 뒤에 명사를 붙여서 더 구체적으로 물을 수 있어요."
+    },
+    {
+      "title": "대답은 정보로",
+      "body": "who / what 질문에는 Yes / No가 아니라 내용으로 대답해요. What do you do? → I'm a chef."
+    }
+  ],
+  "formula": [
+    "Who / What + be동사 + 주어?",
+    "Who / What + do / does / did + 주어 + 동사원형?",
+    "Who / What + 동사 ...? (누가 / 무엇이 ~?)",
+    "What + 명사(time / colour / kind of ...) + ...?"
+  ],
+  "mistakes": [
+    {
+      "wrong": "What you do?",
+      "right": "What do you do?",
+      "why": "의문사 뒤에도 Yes / No 질문 순서가 그대로 필요해요. do를 빠뜨리지 마세요."
+    },
+    {
+      "wrong": "Who does live here?",
+      "right": "Who lives here?",
+      "why": "'누가'를 물을 때는 who가 주어라서 does 없이 바로 동사를 쓰고 -s를 붙여요."
+    },
+    {
+      "wrong": "What did happen?",
+      "right": "What happened?",
+      "why": "'무슨 일이'가 주어라서 did 없이 동사 과거형 happened를 바로 써요."
+    }
+  ],
+  "examples": [
+    {
+      "en": "Who is your manager?",
+      "ko": "매니저가 누구예요?"
+    },
+    {
+      "en": "What do you do?",
+      "ko": "무슨 일 하세요?"
+    },
+    {
+      "en": "Who did you meet at the party?",
+      "ko": "파티에서 누구 만났어요?"
+    },
+    {
+      "en": "Who lives in the room next to yours?",
+      "ko": "옆방에는 누가 살아요?"
+    },
+    {
+      "en": "What happened at work today?",
+      "ko": "오늘 직장에서 무슨 일 있었어요?"
+    },
+    {
+      "en": "What time does the shop close?",
+      "ko": "가게 몇 시에 닫아요?"
+    },
+    {
+      "en": "What kind of coffee do you like?",
+      "ko": "어떤 커피 좋아해요?"
+    },
+    {
+      "en": "What are you doing this weekend?",
+      "ko": "이번 주말에 뭐 해요?"
+    }
+  ],
+  "quiz": [
+    {
+      "type": "blank",
+      "sentence": "___ is your favourite food?",
+      "answer": "What",
+      "choices": [
+        "What",
+        "Who",
+        "Does",
+        "Do"
+      ],
+      "ko": "제일 좋아하는 음식이 뭐예요?",
+      "why": "음식(물건)을 물으니까 What"
+    },
+    {
+      "type": "blank",
+      "sentence": "___ is that man at the counter?",
+      "answer": "Who",
+      "choices": [
+        "Who",
+        "Does",
+        "Do",
+        "Are"
+      ],
+      "ko": "카운터에 있는 저 남자는 누구예요?",
+      "why": "사람을 물으니까 Who"
+    },
+    {
+      "type": "blank",
+      "sentence": "What ___ you buy at the market yesterday?",
+      "answer": "did",
+      "choices": [
+        "did",
+        "do",
+        "were",
+        "does"
+      ],
+      "ko": "어제 시장에서 뭐 샀어요?",
+      "why": "yesterday(과거) + 동사원형 buy → did"
+    },
+    {
+      "type": "blank",
+      "sentence": "Who ___ in Room 3?",
+      "answer": "lives",
+      "choices": [
+        "lives",
+        "live",
+        "is live",
+        "living"
+      ],
+      "ko": "3번 방에는 누가 살아요?",
+      "why": "who가 주어(누가)라서 do 없이 동사에 -s → lives"
+    },
+    {
+      "type": "blank",
+      "sentence": "What ___ your phone number?",
+      "answer": "is",
+      "choices": [
+        "is",
+        "are",
+        "do",
+        "does"
+      ],
+      "ko": "전화번호가 뭐예요?",
+      "why": "your phone number는 단수 → be동사 is"
+    },
+    {
+      "type": "translate",
+      "ko": "누가 당신한테 전화했어요?",
+      "answer": "Who called you?",
+      "choices": [
+        "Who called you?",
+        "Who did called you?",
+        "Who you called?",
+        "Who calling you?"
+      ],
+      "why": "'누가'가 주어라서 did 없이 과거형 called"
+    },
+    {
+      "type": "translate",
+      "ko": "점심으로 뭐 먹었어요?",
+      "answer": "What did you eat for lunch?",
+      "choices": [
+        "What did you eat for lunch?",
+        "What did you ate for lunch?",
+        "What you ate for lunch?",
+        "What do you ate for lunch?"
+      ],
+      "why": "'뭐를' 먹었는지 물으니까 What + did + 주어 + 동사원형"
+    },
+    {
+      "type": "translate",
+      "ko": "지금 몇 시예요?",
+      "answer": "What time is it?",
+      "choices": [
+        "What time is it?",
+        "What time it is?",
+        "What time does it?",
+        "Who time is it?"
+      ],
+      "why": "What time + be동사 + it 순서"
+    },
+    {
+      "type": "translate",
+      "ko": "그녀는 누구를 기다리고 있어요?",
+      "answer": "Who is she waiting for?",
+      "choices": [
+        "Who is she waiting for?",
+        "Who she is waiting for?",
+        "Who does she waiting for?",
+        "What she is waiting for?"
+      ],
+      "why": "진행형 질문 is she waiting 앞에 Who"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "What does your brother do?",
+      "choices": [
+        "What does your brother do?",
+        "What does your brother does?",
+        "What do your brother do?",
+        "What your brother does?"
+      ],
+      "why": "your brother(he) → What does + 주어 + 동사원형 do"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "What happened to your car?",
+      "choices": [
+        "What happened to your car?",
+        "What happen to your car?",
+        "What was happened to your car?",
+        "What does happened to your car?"
+      ],
+      "why": "'무슨 일이'가 주어 → do 없이 과거형 happened"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Who is your best friend in Australia?",
+      "choices": [
+        "Who is your best friend in Australia?",
+        "Who your best friend is in Australia?",
+        "Who does your best friend in Australia?",
+        "Who are your best friend in Australia?"
+      ],
+      "why": "Who + be동사(is) + 주어 순서"
+    }
+  ]
+}

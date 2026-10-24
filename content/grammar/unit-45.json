@@ -1,0 +1,236 @@
+{
+  "unit": 45,
+  "title": "간접의문문 (Do you know where it is?)",
+  "emoji": "🔍",
+  "goal": "Do you know ~? / Can you tell me ~? 뒤에 질문을 넣어 공손하게 묻고, I don't know ~로 모른다고 말할 수 있어요.",
+  "points": [
+    {
+      "title": "질문을 문장 속에 넣기",
+      "body": "Where is the station?(역이 어디예요?)을 Do you know ~? 뒤에 넣으면 Do you know where the station is?(역이 어디 있는지 아세요?)가 돼요. 이렇게 문장 속에 들어간 질문을 간접의문문이라고 해요. 훨씬 부드럽고 공손하게 들려요."
+    },
+    {
+      "title": "순서는 '의문사 + 주어 + 동사'",
+      "body": "질문 속으로 들어가면 순서가 평소 문장처럼 바뀌어요. where is the station (X) → where the station is (O). 의문사 바로 뒤에 주어, 그다음 동사예요."
+    },
+    {
+      "title": "do / does / did는 빠져요",
+      "body": "What time does the shop open? → Do you know what time the shop opens? does가 사라지는 대신 동사에 -s가 붙어요. 과거 did도 빠지고 동사가 과거형이 돼요. Where did she go? → I don't know where she went."
+    },
+    {
+      "title": "의문사가 없으면 if",
+      "body": "Is he at home?처럼 의문사가 없는 질문은 if(~인지)를 넣어요. I don't know if he is at home.(그가 집에 있는지 모르겠어요.)"
+    },
+    {
+      "title": "자주 쓰는 앞부분",
+      "body": "Do you know ~?(~ 아세요?), Can you tell me ~? / Could you tell me ~?(~ 알려 주실래요?), I don't know ~(~ 모르겠어요), I'm not sure ~(~ 잘 모르겠어요). 처음 보는 사람에게 길을 물을 때 특히 좋아요."
+    }
+  ],
+  "formula": [
+    "Do you know + 의문사 + 주어 + 동사 ~?",
+    "Can you tell me + 의문사 + 주어 + 동사 ~?",
+    "I don't know + 의문사 + 주어 + 동사.",
+    "Do you know + if + 주어 + 동사 ~? (의문사 없을 때)"
+  ],
+  "mistakes": [
+    {
+      "wrong": "Do you know where is the bus stop?",
+      "right": "Do you know where the bus stop is?",
+      "why": "원래 질문(Where is ~?) 순서를 그대로 쓰는 실수예요. 질문 속에서는 주어(the bus stop) 다음에 동사(is)를 써요."
+    },
+    {
+      "wrong": "Can you tell me what time does the shop close?",
+      "right": "Can you tell me what time the shop closes?",
+      "why": "질문 속에서는 does를 빼고, 주어가 하나(the shop)니까 동사에 -s를 붙여요."
+    },
+    {
+      "wrong": "I don't know is he at home.",
+      "right": "I don't know if he is at home.",
+      "why": "의문사가 없는 질문은 앞에 if를 넣고, 순서를 he is로 바꿔요."
+    }
+  ],
+  "examples": [
+    {
+      "en": "Do you know where the nearest ATM is?",
+      "ko": "가장 가까운 ATM이 어디 있는지 아세요?"
+    },
+    {
+      "en": "Can you tell me what time the tram leaves?",
+      "ko": "트램이 몇 시에 출발하는지 알려 주실래요?"
+    },
+    {
+      "en": "I don't know how much the rent is.",
+      "ko": "월세가 얼마인지 몰라요."
+    },
+    {
+      "en": "Do you know if the café is hiring?",
+      "ko": "그 카페가 사람을 뽑고 있는지 아세요?"
+    },
+    {
+      "en": "I don't know where my housemate went.",
+      "ko": "하우스메이트가 어디 갔는지 모르겠어요."
+    },
+    {
+      "en": "Could you tell me when the interview starts?",
+      "ko": "면접이 언제 시작하는지 알려 주시겠어요?"
+    },
+    {
+      "en": "Do you know why the beach is closed today?",
+      "ko": "오늘 해변이 왜 닫혔는지 아세요?"
+    },
+    {
+      "en": "I'm not sure if this bus goes to the city.",
+      "ko": "이 버스가 시내로 가는지 잘 모르겠어요."
+    }
+  ],
+  "quiz": [
+    {
+      "type": "blank",
+      "sentence": "Do you know where the post office ___?",
+      "answer": "is",
+      "choices": [
+        "is",
+        "are",
+        "does",
+        "do"
+      ],
+      "ko": "우체국이 어디 있는지 아세요?",
+      "why": "질문 속에서는 주어(the post office) 뒤에 동사가 와요. 주어가 하나라서 is예요."
+    },
+    {
+      "type": "blank",
+      "sentence": "Can you tell me what time the shop ___?",
+      "answer": "closes",
+      "choices": [
+        "closes",
+        "close",
+        "closing",
+        "to close"
+      ],
+      "ko": "가게가 몇 시에 닫는지 알려 주실래요?",
+      "why": "does가 빠지는 대신 동사에 -s가 붙어서 closes예요."
+    },
+    {
+      "type": "blank",
+      "sentence": "I don't know ___ he is at home.",
+      "answer": "if",
+      "choices": [
+        "if",
+        "does",
+        "is",
+        "do"
+      ],
+      "ko": "그가 집에 있는지 모르겠어요.",
+      "why": "의문사가 없는 질문(Is he at home?)은 if를 넣어요."
+    },
+    {
+      "type": "blank",
+      "sentence": "Do you know where she ___ last night?",
+      "answer": "went",
+      "choices": [
+        "went",
+        "go",
+        "goes",
+        "going"
+      ],
+      "ko": "그녀가 어젯밤에 어디 갔는지 아세요?",
+      "why": "did가 빠지면 동사를 과거형으로 써요. go → went."
+    },
+    {
+      "type": "blank",
+      "sentence": "Can you tell me ___ much this shirt is?",
+      "answer": "how",
+      "choices": [
+        "how",
+        "what",
+        "where",
+        "who"
+      ],
+      "ko": "이 셔츠가 얼마인지 알려 주실래요?",
+      "why": "'얼마'는 how much예요."
+    },
+    {
+      "type": "translate",
+      "ko": "기차역이 어디 있는지 아세요?",
+      "answer": "Do you know where the train station is?",
+      "choices": [
+        "Do you know where the train station is?",
+        "Do you know where is the train station?",
+        "Do you know where does the train station is?",
+        "Do you know the train station where is?"
+      ],
+      "why": "의문사(where) + 주어(the train station) + 동사(is) 순서예요."
+    },
+    {
+      "type": "translate",
+      "ko": "면접이 몇 시에 시작하는지 모르겠어요.",
+      "answer": "I don't know what time the interview starts.",
+      "choices": [
+        "I don't know what time the interview starts.",
+        "I don't know what time does the interview start.",
+        "I don't know what time the interview start.",
+        "I don't know what time starts the interview."
+      ],
+      "why": "does는 빼고 주어 + 동사-s(starts) 순서로 써요."
+    },
+    {
+      "type": "translate",
+      "ko": "그가 호주 사람인지 아세요?",
+      "answer": "Do you know if he is Australian?",
+      "choices": [
+        "Do you know if he is Australian?",
+        "Do you know is he Australian?",
+        "Do you know if is he Australian?",
+        "Do you know what he is Australian?"
+      ],
+      "why": "의문사가 없으니 if + 주어(he) + 동사(is)예요."
+    },
+    {
+      "type": "translate",
+      "ko": "그녀가 왜 일을 그만뒀는지 알려 줄 수 있어요?",
+      "answer": "Can you tell me why she quit her job?",
+      "choices": [
+        "Can you tell me why she quit her job?",
+        "Can you tell me why did she quit her job?",
+        "Can you tell me why does she quit her job?",
+        "Can you tell me why quit she her job?"
+      ],
+      "why": "did를 빼고 why + she + quit(과거형) 순서예요. quit은 과거형도 quit이에요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Do you know how much the ticket is?",
+      "choices": [
+        "Do you know how much the ticket is?",
+        "Do you know how much is the ticket?",
+        "Do you know how much does the ticket is?",
+        "Do you know how much the ticket are?"
+      ],
+      "why": "how much + 주어(the ticket) + is 순서가 맞아요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "I don't know where he lives.",
+      "choices": [
+        "I don't know where he lives.",
+        "I don't know where does he live.",
+        "I don't know where he live.",
+        "I don't know where lives he."
+      ],
+      "why": "does를 빼고 he + lives(-s) 순서로 써요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Can you tell me if the bus stops here?",
+      "choices": [
+        "Can you tell me if the bus stops here?",
+        "Can you tell me does the bus stop here?",
+        "Can you tell me if does the bus stop here?",
+        "Can you tell me if the bus stop here?"
+      ],
+      "why": "의문사가 없으니 if + 주어 + 동사-s(stops)예요."
+    }
+  ]
+}

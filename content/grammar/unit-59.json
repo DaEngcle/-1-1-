@@ -1,0 +1,235 @@
+{
+  "unit": 59,
+  "title": "the를 쓰는 경우와 쓰지 않는 경우(2) (Sydney / the Pacific Ocean)",
+  "emoji": "🗺️",
+  "goal": "도시, 나라, 거리, 바다, 강 같은 장소 이름에 the를 붙일지 말지 구별할 수 있어요.",
+  "points": [
+    {
+      "title": "도시·대부분의 나라·주 이름은 the X",
+      "body": "Sydney, Melbourne, Australia, Korea, Queensland처럼 도시, 대부분의 나라, 주 이름 앞에는 the를 쓰지 않아요."
+    },
+    {
+      "title": "거리·공원·역·공항·해변 이름도 the X",
+      "body": "George Street, Hyde Park, Central Station, Melbourne Airport, Bondi Beach처럼 이름 앞에는 보통 the를 쓰지 않아요."
+    },
+    {
+      "title": "바다·강·사막·산맥에는 the",
+      "body": "the Pacific Ocean, the Murray River, the Simpson Desert, the Blue Mountains(여러 산이 모인 산맥)처럼 물이나 넓은 자연 지형 이름에는 the를 써요. the Great Barrier Reef도 마찬가지예요."
+    },
+    {
+      "title": "the가 붙는 나라 이름",
+      "body": "나라 이름에 States, Kingdom 같은 말이 있거나 복수형이면 the를 써요. the USA, the UK, the Philippines."
+    },
+    {
+      "title": "유명한 건물 이름",
+      "body": "박물관, 극장 같은 건물 이름에는 보통 the를 붙여요. the Sydney Opera House, the Australian Museum."
+    }
+  ],
+  "formula": [
+    "the 없이: 도시·나라·주·거리·공원·역·공항 (Sydney, Hyde Park, Central Station)",
+    "the + 바다·강·사막·산맥 (the Pacific Ocean, the Blue Mountains)",
+    "the + States / Kingdom / 복수형 나라 (the USA, the UK, the Philippines)"
+  ],
+  "mistakes": [
+    {
+      "wrong": "I live in the Sydney.",
+      "right": "I live in Sydney.",
+      "why": "도시 이름 앞에는 the를 쓰지 않아요."
+    },
+    {
+      "wrong": "We swam in Pacific Ocean.",
+      "right": "We swam in the Pacific Ocean.",
+      "why": "바다 이름에는 the를 꼭 붙여요."
+    },
+    {
+      "wrong": "My friend is from UK.",
+      "right": "My friend is from the UK.",
+      "why": "Kingdom(왕국)이 들어간 나라 이름이라 the UK예요."
+    }
+  ],
+  "examples": [
+    {
+      "en": "I live in Brisbane.",
+      "ko": "저는 브리즈번에 살아요."
+    },
+    {
+      "en": "We had a picnic in Hyde Park.",
+      "ko": "우리는 하이드 파크에서 피크닉을 했어요."
+    },
+    {
+      "en": "Let's meet at Flinders Street Station.",
+      "ko": "플린더스 스트리트 역에서 만나요."
+    },
+    {
+      "en": "The Yarra River runs through Melbourne.",
+      "ko": "야라강은 멜버른을 지나 흘러요."
+    },
+    {
+      "en": "We went hiking in the Blue Mountains.",
+      "ko": "우리는 블루마운틴에서 하이킹을 했어요."
+    },
+    {
+      "en": "My manager is from the UK.",
+      "ko": "제 매니저는 영국 사람이에요."
+    },
+    {
+      "en": "The Great Barrier Reef is in Queensland.",
+      "ko": "그레이트 배리어 리프는 퀸즐랜드에 있어요."
+    },
+    {
+      "en": "I arrived at Sydney Airport last night.",
+      "ko": "저는 어젯밤에 시드니 공항에 도착했어요."
+    }
+  ],
+  "quiz": [
+    {
+      "type": "blank",
+      "sentence": "My housemate is from ___ Philippines.",
+      "answer": "the",
+      "choices": [
+        "the",
+        "a",
+        "an",
+        "some"
+      ],
+      "ko": "제 하우스메이트는 필리핀 사람이에요.",
+      "why": "복수형 나라 이름이라 the Philippines예요."
+    },
+    {
+      "type": "blank",
+      "sentence": "I swam in ___ in Perth.",
+      "answer": "the Indian Ocean",
+      "choices": [
+        "the Indian Ocean",
+        "Indian Ocean",
+        "an Indian Ocean",
+        "a Indian Ocean"
+      ],
+      "ko": "저는 퍼스에서 인도양에서 수영했어요.",
+      "why": "바다 이름에는 the를 붙여요."
+    },
+    {
+      "type": "blank",
+      "sentence": "I live near ___.",
+      "answer": "Bondi Beach",
+      "choices": [
+        "Bondi Beach",
+        "the Bondi Beach",
+        "a Bondi Beach",
+        "an Bondi Beach"
+      ],
+      "ko": "저는 본다이 비치 근처에 살아요.",
+      "why": "해변 이름 앞에는 보통 the를 쓰지 않아요."
+    },
+    {
+      "type": "blank",
+      "sentence": "She works in ___ now.",
+      "answer": "Melbourne",
+      "choices": [
+        "Melbourne",
+        "the Melbourne",
+        "a Melbourne",
+        "an Melbourne"
+      ],
+      "ko": "그녀는 지금 멜버른에서 일해요.",
+      "why": "도시 이름 앞에는 the를 쓰지 않아요."
+    },
+    {
+      "type": "blank",
+      "sentence": "My boss is from ___ USA.",
+      "answer": "the",
+      "choices": [
+        "the",
+        "a",
+        "an",
+        "many"
+      ],
+      "ko": "제 사장님은 미국 사람이에요.",
+      "why": "States가 들어간 나라 이름이라 the USA예요."
+    },
+    {
+      "type": "translate",
+      "ko": "우리는 하이드 파크에서 만났어요.",
+      "answer": "We met in Hyde Park.",
+      "choices": [
+        "We met in Hyde Park.",
+        "We met in the Hyde Park.",
+        "We met in a Hyde Park.",
+        "We met in Hyde the Park."
+      ],
+      "why": "공원 이름 앞에는 the를 쓰지 않아요."
+    },
+    {
+      "type": "translate",
+      "ko": "그는 영국에서 왔어요.",
+      "answer": "He is from the UK.",
+      "choices": [
+        "He is from the UK.",
+        "He is from UK.",
+        "He is from a UK.",
+        "He is the from UK."
+      ],
+      "why": "the UK처럼 the를 붙여요."
+    },
+    {
+      "type": "translate",
+      "ko": "블루마운틴은 시드니 근처에 있어요.",
+      "answer": "The Blue Mountains are near Sydney.",
+      "choices": [
+        "The Blue Mountains are near Sydney.",
+        "Blue Mountains are near Sydney.",
+        "The Blue Mountains are near the Sydney.",
+        "A Blue Mountains are near Sydney."
+      ],
+      "why": "산맥에는 the, 도시에는 the 없이 써요."
+    },
+    {
+      "type": "translate",
+      "ko": "저는 센트럴 역에서 기차를 탔어요.",
+      "answer": "I got on the train at Central Station.",
+      "choices": [
+        "I got on the train at Central Station.",
+        "I got on the train at the Central Station.",
+        "I got on the train at a Central Station.",
+        "I got on the train at Central the Station."
+      ],
+      "why": "역 이름 앞에는 the를 쓰지 않아요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "The Murray River is very long.",
+      "choices": [
+        "The Murray River is very long.",
+        "Murray River is very long.",
+        "A Murray River is very long.",
+        "The Murray the River is very long."
+      ],
+      "why": "강 이름에는 the를 붙여요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "I visited Canberra last week.",
+      "choices": [
+        "I visited Canberra last week.",
+        "I visited the Canberra last week.",
+        "I visited a Canberra last week.",
+        "I visited an Canberra last week."
+      ],
+      "why": "도시 이름 앞에는 the를 쓰지 않아요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "We walked along George Street.",
+      "choices": [
+        "We walked along George Street.",
+        "We walked along the George Street.",
+        "We walked along a George Street.",
+        "We walked along George the Street."
+      ],
+      "why": "거리 이름 앞에는 the를 쓰지 않아요."
+    }
+  ]
+}

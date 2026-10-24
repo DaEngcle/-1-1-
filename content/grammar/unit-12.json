@@ -1,48 +1,236 @@
 {
   "unit": 12,
-  "title": "be going to (~할 거야, 계획)",
-  "emoji": "🗓️",
-  "goal": "be going to로 이미 정해 둔 계획을 말하고, 상대의 계획을 물어볼 수 있어요.",
+  "title": "현재진행 시제로 안 쓰는 동사 (I know / I want)",
+  "emoji": "🧠",
+  "goal": "like, want, know처럼 진행형으로 안 쓰는 동사를 알고, 지금 일이어도 현재 시제로 말할 수 있어요.",
   "points": [
-    { "title": "be going to = 정해 둔 계획", "body": "be going to + 동사원형은 '~할 거예요'라는 뜻이에요. 말하기 전에 이미 마음먹은 계획을 말할 때 써요." },
-    { "title": "be동사는 주어에 맞게", "body": "I는 am, he / she / it은 is, you / we / they는 are를 써요. 줄여서 I'm going to, She's going to, We're going to처럼 말해요." },
-    { "title": "to 뒤에는 동사원형", "body": "going to 뒤에는 항상 동사원형이 와요. She is going to visit (O), She is going to visits (X)." },
-    { "title": "부정문과 질문", "body": "부정은 be동사 뒤에 not: I'm not going to ~, He isn't going to ~. 질문은 be동사를 앞으로: Are you going to ~? 대답은 Yes, I am. / No, I'm not." },
-    { "title": "will과 뭐가 달라요?", "body": "그 자리에서 바로 정하면 will(\"I'll have a latte.\"), 미리 정한 계획이면 be going to(\"I'm going to apply for a job.\")를 주로 써요. 눈앞에 보이는 걸로 '곧 ~하겠다' 할 때도 be going to를 써요. (It's going to rain.)" }
+    {
+      "title": "동작이 아니라 '상태'인 동사",
+      "body": "좋아하다, 원하다, 알다처럼 눈에 보이는 동작이 아니라 마음이나 머릿속 상태를 나타내는 동사는 보통 -ing로 쓰지 않아요. 지금 일이어도 현재 시제로 말해요."
+    },
+    {
+      "title": "마음·느낌 동사",
+      "body": "like, love, hate, want, need가 대표적이에요. I want a coffee.(O) / I'm wanting a coffee.(X)"
+    },
+    {
+      "title": "생각·기억 동사",
+      "body": "know, understand, believe, remember, mean도 진행형으로 안 써요. I know him.(O) / I'm knowing him.(X)"
+    },
+    {
+      "title": "가지다·속하다 동사",
+      "body": "have(가지고 있다), belong(~의 것이다)도 현재 시제로 써요. She has a car.(O) / She is having a car.(X)"
+    },
+    {
+      "title": "뜻이 바뀌면 진행형 OK",
+      "body": "have가 '먹다·하다'라는 동작이면 진행형을 써요: We're having lunch. think도 '내 생각엔'은 I think ~, '곰곰이 생각하는 중'은 I'm thinking about ~이에요."
+    }
   ],
   "formula": [
-    "I + am + going to + 동사원형",
-    "He / She / It + is + going to + 동사원형",
-    "You / We / They + are + going to + 동사원형",
-    "Am / Is / Are + 주어 + going to + 동사원형 ~?"
+    "like / love / hate / want / need → I want ~ (I'm wanting X)",
+    "know / understand / believe / remember / mean → I know ~ (I'm knowing X)",
+    "have(가지다) / belong → She has ~ (She is having ~ X)",
+    "have(먹다·하다) / think about(곰곰이) → 진행형 OK: I'm having lunch."
   ],
   "mistakes": [
-    { "wrong": "I going to buy a car.", "right": "I'm going to buy a car.", "why": "한국어에는 be동사에 해당하는 말이 없어서 자주 빠뜨려요. going to 앞에 am / is / are를 꼭 넣으세요." },
-    { "wrong": "She is going to visits Sydney.", "right": "She is going to visit Sydney.", "why": "주어가 She라도 to 뒤에는 동사원형이에요. -s를 붙이지 마세요." },
-    { "wrong": "Do you going to cook tonight?", "right": "Are you going to cook tonight?", "why": "be going to의 질문은 do가 아니라 be동사(Are)를 앞으로 보내요." }
+    {
+      "wrong": "I'm wanting a flat white, please.",
+      "right": "I want a flat white, please.",
+      "why": "'원하고 있다'처럼 들려서 -ing를 붙이기 쉬워요. want는 상태 동사라 그냥 I want예요."
+    },
+    {
+      "wrong": "I'm knowing him from my share house.",
+      "right": "I know him from my share house.",
+      "why": "know(알다)는 진행형으로 안 써요. 지금 알고 있어도 I know예요."
+    },
+    {
+      "wrong": "She is having a car.",
+      "right": "She has a car.",
+      "why": "have가 '가지고 있다'일 땐 진행형 X. '먹다·하다'일 때만 is having이 돼요."
+    }
   ],
   "examples": [
-    { "en": "I'm going to apply for a barista job.", "ko": "바리스타 일자리에 지원할 거예요." },
-    { "en": "She's going to move to Melbourne next month.", "ko": "그녀는 다음 달에 멜버른으로 이사할 거예요." },
-    { "en": "We're going to have a barbecue this weekend.", "ko": "우리는 이번 주말에 바비큐를 할 거예요." },
-    { "en": "They're going to work on a farm in Queensland.", "ko": "그들은 퀸즐랜드에 있는 농장에서 일할 거예요." },
-    { "en": "I'm not going to eat out this week.", "ko": "이번 주에는 외식 안 할 거예요." },
-    { "en": "Look at those clouds. It's going to rain.", "ko": "저 구름 좀 봐요. 비가 오겠어요." },
-    { "en": "\"Are you going to cook tonight?\" \"Yes, I am.\"", "ko": "\"오늘 밤에 요리할 거예요?\" \"네, 할 거예요.\"" },
-    { "en": "What are you going to do on Saturday?", "ko": "토요일에 뭐 할 거예요?" }
+    {
+      "en": "I like this café. The coffee is great.",
+      "ko": "나는 이 카페가 좋아요. 커피가 정말 맛있어요."
+    },
+    {
+      "en": "I need a new phone charger.",
+      "ko": "나는 새 휴대폰 충전기가 필요해요."
+    },
+    {
+      "en": "Do you know a good barber near here?",
+      "ko": "이 근처에 괜찮은 이발소 알아요?"
+    },
+    {
+      "en": "She has two jobs in Perth.",
+      "ko": "그녀는 퍼스에서 일을 두 개 하고 있어요."
+    },
+    {
+      "en": "We're having lunch at the beach.",
+      "ko": "우리는 해변에서 점심을 먹고 있어요."
+    },
+    {
+      "en": "I think this place is really nice.",
+      "ko": "내 생각에 여기 정말 좋은 것 같아요."
+    },
+    {
+      "en": "I'm thinking about my next job.",
+      "ko": "나는 다음 일자리에 대해 생각하고 있어요."
+    },
+    {
+      "en": "Sorry, I don't understand. What does \"arvo\" mean?",
+      "ko": "죄송해요, 이해가 안 돼요. \"arvo\"가 무슨 뜻이에요?"
+    }
   ],
   "quiz": [
-    { "type": "blank", "sentence": "I ___ going to buy a bike.", "answer": "am", "choices": ["am", "is", "are", "be"], "ko": "나는 자전거를 살 거예요.", "why": "주어가 I면 am going to." },
-    { "type": "blank", "sentence": "Tom is going to ___ his room tonight.", "answer": "clean", "choices": ["clean", "cleans", "cleaning", "to clean"], "ko": "Tom은 오늘 밤에 방을 청소할 거예요.", "why": "going to 뒤에는 동사원형 clean. to를 또 쓰지 않아요." },
-    { "type": "blank", "sentence": "We ___ going to watch a movie tonight.", "answer": "are", "choices": ["are", "is", "am", "do"], "ko": "우리는 오늘 밤에 영화를 볼 거예요.", "why": "주어가 We면 are going to." },
-    { "type": "blank", "sentence": "He ___ going to come to the party.", "answer": "isn't", "choices": ["isn't", "doesn't", "don't", "aren't"], "ko": "그는 파티에 안 올 거예요.", "why": "부정은 be동사 + not. He는 is니까 isn't." },
-    { "type": "blank", "sentence": "___ they going to stay in Sydney?", "answer": "Are", "choices": ["Are", "Do", "Is", "Will"], "ko": "그들은 시드니에 머물 거예요?", "why": "질문은 be동사를 앞으로. They는 are니까 Are." },
-    { "type": "translate", "ko": "나는 내일 면접을 볼 거예요.", "answer": "I'm going to have a job interview tomorrow.", "choices": ["I'm going to have a job interview tomorrow.", "I'm going to has a job interview tomorrow.", "I going to have a job interview tomorrow.", "I'm going have a job interview tomorrow."], "why": "I'm + going to + 동사원형 have. am과 to 둘 다 빠지면 안 돼요." },
-    { "type": "translate", "ko": "우리는 다음 주에 이사 안 할 거예요.", "answer": "We aren't going to move next week.", "choices": ["We aren't going to move next week.", "We don't going to move next week.", "We aren't going to moving next week.", "We aren't go to move next week."], "why": "부정은 aren't going to + 동사원형 move." },
-    { "type": "translate", "ko": "오늘 밤에 요리할 거예요?", "answer": "Are you going to cook tonight?", "choices": ["Are you going to cook tonight?", "Do you going to cook tonight?", "Are you going to cooking tonight?", "Are you going cook tonight?"], "why": "질문은 Are you going to + 동사원형 ~?" },
-    { "type": "translate", "ko": "(하늘을 보며) 비가 오겠어요.", "answer": "It's going to rain.", "choices": ["It's going to rain.", "It's going to rains.", "It going to rain.", "It's go to rain."], "why": "눈앞에 보이는 걸로 예측할 때 It's going to + 동사원형." },
-    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "She is going to visit her friend in Perth.", "choices": ["She is going to visit her friend in Perth.", "She is going to visits her friend in Perth.", "She going to visit her friend in Perth.", "She are going to visit her friend in Perth."], "why": "She + is + going to + 동사원형 visit." },
-    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "They are going to start work at 7.", "choices": ["They are going to start work at 7.", "They is going to start work at 7.", "They are going to started work at 7.", "They going to start work at 7."], "why": "They는 are, to 뒤에는 동사원형 start." },
-    { "type": "fix", "prompt": "\"Is he going to call you?\"에 맞는 대답을 고르세요.", "answer": "Yes, he is.", "choices": ["Yes, he is.", "Yes, he does.", "Yes, he going.", "Yes, he will is."], "why": "Is로 물으면 is로 대답해요. Yes, he is." }
+    {
+      "type": "blank",
+      "sentence": "I ___ a cold drink.",
+      "answer": "want",
+      "choices": [
+        "want",
+        "am wanting",
+        "wants",
+        "wanting"
+      ],
+      "ko": "나는 시원한 음료를 원해요.",
+      "why": "want는 진행형으로 안 쓰는 동사 → I want"
+    },
+    {
+      "type": "blank",
+      "sentence": "She ___ the answer.",
+      "answer": "knows",
+      "choices": [
+        "knows",
+        "is knowing",
+        "know",
+        "knowing"
+      ],
+      "ko": "그녀는 답을 알아요.",
+      "why": "know는 진행형 X, She는 knows"
+    },
+    {
+      "type": "blank",
+      "sentence": "We ___ dinner right now.",
+      "answer": "are having",
+      "choices": [
+        "are having",
+        "have",
+        "has",
+        "having"
+      ],
+      "ko": "우리는 지금 저녁을 먹고 있어요.",
+      "why": "have가 '먹다'라는 동작이면 진행형 OK"
+    },
+    {
+      "type": "blank",
+      "sentence": "This bag ___ to my housemate.",
+      "answer": "belongs",
+      "choices": [
+        "belongs",
+        "is belonging",
+        "belong",
+        "belonging"
+      ],
+      "ko": "이 가방은 우리 하우스메이트 거예요.",
+      "why": "belong은 진행형 X, This bag은 belongs"
+    },
+    {
+      "type": "blank",
+      "sentence": "Do you ___ me? We met at the hostel.",
+      "answer": "remember",
+      "choices": [
+        "remember",
+        "remembering",
+        "remembers",
+        "are remember"
+      ],
+      "ko": "저 기억하세요? 우리 호스텔에서 만났잖아요.",
+      "why": "Do you 뒤에는 동사원형, remember는 진행형 X"
+    },
+    {
+      "type": "translate",
+      "ko": "나는 이 노래 정말 좋아해요.",
+      "answer": "I really love this song.",
+      "choices": [
+        "I really loves this song.",
+        "I am really love this song.",
+        "I really love this song.",
+        "I really loving this song."
+      ],
+      "why": "love는 상태 동사 → 현재 시제, I 뒤엔 love"
+    },
+    {
+      "type": "translate",
+      "ko": "그는 차가 두 대 있어요.",
+      "answer": "He has two cars.",
+      "choices": [
+        "He is having two cars.",
+        "He have two cars.",
+        "He is has two cars.",
+        "He has two cars."
+      ],
+      "why": "'가지고 있다'의 have는 진행형 X, He는 has"
+    },
+    {
+      "type": "translate",
+      "ko": "나는 지금 그 일에 대해 생각하고 있어요.",
+      "answer": "I'm thinking about the job now.",
+      "choices": [
+        "I'm think about the job now.",
+        "I'm thinking about the job now.",
+        "I thinking about the job now.",
+        "I am thinks about the job now."
+      ],
+      "why": "'곰곰이 생각하는 중'인 think about은 진행형 OK, am + thinking"
+    },
+    {
+      "type": "translate",
+      "ko": "이 단어가 무슨 뜻이에요?",
+      "answer": "What does this word mean?",
+      "choices": [
+        "What is this word meaning?",
+        "What does this word means?",
+        "What do this word mean?",
+        "What does this word mean?"
+      ],
+      "why": "mean은 진행형 X, does 뒤엔 동사원형 mean"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "I need some help with my resume.",
+      "choices": [
+        "I'm needing some help with my resume.",
+        "I needs some help with my resume.",
+        "I need some help with my resume.",
+        "I am need some help with my resume."
+      ],
+      "why": "need는 진행형 X, I 뒤에는 need"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Do you believe me?",
+      "choices": [
+        "Are you believing me?",
+        "Do you believe me?",
+        "Does you believe me?",
+        "Do you believes me?"
+      ],
+      "why": "believe는 진행형 X, you는 Do + 동사원형"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "She is having a shower now.",
+      "choices": [
+        "She is have a shower now.",
+        "She having a shower now.",
+        "She are having a shower now.",
+        "She is having a shower now."
+      ],
+      "why": "have a shower(샤워하다)는 동작이라 진행형 OK, She는 is having"
+    }
   ]
 }

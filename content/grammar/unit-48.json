@@ -1,0 +1,235 @@
+{
+  "unit": 48,
+  "title": "to + 동사원형 (I want to work.)",
+  "emoji": "🎯",
+  "goal": "want, need, decide 같은 동사 뒤에 to + 동사원형을 붙여 바라는 것, 계획한 것을 말할 수 있어요.",
+  "points": [
+    {
+      "title": "to + 동사원형 = '~하는 것, ~하기'",
+      "body": "to 뒤에 동사원형을 붙이면 '~하는 것'이라는 뜻이 돼요. I want to work in a café.(카페에서 일하는 것을 원해요 → 카페에서 일하고 싶어요.)"
+    },
+    {
+      "title": "to 뒤에는 항상 동사원형",
+      "body": "주어가 she여도, 과거여도 to 뒤는 동사원형이에요. She wants to visit Perth.(O) / She wants to visits.(X) / She decided to moved.(X)"
+    },
+    {
+      "title": "to와 짝꿍인 동사",
+      "body": "want(원하다), need(필요하다), hope(바라다), plan(계획하다), decide(결정하다), learn(배우다), promise(약속하다), agree(동의하다), afford(~할 여유가 있다). 주로 '앞으로 할 일'을 말하는 동사예요."
+    },
+    {
+      "title": "'안 하기로' = not to",
+      "body": "to 앞에 not을 넣어요. I decided not to buy a car.(차를 사지 않기로 했어요.)"
+    },
+    {
+      "title": "-ing 동사와 헷갈리지 않기",
+      "body": "enjoy, finish, mind는 -ing(앞 유닛), want, decide, plan은 to예요. I want to swim.(O) / I enjoy swimming.(O) / I want swimming.(X)"
+    }
+  ],
+  "formula": [
+    "주어 + want / need / hope + to + 동사원형",
+    "주어 + plan / decide / learn / promise + to + 동사원형",
+    "주어 + 동사 + not to + 동사원형"
+  ],
+  "mistakes": [
+    {
+      "wrong": "I want work in a café.",
+      "right": "I want to work in a café.",
+      "why": "'~하고 싶다'를 want + 동사로 바로 붙이는 실수예요. want 뒤에 to를 꼭 넣으세요."
+    },
+    {
+      "wrong": "She decided to moves to Perth.",
+      "right": "She decided to move to Perth.",
+      "why": "주어가 She라도 to 뒤는 동사원형이에요. -s를 붙이지 마세요."
+    },
+    {
+      "wrong": "We plan going to Cairns.",
+      "right": "We plan to go to Cairns.",
+      "why": "plan은 to와 짝이에요. -ing가 아니라 to + 동사원형을 써요."
+    }
+  ],
+  "examples": [
+    {
+      "en": "I want to work in a café.",
+      "ko": "카페에서 일하고 싶어요."
+    },
+    {
+      "en": "I need to open a bank account.",
+      "ko": "은행 계좌를 만들어야 해요."
+    },
+    {
+      "en": "She decided to move to Perth.",
+      "ko": "그녀는 퍼스로 이사하기로 했어요."
+    },
+    {
+      "en": "We're planning to travel around Australia.",
+      "ko": "우리는 호주 일주 여행을 계획하고 있어요."
+    },
+    {
+      "en": "I hope to get a farm job this summer.",
+      "ko": "이번 여름에 농장 일을 구하면 좋겠어요."
+    },
+    {
+      "en": "He learned to drive in Brisbane.",
+      "ko": "그는 브리즈번에서 운전을 배웠어요."
+    },
+    {
+      "en": "My boss promised to pay me on Friday.",
+      "ko": "사장님이 금요일에 급여를 주겠다고 약속했어요."
+    },
+    {
+      "en": "I decided not to buy a car.",
+      "ko": "차를 사지 않기로 했어요."
+    }
+  ],
+  "quiz": [
+    {
+      "type": "blank",
+      "sentence": "I want ___ a new phone.",
+      "answer": "to buy",
+      "choices": [
+        "to buy",
+        "buy",
+        "buying",
+        "to buys"
+      ],
+      "ko": "새 휴대폰을 사고 싶어요.",
+      "why": "want + to + 동사원형."
+    },
+    {
+      "type": "blank",
+      "sentence": "She needs ___ her visa.",
+      "answer": "to check",
+      "choices": [
+        "to check",
+        "check",
+        "checking",
+        "to checked"
+      ],
+      "ko": "그녀는 비자를 확인해야 해요.",
+      "why": "need + to + 동사원형. to 뒤에는 원형이에요."
+    },
+    {
+      "type": "blank",
+      "sentence": "We decided ___ a car.",
+      "answer": "to rent",
+      "choices": [
+        "to rent",
+        "rent",
+        "renting",
+        "rented"
+      ],
+      "ko": "우리는 차를 빌리기로 했어요.",
+      "why": "decide + to + 동사원형."
+    },
+    {
+      "type": "blank",
+      "sentence": "I'm learning ___ the guitar.",
+      "answer": "to play",
+      "choices": [
+        "to play",
+        "play",
+        "playing",
+        "plays"
+      ],
+      "ko": "기타 치는 걸 배우고 있어요.",
+      "why": "learn + to + 동사원형."
+    },
+    {
+      "type": "blank",
+      "sentence": "He promised ___ late again.",
+      "answer": "not to be",
+      "choices": [
+        "not to be",
+        "not be",
+        "to be not",
+        "don't to be"
+      ],
+      "ko": "그는 다시는 늦지 않겠다고 약속했어요.",
+      "why": "'~하지 않기로'는 not을 to 앞에: not to be."
+    },
+    {
+      "type": "translate",
+      "ko": "호주에서 일하고 싶어요.",
+      "answer": "I want to work in Australia.",
+      "choices": [
+        "I want to work in Australia.",
+        "I want work in Australia.",
+        "I want working in Australia.",
+        "I want to working in Australia."
+      ],
+      "why": "want + to + 동사원형(work)."
+    },
+    {
+      "type": "translate",
+      "ko": "저는 방을 구해야 해요.",
+      "answer": "I need to find a room.",
+      "choices": [
+        "I need to find a room.",
+        "I need find a room.",
+        "I need finding a room.",
+        "I need to finds a room."
+      ],
+      "why": "need + to + 동사원형(find)."
+    },
+    {
+      "type": "translate",
+      "ko": "그들은 멜버른에 가기로 했어요.",
+      "answer": "They decided to go to Melbourne.",
+      "choices": [
+        "They decided to go to Melbourne.",
+        "They decided go to Melbourne.",
+        "They decided going to Melbourne.",
+        "They decided to went to Melbourne."
+      ],
+      "why": "과거라도 to 뒤는 동사원형 go예요."
+    },
+    {
+      "type": "translate",
+      "ko": "다음 달에 이사할 계획이에요.",
+      "answer": "I'm planning to move next month.",
+      "choices": [
+        "I'm planning to move next month.",
+        "I'm planning move next month.",
+        "I'm planning to moving next month.",
+        "I'm planning to moved next month."
+      ],
+      "why": "plan + to + 동사원형(move)."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "I hope to see you again.",
+      "choices": [
+        "I hope to see you again.",
+        "I hope see you again.",
+        "I hope seeing you again.",
+        "I hope to seeing you again."
+      ],
+      "why": "hope + to + 동사원형."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "She agreed to work on Sunday.",
+      "choices": [
+        "She agreed to work on Sunday.",
+        "She agreed work on Sunday.",
+        "She agreed working on Sunday.",
+        "She agreed to works on Sunday."
+      ],
+      "why": "agree + to + 동사원형."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "We can't afford to eat out every day.",
+      "choices": [
+        "We can't afford to eat out every day.",
+        "We can't afford eat out every day.",
+        "We can't afford eating out every day.",
+        "We can't afford to eating out every day."
+      ],
+      "why": "afford(~할 여유가 있다) + to + 동사원형."
+    }
+  ]
+}

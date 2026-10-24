@@ -1,0 +1,234 @@
+{
+  "unit": 32,
+  "title": "must (꼭 ~해야 해요 / ~임에 틀림없어요)",
+  "emoji": "❗",
+  "goal": "must로 꼭 해야 하는 일을 말하고, must be로 '틀림없이 ~일 거예요'라고 확신하는 추측을 할 수 있어요.",
+  "points": [
+    {
+      "title": "must = 꼭 ~해야 해요",
+      "body": "아주 중요하거나 꼭 필요한 일을 말할 때 must + 동사원형을 써요. You must wear a helmet.은 '헬멧을 꼭 써야 해요'예요."
+    },
+    {
+      "title": "must는 모양이 안 바뀌어요",
+      "body": "주어가 He / She여도 must에 s를 붙이지 않고, 뒤 동사도 동사원형이에요. must 뒤에 to도 쓰지 않아요. She must leave. (O) / She must leaves. (X) / She must to leave. (X)"
+    },
+    {
+      "title": "규칙 · 안내문에서 자주 봐요",
+      "body": "표지판, 회사 규칙, 안내문에 must가 많이 나와요. (All visitors must sign in.) 내가 스스로 '꼭 해야겠다'고 느낄 때도 써요. (I must call my mum.)"
+    },
+    {
+      "title": "must be = ~임에 틀림없어요",
+      "body": "보이는 증거로 거의 확실하게 추측할 때 must be를 써요. 하루 종일 일한 친구에게 You must be tired.라고 하면 '틀림없이 피곤하겠어요'라는 뜻이에요."
+    },
+    {
+      "title": "might be와 비교",
+      "body": "might be는 '~일지도 몰라요'(반반), must be는 '틀림없이 ~일 거예요'(거의 확실)예요. He might be hungry. < He must be hungry."
+    }
+  ],
+  "formula": [
+    "주어 + must + 동사원형 (꼭 ~해야 해요)",
+    "주어 + must be + 형용사 / 명사 (틀림없이 ~일 거예요)"
+  ],
+  "mistakes": [
+    {
+      "wrong": "You must to wear a seatbelt.",
+      "right": "You must wear a seatbelt.",
+      "why": "'~해야 한다'를 to로 이어 쓰기 쉬운데, must 바로 뒤에 동사원형을 써요."
+    },
+    {
+      "wrong": "She must leaves at 6.",
+      "right": "She must leave at 6.",
+      "why": "She 뒤에 s를 붙이는 습관 때문이에요. must 뒤 동사는 항상 동사원형이에요."
+    },
+    {
+      "wrong": "He must is hungry.",
+      "right": "He must be hungry.",
+      "why": "'배고프다'가 is hungry라서 is를 그대로 쓰기 쉬워요. must 뒤에서는 동사원형 be로 바꿔요."
+    }
+  ],
+  "examples": [
+    {
+      "en": "You must wear a helmet on a bike in Australia.",
+      "ko": "호주에서는 자전거 탈 때 헬멧을 꼭 써야 해요."
+    },
+    {
+      "en": "All staff must wash their hands before work.",
+      "ko": "모든 직원은 일하기 전에 꼭 손을 씻어야 해요."
+    },
+    {
+      "en": "I must call my mum tonight. It's her birthday.",
+      "ko": "오늘 밤에 꼭 엄마한테 전화해야 해요. 엄마 생신이에요."
+    },
+    {
+      "en": "You must swim between the flags at the beach.",
+      "ko": "해변에서는 꼭 깃발 사이에서 수영해야 해요."
+    },
+    {
+      "en": "We must finish this before the boss comes back.",
+      "ko": "사장님이 돌아오시기 전에 이거 꼭 끝내야 해요."
+    },
+    {
+      "en": "You worked all day. You must be tired.",
+      "ko": "하루 종일 일했잖아요. 정말 피곤하겠어요."
+    },
+    {
+      "en": "You haven't eaten since this morning. You must be hungry.",
+      "ko": "아침부터 아무것도 안 먹었잖아요. 배고프겠어요."
+    },
+    {
+      "en": "There's a long line. This café must be really good.",
+      "ko": "줄이 길어요. 이 카페 정말 맛있는 게 틀림없어요."
+    }
+  ],
+  "quiz": [
+    {
+      "type": "blank",
+      "sentence": "You ___ wear a seatbelt in the car.",
+      "answer": "must",
+      "choices": [
+        "must",
+        "musts",
+        "are",
+        "to"
+      ],
+      "ko": "차에서는 꼭 안전벨트를 매야 해요.",
+      "why": "꼭 해야 하는 일은 must + 동사원형."
+    },
+    {
+      "type": "blank",
+      "sentence": "All workers must ___ safety boots on the farm.",
+      "answer": "wear",
+      "choices": [
+        "wears",
+        "wearing",
+        "wear",
+        "to wear"
+      ],
+      "ko": "농장에서는 모든 일꾼이 꼭 안전화를 신어야 해요.",
+      "why": "must 뒤에는 동사원형."
+    },
+    {
+      "type": "blank",
+      "sentence": "You've worked 12 hours. You must ___ exhausted.",
+      "answer": "be",
+      "choices": [
+        "is",
+        "be",
+        "are",
+        "being"
+      ],
+      "ko": "12시간이나 일했잖아요. 틀림없이 녹초가 됐겠어요.",
+      "why": "강한 추측은 must be + 형용사. are가 아니라 동사원형 be."
+    },
+    {
+      "type": "blank",
+      "sentence": "She ___ be at home. Her car is outside.",
+      "answer": "must",
+      "choices": [
+        "musts",
+        "is",
+        "does",
+        "must"
+      ],
+      "ko": "그녀는 집에 있는 게 틀림없어요. 차가 밖에 있어요.",
+      "why": "증거를 보고 확신할 때 must be. must에는 s가 안 붙어요."
+    },
+    {
+      "type": "blank",
+      "sentence": "I must ___ my rent today.",
+      "answer": "pay",
+      "choices": [
+        "pays",
+        "pay",
+        "paying",
+        "to pay"
+      ],
+      "ko": "오늘 꼭 월세를 내야 해요.",
+      "why": "must + 동사원형 pay."
+    },
+    {
+      "type": "translate",
+      "ko": "호주에서는 자전거 탈 때 꼭 헬멧을 써야 해요.",
+      "answer": "You must wear a helmet on a bike in Australia.",
+      "choices": [
+        "You must to wear a helmet on a bike in Australia.",
+        "You must wearing a helmet on a bike in Australia.",
+        "You musts wear a helmet on a bike in Australia.",
+        "You must wear a helmet on a bike in Australia."
+      ],
+      "why": "must + 동사원형. to는 쓰지 않아요."
+    },
+    {
+      "type": "translate",
+      "ko": "그는 틀림없이 배고플 거예요.",
+      "answer": "He must be hungry.",
+      "choices": [
+        "He must be hungry.",
+        "He must is hungry.",
+        "He musts be hungry.",
+        "He must hungry."
+      ],
+      "why": "강한 추측은 must be + 형용사."
+    },
+    {
+      "type": "translate",
+      "ko": "저는 오늘 밤에 꼭 이 보고서를 끝내야 해요.",
+      "answer": "I must finish this report tonight.",
+      "choices": [
+        "I must finishing this report tonight.",
+        "I must to finish this report tonight.",
+        "I must finish this report tonight.",
+        "I must finished this report tonight."
+      ],
+      "why": "must + 동사원형 finish."
+    },
+    {
+      "type": "translate",
+      "ko": "이 카페는 정말 인기가 많은 게 틀림없어요.",
+      "answer": "This café must be really popular.",
+      "choices": [
+        "This café must is really popular.",
+        "This café must being really popular.",
+        "This café must be really popular.",
+        "This café musts be really popular."
+      ],
+      "why": "'~임에 틀림없다'는 must be + 형용사."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Visitors must sign in at the front desk.",
+      "choices": [
+        "Visitors must sign in at the front desk.",
+        "Visitors must signs in at the front desk.",
+        "Visitors must to sign in at the front desk.",
+        "Visitors musts sign in at the front desk."
+      ],
+      "why": "must + 동사원형. must에도 뒤 동사에도 s가 안 붙어요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "You must swim between the flags.",
+      "choices": [
+        "You must swimming between the flags.",
+        "You must to swim between the flags.",
+        "You must swims between the flags.",
+        "You must swim between the flags."
+      ],
+      "why": "must + 동사원형 swim."
+    },
+    {
+      "type": "fix",
+      "prompt": "\"She worked all day.\" 다음에 올 맞는 문장을 고르세요.",
+      "answer": "She must be tired.",
+      "choices": [
+        "She must is tired.",
+        "She must be tired.",
+        "She must tired.",
+        "She musts be tired."
+      ],
+      "why": "증거를 보고 확신할 때 must be + 형용사."
+    }
+  ]
+}

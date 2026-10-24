@@ -1,0 +1,176 @@
+{
+  "unit": 33,
+  "title": "must와 have to (의무)",
+  "emoji": "📋",
+  "goal": "must와 have to로 '~해야 해요'를 말하고, 두 표현의 느낌 차이와 과거형 had to를 쓸 수 있어요.",
+  "points": [
+    {
+      "title": "must = 꼭 ~해야 해요",
+      "body": "must + 동사원형은 '꼭 ~해야 해요'라는 강한 의무예요. 주어가 뭐든 must 모양은 그대로예요. (She must go. O / She musts go. X)"
+    },
+    {
+      "title": "have to = ~해야 해요",
+      "body": "have to + 동사원형도 '~해야 해요'라는 뜻이에요. 주어가 he / she / it이면 has to를 써요. (He has to work.)"
+    },
+    {
+      "title": "느낌 차이",
+      "body": "must는 말하는 사람이 스스로 '꼭 해야겠다'고 느낄 때나 규칙·표지판에 많이 써요. have to는 회사 규칙, 상황처럼 바깥 이유 때문에 해야 할 때 써요. 일상 대화에서는 have to를 더 자주 써요."
+    },
+    {
+      "title": "과거는 had to",
+      "body": "must에는 과거형이 없어요. '~해야 했어요'는 주어와 상관없이 had to + 동사원형으로 말해요. (I had to wait.)"
+    },
+    {
+      "title": "질문은 Do / Does로",
+      "body": "have to로 물을 때는 Do I have to ~? / Does she have to ~?처럼 써요. 대답은 Yes, you do. / No, she doesn't.처럼 해요."
+    }
+  ],
+  "formula": [
+    "주어 + must + 동사원형",
+    "I / You / We / They + have to + 동사원형",
+    "He / She / It + has to + 동사원형",
+    "주어 + had to + 동사원형 (과거)"
+  ],
+  "mistakes": [
+    {
+      "wrong": "She have to work today.",
+      "right": "She has to work today.",
+      "why": "주어가 he / she / it이면 have가 has로 바뀌어요. She has to ~로 쓰세요."
+    },
+    {
+      "wrong": "You must to wear a helmet.",
+      "right": "You must wear a helmet.",
+      "why": "have to와 헷갈려서 must 뒤에 to를 붙이기 쉬워요. must 뒤에는 바로 동사원형이에요."
+    },
+    {
+      "wrong": "I must go to the bank yesterday.",
+      "right": "I had to go to the bank yesterday.",
+      "why": "must는 과거형이 없어요. 과거에 해야 했던 일은 had to로 말하세요."
+    }
+  ],
+  "examples": [
+    {
+      "en": "You must wear a helmet when you ride a bike in Australia.",
+      "ko": "호주에서 자전거를 탈 때는 꼭 헬멧을 써야 해요."
+    },
+    {
+      "en": "I have to work at the café this Saturday.",
+      "ko": "이번 주 토요일에 카페에서 일해야 해요."
+    },
+    {
+      "en": "She has to pay rent every two weeks.",
+      "ko": "그녀는 2주마다 방세를 내야 해요."
+    },
+    {
+      "en": "I must call my mum tonight.",
+      "ko": "오늘 밤에 꼭 엄마한테 전화해야 해요."
+    },
+    {
+      "en": "We had to wait 30 minutes for the tram.",
+      "ko": "트램을 30분이나 기다려야 했어요."
+    },
+    {
+      "en": "Do I have to bring my passport?",
+      "ko": "여권을 가져가야 하나요?"
+    },
+    {
+      "en": "He has to start at 6 a.m. on the farm.",
+      "ko": "그는 농장에서 아침 6시에 일을 시작해야 해요."
+    },
+    {
+      "en": "All staff must wash their hands.",
+      "ko": "모든 직원은 반드시 손을 씻어야 합니다."
+    }
+  ],
+  "quiz": [
+    {
+      "type": "blank",
+      "sentence": "She ___ to leave early today.",
+      "answer": "has",
+      "choices": ["has", "have", "must", "does"],
+      "ko": "그녀는 오늘 일찍 가야 해요.",
+      "why": "주어가 She이고 뒤에 to가 있으니 has to예요."
+    },
+    {
+      "type": "blank",
+      "sentence": "You must ___ your ID at the bar.",
+      "answer": "show",
+      "choices": ["show", "shows", "to show", "showing"],
+      "ko": "바에서는 꼭 신분증을 보여 줘야 해요.",
+      "why": "must 뒤에는 to 없이 동사원형이 와요."
+    },
+    {
+      "type": "blank",
+      "sentence": "I ___ to work late last night.",
+      "answer": "had",
+      "choices": ["had", "have", "has", "must"],
+      "ko": "어젯밤에 늦게까지 일해야 했어요.",
+      "why": "last night은 과거라서 had to를 써요."
+    },
+    {
+      "type": "blank",
+      "sentence": "We ___ to clean the kitchen every Sunday.",
+      "answer": "have",
+      "choices": ["have", "has", "must", "do"],
+      "ko": "우리는 일요일마다 부엌을 청소해야 해요.",
+      "why": "주어가 We이고 뒤에 to가 있으니 have to예요."
+    },
+    {
+      "type": "blank",
+      "sentence": "___ I have to wear a uniform?",
+      "answer": "Do",
+      "choices": ["Do", "Does", "Am", "Must"],
+      "ko": "유니폼을 입어야 하나요?",
+      "why": "I have to의 질문은 Do I have to ~?예요."
+    },
+    {
+      "type": "translate",
+      "ko": "그는 내일 일찍 일어나야 해요.",
+      "answer": "He has to get up early tomorrow.",
+      "choices": ["He has to get up early tomorrow.", "He have to get up early tomorrow.", "He has get up early tomorrow.", "He must to get up early tomorrow."],
+      "why": "He는 has to + 동사원형이에요."
+    },
+    {
+      "type": "translate",
+      "ko": "우리는 어제 버스를 타야 했어요.",
+      "answer": "We had to take the bus yesterday.",
+      "choices": ["We had to take the bus yesterday.", "We must take the bus yesterday.", "We have to take the bus yesterday.", "We had take the bus yesterday."],
+      "why": "과거에 해야 했던 일은 had to + 동사원형이에요."
+    },
+    {
+      "type": "translate",
+      "ko": "수영하기 전에 반드시 샤워해야 합니다.",
+      "answer": "You must shower before you swim.",
+      "choices": ["You must shower before you swim.", "You must showering before you swim.", "You musts shower before you swim.", "You must to shower before you swim."],
+      "why": "must는 모양이 바뀌지 않고, 뒤에 동사원형이 와요."
+    },
+    {
+      "type": "translate",
+      "ko": "그녀는 매일 일해야 하나요?",
+      "answer": "Does she have to work every day?",
+      "choices": ["Does she have to work every day?", "Does she has to work every day?", "Do she have to work every day?", "Does she must work every day?"],
+      "why": "She의 질문은 Does she have to ~? Does가 있으면 has가 아니라 have예요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "My housemate has to pay the bills.",
+      "choices": ["My housemate has to pay the bills.", "My housemate have to pay the bills.", "My housemate has pay the bills.", "My housemate must pays the bills."],
+      "why": "My housemate는 한 사람(he / she)이라 has to + 동사원형이에요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "I had to work last weekend.",
+      "choices": ["I had to work last weekend.", "I must work last weekend.", "I have to work last weekend.", "I had to worked last weekend."],
+      "why": "지난 주말은 과거라서 had to, 그리고 to 뒤는 동사원형이에요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Workers must wear safety boots.",
+      "choices": ["Workers must wear safety boots.", "Workers must to wear safety boots.", "Workers must wearing safety boots.", "Workers musts wear safety boots."],
+      "why": "must + 동사원형. must에는 to도 -s도 붙지 않아요."
+    }
+  ]
+}

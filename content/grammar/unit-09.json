@@ -1,47 +1,230 @@
 {
   "unit": 9,
-  "title": "There is / There are (~이 있다)",
-  "emoji": "🏠",
-  "goal": "'근처에 마트가 있어요', '방이 세 개 있어요'처럼 어디에 무엇이 있는지 말하고 물어볼 수 있어요.",
+  "title": "현재 시제 부정문 (don't / doesn't)",
+  "emoji": "🚫",
+  "goal": "일반동사로 '~하지 않아요'를 I don't ~ / She doesn't ~처럼 말할 수 있어요.",
   "points": [
-    { "title": "There is / There are = ~이 있어요", "body": "어디에 무엇이 있다고 말할 때 There is / There are로 시작해요. 여기서 there는 '거기'라는 뜻이 아니라 문장을 여는 말이에요." },
-    { "title": "하나면 is, 여러 개면 are", "body": "하나이거나 milk·water처럼 셀 수 없는 것은 There is(There's), 둘 이상이면 There are를 써요. There is a café. / There are two cafés." },
-    { "title": "없어요 = isn't / aren't", "body": "'~이 없어요'는 There isn't / There aren't예요. any와 같이 쓰면 '하나도 없어요'라는 느낌이에요. There aren't any eggs. / There isn't any milk." },
-    { "title": "있어요? = Is there / Are there", "body": "is/are를 there 앞으로 옮기면 질문이에요. Is there a bus stop near here? 대답은 Yes, there is. / No, there aren't.처럼 해요." }
+    {
+      "title": "I, you, we, they는 don't",
+      "body": "일반동사 문장에서 '안 해요'는 동사 앞에 don't(do not)를 넣어요. I don't drink coffee.(저는 커피를 안 마셔요.)"
+    },
+    {
+      "title": "he, she, it은 doesn't",
+      "body": "he, she, it(한 명·한 개)은 doesn't(does not)를 써요. She doesn't work on Sundays."
+    },
+    {
+      "title": "doesn't 뒤에는 -s 빼기",
+      "body": "doesn't에 이미 -s가 들어 있어서 뒤의 동사는 -s 없이 원래 모양으로 써요. He doesn't works.(X) → He doesn't work.(O)"
+    },
+    {
+      "title": "be동사 문장과 구별하기",
+      "body": "am, is, are 문장은 not만 붙이고(I'm not busy.), 일반동사 문장은 don't / doesn't를 써요(I don't work.)."
+    }
   ],
   "formula": [
-    "There is (There's) + 하나 / 셀 수 없는 것",
-    "There are + 둘 이상",
-    "There isn't / There aren't + ...",
-    "Is there + ...? / Are there + ...?"
+    "I / You / We / They + don't + 동사 원래 모양",
+    "He / She / It + doesn't + 동사 원래 모양 (-s 없이)"
   ],
   "mistakes": [
-    { "wrong": "There is two bedrooms.", "right": "There are two bedrooms.", "why": "There is를 한 덩어리로 외워서 개수를 신경 안 쓰기 쉬워요. 뒤에 오는 것이 둘 이상이면 are예요." },
-    { "wrong": "Have a bus stop near here?", "right": "Is there a bus stop near here?", "why": "'있어요?'를 have로 바로 옮기는 실수예요. 장소에 무엇이 있는지 물을 땐 Is there / Are there로 물어요." },
-    { "wrong": "There aren't any milk.", "right": "There isn't any milk.", "why": "milk는 하나, 둘 셀 수 없는 것이라 is를 써요. water, bread, sugar도 마찬가지예요." }
+    {
+      "wrong": "She doesn't works on Mondays.",
+      "right": "She doesn't work on Mondays.",
+      "why": "앞에서 배운 -s를 습관처럼 붙이기 쉬워요. doesn't가 -s를 가져가니 동사는 원래 모양으로 써요."
+    },
+    {
+      "wrong": "I not like spicy food.",
+      "right": "I don't like spicy food.",
+      "why": "한국어 '안'처럼 not만 넣기 쉬운데, 일반동사는 don't를 동사 앞에 넣어야 해요."
+    },
+    {
+      "wrong": "He don't eat meat.",
+      "right": "He doesn't eat meat.",
+      "why": "don't를 아무 주어에나 쓰기 쉬워요. he, she, it이면 doesn't예요."
+    }
   ],
   "examples": [
-    { "en": "There's a café next to my share house.", "ko": "우리 쉐어하우스 옆에 카페가 있어요." },
-    { "en": "There are three bedrooms in this house.", "ko": "이 집에는 방이 세 개 있어요." },
-    { "en": "There's some milk in the fridge.", "ko": "냉장고에 우유가 좀 있어요." },
-    { "en": "There aren't any eggs.", "ko": "계란이 하나도 없어요." },
-    { "en": "There isn't a tram stop near my house.", "ko": "우리 집 근처에는 트램 정류장이 없어요." },
-    { "en": "Is there a supermarket near here?", "ko": "이 근처에 마트 있어요?" },
-    { "en": "Are there any jobs at the farm?", "ko": "그 농장에 일자리 있어요?" },
-    { "en": "Is there Wi-Fi here? — Yes, there is.", "ko": "여기 와이파이 있어요? — 네, 있어요." }
+    {
+      "en": "I don't eat meat.",
+      "ko": "저는 고기를 안 먹어요."
+    },
+    {
+      "en": "We don't work on public holidays.",
+      "ko": "우리는 공휴일에는 일 안 해요."
+    },
+    {
+      "en": "My housemate doesn't cook.",
+      "ko": "제 하우스메이트는 요리를 안 해요."
+    },
+    {
+      "en": "The shop doesn't open on Sundays.",
+      "ko": "그 가게는 일요일에 문을 안 열어요."
+    },
+    {
+      "en": "I don't have a car.",
+      "ko": "저는 차가 없어요."
+    },
+    {
+      "en": "She doesn't drink coffee. She likes tea.",
+      "ko": "그녀는 커피를 안 마셔요. 차를 좋아해요."
+    },
+    {
+      "en": "They don't live in the city.",
+      "ko": "그 사람들은 시내에 살지 않아요."
+    },
+    {
+      "en": "This tram doesn't go to the beach.",
+      "ko": "이 트램은 해변에 안 가요."
+    }
   ],
   "quiz": [
-    { "type": "blank", "sentence": "There ___ a bus stop near my house.", "answer": "is", "choices": ["is", "are", "have", "has"], "ko": "우리 집 근처에 버스 정류장이 있어요.", "why": "a bus stop은 하나라서 There is" },
-    { "type": "blank", "sentence": "There ___ two bathrooms in the house.", "answer": "are", "choices": ["is", "has", "are", "am"], "ko": "그 집에는 화장실이 두 개 있어요.", "why": "two bathrooms는 둘 이상이라 There are" },
-    { "type": "blank", "sentence": "___ there a Coles near here?", "answer": "Is", "choices": ["Are", "Is", "Do", "Has"], "ko": "이 근처에 콜스(마트) 있어요?", "why": "하나를 물을 때 Is there ~?" },
-    { "type": "blank", "sentence": "There ___ any bread in the kitchen.", "answer": "isn't", "choices": ["aren't", "don't", "not", "isn't"], "ko": "부엌에 빵이 하나도 없어요.", "why": "bread는 셀 수 없는 것이라 isn't" },
-    { "type": "blank", "sentence": "Are there any chairs? — Yes, there ___.", "answer": "are", "choices": ["is", "have", "are", "do"], "ko": "의자 있어요? — 네, 있어요.", "why": "Are there로 물었으니 Yes, there are." },
-    { "type": "translate", "ko": "냉장고에 우유가 있어요.", "answer": "There's some milk in the fridge.", "choices": ["There are some milk in the fridge.", "There's some milk in the fridge.", "There has some milk in the fridge.", "It have some milk in the fridge."], "why": "milk는 셀 수 없어서 There is(There's)" },
-    { "type": "translate", "ko": "이 근처에 해변이 있어요?", "answer": "Is there a beach near here?", "choices": ["Are there a beach near here?", "Have a beach near here?", "There a beach near here?", "Is there a beach near here?"], "why": "하나를 물을 때 Is there + a ~?" },
-    { "type": "translate", "ko": "방에 창문이 두 개 있어요.", "answer": "There are two windows in the room.", "choices": ["There are two windows in the room.", "There is two windows in the room.", "There have two windows in the room.", "There are two window in the room."], "why": "둘 이상이면 There are, window도 windows로" },
-    { "type": "translate", "ko": "오늘은 버스가 하나도 없어요.", "answer": "There aren't any buses today.", "choices": ["There isn't any buses today.", "There don't have buses today.", "There aren't any buses today.", "There aren't any bus today."], "why": "buses는 여러 개라서 There aren't any + 복수" },
-    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "There are five people in my share house.", "choices": ["There is five people in my share house.", "There have five people in my share house.", "There are five peoples in my share house.", "There are five people in my share house."], "why": "people은 여러 명이라 are, 이미 복수라서 s를 붙이지 않아요" },
-    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "Is there a toilet on this train?", "choices": ["Is there a toilet on this train?", "Are there a toilet on this train?", "There is toilet on this train?", "Has there a toilet on this train?"], "why": "a toilet은 하나라서 Is there ~?" },
-    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "There isn't any sugar.", "choices": ["There aren't any sugar.", "There isn't any sugar.", "There not any sugar.", "There don't any sugar."], "why": "sugar는 셀 수 없어서 There isn't any" }
+    {
+      "type": "blank",
+      "sentence": "I ___ drink coffee.",
+      "answer": "don't",
+      "choices": [
+        "don't",
+        "doesn't",
+        "am not",
+        "not"
+      ],
+      "ko": "저는 커피를 안 마셔요.",
+      "why": "I는 don't를 동사 앞에 넣어요."
+    },
+    {
+      "type": "blank",
+      "sentence": "He ___ live in Sydney.",
+      "answer": "doesn't",
+      "choices": [
+        "don't",
+        "not",
+        "doesn't",
+        "isn't"
+      ],
+      "ko": "그는 시드니에 살지 않아요.",
+      "why": "he는 doesn't를 써요. 일반동사(live) 문장이라 isn't는 안 돼요."
+    },
+    {
+      "type": "blank",
+      "sentence": "She doesn't ___ on weekends.",
+      "answer": "work",
+      "choices": [
+        "is work",
+        "working",
+        "works",
+        "work"
+      ],
+      "ko": "그녀는 주말에 일을 안 해요.",
+      "why": "doesn't 뒤에는 동사 원래 모양을 써요."
+    },
+    {
+      "type": "blank",
+      "sentence": "My housemates ___ clean the kitchen.",
+      "answer": "don't",
+      "choices": [
+        "aren't",
+        "not",
+        "doesn't",
+        "don't"
+      ],
+      "ko": "제 하우스메이트들은 부엌 청소를 안 해요.",
+      "why": "housemates는 여러 명(=they)이라 don't예요."
+    },
+    {
+      "type": "blank",
+      "sentence": "The bus ___ stop here.",
+      "answer": "doesn't",
+      "choices": [
+        "isn't",
+        "don't",
+        "doesn't",
+        "not"
+      ],
+      "ko": "그 버스는 여기에 안 서요.",
+      "why": "the bus는 하나(=it)라서 doesn't + 원래 모양 stop이에요."
+    },
+    {
+      "type": "translate",
+      "ko": "그녀는 고기를 안 먹어요.",
+      "answer": "She doesn't eat meat.",
+      "choices": [
+        "She doesn't eats meat.",
+        "She don't eat meat.",
+        "She doesn't eat meat.",
+        "She isn't eat meat."
+      ],
+      "why": "she는 doesn't + 동사 원래 모양(eat)이에요."
+    },
+    {
+      "type": "translate",
+      "ko": "우리는 차가 없어요.",
+      "answer": "We don't have a car.",
+      "choices": [
+        "We don't has a car.",
+        "We aren't have a car.",
+        "We don't have a car.",
+        "We doesn't have a car."
+      ],
+      "why": "we는 don't + 동사 원래 모양(have)이에요."
+    },
+    {
+      "type": "translate",
+      "ko": "저는 매운 음식을 안 좋아해요.",
+      "answer": "I don't like spicy food.",
+      "choices": [
+        "I'm not like spicy food.",
+        "I don't like spicy food.",
+        "I doesn't like spicy food.",
+        "I not like spicy food."
+      ],
+      "why": "일반동사 like가 있으니 I don't + like예요."
+    },
+    {
+      "type": "translate",
+      "ko": "제 매니저는 한국어를 할 줄 몰라요.",
+      "answer": "My manager doesn't speak Korean.",
+      "choices": [
+        "My manager doesn't speaks Korean.",
+        "My manager doesn't speak Korean.",
+        "My manager don't speak Korean.",
+        "My manager isn't speak Korean."
+      ],
+      "why": "my manager는 한 사람이라 doesn't + speak예요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Tom doesn't watch TV.",
+      "choices": [
+        "Tom doesn't watches TV.",
+        "Tom not watch TV.",
+        "Tom doesn't watch TV.",
+        "Tom don't watch TV."
+      ],
+      "why": "Tom은 한 사람이라 doesn't, 뒤에는 원래 모양 watch예요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "They don't work on Sundays.",
+      "choices": [
+        "They don't works on Sundays.",
+        "They doesn't work on Sundays.",
+        "They don't work on Sundays.",
+        "They aren't work on Sundays."
+      ],
+      "why": "they는 don't + 동사 원래 모양이에요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "I'm not tired.",
+      "choices": [
+        "I'm not tired.",
+        "I doesn't tired.",
+        "I not am tired.",
+        "I don't tired."
+      ],
+      "why": "tired(피곤한)는 동사가 아니라서 be동사 문장이에요. I'm not으로 부정해요."
+    }
   ]
 }

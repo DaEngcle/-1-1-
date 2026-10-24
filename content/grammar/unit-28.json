@@ -1,0 +1,236 @@
+{
+  "unit": 28,
+  "title": "미래 시제(4) be -ing로 미래 말하기 (I'm meeting ~ tomorrow)",
+  "emoji": "📅",
+  "goal": "이미 약속하거나 날짜·시간을 정해 둔 일을 be + -ing로 말하고 물어볼 수 있어요.",
+  "points": [
+    {
+      "title": "모양은 현재진행형과 똑같아요",
+      "body": "am / is / are + 동사-ing 그대로예요. 여기에 tomorrow, tonight, next week 같은 미래 시간 말이 붙으면 '~할 거예요, ~하기로 했어요'라는 미래 뜻이 돼요."
+    },
+    {
+      "title": "정해 둔 약속 · 일정에 써요",
+      "body": "다른 사람과 약속했거나 시간·장소까지 정해 둔 일, 달력에 적어 둘 만한 일에 써요. I'm meeting Jake at 6. (6시에 Jake 만나기로 했어요)"
+    },
+    {
+      "title": "시간 말로 구분해요",
+      "body": "I'm working now.는 '지금 일하는 중이에요', I'm working tomorrow.는 '내일 일해요(일정이 잡혀 있어요)'예요. 모양은 같아도 시간 말이 뜻을 정해 줘요."
+    },
+    {
+      "title": "부정문과 질문",
+      "body": "부정은 be동사 뒤에 not: I'm not working on Sunday. 질문은 be동사를 앞으로: Are you doing anything tonight? 대답은 Yes, I am. / No, I'm not."
+    },
+    {
+      "title": "be going to와 비교",
+      "body": "계획을 말할 때는 be going to와 뜻이 거의 같아요. 하지만 날씨처럼 사람이 정할 수 없는 일에는 be -ing를 쓰지 않아요. It's going to rain tomorrow. (O) / It's raining tomorrow. (X)"
+    }
+  ],
+  "formula": [
+    "주어 + am / is / are + 동사-ing + 미래 시간",
+    "주어 + am / is / are + not + 동사-ing + 미래 시간",
+    "Am / Is / Are + 주어 + 동사-ing + 미래 시간?",
+    "What + are you + doing + 미래 시간?"
+  ],
+  "mistakes": [
+    {
+      "wrong": "I meeting my friend tomorrow.",
+      "right": "I'm meeting my friend tomorrow.",
+      "why": "한국어에는 be동사에 해당하는 말이 없어서 자주 빠뜨려요. -ing 앞에 am / is / are를 꼭 넣으세요."
+    },
+    {
+      "wrong": "It's raining tomorrow.",
+      "right": "It's going to rain tomorrow.",
+      "why": "be -ing 미래는 사람이 정해 둔 약속·일정에만 써요. 날씨 예측은 be going to나 will을 써요."
+    },
+    {
+      "wrong": "What do you do tonight?",
+      "right": "What are you doing tonight?",
+      "why": "오늘 밤 계획을 물을 땐 What are you doing ~?이에요. What do you do?는 보통 '무슨 일 하세요?'(직업)라는 질문이에요."
+    }
+  ],
+  "examples": [
+    {
+      "en": "I'm meeting Jake at the café at 6.",
+      "ko": "저 6시에 카페에서 Jake 만나요."
+    },
+    {
+      "en": "She's flying to Brisbane tomorrow morning.",
+      "ko": "그녀는 내일 아침에 비행기로 브리즈번에 가요."
+    },
+    {
+      "en": "We're having a barbecue at the beach on Saturday.",
+      "ko": "우리 토요일에 해변에서 바비큐 해요."
+    },
+    {
+      "en": "I'm starting my new job on Monday.",
+      "ko": "저 월요일에 새 일 시작해요."
+    },
+    {
+      "en": "My housemate is moving out this weekend.",
+      "ko": "제 쉐어메이트가 이번 주말에 이사 나가요."
+    },
+    {
+      "en": "I'm not working on Sunday.",
+      "ko": "저 일요일에는 일 안 해요."
+    },
+    {
+      "en": "What are you doing tonight? — I'm watching the footy with friends.",
+      "ko": "오늘 밤에 뭐 해요? — 친구들이랑 풋볼 경기 봐요."
+    },
+    {
+      "en": "Are you coming to the party on Friday? — Yes, I am.",
+      "ko": "금요일 파티에 와요? — 네, 가요."
+    }
+  ],
+  "quiz": [
+    {
+      "type": "blank",
+      "sentence": "I ___ meeting my boss at 9 tomorrow.",
+      "answer": "am",
+      "choices": [
+        "am",
+        "is",
+        "are",
+        "do"
+      ],
+      "ko": "저 내일 9시에 사장님 만나요.",
+      "why": "주어가 I면 am + 동사-ing."
+    },
+    {
+      "type": "blank",
+      "sentence": "We're ___ dinner with Mia tonight.",
+      "answer": "having",
+      "choices": [
+        "have",
+        "has",
+        "having",
+        "to have"
+      ],
+      "ko": "우리 오늘 밤에 Mia랑 저녁 먹어요.",
+      "why": "be동사 뒤에는 동사-ing. have는 e를 빼고 having."
+    },
+    {
+      "type": "blank",
+      "sentence": "She ___ working on Saturday. She has the day off.",
+      "answer": "isn't",
+      "choices": [
+        "doesn't",
+        "isn't",
+        "not",
+        "aren't"
+      ],
+      "ko": "그녀는 토요일에 일 안 해요. 그날 쉬는 날이에요.",
+      "why": "부정은 be동사 + not. She는 is니까 isn't."
+    },
+    {
+      "type": "blank",
+      "sentence": "___ you doing anything this weekend?",
+      "answer": "Are",
+      "choices": [
+        "Do",
+        "Is",
+        "Does",
+        "Are"
+      ],
+      "ko": "이번 주말에 뭐 하는 거 있어요?",
+      "why": "질문은 be동사를 앞으로. you는 Are."
+    },
+    {
+      "type": "blank",
+      "sentence": "What are you ___ tomorrow night?",
+      "answer": "doing",
+      "choices": [
+        "do",
+        "doing",
+        "does",
+        "did"
+      ],
+      "ko": "내일 밤에 뭐 해요?",
+      "why": "What are you + 동사-ing ~? 형태로 계획을 물어요."
+    },
+    {
+      "type": "translate",
+      "ko": "저 내일 면접 봐요. (일정이 잡혀 있어요)",
+      "answer": "I'm having a job interview tomorrow.",
+      "choices": [
+        "I having a job interview tomorrow.",
+        "I'm have a job interview tomorrow.",
+        "I'm has a job interview tomorrow.",
+        "I'm having a job interview tomorrow."
+      ],
+      "why": "정해진 일정은 I'm + 동사-ing + 미래 시간."
+    },
+    {
+      "type": "translate",
+      "ko": "그들은 다음 주에 시드니로 이사해요.",
+      "answer": "They're moving to Sydney next week.",
+      "choices": [
+        "They're moving to Sydney next week.",
+        "They moving to Sydney next week.",
+        "They're move to Sydney next week.",
+        "They're moveing to Sydney next week."
+      ],
+      "why": "They're + moving. move는 e를 빼고 -ing."
+    },
+    {
+      "type": "translate",
+      "ko": "오늘 밤에 뭐 해요?",
+      "answer": "What are you doing tonight?",
+      "choices": [
+        "What you are doing tonight?",
+        "What are you do tonight?",
+        "What are you doing tonight?",
+        "What do you doing tonight?"
+      ],
+      "why": "What + are you + doing + 미래 시간?"
+    },
+    {
+      "type": "translate",
+      "ko": "저 이번 주말엔 일 안 해요.",
+      "answer": "I'm not working this weekend.",
+      "choices": [
+        "I'm not work this weekend.",
+        "I don't working this weekend.",
+        "I'm not working this weekend.",
+        "I not working this weekend."
+      ],
+      "why": "부정은 I'm not + 동사-ing."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "My sister is arriving in Perth on Friday.",
+      "choices": [
+        "My sister is arriving in Perth on Friday.",
+        "My sister arriving in Perth on Friday.",
+        "My sister is arrive in Perth on Friday.",
+        "My sister are arriving in Perth on Friday."
+      ],
+      "why": "My sister는 is + arriving. arrive는 e를 빼고 -ing."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "It's going to rain tomorrow.",
+      "choices": [
+        "It's raining tomorrow.",
+        "It's going to rains tomorrow.",
+        "It going to rain tomorrow.",
+        "It's going to rain tomorrow."
+      ],
+      "why": "날씨는 사람이 정한 일정이 아니라서 be -ing 미래를 쓰지 않아요. It's going to + 동사원형."
+    },
+    {
+      "type": "fix",
+      "prompt": "\"Are you coming to my party on Saturday?\"에 맞는 대답을 고르세요.",
+      "answer": "Yes, I am.",
+      "choices": [
+        "Yes, I do.",
+        "Yes, I am.",
+        "Yes, I coming.",
+        "Yes, I'm."
+      ],
+      "why": "Are로 물으면 am으로 대답해요. 짧은 대답 끝에서는 I'm으로 줄이지 않아요."
+    }
+  ]
+}

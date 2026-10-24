@@ -1,0 +1,236 @@
+{
+  "unit": 60,
+  "title": "대명사 (I / me / my / mine)",
+  "emoji": "👥",
+  "goal": "I / me / my / mine처럼 자리에 맞는 인칭대명사를 골라 쓸 수 있어요.",
+  "points": [
+    {
+      "title": "주어 자리: I, you, he, she, it, we, they",
+      "body": "문장 맨 앞에서 '~은/는, ~이/가' 역할을 할 때 써요. She is my housemate."
+    },
+    {
+      "title": "목적어 자리: me, you, him, her, it, us, them",
+      "body": "동사 뒤에서 '~을/를, ~에게'가 될 때, 그리고 with, for 같은 말 뒤에 써요. Call me. I work with him."
+    },
+    {
+      "title": "~의 + 명사: my, your, his, her, its, our, their",
+      "body": "뒤에 꼭 명사가 와요. my phone, our house, their cafe."
+    },
+    {
+      "title": "~의 것: mine, yours, his, hers, ours, theirs",
+      "body": "뒤에 명사 없이 혼자 써요. This phone is mine.(이 폰은 제 거예요.) mine = my phone이에요."
+    },
+    {
+      "title": "헷갈리기 쉬운 것",
+      "body": "her는 '그녀를'과 '그녀의' 둘 다, his는 '그의'와 '그의 것' 둘 다예요. its(그것의)와 it's(it is)는 달라요."
+    }
+  ],
+  "formula": [
+    "주어: I / you / he / she / it / we / they",
+    "목적어: me / you / him / her / it / us / them",
+    "~의 + 명사: my / your / his / her / its / our / their",
+    "~의 것: mine / yours / his / hers / ours / theirs"
+  ],
+  "mistakes": [
+    {
+      "wrong": "Him is my manager.",
+      "right": "He is my manager.",
+      "why": "문장 맨 앞 주어 자리에는 He를 써요. him은 동사 뒤에 와요."
+    },
+    {
+      "wrong": "Can you help I?",
+      "right": "Can you help me?",
+      "why": "동사 뒤 '나를'은 I가 아니라 me예요."
+    },
+    {
+      "wrong": "This bag is my.",
+      "right": "This bag is mine.",
+      "why": "뒤에 명사가 없으면 my가 아니라 mine(내 것)을 써요."
+    }
+  ],
+  "examples": [
+    {
+      "en": "She is my housemate. I like her.",
+      "ko": "그녀는 제 하우스메이트예요. 저는 그녀가 좋아요."
+    },
+    {
+      "en": "Can you call me after work?",
+      "ko": "퇴근하고 저한테 전화해 줄래요?"
+    },
+    {
+      "en": "This is our share house.",
+      "ko": "여기가 우리 쉐어하우스예요."
+    },
+    {
+      "en": "Is this phone yours? Yes, it's mine.",
+      "ko": "이 폰 당신 거예요? 네, 제 거예요."
+    },
+    {
+      "en": "Their cafe opens at 6 a.m.",
+      "ko": "그들의 카페는 아침 6시에 문을 열어요."
+    },
+    {
+      "en": "My manager is nice. I work with him every day.",
+      "ko": "제 매니저는 친절해요. 저는 매일 그와 같이 일해요."
+    },
+    {
+      "en": "That towel isn't mine. It's hers.",
+      "ko": "저 수건은 제 것이 아니에요. 그녀 거예요."
+    },
+    {
+      "en": "The dog is cute. Its name is Max.",
+      "ko": "그 개는 귀여워요. 이름이 맥스예요."
+    }
+  ],
+  "quiz": [
+    {
+      "type": "blank",
+      "sentence": "This is Jake. ___ is from Canada.",
+      "answer": "He",
+      "choices": [
+        "He",
+        "Him",
+        "His",
+        "Hers"
+      ],
+      "ko": "이쪽은 제이크예요. 그는 캐나다에서 왔어요.",
+      "why": "주어 자리라서 He예요."
+    },
+    {
+      "type": "blank",
+      "sentence": "Sarah is my boss. I like ___ a lot.",
+      "answer": "her",
+      "choices": [
+        "her",
+        "she",
+        "hers",
+        "its"
+      ],
+      "ko": "사라는 제 사장님이에요. 저는 그녀를 많이 좋아해요.",
+      "why": "동사 like 뒤 '그녀를'은 her예요."
+    },
+    {
+      "type": "blank",
+      "sentence": "We love ___ new apartment.",
+      "answer": "our",
+      "choices": [
+        "our",
+        "us",
+        "ours",
+        "we"
+      ],
+      "ko": "우리는 우리의 새 아파트가 정말 좋아요.",
+      "why": "뒤에 명사 apartment가 있으니까 our예요."
+    },
+    {
+      "type": "blank",
+      "sentence": "Is this your helmet? No, it's not ___.",
+      "answer": "mine",
+      "choices": [
+        "mine",
+        "my",
+        "me",
+        "I"
+      ],
+      "ko": "이거 당신 헬멧이에요? 아니요, 제 것이 아니에요.",
+      "why": "뒤에 명사가 없으니까 '내 것' mine이에요."
+    },
+    {
+      "type": "blank",
+      "sentence": "My housemates are great. I cook dinner with ___.",
+      "answer": "them",
+      "choices": [
+        "them",
+        "they",
+        "their",
+        "theirs"
+      ],
+      "ko": "제 하우스메이트들은 정말 좋아요. 저는 그들과 같이 저녁을 만들어요.",
+      "why": "with 뒤에는 목적어 them을 써요."
+    },
+    {
+      "type": "translate",
+      "ko": "그가 저를 도와줬어요.",
+      "answer": "He helped me.",
+      "choices": [
+        "He helped me.",
+        "Him helped me.",
+        "He helped I.",
+        "His helped me."
+      ],
+      "why": "주어는 He, 동사 뒤는 me예요."
+    },
+    {
+      "type": "translate",
+      "ko": "이건 그들의 차예요.",
+      "answer": "This is their car.",
+      "choices": [
+        "This is their car.",
+        "This is them car.",
+        "This is theirs car.",
+        "This is they car."
+      ],
+      "why": "뒤에 명사 car가 있으니까 their예요."
+    },
+    {
+      "type": "translate",
+      "ko": "그 가방은 그녀 거예요.",
+      "answer": "The bag is hers.",
+      "choices": [
+        "The bag is hers.",
+        "The bag is her.",
+        "The bag is she.",
+        "The bag is hers bag."
+      ],
+      "why": "'그녀의 것'은 hers예요. 뒤에 명사를 붙이지 않아요."
+    },
+    {
+      "type": "translate",
+      "ko": "우리랑 같이 해변에 갈래요?",
+      "answer": "Do you want to come to the beach with us?",
+      "choices": [
+        "Do you want to come to the beach with us?",
+        "Do you want to come to the beach with we?",
+        "Do you want to come to the beach with our?",
+        "Do you want to come to the beach with ours?"
+      ],
+      "why": "with 뒤에는 목적어 us를 써요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Their names are Mia and Leo.",
+      "choices": [
+        "Their names are Mia and Leo.",
+        "They names are Mia and Leo.",
+        "Them names are Mia and Leo.",
+        "Theirs names are Mia and Leo."
+      ],
+      "why": "명사 names 앞의 '그들의'는 Their예요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Can you give me your number?",
+      "choices": [
+        "Can you give me your number?",
+        "Can you give I your number?",
+        "Can you give me you number?",
+        "Can you give my yours number?"
+      ],
+      "why": "'나에게'는 me, 명사 앞 '너의'는 your예요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Is this coffee yours or mine?",
+      "choices": [
+        "Is this coffee yours or mine?",
+        "Is this coffee your or my?",
+        "Is this coffee yours or my?",
+        "Is this coffee you or me?"
+      ],
+      "why": "뒤에 명사가 없으니까 yours, mine을 써요."
+    }
+  ]
+}

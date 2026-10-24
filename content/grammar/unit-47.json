@@ -1,0 +1,236 @@
+{
+  "unit": 47,
+  "title": "-ing (2) 목적어 (I enjoy cooking.)",
+  "emoji": "🏄",
+  "goal": "enjoy, finish, mind 같은 동사 뒤에 -ing를 붙여 '~하는 것을'이라고 말할 수 있어요.",
+  "points": [
+    {
+      "title": "동사 뒤에 오는 -ing",
+      "body": "-ing는 동사 뒤에서 '~하는 것을'이라는 뜻으로도 써요. I enjoy cooking.(저는 요리하는 걸 즐겨요.) 동사 두 개를 그냥 붙이면(enjoy cook) 틀려요."
+    },
+    {
+      "title": "-ing와 짝꿍인 동사",
+      "body": "enjoy(즐기다), finish(끝내다), mind(꺼리다), avoid(피하다), keep(계속하다), practise(연습하다), stop(그만두다), give up(포기하다). 이 동사들 뒤에는 -ing를 써요. 통째로 외워 두세요."
+    },
+    {
+      "title": "Do you mind ~ing? = ~해 주실래요?",
+      "body": "직역은 '~하는 걸 꺼리세요?'라서, 괜찮다고 할 때는 No, not at all.(아뇨, 전혀요.)이라고 대답해요. 일터에서 부탁할 때 아주 많이 써요."
+    },
+    {
+      "title": "about / for 뒤에도 -ing",
+      "body": "How about ~ing?(~하는 거 어때요?), Thank you for ~ing.(~해 줘서 고마워요.)처럼 about, for 같은 말 뒤에도 -ing가 와요."
+    },
+    {
+      "title": "시제는 앞 동사가 담당",
+      "body": "과거라도 -ing는 그대로예요. 시제는 앞 동사가 바꿔요. He stopped smoking.(O) / He stopped smoked.(X)"
+    }
+  ],
+  "formula": [
+    "주어 + enjoy / finish / mind / avoid + 동사-ing",
+    "주어 + keep / practise / stop / give up + 동사-ing",
+    "How about + 동사-ing ~?",
+    "Do you mind + 동사-ing ~?"
+  ],
+  "mistakes": [
+    {
+      "wrong": "I enjoy to surf on weekends.",
+      "right": "I enjoy surfing on weekends.",
+      "why": "enjoy는 -ing하고만 짝이에요. '서핑하는 걸 즐겨요'는 enjoy surfing."
+    },
+    {
+      "wrong": "Did you finish clean the kitchen?",
+      "right": "Did you finish cleaning the kitchen?",
+      "why": "동사 두 개를 그냥 붙이면 안 돼요. finish 뒤의 동사는 -ing로 바꿔요."
+    },
+    {
+      "wrong": "How about go to the beach?",
+      "right": "How about going to the beach?",
+      "why": "How about 뒤에는 동사원형이 아니라 -ing가 와요."
+    }
+  ],
+  "examples": [
+    {
+      "en": "I enjoy surfing on weekends.",
+      "ko": "주말에 서핑하는 걸 즐겨요."
+    },
+    {
+      "en": "Did you finish cleaning the kitchen?",
+      "ko": "부엌 청소 다 했어요?"
+    },
+    {
+      "en": "Do you mind opening the window?",
+      "ko": "창문 좀 열어 주실래요?"
+    },
+    {
+      "en": "My housemate keeps leaving dishes in the sink.",
+      "ko": "하우스메이트가 계속 설거지거리를 싱크대에 놔둬요."
+    },
+    {
+      "en": "I avoid eating out because it's expensive.",
+      "ko": "비싸서 외식은 피해요."
+    },
+    {
+      "en": "He stopped smoking last year.",
+      "ko": "그는 작년에 담배를 끊었어요."
+    },
+    {
+      "en": "I practise speaking English every day.",
+      "ko": "매일 영어 말하기를 연습해요."
+    },
+    {
+      "en": "How about going to the beach this afternoon?",
+      "ko": "오늘 오후에 해변 가는 거 어때요?"
+    }
+  ],
+  "quiz": [
+    {
+      "type": "blank",
+      "sentence": "I enjoy ___ on the beach.",
+      "answer": "walking",
+      "choices": [
+        "walking",
+        "walk",
+        "walks",
+        "walked"
+      ],
+      "ko": "저는 해변을 걷는 걸 즐겨요.",
+      "why": "enjoy 뒤에는 -ing예요."
+    },
+    {
+      "type": "blank",
+      "sentence": "Did you finish ___ the floor?",
+      "answer": "cleaning",
+      "choices": [
+        "cleaning",
+        "clean",
+        "cleans",
+        "cleaned"
+      ],
+      "ko": "바닥 청소 다 했어요?",
+      "why": "finish 뒤에는 -ing예요. 과거 질문이어도 -ing는 그대로."
+    },
+    {
+      "type": "blank",
+      "sentence": "Do you mind ___ the door?",
+      "answer": "closing",
+      "choices": [
+        "closing",
+        "close",
+        "closes",
+        "closed"
+      ],
+      "ko": "문 좀 닫아 주실래요?",
+      "why": "Do you mind 뒤에는 -ing. close는 e를 빼고 closing."
+    },
+    {
+      "type": "blank",
+      "sentence": "How about ___ a taxi?",
+      "answer": "taking",
+      "choices": [
+        "taking",
+        "take",
+        "took",
+        "takes"
+      ],
+      "ko": "택시 타는 거 어때요?",
+      "why": "How about 뒤에는 -ing예요."
+    },
+    {
+      "type": "blank",
+      "sentence": "She kept ___ during the interview.",
+      "answer": "smiling",
+      "choices": [
+        "smiling",
+        "smile",
+        "smiles",
+        "smiled"
+      ],
+      "ko": "그녀는 면접 내내 계속 웃었어요.",
+      "why": "keep(계속하다) 뒤에는 -ing. 과거는 kept가 담당해요."
+    },
+    {
+      "type": "translate",
+      "ko": "저는 요리하는 걸 즐겨요.",
+      "answer": "I enjoy cooking.",
+      "choices": [
+        "I enjoy cooking.",
+        "I enjoy cook.",
+        "I enjoy cooks.",
+        "I enjoying cook."
+      ],
+      "why": "enjoy + 동사-ing."
+    },
+    {
+      "type": "translate",
+      "ko": "그는 담배를 끊었어요.",
+      "answer": "He stopped smoking.",
+      "choices": [
+        "He stopped smoking.",
+        "He stop smoking.",
+        "He stopped smokes.",
+        "He stopping smoked."
+      ],
+      "why": "'~하던 걸 그만두다'는 stop + -ing."
+    },
+    {
+      "type": "translate",
+      "ko": "저는 매일 운전 연습을 해요.",
+      "answer": "I practise driving every day.",
+      "choices": [
+        "I practise driving every day.",
+        "I practise drive every day.",
+        "I practise drives every day.",
+        "I practising drive every day."
+      ],
+      "why": "practise + 동사-ing. drive는 e를 빼고 driving."
+    },
+    {
+      "type": "translate",
+      "ko": "도와줘서 고마워요.",
+      "answer": "Thank you for helping me.",
+      "choices": [
+        "Thank you for helping me.",
+        "Thank you for help me.",
+        "Thank you for helps me.",
+        "Thank you for helped me."
+      ],
+      "why": "for 뒤에 동사가 오면 -ing로 써요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "I avoid spending too much money.",
+      "choices": [
+        "I avoid spending too much money.",
+        "I avoid spend too much money.",
+        "I avoid spends too much money.",
+        "I avoiding spend too much money."
+      ],
+      "why": "avoid + 동사-ing가 맞아요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Do you mind waiting a minute?",
+      "choices": [
+        "Do you mind waiting a minute?",
+        "Do you mind wait a minute?",
+        "Do you mind waits a minute?",
+        "Do you minding wait a minute?"
+      ],
+      "why": "mind 뒤의 동사에 -ing를 붙여요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "She gave up looking for a job in the city.",
+      "choices": [
+        "She gave up looking for a job in the city.",
+        "She gave up look for a job in the city.",
+        "She gave up looks for a job in the city.",
+        "She gave up to looking for a job in the city."
+      ],
+      "why": "give up + 동사-ing. 사이에 to를 넣지 않아요."
+    }
+  ]
+}

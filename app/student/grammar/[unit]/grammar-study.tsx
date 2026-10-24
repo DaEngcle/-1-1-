@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 import { useTts } from "@/app/_ui/audio/use-tts";
+import { VideoEmbed } from "@/app/_ui/video-embed";
 import { QuizGame, shuffle, type QuizQuestion } from "@/app/student/voca/quiz-game";
 import { grammarDeck, type GrammarQuiz, type GrammarUnit } from "@/lib/classroom/grammar";
 
-const STEPS = ["① 개념", "② 예문 듣기", "③ 문제 풀기"] as const;
+const STEPS = ["📺 강의", "① 개념", "② 예문", "③ 문제"] as const;
 
 /** 문법 문제 → 보카 게임 문제 형식 */
 function toQuestion(q: GrammarQuiz, i: number): QuizQuestion {
@@ -37,7 +38,7 @@ export function GrammarStudy({ unit, nextUnit }: { unit: GrammarUnit; nextUnit: 
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="grid grid-cols-3 gap-1 rounded-2xl bg-amber-50 p-1">
+      <div className="grid grid-cols-4 gap-1 rounded-2xl bg-amber-50 p-1">
         {STEPS.map((s, i) => (
           <button
             key={s}
@@ -51,6 +52,20 @@ export function GrammarStudy({ unit, nextUnit }: { unit: GrammarUnit; nextUnit: 
       </div>
 
       {step === 0 && (
+        <section className="flex flex-col gap-3">
+          <VideoEmbed url={unit.video} title={`Unit ${unit.unit} · ${unit.lecture}`} />
+          <p className="text-sm text-zinc-600">다니엘 쌤 강의를 먼저 보고, 개념 → 예문 → 문제로 복습해요.</p>
+          <button
+            type="button"
+            onClick={() => setStep(1)}
+            className="rounded-2xl border-b-4 border-amber-700 bg-amber-500 py-3 text-lg font-extrabold text-white active:translate-y-0.5 active:border-b-2"
+          >
+            강의 다 봤어요 → 개념 정리
+          </button>
+        </section>
+      )}
+
+      {step === 1 && (
         <section className="flex flex-col gap-3">
           <p className="rounded-2xl bg-amber-100 p-3 text-sm font-semibold text-amber-900">🎯 {unit.goal}</p>
           {unit.formula.length > 0 && (
@@ -83,7 +98,7 @@ export function GrammarStudy({ unit, nextUnit }: { unit: GrammarUnit; nextUnit: 
           </article>
           <button
             type="button"
-            onClick={() => setStep(1)}
+            onClick={() => setStep(2)}
             className="rounded-2xl border-b-4 border-amber-700 bg-amber-500 py-3 text-lg font-extrabold text-white active:translate-y-0.5 active:border-b-2"
           >
             이해했어요 → 예문 듣기
@@ -91,7 +106,7 @@ export function GrammarStudy({ unit, nextUnit }: { unit: GrammarUnit; nextUnit: 
         </section>
       )}
 
-      {step === 1 && (
+      {step === 2 && (
         <section className="flex flex-col gap-2">
           <p className="text-sm text-zinc-600">듣고 따라 말해 보세요. 문장을 누르면 해석이 보여요.</p>
           {unit.examples.map((e, i) => (
@@ -128,7 +143,7 @@ export function GrammarStudy({ unit, nextUnit }: { unit: GrammarUnit; nextUnit: 
           ))}
           <button
             type="button"
-            onClick={() => setStep(2)}
+            onClick={() => setStep(3)}
             className="mt-1 rounded-2xl border-b-4 border-amber-700 bg-amber-500 py-3 text-lg font-extrabold text-white active:translate-y-0.5 active:border-b-2"
           >
             🎮 문제 풀기 (12문제)
@@ -136,7 +151,7 @@ export function GrammarStudy({ unit, nextUnit }: { unit: GrammarUnit; nextUnit: 
         </section>
       )}
 
-      {step === 2 && (
+      {step === 3 && (
         <QuizGame
           deck={grammarDeck(unit.unit)}
           seconds={25}

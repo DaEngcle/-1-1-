@@ -1,0 +1,236 @@
+{
+  "unit": 27,
+  "title": "미래 시제(3) will과 be going to 비교 (I'll ~ / I'm going to ~)",
+  "emoji": "⚖️",
+  "goal": "그 자리에서 정한 일은 will, 미리 정해 둔 계획은 be going to로 구분해서 말할 수 있어요.",
+  "points": [
+    {
+      "title": "지금 막 정했으면 will",
+      "body": "말하는 바로 그 순간에 정한 일은 will을 써요. 우유가 없다는 걸 듣고 \"그럼 제가 사 올게요.\"라고 하면 I'll buy some.이에요."
+    },
+    {
+      "title": "미리 정해 둔 계획이면 be going to",
+      "body": "말하기 전에 이미 마음먹은 일은 be going to를 써요. 아침부터 사기로 정해 뒀다면 I'm going to buy milk after work.라고 해요."
+    },
+    {
+      "title": "도와줄게요 · 약속할게요는 will",
+      "body": "\"제가 해 드릴게요\"(제안), \"꼭 할게요\"(약속)처럼 그 자리에서 하는 말은 보통 will이에요. I'll help you. / I'll call you tonight."
+    },
+    {
+      "title": "예측: 눈앞의 증거면 be going to",
+      "body": "지금 보이는 증거로 '곧 ~하겠다' 할 때는 be going to를 써요. (Look at the sky. It's going to rain.) 그냥 내 생각으로 예측할 때는 I think ~ will을 많이 써요. (I think it will be hot tomorrow.)"
+    },
+    {
+      "title": "모양 정리",
+      "body": "will은 주어와 상관없이 will + 동사원형이고, be going to는 am / is / are + going to + 동사원형이에요. 둘 다 뒤에는 동사원형이 와요. 두 개를 섞어서 will going to라고 쓰지 않아요."
+    }
+  ],
+  "formula": [
+    "지금 정함 · 제안 · 약속 → 주어 + will + 동사원형",
+    "미리 정한 계획 → 주어 + am / is / are + going to + 동사원형",
+    "눈앞의 증거로 예측 → It's going to + 동사원형",
+    "내 생각으로 예측 → I think + 주어 + will + 동사원형"
+  ],
+  "mistakes": [
+    {
+      "wrong": "(전화가 울리자) I'm going to get it!",
+      "right": "I'll get it!",
+      "why": "전화가 울리는 걸 보고 그 자리에서 정한 일이에요. 즉석에서 정한 일은 will을 써요."
+    },
+    {
+      "wrong": "A: Why did you buy paint? B: I'll paint my room.",
+      "right": "A: Why did you buy paint? B: I'm going to paint my room.",
+      "why": "페인트를 이미 사 뒀다는 건 미리 정한 계획이라는 뜻이에요. 이럴 땐 be going to가 자연스러워요."
+    },
+    {
+      "wrong": "She will going to start work on Monday.",
+      "right": "She is going to start work on Monday.",
+      "why": "will과 be going to를 한 문장에 섞어 쓰는 실수예요. 둘 중 하나만 쓰세요."
+    }
+  ],
+  "examples": [
+    {
+      "en": "The phone is ringing. — I'll get it!",
+      "ko": "전화 울려요. — 제가 받을게요!"
+    },
+    {
+      "en": "We're out of milk. — Oh, I'll buy some after work.",
+      "ko": "우유가 다 떨어졌어요. — 아, 제가 퇴근하고 사 올게요."
+    },
+    {
+      "en": "I'm going to buy a car next month. I've already saved the money.",
+      "ko": "다음 달에 차를 살 거예요. 돈은 이미 모아 뒀어요."
+    },
+    {
+      "en": "Your bag looks heavy. I'll carry it for you.",
+      "ko": "가방 무거워 보이네요. 제가 들어 드릴게요."
+    },
+    {
+      "en": "I'll call you tonight. I promise.",
+      "ko": "오늘 밤에 전화할게요. 약속해요."
+    },
+    {
+      "en": "Look at the sky. It's going to rain.",
+      "ko": "하늘 좀 봐요. 비가 오겠어요."
+    },
+    {
+      "en": "We're going to travel around Tasmania in December.",
+      "ko": "우리는 12월에 태즈메이니아를 여행할 거예요."
+    },
+    {
+      "en": "I think you'll love Melbourne.",
+      "ko": "당신은 멜버른을 정말 좋아하게 될 것 같아요."
+    }
+  ],
+  "quiz": [
+    {
+      "type": "blank",
+      "sentence": "A: I'm hungry. B: I ___ make you a sandwich.",
+      "answer": "will",
+      "choices": [
+        "will",
+        "am",
+        "going to",
+        "will to"
+      ],
+      "ko": "A: 배고파요. B: 제가 샌드위치 만들어 줄게요.",
+      "why": "그 자리에서 하는 제안이니까 will + 동사원형."
+    },
+    {
+      "type": "blank",
+      "sentence": "I've got a ticket. I'm going ___ see a concert on Friday.",
+      "answer": "to",
+      "choices": [
+        "will",
+        "for",
+        "to",
+        "at"
+      ],
+      "ko": "표가 있어요. 금요일에 콘서트 보러 갈 거예요.",
+      "why": "미리 정한 계획은 be going to + 동사원형. to를 빠뜨리면 안 돼요."
+    },
+    {
+      "type": "blank",
+      "sentence": "Look at that dark cloud! It's going to ___.",
+      "answer": "rain",
+      "choices": [
+        "rains",
+        "rain",
+        "raining",
+        "rained"
+      ],
+      "ko": "저 먹구름 좀 봐요! 비가 오겠어요.",
+      "why": "눈앞의 증거로 예측할 때 It's going to + 동사원형."
+    },
+    {
+      "type": "blank",
+      "sentence": "She ___ going to start a new job next week.",
+      "answer": "is",
+      "choices": [
+        "will",
+        "are",
+        "do",
+        "is"
+      ],
+      "ko": "그녀는 다음 주에 새 일을 시작할 거예요.",
+      "why": "She는 is going to. will going to처럼 섞어 쓰지 않아요."
+    },
+    {
+      "type": "blank",
+      "sentence": "I think it ___ be sunny tomorrow.",
+      "answer": "will",
+      "choices": [
+        "is",
+        "will",
+        "going",
+        "does"
+      ],
+      "ko": "내일은 날씨가 맑을 것 같아요.",
+      "why": "내 생각으로 예측할 때 I think + 주어 + will + 동사원형."
+    },
+    {
+      "type": "translate",
+      "ko": "(전화가 울리자) 제가 받을게요!",
+      "answer": "I'll get it!",
+      "choices": [
+        "I'll gets it!",
+        "I'm go to get it!",
+        "I will to get it!",
+        "I'll get it!"
+      ],
+      "why": "그 자리에서 정한 일은 I'll + 동사원형."
+    },
+    {
+      "type": "translate",
+      "ko": "우리는 내년에 케언즈로 이사할 거예요. (이미 정한 계획)",
+      "answer": "We're going to move to Cairns next year.",
+      "choices": [
+        "We're going to move to Cairns next year.",
+        "We're going to moving to Cairns next year.",
+        "We going to move to Cairns next year.",
+        "We will going to move to Cairns next year."
+      ],
+      "why": "미리 정한 계획은 We're going to + 동사원형."
+    },
+    {
+      "type": "translate",
+      "ko": "내일 아침에 전화할게요. 약속해요.",
+      "answer": "I'll call you tomorrow morning. I promise.",
+      "choices": [
+        "I'll calling you tomorrow morning. I promise.",
+        "I'm call you tomorrow morning. I promise.",
+        "I'll call you tomorrow morning. I promise.",
+        "I will to call you tomorrow morning. I promise."
+      ],
+      "why": "약속은 보통 will + 동사원형."
+    },
+    {
+      "type": "translate",
+      "ko": "저 사람 좀 봐요. 넘어지겠어요!",
+      "answer": "Look at that man. He's going to fall!",
+      "choices": [
+        "Look at that man. He's going to falls!",
+        "Look at that man. He going to fall!",
+        "Look at that man. He's going to fall!",
+        "Look at that man. He's going fall!"
+      ],
+      "why": "눈앞에 보이는 상황으로 예측하니까 He's going to + 동사원형."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "I'm going to paint my room this weekend.",
+      "choices": [
+        "I'm going to paint my room this weekend.",
+        "I'm going to painting my room this weekend.",
+        "I will going to paint my room this weekend.",
+        "I'm going paint my room this weekend."
+      ],
+      "why": "be going to + 동사원형. will과 섞지 않고, to도 빠뜨리지 않아요."
+    },
+    {
+      "type": "fix",
+      "prompt": "A가 \"We don't have any bread.\"라고 했어요. B의 대답으로 맞는 문장을 고르세요.",
+      "answer": "Oh, I'll get some from the shop.",
+      "choices": [
+        "Oh, I'll gets some from the shop.",
+        "Oh, I'm get some from the shop.",
+        "Oh, I will to get some from the shop.",
+        "Oh, I'll get some from the shop."
+      ],
+      "why": "듣고 바로 정한 일이니까 I'll + 동사원형."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Are you going to visit your family in Korea?",
+      "choices": [
+        "Do you going to visit your family in Korea?",
+        "Are you going to visit your family in Korea?",
+        "Are you going to visiting your family in Korea?",
+        "Will you going to visit your family in Korea?"
+      ],
+      "why": "be going to 질문은 Are you going to + 동사원형 ~?"
+    }
+  ]
+}

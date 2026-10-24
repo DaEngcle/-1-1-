@@ -1,0 +1,236 @@
+{
+  "unit": 21,
+  "title": "현재완료 시제(2) 경험 (Have you ever ~? / I have never ~)",
+  "emoji": "🌏",
+  "goal": "have / has + p.p.로 '~해 본 적 있다 / 없다'를 말하고, Have you ever ~?로 경험을 물어볼 수 있어요.",
+  "points": [
+    {
+      "title": "경험 = ~해 본 적 있다",
+      "body": "지금까지 살면서 해 본 일은 have / has + p.p.로 말해요. 언제 했는지는 말하지 않아요. I have seen a kangaroo.(캥거루 본 적 있어요)"
+    },
+    {
+      "title": "Have you ever + p.p.?",
+      "body": "'~해 본 적 있어?'는 Have you ever + p.p.?예요. ever는 '한 번이라도'라는 뜻이에요. 대답은 Yes, I have. / No, I haven't."
+    },
+    {
+      "title": "never = 한 번도 ~한 적 없다",
+      "body": "I have never + p.p.는 '한 번도 ~해 본 적 없다'예요. never 자체가 부정이라서 not을 또 붙이지 않아요."
+    },
+    {
+      "title": "횟수와 before",
+      "body": "once(한 번), twice(두 번), three times(세 번), before(전에)를 문장 끝에 붙여 경험을 더 자세히 말해요."
+    },
+    {
+      "title": "been to vs gone to",
+      "body": "has been to ~는 '~에 가 본 적 있다(다녀왔다)', has gone to ~는 '~에 가 버렸다(지금 여기 없다)'예요. 경험을 말할 땐 been to를 써요."
+    }
+  ],
+  "formula": [
+    "Have / Has + 주어 + ever + p.p. ...?",
+    "주어 + have / has + never + p.p.",
+    "주어 + have / has + p.p. + once / twice / ~ times / before",
+    "have been to = 가 본 적 있다 / have gone to = 가고 없다"
+  ],
+  "mistakes": [
+    {
+      "wrong": "I haven't never eaten Vegemite.",
+      "right": "I have never eaten Vegemite.",
+      "why": "한국어 '안 먹어 봤다'처럼 not을 또 넣기 쉬워요. never가 이미 부정이라 have never + p.p.만 써요."
+    },
+    {
+      "wrong": "Have you ever went to Uluru?",
+      "right": "Have you ever been to Uluru?",
+      "why": "have 뒤에는 과거형(went)이 아니라 p.p.가 와요. '가 본 적'은 been to예요."
+    },
+    {
+      "wrong": "She has gone to Bali twice.",
+      "right": "She has been to Bali twice.",
+      "why": "다녀온 경험은 been to예요. gone to는 가서 아직 안 돌아왔다는 뜻이에요."
+    }
+  ],
+  "examples": [
+    {
+      "en": "Have you ever seen a kangaroo?",
+      "ko": "캥거루 본 적 있어요?"
+    },
+    {
+      "en": "I have never eaten Vegemite.",
+      "ko": "나는 베지마이트를 한 번도 먹어 본 적이 없어요."
+    },
+    {
+      "en": "She has been to Uluru twice.",
+      "ko": "그녀는 울루루에 두 번 가 봤어요."
+    },
+    {
+      "en": "We have worked on a farm before.",
+      "ko": "우리는 전에 농장에서 일해 본 적이 있어요."
+    },
+    {
+      "en": "\"Have you ever tried surfing?\" \"Yes, I have.\"",
+      "ko": "\"서핑 해 본 적 있어?\" \"응, 있어.\""
+    },
+    {
+      "en": "He has never driven on the left.",
+      "ko": "그는 왼쪽 차선으로 운전해 본 적이 한 번도 없어요."
+    },
+    {
+      "en": "I have seen this movie three times.",
+      "ko": "나는 이 영화를 세 번 봤어요."
+    },
+    {
+      "en": "Mina isn't here. She has gone to the supermarket.",
+      "ko": "미나는 여기 없어요. 마트에 갔어요."
+    }
+  ],
+  "quiz": [
+    {
+      "type": "blank",
+      "sentence": "Have you ___ been to Bondi Beach?",
+      "answer": "ever",
+      "choices": [
+        "ever",
+        "for",
+        "since",
+        "ago"
+      ],
+      "ko": "본다이 비치에 가 본 적 있어요?",
+      "why": "'~해 본 적 있어?'는 Have you ever + p.p.?"
+    },
+    {
+      "type": "blank",
+      "sentence": "I have ___ eaten a meat pie.",
+      "answer": "never",
+      "choices": [
+        "never",
+        "ever",
+        "yet",
+        "for"
+      ],
+      "ko": "나는 미트파이를 한 번도 먹어 본 적이 없어요.",
+      "why": "'한 번도 ~한 적 없다'는 have never + p.p."
+    },
+    {
+      "type": "blank",
+      "sentence": "She has ___ to Japan three times.",
+      "answer": "been",
+      "choices": [
+        "been",
+        "went",
+        "go",
+        "being"
+      ],
+      "ko": "그녀는 일본에 세 번 가 봤어요.",
+      "why": "가 본 경험은 has been to"
+    },
+    {
+      "type": "blank",
+      "sentence": "Has he ever ___ a koala?",
+      "answer": "held",
+      "choices": [
+        "held",
+        "hold",
+        "holded",
+        "holding"
+      ],
+      "ko": "그는 코알라를 안아 본 적 있어요?",
+      "why": "hold의 p.p.는 held"
+    },
+    {
+      "type": "blank",
+      "sentence": "\"Have you ever worked in a café?\" \"No, I ___.\"",
+      "answer": "haven't",
+      "choices": [
+        "haven't",
+        "didn't",
+        "don't",
+        "hasn't"
+      ],
+      "ko": "\"카페에서 일해 본 적 있어?\" \"아니, 없어.\"",
+      "why": "Have you ~?에는 Yes, I have. / No, I haven't.로 대답"
+    },
+    {
+      "type": "translate",
+      "ko": "나는 호주에서 운전해 본 적이 한 번도 없어요.",
+      "answer": "I have never driven in Australia.",
+      "choices": [
+        "I have never drove in Australia.",
+        "I have never driven in Australia.",
+        "I haven't never driven in Australia.",
+        "I has never driven in Australia."
+      ],
+      "why": "have never + p.p., drive의 p.p.는 driven"
+    },
+    {
+      "type": "translate",
+      "ko": "너 캥거루 고기 먹어 본 적 있어?",
+      "answer": "Have you ever eaten kangaroo meat?",
+      "choices": [
+        "Did you ever eaten kangaroo meat?",
+        "Have you ever ate kangaroo meat?",
+        "Have you ever eaten kangaroo meat?",
+        "Has you ever eaten kangaroo meat?"
+      ],
+      "why": "Have you ever + p.p.(eaten)?"
+    },
+    {
+      "type": "translate",
+      "ko": "그는 멜버른에 두 번 가 봤어요.",
+      "answer": "He has been to Melbourne twice.",
+      "choices": [
+        "He has been to Melbourne twice.",
+        "He have been to Melbourne twice.",
+        "He has be to Melbourne twice.",
+        "He has went to Melbourne twice."
+      ],
+      "why": "He는 has, '가 본 적'은 been to, 두 번은 twice"
+    },
+    {
+      "type": "translate",
+      "ko": "우리는 전에 그를 만난 적이 있어요.",
+      "answer": "We have met him before.",
+      "choices": [
+        "We have meet him before.",
+        "We has met him before.",
+        "We have met him ago.",
+        "We have met him before."
+      ],
+      "why": "We는 have + p.p.(met), '전에'는 before"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Have you ever been to Tasmania?",
+      "choices": [
+        "Have you ever be to Tasmania?",
+        "Has you ever been to Tasmania?",
+        "Have you ever been to Tasmania?",
+        "Are you ever been to Tasmania?"
+      ],
+      "why": "you는 Have, be의 p.p.는 been"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "I have never seen snow.",
+      "choices": [
+        "I have never saw snow.",
+        "I haven't never seen snow.",
+        "I have never see snow.",
+        "I have never seen snow."
+      ],
+      "why": "never는 not 없이, 뒤에는 p.p.(seen)"
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Jun isn't here. He has gone to the bank.",
+      "choices": [
+        "Jun isn't here. He has been to the bank.",
+        "Jun isn't here. He has gone to the bank.",
+        "Jun isn't here. He has go to the bank.",
+        "Jun isn't here. He have gone to the bank."
+      ],
+      "why": "가서 지금 여기 없으면 has gone to"
+    }
+  ]
+}

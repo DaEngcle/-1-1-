@@ -1,0 +1,175 @@
+{
+  "unit": 38,
+  "title": "능동태와 수동태 비교 (They make it / It is made)",
+  "emoji": "🔄",
+  "goal": "'누가 ~해요(능동태)'와 '~가 ~돼요(수동태)'를 구분하고, be + p.p.로 수동태 문장을 만들 수 있어요.",
+  "points": [
+    {
+      "title": "능동태 = 주어가 직접 해요",
+      "body": "지금까지 배운 보통 문장이에요. 주어가 행동을 직접 해요. (The chef cooks the meals. 셰프가 음식을 요리해요.)"
+    },
+    {
+      "title": "수동태 = 주어가 행동을 받아요",
+      "body": "행동을 받는 쪽을 주어로 쓰면 수동태예요. 모양은 be + p.p.(과거분사)예요. (The meals are cooked. 음식이 요리돼요.) p.p.는 현재완료(have p.p.)에서 배운 그 모양이에요."
+    },
+    {
+      "title": "be는 주어·시제에 맞게",
+      "body": "현재는 am / is / are, 과거는 was / were를 써요. (The room is cleaned. / The room was cleaned yesterday.)"
+    },
+    {
+      "title": "누가 했는지는 by ~",
+      "body": "행동한 사람을 말하고 싶으면 뒤에 by + 사람을 붙여요. 누가 했는지 모르거나 중요하지 않으면 by ~는 빼요. (My bike was stolen.)"
+    },
+    {
+      "title": "언제 수동태를 써요?",
+      "body": "'누가 했는지'보다 '무엇이 어떻게 됐는지'가 더 중요할 때 써요. 뉴스, 안내문, 제품 설명에 자주 나와요."
+    }
+  ],
+  "formula": [
+    "능동태: 주어 + 동사 + 목적어 (They clean the rooms.)",
+    "수동태: 목적어였던 말 + am / is / are / was / were + p.p. (The rooms are cleaned.)",
+    "수동태 + by + 행동한 사람 (The rooms are cleaned by Tom.)"
+  ],
+  "mistakes": [
+    {
+      "wrong": "The coffee is make here.",
+      "right": "The coffee is made here.",
+      "why": "be 뒤에 동사원형을 쓰기 쉬워요. 수동태는 be + p.p.라서 make가 아니라 made예요."
+    },
+    {
+      "wrong": "This house built in 1920.",
+      "right": "This house was built in 1920.",
+      "why": "한국어 '지어졌다'에는 be가 안 보여서 빠뜨리기 쉬워요. 수동태에는 be(was)가 꼭 있어야 해요."
+    },
+    {
+      "wrong": "The Opera House was designed from Jørn Utzon.",
+      "right": "The Opera House was designed by Jørn Utzon.",
+      "why": "'~에 의해'는 from이 아니라 by예요."
+    }
+  ],
+  "examples": [
+    {
+      "en": "People speak English in Australia.",
+      "ko": "호주에서는 사람들이 영어를 써요. (능동태)"
+    },
+    {
+      "en": "English is spoken in Australia.",
+      "ko": "호주에서는 영어가 사용돼요. (수동태)"
+    },
+    {
+      "en": "The bread is baked fresh every morning.",
+      "ko": "빵은 매일 아침 신선하게 구워져요."
+    },
+    {
+      "en": "My bike was stolen last night.",
+      "ko": "어젯밤에 제 자전거를 도둑맞았어요."
+    },
+    {
+      "en": "The Sydney Opera House was designed by Jørn Utzon.",
+      "ko": "시드니 오페라 하우스는 요른 웃손이 설계했어요."
+    },
+    {
+      "en": "Tom cleans the kitchen every night. → The kitchen is cleaned by Tom every night.",
+      "ko": "톰이 매일 밤 부엌을 청소해요. → 부엌은 매일 밤 톰이 청소해요."
+    },
+    {
+      "en": "My coffee was made by a new barista.",
+      "ko": "제 커피는 새로 온 바리스타가 만들었어요."
+    },
+    {
+      "en": "Our flat was painted last week.",
+      "ko": "우리 집은 지난주에 페인트칠이 됐어요."
+    }
+  ],
+  "quiz": [
+    {
+      "type": "blank",
+      "sentence": "These mangoes ___ grown in Queensland.",
+      "answer": "are",
+      "choices": ["are", "is", "do", "does"],
+      "ko": "이 망고들은 퀸즐랜드에서 재배돼요.",
+      "why": "주어가 여러 개(mangoes)인 현재 수동태라서 are + p.p.예요."
+    },
+    {
+      "type": "blank",
+      "sentence": "My phone was ___ on the train.",
+      "answer": "stolen",
+      "choices": ["stolen", "stole", "steal", "steals"],
+      "ko": "기차에서 휴대폰을 도둑맞았어요.",
+      "why": "수동태는 be + p.p.예요. steal의 p.p.는 stolen이에요."
+    },
+    {
+      "type": "blank",
+      "sentence": "The café ___ opened in 2019.",
+      "answer": "was",
+      "choices": ["was", "is", "were", "did"],
+      "ko": "그 카페는 2019년에 문을 열었어요.",
+      "why": "2019년은 과거이고 주어가 하나라서 was + p.p.예요."
+    },
+    {
+      "type": "blank",
+      "sentence": "This song was written ___ a famous Australian singer.",
+      "answer": "by",
+      "choices": ["by", "from", "of", "to"],
+      "ko": "이 노래는 유명한 호주 가수가 썼어요.",
+      "why": "행동한 사람은 by + 사람으로 말해요."
+    },
+    {
+      "type": "blank",
+      "sentence": "My housemate ___ the dishes every night.",
+      "answer": "washes",
+      "choices": ["washes", "is washed", "washed by", "wash"],
+      "ko": "제 하우스메이트가 매일 밤 설거지를 해요.",
+      "why": "하우스메이트가 직접 하는 능동태 현재 문장이에요. 주어가 한 사람이라 washes예요."
+    },
+    {
+      "type": "translate",
+      "ko": "이 커피는 브라질에서 재배돼요.",
+      "answer": "This coffee is grown in Brazil.",
+      "choices": ["This coffee is grown in Brazil.", "This coffee is grow in Brazil.", "This coffee is grew in Brazil.", "This coffee are grown in Brazil."],
+      "why": "is + p.p.(grown)예요. grew는 과거형이라 수동태에 못 써요."
+    },
+    {
+      "type": "translate",
+      "ko": "시드니 하버 브리지는 1932년에 개통됐어요.",
+      "answer": "The Sydney Harbour Bridge was opened in 1932.",
+      "choices": ["The Sydney Harbour Bridge was opened in 1932.", "The Sydney Harbour Bridge is opened in 1932.", "The Sydney Harbour Bridge were opened in 1932.", "The Sydney Harbour Bridge did opened in 1932."],
+      "why": "과거이고 주어가 하나라서 was + p.p.예요."
+    },
+    {
+      "type": "translate",
+      "ko": "그 편지는 우리 엄마가 쓰셨어요. (수동태로)",
+      "answer": "The letter was written by my mum.",
+      "choices": ["The letter was written by my mum.", "The letter was wrote by my mum.", "The letter was written from my mum.", "The letter written by my mum."],
+      "why": "was + p.p.(written) + by + 사람이에요."
+    },
+    {
+      "type": "translate",
+      "ko": "우리 쉐어하우스는 매주 청소돼요.",
+      "answer": "Our share house is cleaned every week.",
+      "choices": ["Our share house is cleaned every week.", "Our share house cleaned every week.", "Our share house are cleaned every week.", "Our share house is cleans every week."],
+      "why": "현재 수동태 is + p.p.(cleaned)예요. be가 빠지면 안 돼요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Cheese is made from milk.",
+      "choices": ["Cheese is made from milk.", "Cheese is make from milk.", "Cheese are made from milk.", "Cheese is maked from milk."],
+      "why": "cheese는 하나로 보니 is, make의 p.p.는 made예요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "My wallet was found by a kind man.",
+      "choices": ["My wallet was found by a kind man.", "My wallet was find by a kind man.", "My wallet found by a kind man.", "My wallet was found from a kind man."],
+      "why": "was + p.p.(found) + by + 사람이에요."
+    },
+    {
+      "type": "fix",
+      "prompt": "'The chef cooks the meals.'를 수동태로 맞게 바꾼 문장을 고르세요.",
+      "answer": "The meals are cooked by the chef.",
+      "choices": ["The meals are cooked by the chef.", "The meals is cooked by the chef.", "The meals are cook by the chef.", "The chef is cooked by the meals."],
+      "why": "목적어(the meals)가 주어로 오고, 여러 개라 are + p.p. + by the chef예요."
+    }
+  ]
+}

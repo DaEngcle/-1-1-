@@ -1,46 +1,236 @@
 {
   "unit": 3,
-  "title": "일반동사 현재 (I work / They live)",
-  "emoji": "💼",
-  "goal": "I, you, we, they와 일반동사를 써서 내 일상과 습관을 영어로 말할 수 있어요.",
+  "title": "be동사 의문문 (Are you ~? / Is it ~?)",
+  "emoji": "❓",
+  "goal": "Am / Is / Are로 '~예요?', '~에 있어요?'라고 묻고, Yes / No로 짧게 대답할 수 있어요.",
   "points": [
-    { "title": "일반동사가 뭐예요?", "body": "work(일하다), live(살다), like(좋아하다)처럼 하는 일이나 상태를 나타내는 말이에요. am, is, are가 아닌 동사를 일반동사라고 불러요." },
-    { "title": "주어 + 동사 그대로", "body": "I, you, we, they 뒤에는 동사를 모양 그대로 써요. I work. / They live in Sydney." },
-    { "title": "am, is, are와 같이 쓰지 않기", "body": "'일해요'를 I am work라고 하지 않아요. 일반동사가 있으면 am, is, are는 빼요." },
-    { "title": "현재형은 습관과 사실", "body": "현재형은 매일 하는 일이나 늘 그런 사실을 말할 때 써요. every day(매일), on weekends(주말마다) 같은 말과 잘 어울려요." },
-    { "title": "여러 명이 주인공일 때", "body": "my housemates, Tom and I처럼 여러 명이 주인공이어도 they처럼 동사를 그대로 써요." }
+    {
+      "title": "순서만 바꾸면 질문",
+      "body": "be동사(am, is, are)를 주어 앞으로 보내고 끝에 물음표를 붙여요. You are busy. → Are you busy?"
+    },
+    {
+      "title": "주어에 맞는 be동사로 시작",
+      "body": "질문에서도 I는 Am, he / she / it은 Is, you / we / they는 Are로 시작해요."
+    },
+    {
+      "title": "짧게 대답하기",
+      "body": "질문에 나온 be동사로 대답해요. Yes, I am. / No, I'm not. / Yes, it is. / No, it isn't."
+    },
+    {
+      "title": "Yes 대답은 줄이지 않기",
+      "body": "Yes로 대답할 때는 Yes, I'm.이 아니라 Yes, I am.처럼 끝을 줄이지 않아요. No 대답은 No, it isn't.처럼 줄여도 돼요."
+    },
+    {
+      "title": "you로 물으면 I로 대답",
+      "body": "Are you ~?(당신 ~예요?)라고 물으면 나에 대한 대답이니까 Yes, I am.이라고 해요. 여러 명에게 물었으면 Yes, we are.예요."
+    }
   ],
   "formula": [
-    "I / You / We / They + 동사 + ...",
-    "여러 명 (my friends, Tom and I) + 동사 + ..."
+    "Am + I + ...?",
+    "Is + he / she / it + ...?",
+    "Are + you / we / they + ...?",
+    "Yes, 주어 + am / is / are. / No, I'm not · it isn't · they aren't."
   ],
   "mistakes": [
-    { "wrong": "I am work at a café.", "right": "I work at a café.", "why": "'일해요'의 '~요'를 am으로 옮기기 쉬워요. 일반동사가 있으면 am, is, are는 빼요." },
-    { "wrong": "I live Sydney.", "right": "I live in Sydney.", "why": "'시드니에 살아요'의 '~에'를 빼먹기 쉬워요. 사는 곳을 말할 때는 live in + 장소예요." },
-    { "wrong": "We every day swim.", "right": "We swim every day.", "why": "한국어처럼 '매일'을 동사 앞에 두기 쉬운데, every day는 보통 문장 끝에 와요." }
+    {
+      "wrong": "Is you busy?",
+      "right": "Are you busy?",
+      "why": "순서를 바꾸면서 be동사를 헷갈리기 쉬워요. 질문에서도 you는 항상 are예요."
+    },
+    {
+      "wrong": "Are you a student? — Yes, I'm.",
+      "right": "Are you a student? — Yes, I am.",
+      "why": "줄임말에 익숙해서 대답 끝까지 줄이기 쉬워요. Yes로 끝나는 짧은 대답은 줄이지 않아요."
+    },
+    {
+      "wrong": "Are you tired? — Yes, you are.",
+      "right": "Are you tired? — Yes, I am.",
+      "why": "질문의 you를 그대로 따라 하기 쉬워요. '당신'에 대해 물으면 '나(I)'로 대답해요."
+    }
   ],
   "examples": [
-    { "en": "I work at a café in Melbourne.", "ko": "저는 멜버른에 있는 카페에서 일해요." },
-    { "en": "We live in a share house.", "ko": "우리는 쉐어하우스에 살아요." },
-    { "en": "They start work at 6 am.", "ko": "그 사람들은 아침 6시에 일을 시작해요." },
-    { "en": "I take the tram every day.", "ko": "저는 매일 트램을 타요." },
-    { "en": "You speak English very well.", "ko": "영어를 정말 잘하시네요." },
-    { "en": "My housemates cook dinner together.", "ko": "제 하우스메이트들은 같이 저녁을 만들어 먹어요." },
-    { "en": "We go to the beach on weekends.", "ko": "우리는 주말마다 해변에 가요." },
-    { "en": "I buy groceries at the supermarket on Sundays.", "ko": "저는 일요일마다 마트에서 장을 봐요." }
+    {
+      "en": "Are you a new barista?",
+      "ko": "새로 온 바리스타세요?"
+    },
+    {
+      "en": "Is the tram stop near here?",
+      "ko": "트램 정류장이 이 근처에 있어요?"
+    },
+    {
+      "en": "Are you from Korea? — Yes, I am.",
+      "ko": "한국에서 오셨어요? — 네, 맞아요."
+    },
+    {
+      "en": "Is your room big? — No, it isn't.",
+      "ko": "방이 커요? — 아니요, 안 커요."
+    },
+    {
+      "en": "Are they your housemates? — Yes, they are.",
+      "ko": "저 사람들이 당신 하우스메이트예요? — 네, 맞아요."
+    },
+    {
+      "en": "Am I late? — No, you aren't.",
+      "ko": "제가 늦었나요? — 아니요, 안 늦었어요."
+    },
+    {
+      "en": "Is this seat free? — Yes, it is.",
+      "ko": "이 자리 비어 있어요? — 네, 비어 있어요."
+    },
+    {
+      "en": "Is the supermarket open now? — No, it isn't.",
+      "ko": "마트 지금 문 열었어요? — 아니요, 안 열었어요."
+    }
   ],
   "quiz": [
-    { "type": "blank", "sentence": "I ___ at a farm.", "answer": "work", "choices": ["work", "works", "am work", "working"], "ko": "저는 농장에서 일해요.", "why": "I 뒤에는 동사를 그대로 써요. am은 넣지 않아요." },
-    { "type": "blank", "sentence": "They ___ in Perth.", "answer": "live", "choices": ["live", "lives", "are live", "living"], "ko": "그들은 퍼스에 살아요.", "why": "they 뒤에는 동사 그대로 live를 써요." },
-    { "type": "blank", "sentence": "We ___ coffee every morning.", "answer": "drink", "choices": ["drink", "drinks", "are drink", "drinking"], "ko": "우리는 매일 아침 커피를 마셔요.", "why": "we 뒤에는 동사 그대로 drink를 써요." },
-    { "type": "blank", "sentence": "My housemates ___ the kitchen on Sundays.", "answer": "clean", "choices": ["clean", "cleans", "is clean", "cleaning"], "ko": "제 하우스메이트들은 일요일마다 부엌을 청소해요.", "why": "housemates는 여러 명이라 they처럼 동사 그대로 써요." },
-    { "type": "blank", "sentence": "I ___ the tram to work.", "answer": "take", "choices": ["take", "takes", "am take", "taking"], "ko": "저는 트램을 타고 출근해요.", "why": "I 뒤에는 동사 그대로 take를 써요." },
-    { "type": "translate", "ko": "저는 매일 영어를 공부해요.", "answer": "I study English every day.", "choices": ["I study English every day.", "I am study English every day.", "I studies English every day.", "I every day study English."], "why": "I + 동사 그대로, every day는 문장 끝에 와요." },
-    { "type": "translate", "ko": "우리는 쉐어하우스에 살아요.", "answer": "We live in a share house.", "choices": ["We live in a share house.", "We are live in a share house.", "We lives in a share house.", "We live a share house."], "why": "we + live, 그리고 사는 곳 앞에는 in이 필요해요." },
-    { "type": "translate", "ko": "그들은 해변에서 수영해요.", "answer": "They swim at the beach.", "choices": ["They swim at the beach.", "They swims at the beach.", "They are swim at the beach.", "They swimming at the beach."], "why": "they 뒤에는 동사 그대로 swim을 써요." },
-    { "type": "translate", "ko": "요리를 정말 잘하시네요.", "answer": "You cook very well.", "choices": ["You cook very well.", "You cooks very well.", "You are cook very well.", "You very well cook."], "why": "you + 동사 그대로, very well은 동사 뒤에 와요." },
-    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "I like Australian coffee.", "choices": ["I like Australian coffee.", "I am like Australian coffee.", "I likes Australian coffee.", "I liking Australian coffee."], "why": "일반동사 like가 있으니 am은 빼고 동사 그대로 써요." },
-    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "We work on weekends.", "choices": ["We work on weekends.", "We are work on weekends.", "We works on weekends.", "We on weekends work."], "why": "we + work, on weekends는 문장 끝에 와요." },
-    { "type": "fix", "prompt": "맞는 문장을 고르세요.", "answer": "Tom and I play tennis.", "choices": ["Tom and I play tennis.", "Tom and I plays tennis.", "Tom and I are play tennis.", "Tom and I playing tennis."], "why": "Tom and I는 두 명(=we)이라 동사 그대로 play를 써요." }
+    {
+      "type": "blank",
+      "sentence": "___ you from Korea?",
+      "answer": "Are",
+      "choices": [
+        "Be",
+        "Are",
+        "Am",
+        "Is"
+      ],
+      "ko": "한국에서 오셨어요?",
+      "why": "you는 are라서 질문도 Are you ~?로 시작해요."
+    },
+    {
+      "type": "blank",
+      "sentence": "___ the beach far from here?",
+      "answer": "Is",
+      "choices": [
+        "Is",
+        "Are",
+        "Be",
+        "Am"
+      ],
+      "ko": "해변이 여기서 멀어요?",
+      "why": "the beach는 하나라서 Is로 물어봐요."
+    },
+    {
+      "type": "blank",
+      "sentence": "___ I late?",
+      "answer": "Am",
+      "choices": [
+        "Is",
+        "Be",
+        "Are",
+        "Am"
+      ],
+      "ko": "제가 늦었나요?",
+      "why": "I는 am이라서 Am I ~?로 물어요."
+    },
+    {
+      "type": "blank",
+      "sentence": "Are you tired? — No, I'm ___.",
+      "answer": "not",
+      "choices": [
+        "aren't",
+        "not",
+        "isn't",
+        "no"
+      ],
+      "ko": "피곤해요? — 아니요, 안 피곤해요.",
+      "why": "I'm 뒤에는 not만 붙여서 I'm not이라고 해요."
+    },
+    {
+      "type": "blank",
+      "sentence": "Is your manager nice? — Yes, she ___.",
+      "answer": "is",
+      "choices": [
+        "is",
+        "isn't",
+        "am",
+        "are"
+      ],
+      "ko": "매니저가 친절해요? — 네, 친절해요.",
+      "why": "she로 대답하니까 Yes, she is.예요. Yes 뒤에 isn't는 뜻이 안 맞아요."
+    },
+    {
+      "type": "translate",
+      "ko": "학생이세요?",
+      "answer": "Are you a student?",
+      "choices": [
+        "Am you a student?",
+        "Are you a student?",
+        "Is you a student?",
+        "Are a student you?"
+      ],
+      "why": "you는 are, 질문은 Are + you 순서예요."
+    },
+    {
+      "type": "translate",
+      "ko": "그녀가 당신 매니저예요? — 네, 맞아요.",
+      "answer": "Is she your manager? — Yes, she is.",
+      "choices": [
+        "Is she your manager? — Yes, she isn't.",
+        "Is she your manager? — Yes, she is.",
+        "Are she your manager? — Yes, she is.",
+        "Is she your manager? — Yes, she's."
+      ],
+      "why": "she는 is로 묻고, Yes 대답은 줄이지 않고 Yes, she is.라고 해요."
+    },
+    {
+      "type": "translate",
+      "ko": "이 자리 비어 있어요?",
+      "answer": "Is this seat free?",
+      "choices": [
+        "Are this seat free?",
+        "Is this seat free?",
+        "Am this seat free?",
+        "Is free this seat?"
+      ],
+      "why": "this seat는 하나라서 Is, 그리고 Is + 주어 + free 순서예요."
+    },
+    {
+      "type": "translate",
+      "ko": "그 사람들은 호주 사람이에요? — 아니요, 아니에요.",
+      "answer": "Are they Australian? — No, they aren't.",
+      "choices": [
+        "Are they Australian? — No, they isn't.",
+        "Is they Australian? — No, they aren't.",
+        "Are they Australian? — No, they not.",
+        "Are they Australian? — No, they aren't."
+      ],
+      "why": "they는 Are로 묻고 No, they aren't.로 대답해요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Are we late?",
+      "choices": [
+        "Are late we?",
+        "Is we late?",
+        "Are we late?",
+        "Am we late?"
+      ],
+      "why": "we는 are, 질문은 Are + we 순서예요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "Is it your bag? — No, it isn't.",
+      "choices": [
+        "Is it your bag? — No, it isn't.",
+        "Is it your bag? — No, it aren't.",
+        "Are it your bag? — No, it isn't.",
+        "Is it your bag? — No, it not."
+      ],
+      "why": "it은 is로 묻고 is로 대답해요. 아니면 No, it isn't.예요."
+    },
+    {
+      "type": "fix",
+      "prompt": "'Are you a nurse?'에 대한 맞는 대답을 고르세요.",
+      "answer": "Yes, I am.",
+      "choices": [
+        "Yes, I am.",
+        "Yes, you are.",
+        "Yes, I'm.",
+        "Yes, I is."
+      ],
+      "why": "you로 물으면 I로 대답하고, Yes 대답은 I am을 줄이지 않아요."
+    }
   ]
 }

@@ -1,0 +1,172 @@
+{
+  "unit": 34,
+  "title": "must not과 don't have to (mustn't / don't have to)",
+  "emoji": "🚫",
+  "goal": "'~하면 안 돼요(must not)'와 '~ 안 해도 돼요(don't have to)'를 구분해서 말할 수 있어요.",
+  "points": [
+    {
+      "title": "must not = ~하면 안 돼요",
+      "body": "must not + 동사원형은 '하면 안 된다'는 금지예요. 줄여서 mustn't[머슨트]라고 해요. 규칙이나 표지판에 많이 나와요."
+    },
+    {
+      "title": "don't have to = ~ 안 해도 돼요",
+      "body": "don't have to + 동사원형은 '할 필요가 없다'는 뜻이에요. 해도 되고 안 해도 돼요. 금지가 아니에요!"
+    },
+    {
+      "title": "뜻이 완전히 달라요",
+      "body": "You mustn't pay. = 돈을 내면 안 돼요. / You don't have to pay. = 돈 안 내도 돼요. 둘 다 '안'이 들어가지만 의미가 정반대예요."
+    },
+    {
+      "title": "doesn't have to / didn't have to",
+      "body": "주어가 he / she / it이면 doesn't have to, 과거는 didn't have to예요. doesn't / didn't 뒤에는 has가 아니라 have를 써요."
+    }
+  ],
+  "formula": [
+    "주어 + must not (mustn't) + 동사원형 → ~하면 안 돼요",
+    "I / You / We / They + don't have to + 동사원형 → ~ 안 해도 돼요",
+    "He / She / It + doesn't have to + 동사원형",
+    "주어 + didn't have to + 동사원형 (과거)"
+  ],
+  "mistakes": [
+    {
+      "wrong": "You don't have to smoke here. (여기서 담배 피우면 안 돼요)",
+      "right": "You mustn't smoke here.",
+      "why": "한국어 '안'만 보고 don't have to를 쓰기 쉬워요. 금지는 mustn't, '안 해도 됨'은 don't have to예요."
+    },
+    {
+      "wrong": "She doesn't has to work today.",
+      "right": "She doesn't have to work today.",
+      "why": "doesn't가 이미 3인칭을 표시하니까 뒤에는 has가 아니라 have를 써요."
+    },
+    {
+      "wrong": "You must not to swim here.",
+      "right": "You must not swim here.",
+      "why": "must not 뒤에는 to 없이 바로 동사원형이 와요."
+    }
+  ],
+  "examples": [
+    {
+      "en": "You mustn't smoke inside the share house.",
+      "ko": "쉐어하우스 안에서는 담배를 피우면 안 돼요."
+    },
+    {
+      "en": "You don't have to tip in Australia.",
+      "ko": "호주에서는 팁을 안 줘도 돼요."
+    },
+    {
+      "en": "You must not swim outside the flags.",
+      "ko": "깃발 바깥쪽에서 수영하면 안 돼요."
+    },
+    {
+      "en": "She doesn't have to work this weekend.",
+      "ko": "그녀는 이번 주말에 일 안 해도 돼요."
+    },
+    {
+      "en": "We mustn't be late for the interview.",
+      "ko": "우리는 면접에 늦으면 안 돼요."
+    },
+    {
+      "en": "You don't have to bring anything. Just come!",
+      "ko": "아무것도 안 가져와도 돼요. 그냥 오세요!"
+    },
+    {
+      "en": "I didn't have to pay for the tram. It was free.",
+      "ko": "트램 요금을 안 내도 됐어요. 무료였거든요."
+    },
+    {
+      "en": "Staff must not use their phones at the counter.",
+      "ko": "직원은 카운터에서 휴대폰을 사용하면 안 됩니다."
+    }
+  ],
+  "quiz": [
+    {
+      "type": "blank",
+      "sentence": "You ___ drink alcohol on this beach. It's against the rules.",
+      "answer": "mustn't",
+      "choices": ["mustn't", "don't have to", "must", "have to"],
+      "ko": "이 해변에서는 술을 마시면 안 돼요. 규칙 위반이에요.",
+      "why": "규칙으로 금지된 것이니 mustn't예요."
+    },
+    {
+      "type": "blank",
+      "sentence": "It's Sunday! I ___ get up early.",
+      "answer": "don't have to",
+      "choices": ["don't have to", "mustn't", "doesn't have to", "must"],
+      "ko": "일요일이에요! 일찍 안 일어나도 돼요.",
+      "why": "일찍 일어날 필요가 없다는 뜻이니 don't have to. 주어가 I라서 doesn't가 아니라 don't예요."
+    },
+    {
+      "type": "blank",
+      "sentence": "He ___ have to wear a suit to work.",
+      "answer": "doesn't",
+      "choices": ["doesn't", "don't", "mustn't", "isn't"],
+      "ko": "그는 회사에 정장을 안 입고 가도 돼요.",
+      "why": "주어가 He이니 doesn't have to예요."
+    },
+    {
+      "type": "blank",
+      "sentence": "You must not ___ here. It's a bus stop.",
+      "answer": "park",
+      "choices": ["park", "parks", "to park", "parking"],
+      "ko": "여기에 주차하면 안 돼요. 버스 정류장이에요.",
+      "why": "must not 뒤에는 동사원형이에요."
+    },
+    {
+      "type": "blank",
+      "sentence": "The tour was free, so we ___ have to pay.",
+      "answer": "didn't",
+      "choices": ["didn't", "don't", "doesn't", "mustn't"],
+      "ko": "투어가 무료여서 우리는 돈을 안 내도 됐어요.",
+      "why": "was로 보아 과거라서 didn't have to예요."
+    },
+    {
+      "type": "translate",
+      "ko": "여기서 사진을 찍으면 안 돼요.",
+      "answer": "You mustn't take photos here.",
+      "choices": ["You mustn't take photos here.", "You don't have to take photos here.", "You mustn't to take photos here.", "You don't must take photos here."],
+      "why": "금지는 mustn't + 동사원형이에요."
+    },
+    {
+      "type": "translate",
+      "ko": "그녀는 요리 안 해도 돼요.",
+      "answer": "She doesn't have to cook.",
+      "choices": ["She doesn't have to cook.", "She mustn't cook.", "She doesn't has to cook.", "She don't have to cook."],
+      "why": "'안 해도 된다'는 doesn't have to. doesn't 뒤에는 have예요."
+    },
+    {
+      "type": "translate",
+      "ko": "오늘은 일찍 올 필요 없어요.",
+      "answer": "You don't have to come early today.",
+      "choices": ["You don't have to come early today.", "You mustn't come early today.", "You don't have to came early today.", "You not have to come early today."],
+      "why": "필요 없다는 don't have to + 동사원형이에요."
+    },
+    {
+      "type": "translate",
+      "ko": "학생들은 시험 중에 이야기하면 안 됩니다.",
+      "answer": "Students must not talk during the test.",
+      "choices": ["Students must not talk during the test.", "Students don't have to talk during the test.", "Students must not talking during the test.", "Students not must talk during the test."],
+      "why": "금지는 must not + 동사원형. not은 must 뒤에 와요."
+    },
+    {
+      "type": "fix",
+      "prompt": "'깃발 밖에서 수영하면 안 돼요'를 맞게 쓴 문장을 고르세요.",
+      "answer": "You mustn't swim outside the flags.",
+      "choices": ["You mustn't swim outside the flags.", "You don't have to swim outside the flags.", "You mustn't swimming outside the flags.", "You don't mustn't swim outside the flags."],
+      "why": "'하면 안 된다'는 금지라서 mustn't + 동사원형이에요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "My boss doesn't have to work on Mondays.",
+      "choices": ["My boss doesn't have to work on Mondays.", "My boss don't have to work on Mondays.", "My boss doesn't has to work on Mondays.", "My boss doesn't have to works on Mondays."],
+      "why": "My boss는 한 사람이라 doesn't have to + 동사원형이에요."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "I didn't have to wait long.",
+      "choices": ["I didn't have to wait long.", "I didn't had to wait long.", "I don't had to wait long.", "I didn't have to waited long."],
+      "why": "과거는 didn't have to + 동사원형. didn't 뒤에는 had가 아니라 have예요."
+    }
+  ]
+}

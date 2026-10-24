@@ -1,0 +1,235 @@
+{
+  "unit": 50,
+  "title": "동사 + 사람 + to 동사원형 (I want you to come.)",
+  "emoji": "🙏",
+  "goal": "want / ask / tell + 사람 + to 동사원형으로 '누가 ~하기를 원하다, ~해 달라고 부탁하다, ~하라고 말하다'를 말할 수 있어요.",
+  "points": [
+    {
+      "title": "'다른 사람이 ~하기를'",
+      "body": "I want to come.은 '내가 오고 싶다', I want you to come.은 '네가 오기를 원해'예요. 동사와 to 사이에 사람을 넣으면, 그 사람이 하는 일이 돼요."
+    },
+    {
+      "title": "사람 자리는 me / you / him / her / us / them",
+      "body": "사람 자리에는 I, he, she가 아니라 me, him, her, us, them을 써요. She asked me to help.(O) / She asked I to help.(X)"
+    },
+    {
+      "title": "자주 쓰는 동사",
+      "body": "want(원하다), would like(~해 주셨으면 하다), ask(부탁하다), tell(말하다, 시키다), need(필요하다), allow(허락하다). 모두 '동사 + 사람 + to + 동사원형'으로 써요."
+    },
+    {
+      "title": "that 문장으로 만들지 않기",
+      "body": "한국어 '네가 ~하길 원해'를 I want that you ~로 옮기면 틀려요. I want you to ~로 써요."
+    },
+    {
+      "title": "'~하지 말라고' = not to",
+      "body": "to 앞에 not을 넣어요. My manager told me not to be late.(매니저가 늦지 말라고 했어요.)"
+    }
+  ],
+  "formula": [
+    "주어 + want / would like / need + 사람 + to + 동사원형",
+    "주어 + ask / tell / allow + 사람 + to + 동사원형",
+    "주어 + tell / ask + 사람 + not to + 동사원형"
+  ],
+  "mistakes": [
+    {
+      "wrong": "I want that you come to the party.",
+      "right": "I want you to come to the party.",
+      "why": "한국어 순서대로 that 문장을 만드는 실수예요. want + 사람(you) + to + 동사원형으로 써요."
+    },
+    {
+      "wrong": "My manager told me come early.",
+      "right": "My manager told me to come early.",
+      "why": "사람(me) 뒤에 to를 빠뜨리기 쉬워요. tell + 사람 + to + 동사원형."
+    },
+    {
+      "wrong": "She asked I to help her.",
+      "right": "She asked me to help her.",
+      "why": "사람 자리에는 I가 아니라 me를 써요."
+    }
+  ],
+  "examples": [
+    {
+      "en": "I want you to come to my party.",
+      "ko": "네가 내 파티에 와 줬으면 해."
+    },
+    {
+      "en": "My manager asked me to work on Saturday.",
+      "ko": "매니저가 토요일에 일해 달라고 부탁했어요."
+    },
+    {
+      "en": "She told us to wait outside.",
+      "ko": "그녀가 우리에게 밖에서 기다리라고 했어요."
+    },
+    {
+      "en": "I'd like you to meet my housemate, Jake.",
+      "ko": "제 하우스메이트 제이크를 소개할게요."
+    },
+    {
+      "en": "The farmer told them not to touch the machine.",
+      "ko": "농장 주인이 그들에게 기계를 만지지 말라고 했어요."
+    },
+    {
+      "en": "Can you ask him to call me back?",
+      "ko": "그에게 저한테 다시 전화해 달라고 전해 주실래요?"
+    },
+    {
+      "en": "My parents want me to come home soon.",
+      "ko": "부모님은 제가 곧 집에 돌아오길 바라세요."
+    },
+    {
+      "en": "Our landlord doesn't allow us to have pets.",
+      "ko": "집주인이 우리가 반려동물 키우는 걸 허락하지 않아요."
+    }
+  ],
+  "quiz": [
+    {
+      "type": "blank",
+      "sentence": "My boss wants me ___ early tomorrow.",
+      "answer": "to come",
+      "choices": [
+        "to come",
+        "come",
+        "coming",
+        "comes"
+      ],
+      "ko": "사장님은 제가 내일 일찍 오길 원해요.",
+      "why": "want + 사람(me) + to + 동사원형."
+    },
+    {
+      "type": "blank",
+      "sentence": "She asked ___ to close the shop.",
+      "answer": "me",
+      "choices": [
+        "me",
+        "I",
+        "my",
+        "mine"
+      ],
+      "ko": "그녀가 저에게 가게 문을 닫아 달라고 부탁했어요.",
+      "why": "사람 자리에는 me를 써요."
+    },
+    {
+      "type": "blank",
+      "sentence": "The doctor told him ___ smoke.",
+      "answer": "not to",
+      "choices": [
+        "not to",
+        "don't",
+        "no to",
+        "to don't"
+      ],
+      "ko": "의사가 그에게 담배를 피우지 말라고 했어요.",
+      "why": "'~하지 말라고'는 tell + 사람 + not to + 동사원형."
+    },
+    {
+      "type": "blank",
+      "sentence": "Can you tell ___ to call me?",
+      "answer": "her",
+      "choices": [
+        "her",
+        "she",
+        "hers",
+        "to her"
+      ],
+      "ko": "그녀에게 저한테 전화하라고 말해 줄래요?",
+      "why": "tell 바로 뒤 사람 자리에는 her를 써요."
+    },
+    {
+      "type": "blank",
+      "sentence": "We'd like you ___ our team.",
+      "answer": "to join",
+      "choices": [
+        "to join",
+        "join",
+        "joining",
+        "joined"
+      ],
+      "ko": "저희 팀에 들어와 주셨으면 해요.",
+      "why": "would like + 사람 + to + 동사원형."
+    },
+    {
+      "type": "translate",
+      "ko": "그가 나에게 기다리라고 말했어요.",
+      "answer": "He told me to wait.",
+      "choices": [
+        "He told me to wait.",
+        "He told me wait.",
+        "He told I to wait.",
+        "He told to me wait."
+      ],
+      "why": "tell + 사람(me) + to + 동사원형."
+    },
+    {
+      "type": "translate",
+      "ko": "저는 당신이 행복하길 바라요.",
+      "answer": "I want you to be happy.",
+      "choices": [
+        "I want you to be happy.",
+        "I want that you are happy.",
+        "I want you be happy.",
+        "I want you are happy."
+      ],
+      "why": "want + 사람 + to + 동사원형(be). that 문장은 쓰지 않아요."
+    },
+    {
+      "type": "translate",
+      "ko": "그녀가 우리에게 조용히 해 달라고 부탁했어요.",
+      "answer": "She asked us to be quiet.",
+      "choices": [
+        "She asked us to be quiet.",
+        "She asked we to be quiet.",
+        "She asked us be quiet.",
+        "She asked to us be quiet."
+      ],
+      "why": "ask + 사람(us) + to + 동사원형."
+    },
+    {
+      "type": "translate",
+      "ko": "매니저가 저에게 늦지 말라고 했어요.",
+      "answer": "My manager told me not to be late.",
+      "choices": [
+        "My manager told me not to be late.",
+        "My manager told me to not late.",
+        "My manager told me don't be late.",
+        "My manager told me not be late."
+      ],
+      "why": "tell + 사람 + not to + 동사원형(be)."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "I need you to sign this form.",
+      "choices": [
+        "I need you to sign this form.",
+        "I need that you sign this form.",
+        "I need you sign this form.",
+        "I need your to sign this form."
+      ],
+      "why": "need + 사람(you) + to + 동사원형."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "They asked me to stay longer.",
+      "choices": [
+        "They asked me to stay longer.",
+        "They asked me stay longer.",
+        "They asked I to stay longer.",
+        "They asked me to stayed longer."
+      ],
+      "why": "ask + me + to + 동사원형. 과거라도 to 뒤는 원형."
+    },
+    {
+      "type": "fix",
+      "prompt": "맞는 문장을 고르세요.",
+      "answer": "My housemate wants me to clean the bathroom.",
+      "choices": [
+        "My housemate wants me to clean the bathroom.",
+        "My housemate wants me clean the bathroom.",
+        "My housemate wants that I clean the bathroom.",
+        "My housemate want me to clean the bathroom."
+      ],
+      "why": "want + 사람 + to + 동사원형. 주어가 한 명이라 wants."
+    }
+  ]
+}
