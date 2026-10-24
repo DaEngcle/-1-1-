@@ -58,24 +58,32 @@ function useTestAudio() {
     return u;
   }
 
-  async function playSequence(key: string, audioIds: string[]) {
+  /** 끝까지 재생했으면 true. 하나라도 못 틀었으면 false (듣기 횟수를 돌려주려고) */
+  async function playSequence(key: string, audioIds: string[]): Promise<boolean> {
     current.current?.pause();
     setPlaying(key);
+    let ok = true;
     try {
       for (const id of audioIds) {
         const audio = new Audio(await url(id));
         current.current = audio;
-        await new Promise<void>((resolve) => {
-          audio.onended = () => setTimeout(resolve, 350);
-          audio.onerror = () => resolve();
-          void audio.play().catch(() => resolve());
+        const played = await new Promise<boolean>((resolve) => {
+          audio.onended = () => setTimeout(() => resolve(true), 350);
+          audio.onerror = () => resolve(false);
+          void audio.play().catch(() => resolve(false));
         });
+        if (!played) {
+          ok = false;
+          break;
+        }
       }
     } catch {
-      alert("음성을 불러오지 못했어요. 잠시 후 다시 눌러주세요.");
+      ok = false;
     } finally {
       setPlaying(null);
     }
+    if (!ok) alert("음성을 재생하지 못했어요. 듣기 횟수는 그대로 남겨 둘게요. 다시 눌러주세요.");
+    return ok;
   }
 
   useEffect(() => () => current.current?.pause(), []);
@@ -129,7 +137,10 @@ export function LevelTestRunner({
   function play(key: string, audioIds: string[], limit: number) {
     if ((plays[key] ?? 0) >= limit || playing) return;
     setPlays((p) => ({ ...p, [key]: (p[key] ?? 0) + 1 }));
-    void playSequence(key, audioIds);
+    void playSequence(key, audioIds).then((ok) => {
+      // 소리가 안 나왔으면 들은 횟수에서 빼 준다
+      if (!ok) setPlays((p) => ({ ...p, [key]: Math.max(0, (p[key] ?? 1) - 1) }));
+    });
   }
 
   function next() {

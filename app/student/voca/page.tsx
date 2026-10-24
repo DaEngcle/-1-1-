@@ -15,7 +15,6 @@ export default async function VocaHomePage() {
     .like("deck", "verbs-%");
   const stars = (data ?? []).reduce((n, r) => n + (r.stars ?? 0), 0);
   const cleared = (data ?? []).filter((r) => (r.stars ?? 0) > 0).length;
-  const maxStars = VERB_SETS.length * 3;
 
   return (
     <>
@@ -34,7 +33,7 @@ export default async function VocaHomePage() {
         <div className="flex items-center justify-between gap-2">
           <span className="text-lg font-extrabold text-zinc-900">🔤 동사 3단변화</span>
           <span className="rounded-full bg-violet-50 px-2.5 py-1 text-xs font-bold text-violet-700">
-            ⭐ {stars}/{maxStars}
+            {cleared}/{VERB_SETS.length} 세트
           </span>
         </div>
         <p className="text-sm text-zinc-600">
@@ -44,7 +43,7 @@ export default async function VocaHomePage() {
           <span className="block h-full bg-violet-500" style={{ width: `${(cleared / VERB_SETS.length) * 100}%` }} />
         </span>
         <span className="text-xs text-zinc-500">
-          {cleared}/{VERB_SETS.length} 세트 클리어
+          {cleared}개 세트 클리어 · 모은 별 ⭐ {stars}개 (세트마다 최대 3개)
         </span>
       </Link>
 

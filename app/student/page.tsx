@@ -39,7 +39,7 @@ import { getCourseProgress } from "@/lib/classroom/progress";
 import { ScoreTrendChart } from "@/app/_ui/score-trend-chart";
 import { cardClass } from "@/app/_ui/styles";
 import { ATTENDANCE_LABEL } from "@/lib/classroom/attendance";
-import { getEngagement, getSeasonRanking } from "@/lib/classroom/engagement";
+import { getEngagement, getSeasonRanking, weekShadowingCount, WEEKLY_SHADOWING_GOAL } from "@/lib/classroom/engagement";
 import { LeagueCard } from "@/app/_ui/league";
 import { TierEmblem } from "@/app/_ui/tier-emblem";
 import { tierFor } from "@/lib/classroom/league";
@@ -85,7 +85,7 @@ function ProgressBar({ percent }: { percent: number }) {
 
 export default async function StudentHomePage() {
   const student = await requireStudent();
-  const [stats, progressMap, engagement, ranking, tests, { data: latestNews }] = await Promise.all([
+  const [stats, progressMap, engagement, ranking, tests, { data: latestNews }, weekShadow] = await Promise.all([
     getStudentStats(student.id),
     getCourseProgress([student.id]),
     getEngagement(student.id),
@@ -99,6 +99,7 @@ export default async function StudentHomePage() {
       .order("created_at", { ascending: false })
       .limit(1)
       .maybeSingle(),
+    weekShadowingCount(student.id),
   ]);
   const nickname = student.nickname;
   const progress = progressMap.get(student.id)!;
@@ -222,31 +223,6 @@ export default async function StudentHomePage() {
         </section>
       )}
 
-      {latestNews && (
-        <Link
-          href={`/student/news/${latestNews.id}`}
-          className={`${cardClass} flex items-center gap-3 hover:border-brand-300`}
-        >
-          {latestNews.image_url ? (
-            // eslint-disable-next-line @next/next/no-img-element -- ABC 대표 사진
-            <img src={latestNews.image_url} alt="" className="h-14 w-20 shrink-0 rounded-xl object-cover" />
-          ) : (
-            <span className="text-3xl">📰</span>
-          )}
-          <span className="flex min-w-0 flex-col">
-            <span className="text-xs font-semibold text-brand-600">
-              오늘의 호주 뉴스 · {latestNews.level}
-            </span>
-            <span className="truncate font-bold text-zinc-900">{latestNews.title_ko}</span>
-            <span className="text-xs text-zinc-500">쉬운 영어 요약 + 핵심 표현 5개 + 1분 퀴즈</span>
-          </span>
-          <span className="ml-auto shrink-0 text-xl text-brand-600">→</span>
-        </Link>
-      )}
-
-      <InstallAppCard />
-      <PushToggle />
-
       {student.courses.length === 0 && (
         <section className="flex flex-col gap-2 rounded-2xl bg-[#fff8db] p-4 text-zinc-900">
           <p className="font-bold">🎁 무료회원으로 이용 중이에요</p>
@@ -299,7 +275,32 @@ export default async function StudentHomePage() {
         </section>
       )}
 
-      <LevelCard pre={tests.pre} post={tests.post} href="/student/level-test" />
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Missions missions={engagement.missions} />
+        <LeagueCard rows={ranking} meId={student.id} />
+      </div>
+
+      {latestNews && (
+        <Link
+          href={`/student/news/${latestNews.id}`}
+          className={`${cardClass} flex items-center gap-3 hover:border-brand-300`}
+        >
+          {latestNews.image_url ? (
+            // eslint-disable-next-line @next/next/no-img-element -- ABC 대표 사진
+            <img src={latestNews.image_url} alt="" className="h-14 w-20 shrink-0 rounded-xl object-cover" />
+          ) : (
+            <span className="text-3xl">📰</span>
+          )}
+          <span className="flex min-w-0 flex-col">
+            <span className="text-xs font-semibold text-brand-600">
+              오늘의 호주 뉴스 · {latestNews.level}
+            </span>
+            <span className="truncate font-bold text-zinc-900">{latestNews.title_ko}</span>
+            <span className="text-xs text-zinc-500">쉬운 영어 요약 + 핵심 표현 5개 + 1분 퀴즈</span>
+          </span>
+          <span className="ml-auto shrink-0 text-xl text-brand-600">→</span>
+        </Link>
+      )}
 
       <section className="grid grid-cols-3 gap-3">
         <div
@@ -332,20 +333,15 @@ export default async function StudentHomePage() {
         >
           <span className="text-xl">🎤</span>
           <span className="text-2xl font-bold text-zinc-900">
-            {progress.submittedSentences}
+            {weekShadow}
             <span className="ml-0.5 text-sm font-normal text-zinc-500">
-              /{progress.sentences}
+              /{WEEKLY_SHADOWING_GOAL}
             </span>
           </span>
-          <span className="text-xs text-zinc-500">쉐도잉 제출</span>
-          <ProgressBar percent={progress.submitPercent} />
+          <span className="text-xs text-zinc-500">이번 주 쉐도잉</span>
+          <ProgressBar percent={Math.min(100, Math.round((weekShadow / WEEKLY_SHADOWING_GOAL) * 100))} />
         </Link>
       </section>
-
-      <div className="grid gap-3 sm:grid-cols-2">
-        <Missions missions={engagement.missions} />
-        <LeagueCard rows={ranking} meId={student.id} />
-      </div>
 
       <StudyCalendar
         month={engagement.month}
@@ -355,98 +351,118 @@ export default async function StudentHomePage() {
         tier={<TierEmblem tier={myTier.id} className="h-9 w-9" />}
       />
 
-      <Badges badges={engagement.badges} />
+      <LevelCard pre={tests.pre} post={tests.post} href="/student/level-test" />
 
-      <section className="grid grid-cols-3 gap-3">
-        <StatTile
-          label="평균 발음 점수"
-          value={stats.averageScore ?? "-"}
-          unit={stats.averageScore != null ? "점" : undefined}
-        />
-        <StatTile
-          label="연습한 문장"
-          value={stats.practicedSentences}
-          unit="개"
-        />
-        <StatTile
-          label="출석률"
-          value={
-            totalClasses ? Math.round((attended / totalClasses) * 100) : "-"
-          }
-          unit={totalClasses ? "%" : undefined}
-        />
-      </section>
+      {/* 자세한 기록은 접어 둔다 (홈이 너무 길어서 오늘 할 일이 안 보였다) */}
+      <details className="group rounded-3xl bg-white/60 p-1">
+        <summary className="cursor-pointer list-none rounded-2xl bg-white px-4 py-3 text-sm font-bold text-zinc-800 shadow-sm">
+          📊 내 기록 자세히 보기 (배지·발음 점수·자주 틀리는 단어·출결)
+        </summary>
+        <div className="mt-3 flex flex-col gap-5">
+        <Badges badges={engagement.badges} />
 
-      <section className={cardClass}>
-        <h2 className="mb-2 font-bold text-zinc-900">
-          최근 30일 평균 발음 점수
-        </h2>
-        <ScoreTrendChart data={stats.dailyScores} />
-        <p className="mt-1 text-xs text-zinc-500">
-          총 {stats.totalSubmissions}회 제출 · 학습한 날 {stats.activeDays}일
-          {stats.bestScore != null && ` · 최고 ${stats.bestScore}점`}
-        </p>
-      </section>
-
-      <div className="grid gap-3 sm:grid-cols-2">
-        <section className={cardClass}>
-          <h2 className="mb-2 font-bold text-zinc-900">
-            자주 틀리는 단어 TOP 5
-          </h2>
-          {stats.weakWords.length === 0 ? (
-            <p className="text-sm text-zinc-500">
-              채점 결과가 쌓이면 여기에 보여요.
-            </p>
-          ) : (
-            <ol className="flex flex-col gap-1.5 text-sm">
-              {stats.weakWords.map((w, i) => (
-                <li key={w.word} className="flex justify-between">
-                  <span>
-                    <span className="mr-2 text-zinc-400">{i + 1}</span>
-                    <b>{w.word}</b>
-                  </span>
-                  <span className="text-zinc-500">
-                    {w.count}회 · 평균 {w.avg}점
-                  </span>
-                </li>
-              ))}
-            </ol>
-          )}
+        <section className="grid grid-cols-3 gap-3">
+          <StatTile
+            label="평균 발음 점수"
+            value={stats.averageScore ?? "-"}
+            unit={stats.averageScore != null ? "점" : undefined}
+          />
+          <StatTile
+            label="연습한 문장"
+            value={stats.practicedSentences}
+            unit="개"
+          />
+          <StatTile
+            label="출석률"
+            value={
+              totalClasses ? Math.round((attended / totalClasses) * 100) : "-"
+            }
+            unit={totalClasses ? "%" : undefined}
+          />
         </section>
 
         <section className={cardClass}>
-          <h2 className="mb-2 font-bold text-zinc-900">출결</h2>
-          {totalClasses === 0 ? (
-            <p className="text-sm text-zinc-500">아직 출결 기록이 없어요.</p>
-          ) : (
-            <>
-              <p className="mb-2 text-sm text-zinc-700">
-                {(
-                  Object.keys(
-                    ATTENDANCE_LABEL,
-                  ) as (keyof typeof ATTENDANCE_LABEL)[]
-                )
-                  .map(
-                    (k) =>
-                      `${ATTENDANCE_LABEL[k].label} ${stats.attendance[k]}`,
-                  )
-                  .join(" · ")}
+          <h2 className="mb-2 font-bold text-zinc-900">
+            최근 30일 평균 발음 점수
+          </h2>
+          <ScoreTrendChart data={stats.dailyScores} />
+          <p className="mt-1 text-xs text-zinc-500">
+            총 {stats.totalSubmissions}회 제출 · 학습한 날 {stats.activeDays}일
+            {stats.bestScore != null && ` · 최고 ${stats.bestScore}점`}
+          </p>
+        </section>
+
+        <div className="grid gap-3 sm:grid-cols-2">
+          <section className={cardClass}>
+            <h2 className="mb-2 font-bold text-zinc-900">
+              자주 틀리는 단어 TOP 5
+            </h2>
+            {stats.weakWords.length === 0 ? (
+              <p className="text-sm text-zinc-500">
+                채점 결과가 쌓이면 여기에 보여요.
               </p>
-              <ul className="flex flex-col gap-1 text-sm">
-                {stats.recentAttendance.map((a) => (
-                  <li key={a.class_date} className="flex justify-between">
-                    <span className="text-zinc-600">{a.class_date}</span>
+            ) : (
+              <ol className="flex flex-col gap-1.5 text-sm">
+                {stats.weakWords.map((w, i) => (
+                  <li key={w.word} className="flex justify-between">
                     <span>
-                      {ATTENDANCE_LABEL[a.status].icon}{" "}
-                      {ATTENDANCE_LABEL[a.status].label}
+                      <span className="mr-2 text-zinc-400">{i + 1}</span>
+                      <b>{w.word}</b>
+                    </span>
+                    <span className="text-zinc-500">
+                      {w.count}회 · 평균 {w.avg}점
                     </span>
                   </li>
                 ))}
-              </ul>
-            </>
-          )}
-        </section>
-      </div>
+              </ol>
+            )}
+          </section>
+
+          <section className={cardClass}>
+            <h2 className="mb-2 font-bold text-zinc-900">출결</h2>
+            {totalClasses === 0 ? (
+              <p className="text-sm text-zinc-500">아직 출결 기록이 없어요.</p>
+            ) : (
+              <>
+                <p className="mb-2 text-sm text-zinc-700">
+                  {(
+                    Object.keys(
+                      ATTENDANCE_LABEL,
+                    ) as (keyof typeof ATTENDANCE_LABEL)[]
+                  )
+                    .map(
+                      (k) =>
+                        `${ATTENDANCE_LABEL[k].label} ${stats.attendance[k]}`,
+                    )
+                    .join(" · ")}
+                </p>
+                <ul className="flex flex-col gap-1 text-sm">
+                  {stats.recentAttendance.map((a) => (
+                    <li key={a.class_date} className="flex justify-between">
+                      <span className="text-zinc-600">{a.class_date}</span>
+                      <span>
+                        {ATTENDANCE_LABEL[a.status].icon}{" "}
+                        {ATTENDANCE_LABEL[a.status].label}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </section>
+        </div>
+        </div>
+      </details>
+
+      <InstallAppCard />
+      <PushToggle />
+
+
+
+
+
+
+
       {student.courses.length === 0 && (
         <div
           id="all-reviews"

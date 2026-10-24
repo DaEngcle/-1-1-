@@ -20,6 +20,20 @@ export function weekStart(today = kstDate(new Date())) {
   return addDays(today, -((dow + 6) % 7));
 }
 
+/** 이번 주 쉐도잉 목표 (홈·내 쉐도잉에서 '전체 1,560개 중 2개' 대신 보여준다) */
+export const WEEKLY_SHADOWING_GOAL = 20;
+
+/** 이번 주(월요일부터, 한국 시간)에 낸 쉐도잉 수 */
+export async function weekShadowingCount(studentId: string) {
+  const supabase = createServerSupabaseClient();
+  const { count } = await supabase
+    .from("submissions")
+    .select("id", { count: "exact", head: true })
+    .eq("student_id", studentId)
+    .gte("created_at", `${weekStart()}T00:00:00+09:00`);
+  return count ?? 0;
+}
+
 type SubRow = { created_at: string; status: string; overall_score: number | null };
 
 interface DayActivity {

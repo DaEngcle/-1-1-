@@ -1,15 +1,19 @@
 import Link from "next/link";
 import { logout } from "@/app/login/actions";
 import { NavLinks } from "./nav-links";
+import { BottomNav } from "./bottom-nav";
 import { SubmitButton } from "@/app/_ui/submit-button";
 
 export function AppShell({
   title,
   nav,
+  bottomNav,
   children,
 }: {
   title: string;
   nav: { href: string; label: string }[];
+  /** 있으면 휴대폰에서는 위 메뉴 대신 아래 탭바(+더보기)를 쓴다 */
+  bottomNav?: { href: string; icon: string; label: string }[];
   children: React.ReactNode;
 }) {
   return (
@@ -28,9 +32,14 @@ export function AppShell({
             </SubmitButton>
           </form>
         </div>
-        <NavLinks items={nav} />
+        <div className={bottomNav ? "hidden sm:block" : ""}>
+          <NavLinks items={nav} />
+        </div>
       </header>
-      <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-5 px-4 py-6">{children}</main>
+      <main className={`mx-auto flex w-full max-w-3xl flex-1 flex-col gap-5 px-4 py-6 ${bottomNav ? "pb-24 sm:pb-6" : ""}`}>
+        {children}
+      </main>
+      {bottomNav && <BottomNav items={nav} primary={bottomNav} />}
     </div>
   );
 }

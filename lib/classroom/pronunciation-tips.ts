@@ -178,11 +178,20 @@ export function getTip(id: string) {
 
 /** 문장에 들어있는 어려운 소리 팁 (우선순위 순, 최대 limit개) */
 export function findTipsForSentence(sentence: string, limit = 2) {
-  const words = sentence.toLowerCase().match(/[a-z']+/g) ?? [];
-  return PRONUNCIATION_TIPS.map((tip) => ({
-    tip,
-    words: [...new Set(words.filter((w) => tip.match(w)))],
-  }))
+  // 비교는 소문자로 하되, 보여줄 땐 문장에 쓰인 그대로 (Melbourne, CBD처럼 대문자 유지)
+  const words = sentence.match(/[A-Za-z']+/g) ?? [];
+  return PRONUNCIATION_TIPS.map((tip) => {
+    const seen = new Set<string>();
+    return {
+      tip,
+      words: words.filter((w) => {
+        const key = w.toLowerCase();
+        if (seen.has(key) || !tip.match(key)) return false;
+        seen.add(key);
+        return true;
+      }),
+    };
+  })
     .filter((t) => t.words.length > 0)
     .slice(0, limit);
 }

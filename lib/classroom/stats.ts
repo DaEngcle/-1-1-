@@ -71,11 +71,17 @@ export async function getStudentStats(studentId: string): Promise<StudentStats> 
     };
   });
 
+  // 감탄사·관사 같은 기능어는 '자주 틀리는 단어'에서 빼야 연습할 단어가 보인다
+  const SKIP_WORDS = new Set([
+    "a", "an", "the", "uh", "um", "umm", "hmm", "mm", "oh", "ah", "eh", "yeah", "yep", "nah", "ok", "okay",
+    "to", "of", "and", "or", "in", "on", "at", "is", "am", "are", "i", "it",
+  ]);
   const wordStats = new Map<string, { miss: number; total: number; sum: number }>();
   for (const s of scored) {
     for (const w of (s.word_details as WordResult[] | null) ?? []) {
       if (w.errorType === "Insertion") continue;
       const key = w.word.toLowerCase();
+      if (SKIP_WORDS.has(key)) continue;
       const ws = wordStats.get(key) ?? { miss: 0, total: 0, sum: 0 };
       ws.total++;
       ws.sum += w.accuracy;

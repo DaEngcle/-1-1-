@@ -23,6 +23,19 @@ type Feedback = {
 type Phase = "intro" | "talking" | "listening" | "recording" | "thinking" | "reporting" | "report";
 
 const MAX_ANSWER_SECONDS = 40;
+const NETWORK_ERROR = "인터넷 연결이 불안정해요. 잠시 후 다시 해 주세요.";
+
+/** 서버 요청. 인터넷이 끊겨도 멈추지 않고 실패로 돌려준다 */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function request(url: string, init: RequestInit): Promise<{ ok: boolean; data: any }> {
+  try {
+    const res = await fetch(url, init);
+    const data = await res.json().catch(() => ({}));
+    return { ok: res.ok, data };
+  } catch {
+    return { ok: false, data: { error: NETWORK_ERROR } };
+  }
+}
 
 export function Conversation({ scenario: s, ready }: { scenario: Scenario; ready: boolean }) {
   const { play, stop, unlock, playingKey } = useTts();
@@ -71,13 +84,12 @@ export function Conversation({ scenario: s, ready }: { scenario: Scenario; ready
     recorder.prepare();
     unlock();
     setPhase("thinking");
-    const res = await fetch("/api/interview/start", {
+    const { ok, data } = await request("/api/interview/start", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ scenario: s.id }),
     });
-    const data = await res.json().catch(() => ({}));
-    if (!res.ok) {
+    if (!ok) {
       setError(data.error ?? "시작하지 못했어요.");
       setPhase("intro");
       return;
@@ -94,10 +106,9 @@ export function Conversation({ scenario: s, ready }: { scenario: Scenario; ready
     const form = new FormData();
     form.append("sessionId", sessionId);
     form.append("audio", blob, "answer.wav");
-    const res = await fetch("/api/interview/turn", { method: "POST", body: form });
-    const data = await res.json().catch(() => ({}));
+    const { ok, data } = await request("/api/interview/turn", { method: "POST", body: form });
     setMood("smile");
-    if (!res.ok) {
+    if (!ok) {
       setError(data.error ?? "다시 말해 주세요.");
       setPhase("listening");
       return;
@@ -126,13 +137,12 @@ export function Conversation({ scenario: s, ready }: { scenario: Scenario; ready
     if (!sessionId) return;
     stop();
     setPhase("reporting");
-    const res = await fetch("/api/interview/finish", {
+    const { ok, data } = await request("/api/interview/finish", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ sessionId }),
     });
-    const data = await res.json().catch(() => ({}));
-    if (!res.ok || !data.feedback) {
+    if (!ok || !data.feedback) {
       setError(data.error ?? "리포트를 만들지 못했어요.");
       setPhase("report");
       return;
@@ -304,7 +314,12 @@ export function Conversation({ scenario: s, ready }: { scenario: Scenario; ready
             )}
           </>
         ) : (
-          <p className="rounded-xl bg-rose-50 p-3 text-sm font-semibold text-rose-700">{error}</p>
+          <div className="flex flex-col gap-2 rounded-xl bg-rose-50 p-3 text-sm font-semibold text-rose-700">
+            <p>{error}</p>
+            <button type="button" onClick={() => void finish()} className="self-start rounded-full bg-white px-3 py-1.5 text-rose-700 ring-1 ring-rose-200">
+              🔄 리포트 다시 받기
+            </button>
+          </div>
         )}
         <details className="rounded-3xl bg-white p-4 text-sm shadow-sm">
           <summary className="cursor-pointer font-bold text-zinc-800">💬 대화 다시 보기</summary>
