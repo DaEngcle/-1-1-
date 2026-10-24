@@ -26,13 +26,15 @@ export const WEEKLY_SHADOWING_GOAL = 20;
 /** 이번 주(월요일부터, 한국 시간)에 쉐도잉한 문장 수 (같은 문장을 여러 번 내도 1개) */
 export async function weekShadowingCount(studentId: string) {
   const supabase = createServerSupabaseClient();
-  const { data } = await supabase
-    .from("submissions")
-    .select("lesson_item_id")
-    .eq("student_id", studentId)
-    .gte("created_at", `${weekStart()}T00:00:00+09:00`)
-    .limit(1000);
-  return new Set((data ?? []).map((r) => r.lesson_item_id)).size;
+  const rows = await fetchAll<{ lesson_item_id: string }>((from, to) =>
+    supabase
+      .from("submissions")
+      .select("lesson_item_id")
+      .eq("student_id", studentId)
+      .gte("created_at", `${weekStart()}T00:00:00+09:00`)
+      .range(from, to),
+  );
+  return new Set(rows.map((r) => r.lesson_item_id)).size;
 }
 
 type SubRow = { created_at: string; status: string; overall_score: number | null };

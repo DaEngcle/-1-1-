@@ -224,6 +224,14 @@ export function useRecorder(
       sourceRef.current = source;
       nodeRef.current = node;
       activeRef.current = true;
+      // 마이크를 켜는 사이에 앱을 나갔으면 바로 끈다 (숨은 화면에서 녹음이 켜져 있지 않게)
+      if (document.visibilityState === "hidden") {
+        chunksRef.current = [];
+        activeRef.current = false;
+        release(true);
+        onFinishedRef.current?.(null);
+        return;
+      }
       setRecording(true);
       setSeconds(0);
       // 오디오가 멈춰 있으면 녹음 데이터가 아예 안 들어온다 → 1.5초 뒤 한 번 새로 연다
