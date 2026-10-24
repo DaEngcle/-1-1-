@@ -5,14 +5,16 @@ import { cardClass } from "@/app/_ui/styles";
 import { CatPicker } from "@/app/_ui/cat-picker";
 import { CatNameForm } from "@/app/_ui/cat-name-form";
 import { PasswordForm } from "./password-form";
+import { PushToggle } from "@/app/_ui/push-toggle";
+import { InstallAppCard } from "@/app/_ui/pwa";
 
 export default async function StudentProfilePage() {
   const student = await requireStudent();
 
   return (
     <>
-      <Link href="/student" className="text-sm text-zinc-600 underline">
-        ← 홈
+      <Link href="/student/more" className="text-sm text-zinc-600 underline">
+        ← 더보기
       </Link>
       <h1 className="text-xl font-extrabold text-zinc-900">👤 내 정보</h1>
       <h2 className="text-lg font-extrabold text-zinc-900">내 닉네임</h2>
@@ -35,6 +37,9 @@ export default async function StudentProfilePage() {
           </div>
         )}
       </section>
+      <h2 id="notify" className="scroll-mt-6 text-xl font-extrabold text-zinc-900">🔔 알림·앱 설치</h2>
+      <PushToggle />
+      <InstallAppCard />
       <h2 id="password" className="scroll-mt-6 text-xl font-extrabold text-zinc-900">🔑 비밀번호 바꾸기</h2>
       <section className={cardClass}>
         <PasswordForm />

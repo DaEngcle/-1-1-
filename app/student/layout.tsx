@@ -37,7 +37,7 @@ export default async function StudentLayout({
 }) {
   const student = await requireStudent();
   return (
-    <AppShell title={`다잉클 · ${student.nickname ?? student.name}`} nav={NAV} bottomNav={BOTTOM_NAV}>
+    <AppShell title={`다잉클 · ${student.nickname ?? student.name}`} nav={NAV} bottomNav={{ items: BOTTOM_NAV, moreHref: "/student/more" }}>
       <CatProvider breed={student.catBreed} name={student.catName}>{children}</CatProvider>
       <FeedbackPrompt />
     </AppShell>

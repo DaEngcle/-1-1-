@@ -1,7 +1,5 @@
 import Link from "next/link";
 import { ReviewMarquee, ReviewWall } from "@/app/_ui/reviews";
-import { InstallAppCard } from "@/app/_ui/pwa";
-import { PushToggle } from "@/app/_ui/push-toggle";
 import { requireStudent } from "@/lib/classroom/dal";
 import { PLANS, isPlanId, isTrialPlan } from "@/lib/classroom/plans";
 import { kstDate } from "@/lib/classroom/stats";
@@ -454,8 +452,6 @@ export default async function StudentHomePage() {
         </div>
       </details>
 
-      <InstallAppCard />
-      <PushToggle />
 
 
 

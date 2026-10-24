@@ -13,7 +13,7 @@ export function AppShell({
   title: string;
   nav: { href: string; label: string }[];
   /** 있으면 휴대폰에서는 위 메뉴 대신 아래 탭바(+더보기)를 쓴다 */
-  bottomNav?: { href: string; icon: string; label: string }[];
+  bottomNav?: { items: { href: string; icon: string; label: string }[]; moreHref: string };
   children: React.ReactNode;
 }) {
   return (
@@ -39,7 +39,7 @@ export function AppShell({
       <main className={`mx-auto flex w-full max-w-3xl flex-1 flex-col gap-5 px-4 py-6 ${bottomNav ? "pb-32 sm:pb-6" : ""}`}>
         {children}
       </main>
-      {bottomNav && <BottomNav items={nav} primary={bottomNav} />}
+      {bottomNav && <BottomNav items={nav} primary={bottomNav.items} moreHref={bottomNav.moreHref} />}
     </div>
   );
 }
