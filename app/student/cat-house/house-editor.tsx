@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useTransition } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { CatRoom, ItemPreview } from "@/app/_ui/cat-room";
 import type { CatBreed, CatMood } from "@/lib/classroom/cat";
@@ -55,6 +55,11 @@ export function HouseEditor({
 }) {
   const router = useRouter();
   const [layout, setLayout] = useState(initial);
+  // 구매처럼 기다린 뒤에 놓을 때도 가장 최근 배치를 쓰기 위해
+  const latest = useRef(layout);
+  useEffect(() => {
+    latest.current = layout;
+  }, [layout]);
   const [tab, setTab] = useState<Tab>("floorItem");
   const [sel, setSel] = useState<number | null>(null);
   const [msg, setMsg] = useState<string | null>(null);
@@ -145,20 +150,23 @@ export function HouseEditor({
       });
       return;
     }
-    const idx = layout.items.findIndex((p) => p.id === it.id);
+    const cur = latest.current;
+    const idx = cur.items.findIndex((p) => p.id === it.id);
     if (idx >= 0) {
       setSel(idx);
       return;
     }
-    if (layout.items.length >= MAX_PLACED) {
+    if (cur.items.length >= MAX_PLACED) {
       setMsg(`방에는 ${MAX_PLACED}개까지 놓을 수 있어요.`);
       return;
     }
-    const p = defaultPlace(it.id, layout.items.length);
+    const p = defaultPlace(it.id, cur.items.length);
     if (!p) return;
-    // 지금 화면의 목록 기준으로 같이 바꿔야 선택 번호가 어긋나지 않는다
-    setLayout({ ...layout, items: [...layout.items, p] });
-    setSel(layout.items.length);
+    // 같은 목록 기준으로 놓고 선택해야 번호가 어긋나지 않는다
+    const next = { ...cur, items: [...cur.items, p] };
+    latest.current = next;
+    setLayout(next);
+    setSel(cur.items.length);
   }
 
   function buy(it: HouseItem) {
