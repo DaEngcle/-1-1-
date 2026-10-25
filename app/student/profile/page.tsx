@@ -21,20 +21,10 @@ export default async function StudentProfilePage() {
         </p>
         <NicknameForm current={student.nickname} />
       </section>
-      <Link href="/student/cat-house#cat" className="text-sm font-semibold text-brand-700 underline">
-        🐾 내 고양이·이름 바꾸기는 고양이 집에서
-      </Link>
       <h2 id="password" className="scroll-mt-6 text-lg font-extrabold text-zinc-900">🔒 비밀번호 바꾸기</h2>
       <section className={cardClass}>
         <PasswordForm />
       </section>
-      <p className="text-sm text-zinc-500">
-        알림·자막·효과음은{" "}
-        <Link href="/student/settings" className="font-semibold text-brand-700 underline">
-          설정
-        </Link>
-        에서 바꿀 수 있어요.
-      </p>
     </>
   );
 }
