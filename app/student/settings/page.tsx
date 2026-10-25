@@ -33,7 +33,7 @@ export default async function SettingsPage() {
           {student.accessUntil ? ` · ${student.accessUntil.replaceAll("-", ".")}까지` : ""}
         </p>
         <Link href="/student/profile" className="mt-3 inline-block text-sm font-semibold text-brand-700 underline">
-          닉네임·고양이·비밀번호 바꾸기
+          닉네임·비밀번호 바꾸기
         </Link>
       </section>
 

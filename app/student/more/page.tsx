@@ -28,7 +28,7 @@ const SECTIONS: { title: string; items: Item[] }[] = [
   {
     title: "계정",
     items: [
-      { href: "/student/profile", icon: "user", title: "내 정보", sub: "닉네임·고양이·비밀번호 바꾸기" },
+      { href: "/student/profile", icon: "user", title: "내 정보", sub: "닉네임·비밀번호 바꾸기" },
       { href: "/student/settings", icon: "settings", title: "설정", sub: "알림·해석·자막·효과음" },
     ],
   },
@@ -43,36 +43,24 @@ export default async function MorePage() {
     <>
       <h1 className="text-3xl font-extrabold tracking-tight text-zinc-900">더보기</h1>
 
-      <Link href="/student/profile" className="flex items-center gap-4 rounded-[28px] bg-white p-5 shadow-sm">
-        {student.catBreed ? (
-          <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-brand-50">
-            <CatSprite breed={student.catBreed} className="h-10 w-12" />
-          </span>
-        ) : (
-          <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-brand-50 text-2xl font-extrabold text-brand-700">
-            {name.slice(0, 1)}
-          </span>
-        )}
-        <span className="flex min-w-0 flex-col">
-          <span className="truncate text-xl font-extrabold text-zinc-900">{name}</span>
-          <span className="truncate text-sm text-zinc-500">
-            {plan}
-            {student.accessUntil ? ` · ${student.accessUntil.replaceAll("-", ".")}까지` : ""}
-          </span>
-        </span>
-        <LineIcon name="chevron" className="ml-auto h-5 w-5 shrink-0 text-zinc-300" />
-      </Link>
-
       <Link
         href="/student/cat-house"
         className="flex items-center gap-4 rounded-[28px] bg-gradient-to-br from-violet-500 to-fuchsia-500 p-5 text-white shadow-md"
       >
-        <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/20">
-          <LineIcon name="house" className="h-7 w-7" />
+        <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-white/90">
+          {student.catBreed ? (
+            <CatSprite breed={student.catBreed} className="h-10 w-12" />
+          ) : (
+            <span className="text-2xl font-extrabold text-violet-600">{name.slice(0, 1)}</span>
+          )}
         </span>
-        <span className="flex flex-col">
-          <span className="text-lg font-extrabold">{student.catName ?? "고양이"}의 집 꾸미기</span>
-          <span className="text-sm text-white/85">공부로 모은 츄르 🐟로 가구 사기 · 친구 방 구경</span>
+        <span className="flex min-w-0 flex-col">
+          <span className="truncate text-xl font-extrabold">{name}</span>
+          <span className="truncate text-xs text-white/80">
+            {plan}
+            {student.accessUntil ? ` · ${student.accessUntil.replaceAll("-", ".")}까지` : ""}
+          </span>
+          <span className="mt-1 text-sm font-bold">🏠 {student.catName ?? "고양이"}의 집 꾸미기 · 츄르 🐟로 가구 사기</span>
         </span>
         <LineIcon name="chevron" className="ml-auto h-5 w-5 shrink-0 text-white/70" />
       </Link>

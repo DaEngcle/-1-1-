@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { requireStudent } from "@/lib/classroom/dal";
 import { CatRoom } from "@/app/_ui/cat-room";
+import { CatPicker } from "@/app/_ui/cat-picker";
+import { CatNameForm } from "@/app/_ui/cat-name-form";
 import { ITEM_BY_ID, GUESTS, POSTCARDS, POSTCARD_MIN, affinity, catMoodFor, guestFor, roomScore, DAILY_CHURU_CAP } from "@/lib/classroom/cat-house";
 import type { CatBreed } from "@/lib/classroom/cat";
 import { BoxButton } from "./box-button";
@@ -30,6 +32,25 @@ export default async function CatHousePage() {
           공부하면 츄르 🐟가 모여요 (오늘 {churu.todayEarned}/{DAILY_CHURU_CAP}). 츄르로 가구를 사서 방을 꾸며 주세요.
         </p>
       </div>
+
+      {!student.catBreed ? (
+        <p className="rounded-2xl bg-amber-50 p-3 text-sm text-amber-800">
+          먼저{" "}
+          <a href="#cat" className="font-bold underline">
+            맨 아래에서 내 고양이
+          </a>
+          를 골라 주세요!
+        </p>
+      ) : null}
+
+      <HouseEditor
+        initial={room.layout}
+        owned={[...churu.owned]}
+        balance={churu.balance}
+        breed={student.catBreed}
+        mood={mood.mood}
+        guest={(guest?.breed as CatBreed | undefined) ?? null}
+      />
 
       <div className="flex flex-col gap-2 rounded-2xl bg-white p-3 shadow-sm">
         <div className="flex flex-wrap items-center gap-1.5">
@@ -68,25 +89,6 @@ export default async function CatHousePage() {
       )}
 
       <BoxButton opened={churu.boxOpened} weekDays={churu.weekDays} />
-
-      {!student.catBreed ? (
-        <p className="rounded-2xl bg-amber-50 p-3 text-sm text-amber-800">
-          먼저{" "}
-          <Link href="/student/profile#cat" className="font-bold underline">
-            내 고양이
-          </Link>
-          를 골라 주세요!
-        </p>
-      ) : null}
-
-      <HouseEditor
-        initial={room.layout}
-        owned={[...churu.owned]}
-        balance={churu.balance}
-        breed={student.catBreed}
-        mood={mood.mood}
-        guest={(guest?.breed as CatBreed | undefined) ?? null}
-      />
 
       <section className="flex flex-col gap-2 rounded-2xl bg-white p-3 shadow-sm">
         <h2 className="font-extrabold text-zinc-900">
@@ -155,6 +157,17 @@ export default async function CatHousePage() {
               </li>
             ))}
           </ul>
+        )}
+      </section>
+      <section id="cat" className="flex scroll-mt-6 flex-col gap-2 rounded-2xl bg-white p-3 shadow-sm">
+        <h2 className="font-extrabold text-zinc-900">🐾 내 고양이 바꾸기</h2>
+        <p className="text-xs text-zinc-500">홈에서 매일 응원해 주는 고양이예요. 누르면 바로 바뀌어요.</p>
+        <CatPicker current={student.catBreed} />
+        {student.catBreed && (
+          <div className="mt-2 flex flex-col gap-1">
+            <p className="text-sm font-bold text-zinc-800">이름</p>
+            <CatNameForm current={student.catName} />
+          </div>
         )}
       </section>
     </>
