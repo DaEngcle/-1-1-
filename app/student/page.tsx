@@ -291,7 +291,7 @@ export default async function StudentHomePage() {
           )}
           <span className="flex min-w-0 flex-col">
             <span className="text-xs font-semibold text-brand-600">
-              오늘의 호주 뉴스 · {latestNews.level}
+              뉴스로 배우는 영어 · {latestNews.level}
             </span>
             <span className="truncate font-bold text-zinc-900">{latestNews.title_ko}</span>
             <span className="text-xs text-zinc-500">쉬운 영어 요약 + 핵심 표현 5개 + 1분 퀴즈</span>

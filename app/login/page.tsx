@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { checkStudent, isTeacher as hasTeacherSession } from "@/lib/classroom/dal";
 import { PhoneLoginForm, StudentLoginForm, TeacherLoginForm } from "./login-forms";
 
 const ERRORS: Record<string, string> = {
@@ -28,6 +30,14 @@ export default async function LoginPage({
   searchParams: Promise<{ role?: string; error?: string; method?: string }>;
 }) {
   const { role, error, method } = await searchParams;
+  // 이미 로그인돼 있으면 (자동 로그인) 바로 들어간다. 오류 안내로 온 경우는 그대로 보여 준다.
+  if (!error) {
+    if (role === "teacher") {
+      if (await hasTeacherSession()) redirect("/teacher");
+    } else if ((await checkStudent()).student) {
+      redirect("/student");
+    }
+  }
   const byCode = method === "code";
   const isTeacher = role === "teacher";
 

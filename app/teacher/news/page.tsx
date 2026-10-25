@@ -22,7 +22,7 @@ export default async function TeacherNewsPage() {
 
   return (
     <>
-      <h1 className="text-xl font-bold text-zinc-900">📰 뉴스로 공부하기</h1>
+      <h1 className="text-xl font-bold text-zinc-900">📰 뉴스로 배우는 영어</h1>
       <section className={`${cardClass} flex flex-col gap-2`}>
         <p className="text-sm text-zinc-700">
           매일 아침 6시(한국)에 ABC News 헤드라인 중 워홀러에게 쓸모 있는 가벼운 기사 2개를 골라, AI가 쉬운 요약·핵심

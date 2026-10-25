@@ -51,16 +51,37 @@ export async function decryptSession(
   }
 }
 
+export const SESSION_COOKIE_OPTIONS = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: "lax" as const,
+  path: "/",
+  maxAge: SESSION_DAYS * 24 * 60 * 60,
+};
+
 export async function createSession(payload: SessionPayload) {
   const token = await encryptSession(payload);
   const cookieStore = await cookies();
-  cookieStore.set(SESSION_COOKIE, token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    path: "/",
-    maxAge: SESSION_DAYS * 24 * 60 * 60,
-  });
+  cookieStore.set(SESSION_COOKIE, token, SESSION_COOKIE_OPTIONS);
+}
+
+const REFRESH_AFTER_DAYS = 3;
+
+/**
+ * 자동 로그인 연장: 로그인한 지 3일이 지난 유효한 세션이면 같은 내용으로 새 토큰을 만든다.
+ * 앱을 계속 쓰는 학생은 30일이 지나도 로그아웃되지 않는다. 연장할 필요가 없으면 null.
+ */
+export async function refreshedSessionToken(token: string | undefined): Promise<string | null> {
+  if (!token) return null;
+  try {
+    const { payload } = await jwtVerify(token, getKey(), { algorithms: ["HS256"] });
+    const session = await decryptSession(token);
+    if (!session || typeof payload.iat !== "number") return null;
+    if (Date.now() / 1000 - payload.iat < REFRESH_AFTER_DAYS * 24 * 60 * 60) return null;
+    return encryptSession(session);
+  } catch {
+    return null;
+  }
 }
 
 export async function deleteSession() {

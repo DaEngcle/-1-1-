@@ -14,7 +14,7 @@ const NAV = [
   { href: "/student/grammar", label: "🐤 기초 문법" },
   { href: "/student/cat-house", label: "🏠 고양이 집" },
   { href: "/student/league", label: "🏆 리그" },
-  { href: "/student/news", label: "📰 뉴스로 공부" },
+  { href: "/student/news", label: "📰 뉴스로 배우는 영어" },
   { href: "/student/resources", label: "🎁 자료실" },
   { href: "/student/shadowing", label: "🎤 내 쉐도잉" },
   { href: "/student/level-test", label: "📈 레벨테스트" },

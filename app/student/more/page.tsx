@@ -13,7 +13,7 @@ const SECTIONS: { title: string; items: Item[] }[] = [
     title: "공부",
     items: [
       { href: "/student/grammar", icon: "book", title: "기초 문법", sub: "다니엘 쌤 강의 + 개념·예문·문제" },
-      { href: "/student/news", icon: "news", title: "뉴스로 공부", sub: "매일 새 호주 뉴스 · 핵심 표현 5개" },
+      { href: "/student/news", icon: "news", title: "뉴스로 배우는 영어", sub: "매일 호주 뉴스로 · 핵심 표현 5개 + 퀴즈" },
       { href: "/student/pronunciation", icon: "sound", title: "발음 가이드", sub: "th·r·l·f·v 입모양부터" },
       { href: "/student/level-test", icon: "chart", title: "레벨테스트", sub: "내 영어 레벨 확인·수료 때 다시 보기" },
     ],

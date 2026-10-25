@@ -27,7 +27,7 @@ export default async function NewsListPage() {
   return (
     <>
       <div>
-        <h1 className="text-xl font-bold text-zinc-900">📰 뉴스로 공부하기</h1>
+        <h1 className="text-xl font-bold text-zinc-900">📰 뉴스로 배우는 영어</h1>
         <p className="text-sm text-zinc-500">
           진짜 호주 뉴스를 쉬운 영어로 읽고, 호주에서 바로 쓰는 표현 5개씩 챙겨가요.
         </p>
