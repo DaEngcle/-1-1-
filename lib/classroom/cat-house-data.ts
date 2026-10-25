@@ -139,3 +139,29 @@ export async function likedToday(ownerId: string, likerId: string) {
     .maybeSingle();
   return Boolean(data);
 }
+
+export type GuestbookEntry = { id: number; writerId: string; name: string; message: string; day: string; mine: boolean };
+
+/** 방명록 최근 글 (최신 순) */
+export async function listGuestbook(ownerId: string, viewerId: string, limit = 20): Promise<GuestbookEntry[]> {
+  const { data } = await createServerSupabaseClient()
+    .from("cat_guestbook")
+    .select("id, writer_id, message, day, students!cat_guestbook_writer_id_fkey(name, nickname, is_active)")
+    .eq("owner_id", ownerId)
+    .order("created_at", { ascending: false })
+    .limit(limit);
+  return (data ?? [])
+    .map((r) => {
+      const s = r.students as unknown as { name: string; nickname: string | null; is_active: boolean } | null;
+      if (!s || !s.is_active) return null;
+      return {
+        id: r.id as number,
+        writerId: r.writer_id as string,
+        name: s.nickname ?? maskName(s.name),
+        message: r.message as string,
+        day: r.day as string,
+        mine: r.writer_id === viewerId,
+      };
+    })
+    .filter((r) => r !== null);
+}

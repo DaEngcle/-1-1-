@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { requireStudent } from "@/lib/classroom/dal";
 import { kstDate } from "@/lib/classroom/stats";
-import { BOX_MIN_DAYS, BOX_ODDS, ITEMS, ITEM_BY_ID, normalizeLayout, type Layout } from "@/lib/classroom/cat-house";
+import { BOX_MIN_DAYS, BOX_ODDS, ITEMS, ITEM_BY_ID, checkGuestbook, normalizeLayout, type Layout } from "@/lib/classroom/cat-house";
 import { weekStart } from "@/lib/classroom/engagement";
 import { getChuru, getRoom } from "@/lib/classroom/cat-house-data";
 
@@ -84,4 +84,37 @@ export async function openBox() {
   return item
     ? { ok: true, message: `🎉 ${rarity} 아이템 「${item.name}」이(가) 나왔어요!`, itemId: item.id }
     : { ok: true, message: "🎉 이미 다 가지고 있어서 츄르 30개로 바꿔 드렸어요!" };
+}
+
+/** 친구 방 방명록에 영어 한 줄 (방마다 하루 한 번) */
+export async function writeGuestbook(ownerId: string, message: string) {
+  const student = await requireStudent();
+  if (ownerId === student.id) return { ok: false, message: "내 방에는 쓸 수 없어요." };
+  if (!/^[0-9a-f-]{36}$/.test(ownerId)) return { ok: false, message: "방을 찾지 못했어요." };
+  const checked = checkGuestbook(String(message ?? ""));
+  if (!checked.ok) return { ok: false, message: checked.reason };
+  const supabase = createServerSupabaseClient();
+  const { data: owner } = await supabase.from("students").select("is_active").eq("id", ownerId).maybeSingle();
+  if (!owner?.is_active) return { ok: false, message: "방을 찾지 못했어요." };
+  const { error } = await supabase
+    .from("cat_guestbook")
+    .insert({ owner_id: ownerId, writer_id: student.id, day: kstDate(new Date()), message: checked.text });
+  if (error) {
+    return { ok: false, message: error.code === "23505" ? "이 방에는 오늘 이미 남겼어요. 내일 또 와요 🐾" : "남기지 못했어요. 다시 해 주세요." };
+  }
+  revalidatePath(`/student/cat-house/${ownerId}`);
+  return { ok: true, message: "방명록을 남겼어요 ✉️" };
+}
+
+/** 방명록 글 지우기 (방 주인 또는 쓴 사람만) */
+export async function removeGuestbook(entryId: number) {
+  const student = await requireStudent();
+  if (!Number.isInteger(entryId)) return { ok: false };
+  const supabase = createServerSupabaseClient();
+  const { data: row } = await supabase.from("cat_guestbook").select("owner_id, writer_id").eq("id", entryId).maybeSingle();
+  if (!row || (row.owner_id !== student.id && row.writer_id !== student.id)) return { ok: false };
+  await supabase.from("cat_guestbook").delete().eq("id", entryId);
+  revalidatePath(`/student/cat-house/${row.owner_id}`);
+  revalidatePath("/student/cat-house");
+  return { ok: true };
 }

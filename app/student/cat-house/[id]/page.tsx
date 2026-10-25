@@ -5,9 +5,11 @@ import { requireStudent } from "@/lib/classroom/dal";
 import { maskName } from "@/lib/classroom/engagement";
 import { CatRoom } from "@/app/_ui/cat-room";
 import type { CatBreed } from "@/lib/classroom/cat";
-import { getRoom, likedToday } from "@/lib/classroom/cat-house-data";
+import { getRoom, likedToday, listGuestbook } from "@/lib/classroom/cat-house-data";
+import { kstDate } from "@/lib/classroom/stats";
 import { guestFor, roomScore } from "@/lib/classroom/cat-house";
 import { LikeButton } from "./like-button";
+import { Guestbook } from "../guestbook";
 
 export default async function VisitRoomPage({ params }: { params: Promise<{ id: string }> }) {
   const me = await requireStudent();
@@ -19,7 +21,9 @@ export default async function VisitRoomPage({ params }: { params: Promise<{ id: 
     .eq("id", id)
     .maybeSingle();
   if (!owner || !owner.is_active) notFound();
-  const [{ layout, likes }, liked] = await Promise.all([getRoom(id), likedToday(id, me.id)]);
+  const [{ layout, likes }, liked, guestbook] = await Promise.all([getRoom(id), likedToday(id, me.id), listGuestbook(id, me.id)]);
+  const today = kstDate(new Date());
+  const wroteToday = guestbook.some((e) => e.mine && e.day === today);
   const name = (owner.nickname as string | null) ?? maskName(owner.name as string);
 
   return (
@@ -43,6 +47,7 @@ export default async function VisitRoomPage({ params }: { params: Promise<{ id: 
         {roomScore(layout).sets.length ? ` · ${roomScore(layout).sets.join(" · ")}` : ""}
       </p>
       <LikeButton ownerId={id} likes={likes} liked={liked || id === me.id} />
+      <Guestbook ownerId={id} entries={guestbook} canWrite={id !== me.id} isOwner={id === me.id} wroteToday={wroteToday} />
     </>
   );
 }

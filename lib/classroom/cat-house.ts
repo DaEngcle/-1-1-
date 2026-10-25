@@ -436,3 +436,32 @@ export function roomScore(layout: Layout) {
 // ---------- 주간 깜짝 상자 (무료·확률 공개) ----------
 export const BOX_ODDS = { 일반: 75, 레어: 22, 전설: 3 } as const;
 export const BOX_MIN_DAYS = 3;
+
+/** 방명록: 고르기만 해도 되는 영어 한 줄 */
+export const GUESTBOOK_PHRASES = [
+  { en: "What a cozy room!", ko: "방 정말 아늑하다!" },
+  { en: "Your cat is so adorable!", ko: "고양이 너무 귀여워!" },
+  { en: "I love how you decorated it.", ko: "꾸민 거 너무 좋아." },
+  { en: "Can I move in? 😆", ko: "나 여기 살아도 돼?" },
+  { en: "This room is so Aussie!", ko: "완전 호주 느낌이다!" },
+  { en: "Keep it up, mate!", ko: "계속 힘내, 친구!" },
+  { en: "Great job studying today!", ko: "오늘 공부 수고했어!" },
+  { en: "See you in class!", ko: "수업에서 봐!" },
+];
+export const GUESTBOOK_MAX = 80;
+
+/** 방명록 글 확인: 영어로만, 80자 이하. 문제가 있으면 이유(한국어)를 돌려준다 */
+export function checkGuestbook(raw: string): { ok: true; text: string } | { ok: false; reason: string } {
+  const text = raw.replace(/\s+/g, " ").trim();
+  if (text.length < 2) return { ok: false, reason: "한 줄을 써 주세요." };
+  if (text.length > GUESTBOOK_MAX) return { ok: false, reason: `${GUESTBOOK_MAX}자까지 쓸 수 있어요.` };
+  if (/[ㄱ-ㅎㅏ-ㅣ가-힣]/.test(text)) return { ok: false, reason: "방명록은 영어로 써요! 🇦🇺" };
+  if (!/[a-zA-Z]{2,}/.test(text)) return { ok: false, reason: "영어 단어를 넣어 주세요." };
+  if (!/^[\x20-\x7E’☀-➿\u{1F300}-\u{1FAFF}️]+$/u.test(text)) {
+    return { ok: false, reason: "영어·숫자·이모지만 쓸 수 있어요." };
+  }
+  if (/\b(fuck|shit|bitch|asshole|dick|cunt|bastard|slut|retard)/i.test(text)) {
+    return { ok: false, reason: "친구가 기분 좋을 말로 써 주세요 🐾" };
+  }
+  return { ok: true, text };
+}

@@ -4,12 +4,18 @@ import { CatRoom } from "@/app/_ui/cat-room";
 import { ITEM_BY_ID, GUESTS, POSTCARDS, POSTCARD_MIN, affinity, catMoodFor, guestFor, roomScore, DAILY_CHURU_CAP } from "@/lib/classroom/cat-house";
 import type { CatBreed } from "@/lib/classroom/cat";
 import { BoxButton } from "./box-button";
-import { getChuru, getRoom, listRooms } from "@/lib/classroom/cat-house-data";
+import { getChuru, getRoom, listGuestbook, listRooms } from "@/lib/classroom/cat-house-data";
+import { Guestbook } from "./guestbook";
 import { HouseEditor } from "./house-editor";
 
 export default async function CatHousePage() {
   const student = await requireStudent();
-  const [churu, room, rooms] = await Promise.all([getChuru(student.id), getRoom(student.id), listRooms(student.id)]);
+  const [churu, room, rooms, guestbook] = await Promise.all([
+    getChuru(student.id),
+    getRoom(student.id),
+    listRooms(student.id),
+    listGuestbook(student.id, student.id),
+  ]);
   const mood = catMoodFor(churu.daysSince);
   const catName = student.catName ?? "고양이";
   const aff = affinity(churu.studyEarned);
@@ -130,6 +136,8 @@ export default async function CatHousePage() {
           <li>며칠 쉬어도 고양이는 아프지 않아요. 창가에서 낮잠 자며 기다려요 💤</li>
         </ul>
       </details>
+
+      <Guestbook ownerId={student.id} entries={guestbook} canWrite={false} isOwner wroteToday={false} />
 
       <section className="flex flex-col gap-2">
         <h2 className="font-extrabold text-zinc-900">🐾 친구 방 구경하기</h2>
