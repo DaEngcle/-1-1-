@@ -6,7 +6,6 @@ import { LineIcon } from "@/app/_ui/line-icons";
 import { PushToggle } from "@/app/_ui/push-toggle";
 import { InstallAppCard } from "@/app/_ui/pwa";
 import { SubmitButton } from "@/app/_ui/submit-button";
-import { PasswordForm } from "../profile/password-form";
 import { SettingsToggles } from "./settings-toggles";
 
 const card = "rounded-[28px] bg-white p-5 shadow-sm";
@@ -34,7 +33,7 @@ export default async function SettingsPage() {
           {student.accessUntil ? ` · ${student.accessUntil.replaceAll("-", ".")}까지` : ""}
         </p>
         <Link href="/student/profile" className="mt-3 inline-block text-sm font-semibold text-brand-700 underline">
-          닉네임·고양이 바꾸기
+          닉네임·고양이·비밀번호 바꾸기
         </Link>
       </section>
 
@@ -48,11 +47,6 @@ export default async function SettingsPage() {
         <h2 className="text-lg font-extrabold text-zinc-900">알림·앱 설치</h2>
         <PushToggle />
         <InstallAppCard />
-      </section>
-
-      <section id="password" className={`${card} scroll-mt-6`}>
-        <h2 className="mb-3 text-lg font-extrabold text-zinc-900">비밀번호 바꾸기</h2>
-        <PasswordForm />
       </section>
 
       <form action={logout} className="rounded-[28px] bg-white px-5 shadow-sm">

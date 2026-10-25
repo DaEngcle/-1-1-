@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { requireStudent } from "@/lib/classroom/dal";
 import { NicknameForm } from "./nickname-form";
+import { PasswordForm } from "./password-form";
 import { cardClass } from "@/app/_ui/styles";
 import { CatPicker } from "@/app/_ui/cat-picker";
 import { CatNameForm } from "@/app/_ui/cat-name-form";
@@ -35,8 +36,12 @@ export default async function StudentProfilePage() {
           </div>
         )}
       </section>
+      <h2 id="password" className="scroll-mt-6 text-lg font-extrabold text-zinc-900">🔒 비밀번호 바꾸기</h2>
+      <section className={cardClass}>
+        <PasswordForm />
+      </section>
       <p className="text-sm text-zinc-500">
-        알림·비밀번호는{" "}
+        알림·자막·효과음은{" "}
         <Link href="/student/settings" className="font-semibold text-brand-700 underline">
           설정
         </Link>
