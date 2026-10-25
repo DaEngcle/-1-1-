@@ -113,7 +113,8 @@ export async function removeGuestbook(entryId: number) {
   const supabase = createServerSupabaseClient();
   const { data: row } = await supabase.from("cat_guestbook").select("owner_id, writer_id").eq("id", entryId).maybeSingle();
   if (!row || (row.owner_id !== student.id && row.writer_id !== student.id)) return { ok: false };
-  await supabase.from("cat_guestbook").delete().eq("id", entryId);
+  const { error } = await supabase.from("cat_guestbook").delete().eq("id", entryId);
+  if (error) return { ok: false };
   revalidatePath(`/student/cat-house/${row.owner_id}`);
   revalidatePath("/student/cat-house");
   return { ok: true };
