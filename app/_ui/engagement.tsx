@@ -45,14 +45,11 @@ export function StudyCalendar({
   streak,
   bestStreak,
   totalDays,
-  tier,
 }: {
   month: Engagement["month"];
   streak?: number;
   bestStreak?: number;
   totalDays?: number;
-  /** 현재 리그 (학생 홈에서만) */
-  tier?: React.ReactNode;
 }) {
   const past = month.days.filter((d) => !d.future);
   const perfect = past.length > 0 && past.every((d) => d.level > 0);
@@ -96,11 +93,7 @@ export function StudyCalendar({
         ))}
       </div>
       {streak != null && (
-        <div className="grid grid-cols-3 divide-x divide-amber-100 border-t border-amber-100 bg-white/70 py-3 text-center">
-          <div className="flex flex-col items-center justify-center gap-0.5">
-            {tier ?? <span className="text-2xl">🔥</span>}
-            <span className="text-[11px] text-zinc-500">현재 리그</span>
-          </div>
+        <div className="grid grid-cols-2 divide-x divide-amber-100 border-t border-amber-100 bg-white/70 py-3 text-center">
           <div className="flex flex-col items-center justify-center">
             {streak > 0 && streak >= (bestStreak ?? 0) && (
               <span className="text-[10px] font-bold text-violet-500">신기록!</span>

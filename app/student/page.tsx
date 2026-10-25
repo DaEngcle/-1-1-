@@ -39,8 +39,6 @@ import { cardClass } from "@/app/_ui/styles";
 import { ATTENDANCE_LABEL } from "@/lib/classroom/attendance";
 import { getEngagement, getSeasonRanking, weekShadowingCount, WEEKLY_SHADOWING_GOAL } from "@/lib/classroom/engagement";
 import { LeagueCard } from "@/app/_ui/league";
-import { TierEmblem } from "@/app/_ui/tier-emblem";
-import { tierFor } from "@/lib/classroom/league";
 import { getTests } from "@/lib/classroom/level-test-data";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { LevelCard } from "@/app/_ui/level-card";
@@ -106,8 +104,6 @@ export default async function StudentHomePage() {
     0,
   );
   const attended = stats.attendance.present + stats.attendance.late;
-  const meRank = ranking.find((r) => r.studentId === student.id);
-  const myTier = tierFor(meRank?.xp ?? 0, meRank?.rank ?? 99);
   const greeting = catGreeting(
     nickname ?? student.name,
     engagement.streak,
@@ -346,7 +342,6 @@ export default async function StudentHomePage() {
         streak={engagement.streak}
         bestStreak={engagement.bestStreak}
         totalDays={engagement.totalDays}
-        tier={<TierEmblem tier={myTier.id} className="h-9 w-9" />}
       />
 
       <LevelCard pre={tests.pre} post={tests.post} href="/student/level-test" />
