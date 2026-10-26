@@ -73,7 +73,7 @@ export function planName(plan: string | null | undefined, courses?: readonly unk
 export function planForCourses(courses: CourseId[], current?: string | null): PlanId {
   const key = (list: readonly string[]) => [...list].sort().join(",");
   const want = key(courses);
-  if (isPlanId(current) && current !== "custom" && key(PLANS[current].courses) === want) return current;
+  if (isPlanId(current) && current !== "custom" && current !== "trial1" && key(PLANS[current].courses) === want) return current;
   const hit = (Object.keys(PLANS) as PlanId[]).find(
     (id) => id !== "custom" && id !== "trial1" && key(PLANS[id].courses) === want,
   );
