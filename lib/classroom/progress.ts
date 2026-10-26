@@ -1,7 +1,7 @@
 import "server-only";
 import { createServerSupabaseClient, type Lesson } from "@/lib/supabase";
 import { SEGMENT_SECONDS, COMPLETE_PERCENT } from "./progress-rules";
-import { coursesForPlan } from "./plans";
+import { studentCourses } from "./plans";
 
 export { SEGMENT_SECONDS, COMPLETE_PERCENT };
 
@@ -79,7 +79,7 @@ export async function getCourseProgress(studentIds: string[]): Promise<Map<strin
   const supabase = createServerSupabaseClient();
   const [{ lessons, items }, { data: planRows }, progressRows, submissionRows] = await Promise.all([
     loadPublished(supabase),
-    supabase.from("students").select("id, plan").in("id", studentIds),
+    supabase.from("students").select("id, plan, courses").in("id", studentIds),
     fetchAll<{ student_id: string; lesson_id: string }>((from, to) =>
       supabase
         .from("video_progress")
@@ -99,7 +99,7 @@ export async function getCourseProgress(studentIds: string[]): Promise<Map<strin
   const courseOfLesson = new Map(lessons.map((l) => [l.id, l.course_id]));
   const videoLessonIds = new Set(lessons.filter((l) => l.video_url).map((l) => l.id));
   const itemCourse = new Map(items.map((i) => [i.id, courseOfLesson.get(i.lesson_id)]));
-  const planOf = new Map((planRows ?? []).map((r) => [r.id as string, r.plan as string | null]));
+  const planOf = new Map((planRows ?? []).map((r) => [r.id as string, studentCourses(r.plan as string | null, r.courses as string[] | null)]));
 
   const completed = new Map<string, Set<string>>();
   for (const p of progressRows) {
@@ -114,7 +114,7 @@ export async function getCourseProgress(studentIds: string[]): Promise<Map<strin
 
   const pct = (a: number, b: number) => (b ? Math.round((a / b) * 100) : 0);
   for (const id of studentIds) {
-    const courses = new Set<string>(coursesForPlan(planOf.get(id)));
+    const courses = new Set<string>(planOf.get(id) ?? []);
     const inPlan = (course: string | undefined) => course != null && courses.has(course);
     const videoTotal = [...videoLessonIds].filter((l) => inPlan(courseOfLesson.get(l))).length;
     const itemTotal = [...itemCourse.values()].filter(inPlan).length;
@@ -146,7 +146,7 @@ export async function getLessonProgress(studentId: string): Promise<LessonProgre
   const supabase = createServerSupabaseClient();
   const [{ lessons: allLessons, items }, { data: me }, { data: progressRows }, submissionRows] = await Promise.all([
     loadPublished(supabase),
-    supabase.from("students").select("plan").eq("id", studentId).maybeSingle(),
+    supabase.from("students").select("plan, courses").eq("id", studentId).maybeSingle(),
     supabase
       .from("video_progress")
       .select("lesson_id, percent, completed_at")
@@ -156,7 +156,7 @@ export async function getLessonProgress(studentId: string): Promise<LessonProgre
     ),
   ]);
 
-  const courses = new Set<string>(coursesForPlan(me?.plan));
+  const courses = new Set<string>(studentCourses(me?.plan, me?.courses as string[] | null));
   const lessons = allLessons.filter((l) => courses.has(l.course_id));
   const progress = new Map((progressRows ?? []).map((p) => [p.lesson_id, p]));
   const submitted = new Set(submissionRows.map((s) => s.lesson_item_id));

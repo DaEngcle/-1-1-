@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { requireStudent } from "@/lib/classroom/dal";
-import { PLANS, isPlanId } from "@/lib/classroom/plans";
+import { isPlanId, planName } from "@/lib/classroom/plans";
 import { logout } from "@/app/login/actions";
 import { CatSprite } from "@/app/_ui/cat";
 import { LineIcon } from "@/app/_ui/line-icons";
@@ -37,7 +37,7 @@ const SECTIONS: { title: string; items: Item[] }[] = [
 export default async function MorePage() {
   const student = await requireStudent();
   const name = student.nickname ?? student.name;
-  const plan = isPlanId(student.plan) ? PLANS[student.plan].name.replace("다잉클 ", "") : "무료회원";
+  const plan = isPlanId(student.plan) ? planName(student.plan, student.courses).replace("다잉클 ", "") : "무료회원";
 
   return (
     <>

@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { isTeacher } from "@/lib/classroom/dal";
 import { getRoster, STATUS_INFO } from "@/lib/classroom/roster";
-import { PLANS, isPlanId } from "@/lib/classroom/plans";
 import { kstDate } from "@/lib/classroom/stats";
 
 /** 학생 관리판을 엑셀에서 열 수 있는 CSV로 */
@@ -24,7 +23,7 @@ export async function GET() {
       r.nickname,
       r.phone,
       STATUS_INFO[r.status].label,
-      isPlanId(r.plan) ? PLANS[r.plan].name : "",
+      r.planLabel,
       r.accessUntil,
       r.daysLeft,
       r.lastActive,

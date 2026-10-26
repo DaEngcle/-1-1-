@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ReviewMarquee, ReviewWall } from "@/app/_ui/reviews";
 import { requireStudent } from "@/lib/classroom/dal";
-import { PLANS, isPlanId, isTrialPlan } from "@/lib/classroom/plans";
+import { isPlanId, isTrialPlan, planName } from "@/lib/classroom/plans";
 import { kstDate } from "@/lib/classroom/stats";
 import { CatSprite } from "@/app/_ui/cat";
 import { CatPicker } from "@/app/_ui/cat-picker";
@@ -158,7 +158,7 @@ export default async function StudentHomePage() {
           </span>
           {isPlanId(student.plan) && student.courses.length > 0 && (
             <span className="rounded-full bg-white/15 px-3 py-1">
-              {isTrialPlan(student.plan) ? "🎁" : "🎫"} {PLANS[student.plan].name.replace("다잉클 ", "")}
+              {isTrialPlan(student.plan) ? "🎁" : "🎫"} {planName(student.plan, student.courses).replace("다잉클 ", "")}
               {student.accessUntil && ` · D-${daysLeft(student.accessUntil)}`}
             </span>
           )}

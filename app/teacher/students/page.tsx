@@ -615,7 +615,7 @@ export default async function StudentsPage({
                         }`}
                       >
                         {isTrialPlan(r.plan) && "🎁 "}
-                        {PLANS[r.plan].name.replace("다잉클 ", "")}
+                        {r.planLabel.replace("다잉클 ", "")}
                         {r.daysLeft != null &&
                           (r.daysLeft < 0 ? " · 만료" : ` · D-${r.daysLeft}`)}
                       </span>

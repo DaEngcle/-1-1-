@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { requireTeacher } from "@/lib/classroom/dal";
 import { generateLoginCode, hashLoginCode } from "@/lib/classroom/login-code";
-import { COURSE_IDS, accessUntil, isPlanId } from "@/lib/classroom/plans";
+import { COURSE_IDS, accessUntil, isPlanId, planForCourses } from "@/lib/classroom/plans";
 import { kstDate } from "@/lib/classroom/stats";
 import { TALK_PASS } from "@/lib/classroom/interview-scenarios";
 import { randomBytes } from "node:crypto";
@@ -203,14 +203,25 @@ export async function rejectStudent(formData: FormData) {
 export async function updatePlan(formData: FormData) {
   await requireTeacher();
   const id = String(formData.get("id"));
-  const plan = String(formData.get("plan"));
   const until = String(formData.get("until") ?? "");
-  if (!isPlanId(plan) || !/^\d{4}-\d{2}-\d{2}$/.test(until)) return;
+  const trial = formData.get("trial") === "on";
+  const courses = COURSE_IDS.filter((c) => formData.getAll("courses").map(String).includes(c));
+  if (!/^[0-9a-f-]{36}$/.test(id) || !/^\d{4}-\d{2}-\d{2}$/.test(until) || courses.length === 0) return;
   const supabase = createServerSupabaseClient();
+  const { data: cur } = await supabase.from("students").select("plan").eq("id", id).maybeSingle();
+  // 체험은 부트캠프만 열린다. 아니면 고른 과정과 같은 수강권, 없으면 맞춤 수강(custom)
+  const plan = trial ? "trial1" : planForCourses(courses, cur?.plan as string | null);
   // 무료회원이 수강권을 사면 여기서 수강권을 주면 바로 등록생이 된다
   await supabase
     .from("students")
-    .update({ plan, access_until: until, stage: "enrolled", approval: "approved", is_active: true })
+    .update({
+      plan,
+      courses: plan === "custom" ? courses : null,
+      access_until: until,
+      stage: "enrolled",
+      approval: "approved",
+      is_active: true,
+    })
     .eq("id", id);
   revalidatePath("/teacher/students");
   revalidatePath("/teacher/crm");

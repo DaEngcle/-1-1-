@@ -26,6 +26,8 @@ export const PLANS = {
   kit12: { name: "다잉클 워홀생존키트", months: 12, courses: ["bootcamp", "level1", "level2", "level3"] as CourseId[] },
   // shortcut: 초급반·중급반(드라마) 과정이 생기면 여기에 추가
   allinone: { name: "다잉클 All in one", months: 18, courses: ["bootcamp", "level1", "level2", "level3"] as CourseId[] },
+  // 선생님이 과정을 직접 골라 준 학생 (예: 1.0반만). 실제 과정은 students.courses에 있다
+  custom: { name: "다잉클 맞춤 수강", months: 3, courses: [] as CourseId[], legacy: true },
 } as const;
 export type PlanId = keyof typeof PLANS;
 
@@ -45,6 +47,37 @@ export function isTrialPlan(plan: string | null | undefined) {
 
 export function coursesForPlan(plan: string | null | undefined): CourseId[] {
   return isPlanId(plan) ? PLANS[plan].courses : [];
+}
+
+function onlyCourseIds(courses: readonly unknown[]): CourseId[] {
+  return COURSE_IDS.filter((c) => courses.includes(c));
+}
+
+/** 학생이 볼 수 있는 과정: 맞춤 수강이면 직접 고른 과정, 아니면 수강권 기본 과정 */
+export function studentCourses(plan: string | null | undefined, courses: readonly unknown[] | null | undefined): CourseId[] {
+  if (plan === "custom") return onlyCourseIds(courses ?? []);
+  return coursesForPlan(plan);
+}
+
+/** 화면에 보일 수강권 이름 (맞춤 수강은 고른 과정으로 예: "Level 1.0반") */
+export function planName(plan: string | null | undefined, courses?: readonly unknown[] | null): string {
+  if (!isPlanId(plan)) return "";
+  if (plan === "custom") {
+    const list = onlyCourseIds(courses ?? []);
+    return list.length ? `다잉클 ${list.map((c) => COURSE_SHORT[c].replace("Level ", "")).join(" + ")}반` : PLANS.custom.name;
+  }
+  return PLANS[plan].name;
+}
+
+/** 고른 과정과 똑같은 수강권이 있으면 그 수강권(지금 수강권이 맞으면 그대로), 없으면 custom */
+export function planForCourses(courses: CourseId[], current?: string | null): PlanId {
+  const key = (list: readonly string[]) => [...list].sort().join(",");
+  const want = key(courses);
+  if (isPlanId(current) && current !== "custom" && key(PLANS[current].courses) === want) return current;
+  const hit = (Object.keys(PLANS) as PlanId[]).find(
+    (id) => id !== "custom" && id !== "trial1" && key(PLANS[id].courses) === want,
+  );
+  return hit ?? "custom";
 }
 
 /** 시작일(YYYY-MM-DD)부터 수강권 기간이 끝나는 날 */

@@ -1,4 +1,5 @@
 import "server-only";
+import { planName } from "./plans";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { fetchAll, getCourseProgress, type CourseProgress } from "./progress";
 import { kstDate } from "./stats";
@@ -22,6 +23,8 @@ export interface RosterRow {
   memo: string | null;
   isActive: boolean;
   plan: string | null;
+  /** 화면에 보일 수강권 이름 */
+  planLabel: string;
   accessUntil: string | null;
   daysLeft: number | null;
   createdAt: string;
@@ -57,7 +60,7 @@ export async function getRoster(): Promise<RosterRow[]> {
   const supabase = createServerSupabaseClient();
   const { data: studentRows } = await supabase
     .from("students")
-    .select("id, name, nickname, phone, memo, is_active, plan, access_until, created_at, cohort_id, password_hash, login_code_hash")
+    .select("id, name, nickname, phone, memo, is_active, plan, courses, access_until, created_at, cohort_id, password_hash, login_code_hash")
     .eq("approval", "approved")
     // 무료회원(웨비나 등)·상담 고객은 학생 관리판이 아니라 상담·고객 탭에서 본다
     .eq("stage", "enrolled")
@@ -130,6 +133,7 @@ export async function getRoster(): Promise<RosterRow[]> {
       memo: (s.memo as string | null) ?? null,
       isActive: Boolean(s.is_active),
       plan: (s.plan as string | null) ?? null,
+      planLabel: planName(s.plan as string | null, s.courses as string[] | null),
       accessUntil: until,
       daysLeft: until ? daysBetween(today, until) : null,
       createdAt: s.created_at as string,

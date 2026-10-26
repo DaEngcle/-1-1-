@@ -19,13 +19,13 @@ import {
   setVocaFull,
   setStudentActive,
   updateMemo,
-  updatePlan,
 } from "../actions";
 import { RegenerateCodeButton, TempPasswordButton } from "../student-forms";
 import { CopyButton } from "@/app/_ui/copy-button";
 import { getRoster, nudgeMessage, STATUS_INFO } from "@/lib/classroom/roster";
 import { headers } from "next/headers";
-import { COURSE_SHORT, PLANS, coursesForPlan, isTrialPlan } from "@/lib/classroom/plans";
+import { COURSE_SHORT, isTrialPlan, studentCourses } from "@/lib/classroom/plans";
+import { PlanEditor } from "./plan-editor";
 import { ATTENDANCE_LABEL } from "@/lib/classroom/attendance";
 import { ScoreTrendChart } from "@/app/_ui/score-trend-chart";
 import { SubmissionList } from "../../submission-list";
@@ -52,7 +52,7 @@ export default async function TeacherStudentPage({
   const { data: student } = await supabase
     .from("students")
     .select(
-      `id, name, phone, memo, is_active, created_at, plan, access_until, early_courses, ${PROFILE_SELECT}`,
+      `id, name, phone, memo, is_active, created_at, plan, courses, access_until, early_courses, ${PROFILE_SELECT}`,
     )
     .eq("id", id)
     .maybeSingle<
@@ -66,6 +66,7 @@ export default async function TeacherStudentPage({
         plan: string | null;
         access_until: string | null;
         early_courses: string[] | null;
+        courses: string[] | null;
       } & Profile
     >();
   if (!student) notFound();
@@ -383,47 +384,22 @@ export default async function TeacherStudentPage({
 
       <section className={cardClass}>
         <h2 className="mb-2 font-bold text-zinc-900">수강권</h2>
-        <form
-          action={updatePlan}
-          className="flex flex-wrap items-center gap-2 text-sm"
-        >
-          <input type="hidden" name="id" value={student.id} />
-          <select
-            name="plan"
-            defaultValue={student.plan ?? "bootcamp"}
-            className="rounded-lg border border-slate-200 px-2 py-1.5"
-          >
-            {Object.entries(PLANS).map(([pid, p]) => (
-              <option key={pid} value={pid}>
-                {p.name} ({p.months}개월)
-              </option>
-            ))}
-          </select>
-          <label className="flex items-center gap-1 text-xs text-zinc-500">
-            종료일
-            <input
-              type="date"
-              name="until"
-              defaultValue={student.access_until ?? ""}
-              required
-              className="rounded-lg border border-slate-200 px-2 py-1"
-            />
-          </label>
-          <SubmitButton className="rounded-lg border border-slate-300 px-3 py-1.5 font-semibold">
-            저장
-          </SubmitButton>
-        </form>
+        <PlanEditor
+          id={student.id}
+          plan={student.plan}
+          courses={studentCourses(student.plan, student.courses)}
+          until={student.access_until}
+        />
         <p className="mt-1 text-xs text-zinc-500">
-          연장할 때는 종료일만 바꿔서 저장하세요. 종료일이 지나면 학생은
-          로그인할 수 없어요. (무료 체험은 끝나도 로그인은 되고, 강의만 잠겨서
-          무료회원처럼 돼요. 결제하면 수강권만 바꿔 주세요.)
+          연장은 +개월 버튼이나 종료일만 바꿔 저장하세요. 종료일이 지나면 학생은 로그인할 수 없어요. (무료 체험은 끝나도
+          로그인은 되고 강의만 잠겨요.)
         </p>
         {(() => {
           // 수강권에 들어 있지만 아직 '준비 중'이라 미리 열어주기를 안 하면 안 보이는 과정
           const hidden = (courseRows ?? []).filter(
             (c) =>
               c.status !== "open" &&
-              coursesForPlan(student.plan).includes(c.id as never) &&
+              studentCourses(student.plan, student.courses).includes(c.id as never) &&
               !(student.early_courses ?? []).includes(c.id),
           );
           return hidden.length > 0 ? (
