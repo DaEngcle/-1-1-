@@ -30,6 +30,7 @@ const SECTIONS: { title: string; items: Item[] }[] = [
     items: [
       { href: "/student/profile", icon: "user", title: "내 정보", sub: "닉네임·비밀번호 바꾸기" },
       { href: "/student/settings", icon: "settings", title: "설정", sub: "알림·해석·자막·효과음" },
+      { href: "/install", icon: "phone", title: "폰에 앱 설치하기", sub: "아이폰·갤럭시 홈 화면에 추가하는 방법" },
     ],
   },
 ];

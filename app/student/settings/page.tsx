@@ -28,6 +28,9 @@ export default async function SettingsPage() {
         <h2 className="text-lg font-extrabold text-zinc-900">알림·앱 설치</h2>
         <PushToggle />
         <InstallAppCard />
+        <Link href="/install" className="text-sm font-semibold text-brand-700 underline">
+          📲 폰에 설치하는 방법 보기 (아이폰·갤럭시)
+        </Link>
       </section>
 
     </>

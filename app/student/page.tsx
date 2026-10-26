@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { InstallAppCard } from "@/app/_ui/pwa";
 import { ReviewMarquee, ReviewWall } from "@/app/_ui/reviews";
 import { requireStudent } from "@/lib/classroom/dal";
 import { isPlanId, isTrialPlan, planName } from "@/lib/classroom/plans";
@@ -197,6 +198,8 @@ export default async function StudentHomePage() {
           </Link>
         )}
       </section>
+
+      <InstallAppCard />
 
       {!student.catBreed && (
         <section className="flex flex-col gap-3 rounded-3xl border-2 border-dashed border-brand-200 bg-white p-4">

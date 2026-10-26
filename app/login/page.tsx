@@ -74,6 +74,9 @@ export default async function LoginPage({
             >
               처음이에요 · 회원가입
             </Link>
+            <Link href="/install" className="rounded-xl bg-brand-50 px-4 py-2.5 font-bold text-brand-700">
+              📲 폰에 앱으로 설치하는 방법
+            </Link>
             <Link href={byCode ? "/login" : "/login?method=code"} className="text-xs text-zinc-500 underline">
               {byCode ? "전화번호로 로그인" : "선생님께 받은 코드로 로그인"}
             </Link>
