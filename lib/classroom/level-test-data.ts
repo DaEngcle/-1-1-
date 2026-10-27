@@ -170,8 +170,9 @@ export async function regradeTest(testId: string) {
       return false;
     }
   }
+  // 중간에 실패해도 다시 돌리면 저장된 원본(받아쓰기 답·말하기 문장·발음 점수)에서 똑같이 다시 계산된다
   const { listening, grammar, speaking, total, skills } = summarize(await getAnswers(testId));
-  await supabase
+  const { error: finalError } = await supabase
     .from("level_tests")
     .update({
       speaking_score: speaking,
@@ -184,5 +185,10 @@ export async function regradeTest(testId: string) {
     })
     .eq("id", testId)
     .eq("scoring_version", REGRADING);
+  if (finalError) {
+    console.error("레벨테스트 다시 채점 저장 실패:", finalError.message);
+    await release();
+    return false;
+  }
   return true;
 }
