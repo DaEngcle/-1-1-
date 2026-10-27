@@ -5,6 +5,8 @@ import { assessPronunciation, isAzureConfigured } from "@/lib/classroom/azure-sp
 import type { InterviewFeedback } from "@/lib/classroom/interview-ai";
 
 export const maxDuration = 30;
+/** 면접 한 번의 리포트로 따라 말하기 채점할 수 있는 횟수 */
+const MAX_PRACTICE = 30;
 
 /** 리포트의 '더 좋은 답'·'모범 답안'을 따라 말하면 발음 점수를 준다 (그 면접 리포트에 있는 문장만) */
 export async function POST(request: NextRequest) {
@@ -18,15 +20,26 @@ export async function POST(request: NextRequest) {
   if (!/^[0-9a-f-]{36}$/.test(sessionId) || !text || !(audio instanceof Blob) || audio.size === 0 || audio.size > 3_000_000) {
     return NextResponse.json({ error: "다시 녹음해 주세요." }, { status: 400 });
   }
-  const { data: session } = await createServerSupabaseClient()
+  const supabase = createServerSupabaseClient();
+  const { data: session } = await supabase
     .from("interview_sessions")
-    .select("feedback")
+    .select("feedback, practice_count")
     .eq("id", sessionId)
     .eq("student_id", student.id)
     .maybeSingle();
   const fb = session?.feedback as InterviewFeedback | null;
   const allowed = new Set([...(fb?.fixes ?? []).map((f) => f.better), ...(fb?.model_answers ?? []).map((m) => m.answer)]);
   if (!allowed.has(text)) return NextResponse.json({ error: "연습할 문장을 찾지 못했어요." }, { status: 400 });
+  // 횟수를 먼저 올려서 잡는다 (같은 값일 때만 올라가서 동시에 보내도 한도를 못 넘는다)
+  const used = (session?.practice_count as number | null) ?? 0;
+  if (used >= MAX_PRACTICE) return NextResponse.json({ error: "이 면접 연습은 여기까지! 새 면접에서 또 해 봐요 💪" }, { status: 429 });
+  const { data: claimed } = await supabase
+    .from("interview_sessions")
+    .update({ practice_count: used + 1 })
+    .eq("id", sessionId)
+    .eq("practice_count", used)
+    .select("id");
+  if (!claimed?.length) return NextResponse.json({ error: "잠깐 뒤에 다시 해 주세요." }, { status: 429 });
   try {
     const r = await assessPronunciation(new Uint8Array(await audio.arrayBuffer()), text);
     return NextResponse.json({
