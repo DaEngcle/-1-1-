@@ -118,6 +118,9 @@ export async function finishTest(testId: string) {
  * 예전 기준으로 채점된 결과를 지금 기준으로 다시 채점한다 (수강 전·후 비교를 같은 기준으로).
  * 저장된 받아쓰기 답과 말하기 기록(문장·발음 점수)으로 다시 계산하고, 끝난 날짜는 그대로 둔다.
  */
+/** 다시 채점하는 동안 잠깐 넣어 두는 표시 (지금 기준보다 커서 다른 재채점이 건드리지 않는다) */
+const REGRADING = 900;
+
 export async function regradeTest(testId: string) {
   const supabase = createServerSupabaseClient();
   const { data: test } = await supabase
@@ -125,7 +128,17 @@ export async function regradeTest(testId: string) {
     .select("finished_at, scoring_version")
     .eq("id", testId)
     .maybeSingle();
-  if (!test?.finished_at || (test.scoring_version ?? 2) >= SCORING_VERSION) return false;
+  const before = (test?.scoring_version as number | undefined) ?? 2;
+  if (!test?.finished_at || before >= SCORING_VERSION) return false;
+  // 동시에 두 번 돌지 않게 먼저 '채점 중'(REGRADING)으로 잡는다. 이미 누가 잡았으면 그만
+  const { data: claimed } = await supabase
+    .from("level_tests")
+    .update({ scoring_version: REGRADING })
+    .eq("id", testId)
+    .eq("scoring_version", before)
+    .select("id");
+  if (!claimed?.length) return false;
+  const release = () => supabase.from("level_tests").update({ scoring_version: before }).eq("id", testId);
   const answers = await getAnswers(testId);
   const updates: { test_id: string; question_id: string; score: number; detail?: unknown }[] = [];
   for (const a of answers) {
@@ -150,7 +163,12 @@ export async function regradeTest(testId: string) {
   for (const u of speakingUpdates) if (u) updates.push(u);
   for (const u of updates) {
     const { test_id, question_id, ...rest } = u;
-    await supabase.from("level_test_answers").update(rest).eq("test_id", test_id).eq("question_id", question_id);
+    const { error } = await supabase.from("level_test_answers").update(rest).eq("test_id", test_id).eq("question_id", question_id);
+    if (error) {
+      console.error("레벨테스트 다시 채점 실패:", error.message);
+      await release();
+      return false;
+    }
   }
   const { listening, grammar, speaking, total, skills } = summarize(await getAnswers(testId));
   await supabase
@@ -164,6 +182,7 @@ export async function regradeTest(testId: string) {
       level: levelForScore(total).level,
       scoring_version: SCORING_VERSION,
     })
-    .eq("id", testId);
+    .eq("id", testId)
+    .eq("scoring_version", REGRADING);
   return true;
 }
