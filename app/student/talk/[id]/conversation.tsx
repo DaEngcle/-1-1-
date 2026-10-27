@@ -10,6 +10,7 @@ import { InterviewerFace, InterviewerVideo, hasInterviewerVideo } from "@/app/_u
 import { CatSprite } from "@/app/_ui/cat";
 import { useMyCat } from "@/app/_ui/cat-context";
 import type { Scenario } from "@/lib/classroom/interview-scenarios";
+import { PracticeLine } from "./practice-line";
 
 type Turn = { role: "ai" | "me"; text: string };
 type Feedback = {
@@ -20,6 +21,7 @@ type Feedback = {
   good_ko: string[];
   fixes: { you_said: string; better: string; why_ko: string }[];
   expressions: { en: string; ko: string }[];
+  model_answers?: { question: string; answer: string; ko: string }[];
 };
 type Phase = "intro" | "talking" | "listening" | "recording" | "thinking" | "reporting" | "report";
 
@@ -293,6 +295,27 @@ export function Conversation({ scenario: s, ready }: { scenario: Scenario; ready
                       <span>🔊</span>
                     </button>
                     <p className="text-xs text-zinc-600">{f.why_ko}</p>
+                    {sessionId && <PracticeLine sessionId={sessionId} text={f.better} />}
+                  </div>
+                ))}
+              </div>
+            )}
+            {(feedback.model_answers ?? []).length > 0 && (
+              <div className="flex flex-col gap-2 rounded-3xl bg-white p-4 shadow-sm">
+                <p className="text-sm font-bold text-zinc-900">🏆 모범 답안 따라 해 보기</p>
+                {(feedback.model_answers ?? []).map((m) => (
+                  <div key={m.question} className="flex flex-col gap-1 rounded-2xl bg-slate-50 p-3 text-sm">
+                    <p className="text-xs font-semibold text-zinc-500">Q. {m.question}</p>
+                    <button
+                      type="button"
+                      onClick={() => play(m.answer, "slow", `model:${m.answer}`, s.voice)}
+                      className="flex items-start justify-between gap-2 text-left font-bold text-zinc-900"
+                    >
+                      <span>{m.answer}</span>
+                      <span>🔊</span>
+                    </button>
+                    <p className="text-xs text-zinc-500">{m.ko}</p>
+                    {sessionId && <PracticeLine sessionId={sessionId} text={m.answer} />}
                   </div>
                 ))}
               </div>
