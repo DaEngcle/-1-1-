@@ -3,7 +3,8 @@
 import { revalidatePath } from "next/cache";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { requireTeacher } from "@/lib/classroom/dal";
-import { setPostTestOpen } from "@/lib/classroom/level-test-data";
+import { regradeTest, setPostTestOpen } from "@/lib/classroom/level-test-data";
+import { SCORING_VERSION } from "@/lib/classroom/level-test";
 
 export async function togglePostTest(formData: FormData) {
   await requireTeacher();
@@ -22,5 +23,19 @@ export async function resetLevelTest(formData: FormData) {
   if (paths.length) await supabase.storage.from("shadowing").remove(paths);
   await supabase.from("level_tests").delete().eq("id", testId).eq("student_id", studentId);
   revalidatePath(`/teacher/students/${studentId}`);
+  revalidatePath("/teacher/level-tests");
+}
+
+/** 예전 기준으로 채점된 레벨테스트를 모두 지금 기준으로 다시 채점 */
+export async function regradeOldTests() {
+  await requireTeacher();
+  const supabase = createServerSupabaseClient();
+  const { data } = await supabase
+    .from("level_tests")
+    .select("id")
+    .not("finished_at", "is", null)
+    .lt("scoring_version", SCORING_VERSION)
+    .limit(40);
+  for (const t of data ?? []) await regradeTest(t.id as string);
   revalidatePath("/teacher/level-tests");
 }

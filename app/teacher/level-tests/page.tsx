@@ -5,9 +5,13 @@ import { LEVELS } from "@/lib/classroom/levels";
 import { isPostTestOpen, type LevelTestRow } from "@/lib/classroom/level-test-data";
 import { getWeeklyRanking } from "@/lib/classroom/engagement";
 import { WeeklyRanking } from "@/app/_ui/engagement";
-import { togglePostTest } from "./actions";
+import { regradeOldTests, togglePostTest } from "./actions";
+import { SCORING_VERSION } from "@/lib/classroom/level-test";
 import { cardClass, primaryButtonClass, secondaryButtonClass } from "@/app/_ui/styles";
 import { SubmitButton } from "@/app/_ui/submit-button";
+
+// 다시 채점(AI 호출)이 오래 걸릴 수 있어서
+export const maxDuration = 300;
 
 export default async function TeacherLevelTestsPage() {
   await requireTeacher();
@@ -43,6 +47,22 @@ export default async function TeacherLevelTestsPage() {
           </SubmitButton>
         </form>
       </section>
+
+      {tests.some((t) => ((t as LevelTestRow & { scoring_version?: number }).scoring_version ?? 2) < SCORING_VERSION) && (
+        <section className={`${cardClass} flex flex-wrap items-center justify-between gap-3 border border-amber-200 bg-amber-50`}>
+          <div>
+            <p className="font-semibold text-zinc-900">
+              예전(후한) 기준 결과 {tests.filter((t) => ((t as LevelTestRow & { scoring_version?: number }).scoring_version ?? 2) < SCORING_VERSION).length}건
+            </p>
+            <p className="text-xs text-zinc-600">
+              새 기준(AI 문법 채점 · 짧은 대답 감점 · 받아쓰기 엄격)으로 다시 채점하면 수강 전·후를 같은 기준으로 비교할 수 있어요. 30초쯤 걸려요.
+            </p>
+          </div>
+          <form action={regradeOldTests}>
+            <SubmitButton className={primaryButtonClass}>새 기준으로 다시 채점</SubmitButton>
+          </form>
+        </section>
+      )}
 
       <section className={cardClass}>
         <h2 className="mb-2 font-bold text-zinc-900">반 전체 레벨 분포</h2>

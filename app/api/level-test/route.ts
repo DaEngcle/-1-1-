@@ -1,4 +1,4 @@
-import { NextResponse, type NextRequest } from "next/server";
+import { NextResponse, after, type NextRequest } from "next/server";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { getVerifiedStudent } from "@/lib/classroom/dal";
 import { assessFreeSpeech, isAzureConfigured } from "@/lib/classroom/azure-speech";
@@ -14,7 +14,8 @@ import {
   dictationScore,
   speakingDetail,
 } from "@/lib/classroom/level-test";
-import { canTakeTest, finishTest, getOrCreateTest, type TestKind } from "@/lib/classroom/level-test-data";
+import { canTakeTest, finishTest, getOrCreateTest, regradeTest, type TestKind } from "@/lib/classroom/level-test-data";
+import { gradeSpeakingLanguage } from "@/lib/classroom/level-test-ai";
 import { getSpeechAudio, mp3Response } from "@/lib/classroom/speech-cache";
 
 export const maxDuration = 60;
@@ -88,7 +89,8 @@ export async function POST(request: NextRequest) {
       audioPath = `level-tests/${student.id}/${kind}/${question.id}.wav`;
       await supabase.storage.from("shadowing").upload(audioPath, bytes, { contentType: "audio/wav", upsert: true });
     }
-    const { score, detail } = speakingDetail(question.id, result);
+    const ai = result ? await gradeSpeakingLanguage(question.question, result.transcript) : null;
+    const { score, detail } = speakingDetail(question.id, result, ai);
     await supabase
       .from("level_test_answers")
       .upsert({ test_id: testId, question_id: question.id, score, audio_path: audioPath, detail });
@@ -123,7 +125,13 @@ export async function POST(request: NextRequest) {
       console.error("레벨테스트 답 저장 실패:", error.message);
       return NextResponse.json({ error: "제출 중 오류가 발생했어요." }, { status: 500 });
     }
-    return NextResponse.json(await finishTest(testId));
+    const finished = await finishTest(testId);
+    if (kind === "post") {
+      // 수강 전 결과가 예전 기준이면 같은 기준으로 다시 채점해서 전·후를 공정하게 비교한다
+      const { data: pre } = await supabase.from("level_tests").select("id").eq("student_id", student.id).eq("kind", "pre").maybeSingle();
+      if (pre) after(() => regradeTest(pre.id as string).then(() => undefined));
+    }
+    return NextResponse.json(finished);
   }
 
   return NextResponse.json({ error: "bad_request" }, { status: 400 });

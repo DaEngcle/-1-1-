@@ -1,7 +1,8 @@
 import "server-only";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { levelForScore } from "./levels";
-import { summarize, type Skills } from "./level-test";
+import { DICTATION, SCORING_VERSION, SPEAKING, dictationScore, speakingDetail, summarize, type Skills, type SpeakingDetail } from "./level-test";
+import { gradeSpeakingLanguage } from "./level-test-ai";
 
 export type TestKind = "pre" | "post";
 
@@ -106,8 +107,63 @@ export async function finishTest(testId: string) {
       total_score: total,
       skills,
       level,
+      scoring_version: SCORING_VERSION,
       finished_at: new Date().toISOString(),
     })
     .eq("id", testId);
   return { listening, grammar, speaking, total, skills, level };
+}
+
+/**
+ * 예전 기준으로 채점된 결과를 지금 기준으로 다시 채점한다 (수강 전·후 비교를 같은 기준으로).
+ * 저장된 받아쓰기 답과 말하기 기록(문장·발음 점수)으로 다시 계산하고, 끝난 날짜는 그대로 둔다.
+ */
+export async function regradeTest(testId: string) {
+  const supabase = createServerSupabaseClient();
+  const { data: test } = await supabase
+    .from("level_tests")
+    .select("finished_at, scoring_version")
+    .eq("id", testId)
+    .maybeSingle();
+  if (!test?.finished_at || (test.scoring_version ?? 2) >= SCORING_VERSION) return false;
+  const answers = await getAnswers(testId);
+  const updates: { test_id: string; question_id: string; score: number; detail?: unknown }[] = [];
+  for (const a of answers) {
+    if (DICTATION.some((q) => q.id === a.question_id)) {
+      updates.push({ test_id: testId, question_id: a.question_id, score: dictationScore(a.question_id, a.text_answer ?? "") ?? 0 });
+    }
+  }
+  // 말하기 4문항은 AI 채점을 한꺼번에
+  const speakingUpdates = await Promise.all(
+    answers.map(async (a) => {
+      const q = SPEAKING.find((x) => x.id === a.question_id);
+      const d = a.detail as SpeakingDetail | null;
+      if (!q || !d) return null;
+      const result = d.transcript
+        ? { transcript: d.transcript, overall: d.pron, accuracy: d.accuracy, fluency: d.fluency, prosody: d.prosody }
+        : null;
+      const ai = result ? await gradeSpeakingLanguage(q.question, result.transcript) : null;
+      const { score, detail } = speakingDetail(q.id, result, ai);
+      return { test_id: testId, question_id: q.id, score, detail };
+    }),
+  );
+  for (const u of speakingUpdates) if (u) updates.push(u);
+  for (const u of updates) {
+    const { test_id, question_id, ...rest } = u;
+    await supabase.from("level_test_answers").update(rest).eq("test_id", test_id).eq("question_id", question_id);
+  }
+  const { listening, grammar, speaking, total, skills } = summarize(await getAnswers(testId));
+  await supabase
+    .from("level_tests")
+    .update({
+      speaking_score: speaking,
+      listening_score: listening,
+      grammar_score: grammar,
+      total_score: total,
+      skills,
+      level: levelForScore(total).level,
+      scoring_version: SCORING_VERSION,
+    })
+    .eq("id", testId);
+  return true;
 }

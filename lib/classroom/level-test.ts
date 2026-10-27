@@ -3,9 +3,12 @@ import type { TtsVoice } from "./azure-speech";
 
 // 레벨테스트 v2: 듣기(받아쓰기·대화) → 문법·어휘 → 자유 말하기
 // 수강 전·후 같은 문제로 비교하므로 기수 중간에는 문제를 바꾸지 않는다.
+// 채점 기준을 바꾸면 SCORING_VERSION을 올리고, 선생님 화면에서 예전 결과를 새 기준으로 다시 채점한다.
 // 정답·받아쓰기 원문은 이 파일(서버)에만 있고 브라우저로 보내지 않는다.
 
 export const TEST_VERSION = 2;
+/** 3: 말하기에 AI 문법·어휘·과제 점수, 발음 점수 보정, 짧은 대답 상한, 받아쓰기 엄격하게 */
+export const SCORING_VERSION = 3;
 
 /** 받아쓰기: 듣고 그대로 타이핑 (짧은 문장 → 긴 문장) */
 export const DICTATION = [
@@ -127,10 +130,10 @@ export const BLANKS = [
 
 /** 자유 말하기: 영어 질문에 자유롭게 대답 (target = 이만큼 다양한 단어를 쓰면 '말한 양' 만점) */
 export const SPEAKING = [
-  { id: "s1", question: "Can you introduce yourself? Where are you from, and what do you do?", ko: "자기소개를 해주세요. 어디서 왔고, 무슨 일을 하나요?", target: 15 },
-  { id: "s2", question: "What do you usually do on your days off?", ko: "쉬는 날엔 보통 뭐 하나요?", target: 18 },
-  { id: "s3", question: "You're at a café. Order a drink and ask how long it'll take.", ko: "카페에 있어요. 음료를 주문하고 얼마나 걸리는지 물어보세요.", target: 15 },
-  { id: "s4", question: "Your housemate keeps leaving dirty dishes in the sink. What would you say to them?", ko: "하우스메이트가 계속 설거지를 안 하고 싱크대에 그릇을 쌓아둬요. 뭐라고 말할까요?", target: 20 },
+  { id: "s1", question: "Can you introduce yourself? Where are you from, and what do you do?", ko: "자기소개를 해주세요. 어디서 왔고, 무슨 일을 하나요?", target: 25 },
+  { id: "s2", question: "What do you usually do on your days off?", ko: "쉬는 날엔 보통 뭐 하나요?", target: 28 },
+  { id: "s3", question: "You're at a café. Order a drink and ask how long it'll take.", ko: "카페에 있어요. 음료를 주문하고 얼마나 걸리는지 물어보세요.", target: 22 },
+  { id: "s4", question: "Your housemate keeps leaving dirty dishes in the sink. What would you say to them?", ko: "하우스메이트가 계속 설거지를 안 하고 싱크대에 그릇을 쌓아둬요. 뭐라고 말할까요?", target: 30 },
 ];
 
 export const WEIGHTS = { listening: 0.35, grammar: 0.25, speaking: 0.4 };
@@ -178,7 +181,9 @@ export function dictationScore(id: string, typed: string) {
   const matched = dp[a.length][b.length];
   // 엉뚱한 단어를 잔뜩 써서 맞추는 것 방지: 쓴 단어가 원문보다 많으면 그만큼 감점
   const extra = Math.max(0, b.length - a.length);
-  return Math.max(0, Math.round(((matched - extra * 0.5) / a.length) * 100));
+  const ratio = Math.max(0, (matched - extra) / a.length);
+  // 몇 단어만 놓쳐도 점수가 꽤 깎이게 (80% 맞힘 → 72점, 60% → 46점)
+  return Math.round(Math.pow(ratio, 1.5) * 100);
 }
 
 export function choiceScore(id: string, choice: number) {
@@ -196,6 +201,9 @@ export function blankScore(id: string, typed: string) {
 
 export interface SpeakingDetail {
   transcript: string;
+  /** AI가 본 문법·어휘·과제 수행 (없으면 null) */
+  language?: number | null;
+  note?: string;
   uniqueWords: number;
   accuracy: number;
   fluency: number;
@@ -204,23 +212,34 @@ export interface SpeakingDetail {
   range: number;
 }
 
-/** 자유 말하기 한 문항: 발음 평가 70% + 말한 양(다양한 단어 수) 30% */
+/**
+ * 자유 말하기 한 문항.
+ * - 발음 점수는 자유 말하기에서 후하게 나와서 45점 아래는 0, 95점 이상은 100으로 늘려 쓴다
+ * - AI 언어 점수가 있으면: 발음 35% + 문법·어휘·과제 45% + 말한 양 20%
+ * - 없으면: 발음 55% + 말한 양 45%
+ * - 너무 짧은 대답은 상한 (다른 단어 6개 미만 30점, 10개 미만 55점)
+ */
 export function speakingDetail(
   id: string,
   result: { transcript: string; overall: number; accuracy: number; fluency: number; prosody: number | null } | null,
+  ai: { language: number; note: string } | null = null,
 ): { score: number; detail: SpeakingDetail } {
-  const target = SPEAKING.find((x) => x.id === id)?.target ?? 15;
+  const target = SPEAKING.find((x) => x.id === id)?.target ?? 25;
   if (!result) {
     return {
       score: 0,
-      detail: { transcript: "", uniqueWords: 0, accuracy: 0, fluency: 0, prosody: null, pron: 0, range: 0 },
+      detail: { transcript: "", uniqueWords: 0, accuracy: 0, fluency: 0, prosody: null, pron: 0, range: 0, language: null },
     };
   }
   const uniqueWords = new Set(words(result.transcript)).size;
   const range = Math.min(100, Math.round((uniqueWords / target) * 100));
   const pron = Math.round(result.overall);
+  const pronAdj = Math.max(0, Math.min(100, ((pron - 45) / 50) * 100));
+  let score = ai ? pronAdj * 0.35 + ai.language * 0.45 + range * 0.2 : pronAdj * 0.55 + range * 0.45;
+  if (uniqueWords < 6) score = Math.min(score, 30);
+  else if (uniqueWords < 10) score = Math.min(score, 55);
   return {
-    score: Math.round(pron * 0.7 + range * 0.3),
+    score: Math.round(score),
     detail: {
       transcript: result.transcript,
       uniqueWords,
@@ -229,6 +248,8 @@ export function speakingDetail(
       prosody: result.prosody == null ? null : Math.round(result.prosody),
       pron,
       range,
+      language: ai?.language ?? null,
+      note: ai?.note ?? "",
     },
   };
 }
