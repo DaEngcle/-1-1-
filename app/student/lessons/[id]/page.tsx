@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ClipPlayer } from "@/app/_ui/clip-player";
 import { notFound } from "next/navigation";
 import { canOpenLesson, PREVIEW_DAYS } from "@/lib/classroom/preview";
 import { upgradePlanFor } from "@/lib/classroom/plans";
@@ -131,9 +132,19 @@ export default async function StudentLessonPage({
         </section>
       )}
 
+      {lesson.clip_path && process.env.NEXT_PUBLIC_SUPABASE_URL && (
+        <section className="flex flex-col gap-2">
+          <h2 className="font-bold text-zinc-900">🎞 교재 영상 <span className="text-xs font-semibold text-zinc-500">원어민 대화</span></h2>
+          <ClipPlayer
+            src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/clips/${lesson.clip_path}`}
+            title={heading}
+          />
+        </section>
+      )}
+
       {lesson.video_url && (
         <section className="flex flex-col gap-2">
-          <h2 className="font-bold text-zinc-900">🎬 교재 영상</h2>
+          <h2 className="font-bold text-zinc-900">🎬 강의 영상</h2>
           {lesson.video_live && (
             <p className="rounded-lg bg-slate-100 px-3 py-1.5 text-xs text-zinc-600">
               📼 Live 수업 녹화본이에요. VOD 강의가 준비되면 교체될 예정입니다.

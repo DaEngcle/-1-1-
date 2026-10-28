@@ -97,6 +97,8 @@ export interface Lesson {
   video_url: string | null;
   /** Live 수업 녹화본 (VOD 준비되면 교체 예정) */
   video_live?: boolean;
+  /** 교재 영상(원어민 대화 클립): storage clips 버킷 안 경로 */
+  clip_path?: string | null;
   description: string | null;
   is_published: boolean;
   created_at: string;
