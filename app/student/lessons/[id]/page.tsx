@@ -75,7 +75,7 @@ export default async function StudentLessonPage({
     ]).then(([p, n]) => ({ data: [...(p.data ?? []), ...(n.data ?? [])] })),
     supabase
       .from("video_progress")
-      .select("watched_segments, duration_seconds")
+      .select("watched_segments, duration_seconds, last_position")
       .eq("student_id", student.id)
       .eq("lesson_id", id)
       .maybeSingle(),
@@ -146,6 +146,7 @@ export default async function StudentLessonPage({
               title={heading}
               initialSegments={progressRow?.watched_segments ?? []}
               initialDuration={progressRow?.duration_seconds ?? null}
+              initialPosition={progressRow?.last_position ?? null}
             />
           ) : (
             <VideoEmbed url={lesson.video_url} title={heading} />

@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "로그인이 필요해요." }, { status: 401 });
   }
 
-  let body: { lessonId?: unknown; duration?: unknown; segments?: unknown; played?: unknown };
+  let body: { lessonId?: unknown; duration?: unknown; segments?: unknown; played?: unknown; position?: unknown };
   try {
     body = await request.json();
   } catch {
@@ -38,6 +38,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "bad_request" }, { status: 400 });
   }
   const total = segmentCount(duration);
+  // 이어 보기 위치 (영상 길이 안에서만)
+  const rawPosition = Math.floor(Number(body.position));
+  const position = Number.isFinite(rawPosition) && rawPosition >= 0 && rawPosition <= duration ? rawPosition : null;
   const reported = Array.isArray(body.segments)
     ? [...new Set(body.segments.filter((s): s is number => Number.isInteger(s) && s >= 0 && s < total))]
     : [];
@@ -77,6 +80,14 @@ export async function POST(request: NextRequest) {
   const accepted = fresh.slice(0, Math.max(0, allowed));
 
   if (existing && accepted.length === 0) {
+    // 새로 본 구간이 없어도(다시 보기) 이어 볼 위치는 저장. updated_at은 건드리지 않는다 (빨리 감기 방지 계산용)
+    if (position != null) {
+      await supabase
+        .from("video_progress")
+        .update({ last_position: position })
+        .eq("student_id", student.id)
+        .eq("lesson_id", lessonId);
+    }
     const percent = watchPercent([...known], duration);
     return NextResponse.json({ percent, completed: Boolean(existing.completed_at) });
   }
@@ -93,6 +104,7 @@ export async function POST(request: NextRequest) {
     duration_seconds: duration,
     percent,
     completed_at: completedAt,
+    ...(position != null ? { last_position: position } : {}),
     updated_at: new Date().toISOString(),
   });
   if (error) {

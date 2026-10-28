@@ -8,6 +8,8 @@ interface YTPlayer {
   getCurrentTime(): number;
   getDuration(): number;
   getPlayerState(): number;
+  seekTo(seconds: number, allowSeekAhead: boolean): void;
+  pauseVideo(): void;
   destroy(): void;
 }
 interface YTNamespace {
@@ -17,7 +19,7 @@ interface YTNamespace {
       videoId: string;
       host?: string;
       playerVars?: Record<string, number>;
-      events?: { onStateChange?: (e: { data: number }) => void };
+      events?: { onStateChange?: (e: { data: number }) => void; onReady?: () => void };
     },
   ) => YTPlayer;
   PlayerState: { PLAYING: number; PAUSED: number; ENDED: number };
@@ -55,12 +57,15 @@ export function TrackedVideo({
   title,
   initialSegments,
   initialDuration,
+  initialPosition,
 }: {
   lessonId: string;
   videoId: string;
   title: string;
   initialSegments: number[];
   initialDuration: number | null;
+  /** 마지막으로 본 위치(초). 있으면 거기서부터 이어 본다 */
+  initialPosition?: number | null;
 }) {
   const holderRef = useRef<HTMLDivElement>(null);
   const segmentsRef = useRef(new Set(initialSegments));
@@ -68,6 +73,14 @@ export function TrackedVideo({
   const dirtyRef = useRef(false);
   // 지난 보고 이후 실제로 재생한 초 (복습 포함)
   const playedRef = useRef(0);
+  // 지금 보고 있는 위치 (이어 보기용)
+  const positionRef = useRef<number | null>(null);
+  // 끝까지 다 봤거나 거의 끝이면 처음부터, 아니면 본 곳부터
+  const resumeAt =
+    initialPosition && initialDuration && initialPosition > 5 && initialPosition < initialDuration - 20
+      ? Math.floor(initialPosition)
+      : 0;
+  const [resumeShown, setResumeShown] = useState(resumeAt > 0);
   const [percent, setPercent] = useState(() =>
     initialDuration ? calcPercent(new Set(initialSegments), initialDuration) : 0,
   );
@@ -83,7 +96,8 @@ export function TrackedVideo({
       if ((!dirtyRef.current && played < 1) || !duration) return;
       dirtyRef.current = false;
       playedRef.current -= played;
-      const body = JSON.stringify({ lessonId, duration, played, segments: [...segmentsRef.current] });
+      const position = positionRef.current == null ? undefined : Math.floor(positionRef.current);
+      const body = JSON.stringify({ lessonId, duration, played, position, segments: [...segmentsRef.current] });
       if (useBeacon && navigator.sendBeacon) {
         navigator.sendBeacon("/api/progress", new Blob([body], { type: "application/json" }));
         return;
@@ -109,6 +123,7 @@ export function TrackedVideo({
       const duration = player.getDuration();
       if (duration > 0) durationRef.current = Math.round(duration);
       const now = player.getCurrentTime();
+      positionRef.current = now;
       if (lastTime != null) {
         const step = now - lastTime;
         if (step > 0 && step <= MAX_NATURAL_STEP) {
@@ -133,7 +148,7 @@ export function TrackedVideo({
       player = new YT.Player(el, {
         videoId,
         host: "https://www.youtube-nocookie.com",
-        playerVars: { rel: 0, playsinline: 1 },
+        playerVars: { rel: 0, playsinline: 1, ...(resumeAt ? { start: resumeAt } : {}) },
         events: {
           onStateChange: (e) => {
             if (e.data === YT.PlayerState.PAUSED || e.data === YT.PlayerState.ENDED) {
@@ -162,6 +177,8 @@ export function TrackedVideo({
       report(true);
       player?.destroy();
     };
+    // resumeAt은 처음 열 때 한 번만 쓴다
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lessonId, videoId]);
 
   const completed = percent >= COMPLETE_PERCENT;
@@ -172,6 +189,14 @@ export function TrackedVideo({
         title={title}
         className="aspect-video w-full overflow-hidden rounded-lg bg-black [&>iframe]:h-full [&>iframe]:w-full"
       />
+      {resumeShown && (
+        <p className="flex items-center justify-between gap-2 rounded-lg bg-brand-50 px-3 py-1.5 text-xs font-semibold text-brand-700">
+          ▶ 지난번 본 {formatTime(resumeAt)}부터 이어서 재생돼요
+          <button type="button" onClick={() => setResumeShown(false)} className="text-zinc-400">
+            ✕
+          </button>
+        </p>
+      )}
       <div className="flex items-center gap-2 text-xs">
         <div className="h-2 flex-1 overflow-hidden rounded-full bg-zinc-200">
           <div
@@ -185,6 +210,12 @@ export function TrackedVideo({
       </div>
     </div>
   );
+}
+
+function formatTime(sec: number) {
+  const m = Math.floor(sec / 60);
+  const s = sec % 60;
+  return `${m}:${String(s).padStart(2, "0")}`;
 }
 
 function calcPercent(segments: Set<number>, duration: number) {
