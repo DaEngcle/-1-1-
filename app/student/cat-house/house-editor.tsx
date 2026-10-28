@@ -8,18 +8,24 @@ import type { CatBreed, CatMood } from "@/lib/classroom/cat";
 import {
   ITEMS,
   ITEM_BY_ID,
-  MAX_PLACED,
-  ROOM_H,
-  ROOM_W,
+  maxPlaced,
+  ROOM_UPGRADES,
   clampPlace,
+  dailyDeals,
   defaultPlace,
+  inSeason,
+  priceOn,
+  roomDims,
   type HouseItem,
   type Layout,
+  type RoomSize,
 } from "@/lib/classroom/cat-house";
 import { buyItem, saveLayout } from "./actions";
 
-type Tab = HouseItem["kind"];
+type Tab = HouseItem["kind"] | "deal" | "season";
 const TABS: { id: Tab; label: string }[] = [
+  { id: "deal", label: "✨ 오늘 특가" },
+  { id: "season", label: "🎃 한정" },
   { id: "floorItem", label: "🛋️ 가구" },
   { id: "frontItem", label: "☕ 소품" },
   { id: "wallItem", label: "🖼️ 벽장식" },
@@ -29,6 +35,7 @@ const TABS: { id: Tab; label: string }[] = [
   { id: "floor", label: "🟫 바닥" },
   { id: "hat", label: "🎩 모자" },
   { id: "outfit", label: "👕 옷" },
+  { id: "room", label: "🏠 방 넓히기" },
 ];
 const PLACEABLE: Tab[] = ["floorItem", "frontItem", "wallItem", "lightItem"];
 
@@ -46,7 +53,10 @@ export function HouseEditor({
   breed,
   mood,
   guest,
+  today,
 }: {
+  /** 오늘 날짜 (YYYY-MM-DD, 한국 시간): 오늘 특가·한정 아이템 */
+  today: string;
   initial: Layout;
   owned: string[];
   balance: number;
@@ -72,13 +82,17 @@ export function HouseEditor({
   const dirty = JSON.stringify(layout) !== JSON.stringify(initial);
   const placedIds = new Set(layout.items.map((p) => p.id));
   const selItem = sel !== null ? layout.items[sel] : null;
+  const size: RoomSize = layout.size ?? 1;
+  const R = roomDims(size);
+  const deals = dailyDeals(today);
+  const priceOf = (it: HouseItem) => priceOn(it, today);
 
   /** 화면 좌표 → 방 좌표 */
   function toRoom(e: { clientX: number; clientY: number }) {
     const r = svgRef.current!.getBoundingClientRect();
     return {
-      x: ((e.clientX - r.left) / r.width) * ROOM_W,
-      y: ((e.clientY - r.top) / r.height) * ROOM_H,
+      x: ((e.clientX - r.left) / r.width) * R.w,
+      y: ((e.clientY - r.top) / r.height) * R.h,
     };
   }
 
@@ -94,7 +108,7 @@ export function HouseEditor({
       const pt = toRoom(ev);
       setLayout((l) => {
         const items = [...l.items];
-        const q = clampPlace(items[d.i].id, pt.x - d.dx, pt.y - d.dy);
+        const q = clampPlace(items[d.i].id, pt.x - d.dx, pt.y - d.dy, size, items[d.i].f);
         if (q) items[d.i] = q;
         return { ...l, items };
       });
@@ -113,7 +127,7 @@ export function HouseEditor({
     setLayout((l) => {
       const items = [...l.items];
       const p = items[sel];
-      const q = clampPlace(p.id, p.x + dx, p.y + dy);
+      const q = clampPlace(p.id, p.x + dx, p.y + dy, size, p.f);
       if (q) items[sel] = q;
       return { ...l, items };
     });
@@ -131,6 +145,30 @@ export function HouseEditor({
     setSel(to);
   }
 
+  /** 고른 물건 좌우 뒤집기 */
+  function flipSel() {
+    if (sel === null) return;
+    setLayout((l) => {
+      const items = [...l.items];
+      const p = items[sel];
+      items[sel] = p.f ? { id: p.id, x: p.x, y: p.y } : { ...p, f: true };
+      return { ...l, items };
+    });
+  }
+
+  /** 방 크기 바꾸기: 물건들을 새 방 안으로 맞춘다 */
+  function setSize(next: RoomSize) {
+    const cur = latest.current;
+    const all = cur.items.map((p) => clampPlace(p.id, p.x, p.y, next, p.f)).filter((p) => p !== null);
+    const items = all.slice(0, maxPlaced(next));
+    if (items.length < all.length) setMsg(`작은 방에는 ${maxPlaced(next)}개까지만 놓여요. 나머지는 가방에 넣어 뒀어요.`);
+    const nextLayout: Layout = { ...cur, items, size: next };
+    if (next === 1) delete nextLayout.size;
+    latest.current = nextLayout;
+    setLayout(nextLayout);
+    setSel(null);
+  }
+
   function removeSel() {
     if (sel === null) return;
     setLayout((l) => ({ ...l, items: l.items.filter((_, i) => i !== sel) }));
@@ -140,6 +178,11 @@ export function HouseEditor({
   /** 가진 아이템을 고르면: 놓여 있으면 선택, 아니면 방에 놓기 / 배경·옷은 바꾸기 */
   function use(it: HouseItem) {
     setMsg(null);
+    if (it.kind === "room") {
+      const up = ROOM_UPGRADES.find((r) => r.id === it.id);
+      if (up) setSize(size === up.size ? 1 : up.size);
+      return;
+    }
     if (it.kind === "wall" || it.kind === "floor" || it.kind === "window") {
       setLayout((l) => ({ ...l, [it.kind]: it.id }));
       return;
@@ -160,11 +203,11 @@ export function HouseEditor({
       setSel(idx);
       return;
     }
-    if (cur.items.length >= MAX_PLACED) {
-      setMsg(`방에는 ${MAX_PLACED}개까지 놓을 수 있어요.`);
+    if (cur.items.length >= maxPlaced(cur.size ?? 1)) {
+      setMsg(`이 방에는 ${maxPlaced(cur.size ?? 1)}개까지 놓을 수 있어요. 방을 넓히면 더 놓을 수 있어요!`);
       return;
     }
-    const p = defaultPlace(it.id, cur.items.length);
+    const p = defaultPlace(it.id, cur.items.length, cur.size ?? 1);
     if (!p) return;
     // 같은 목록 기준으로 놓고 선택해야 번호가 어긋나지 않는다
     const next = { ...cur, items: [...cur.items, p] };
@@ -192,7 +235,15 @@ export function HouseEditor({
     });
   }
 
-  const list = ITEMS.filter((i) => i.kind === tab);
+  // 기간이 지난 한정 아이템은 가진 사람에게만 보인다
+  const visible = (i: HouseItem) => own.has(i.id) || inSeason(i, today);
+  const list =
+    tab === "deal"
+      ? deals.map((id) => ITEM_BY_ID.get(id)!).filter(Boolean)
+      : tab === "season"
+        ? ITEMS.filter((i) => i.season && visible(i))
+        : ITEMS.filter((i) => i.kind === tab && visible(i));
+  const locked = (it: HouseItem) => it.id === "room-3" && !own.has("room-2");
 
   return (
     <div className="flex flex-col gap-3">
@@ -215,11 +266,14 @@ export function HouseEditor({
               <p className="mt-0.5 text-sm text-zinc-500">{confirm.desc}</p>
             )}
             <p className="mt-2 text-sm text-zinc-700">
-              🐟 츄르 <b>{confirm.price}</b>개로 살까요? (지금 {balance}개)
+              🐟 츄르 <b>{priceOf(confirm)}</b>개로 살까요? (지금 {balance}개)
+              {priceOf(confirm) < confirm.price && (
+                <span className="ml-1 text-xs text-zinc-400 line-through">{confirm.price}</span>
+              )}
             </p>
-            {balance < confirm.price && (
+            {balance < priceOf(confirm) && (
               <p className="mt-1 text-sm font-semibold text-rose-600">
-                츄르가 {confirm.price - balance}개 모자라요. 쉐도잉 1문장에
+                츄르가 {priceOf(confirm) - balance}개 모자라요. 쉐도잉 1문장에
                 5개씩 모여요!
               </p>
             )}
@@ -231,7 +285,7 @@ export function HouseEditor({
               >
                 취소
               </button>
-              {balance < confirm.price ? (
+              {balance < priceOf(confirm) ? (
                 <Link
                   href="/student/shadowing"
                   className="rounded-2xl bg-violet-600 py-3 text-center font-bold text-white"
@@ -309,6 +363,13 @@ export function HouseEditor({
             </button>
             <button
               type="button"
+              onClick={flipSel}
+              className="rounded-lg bg-white px-2 text-xs font-bold text-violet-700 shadow-sm"
+            >
+              ↔ 뒤집기
+            </button>
+            <button
+              type="button"
               onClick={removeSel}
               className="rounded-lg bg-white px-2 text-xs font-bold text-rose-600 shadow-sm"
             >
@@ -323,7 +384,7 @@ export function HouseEditor({
           🐟 츄르 {balance}
         </span>
         <span className="text-xs text-zinc-500">
-          놓은 물건 {layout.items.length}/{MAX_PLACED}
+          놓은 물건 {layout.items.length}/{maxPlaced(size)}
         </span>
         <button
           type="button"
@@ -353,20 +414,27 @@ export function HouseEditor({
         ))}
       </div>
 
+      {tab === "deal" && <p className="text-xs text-zinc-500">매일 자정에 바뀌는 오늘의 특가! 30% 싸게 살 수 있어요 ✨</p>}
+      {tab === "season" && <p className="text-xs text-zinc-500">기간 한정 아이템이에요. 기간이 지나도 산 건 계속 쓸 수 있어요.</p>}
+      {tab === "room" && <p className="text-xs text-zinc-500">지금 방: {size === 1 ? "기본 방" : size === 2 ? "큰 방" : "대저택"} ({R.w}×{R.h}). 산 방을 누르면 그 크기로 바뀌어요.</p>}
       <ul className="grid grid-cols-3 gap-2 sm:grid-cols-4">
+        {list.length === 0 && <li className="col-span-3 py-6 text-center text-sm text-zinc-400">지금은 한정 아이템이 없어요.</li>}
         {list.map((it) => {
           const has = own.has(it.id);
+          const price = priceOf(it);
           const on =
             it.kind === "wall" || it.kind === "floor" || it.kind === "window"
               ? layout[it.kind] === it.id
               : it.kind === "hat" || it.kind === "outfit"
                 ? layout.wear[it.kind] === it.id
-                : placedIds.has(it.id);
+                : it.kind === "room"
+                  ? ROOM_UPGRADES.find((r) => r.id === it.id)?.size === size
+                  : placedIds.has(it.id);
           return (
             <li key={it.id}>
               <button
                 type="button"
-                disabled={pending}
+                disabled={pending || (!has && locked(it))}
                 onClick={() => (has ? use(it) : setConfirm(it))}
                 className={`flex w-full flex-col items-center gap-1 rounded-2xl border-2 bg-white p-2 text-center shadow-sm ${on ? "border-violet-500" : "border-transparent"}`}
               >
@@ -379,9 +447,16 @@ export function HouseEditor({
                 >
                   {it.rarity}
                 </span>
+                {!has && price < it.price && (
+                  <span className="rounded-full bg-rose-500 px-1.5 py-0.5 text-[10px] font-bold text-white">특가 -30%</span>
+                )}
                 {has ? (
                   <span className="text-[11px] font-semibold text-emerald-700">
-                    {on
+                    {it.kind === "room"
+                      ? on
+                        ? "쓰는 중 · 기본 방으로"
+                        : "이 크기로"
+                      : on
                       ? PLACEABLE.includes(it.kind)
                         ? "방에 있음 · 고르기"
                         : it.kind === "hat" || it.kind === "outfit"
@@ -395,9 +470,9 @@ export function HouseEditor({
                   </span>
                 ) : (
                   <span
-                    className={`text-[11px] font-bold ${balance >= it.price ? "text-amber-700" : "text-zinc-400"}`}
+                    className={`text-[11px] font-bold ${balance >= price ? "text-amber-700" : "text-zinc-400"}`}
                   >
-                    🐟 {it.price} 사기
+                    {locked(it) ? "🔒 큰 방 먼저" : `🐟 ${price} 사기`}
                   </span>
                 )}
               </button>

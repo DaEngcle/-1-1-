@@ -1,9 +1,9 @@
 import { CatSprite } from "@/app/_ui/cat";
 import type { CatBreed, CatMood } from "@/lib/classroom/cat";
-import { ITEM_BY_ID, ROOM_H, ROOM_W, WALL_H, artSize, type Art, type Layout } from "@/lib/classroom/cat-house";
+import { ITEM_BY_ID, WALL_H, artSize, roomDims, type Art, type Layout } from "@/lib/classroom/cat-house";
 
 /** 픽셀 그림 (문자 격자) → 사각형들. 같은 줄에서 같은 색은 한 칸으로 합친다 */
-function Pixels({ art, x, y }: { art: Art; x: number; y: number }) {
+function Pixels({ art, x, y, flip = false }: { art: Art; x: number; y: number; flip?: boolean }) {
   const rects: React.ReactNode[] = [];
   art.rows.forEach((row, ry) => {
     let start = 0;
@@ -16,13 +16,19 @@ function Pixels({ art, x, y }: { art: Art; x: number; y: number }) {
       }
     }
   });
+  if (flip) {
+    const w = Math.max(...art.rows.map((r) => r.length));
+    return <g transform={`translate(${2 * x + w} 0) scale(-1 1)`}>{rects}</g>;
+  }
   return <g>{rects}</g>;
 }
 
-const W = ROOM_W;
-const H = ROOM_H;
+type Dims = { w: number; h: number; wall: number };
+const D1: Dims = roomDims(1);
 
-function Wall({ id }: { id: string }) {
+function Wall({ id, d = D1 }: { id: string; d?: Dims }) {
+  const W = d.w;
+  const WALL_H = d.wall;
   const it = ITEM_BY_ID.get(id);
   const [a, b] = it?.colors ?? ["#FFF4E0", "#FBEBD0"];
   const out: React.ReactNode[] = [<rect key="base" x={0} y={0} width={W} height={WALL_H} fill={a} />];
@@ -34,7 +40,8 @@ function Wall({ id }: { id: string }) {
   return <g>{out}</g>;
 }
 
-function Floor({ id }: { id: string }) {
+function Floor({ id, d = D1 }: { id: string; d?: Dims }) {
+  const { w: W, h: H, wall: WALL_H } = d;
   const it = ITEM_BY_ID.get(id);
   const [a, b] = it?.colors ?? ["#C99A6B", "#B5865A"];
   const out: React.ReactNode[] = [<rect key="base" x={0} y={WALL_H} width={W} height={H - WALL_H} fill={a} />];
@@ -52,9 +59,9 @@ function Floor({ id }: { id: string }) {
   return <g>{out}</g>;
 }
 
-function Window({ id }: { id: string }) {
+function Window({ id, d = D1 }: { id: string; d?: Dims }) {
   const scene = ITEM_BY_ID.get(id)?.scene ?? "bondi";
-  const X = 40;
+  const X = Math.round((d.w - 16) / 2);
   const Y = 9;
   const inner: React.ReactNode[] = [];
   const r = (k: string, x: number, y: number, w: number, h: number, fill: string) =>
@@ -96,9 +103,13 @@ function Window({ id }: { id: string }) {
   );
 }
 
-/** 고양이 크기·위치 (방 좌표) */
-const CAT = { x: 35, width: 26, base: 55 };
-const GUEST = { x: 64, width: 17, base: 52 };
+/** 고양이 크기·위치 (방 좌표, 방 크기에 맞춰) */
+function catPlace(d: Dims) {
+  return {
+    cat: { x: Math.round((d.w - 26) / 2), width: 26, base: d.h - 5 },
+    guest: { x: Math.round(d.w * 0.67), width: 17, base: d.h - 8 },
+  };
+}
 
 /** 고양이 방 한 장면 (서버·클라이언트 공용). 바닥 물건은 아래쪽(앞)에 있을수록 나중에 그려진다 */
 export function CatRoom({
@@ -123,6 +134,11 @@ export function CatRoom({
   svgRef?: React.Ref<SVGSVGElement>;
   className?: string;
 }) {
+  const d = roomDims(layout.size ?? 1);
+  const { w: W, h: H } = d;
+  const { cat: CAT, guest: GUEST } = catPlace(d);
+  // 고양이가 방 안을 천천히 돌아다닌다 (편집 중엔 가만히)
+  const roam = Math.round(d.w * 0.22);
   type Node = { z: number; order: number; el: React.ReactNode };
   const nodes: Node[] = [];
   layout.items.forEach((p, i) => {
@@ -139,7 +155,7 @@ export function CatRoom({
           onPointerDown={onItemPointerDown ? (e) => onItemPointerDown(i, e) : undefined}
           style={onItemPointerDown ? { cursor: "grab", touchAction: "none" } : undefined}
         >
-          <Pixels art={it.art} x={p.x} y={p.y} />
+          <Pixels art={it.art} x={p.x} y={p.y} flip={p.f} />
           {selected === i && (
             <rect x={p.x - 0.5} y={p.y - 0.5} width={w + 1} height={h + 1} fill="none" stroke="#6C5CFF" strokeWidth={0.5} strokeDasharray="1.2 0.8" />
           )}
@@ -163,7 +179,21 @@ export function CatRoom({
     nodes.push({
       z: CAT.base,
       order: 999,
-      el: <CatSprite key="cat" breed={breed} mood={mood} hat={hat} outfit={outfit} place={{ x: CAT.x, y: CAT.base - ch, width: CAT.width }} />,
+      el: (
+        <g key="cat" pointerEvents="none">
+          {!onItemPointerDown && (
+            <animateTransform
+              attributeName="transform"
+              type="translate"
+              values={`0 0; 0 0; ${-roam} 0; ${-roam} 0; ${roam} 0; ${roam} 0; 0 0`}
+              keyTimes="0; 0.15; 0.3; 0.5; 0.7; 0.85; 1"
+              dur="30s"
+              repeatCount="indefinite"
+            />
+          )}
+          <CatSprite breed={breed} mood={mood} hat={hat} outfit={outfit} place={{ x: CAT.x, y: CAT.base - ch, width: CAT.width }} />
+        </g>
+      ),
     });
   }
   nodes.sort((a, b) => a.z - b.z || a.order - b.order);
@@ -171,9 +201,9 @@ export function CatRoom({
   return (
     <div className={`relative w-full overflow-hidden rounded-3xl ${className}`} style={{ aspectRatio: `${W} / ${H}` }}>
       <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="absolute inset-0 h-full w-full select-none" shapeRendering="crispEdges">
-        <Wall id={layout.wall} />
-        <Floor id={layout.floor} />
-        <Window id={layout.window} />
+        <Wall id={layout.wall} d={d} />
+        <Floor id={layout.floor} d={d} />
+        <Window id={layout.window} d={d} />
         {nodes.map((n) => n.el)}
       </svg>
     </div>
@@ -198,7 +228,21 @@ export function ItemPreview({ id, className = "h-14 w-14" }: { id: string; class
       </svg>
     );
   }
-  const art = it.art!;
+  if (it.kind === "room") {
+    // 방 넓히기: 작은 방 → 큰 방 그림
+    const big = it.id === "room-3";
+    return (
+      <svg viewBox="0 0 20 20" className={className} shapeRendering="crispEdges" aria-hidden>
+        <rect x={big ? 1 : 3} y={big ? 4 : 6} width={big ? 18 : 14} height={big ? 14 : 12} fill="#FFF4E0" />
+        <rect x={big ? 1 : 3} y={big ? 12 : 13} width={big ? 18 : 14} height={big ? 6 : 5} fill="#C99A6B" />
+        <rect x={8} y={big ? 6 : 8} width={4} height={4} fill="#8FD3FF" />
+        <rect x={big ? 0 : 2} y={big ? 3 : 5} width={big ? 20 : 16} height={1} fill="#6C5CFF" />
+        <rect x={big ? 0 : 2} y={big ? 18 : 18} width={big ? 20 : 16} height={1} fill="#6C5CFF" />
+      </svg>
+    );
+  }
+  if (!it.art) return null;
+  const art = it.art;
   const w = Math.max(...art.rows.map((r) => r.length));
   const h = art.rows.length;
   const s = Math.max(w, h) + 2;

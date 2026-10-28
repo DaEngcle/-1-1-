@@ -1,0 +1,307 @@
+[
+ {
+  "id": "pumpkin",
+  "name": "잭오랜턴 호박",
+  "kind": "floorItem",
+  "price": 60,
+  "rarity": "레어",
+  "season": {
+   "from": "10-15",
+   "to": "11-10"
+  },
+  "desc": "할로윈 한정! 웃는 얼굴이 새겨진 주황 호박",
+  "art": {
+   "rows": [
+    "......gg......",
+    ".....gg.......",
+    "..oooOooOooo..",
+    ".ooOOoOOoOOoo.",
+    "ooOkkOOOOkkOoo",
+    "ooOkkOOOOkkOoo",
+    "ooOOOOOOOOOOoo",
+    "ooOkOkOkOkOkoo",
+    "ooOOkkkkkkOOoo",
+    ".ooOOOOOOOOoo.",
+    "..oooooooooo.."
+   ],
+   "pal": {
+    "o": "#D9701E",
+    "O": "#F5963A",
+    "g": "#3F7A3A",
+    "k": "#3A2210"
+   }
+  }
+ },
+ {
+  "id": "ghost",
+  "name": "꼬마 유령",
+  "kind": "wallItem",
+  "price": 50,
+  "rarity": "일반",
+  "season": {
+   "from": "10-15",
+   "to": "11-10"
+  },
+  "desc": "할로윈 한정! 벽에 동동 떠 있는 귀여운 유령",
+  "art": {
+   "rows": [
+    "...wwww...",
+    "..wwwwww..",
+    ".wwwwwwww.",
+    ".wkwwwwkw.",
+    ".wwwwwwww.",
+    ".wwwkkwww.",
+    "wwwwwwwwww",
+    "wwwwwwwwww",
+    "wwwwwwwwww",
+    "w.ww.ww.ww"
+   ],
+   "pal": {
+    "w": "#F4F4FA",
+    "k": "#2A2335"
+   }
+  }
+ },
+ {
+  "id": "bat-garland",
+  "name": "박쥐 가랜드",
+  "kind": "lightItem",
+  "price": 45,
+  "rarity": "일반",
+  "season": {
+   "from": "10-15",
+   "to": "11-10"
+  },
+  "desc": "할로윈 한정! 천장에 줄줄이 매달린 박쥐들",
+  "art": {
+   "rows": [
+    "ssssssssssssssssssssssss",
+    ".b.b......b.b......b.b..",
+    "bbbbb....bbbbb....bbbbb.",
+    ".bbb......bbb......bbb.."
+   ],
+   "pal": {
+    "s": "#7A5A3A",
+    "b": "#2A2335"
+   }
+  }
+ },
+ {
+  "id": "candy-bucket",
+  "name": "사탕 바구니",
+  "kind": "frontItem",
+  "price": 30,
+  "rarity": "일반",
+  "season": {
+   "from": "10-15",
+   "to": "11-10"
+  },
+  "desc": "할로윈 한정! Trick or treat? 사탕이 가득",
+  "art": {
+   "rows": [
+    "..h......h..",
+    "...hhhhhh...",
+    ".rpyrgpyrg..",
+    "oooooooooooo",
+    "oOkOOOOOkOOo",
+    "oOOOkkkkOOOo",
+    ".oooooooooo."
+   ],
+   "pal": {
+    "h": "#3A2210",
+    "r": "#E85D4A",
+    "p": "#F4A6B8",
+    "y": "#FFD45C",
+    "g": "#6BCB77",
+    "o": "#D9701E",
+    "O": "#F5963A",
+    "k": "#3A2210"
+   }
+  }
+ },
+ {
+  "id": "witch-hat",
+  "name": "마녀 모자",
+  "kind": "hat",
+  "price": 80,
+  "rarity": "레어",
+  "season": {
+   "from": "10-15",
+   "to": "11-10"
+  },
+  "desc": "할로윈 한정! 뾰족한 보라 마녀 모자",
+  "art": {
+   "rows": [
+    "........pp....",
+    ".......ppp....",
+    "......pppp....",
+    ".....ppppp....",
+    "....pppppp....",
+    "...yyyyyyyy...",
+    "pppppppppppppp"
+   ],
+   "pal": {
+    "p": "#5B3A8C",
+    "y": "#FFD45C"
+   }
+  }
+ },
+ {
+  "id": "xmas-tree",
+  "name": "크리스마스 트리",
+  "kind": "floorItem",
+  "price": 150,
+  "rarity": "레어",
+  "season": {
+   "from": "12-01",
+   "to": "01-06"
+  },
+  "desc": "크리스마스 한정! 반짝이는 장식이 달린 트리",
+  "art": {
+   "rows": [
+    ".......y.......",
+    "......yyy......",
+    "......ggg......",
+    ".....gRggg.....",
+    "....ggggYgg....",
+    "...gBggggggg...",
+    "....ggRgggg....",
+    "...gggggBggg...",
+    "..ggYggggggRg..",
+    ".gggggRgggggggg",
+    "ggBgggggggYgggg",
+    ".......bb......",
+    ".....rrrrr.....",
+    "....rRrrrRr...."
+   ],
+   "pal": {
+    "y": "#FFD45C",
+    "g": "#2D7A43",
+    "R": "#E85D4A",
+    "Y": "#FFE066",
+    "B": "#5BA8F5",
+    "b": "#7A4E2A",
+    "r": "#D93A3A"
+   }
+  }
+ },
+ {
+  "id": "stocking",
+  "name": "크리스마스 양말",
+  "kind": "wallItem",
+  "price": 40,
+  "rarity": "일반",
+  "season": {
+   "from": "12-01",
+   "to": "01-06"
+  },
+  "desc": "크리스마스 한정! 선물을 기다리는 빨간 양말",
+  "art": {
+   "rows": [
+    "wwwwww..",
+    "WwWwWw..",
+    "rrrrrr..",
+    "rRrrRr..",
+    "rrrrrr..",
+    "rrrRrrrr",
+    "rrrrrrRr",
+    ".rrrrrr."
+   ],
+   "pal": {
+    "w": "#FFFFFF",
+    "W": "#E3E6EC",
+    "r": "#D93A3A",
+    "R": "#F06060"
+   }
+  }
+ },
+ {
+  "id": "snowman",
+  "name": "눈사람",
+  "kind": "frontItem",
+  "price": 70,
+  "rarity": "레어",
+  "season": {
+   "from": "12-01",
+   "to": "01-06"
+  },
+  "desc": "크리스마스 한정! 호주엔 눈이 없지만 방 안엔 있어요",
+  "art": {
+   "rows": [
+    "...kkkk...",
+    "...kkkk...",
+    "..kkkkkk..",
+    "...wwww...",
+    "..wkwwkw..",
+    "..wwoowww.",
+    "...wwww...",
+    "..rrrrrrr.",
+    ".wwwwwwww.",
+    "wwwwkwwwww",
+    "wwwwwwwwww",
+    "wwwwkwwwww",
+    ".wwwwwwww."
+   ],
+   "pal": {
+    "k": "#2A2335",
+    "w": "#F4F7FB",
+    "o": "#F5963A",
+    "r": "#D93A3A"
+   }
+  }
+ },
+ {
+  "id": "gift-box",
+  "name": "선물 상자",
+  "kind": "frontItem",
+  "price": 35,
+  "rarity": "일반",
+  "season": {
+   "from": "12-01",
+   "to": "01-06"
+  },
+  "desc": "크리스마스 한정! 리본 묶인 선물 상자",
+  "art": {
+   "rows": [
+    "..yy..yy..",
+    "...yyyy...",
+    "gggggggggg",
+    "gGGGyyGGGg",
+    "ggggyygggg",
+    "gGGGyyGGGg",
+    "gGGGyyGGGg",
+    "gggggggggg"
+   ],
+   "pal": {
+    "y": "#FFD45C",
+    "g": "#3F9B58",
+    "G": "#6BCB77"
+   }
+  }
+ },
+ {
+  "id": "snow-lights",
+  "name": "눈송이 조명",
+  "kind": "lightItem",
+  "price": 60,
+  "rarity": "레어",
+  "season": {
+   "from": "12-01",
+   "to": "01-06"
+  },
+  "desc": "크리스마스 한정! 천장에서 반짝이는 눈송이",
+  "art": {
+   "rows": [
+    "ssssssssssssssssssssss",
+    "..s.......s.......s...",
+    ".w.w.....w.w.....w.w..",
+    "..w.......w.......w...",
+    ".w.w.....w.w.....w.w.."
+   ],
+   "pal": {
+    "s": "#C9D6E8",
+    "w": "#FFFFFF"
+   }
+  }
+ }
+]

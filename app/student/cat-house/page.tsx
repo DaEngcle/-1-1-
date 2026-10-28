@@ -9,6 +9,7 @@ import { BoxButton } from "./box-button";
 import { getChuru, getRoom, listGuestbook, listRooms } from "@/lib/classroom/cat-house-data";
 import { Guestbook } from "./guestbook";
 import { HouseEditor } from "./house-editor";
+import { kstDate } from "@/lib/classroom/stats";
 
 export default async function CatHousePage() {
   const student = await requireStudent();
@@ -44,6 +45,7 @@ export default async function CatHousePage() {
       ) : null}
 
       <HouseEditor
+        today={kstDate(new Date())}
         initial={room.layout}
         owned={[...churu.owned]}
         balance={churu.balance}

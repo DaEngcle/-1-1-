@@ -1,19 +1,40 @@
 // 고양이 집 (미니룸): 공부로 모은 츄르로 방을 꾸민다. 픽셀아트는 문자 격자 + 팔레트.
 // 아이템을 늘릴 땐 BASE_ITEMS나 cat-house-items.json에 추가만 하면 된다 (가격·종류·그림).
 import EXTRA_ITEMS from "@/content/cat-house-items.json";
+import SEASONAL_ITEMS from "@/content/cat-house-seasonal.json";
 
 /** 예전(작은 방) 자리 이름. 저장된 옛 배치를 새 방으로 옮길 때만 쓴다 */
 export type Slot = "wallL" | "wallR" | "floorL" | "floorR" | "front" | "ceiling";
 
-/** 넓은 방 크기 (픽셀). 벽 0~WALL_H, 그 아래가 바닥 */
+/** 기본 방 크기 (픽셀). 벽 0~WALL_H, 그 아래가 바닥 */
 export const ROOM_W = 96;
 export const ROOM_H = 60;
 export const WALL_H = 36;
+
+/** 방 넓히기 단계별 크기 (동물의 숲 집 증축처럼 츄르로 넓힌다) */
+export type RoomSize = 1 | 2 | 3;
+export const ROOM_SIZES: Record<RoomSize, { w: number; h: number; wall: number }> = {
+  1: { w: ROOM_W, h: ROOM_H, wall: WALL_H },
+  2: { w: 128, h: 72, wall: 42 },
+  3: { w: 160, h: 84, wall: 48 },
+};
+/** 방 크기마다 놓을 수 있는 물건 수 */
+export function maxPlaced(size: RoomSize = 1) {
+  return size === 3 ? 40 : size === 2 ? 32 : MAX_PLACED;
+}
+export function roomDims(size: RoomSize = 1) {
+  return ROOM_SIZES[size] ?? ROOM_SIZES[1];
+}
+/** 방 넓히기 아이템 id → 단계 */
+export const ROOM_UPGRADES: { id: string; size: RoomSize }[] = [
+  { id: "room-2", size: 2 },
+  { id: "room-3", size: 3 },
+];
 /** 방에 놓을 수 있는 최대 개수 */
 export const MAX_PLACED = 24;
 
-/** 방에 놓인 아이템 하나: 그림 왼쪽 위 좌표 */
-export type Placed = { id: string; x: number; y: number };
+/** 방에 놓인 아이템 하나: 그림 왼쪽 위 좌표 (f: 좌우 뒤집기) */
+export type Placed = { id: string; x: number; y: number; f?: boolean };
 export type PlaceKind = "wallItem" | "floorItem" | "frontItem" | "lightItem";
 export const PLACE_KINDS: PlaceKind[] = ["floorItem", "frontItem", "wallItem", "lightItem"];
 
@@ -23,7 +44,7 @@ export type HouseItem = {
   id: string;
   name: string;
   /** wall/floor/window는 방 배경, 나머지는 놓을 수 있는 자리 */
-  kind: "wall" | "floor" | "window" | "wallItem" | "floorItem" | "frontItem" | "lightItem" | "hat" | "outfit";
+  kind: "wall" | "floor" | "window" | "wallItem" | "floorItem" | "frontItem" | "lightItem" | "hat" | "outfit" | "room";
   price: number;
   rarity: "기본" | "일반" | "레어" | "전설";
   desc?: string;
@@ -32,9 +53,14 @@ export type HouseItem = {
   colors?: string[];
   pattern?: "stripe" | "check" | "dots" | "plank" | "tile" | "plain";
   scene?: "bondi" | "opera" | "uluru";
+  /** 기간 한정 (MM-DD ~ MM-DD, 해를 넘어가도 된다). 기간이 지나도 산 건 계속 쓸 수 있다 */
+  season?: { from: string; to: string };
 };
 
 const BASE_ITEMS: HouseItem[] = [
+  // 방 넓히기 (놓는 물건이 아니라 방 크기)
+  { id: "room-2", name: "방 넓히기 · 큰 방", kind: "room", price: 300, rarity: "레어", desc: "방이 가로·세로로 넓어져요 (128×72). 가구를 더 놓을 수 있어요!" },
+  { id: "room-3", name: "방 넓히기 · 대저택", kind: "room", price: 800, rarity: "전설", desc: "제일 큰 방 (160×84). 큰 방을 먼저 넓혀야 해요." },
   // 벽지
   { id: "wall-cream", name: "크림 벽지", kind: "wall", price: 0, rarity: "기본", colors: ["#FFF4E0", "#FBEBD0"], pattern: "plain" },
   { id: "wall-sky", name: "하늘 줄무늬 벽지", kind: "wall", price: 50, rarity: "일반", colors: ["#DCEFFF", "#C5E2FA"], pattern: "stripe" },
@@ -212,7 +238,11 @@ const BASE_ITEMS: HouseItem[] = [
   },
 ];
 
-export const ITEMS: HouseItem[] = [...BASE_ITEMS, ...(EXTRA_ITEMS as unknown as HouseItem[])];
+export const ITEMS: HouseItem[] = [
+  ...BASE_ITEMS,
+  ...(EXTRA_ITEMS as unknown as HouseItem[]),
+  ...(SEASONAL_ITEMS as unknown as HouseItem[]),
+];
 
 export const ITEM_BY_ID = new Map(ITEMS.map((i) => [i.id, i]));
 export const FREE_ITEMS = ITEMS.filter((i) => i.price === 0).map((i) => i.id);
@@ -225,6 +255,8 @@ export type Layout = {
   items: Placed[];
   /** 고양이가 입은 모자·옷 */
   wear: { hat?: string; outfit?: string };
+  /** 방 크기 단계 (없으면 1) */
+  size?: RoomSize;
 };
 
 export const DEFAULT_LAYOUT: Layout = { wall: "wall-cream", floor: "floor-wood", window: "window-bondi", items: [], wear: {} };
@@ -234,28 +266,57 @@ export function artSize(art: Art) {
 }
 
 /** 종류마다 놓을 수 있는 범위 안으로 좌표를 맞춘다 */
-export function clampPlace(id: string, x: number, y: number): Placed | null {
+export function clampPlace(id: string, x: number, y: number, size: RoomSize = 1, f?: boolean): Placed | null {
   const it = ITEM_BY_ID.get(id);
   if (!it?.art || !(PLACE_KINDS as string[]).includes(it.kind)) return null;
+  const R = roomDims(size);
   const { w, h } = artSize(it.art);
-  const cx = Math.round(Math.min(Math.max(x, 0), ROOM_W - w));
+  const cx = Math.round(Math.min(Math.max(x, 0), R.w - w));
   let cy = Math.round(y);
   if (it.kind === "lightItem") cy = 0;
-  else if (it.kind === "wallItem") cy = Math.min(Math.max(cy, 2), WALL_H - 2 - h);
-  else cy = Math.min(Math.max(cy, WALL_H + 2 - h), ROOM_H - h); // 바닥: 발이 바닥 안에
-  return { id, x: cx, y: cy };
+  else if (it.kind === "wallItem") cy = Math.min(Math.max(cy, 2), R.wall - 2 - h);
+  else cy = Math.min(Math.max(cy, R.wall + 2 - h), R.h - h); // 바닥: 발이 바닥 안에
+  return f ? { id, x: cx, y: cy, f: true } : { id, x: cx, y: cy };
 }
 
 /** 새로 놓을 때 기본 위치 */
-export function defaultPlace(id: string, n = 0): Placed | null {
+export function defaultPlace(id: string, n = 0, size: RoomSize = 1): Placed | null {
   const it = ITEM_BY_ID.get(id);
   if (!it?.art) return null;
+  const R = roomDims(size);
   const { w, h } = artSize(it.art);
-  const x = 10 + ((n * 17) % (ROOM_W - 20));
-  if (it.kind === "lightItem") return clampPlace(id, x, 0);
-  if (it.kind === "wallItem") return clampPlace(id, x, 10);
-  if (it.kind === "frontItem") return clampPlace(id, x - w / 2, ROOM_H - 2 - h);
-  return clampPlace(id, x - w / 2, WALL_H + 12 - h);
+  const x = 10 + ((n * 17) % (R.w - 20));
+  if (it.kind === "lightItem") return clampPlace(id, x, 0, size);
+  if (it.kind === "wallItem") return clampPlace(id, x, 10, size);
+  if (it.kind === "frontItem") return clampPlace(id, x - w / 2, R.h - 2 - h, size);
+  return clampPlace(id, x - w / 2, R.wall + 12 - h, size);
+}
+
+/** 기간 한정 아이템이 오늘 상점에 나오는지 (day: YYYY-MM-DD) */
+export function inSeason(it: HouseItem, day: string) {
+  if (!it.season) return true;
+  const md = day.slice(5);
+  const { from, to } = it.season;
+  return from <= to ? md >= from && md <= to : md >= from || md <= to;
+}
+
+/** 오늘의 특가: 날마다 바뀌는 2개, 30% 할인 (동물의 숲 상점처럼 매일 들러 볼 이유) */
+export const DEAL_OFF = 0.3;
+export function dailyDeals(day: string): string[] {
+  const pool = ITEMS.filter((i) => i.price >= 40 && i.kind !== "room" && inSeason(i, day)).map((i) => i.id);
+  let h = 2166136261;
+  for (let i = 0; i < day.length; i++) h = Math.imul(h ^ day.charCodeAt(i), 16777619);
+  const pick: string[] = [];
+  for (let k = 0; pick.length < 2 && k < 20; k++) {
+    h = Math.imul(h ^ (h >>> 15), 2246822507);
+    const id = pool[(h >>> 0) % pool.length];
+    if (id && !pick.includes(id)) pick.push(id);
+  }
+  return pick;
+}
+/** 오늘 실제 가격 */
+export function priceOn(it: HouseItem, day: string) {
+  return dailyDeals(day).includes(it.id) ? Math.round(it.price * (1 - DEAL_OFF)) : it.price;
 }
 
 /** 예전 작은 방의 자리 → 새 방 좌표 */
@@ -281,10 +342,11 @@ export function normalizeLayout(raw: unknown): Layout {
   const r = (raw ?? {}) as Partial<Layout> & { slots?: Partial<Record<Slot, string>> };
   const ok = (id: unknown, kind: HouseItem["kind"]) =>
     typeof id === "string" && ITEM_BY_ID.get(id)?.kind === kind ? id : undefined;
+  const size: RoomSize = r.size === 2 || r.size === 3 ? r.size : 1;
   const items: Placed[] = [];
   const seen = new Set<string>();
   const push = (p: Placed | null) => {
-    if (p && !seen.has(p.id) && items.length < MAX_PLACED) {
+    if (p && !seen.has(p.id) && items.length < maxPlaced(size)) {
       seen.add(p.id);
       items.push(p);
     }
@@ -292,7 +354,7 @@ export function normalizeLayout(raw: unknown): Layout {
   if (Array.isArray(r.items)) {
     for (const p of r.items as unknown[]) {
       const q = p as Partial<Placed>;
-      if (typeof q?.id === "string" && Number.isFinite(q.x) && Number.isFinite(q.y)) push(clampPlace(q.id, q.x!, q.y!));
+      if (typeof q?.id === "string" && Number.isFinite(q.x) && Number.isFinite(q.y)) push(clampPlace(q.id, q.x!, q.y!, size, q.f === true));
     }
   } else if (r.slots) {
     for (const [slot, id] of Object.entries(r.slots)) {
@@ -319,6 +381,7 @@ export function normalizeLayout(raw: unknown): Layout {
     window: ok(r.window, "window") ?? DEFAULT_LAYOUT.window,
     items,
     wear,
+    ...(size > 1 ? { size } : {}),
   };
 }
 
