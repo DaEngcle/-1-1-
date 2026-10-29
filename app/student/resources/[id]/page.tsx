@@ -19,12 +19,13 @@ export default async function ResourceDetailPage({
   const { data: r } = await supabase
     .from("resources")
     .select(
-      "id, title, description, cover_path, price, list_price, preview_dir, preview_count, size_bytes",
+      "id, title, description, cover_path, price, list_price, preview_dir, preview_count, size_bytes, required_course",
     )
     .eq("id", id)
     .eq("is_published", true)
     .maybeSingle();
-  if (!r) notFound();
+  // 수강생 한정 자료는 그 과정 학생에게만
+  if (!r || (r.required_course && !student.courses.includes(r.required_course as never))) notFound();
   const [{ data: access }, { data: request }] = await Promise.all([
     supabase
       .from("resource_access")

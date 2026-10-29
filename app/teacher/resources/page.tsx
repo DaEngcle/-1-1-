@@ -1,3 +1,4 @@
+import { COURSE_SHORT } from "@/lib/classroom/plans";
 import { headers } from "next/headers";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { requireTeacher } from "@/lib/classroom/dal";
@@ -197,6 +198,11 @@ export default async function TeacherResourcesPage() {
                     <p className="font-bold text-zinc-900">
                       {bookIcon(i)} {r.title}
                     </p>
+                    {r.required_course && (
+                      <p className="text-xs font-semibold text-brand-700">
+                        🔒 {COURSE_SHORT[r.required_course as string] ?? r.required_course} 수강생 한정
+                      </p>
+                    )}
                     {r.description && (
                       <p className="text-sm text-zinc-600">{r.description}</p>
                     )}

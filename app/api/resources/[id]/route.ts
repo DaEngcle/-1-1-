@@ -12,10 +12,14 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
   const supabase = createServerSupabaseClient();
   const { data: resource } = await supabase
     .from("resources")
-    .select("id, file_path, file_name, link_url, is_published, price")
+    .select("id, file_path, file_name, link_url, is_published, price, required_course")
     .eq("id", id)
     .maybeSingle();
   if (!resource || (!resource.is_published && !teacher)) {
+    return NextResponse.json({ error: "not_found" }, { status: 404 });
+  }
+  // 수강생 한정 자료: 그 과정을 듣는 학생만 (선생님은 항상)
+  if (resource.required_course && student && !student.courses.includes(resource.required_course as never)) {
     return NextResponse.json({ error: "not_found" }, { status: 404 });
   }
   // 유료 자료는 결제 확인 후 열어준 사람만

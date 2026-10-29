@@ -137,7 +137,7 @@ export function CatRoom({
   const d = roomDims(layout.size ?? 1);
   const { w: W, h: H } = d;
   const { cat: CAT, guest: GUEST } = catPlace(d);
-  // 고양이가 방 안을 천천히 돌아다닌다 (편집 중엔 가만히)
+  // 고양이가 방 안을 천천히 돌아다닌다 (꾸미는 중에도. 클릭은 통과해서 물건 옮기기를 막지 않는다)
   const roam = Math.round(d.w * 0.22);
   type Node = { z: number; order: number; el: React.ReactNode };
   const nodes: Node[] = [];
@@ -181,16 +181,14 @@ export function CatRoom({
       order: 999,
       el: (
         <g key="cat" pointerEvents="none">
-          {!onItemPointerDown && (
-            <animateTransform
-              attributeName="transform"
-              type="translate"
-              values={`0 0; 0 0; ${-roam} 0; ${-roam} 0; ${roam} 0; ${roam} 0; 0 0`}
-              keyTimes="0; 0.15; 0.3; 0.5; 0.7; 0.85; 1"
-              dur="30s"
-              repeatCount="indefinite"
-            />
-          )}
+          <animateTransform
+            attributeName="transform"
+            type="translate"
+            values={`0 0; 0 0; ${-roam} 0; ${-roam} 0; ${roam} 0; ${roam} 0; 0 0`}
+            keyTimes="0; 0.15; 0.3; 0.5; 0.7; 0.85; 1"
+            dur="30s"
+            repeatCount="indefinite"
+          />
           <CatSprite breed={breed} mood={mood} hat={hat} outfit={outfit} place={{ x: CAT.x, y: CAT.base - ch, width: CAT.width }} />
         </g>
       ),

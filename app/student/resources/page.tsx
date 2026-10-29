@@ -24,7 +24,7 @@ export default async function ResourcesPage({
   const { data } = await supabase
     .from("resources")
     .select(
-      "id, title, description, size_bytes, cover_path, link_url, price, list_price",
+      "id, title, description, size_bytes, cover_path, link_url, price, list_price, required_course",
     )
     .eq("is_published", true)
     .order("sort_order")
@@ -35,6 +35,10 @@ export default async function ResourcesPage({
     .eq("student_id", student.id);
   const owned = new Set((accessRows ?? []).map((a) => a.resource_id as string));
   const free = student.courses.length === 0;
+  // 수강생 한정 자료는 그 과정을 듣는 학생에게만 보인다
+  const list = (data ?? []).filter(
+    (r) => !r.required_course || student.courses.includes(r.required_course as never),
+  );
 
   return (
     <>
@@ -50,12 +54,12 @@ export default async function ResourcesPage({
       )}
       <h1 className="text-xl font-bold text-zinc-900">🎁 자료실</h1>
       <section className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-        {(data ?? []).length === 0 && (
+        {list.length === 0 && (
           <p className="col-span-full text-sm text-zinc-500">
             곧 자료가 올라와요!
           </p>
         )}
-        {(data ?? []).map((r, i) => {
+        {list.map((r, i) => {
           const cover = coverUrl(r.cover_path);
           // 유료 자료(아직 안 산 것)는 미리보기·구매 페이지로
           const forSale = Boolean(r.price) && !owned.has(r.id);
