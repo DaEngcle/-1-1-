@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
 
   const { data: item } = await supabase
     .from("lesson_items")
-    .select("id, sentence, lessons!inner(is_published, course_id, kind, day_number, courses!inner(status))")
+    .select("id, sentence, lessons!inner(id, is_published, course_id, kind, day_number, courses!inner(status))")
     .eq("id", lessonItemId)
     .eq("lessons.is_published", true)
     .maybeSingle();

@@ -37,8 +37,10 @@ export default async function StudentLessonPage({
   // 수강권에 없는 과정은 맛보기(Day 1~3)만
   const { data: courseRow } = await supabase.from("courses").select("status").eq("id", lesson.course_id).maybeSingle();
   if (!canOpenLesson(student.courses, lesson, courseRow?.status, student.earlyCourses)) notFound();
+  // 선생님이 이 학생에게만 열어준 강의 (선물 강의)
+  const isGift = student.earlyCourses.includes(`lesson:${lesson.id}`);
   const isPreview =
-    !(student.courses as string[]).includes(lesson.course_id) && !student.earlyCourses.includes(lesson.course_id);
+    !isGift && !(student.courses as string[]).includes(lesson.course_id) && !student.earlyCourses.includes(lesson.course_id);
   const upgrade = upgradePlanFor(lesson.course_id);
 
   const [
@@ -121,6 +123,12 @@ export default async function StudentLessonPage({
         <h1 className="text-xl font-bold text-zinc-900">{heading}</h1>
         {lesson.description && <p className="text-sm text-zinc-600">{lesson.description}</p>}
       </div>
+
+      {isGift && !(student.courses as string[]).includes(lesson.course_id) && (
+        <section className="rounded-2xl bg-[#ffd23f] p-4 text-zinc-900">
+          <p className="font-bold">🎁 다니엘 쌤이 특별히 열어 드린 선물 강의예요</p>
+        </section>
+      )}
 
       {isPreview && (
         <section className="flex flex-col gap-1 rounded-2xl bg-[#ffd23f] p-4 text-zinc-900">

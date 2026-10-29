@@ -1,6 +1,6 @@
 import Link from "next/link";
+import { PREVIEW_DAYS, grantedLessonIds } from "@/lib/classroom/preview";
 import { COURSE_INFO } from "@/lib/classroom/course-info";
-import { PREVIEW_DAYS } from "@/lib/classroom/preview";
 import {
   createServerSupabaseClient,
   type Course,
@@ -96,7 +96,8 @@ export default async function StudentLessonsPage({
 
   // 수강권이 없거나 준비 중인 과정은 한글 목차만 보여준다 (레슨 내용은 상세 페이지에서 막힘)
   if (!canSee) {
-    const [{ data: tocRows }, { data: previewRows }, { count: sentenceCount }] =
+    const granted = grantedLessonIds(student.earlyCourses);
+    const [{ data: tocRows }, { data: previewRows }, { count: sentenceCount }, { data: giftRows }] =
       await Promise.all([
         supabase
           .from("lessons")
@@ -124,7 +125,12 @@ export default async function StudentLessonsPage({
           })
           .eq("lessons.course_id", course.id)
           .eq("lessons.is_published", true),
+        // 선생님이 이 학생에게만 열어준 강의
+        granted.length
+          ? supabase.from("lessons").select("id, title").eq("course_id", course.id).eq("is_published", true).in("id", granted)
+          : Promise.resolve({ data: [] as { id: string; title: string }[] }),
       ]);
+    const gifts = new Set((giftRows ?? []).map((g) => g.id as string));
     const toc = (tocRows ?? []) as Lesson[];
     if (toc.length === 0) {
       return (
@@ -143,7 +149,7 @@ export default async function StudentLessonsPage({
       );
     }
     const previewTitle = new Map(
-      (previewRows ?? []).map((p) => [p.id as string, p.title as string]),
+      [...(previewRows ?? []), ...(giftRows ?? [])].map((p) => [p.id as string, p.title as string]),
     );
     const tocWeeks = new Map<number, { title: string; lessons: Lesson[] }>();
     for (const l of toc) {
@@ -219,7 +225,7 @@ export default async function StudentLessonsPage({
                         </span>
                       </span>
                       <span className="shrink-0 rounded-full bg-[#ffd23f] px-2 py-0.5 text-xs font-bold text-zinc-900">
-                        🎁 맛보기
+                        {gifts.has(l.id) ? "🎁 선물 강의" : "🎁 맛보기"}
                       </span>
                     </Link>
                   </li>
