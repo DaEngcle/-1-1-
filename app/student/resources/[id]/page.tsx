@@ -25,7 +25,7 @@ export default async function ResourceDetailPage({
     .eq("is_published", true)
     .maybeSingle();
   // 수강생 한정 자료는 그 과정 학생에게만
-  if (!r || (r.required_course && !student.courses.includes(r.required_course as never))) notFound();
+  if (!r) notFound();
   const [{ data: access }, { data: request }] = await Promise.all([
     supabase
       .from("resource_access")
@@ -40,6 +40,8 @@ export default async function ResourceDetailPage({
       .eq("student_id", student.id)
       .maybeSingle(),
   ]);
+  // 수강생 한정 자료는 그 과정 학생이나, 선생님이 따로 열어준 학생에게만
+  if (r.required_course && !student.courses.includes(r.required_course as never) && !access) notFound();
   const owned = !r.price || Boolean(access);
   const cover = coverUrl(r.cover_path);
   const rate = discountRate(r.list_price, r.price);

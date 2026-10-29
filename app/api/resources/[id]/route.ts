@@ -20,7 +20,14 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
   }
   // 수강생 한정 자료: 그 과정을 듣는 학생만 (선생님은 항상)
   if (resource.required_course && student && !student.courses.includes(resource.required_course as never)) {
-    return NextResponse.json({ error: "not_found" }, { status: 404 });
+    // 선생님이 이 학생에게 따로 열어준 자료면 통과
+    const { data: granted } = await supabase
+      .from("resource_access")
+      .select("resource_id")
+      .eq("resource_id", resource.id)
+      .eq("student_id", student.id)
+      .maybeSingle();
+    if (!granted) return NextResponse.json({ error: "not_found" }, { status: 404 });
   }
   // 유료 자료는 결제 확인 후 열어준 사람만
   if (resource.price && student) {

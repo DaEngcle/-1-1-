@@ -37,7 +37,7 @@ export default async function ResourcesPage({
   const free = student.courses.length === 0;
   // 수강생 한정 자료는 그 과정을 듣는 학생에게만 보인다
   const list = (data ?? []).filter(
-    (r) => !r.required_course || student.courses.includes(r.required_course as never),
+    (r) => !r.required_course || student.courses.includes(r.required_course as never) || owned.has(r.id),
   );
 
   return (
