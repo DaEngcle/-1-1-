@@ -13,21 +13,26 @@ export function Avatar({ breed, className = "h-9 w-11" }: { breed: string | null
   );
 }
 
-/** 랭킹 줄 (시즌·주간 공용) */
-export function RankList({ rows, meId, showTier = true }: { rows: RankRow[]; meId?: string; showTier?: boolean }) {
+/** 랭킹 줄 (시즌·주간 공용). houseLinks면 줄을 누르면 그 사람 고양이 집으로 간다 */
+export function RankList({
+  rows,
+  meId,
+  showTier = true,
+  houseLinks = false,
+}: {
+  rows: RankRow[];
+  meId?: string;
+  showTier?: boolean;
+  houseLinks?: boolean;
+}) {
   const medal = (rank: number) => (rank === 1 ? "🥇" : rank === 2 ? "🥈" : rank === 3 ? "🥉" : String(rank));
   return (
     <ol className="flex flex-col">
       {rows.map((r) => {
         const tier = tierFor(r.xp, r.rank);
         const me = r.studentId === meId;
-        return (
-          <li
-            key={r.studentId}
-            className={`flex items-center gap-2 border-b border-slate-100 px-2 py-2 last:border-0 ${
-              me ? "rounded-2xl border-0 bg-violet-50 ring-2 ring-violet-300" : ""
-            }`}
-          >
+        const row = (
+          <>
             <span className={`w-7 text-center ${r.rank <= 3 ? "text-xl" : "text-sm font-bold text-zinc-400"}`}>{medal(r.rank)}</span>
             <Avatar breed={r.catBreed} />
             <span className="flex min-w-0 flex-1 flex-col">
@@ -46,6 +51,24 @@ export function RankList({ rows, meId, showTier = true }: { rows: RankRow[]; meI
               {r.xp.toLocaleString()}
               <span className="ml-0.5 text-xs font-semibold text-zinc-400">P</span>
             </span>
+            {houseLinks && <span className="shrink-0 text-base" aria-hidden>🏠</span>}
+          </>
+        );
+        const inner = `flex items-center gap-2 px-2 py-2 ${me ? "rounded-2xl bg-violet-50 ring-2 ring-violet-300" : ""}`;
+        const line = me ? "" : "border-b border-slate-100 last:border-0";
+        return (
+          <li key={r.studentId} className={houseLinks ? line : `${inner} ${line}`}>
+            {houseLinks ? (
+              <Link
+                href={me ? "/student/cat-house" : `/student/cat-house/${r.studentId}`}
+                className={`${inner} rounded-2xl active:bg-slate-50`}
+                aria-label={`${r.name}의 고양이 집 가기`}
+              >
+                {row}
+              </Link>
+            ) : (
+              row
+            )}
           </li>
         );
       })}

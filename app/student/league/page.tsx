@@ -63,7 +63,7 @@ export default async function LeaguePage({ searchParams }: { searchParams: Promi
         {(week ? weekly : season).length === 0 ? (
           <p className="p-3 text-sm text-zinc-500">아직 기록이 없어요.</p>
         ) : (
-          <RankList rows={week ? weekly : season} meId={student.id} showTier={!week} />
+          <RankList rows={week ? weekly : season} meId={student.id} showTier={!week} houseLinks />
         )}
       </section>
 
