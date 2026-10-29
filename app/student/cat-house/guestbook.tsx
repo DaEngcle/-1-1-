@@ -52,7 +52,7 @@ export function Guestbook({
           <p className="rounded-xl bg-violet-50 p-2 text-sm text-violet-700">오늘은 남겼어요. 내일 또 놀러 와요 🐾</p>
         ) : (
           <div className="flex flex-col gap-2">
-            <p className="text-xs text-zinc-500">영어로 한 줄 남겨요. 아래 문장을 눌러도 돼요.</p>
+            <p className="text-xs text-zinc-500">한 줄 남겨요. 한글도 OK! 아래 영어 문장을 눌러도 돼요 🇦🇺</p>
             <div className="flex flex-wrap gap-1.5">
               {GUESTBOOK_PHRASES.map((p) => (
                 <button
@@ -71,8 +71,8 @@ export function Guestbook({
                 value={text}
                 onChange={(e) => setText(e.target.value)}
                 maxLength={GUESTBOOK_MAX}
-                placeholder="Write in English!"
-                lang="en"
+                placeholder="응원 한 줄 남기기 (영어·한글)"
+               
                 autoCapitalize="sentences"
                 className="min-w-0 flex-1 rounded-xl border border-zinc-200 px-3 py-2 text-sm"
               />
@@ -95,7 +95,7 @@ export function Guestbook({
           {list.map((e) => (
             <li key={e.id} className="flex items-start gap-2 py-2">
               <div className="min-w-0 flex-1">
-                <p className="break-words text-[15px] font-semibold text-zinc-900" lang="en">
+                <p className="break-words text-[15px] font-semibold text-zinc-900">
                   “{e.message}”
                 </p>
                 <p className="text-xs text-zinc-500">

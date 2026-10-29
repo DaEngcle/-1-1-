@@ -513,17 +513,19 @@ export const GUESTBOOK_PHRASES = [
 ];
 export const GUESTBOOK_MAX = 80;
 
-/** 방명록 글 확인: 영어로만, 80자 이하. 문제가 있으면 이유(한국어)를 돌려준다 */
+/** 방명록 글 확인: 영어·한글, 80자 이하. 문제가 있으면 이유(한국어)를 돌려준다 */
 export function checkGuestbook(raw: string): { ok: true; text: string } | { ok: false; reason: string } {
   const text = raw.replace(/\s+/g, " ").trim();
   if (text.length < 2) return { ok: false, reason: "한 줄을 써 주세요." };
   if (text.length > GUESTBOOK_MAX) return { ok: false, reason: `${GUESTBOOK_MAX}자까지 쓸 수 있어요.` };
-  if (/[ㄱ-ㅎㅏ-ㅣ가-힣]/.test(text)) return { ok: false, reason: "방명록은 영어로 써요! 🇦🇺" };
-  if (!/[a-zA-Z]{2,}/.test(text)) return { ok: false, reason: "영어 단어를 넣어 주세요." };
-  if (!/^[\x20-\x7E’☀-➿\u{1F300}-\u{1FAFF}️]+$/u.test(text)) {
-    return { ok: false, reason: "영어·숫자·이모지만 쓸 수 있어요." };
+  if (!/[a-zA-Z가-힣]/.test(text)) return { ok: false, reason: "글자를 넣어 주세요." };
+  if (!/^[\x20-\x7E’ㄱ-ㅎㅏ-ㅣ가-힣☀-➿\u{1F300}-\u{1FAFF}️]+$/u.test(text)) {
+    return { ok: false, reason: "영어·한글·숫자·이모지만 쓸 수 있어요." };
   }
-  if (/\b(fuck|shit|bitch|asshole|dick|cunt|bastard|slut|retard)/i.test(text)) {
+  if (
+    /\b(fuck|shit|bitch|asshole|dick|cunt|bastard|slut|retard)/i.test(text) ||
+    /(씨발|시발|ㅅㅂ|ㅆㅂ|병신|ㅂㅅ|개새|좆|존나|ㅈㄴ|닥쳐|꺼져|미친놈|미친년|지랄|등신|애미|느금)/.test(text.replace(/\s/g, ""))
+  ) {
     return { ok: false, reason: "친구가 기분 좋을 말로 써 주세요 🐾" };
   }
   return { ok: true, text };
