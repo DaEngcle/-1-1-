@@ -1,11 +1,13 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { after } from "next/server";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { requireStudent } from "@/lib/classroom/dal";
 import { kstDate } from "@/lib/classroom/stats";
 import { BOX_MIN_DAYS, BOX_ODDS, ITEMS, ITEM_BY_ID, ROOM_UPGRADES, checkGuestbook, inSeason, normalizeLayout, priceOn, type Layout } from "@/lib/classroom/cat-house";
-import { weekStart } from "@/lib/classroom/engagement";
+import { maskName, weekStart } from "@/lib/classroom/engagement";
+import { sendPushToStudent } from "@/lib/classroom/push";
 import { getChuru, getRoom } from "@/lib/classroom/cat-house-data";
 
 /** 상점에서 아이템 사기 (츄르가 충분할 때만) */
@@ -112,6 +114,18 @@ export async function writeGuestbook(ownerId: string, message: string) {
     return { ok: false, message: error.code === "23505" ? "이 방에는 오늘 이미 남겼어요. 내일 또 와요 🐾" : "남기지 못했어요. 다시 해 주세요." };
   }
   revalidatePath(`/student/cat-house/${ownerId}`);
+  // 방 주인에게 알림 (응답은 기다리지 않음). 방명록은 한 방에 하루 한 번이라 알림도 많아야 하루 한 번
+  const text = checked.text;
+  after(async () => {
+    try {
+      const { data: w } = await supabase.from("students").select("name, nickname").eq("id", student.id).maybeSingle();
+      const who = w ? ((w.nickname as string | null) ?? maskName(w.name as string)) : "친구";
+      const body = text.length > 60 ? text.slice(0, 60) + "…" : text;
+      await sendPushToStudent(ownerId, { title: `🐾 ${who}님이 방명록을 남겼어요`, body, url: "/student/cat-house", tag: `guestbook-${student.id}` }, "guestbook");
+    } catch (e) {
+      console.error("방명록 알림 실패:", (e as Error).message);
+    }
+  });
   return { ok: true, message: "방명록을 남겼어요 ✉️" };
 }
 
