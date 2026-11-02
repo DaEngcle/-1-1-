@@ -4,7 +4,7 @@ import { createServerSupabaseClient } from "@/lib/supabase";
 import { requireStudent } from "@/lib/classroom/dal";
 import { bookIcon, coverUrl } from "@/lib/classroom/resources";
 import { discountRate, manwon } from "@/lib/classroom/price";
-import { COURSE_APPLY_LINKS, canGetCourseBook, isProspect, upgradePlanFor } from "@/lib/classroom/plans";
+import { COURSE_APPLY_LINKS, COURSE_APPLY_PLAN_NAMES, canGetCourseBook, isProspect } from "@/lib/classroom/plans";
 import { SubmitButton } from "@/app/_ui/submit-button";
 import { requestPurchase } from "../actions";
 
@@ -46,7 +46,7 @@ export default async function ResourceDetailPage({
   const locked = Boolean(r.required_course) && !canGetCourseBook(student, r.required_course!) && !access;
   if (locked && !(isProspect(student) && (r.preview_count ?? 0) > 0)) notFound();
   const owned = !locked && (!r.price || Boolean(access));
-  const upgrade = r.required_course ? upgradePlanFor(r.required_course) : null;
+  const applyPlanName = r.required_course ? COURSE_APPLY_PLAN_NAMES[r.required_course] : undefined;
   const cover = coverUrl(r.cover_path);
   const rate = discountRate(r.list_price, r.price);
   const pages = Array.from(
@@ -116,7 +116,7 @@ export default async function ResourceDetailPage({
           )}
           {locked ? (
             <p className="text-sm font-semibold text-zinc-700">
-              🔒 {upgrade?.name ?? "이 과정"} 수강생에게 드리는 교재예요. 여기서는 앞부분만 볼 수 있어요.
+              🔒 {applyPlanName ?? "이 과정"} 수강생에게 드리는 교재예요. 여기서는 앞부분만 볼 수 있어요.
             </p>
           ) : r.price && !owned ? (
             <p className="flex items-baseline gap-2">

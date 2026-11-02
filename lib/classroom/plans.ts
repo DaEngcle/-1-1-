@@ -56,6 +56,12 @@ export const COURSE_APPLY_LINKS: Record<string, string> = {
   level1: "https://leadz.kr/yBd?utm=classroom_book",
 };
 
+/** 위 신청 링크로 파는 수강권 이름 (잠금 안내 문구가 결제 페이지와 같도록) */
+export const COURSE_APPLY_PLAN_NAMES: Record<string, string> = {
+  bootcamp: PLANS.bootcamp.name,
+  level1: PLANS.combo6.name,
+};
+
 /** 아직 수강 전인 학생(무료회원·무료 체험): 과정 교재를 미리보기로 보여준다 */
 export function isProspect(student: { plan: string | null; courses: readonly string[] }) {
   return student.courses.length === 0 || isTrialPlan(student.plan);
