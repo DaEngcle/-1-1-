@@ -5,7 +5,7 @@ import { requireStudent } from "@/lib/classroom/dal";
 import { cardClass } from "@/app/_ui/styles";
 import { bookIcon, coverUrl } from "@/lib/classroom/resources";
 import { discountRate, manwon } from "@/lib/classroom/price";
-import { COURSE_IDS, COURSE_SHORT, canGetCourseBook } from "@/lib/classroom/plans";
+import { COURSE_IDS, COURSE_SHORT, canGetCourseBook, isProspect } from "@/lib/classroom/plans";
 
 function formatSize(bytes: number | null) {
   if (!bytes) return "";
@@ -25,7 +25,7 @@ export default async function ResourcesPage({
   const { data } = await supabase
     .from("resources")
     .select(
-      "id, title, description, size_bytes, cover_path, link_url, price, list_price, required_course",
+      "id, title, description, size_bytes, cover_path, link_url, price, list_price, required_course, preview_count",
     )
     .eq("is_published", true)
     .order("sort_order")
@@ -38,8 +38,15 @@ export default async function ResourcesPage({
   const free = student.courses.length === 0;
   // 수강생 한정 자료는 그 과정을 듣는 학생에게만 보인다
   const visible = (data ?? []).filter(
-    (r) => !r.required_course || canGetCourseBook(student, r.required_course) || owned.has(r.id),
+    (r) =>
+      !r.required_course ||
+      canGetCourseBook(student, r.required_course) ||
+      owned.has(r.id) ||
+      // 수강 전인 학생에게는 미리보기로 보여준다 (파일은 못 받음)
+      (isProspect(student) && (r.preview_count ?? 0) > 0),
   );
+  const locked = (r: { id: string; required_course: string | null }) =>
+    Boolean(r.required_course) && !canGetCourseBook(student, r.required_course!) && !owned.has(r.id);
   // 같은 과정 교재는 한 묶음으로, 나머지는 아래에 표지로
   const list = visible.filter((r) => !r.required_course);
   const bundles = COURSE_IDS.map((course) => ({
@@ -79,10 +86,10 @@ export default async function ResourcesPage({
             </span>
             <span className="flex min-w-0 flex-1 flex-col">
               <span className="font-bold text-zinc-900">
-                {bookIcon(0, course)} {COURSE_SHORT[course]} 교재
+                {items.every(locked) ? "🔒" : bookIcon(0, course)} {COURSE_SHORT[course]} 교재
               </span>
               <span className="text-xs text-zinc-500">
-                수강생 전용 · {items.length}권
+                수강생 전용 · {items.length}권{items.every(locked) ? " · 미리보기 가능" : ""}
               </span>
             </span>
             <span className="text-sm text-zinc-400 transition-transform group-open/bundle:rotate-180">▼</span>
@@ -92,7 +99,10 @@ export default async function ResourcesPage({
               const cover = coverUrl(r.cover_path);
               return (
                 <li key={r.id} className="border-b border-slate-100 last:border-b-0">
-                  <a href={`/api/resources/${r.id}`} className="flex items-center gap-3 p-3 hover:bg-slate-50">
+                  <a
+                    href={locked(r) ? `/student/resources/${r.id}` : `/api/resources/${r.id}`}
+                    className="flex items-center gap-3 p-3 hover:bg-slate-50"
+                  >
                     {cover && (
                       // eslint-disable-next-line @next/next/no-img-element -- 앱에 배포된 표지
                       <img
@@ -106,8 +116,14 @@ export default async function ResourcesPage({
                       {r.description && <span className="text-xs text-zinc-600">{r.description}</span>}
                     </span>
                     <span className="shrink-0 rounded-xl border-b-4 border-brand-800 bg-brand-600 px-3 py-1.5 text-center text-sm font-bold text-white">
-                      ⬇ 받기
-                      <span className="block text-xs font-normal opacity-80">{formatSize(r.size_bytes)}</span>
+                      {locked(r) ? (
+                        "👀 미리보기"
+                      ) : (
+                        <>
+                          ⬇ 받기
+                          <span className="block text-xs font-normal opacity-80">{formatSize(r.size_bytes)}</span>
+                        </>
+                      )}
                     </span>
                   </a>
                 </li>

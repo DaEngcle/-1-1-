@@ -50,6 +50,11 @@ export function canGetCourseBook(student: { plan: string | null; courses: readon
   return !isTrialPlan(student.plan) && student.courses.includes(course);
 }
 
+/** 아직 수강 전인 학생(무료회원·무료 체험): 과정 교재를 미리보기로 보여준다 */
+export function isProspect(student: { plan: string | null; courses: readonly string[] }) {
+  return student.courses.length === 0 || isTrialPlan(student.plan);
+}
+
 export function coursesForPlan(plan: string | null | undefined): CourseId[] {
   return isPlanId(plan) ? PLANS[plan].courses : [];
 }

@@ -4,7 +4,7 @@ import { createServerSupabaseClient } from "@/lib/supabase";
 import { requireStudent } from "@/lib/classroom/dal";
 import { bookIcon, coverUrl } from "@/lib/classroom/resources";
 import { discountRate, manwon } from "@/lib/classroom/price";
-import { canGetCourseBook } from "@/lib/classroom/plans";
+import { canGetCourseBook, isProspect, upgradePlanFor } from "@/lib/classroom/plans";
 import { SubmitButton } from "@/app/_ui/submit-button";
 import { requestPurchase } from "../actions";
 
@@ -42,8 +42,11 @@ export default async function ResourceDetailPage({
       .maybeSingle(),
   ]);
   // 수강생 한정 자료는 그 과정 학생이나, 선생님이 따로 열어준 학생에게만
-  if (r.required_course && !canGetCourseBook(student, r.required_course) && !access) notFound();
-  const owned = !r.price || Boolean(access);
+  // 수강 전인 학생(무료회원·무료 체험)은 앞부분 미리보기만 볼 수 있다
+  const locked = Boolean(r.required_course) && !canGetCourseBook(student, r.required_course!) && !access;
+  if (locked && !(isProspect(student) && (r.preview_count ?? 0) > 0)) notFound();
+  const owned = !locked && (!r.price || Boolean(access));
+  const upgrade = r.required_course ? upgradePlanFor(r.required_course) : null;
   const cover = coverUrl(r.cover_path);
   const rate = discountRate(r.list_price, r.price);
   const pages = Array.from(
@@ -51,7 +54,14 @@ export default async function ResourceDetailPage({
     (_, i) => `${r.preview_dir}/p${String(i + 1).padStart(2, "0")}.jpg`,
   );
 
-  const action = owned ? (
+  const action = locked ? (
+    <Link
+      href={`/student/lessons?course=${r.required_course}`}
+      className="rounded-xl border-b-4 border-amber-500 bg-[#ffd23f] px-5 py-3 text-center font-extrabold text-zinc-900"
+    >
+      🎬 강의 맛보기 보러 가기
+    </Link>
+  ) : owned ? (
     <a
       href={`/api/resources/${r.id}`}
       className="rounded-xl border-b-4 border-brand-800 bg-brand-600 px-5 py-3 text-center font-bold text-white"
@@ -91,7 +101,11 @@ export default async function ResourceDetailPage({
           {r.description && (
             <p className="text-sm text-zinc-600">{r.description}</p>
           )}
-          {r.price && !owned ? (
+          {locked ? (
+            <p className="text-sm font-semibold text-zinc-700">
+              🔒 {upgrade?.name ?? "이 과정"} 수강생에게 드리는 교재예요. 여기서는 앞부분만 볼 수 있어요.
+            </p>
+          ) : r.price && !owned ? (
             <p className="flex items-baseline gap-2">
               {rate > 0 && (
                 <span className="text-lg font-extrabold text-red-500">
@@ -134,7 +148,7 @@ export default async function ResourceDetailPage({
           {!owned && (
             <div className="flex flex-col gap-2 rounded-2xl bg-[#fff8db] p-4 text-center">
               <p className="font-bold text-zinc-900">
-                뒷부분이 궁금하다면? 전체를 받아보세요
+                {locked ? "전체 교재는 수강생에게 드려요" : "뒷부분이 궁금하다면? 전체를 받아보세요"}
               </p>
               {action}
             </div>
