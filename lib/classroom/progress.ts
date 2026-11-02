@@ -147,7 +147,7 @@ export async function getLessonProgress(studentId: string): Promise<LessonProgre
   const supabase = createServerSupabaseClient();
   const [{ lessons: allLessons, items }, { data: me }, { data: progressRows }, submissionRows] = await Promise.all([
     loadPublished(supabase),
-    supabase.from("students").select("plan, courses").eq("id", studentId).maybeSingle(),
+    supabase.from("students").select("plan, courses, early_courses").eq("id", studentId).maybeSingle(),
     supabase
       .from("video_progress")
       .select("lesson_id, percent, completed_at")
@@ -160,7 +160,13 @@ export async function getLessonProgress(studentId: string): Promise<LessonProgre
   const courses = new Set<string>(studentCourses(me?.plan, me?.courses as string[] | null));
   // 무료 체험은 열린 앞부분만 (다음 공부 안내가 잠긴 강의를 가리키지 않게)
   const isTrial = isTrialPlan(me?.plan);
-  const lessons = allLessons.filter((l) => courses.has(l.course_id) && (!isTrial || isTrialLesson(l)));
+  const early = (me?.early_courses as string[] | null) ?? [];
+  const lessons = allLessons.filter(
+    (l) =>
+      courses.has(l.course_id) &&
+      // 선생님이 따로 열어준 과정·강의는 체험이어도 보인다
+      (!isTrial || isTrialLesson(l) || early.includes(l.course_id) || early.includes(`lesson:${l.id}`)),
+  );
   const progress = new Map((progressRows ?? []).map((p) => [p.lesson_id, p]));
   const submitted = new Set(submissionRows.map((s) => s.lesson_item_id));
   const itemsByLesson = new Map<string, string[]>();
