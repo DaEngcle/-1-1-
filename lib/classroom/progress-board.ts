@@ -65,17 +65,21 @@ export async function getProgressBoard(courseId: string, cohort: string | null) 
   const inCourse = (s: (typeof allStudents)[number]) =>
     studentCourses(s.plan as string | null, s.courses as string[] | null).includes(courseId as never);
 
-  // 기수를 고르면 그 기수 학생 전부, 전체·미지정은 이 과정을 듣는 학생만
+  // 수강권이 없는 기수 학생은 기수 화면에서만 흐리게 보여준다 (평균에는 안 넣음)
+  const noPlan = (s: (typeof allStudents)[number]) =>
+    studentCourses(s.plan as string | null, s.courses as string[] | null).length === 0;
+  const inCohortView = (s: (typeof allStudents)[number]) => inCourse(s) || noPlan(s);
+  // 전체·미지정·기수 모두 이 과정을 듣는 학생만
   const cohorts: BoardCohort[] = (cohortRows ?? [])
     .map((c) => ({
       id: c.id as string,
       name: c.name as string,
-      count: allStudents.filter((s) => s.cohort_id === c.id).length,
+      count: allStudents.filter((s) => s.cohort_id === c.id && inCohortView(s)).length,
     }))
     .filter((c) => c.count > 0);
   const unassigned = allStudents.filter((s) => !s.cohort_id && inCourse(s)).length;
   const students = allStudents.filter((s) =>
-    cohort === "none" ? !s.cohort_id && inCourse(s) : cohort ? s.cohort_id === cohort : inCourse(s),
+    cohort === "none" ? !s.cohort_id && inCourse(s) : cohort ? s.cohort_id === cohort && inCohortView(s) : inCourse(s),
   );
   const ids = students.map((s) => s.id as string);
   const lessonIds = lessons.map((l) => l.id as string);
@@ -109,14 +113,16 @@ export async function getProgressBoard(courseId: string, cohort: string | null) 
   const touch = (id: string, day: string) => {
     if (!last.has(id) || day > last.get(id)!) last.set(id, day);
   };
+  // 마지막 공부일도 이 과정 안에서만 센다
+  const courseLessons = new Set(lessonIds);
   for (const s of submitted) {
-    touch(s.student_id, kstDate(s.created_at));
     const lessonId = lessonOfItem.get(s.lesson_item_id);
     if (!lessonId) continue;
+    touch(s.student_id, kstDate(s.created_at));
     const key = `${s.student_id}:${lessonId}`;
     sentByLesson.set(key, (sentByLesson.get(key) ?? new Set()).add(s.lesson_item_id));
   }
-  for (const w of watched) touch(w.student_id, kstDate(w.updated_at));
+  for (const w of watched) if (courseLessons.has(w.lesson_id)) touch(w.student_id, kstDate(w.updated_at));
 
   const rows: BoardRow[] = students.map((s) => {
     const id = s.id as string;
@@ -161,7 +167,7 @@ export async function getProgressBoard(courseId: string, cohort: string | null) 
       nickname: (s.nickname as string | null) ?? null,
       planLabel: planName(s.plan as string | null, s.courses as string[] | null).replace("다잉클 ", ""),
       isTrial,
-      ended: Boolean(until && until < today),
+      ended: Boolean(until && until < today) || noPlan(s),
       cells,
       done,
       total,
