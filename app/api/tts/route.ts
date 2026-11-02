@@ -9,7 +9,8 @@ import {
   type TtsVoice,
 } from "@/lib/classroom/azure-speech";
 
-const MAX_TEXT_LENGTH = 300;
+// 뉴스 요약문(최대 400자대)까지 원어민 음성으로 읽을 수 있게
+const MAX_TEXT_LENGTH = 800;
 
 /**
  * 원어민 음성(mp3) 반환. GET /api/tts?text=...&speed=normal|slow

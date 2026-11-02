@@ -9,18 +9,34 @@ import { markNewsRead } from "../actions";
 type Expression = { phrase: string; meaning: string; example: string; example_ko: string; note?: string };
 type Quiz = { question: string; choices: string[]; answer: number; explain: string };
 
+// 뉴스 읽어주기 목소리: AI 면접에 쓰는 사람 같은 목소리 + 호주 억양
+const NEWS_VOICE = "ava_au";
+// 이 화면에서 소리는 하나만: 다른 버튼을 누르면 재생 중이던 소리를 멈춘다
+let stopCurrent: (() => void) | null = null;
+
 function Speak({ text, label = "🔊", slow }: { text: string; label?: string; slow?: boolean }) {
-  const { play, playingKey } = useTts();
-  const key = `${slow ? "slow" : "normal"}:${text}`;
+  const { play, stop, playingKey } = useTts();
+  const speed = slow ? "slow" : "normal";
+  const key = `${speed}:${text}`;
+  const playing = playingKey === key;
   return (
     <button
       type="button"
-      onClick={() => play(text, slow ? "slow" : "normal")}
+      aria-label={playing ? "정지" : undefined}
+      onClick={() => {
+        if (playing) {
+          stop();
+          return;
+        }
+        stopCurrent?.();
+        stopCurrent = stop;
+        void play(text, speed, key, NEWS_VOICE);
+      }}
       className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-bold transition-colors ${
-        playingKey === key ? "bg-brand-600 text-white" : "bg-brand-50 text-brand-700 hover:bg-brand-100"
+        playing ? "bg-brand-600 text-white" : "bg-brand-50 text-brand-700 hover:bg-brand-100"
       }`}
     >
-      {label}
+      {playing ? "⏹ 정지" : label}
     </button>
   );
 }
