@@ -4,6 +4,7 @@ import { createServerSupabaseClient } from "@/lib/supabase";
 import { requireStudent } from "@/lib/classroom/dal";
 import { bookIcon, coverUrl } from "@/lib/classroom/resources";
 import { discountRate, manwon } from "@/lib/classroom/price";
+import { canGetCourseBook } from "@/lib/classroom/plans";
 import { SubmitButton } from "@/app/_ui/submit-button";
 import { requestPurchase } from "../actions";
 
@@ -41,7 +42,7 @@ export default async function ResourceDetailPage({
       .maybeSingle(),
   ]);
   // 수강생 한정 자료는 그 과정 학생이나, 선생님이 따로 열어준 학생에게만
-  if (r.required_course && !student.courses.includes(r.required_course as never) && !access) notFound();
+  if (r.required_course && !canGetCourseBook(student, r.required_course) && !access) notFound();
   const owned = !r.price || Boolean(access);
   const cover = coverUrl(r.cover_path);
   const rate = discountRate(r.list_price, r.price);

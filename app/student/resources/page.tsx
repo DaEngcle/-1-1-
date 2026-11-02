@@ -5,6 +5,7 @@ import { requireStudent } from "@/lib/classroom/dal";
 import { cardClass } from "@/app/_ui/styles";
 import { bookIcon, coverUrl } from "@/lib/classroom/resources";
 import { discountRate, manwon } from "@/lib/classroom/price";
+import { COURSE_IDS, COURSE_SHORT, canGetCourseBook } from "@/lib/classroom/plans";
 
 function formatSize(bytes: number | null) {
   if (!bytes) return "";
@@ -36,9 +37,15 @@ export default async function ResourcesPage({
   const owned = new Set((accessRows ?? []).map((a) => a.resource_id as string));
   const free = student.courses.length === 0;
   // 수강생 한정 자료는 그 과정을 듣는 학생에게만 보인다
-  const list = (data ?? []).filter(
-    (r) => !r.required_course || student.courses.includes(r.required_course as never) || owned.has(r.id),
+  const visible = (data ?? []).filter(
+    (r) => !r.required_course || canGetCourseBook(student, r.required_course) || owned.has(r.id),
   );
+  // 같은 과정 교재는 한 묶음으로, 나머지는 아래에 표지로
+  const list = visible.filter((r) => !r.required_course);
+  const bundles = COURSE_IDS.map((course) => ({
+    course,
+    items: visible.filter((r) => r.required_course === course),
+  })).filter((b) => b.items.length > 0);
 
   return (
     <>
@@ -53,8 +60,64 @@ export default async function ResourcesPage({
         </section>
       )}
       <h1 className="text-xl font-bold text-zinc-900">🎁 자료실</h1>
+      {bundles.map(({ course, items }) => (
+        <details key={course} className={`${cardClass} group/bundle !p-0`}>
+          <summary className="flex cursor-pointer list-none items-center gap-3 p-3 [&::-webkit-details-marker]:hidden">
+            <span className="flex shrink-0">
+              {items.slice(0, 3).map((r, i) => {
+                const cover = coverUrl(r.cover_path);
+                return cover ? (
+                  // eslint-disable-next-line @next/next/no-img-element -- 앱에 배포된 표지
+                  <img
+                    key={r.id}
+                    src={cover}
+                    alt=""
+                    className={`aspect-[3/4] w-11 rounded-md object-cover object-top shadow ${i > 0 ? "-ml-5" : ""}`}
+                  />
+                ) : null;
+              })}
+            </span>
+            <span className="flex min-w-0 flex-1 flex-col">
+              <span className="font-bold text-zinc-900">
+                {bookIcon(0, course)} {COURSE_SHORT[course]} 교재
+              </span>
+              <span className="text-xs text-zinc-500">
+                수강생 전용 · {items.length}권
+              </span>
+            </span>
+            <span className="text-sm text-zinc-400 transition-transform group-open/bundle:rotate-180">▼</span>
+          </summary>
+          <ul className="flex flex-col border-t border-slate-100">
+            {items.map((r) => {
+              const cover = coverUrl(r.cover_path);
+              return (
+                <li key={r.id} className="border-b border-slate-100 last:border-b-0">
+                  <a href={`/api/resources/${r.id}`} className="flex items-center gap-3 p-3 hover:bg-slate-50">
+                    {cover && (
+                      // eslint-disable-next-line @next/next/no-img-element -- 앱에 배포된 표지
+                      <img
+                        src={cover}
+                        alt={`${r.title} 표지`}
+                        className="aspect-[3/4] w-12 shrink-0 rounded object-cover object-top shadow-sm"
+                      />
+                    )}
+                    <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+                      <span className="text-sm font-bold leading-snug text-zinc-900">{r.title}</span>
+                      {r.description && <span className="text-xs text-zinc-600">{r.description}</span>}
+                    </span>
+                    <span className="shrink-0 rounded-xl border-b-4 border-brand-800 bg-brand-600 px-3 py-1.5 text-center text-sm font-bold text-white">
+                      ⬇ 받기
+                      <span className="block text-xs font-normal opacity-80">{formatSize(r.size_bytes)}</span>
+                    </span>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </details>
+      ))}
       <section className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-        {list.length === 0 && (
+        {list.length === 0 && bundles.length === 0 && (
           <p className="col-span-full text-sm text-zinc-500">
             곧 자료가 올라와요!
           </p>

@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { getVerifiedStudent, isTeacher } from "@/lib/classroom/dal";
+import { canGetCourseBook } from "@/lib/classroom/plans";
 
 /** 자료 내려받기: 로그인한 회원만, 1분짜리 서명 링크로 보낸다 (다운로드 수 기록) */
 export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
@@ -19,7 +20,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     return NextResponse.json({ error: "not_found" }, { status: 404 });
   }
   // 수강생 한정 자료: 그 과정을 듣는 학생만 (선생님은 항상)
-  if (resource.required_course && student && !student.courses.includes(resource.required_course as never)) {
+  if (resource.required_course && student && !canGetCourseBook(student, resource.required_course)) {
     // 선생님이 이 학생에게 따로 열어준 자료면 통과
     const { data: granted } = await supabase
       .from("resource_access")

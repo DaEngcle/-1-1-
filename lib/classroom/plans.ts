@@ -45,6 +45,11 @@ export function isTrialPlan(plan: string | null | undefined) {
   return isPlanId(plan) && "trial" in PLANS[plan];
 }
 
+/** 과정 교재를 받을 수 있는지: 그 과정을 실제로 듣는 학생만 (무료 체험은 강의만 열리고 교재는 안 줌) */
+export function canGetCourseBook(student: { plan: string | null; courses: readonly string[] }, course: string) {
+  return !isTrialPlan(student.plan) && student.courses.includes(course);
+}
+
 export function coursesForPlan(plan: string | null | undefined): CourseId[] {
   return isPlanId(plan) ? PLANS[plan].courses : [];
 }
