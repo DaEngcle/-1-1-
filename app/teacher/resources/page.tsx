@@ -196,7 +196,7 @@ export default async function TeacherResourcesPage() {
                   )}
                   <div>
                     <p className="font-bold text-zinc-900">
-                      {bookIcon(i)} {r.title}
+                      {bookIcon(i, r.required_course)} {r.title}
                     </p>
                     {r.required_course && (
                       <p className="text-xs font-semibold text-brand-700">

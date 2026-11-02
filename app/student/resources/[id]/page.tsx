@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { requireStudent } from "@/lib/classroom/dal";
-import { coverUrl } from "@/lib/classroom/resources";
+import { bookIcon, coverUrl } from "@/lib/classroom/resources";
 import { discountRate, manwon } from "@/lib/classroom/price";
 import { SubmitButton } from "@/app/_ui/submit-button";
 import { requestPurchase } from "../actions";
@@ -86,7 +86,7 @@ export default async function ResourceDetailPage({
           />
         )}
         <div className="flex flex-1 flex-col gap-2">
-          <h1 className="text-xl font-bold text-zinc-900">📕 {r.title}</h1>
+          <h1 className="text-xl font-bold text-zinc-900">{r.required_course ? bookIcon(0, r.required_course) : "📕"} {r.title}</h1>
           {r.description && (
             <p className="text-sm text-zinc-600">{r.description}</p>
           )}

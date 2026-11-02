@@ -90,7 +90,7 @@ export default async function ResourcesPage({
                 </span>
               )}
               <p className="text-sm font-bold leading-snug text-zinc-900">
-                {r.link_url ? "✅" : bookIcon(i)} {r.title}
+                {r.link_url ? "✅" : bookIcon(i, r.required_course)} {r.title}
               </p>
               {r.description && (
                 <p className="text-xs text-zinc-600">{r.description}</p>
