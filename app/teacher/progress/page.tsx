@@ -124,17 +124,17 @@ export default async function ProgressBoardPage({
       {sorted.length === 0 ? (
         <p className="text-sm text-zinc-500">이 조건에 해당하는 학생이 없어요.</p>
       ) : (
-        <div className="overflow-x-auto rounded-2xl border border-slate-200/80 bg-white shadow-sm">
+        <div className="isolate max-h-[75vh] overflow-auto rounded-2xl border border-slate-200/80 bg-white shadow-sm">
           <table className="border-separate border-spacing-0 text-sm">
             <thead>
               <tr>
-                <th className="sticky left-0 z-10 min-w-36 bg-white px-3 py-2 text-left text-xs font-semibold text-zinc-500">학생</th>
-                <th className="px-2 py-2 text-xs font-semibold text-zinc-500">진도</th>
-                <th className="whitespace-nowrap px-2 py-2 text-xs font-semibold text-zinc-500">마지막</th>
+                <th className="sticky left-0 top-0 z-20 min-w-36 bg-white px-3 py-2 text-left text-xs font-semibold text-zinc-500">학생</th>
+                <th className="sticky top-0 z-10 bg-white px-2 py-2 text-xs font-semibold text-zinc-500">진도</th>
+                <th className="sticky top-0 z-10 whitespace-nowrap bg-white px-2 py-2 text-xs font-semibold text-zinc-500">마지막</th>
                 {days.map((d, i) => (
                   <th
                     key={d.id}
-                    className={`min-w-7 py-2 text-center text-[11px] font-medium tabular-nums text-zinc-500 ${
+                    className={`sticky top-0 z-10 min-w-7 bg-white py-2 text-center text-[11px] font-medium tabular-nums text-zinc-500 ${
                       i > 0 && days[i - 1].week !== d.week ? "border-l border-slate-200" : ""
                     }`}
                   >
