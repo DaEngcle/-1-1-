@@ -50,6 +50,12 @@ export function canGetCourseBook(student: { plan: string | null; courses: readon
   return !isTrialPlan(student.plan) && student.courses.includes(course);
 }
 
+/** 교재 미리보기에서 보내는 수강 신청 링크 (토스 한도 문제가 풀릴 때까지 리드젠 결제 페이지) */
+export const COURSE_APPLY_LINKS: Record<string, string> = {
+  bootcamp: "https://leadz.kr/yBc?utm=classroom_book",
+  level1: "https://leadz.kr/yBd?utm=classroom_book",
+};
+
 /** 아직 수강 전인 학생(무료회원·무료 체험): 과정 교재를 미리보기로 보여준다 */
 export function isProspect(student: { plan: string | null; courses: readonly string[] }) {
   return student.courses.length === 0 || isTrialPlan(student.plan);

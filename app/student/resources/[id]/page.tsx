@@ -4,7 +4,7 @@ import { createServerSupabaseClient } from "@/lib/supabase";
 import { requireStudent } from "@/lib/classroom/dal";
 import { bookIcon, coverUrl } from "@/lib/classroom/resources";
 import { discountRate, manwon } from "@/lib/classroom/price";
-import { canGetCourseBook, isProspect, upgradePlanFor } from "@/lib/classroom/plans";
+import { COURSE_APPLY_LINKS, canGetCourseBook, isProspect, upgradePlanFor } from "@/lib/classroom/plans";
 import { SubmitButton } from "@/app/_ui/submit-button";
 import { requestPurchase } from "../actions";
 
@@ -54,13 +54,26 @@ export default async function ResourceDetailPage({
     (_, i) => `${r.preview_dir}/p${String(i + 1).padStart(2, "0")}.jpg`,
   );
 
+  const applyLink = r.required_course ? COURSE_APPLY_LINKS[r.required_course] : undefined;
   const action = locked ? (
-    <Link
-      href={`/student/lessons?course=${r.required_course}`}
-      className="rounded-xl border-b-4 border-amber-500 bg-[#ffd23f] px-5 py-3 text-center font-extrabold text-zinc-900"
-    >
-      🎬 강의 맛보기 보러 가기
-    </Link>
+    <div className="flex flex-col gap-2">
+      {applyLink && (
+        <a
+          href={applyLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="rounded-xl border-b-4 border-amber-500 bg-[#ffd23f] px-5 py-3 text-center font-extrabold text-zinc-900"
+        >
+          📝 수강 신청하기
+        </a>
+      )}
+      <Link
+        href={`/student/lessons?course=${r.required_course}`}
+        className="rounded-xl border border-slate-200 bg-white px-5 py-2.5 text-center text-sm font-bold text-zinc-700"
+      >
+        🎬 강의 맛보기 먼저 보기
+      </Link>
+    </div>
   ) : owned ? (
     <a
       href={`/api/resources/${r.id}`}
