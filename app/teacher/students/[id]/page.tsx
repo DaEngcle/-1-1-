@@ -16,6 +16,7 @@ import {
   deleteNote,
   sendTeacherPush,
   setEarlyCourses,
+  setHideFromProgress,
   setVocaFull,
   setStudentActive,
   updateMemo,
@@ -52,11 +53,12 @@ export default async function TeacherStudentPage({
   const { data: student } = await supabase
     .from("students")
     .select(
-      `id, name, phone, memo, is_active, created_at, plan, courses, access_until, early_courses, ${PROFILE_SELECT}`,
+      `id, name, phone, memo, is_active, created_at, plan, courses, access_until, early_courses, hide_from_progress, ${PROFILE_SELECT}`,
     )
     .eq("id", id)
     .maybeSingle<
       {
+        hide_from_progress: boolean;
         id: string;
         name: string;
         phone: string | null;
@@ -198,6 +200,11 @@ export default async function TeacherStudentPage({
           >
             {STAGES[stage].icon} {STAGES[stage].label}
           </Link>
+          <form action={setHideFromProgress.bind(null, student.id, !student.hide_from_progress)}>
+            <SubmitButton className="rounded-full border border-slate-200 px-2 py-0.5 text-xs font-semibold text-zinc-600">
+              {student.hide_from_progress ? "🙈 진도표에서 숨김 · 다시 보이기" : "진도표에서 숨기기"}
+            </SubmitButton>
+          </form>
         </div>
         <form action={updateProfile} className="flex flex-col gap-2">
           <input type="hidden" name="id" value={student.id} />

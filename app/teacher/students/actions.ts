@@ -284,6 +284,15 @@ export async function setVocaFull(id: string, on: boolean) {
   revalidatePath(`/teacher/students/${id}`);
 }
 
+/** 진도표에서 숨기기 / 다시 보이기 (수강에는 영향 없음) */
+export async function setHideFromProgress(id: string, hide: boolean) {
+  await requireTeacher();
+  if (!/^[0-9a-f-]{36}$/.test(id)) return;
+  await createServerSupabaseClient().from("students").update({ hide_from_progress: hide }).eq("id", id);
+  revalidatePath(`/teacher/students/${id}`);
+  revalidatePath("/teacher/progress");
+}
+
 /** 선생님이 학생 휴대폰으로 알림 보내기 */
 export async function sendTeacherPush(formData: FormData) {
   await requireTeacher();

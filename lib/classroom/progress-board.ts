@@ -58,6 +58,7 @@ export async function getProgressBoard(courseId: string, cohort: string | null) 
       .eq("approval", "approved")
       .eq("stage", "enrolled")
       .eq("is_active", true)
+      .eq("hide_from_progress", false)
       .order("name"),
   ]);
   const lessons = lessonRows ?? [];
