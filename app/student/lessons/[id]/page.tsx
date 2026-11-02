@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ClipPlayer } from "@/app/_ui/clip-player";
 import { notFound } from "next/navigation";
-import { canOpenLesson, PREVIEW_DAYS } from "@/lib/classroom/preview";
+import { canOpenLesson, isTrialLesson, PREVIEW_DAYS } from "@/lib/classroom/preview";
 import { upgradePlanFor } from "@/lib/classroom/plans";
 import {
   createServerSupabaseClient,
@@ -36,7 +36,7 @@ export default async function StudentLessonPage({
   const lesson = lessonRow as Lesson;
   // 수강권에 없는 과정은 맛보기(Day 1~3)만
   const { data: courseRow } = await supabase.from("courses").select("status").eq("id", lesson.course_id).maybeSingle();
-  if (!canOpenLesson(student.courses, lesson, courseRow?.status, student.earlyCourses)) notFound();
+  if (!canOpenLesson(student.courses, lesson, courseRow?.status, student.earlyCourses, student.isTrial)) notFound();
   // 선생님이 이 학생에게만 열어준 강의 (선물 강의)
   const isGift = student.earlyCourses.includes(`lesson:${lesson.id}`);
   const isPreview =
@@ -61,7 +61,7 @@ export default async function StudentLessonPage({
     Promise.all([
       supabase
         .from("lessons")
-        .select("id, sort_order")
+        .select("id, sort_order, kind, day_number, week_number")
         .eq("is_published", true)
         .eq("course_id", lesson.course_id)
         .lt("sort_order", lesson.sort_order)
@@ -69,7 +69,7 @@ export default async function StudentLessonPage({
         .limit(1),
       supabase
         .from("lessons")
-        .select("id, sort_order")
+        .select("id, sort_order, kind, day_number, week_number")
         .eq("is_published", true)
         .eq("course_id", lesson.course_id)
         .gt("sort_order", lesson.sort_order)
@@ -96,7 +96,12 @@ export default async function StudentLessonPage({
   const prev = neighborRows?.find((n) => n.sort_order < lesson.sort_order);
   const nextRow = neighborRows?.find((n) => n.sort_order > lesson.sort_order);
   // 맛보기 학생은 맛보기 레슨까지만 다음으로 넘어간다
-  const next = isPreview && lesson.day_number != null && lesson.day_number >= PREVIEW_DAYS ? undefined : nextRow;
+  // 체험 학생은 Day 20까지만
+  const next =
+    (isPreview && lesson.day_number != null && lesson.day_number >= PREVIEW_DAYS) ||
+    (student.isTrial && nextRow && !isTrialLesson(nextRow))
+      ? undefined
+      : nextRow;
 
   // 문장별 가장 최근 제출 결과
   const latest = new Map<string, PracticeResult>();

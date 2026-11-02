@@ -8,7 +8,7 @@ import { fetchAll } from "./progress";
  * 학생이 열 수 있는 레슨(수강권·맛보기·미리 열어준 과정)의 문장만 쓴다.
  */
 
-type StudentAccess = { courses: string[]; earlyCourses: string[] };
+type StudentAccess = { courses: string[]; earlyCourses: string[]; isTrial?: boolean };
 type LessonRow = {
   id: string;
   course_id: string;
@@ -49,7 +49,7 @@ export async function getVocaCourses(student: StudentAccess): Promise<VocaCourse
         const n = count.get(l.id) ?? 0;
         if (!n) continue;
         const w = weeks.get(l.week_number) ?? { week: l.week_number, title: l.week_title, sentences: 0, open: false };
-        const open = canOpenLesson(student.courses, l, c.status as string, student.earlyCourses);
+        const open = canOpenLesson(student.courses, l, c.status as string, student.earlyCourses, student.isTrial);
         if (open) w.sentences += n;
         w.open ||= open;
         weeks.set(l.week_number, w);
@@ -67,7 +67,7 @@ export async function getVocaWeek(student: StudentAccess, courseId: string, week
   const open = new Set(
     lessons
       .filter((l) => l.course_id === courseId && l.week_number === week)
-      .filter((l) => canOpenLesson(student.courses, l, course.status as string, student.earlyCourses))
+      .filter((l) => canOpenLesson(student.courses, l, course.status as string, student.earlyCourses, student.isTrial))
       .map((l) => l.id),
   );
   const sentences: VocaSentence[] = items

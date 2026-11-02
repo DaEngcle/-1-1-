@@ -40,14 +40,14 @@ export async function POST(request: NextRequest) {
 
   const { data: item } = await supabase
     .from("lesson_items")
-    .select("id, sentence, lessons!inner(id, is_published, course_id, kind, day_number, courses!inner(status))")
+    .select("id, sentence, lessons!inner(id, is_published, course_id, kind, day_number, week_number, courses!inner(status))")
     .eq("id", lessonItemId)
     .eq("lessons.is_published", true)
     .maybeSingle();
   const itemLesson = item?.lessons as unknown as
-    | { id: string; course_id: string; kind: string; day_number: number | null; courses: { status: string } }
+    | { id: string; course_id: string; kind: string; day_number: number | null; week_number: number | null; courses: { status: string } }
     | undefined;
-  if (!item || !itemLesson || !canOpenLesson(student.courses, itemLesson, itemLesson.courses?.status, student.earlyCourses)) {
+  if (!item || !itemLesson || !canOpenLesson(student.courses, itemLesson, itemLesson.courses?.status, student.earlyCourses, student.isTrial)) {
     return NextResponse.json({ error: "문장을 찾을 수 없어요." }, { status: 404 });
   }
 

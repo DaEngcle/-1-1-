@@ -59,6 +59,8 @@ export const checkStudent = cache(async () => {
       plan: (student.plan as string | null) ?? null,
       accessUntil: (student.access_until as string | null) ?? null,
       courses: trialEnded ? [] : studentCourses(student.plan, student.courses as string[] | null),
+      /** 무료 체험 중인지 (강의는 앞부분만 열린다) */
+      isTrial: !trialEnded && isTrialPlan(student.plan),
       /** 준비 중이어도 이 학생에게만 미리 열린 과정 */
       earlyCourses: ((student.early_courses as string[] | null) ?? []) as string[],
     },

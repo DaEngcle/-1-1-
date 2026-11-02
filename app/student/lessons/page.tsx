@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { PREVIEW_DAYS, grantedLessonIds } from "@/lib/classroom/preview";
+import { PREVIEW_DAYS, TRIAL_LAST_DAY, grantedLessonIds, isTrialLesson } from "@/lib/classroom/preview";
 import { COURSE_INFO } from "@/lib/classroom/course-info";
 import {
   createServerSupabaseClient,
@@ -7,7 +7,7 @@ import {
   type Lesson,
 } from "@/lib/supabase";
 import { requireStudent } from "@/lib/classroom/dal";
-import { COURSE_SHORT, upgradePlanFor } from "@/lib/classroom/plans";
+import { COURSE_APPLY_LINKS, COURSE_SHORT, upgradePlanFor } from "@/lib/classroom/plans";
 
 /** 과정별 색 (Level 1.0은 교재 표지의 노란색) */
 const THEME: Record<string, { tab: string; badge: string; icon: string }> = {
@@ -287,7 +287,11 @@ export default async function StudentLessonsPage({
   const watch = new Map((progressRows ?? []).map((p) => [p.lesson_id, p]));
 
   const lessons = (lessonRows ?? []) as Lesson[];
-  const openIds = new Set(lessons.filter((l) => l.is_published).map((l) => l.id));
+  // 체험 학생은 Day 20까지만 (선생님이 따로 열어준 강의·과정은 예외)
+  const trialView = student.isTrial && !early.has(course.id);
+  const giftIds = new Set(grantedLessonIds(student.earlyCourses));
+  const trialLocked = (l: Lesson) => trialView && !isTrialLesson(l) && !giftIds.has(l.id);
+  const openIds = new Set(lessons.filter((l) => l.is_published && !trialLocked(l)).map((l) => l.id));
   const openItems = (itemRows ?? []).filter((i) => openIds.has(i.lesson_id));
   const practiced = new Set((subRows ?? []).map((s) => s.lesson_item_id));
   const itemsByLesson = new Map<string, string[]>();
@@ -350,6 +354,22 @@ export default async function StudentLessonsPage({
           </div>
         </section>
       )}
+      {trialView && (
+        <section className="flex flex-col gap-2 rounded-2xl bg-[#fff8db] p-4 text-zinc-900">
+          <p className="font-bold">🎁 무료 체험 중이에요 · Day 1~{TRIAL_LAST_DAY}까지 들을 수 있어요</p>
+          <p className="text-sm">Day {TRIAL_LAST_DAY + 1}부터는 수강생에게 열려요.</p>
+          {COURSE_APPLY_LINKS[course.id] && (
+            <a
+              href={COURSE_APPLY_LINKS[course.id]}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="self-start rounded-xl border-b-4 border-amber-500 bg-[#ffd23f] px-4 py-2 text-sm font-extrabold"
+            >
+              📝 수강 신청하기
+            </a>
+          )}
+        </section>
+      )}
       {lessons.some((l) => l.video_live) && (
         <p className="rounded-lg bg-slate-100 px-3 py-1.5 text-xs text-zinc-600">
           📼 Live 표시가 있는 강의는 수업 녹화본이에요. VOD 강의가 준비되면
@@ -363,6 +383,19 @@ export default async function StudentLessonsPage({
             {week.lessons.map((l) => {
               const items = itemsByLesson.get(l.id) ?? [];
               const done = items.filter((id) => practiced.has(id)).length;
+              if (trialLocked(l)) {
+                return (
+                  <div key={l.id} className="flex items-center justify-between gap-3 px-4 py-3">
+                    <span className="flex flex-col">
+                      <span className="text-xs text-zinc-400">
+                        {l.kind === "day" ? `Day ${String(l.day_number).padStart(2, "0")}` : l.title}
+                      </span>
+                      <span className="font-medium text-zinc-700">{l.title_ko ?? "주간 복습 드릴"}</span>
+                    </span>
+                    <span className="shrink-0 text-sm opacity-40">🔒</span>
+                  </div>
+                );
+              }
               if (!l.is_published) {
                 return (
                   <div key={l.id} className="flex items-center justify-between gap-3 px-4 py-3 opacity-60">

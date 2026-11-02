@@ -48,12 +48,12 @@ export async function POST(request: NextRequest) {
   const supabase = createServerSupabaseClient();
   const { data: lesson } = await supabase
     .from("lessons")
-    .select("id, video_url, course_id, kind, day_number, courses!inner(status)")
+    .select("id, video_url, course_id, kind, day_number, week_number, courses!inner(status)")
     .eq("id", lessonId)
     .eq("is_published", true)
     .maybeSingle();
   const status = (lesson?.courses as unknown as { status: string } | undefined)?.status;
-  if (!lesson?.video_url || !canOpenLesson(student.courses, lesson, status, student.earlyCourses)) {
+  if (!lesson?.video_url || !canOpenLesson(student.courses, lesson, status, student.earlyCourses, student.isTrial)) {
     return NextResponse.json({ error: "not_found" }, { status: 404 });
   }
 

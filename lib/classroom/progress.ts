@@ -1,7 +1,8 @@
 import "server-only";
 import { createServerSupabaseClient, type Lesson } from "@/lib/supabase";
 import { SEGMENT_SECONDS, COMPLETE_PERCENT } from "./progress-rules";
-import { studentCourses } from "./plans";
+import { isTrialPlan, studentCourses } from "./plans";
+import { isTrialLesson } from "./preview";
 
 export { SEGMENT_SECONDS, COMPLETE_PERCENT };
 
@@ -157,7 +158,9 @@ export async function getLessonProgress(studentId: string): Promise<LessonProgre
   ]);
 
   const courses = new Set<string>(studentCourses(me?.plan, me?.courses as string[] | null));
-  const lessons = allLessons.filter((l) => courses.has(l.course_id));
+  // 무료 체험은 열린 앞부분만 (다음 공부 안내가 잠긴 강의를 가리키지 않게)
+  const isTrial = isTrialPlan(me?.plan);
+  const lessons = allLessons.filter((l) => courses.has(l.course_id) && (!isTrial || isTrialLesson(l)));
   const progress = new Map((progressRows ?? []).map((p) => [p.lesson_id, p]));
   const submitted = new Set(submissionRows.map((s) => s.lesson_item_id));
   const itemsByLesson = new Map<string, string[]>();
