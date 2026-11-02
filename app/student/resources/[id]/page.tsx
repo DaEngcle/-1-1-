@@ -4,7 +4,7 @@ import { createServerSupabaseClient } from "@/lib/supabase";
 import { requireStudent } from "@/lib/classroom/dal";
 import { bookIcon, coverUrl } from "@/lib/classroom/resources";
 import { discountRate, manwon } from "@/lib/classroom/price";
-import { COURSE_APPLY_LINKS, COURSE_APPLY_PLAN_NAMES, canGetCourseBook, isProspect } from "@/lib/classroom/plans";
+import { COURSE_APPLY_LINKS, COURSE_APPLY_PLAN_NAMES, canGetCourseBook, isProspect, upgradePlanFor } from "@/lib/classroom/plans";
 import { SubmitButton } from "@/app/_ui/submit-button";
 import { requestPurchase } from "../actions";
 
@@ -46,7 +46,9 @@ export default async function ResourceDetailPage({
   const locked = Boolean(r.required_course) && !canGetCourseBook(student, r.required_course!) && !access;
   if (locked && !(isProspect(student) && (r.preview_count ?? 0) > 0)) notFound();
   const owned = !locked && (!r.price || Boolean(access));
-  const applyPlanName = r.required_course ? COURSE_APPLY_PLAN_NAMES[r.required_course] : undefined;
+  const applyPlanName = r.required_course
+    ? COURSE_APPLY_PLAN_NAMES[r.required_course] ?? upgradePlanFor(r.required_course)?.name
+    : undefined;
   const cover = coverUrl(r.cover_path);
   const rate = discountRate(r.list_price, r.price);
   const pages = Array.from(
