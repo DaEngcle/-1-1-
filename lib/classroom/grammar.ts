@@ -165,9 +165,9 @@ export const SERVICE_GRAMMAR_UNITS = 20;
 
 type GrammarStudent = { courses: readonly string[]; earlyCourses: readonly string[] };
 
-/** 문법 유료 과정 수강: 기초반(Level 1.0)이 들어 있는 수강권이거나, 선생님이 따로 열어 준 학생 */
+/** 문법 유료 과정 수강: 주말 기초반처럼 선생님이 따로 열어 준 학생 (early_courses의 "grammar") */
 export function hasPaidGrammar(student: GrammarStudent) {
-  return student.courses.includes("level1") || student.earlyCourses.includes("grammar");
+  return student.earlyCourses.includes("grammar");
 }
 
 /** 이 학생이 볼 수 있으면 null, 아니면 막힌 이유 */
