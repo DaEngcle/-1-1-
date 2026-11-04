@@ -1,8 +1,7 @@
 import Link from "next/link";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { requireStudent } from "@/lib/classroom/dal";
-import { hasFullVoca } from "@/lib/classroom/verbs";
-import { FREE_GRAMMAR_UNITS, GRAMMAR_PARTS, OPEN_GRAMMAR_UNITS, grammarDeck, grammarUnit } from "@/lib/classroom/grammar";
+import { GRAMMAR_PARTS, OPEN_GRAMMAR_UNITS, SERVICE_GRAMMAR_UNITS, grammarDeck, grammarLock, grammarUnit, hasPaidGrammar } from "@/lib/classroom/grammar";
 
 export default async function GrammarPage() {
   const student = await requireStudent();
@@ -12,7 +11,6 @@ export default async function GrammarPage() {
     .eq("student_id", student.id)
     .like("deck", "grammar-%");
   const byDeck = new Map((data ?? []).map((r) => [r.deck as string, r]));
-  const free = !hasFullVoca(student);
   const cleared = (data ?? []).filter((r) => (r.stars ?? 0) > 0 && Number(String(r.deck).slice(8)) <= OPEN_GRAMMAR_UNITS).length;
 
   return (
@@ -25,6 +23,9 @@ export default async function GrammarPage() {
             다니엘 쌤 강의 → 개념 → 예문 → 문제 12개. 80점이 넘으면 별을 받아요. 아무 유닛부터 시작해도 돼요.
           </span>
           <span className="text-xs font-bold text-white/90">{cleared}/{OPEN_GRAMMAR_UNITS} 유닛 클리어</span>
+          {!hasPaidGrammar(student) && student.courses.length > 0 && (
+            <span className="text-xs text-amber-50">1~{SERVICE_GRAMMAR_UNITS}강은 수강생 서비스, {SERVICE_GRAMMAR_UNITS + 1}강부터는 유료 과정이에요.</span>
+          )}
         </span>
       </section>
 
@@ -35,7 +36,8 @@ export default async function GrammarPage() {
             {part.units.map((n) => {
               const u = grammarUnit(n)!;
               const p = byDeck.get(grammarDeck(n));
-              const locked = free && n > FREE_GRAMMAR_UNITS;
+              const lock = grammarLock(student, n);
+              const locked = lock !== null;
               const body = (
                 <>
                   <span
@@ -47,7 +49,7 @@ export default async function GrammarPage() {
                     <span className="text-xs font-bold text-amber-700">Unit {n}</span>
                     <span className="font-bold leading-snug text-zinc-900">{u.lecture}</span>
                     {locked ? (
-                      <span className="text-xs font-semibold text-amber-700">수강생 전용이에요</span>
+                      <span className="text-xs font-semibold text-amber-700">{lock === "paid" ? "유료 과정이에요" : "수강생 전용이에요"}</span>
                     ) : p ? (
                       <span className="text-xs text-zinc-500">최고 {p.best}점</span>
                     ) : null}

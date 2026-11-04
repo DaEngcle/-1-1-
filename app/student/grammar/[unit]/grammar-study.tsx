@@ -5,8 +5,9 @@ import { useTts } from "@/app/_ui/audio/use-tts";
 import { VideoEmbed } from "@/app/_ui/video-embed";
 import { QuizGame, shuffle, type QuizQuestion } from "@/app/student/voca/quiz-game";
 import { grammarDeck, type GrammarQuiz, type GrammarUnit } from "@/lib/classroom/grammar";
+import { BlockBuilder } from "./block-builder";
 
-const STEPS = ["📺 강의", "① 개념", "② 예문", "③ 문제"] as const;
+const STEPS = ["📺 강의", "① 개념", "② 예문", "③ 문제"];
 
 /** 문법 문제 → 보카 게임 문제 형식 */
 function toQuestion(q: GrammarQuiz, i: number): QuizQuestion {
@@ -35,16 +36,18 @@ export function GrammarStudy({ unit, nextUnit }: { unit: GrammarUnit; nextUnit: 
   const [step, setStep] = useState(0);
   const [showKo, setShowKo] = useState<Record<number, boolean>>({});
   const { play, playingKey } = useTts();
+  const hasBlocks = (unit.blocks?.length ?? 0) > 0;
+  const steps = hasBlocks ? [...STEPS, "④ 블록"] : STEPS;
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="grid grid-cols-4 gap-1 rounded-2xl bg-amber-50 p-1">
-        {STEPS.map((s, i) => (
+      <div className={`grid ${hasBlocks ? "grid-cols-5" : "grid-cols-4"} gap-1 rounded-2xl bg-amber-50 p-1`}>
+        {steps.map((s, i) => (
           <button
             key={s}
             type="button"
             onClick={() => setStep(i)}
-            className={`rounded-xl py-2 text-sm font-bold ${step === i ? "bg-white text-amber-700 shadow-sm" : "text-amber-800/60"}`}
+            className={`rounded-xl py-2 ${hasBlocks ? "text-xs" : "text-sm"} font-bold ${step === i ? "bg-white text-amber-700 shadow-sm" : "text-amber-800/60"}`}
           >
             {s}
           </button>
@@ -150,6 +153,18 @@ export function GrammarStudy({ unit, nextUnit }: { unit: GrammarUnit; nextUnit: 
           </button>
         </section>
       )}
+
+      {step === 3 && hasBlocks && (
+        <button
+          type="button"
+          onClick={() => setStep(4)}
+          className="rounded-2xl bg-amber-100 py-2.5 text-sm font-bold text-amber-900"
+        >
+          🧩 문제를 풀었다면, 블록으로 문장 만들기 →
+        </button>
+      )}
+
+      {step === 4 && unit.blocks && <BlockBuilder unit={unit.unit} blocks={unit.blocks} nextUnit={nextUnit} />}
 
       {step === 3 && (
         <QuizGame

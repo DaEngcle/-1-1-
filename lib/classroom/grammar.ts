@@ -66,6 +66,8 @@ export type GrammarQuiz =
   | { type: "translate"; ko: string; answer: string; choices: string[]; why: string }
   | { type: "fix"; prompt: string; answer: string; choices: string[]; why: string };
 
+export type GrammarBlock = { ko: string; en: string; tokens: string[]; extra: string[] };
+
 type UnitContent = {
   unit: number;
   title: string;
@@ -76,6 +78,8 @@ type UnitContent = {
   mistakes: { wrong: string; right: string; why: string }[];
   examples: { en: string; ko: string }[];
   quiz: GrammarQuiz[];
+  /** 수업 끝나고 블록으로 문장 만들기 (있는 유닛만) */
+  blocks?: GrammarBlock[];
 };
 
 export type GrammarUnit = UnitContent & { lecture: string; video: string };
@@ -150,11 +154,29 @@ export const GRAMMAR_UNITS: GrammarUnit[] = ([u01, u02, u03, u04, u05, u06, u07,
   video: LECTURES[u.unit].video,
 }));
 
-/** 지금 학생에게 공개하는 유닛 수 (21~60강 내용은 만들어 두었고, 숫자만 올리면 열린다) */
-export const OPEN_GRAMMAR_UNITS = 20;
+/** 지금 학생에게 공개하는 유닛 수 (뒤쪽 강의 내용은 만들어 두었고, 숫자만 올리면 열린다) */
+export const OPEN_GRAMMAR_UNITS = 25;
 
 /** 무료회원은 앞 유닛까지만 */
 export const FREE_GRAMMAR_UNITS = 3;
+
+/** 수강생에게 서비스로 여는 유닛. 그 뒤는 유료 과정 */
+export const SERVICE_GRAMMAR_UNITS = 20;
+
+type GrammarStudent = { courses: readonly string[]; earlyCourses: readonly string[] };
+
+/** 문법 유료 과정 수강: 기초반(Level 1.0)이 들어 있는 수강권이거나, 선생님이 따로 열어 준 학생 */
+export function hasPaidGrammar(student: GrammarStudent) {
+  return student.courses.includes("level1") || student.earlyCourses.includes("grammar");
+}
+
+/** 이 학생이 볼 수 있으면 null, 아니면 막힌 이유 */
+export function grammarLock(student: GrammarStudent, unit: number): "member" | "paid" | null {
+  if (hasPaidGrammar(student)) return null;
+  if (unit <= FREE_GRAMMAR_UNITS) return null;
+  if (student.courses.length === 0 && !student.earlyCourses.includes("voca")) return "member";
+  return unit <= SERVICE_GRAMMAR_UNITS ? null : "paid";
+}
 
 /** 게임 저장용 덱 이름 (voca_progress 테이블을 같이 쓴다) */
 export const grammarDeck = (unit: number) => `grammar-${unit}`;

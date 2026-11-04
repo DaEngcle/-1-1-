@@ -232,5 +232,150 @@
       ],
       "why": "will not의 줄임말은 won't이고, 뒤에는 동사원형 eat."
     }
+  ],
+  "blocks": [
+    {
+      "ko": "플랫화이트 한 잔 주세요.",
+      "en": "I'll have a flat white, please.",
+      "tokens": [
+        "I'll",
+        "have",
+        "a",
+        "flat white",
+        "please"
+      ],
+      "extra": [
+        "having"
+      ]
+    },
+    {
+      "ko": "퇴근하고 전화할게요.",
+      "en": "I'll call you after work.",
+      "tokens": [
+        "I'll",
+        "call",
+        "you",
+        "after",
+        "work"
+      ],
+      "extra": [
+        "calls"
+      ]
+    },
+    {
+      "ko": "내일은 더울 거예요.",
+      "en": "It will be hot tomorrow.",
+      "tokens": [
+        "It",
+        "will",
+        "be",
+        "hot",
+        "tomorrow"
+      ],
+      "extra": [
+        "is"
+      ]
+    },
+    {
+      "ko": "그녀는 월요일에 새 일을 시작할 거예요.",
+      "en": "She'll start her new job on Monday.",
+      "tokens": [
+        "She'll",
+        "start",
+        "her",
+        "new",
+        "job",
+        "on",
+        "Monday"
+      ],
+      "extra": [
+        "starts"
+      ]
+    },
+    {
+      "ko": "다시는 안 늦을게요.",
+      "en": "I won't be late again.",
+      "tokens": [
+        "I",
+        "won't",
+        "be",
+        "late",
+        "again"
+      ],
+      "extra": [
+        "don't"
+      ]
+    },
+    {
+      "ko": "창문 좀 열어 줄래요?",
+      "en": "Will you open the window, please?",
+      "tokens": [
+        "Will",
+        "you",
+        "open",
+        "the",
+        "window",
+        "please"
+      ],
+      "extra": [
+        "Do"
+      ]
+    },
+    {
+      "ko": "우리는 트램을 타고 해변에 갈 거예요.",
+      "en": "We'll take the tram to the beach.",
+      "tokens": [
+        "We'll",
+        "take",
+        "the",
+        "tram",
+        "to",
+        "the",
+        "beach"
+      ],
+      "extra": [
+        "going"
+      ]
+    },
+    {
+      "ko": "내일 다시 올게요.",
+      "en": "I'll come back tomorrow.",
+      "tokens": [
+        "I'll",
+        "come",
+        "back",
+        "tomorrow"
+      ],
+      "extra": [
+        "to"
+      ]
+    },
+    {
+      "ko": "그들은 오늘 밤에 일하지 않을 거예요.",
+      "en": "They won't work tonight.",
+      "tokens": [
+        "They",
+        "won't",
+        "work",
+        "tonight"
+      ],
+      "extra": [
+        "works"
+      ]
+    },
+    {
+      "ko": "그는 내일 바쁠 거예요.",
+      "en": "He will be busy tomorrow.",
+      "tokens": [
+        "He",
+        "will",
+        "be",
+        "busy",
+        "tomorrow"
+      ],
+      "extra": [
+        "is"
+      ]
+    }
   ]
 }
