@@ -21,6 +21,8 @@ export const metadata: Metadata = {
   applicationName: "다잉클 클래스룸",
   // 아이폰 '홈 화면에 추가'용
   appleWebApp: { capable: true, title: "다잉클", statusBarStyle: "default" },
+  // 예전 iOS는 이 표시가 있어야 주소창 없이 앱처럼 열린다
+  other: { "apple-mobile-web-app-capable": "yes" },
   icons: { icon: "/icon-192.png", apple: "/apple-touch-icon.png" },
   title: "다잉클 데일리 | 1일 1영어표현 카톡 구독",
   description:
