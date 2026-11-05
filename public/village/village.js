@@ -72,8 +72,9 @@
 .vg-fab { position: absolute; right: 10px; bottom: 10px; z-index: 2; font: inherit; font-size: 13px; font-weight: 700; color: #fff; background: #6c5cff; border: 2px solid #2a2350; border-radius: 10px; padding: 6px 10px; box-shadow: 0 3px 0 #2a2350; cursor: pointer; }
 .vg-toast { position: absolute; left: 50%; top: 45%; transform: translate(-50%, -50%); z-index: 3; font-size: 14px; font-weight: 700; color: #fff; background: #1f8a4c; border: 2px solid #2a2350; border-radius: 12px; padding: 10px 14px; text-align: center; }
 .vg-fab[hidden] { display: none; }
-.vg-stick { position: absolute; left: 12px; bottom: 12px; z-index: 3; width: 104px; height: 104px; border-radius: 50%; background: rgba(42,35,80,.28); border: 3px solid #2a2350; touch-action: none; cursor: grab; }
-.vg-knob { position: absolute; left: 50%; top: 50%; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%; background: #f2b631; border: 3px solid #2a2350; box-shadow: 0 3px 0 #2a2350; pointer-events: none; }
+.vg-stick { position: absolute; left: 12px; bottom: 12px; z-index: 3; width: 104px; height: 104px; border-radius: 50%; background: rgba(255,255,255,.12); border: 2px solid rgba(255,255,255,.55); opacity: .55; transition: opacity .15s; touch-action: none; cursor: grab; }
+.vg-stick:active { opacity: .85; }
+.vg-knob { position: absolute; left: 50%; top: 50%; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%; background: rgba(255,255,255,.6); border: 2px solid rgba(42,35,80,.45); pointer-events: none; }
 .vg-inside { position: absolute; inset: 0; z-index: 1; overflow: hidden; touch-action: none; cursor: pointer; }
 .vg-inside[hidden] { display: none; }
 .vg-stage { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
@@ -158,7 +159,7 @@
 
     const walkImg = new Image();
     walkImg.onload = () => { if (!stopped) begin(walkImg); };
-    walkImg.src = base + "walk.png";
+    walkImg.src = base + "walk.png?v=2";
 
     let worldNav = null;
     function begin(mk) {
