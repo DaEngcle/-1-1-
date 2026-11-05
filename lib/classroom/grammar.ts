@@ -155,7 +155,7 @@ export const GRAMMAR_UNITS: GrammarUnit[] = ([u01, u02, u03, u04, u05, u06, u07,
 }));
 
 /** 지금 학생에게 공개하는 유닛 수 (뒤쪽 강의 내용은 만들어 두었고, 숫자만 올리면 열린다) */
-export const OPEN_GRAMMAR_UNITS = 25;
+export const OPEN_GRAMMAR_UNITS = 30;
 
 /** 무료회원은 앞 유닛까지만 */
 export const FREE_GRAMMAR_UNITS = 3;
