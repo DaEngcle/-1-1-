@@ -34,7 +34,7 @@ export default async function CatHousePage() {
         </p>
       </div>
 
-      <details open className="rounded-2xl bg-white p-3 text-sm text-zinc-600 shadow-sm">
+      <details className="rounded-2xl bg-white p-3 text-sm text-zinc-600 shadow-sm">
         <summary className="cursor-pointer font-bold text-zinc-800">🐟 츄르는 어떻게 모아요?</summary>
         <ul className="mt-2 list-disc pl-5">
           <li>쉐도잉 1문장 제출 +5</li>

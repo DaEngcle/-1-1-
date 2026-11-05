@@ -34,6 +34,18 @@
     { id: "huts", x: 1968, y: 1376, top: 1142, name: "🏖 해변 오두막", desc: "알록달록 오두막. 사진 부탁 영어.", q: ["\"사진 한 장 찍어 주실 수 있어요?\"", "Could you take a photo of us?"] },
     { id: "pier", x: 2339, y: 1266, top: 1211, name: "⛵ 피어", desc: "해 질 녘 산책 코스. 길 묻기 영어.", q: ["\"해변은 어느 쪽이에요?\"", "Excuse me, which way to the beach?"] },
   ];
+  // 가게 내부 맵: 그림 좌표로 걸을 수 있는 바닥(floor)에서 가구(block)를 뺀다. start: 들어온 자리, spot: 처음 걸어가는 자리
+  const CAFE_TABLES = [[495,530,610,610,495,700,390,610],[690,455,790,540,690,620,595,540],[830,375,925,450,830,530,745,450]];
+  const ROOMS = {
+    bakery: { w: 1000, h: 1000, bg: "#6b4128", start: [470,885], spot: [690,700], floor: [[370,825,410,805,640,712,770,650,845,708,490,905]] },
+    cafe: { w: 1000, h: 747, bg: "#6b4128", start: [300,640], spot: [540,500], floor: [[120,520,255,600,425,520,560,455,690,430,760,400,930,505,500,722]], block: CAFE_TABLES },
+    restaurant: { w: 1000, h: 747, bg: "#6b4128", start: [340,640], spot: [590,470], floor: [[120,520,255,600,425,520,560,455,690,430,760,400,930,505,500,722]], block: [...CAFE_TABLES, [255,565,330,565,330,610,255,610]] },
+    hotel: { w: 1000, h: 747, bg: "#6b4128", start: [430,680], spot: [250,565], floor: [[60,515,115,495,175,550,300,480,310,520,275,530,275,600,390,650,430,690,500,722]] },
+    pharmacy: { w: 1000, h: 1000, bg: "#6b4128", start: [250,820], spot: [720,815], floor: [[55,715,225,790,420,885,505,920,650,825,705,808,825,730,940,715,505,948],[300,800,490,705,600,620,690,680,640,690,440,765,420,880]] },
+    site: { w: 1000, h: 1000, bg: "#6b4128", start: [640,830], spot: [410,540], floor: [[60,640,240,520,300,480,470,500,700,500,950,645,500,915]], block: [[355,600,450,560,560,490,720,590,800,640,800,730,690,730,640,780,580,800,450,740,450,680,365,680],[165,650,250,590,350,690,275,755],[110,670,150,640,180,680,140,695],[320,760,355,720,390,765,355,785],[450,855,495,820,535,860,495,900],[830,650,860,620,895,660,860,675],[705,510,790,470,865,540,800,620]] },
+    supermarket: { w: 1000, h: 1000, bg: "#8a6245", start: [510,760], spot: [600,600], floor: [[100,470,330,300,660,480,640,600,730,630,680,660,500,770,320,700]], block: [[150,440,270,400,390,510,270,590],[110,530,165,510,250,600,210,640],[275,620,400,540,485,590,485,640,340,700],[310,330,340,315,585,470,580,580,520,575],[380,240,410,225,650,370,650,470,590,460]] },
+  };
+  const INSIDE_SCALE = 0.95; // 내부 그림에서 고양이 크기
   const FRIEND_SPOTS = ["hosier", "fed", "china", "lib", "qvm", "eureka", "paul", "luna"];
 
   const CSS = `
@@ -59,7 +71,14 @@
 .vg-chip.gold { background: #f2b631; }
 .vg-fab { position: absolute; right: 10px; bottom: 10px; z-index: 2; font: inherit; font-size: 13px; font-weight: 700; color: #fff; background: #6c5cff; border: 2px solid #2a2350; border-radius: 10px; padding: 6px 10px; box-shadow: 0 3px 0 #2a2350; cursor: pointer; }
 .vg-toast { position: absolute; left: 50%; top: 45%; transform: translate(-50%, -50%); z-index: 3; font-size: 14px; font-weight: 700; color: #fff; background: #1f8a4c; border: 2px solid #2a2350; border-radius: 12px; padding: 10px 14px; text-align: center; }
-.vg-sheet { border-top: 3px solid #2a2350; padding: 10px 14px 12px; display: grid; gap: 6px; background: #fffaf0; }
+.vg-fab[hidden] { display: none; }
+.vg-inside { position: absolute; inset: 0; z-index: 1; overflow: hidden; touch-action: none; cursor: pointer; }
+.vg-inside[hidden] { display: none; }
+.vg-stage { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+.vg-stage img { display: block; max-width: none; width: 100%; height: 100%; user-select: none; -webkit-user-drag: none; pointer-events: none; }
+.vg-sheet { border-top: 3px solid #2a2350; padding: 10px 14px 12px; display: grid; gap: 6px; background: #fffaf0; max-height: 58%; overflow-y: auto; }
+.vg-sheet[hidden], .vg-in[hidden] { display: none; }
+.vg-sheet .vg-in { padding: 0; }
 .vg-sheet h2, .vg-card h2 { margin: 0; font-size: 15px; font-weight: 800; line-height: 1.3; }
 .vg-sheet p { margin: 0; font-size: 13px; line-height: 1.45; color: #6d6890; }
 .vg-row { display: flex; gap: 8px; flex-wrap: wrap; }
@@ -105,6 +124,9 @@
     if (typeof cfg.churu === "number") el("span", "vg-chip gold", chips, "🐟 츄르 " + cfg.churu);
     if (cfg.friends && cfg.friends.length) el("span", "vg-chip", chips, "🐾 이웃 고양이 " + cfg.friends.length);
     const fab = el("button", "vg-fab", view, "📍 내 고양이"); fab.type = "button";
+    const inside = el("div", "vg-inside", view); inside.hidden = true;
+    const stage = el("div", "vg-stage", inside);
+    const stageImg = el("img", "", stage); stageImg.alt = "";
     const sheet = el("section", "vg-sheet", app); sheet.setAttribute("aria-live", "polite");
     const sTitle = el("h2", "", sheet), sDesc = el("p", "", sheet), sAct = el("div", "vg-row", sheet);
     const room = el("div", "vg-room", app); room.hidden = true;
@@ -113,7 +135,12 @@
     const rIn = el("div", "vg-in", card);
     const rTitle = el("h2", "", rIn), rQ = el("div", "vg-q", rIn), rSpeak = el("div", "", rIn), rAct = el("div", "vg-row", rIn);
     // 말하기 칸은 앱이 채운다 (미리보기에는 없다)
-    function closeRoom() { room.hidden = true; if (cfg.onRoomClose) cfg.onRoomClose(); }
+    let leaveInside = null;
+    function closeRoom() {
+      room.hidden = true;
+      if (leaveInside) leaveInside();
+      if (cfg.onRoomClose) cfg.onRoomClose();
+    }
 
     const pickZoom = () => {
       const vw = view.clientWidth, vh = view.clientHeight;
@@ -126,14 +153,10 @@
     walkImg.onload = () => { if (!stopped) begin(walkImg); };
     walkImg.src = base + "walk.png";
 
+    let worldNav = null;
     function begin(mk) {
-      // 걸을 수 있는 곳: 서로 이어진 가장 큰 길망만 남긴다
-      const GW = mk.width, GH = mk.height;
-      const cv = document.createElement("canvas"); cv.width = GW; cv.height = GH;
-      const cx = cv.getContext("2d"); cx.drawImage(mk, 0, 0);
-      const px = cx.getImageData(0, 0, GW, GH).data, WALK = new Uint8Array(GW * GH);
-      for (let i = 0; i < GW * GH; i++) WALK[i] = px[i * 4] > 127 ? 1 : 0;
-      {
+      // 서로 이어진 가장 큰 길망만 남긴다
+      function keepLargest(WALK, GW, GH) {
         const comp = new Int32Array(GW * GH), q = new Int32Array(GW * GH); let best = 0, bestId = 0, id = 0;
         for (let s0 = 0; s0 < GW * GH; s0++) {
           if (!WALK[s0] || comp[s0]) continue; id++; let h = 0, t = 0; q[t++] = s0; comp[s0] = id;
@@ -145,6 +168,8 @@
         }
         for (let i = 0; i < GW * GH; i++) if (comp[i] !== bestId) WALK[i] = 0;
       }
+      // 걷기 지도 하나로 길찾기 도구를 만든다
+      function makeNav(WALK, GW, GH, MS) {
       const ok = (gx, gy) => gx >= 0 && gy >= 0 && gx < GW && gy < GH && WALK[gy * GW + gx] === 1;
       function nearestWalk(x, y) {
         const gx0 = Math.round(x / MS), gy0 = Math.round(y / MS);
@@ -183,6 +208,30 @@
         return out;
       }
 
+        return { ok, nearestWalk, path };
+      }
+      // 마을 지도에서 걸을 수 있는 곳
+      const GW = mk.width, GH = mk.height;
+      const cv = document.createElement("canvas"); cv.width = GW; cv.height = GH;
+      const cx = cv.getContext("2d"); cx.drawImage(mk, 0, 0);
+      const px = cx.getImageData(0, 0, GW, GH).data, WALK = new Uint8Array(GW * GH);
+      for (let i = 0; i < GW * GH; i++) WALK[i] = px[i * 4] > 127 ? 1 : 0;
+      keepLargest(WALK, GW, GH);
+      const { nearestWalk } = (worldNav = makeNav(WALK, GW, GH, MS));
+      // 내부 맵 걷기 지도: 바닥 다각형에서 가구를 뺀다
+      const inPoly = (poly, x, y) => { let on = false; for (let i = 0, j = poly.length - 2; i < poly.length; j = i, i += 2) { const xi = poly[i], yi = poly[i + 1], xj = poly[j], yj = poly[j + 1]; if (yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) on = !on; } return on; };
+      const ROOM_MS = 10;
+      function roomNav(r) {
+        if (r.nav) return r.nav;
+        const gw = Math.ceil(r.w / ROOM_MS), gh = Math.ceil(r.h / ROOM_MS), w = new Uint8Array(gw * gh);
+        for (let gy = 0; gy < gh; gy++) for (let gx = 0; gx < gw; gx++) {
+          const x = gx * ROOM_MS + ROOM_MS / 2, y = gy * ROOM_MS + ROOM_MS / 2;
+          if (r.floor.some((p) => inPoly(p, x, y)) && !(r.block || []).some((p) => inPoly(p, x, y))) w[gy * gw + gx] = 1;
+        }
+        keepLargest(w, gw, gh);
+        return (r.nav = makeNav(w, gw, gh, ROOM_MS));
+      }
+
       // 8방향: 그림은 S·SE·E·NE·N 5방향, 왼쪽 3방향은 좌우로 뒤집어서 쓴다
       const DIR8 = [["E",1],["SE",1],["S",1],["SE",-1],["E",-1],["NE",-1],["N",1],["NE",1]];
       const dirFor = (dx, dy) => DIR8[(Math.round(Math.atan2(dy, dx) / (Math.PI / 4)) + 8) % 8];
@@ -197,22 +246,24 @@
       function draw(c) {
         // 걸은 거리만큼 그림을 넘긴다 (발이 미끄러져 보이지 않게)
         const n = META[`${c.breed}-${c.dir}`][1];
-        const f = c.walking ? Math.floor(c.dist / STEP) % n : REST[`${c.breed}-${c.dir}`];
+        const f = c.walking ? Math.floor(c.dist / (STEP * c.scale / SCALE)) % n : REST[`${c.breed}-${c.dir}`];
         c.img.style.backgroundPosition = `${-f * c.w}px 0`;
         let sx = 1, sy = 1;
         if (!c.walking && !reduce) { const b = Math.sin(c.clock * 2.4); sy = 1 + b * 0.018; sx = 1 - b * 0.01; }
         c.root.style.left = c.x + "px"; c.root.style.top = c.y + "px"; c.root.style.zIndex = Math.round(c.y) + 2;
-        c.bob.style.transform = `translate(-50%, -100%) scale(${c.flip * sx * SCALE}, ${sy * SCALE})`;
+        c.bob.style.transform = `translate(-50%, -100%) scale(${c.flip * sx * c.scale}, ${sy * c.scale})`;
         c.tag.style.left = c.x + "px"; c.tag.style.top = c.y + "px"; c.tag.style.zIndex = 100000;
       }
-      function cat(breed, x, y, name, isMe) {
-        const r = el("div", "vg-cat", world), shadow = el("div", "vg-shadow", r), bob = el("div", "vg-bob", r), img = el("div", "vg-img", bob);
-        const tag = el("div", "vg-tag" + (isMe ? " me" : ""), world, name);
-        const c = { breed, x, y, root: r, shadow, bob, img, tag, dir: "S", flip: 1, clock: 0, dist: 0, walking: false, route: [], then: null, speed: isMe ? 140 : 55, idleT: Math.random() * 3 };
+      function cat(breed, x, y, name, isMe, place) {
+        const parent = place ? place.parent : world;
+        const r = el("div", "vg-cat", parent), shadow = el("div", "vg-shadow", r), bob = el("div", "vg-bob", r), img = el("div", "vg-img", bob);
+        const tag = el("div", "vg-tag" + (isMe ? " me" : ""), parent, name);
+        const c = { scale: place ? place.scale : SCALE, nav: place ? place.nav : worldNav, breed, x, y, root: r, shadow, bob, img, tag, dir: "S", flip: 1, clock: 0, dist: 0, walking: false, route: [], then: null, speed: isMe ? 140 : 55, idleT: Math.random() * 3 };
+        if (place) shadow.style.transform = `translate(-50%, -50%) scale(${place.scale / SCALE})`;
         setDir(c, "S", 1); draw(c); return c;
       }
       function goTo(c, x, y, then) {
-        const r = path(c.x, c.y, x, y);
+        const r = c.nav.path(c.x, c.y, x, y);
         if (!r) return false;
         if (!c.walking) c.dist = 0;
         c.route = r.slice(1); c.then = then || null; c.walking = c.route.length > 0;
@@ -271,11 +322,11 @@
         target.classList.remove("on"); void target.offsetWidth; target.classList.add("on");
       }
 
-      let lastT = performance.now();
+      let lastT = performance.now(), inCat = null;
       function tick(now) {
         if (stopped) return;
         const dt = Math.min(0.05, (now - lastT) / 1000); lastT = now;
-        step(me, dt);
+        if (inCat) step(inCat, dt); else step(me, dt);
         for (const f of friends) {
           if (!f.route.length) { f.idleT -= dt; if (f.idleT <= 0) { f.idleT = 2 + Math.random() * 4; const r = 40 + Math.random() * 90, a = Math.random() * Math.PI * 2; goTo(f, f.home.x + Math.cos(a) * r, f.home.y + Math.sin(a) * r * 0.6); } }
           step(f, dt);
@@ -322,11 +373,45 @@
         }, reduce ? 50 : 900);
       }
 
+      // 내부 맵을 화면에 맞춘다
+      function fitStage(r) {
+        const vw = view.clientWidth, vh = view.clientHeight, k = Math.min(vw / r.w, vh / r.h);
+        stage.style.width = r.w + "px"; stage.style.height = r.h + "px";
+        stage.style.transform = `translate(${Math.round((vw - r.w * k) / 2)}px, ${Math.round((vh - r.h * k) / 2)}px) scale(${k})`;
+        stage.style.setProperty("--vg-iz", String(1 / k));
+      }
+      let curRoom = null;
+      function enterRoom(p) {
+        const r = ROOMS[p.room];
+        curRoom = r;
+        inside.hidden = false; inside.style.background = r.bg; fab.hidden = true;
+        stageImg.src = `${base}rooms/${p.room}.jpg`; stageImg.alt = p.name + " 안";
+        for (const n of [sTitle, sDesc, sAct]) n.hidden = true;
+        sheet.appendChild(rIn); rImg.hidden = true;
+        fitStage(r);
+        const nav = roomNav(r), s0 = nav.nearestWalk(r.start[0], r.start[1]);
+        inCat = cat(me.breed, s0.gx * ROOM_MS + 5, s0.gy * ROOM_MS + 5, cfg.myName || "나", true, { parent: stage, scale: INSIDE_SCALE, nav });
+        inCat.speed = 220;
+        goTo(inCat, r.spot[0], r.spot[1]);
+        leaveInside = () => {
+          inCat.root.remove(); inCat.tag.remove(); inCat = null; curRoom = null; leaveInside = null;
+          inside.hidden = true; fab.hidden = false; rIn.remove();
+          for (const n of [sTitle, sDesc, sAct]) n.hidden = false;
+          follow = true;
+        };
+      }
+      inside.addEventListener("pointerdown", (e) => e.stopPropagation(), { signal });
+      inside.addEventListener("click", (e) => {
+        if (!inCat || !curRoom) return;
+        const b = stage.getBoundingClientRect();
+        goTo(inCat, ((e.clientX - b.left) / b.width) * curRoom.w, ((e.clientY - b.top) / b.height) * curRoom.h);
+      }, { signal });
+      addEventListener("resize", () => { if (curRoom) fitStage(curRoom); }, { signal });
+
       // 가게 안: 표현 연습 + 이어지는 앱 화면
       function openRoom(p) {
-        rImg.hidden = !p.room;
-        if (p.room) { rImg.src = `${base}rooms/${p.room}.jpg`; rImg.alt = p.name + " 안"; } else rImg.removeAttribute("src");
-        rTitle.textContent = p.room ? p.name + " 안으로 들어왔어요" : p.name;
+        if (leaveInside) closeRoom();
+        rTitle.textContent = p.room ? p.name + " 안이에요 · 바닥을 눌러 걸어 보세요" : p.name;
         rQ.replaceChildren(document.createTextNode(p.q[0] + " · 영어로 말해 보세요"));
         const ans = el("button", "", rQ, "💡 정답 보기"); ans.type = "button";
         ans.addEventListener("click", () => { ans.textContent = "✅ " + p.q[1]; });
@@ -334,7 +419,8 @@
         if ("speechSynthesis" in window) btn(rAct, "🔊 듣기", "", () => { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(p.q[1]); u.lang = "en-AU"; speechSynthesis.speak(u); });
         if (p.link) btn(rAct, p.link[1], "go", () => { closeRoom(); cfg.onOpen(p.link[0]); });
         btn(rAct, "밖으로 나가기", "", closeRoom);
-        room.hidden = false;
+        if (p.room) enterRoom(p);
+        else { card.appendChild(rIn); rImg.hidden = true; room.hidden = false; }
         if (cfg.onRoomOpen) cfg.onRoomOpen(rSpeak, p.q[1]);
       }
       addEventListener("resize", setZoom, { signal });
