@@ -39,7 +39,7 @@
   const ROOMS = {
     bakery: { w: 1000, h: 1000, bg: "#6b4128", start: [470,885], spot: [690,700], floor: [[370,825,410,805,640,712,770,650,845,708,490,905]] },
     cafe: { w: 1000, h: 747, bg: "#6b4128", start: [300,640], spot: [540,500], floor: [[120,520,255,600,425,520,560,455,690,430,760,400,930,505,500,722]], block: CAFE_TABLES },
-    restaurant: { w: 1000, h: 747, bg: "#6b4128", start: [340,640], spot: [590,470], floor: [[120,520,255,600,425,520,560,455,690,430,760,400,930,505,500,722]], block: [...CAFE_TABLES, [255,565,330,565,330,610,255,610]] },
+    restaurant: { video: true, w: 1000, h: 747, bg: "#6b4128", start: [340,640], spot: [590,470], floor: [[120,520,255,600,425,520,560,455,690,430,760,400,930,505,500,722]], block: [...CAFE_TABLES, [255,565,330,565,330,610,255,610]] },
     hotel: { w: 1000, h: 747, bg: "#6b4128", start: [430,680], spot: [250,565], floor: [[60,515,115,495,175,550,300,480,310,520,275,530,275,600,390,650,430,690,500,722]] },
     pharmacy: { w: 1000, h: 1000, bg: "#6b4128", start: [250,820], spot: [720,815], floor: [[55,715,225,790,420,885,505,920,650,825,705,808,825,730,940,715,505,948],[300,800,490,705,600,620,690,680,640,690,440,765,420,880]] },
     site: { w: 1000, h: 1000, bg: "#6b4128", start: [640,830], spot: [410,540], floor: [[60,640,240,520,300,480,470,500,700,500,950,645,500,915]], block: [[355,600,450,560,560,490,720,590,800,640,800,730,690,730,640,780,580,800,450,740,450,680,365,680],[165,650,250,590,350,690,275,755],[110,670,150,640,180,680,140,695],[320,760,355,720,390,765,355,785],[450,855,495,820,535,860,495,900],[830,650,860,620,895,660,860,675],[705,510,790,470,865,540,800,620]] },
@@ -72,6 +72,8 @@
 .vg-fab { position: absolute; right: 10px; bottom: 10px; z-index: 2; font: inherit; font-size: 13px; font-weight: 700; color: #fff; background: #6c5cff; border: 2px solid #2a2350; border-radius: 10px; padding: 6px 10px; box-shadow: 0 3px 0 #2a2350; cursor: pointer; }
 .vg-toast { position: absolute; left: 50%; top: 45%; transform: translate(-50%, -50%); z-index: 3; font-size: 14px; font-weight: 700; color: #fff; background: #1f8a4c; border: 2px solid #2a2350; border-radius: 12px; padding: 10px 14px; text-align: center; }
 .vg-fab[hidden] { display: none; }
+.vg-stick { position: absolute; left: 12px; bottom: 12px; z-index: 3; width: 104px; height: 104px; border-radius: 50%; background: rgba(42,35,80,.28); border: 3px solid #2a2350; touch-action: none; cursor: grab; }
+.vg-knob { position: absolute; left: 50%; top: 50%; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%; background: #f2b631; border: 3px solid #2a2350; box-shadow: 0 3px 0 #2a2350; pointer-events: none; }
 .vg-inside { position: absolute; inset: 0; z-index: 1; overflow: hidden; touch-action: none; cursor: pointer; }
 .vg-inside[hidden] { display: none; }
 .vg-stage { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
@@ -116,7 +118,7 @@
     root.replaceChildren();
     const app = el("div", "vg", root);
     const view = el("div", "vg-view", app);
-    view.setAttribute("aria-label", "마을 지도. 누르면 고양이가 걸어가요");
+    view.setAttribute("aria-label", "마을 지도. 조이스틱이나 방향키로 고양이를 움직여요");
     const world = el("div", "vg-world", view);
     world.style.width = W + "px"; world.style.height = H + "px";
     const map = el("img", "vg-map", world);
@@ -127,6 +129,8 @@
     if (cfg.friends && cfg.friends.length) el("span", "vg-chip", chips, "🐾 이웃 고양이 " + cfg.friends.length);
     const fab = el("button", "vg-fab", view, "📍 내 고양이"); fab.type = "button";
     const inside = el("div", "vg-inside", view); inside.hidden = true;
+    const stick = el("div", "vg-stick", view), knob = el("div", "vg-knob", stick);
+    stick.setAttribute("aria-label", "고양이 움직이기. 끌어서 조종해요. 키보드 방향키도 돼요");
     const stage = el("div", "vg-stage", inside);
     const stageImg = el("img", "", stage); stageImg.alt = "";
     const stageVideo = el("video", "", stage); stageVideo.muted = true; stageVideo.loop = true; stageVideo.playsInline = true; stageVideo.hidden = true;
@@ -211,7 +215,7 @@
         return out;
       }
 
-        return { ok, nearestWalk, path };
+        return { ok, nearestWalk, path, ms: MS };
       }
       // 마을 지도에서 걸을 수 있는 곳
       const GW = mk.width, GH = mk.height;
@@ -326,9 +330,65 @@
       }
 
       let lastT = performance.now(), inCat = null;
+      // 조이스틱·방향키로 직접 움직이기: 막히면 벽을 따라 미끄러진다
+      const pad = { x: 0, y: 0 }, keys = new Set();
+      let manual = false;
+      function steer(c, dt) {
+        const held = new Set([...keys].map((k) => KEYS[k]));
+        const kx = (held.has("r") ? 1 : 0) - (held.has("l") ? 1 : 0), ky = (held.has("d") ? 1 : 0) - (held.has("u") ? 1 : 0);
+        let vx = pad.x + kx, vy = pad.y + ky;
+        const m = Math.hypot(vx, vy);
+        if (m < 0.08) {
+          if (manual) {
+            manual = false; c.walking = false;
+            if (c.dir === "N" || c.dir === "NE") setDir(c, c.dir === "N" ? "S" : "SE", c.flip);
+          }
+          return;
+        }
+        if (m > 1) { vx /= m; vy /= m; }
+        manual = true; follow = true; c.route = []; c.then = null; c.walking = true;
+        const s = c.speed * dt, nx = c.x + vx * s, ny = c.y + vy * s, cell = (v) => Math.floor(v / c.nav.ms);
+        const px = c.x, py = c.y;
+        if (c.nav.ok(cell(nx), cell(ny))) { c.x = nx; c.y = ny; }
+        else if (c.nav.ok(cell(nx), cell(c.y))) c.x = nx;
+        else if (c.nav.ok(cell(c.x), cell(ny))) c.y = ny;
+        c.dist += Math.hypot(c.x - px, c.y - py);
+        const [dd, fl] = dirFor(vx, vy); setDir(c, dd, fl);
+      }
+      stick.addEventListener("pointerdown", (e) => {
+        e.stopPropagation(); e.preventDefault();
+        try { stick.setPointerCapture(e.pointerId); } catch {}
+        const b = stick.getBoundingClientRect(), R = b.width / 2;
+        const update = (ev) => {
+          let dx = (ev.clientX - b.left - R) / R, dy = (ev.clientY - b.top - R) / R;
+          const m = Math.hypot(dx, dy); if (m > 1) { dx /= m; dy /= m; }
+          pad.x = dx; pad.y = dy;
+          knob.style.transform = `translate(${dx * (R - 20)}px, ${dy * (R - 20)}px)`;
+        };
+        const end = () => {
+          pad.x = 0; pad.y = 0; knob.style.transform = "";
+          stick.removeEventListener("pointermove", update);
+          stick.removeEventListener("pointerup", end);
+          stick.removeEventListener("pointercancel", end);
+        };
+        stick.addEventListener("pointermove", update);
+        stick.addEventListener("pointerup", end);
+        stick.addEventListener("pointercancel", end);
+        update(e);
+      }, { signal });
+      const KEYS = { ArrowLeft: "l", ArrowRight: "r", ArrowUp: "u", ArrowDown: "d", a: "l", d: "r", w: "u", s: "d", A: "l", D: "r", W: "u", S: "d" };
+      addEventListener("keydown", (e) => {
+        const k = KEYS[e.key], t = e.target;
+        if (!k || !room.hidden || (t && /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
+        keys.add(e.key); e.preventDefault();
+      }, { signal });
+      addEventListener("keyup", (e) => { keys.delete(e.key); if (e.key.length === 1) { keys.delete(e.key.toLowerCase()); keys.delete(e.key.toUpperCase()); } }, { signal });
+      addEventListener("blur", () => keys.clear(), { signal });
+
       function tick(now) {
         if (stopped) return;
         const dt = Math.min(0.05, (now - lastT) / 1000); lastT = now;
+        steer(inCat || me, dt);
         if (inCat) step(inCat, dt); else step(me, dt);
         for (const f of friends) {
           if (!f.route.length) { f.idleT -= dt; if (f.idleT <= 0) { f.idleT = 2 + Math.random() * 4; const r = 40 + Math.random() * 90, a = Math.random() * Math.PI * 2; goTo(f, f.home.x + Math.cos(a) * r, f.home.y + Math.sin(a) * r * 0.6); } }
@@ -348,7 +408,6 @@
         if (drag.moved) { cam.x = drag.cx - dx / zoom; cam.y = drag.cy - dy / zoom; }
       }, { signal });
       view.addEventListener("pointerup", (e) => {
-        if (drag && !drag.moved) { const r = view.getBoundingClientRect(); walkTo(cam.x + (e.clientX - r.left - r.width / 2) / zoom, cam.y + (e.clientY - r.top - r.height / 2) / zoom); }
         drag = null;
       }, { signal });
       view.addEventListener("pointercancel", () => { drag = null; }, { signal });
@@ -390,7 +449,7 @@
         inside.hidden = false; inside.style.background = r.bg; fab.hidden = true;
         stageImg.src = `${base}rooms/${p.room}.jpg`; stageImg.alt = p.name + " 안";
         // 움직이는 가게: 영상이 재생되면 그림 위를 덮는다 (안 되면 그림만 보인다)
-        if (r.video && !reduce) {
+        if (r.video && (!reduce || cfg.forceMotion)) {
           stageVideo.src = `${base}rooms/${p.room}.mp4`; stageVideo.hidden = false;
           const playing = stageVideo.play(); if (playing) playing.catch(() => {});
         }
@@ -410,17 +469,12 @@
         };
       }
       inside.addEventListener("pointerdown", (e) => e.stopPropagation(), { signal });
-      inside.addEventListener("click", (e) => {
-        if (!inCat || !curRoom) return;
-        const b = stage.getBoundingClientRect();
-        goTo(inCat, ((e.clientX - b.left) / b.width) * curRoom.w, ((e.clientY - b.top) / b.height) * curRoom.h);
-      }, { signal });
       addEventListener("resize", () => { if (curRoom) fitStage(curRoom); }, { signal });
 
       // 가게 안: 표현 연습 + 이어지는 앱 화면
       function openRoom(p) {
         if (leaveInside) closeRoom();
-        rTitle.textContent = p.room ? p.name + " 안이에요 · 바닥을 눌러 걸어 보세요" : p.name;
+        rTitle.textContent = p.room ? p.name + " 안이에요 · 조이스틱으로 걸어 보세요" : p.name;
         rQ.replaceChildren(document.createTextNode(p.q[0] + " · 영어로 말해 보세요"));
         const ans = el("button", "", rQ, "💡 정답 보기"); ans.type = "button";
         ans.addEventListener("click", () => { ans.textContent = "✅ " + p.q[1]; });
