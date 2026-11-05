@@ -159,7 +159,7 @@
 
     const walkImg = new Image();
     walkImg.onload = () => { if (!stopped) begin(walkImg); };
-    walkImg.src = base + "walk.png?v=2";
+    walkImg.src = base + "walk.png?v=3";
 
     let worldNav = null;
     function begin(mk) {
