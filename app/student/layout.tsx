@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { AppShell } from "@/app/_ui/app-shell";
 import { CatProvider } from "@/app/_ui/cat-context";
 import { FeedbackPrompt } from "@/app/_ui/feedback-prompt";
+import { NewPasswordPrompt } from "@/app/student/profile/new-password-prompt";
 
 export const metadata: Metadata = { title: "다잉클 클래스룸" };
 
@@ -41,6 +42,7 @@ export default async function StudentLayout({
     <AppShell title={`다잉클 · ${student.nickname ?? student.name}`} nav={NAV} bottomNav={{ items: BOTTOM_NAV, moreHref: "/student/more" }}>
       <CatProvider breed={student.catBreed} name={student.catName}>{children}</CatProvider>
       <FeedbackPrompt />
+      {student.mustChangePassword && <NewPasswordPrompt />}
     </AppShell>
   );
 }

@@ -68,7 +68,30 @@ export async function changePassword(_prev: NicknameState, formData: FormData): 
   if (!(await verifyPassword(current, data.password_hash as string))) {
     return { status: "error", message: "지금 비밀번호가 맞지 않아요." };
   }
-  const { error } = await supabase.from("students").update({ password_hash: await hashPassword(next) }).eq("id", student.id);
+  const { error } = await supabase.from("students").update({ password_hash: await hashPassword(next), must_change_password: false }).eq("id", student.id);
   if (error) return { status: "error", message: "저장 중 오류가 발생했어요." };
+  revalidatePath("/student", "layout");
   return { status: "success", message: "비밀번호를 바꿨어요 🔑 다음부터 새 비밀번호로 로그인하세요." };
+}
+
+/** 초기화된 비밀번호로 로그인한 학생이 새 비밀번호 정하기 (초기화된 계정만 지금 비밀번호 없이 가능) */
+export async function setNewPassword(_prev: NicknameState, formData: FormData): Promise<NicknameState> {
+  const student = await requireStudent();
+  const next = String(formData.get("next") ?? "");
+  if (next.length < 8) return { status: "error", message: "새 비밀번호는 8자 이상이어야 해요." };
+  if (next !== String(formData.get("confirm") ?? "")) return { status: "error", message: "새 비밀번호 두 칸이 서로 달라요." };
+  const supabase = createServerSupabaseClient();
+  const { data, error } = await supabase
+    .from("students")
+    .update({ password_hash: await hashPassword(next), must_change_password: false })
+    .eq("id", student.id)
+    .eq("must_change_password", true)
+    .select("id");
+  if (error) {
+    console.error("새 비밀번호 저장 실패:", error.message);
+    return { status: "error", message: "저장 중 오류가 발생했어요. 다시 시도해주세요." };
+  }
+  if (!data?.length) return { status: "error", message: "이미 비밀번호를 정한 계정이에요." };
+  revalidatePath("/student", "layout");
+  return { status: "success", message: "새 비밀번호를 저장했어요 🔑" };
 }
