@@ -208,12 +208,12 @@
       "prompt": "맞는 문장을 고르세요.",
       "answer": "It's going to rain tomorrow.",
       "choices": [
-        "It's raining tomorrow.",
+        "It raining tomorrow.",
         "It's going to rains tomorrow.",
         "It going to rain tomorrow.",
         "It's going to rain tomorrow."
       ],
-      "why": "날씨는 사람이 정한 일정이 아니라서 be -ing 미래를 쓰지 않아요. It's going to + 동사원형."
+      "why": "날씨는 사람이 정한 일정이 아니라서 보통 It's going to + 동사원형으로 말해요."
     },
     {
       "type": "fix",
