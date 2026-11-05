@@ -300,14 +300,14 @@ export function inSeason(it: HouseItem, day: string) {
   return from <= to ? md >= from && md <= to : md >= from || md <= to;
 }
 
-/** 오늘의 특가: 날마다 바뀌는 2개, 30% 할인 (동물의 숲 상점처럼 매일 들러 볼 이유) */
+/** 오늘의 특가: 날마다 바뀌는 6개, 30% 할인 (동물의 숲 상점처럼 매일 들러 볼 이유) */
 export const DEAL_OFF = 0.3;
 export function dailyDeals(day: string): string[] {
   const pool = ITEMS.filter((i) => i.price >= 40 && i.kind !== "room" && inSeason(i, day)).map((i) => i.id);
   let h = 2166136261;
   for (let i = 0; i < day.length; i++) h = Math.imul(h ^ day.charCodeAt(i), 16777619);
   const pick: string[] = [];
-  for (let k = 0; pick.length < 2 && k < 20; k++) {
+  for (let k = 0; pick.length < 6 && k < 80; k++) {
     h = Math.imul(h ^ (h >>> 15), 2246822507);
     const id = pool[(h >>> 0) % pool.length];
     if (id && !pick.includes(id)) pick.push(id);
@@ -385,16 +385,12 @@ export function normalizeLayout(raw: unknown): Layout {
   };
 }
 
-/** 하루에 모을 수 있는 츄르 상한 */
-export const DAILY_CHURU_CAP = 100;
-
 /**
  * 하루 공부 기록 → 그날 모은 츄르.
- * 쉐도잉 1문장 5 · 영상 1분 1 (최대 20) · 보카·문법·AI 면접 포인트의 절반.
+ * 쉐도잉 1문장 5 · 영상 1분 1 · 보카·문법·AI 면접 포인트의 절반. 하루 상한 없음.
  */
 export function churuForDay(d: { submissions: number; watchedSeconds: number; vocaPoints: number }) {
-  const v = d.submissions * 5 + Math.min(20, Math.floor(d.watchedSeconds / 60)) + Math.floor(d.vocaPoints / 2);
-  return Math.min(DAILY_CHURU_CAP, v);
+  return d.submissions * 5 + Math.floor(d.watchedSeconds / 60) + Math.floor(d.vocaPoints / 2);
 }
 
 /** 마지막으로 공부한 날로부터 며칠 지났는지 → 고양이 기분 (벌은 없다: 오래 쉬면 낮잠) */

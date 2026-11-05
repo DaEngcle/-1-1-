@@ -5,22 +5,30 @@ import { MouthDiagram } from "@/app/_ui/mouth-diagram";
 import { VideoEmbed } from "@/app/_ui/video-embed";
 import { MinimalPairs, WordChips } from "@/app/_ui/practice/listen-buttons";
 import { cardClass } from "@/app/_ui/styles";
+import { BackToPractice } from "../back-to-practice";
 
 export default async function PronunciationTipPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ from?: string }>;
 }) {
   const { id } = await params;
+  const fromPractice = (await searchParams).from === "practice";
   const tip = getTip(id);
   if (!tip) notFound();
 
   return (
     <>
       <div className="flex flex-col gap-1">
-        <Link href="/student/pronunciation" className="text-xs text-zinc-500">
-          ← 발음 가이드
-        </Link>
+        {fromPractice ? (
+          <BackToPractice />
+        ) : (
+          <Link href="/student/pronunciation" className="text-xs text-zinc-500">
+            ← 발음 가이드
+          </Link>
+        )}
         <h1 className="text-xl font-bold text-zinc-900">
           {tip.title} <span className="text-sm font-normal text-zinc-400">{tip.ipa}</span>
         </h1>
@@ -58,6 +66,7 @@ export default async function PronunciationTipPage({
         <h2 className="font-bold text-zinc-900">부트캠프 표현으로 연습</h2>
         <WordChips words={tip.practiceWords} />
       </section>
+      {fromPractice && <BackToPractice />}
     </>
   );
 }

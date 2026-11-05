@@ -7,6 +7,7 @@ import { useState } from "react";
 import type { WordResult } from "@/lib/classroom/azure-speech";
 import { findTipsForSentence } from "@/lib/classroom/pronunciation-tips";
 import { buildDetailedFeedback } from "@/lib/classroom/detailed-feedback";
+import { splitFeedback } from "@/lib/classroom/feedback-summary";
 import { useTts } from "@/app/_ui/audio/use-tts";
 import { toWav16kMono } from "@/app/_ui/audio/wav";
 import { useRecorder } from "@/app/_ui/audio/use-recorder";
@@ -120,7 +121,7 @@ function ResultView({ result, onPlayWord }: { result: PracticeResult; onPlayWord
       {result.feedback_text ? (
         <div className="rounded-xl border border-brand-100 bg-brand-50 p-3 text-sm leading-relaxed whitespace-pre-line text-zinc-800">
           <span className="mb-1 block text-xs font-semibold text-brand-700">AI 코치 피드백</span>
-          {result.feedback_text}
+          <CoachFeedback text={result.feedback_text} />
         </div>
       ) : (
         detailed.length > 0 && (
@@ -152,7 +153,7 @@ function ResultView({ result, onPlayWord }: { result: PracticeResult; onPlayWord
           {tips.map(({ tip }) => (
             <Link
               key={tip.id}
-              href={`/student/pronunciation/${tip.id}`}
+              href={`/student/pronunciation/${tip.id}?from=practice`}
               className="rounded-full bg-sky-50 px-3 py-1 text-xs font-semibold text-sky-700"
             >
               💡 {tip.label} 발음 교정 팁 보기
@@ -295,7 +296,7 @@ export function SentencePractice({
           {tips.map(({ tip, words }) => (
             <Link
               key={tip.id}
-              href={`/student/pronunciation/${tip.id}`}
+              href={`/student/pronunciation/${tip.id}?from=practice`}
               className="rounded-full bg-sky-50 px-3 py-1 text-xs text-sky-700"
             >
               💡 <b>{tip.label}</b> 주의: {words.slice(0, 3).join(", ")}
@@ -350,5 +351,24 @@ export function SentencePractice({
         {result && <ResultView result={result} onPlayWord={(w) => play(w, "slow")} />}
       </div>
     </article>
+  );
+}
+
+/** AI 코치 피드백: 요약 3줄을 먼저 보여 주고, 긴 설명은 눌러서 본다 */
+function CoachFeedback({ text }: { text: string }) {
+  const { summary, detail } = splitFeedback(text);
+  if (summary.length === 0) return <>{detail}</>;
+  return (
+    <>
+      <ul className="flex list-disc flex-col gap-0.5 pl-4 font-semibold">
+        {summary.map((line, i) => (
+          <li key={i}>{line}</li>
+        ))}
+      </ul>
+      <details className="mt-2">
+        <summary className="cursor-pointer text-xs font-semibold text-brand-700">자세히 보기</summary>
+        <p className="mt-1">{detail}</p>
+      </details>
+    </>
   );
 }

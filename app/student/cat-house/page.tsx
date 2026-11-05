@@ -3,7 +3,7 @@ import { requireStudent } from "@/lib/classroom/dal";
 import { CatRoom } from "@/app/_ui/cat-room";
 import { CatPicker } from "@/app/_ui/cat-picker";
 import { CatNameForm } from "@/app/_ui/cat-name-form";
-import { ITEM_BY_ID, GUESTS, POSTCARDS, POSTCARD_MIN, affinity, catMoodFor, guestFor, roomScore, DAILY_CHURU_CAP } from "@/lib/classroom/cat-house";
+import { ITEM_BY_ID, GUESTS, POSTCARDS, POSTCARD_MIN, affinity, catMoodFor, guestFor, roomScore } from "@/lib/classroom/cat-house";
 import type { CatBreed } from "@/lib/classroom/cat";
 import { BoxButton } from "./box-button";
 import { getChuru, getRoom, listGuestbook, listRooms } from "@/lib/classroom/cat-house-data";
@@ -30,9 +30,22 @@ export default async function CatHousePage() {
       <div>
         <h1 className="text-2xl font-extrabold text-zinc-900">🏠 {catName}의 집</h1>
         <p className="text-sm text-zinc-500">
-          공부하면 츄르 🐟가 모여요 (오늘 {churu.todayEarned}/{DAILY_CHURU_CAP}). 츄르로 가구를 사서 방을 꾸며 주세요.
+          공부하면 츄르 🐟가 모여요 (오늘 {churu.todayEarned}개). 츄르로 가구를 사서 방을 꾸며 주세요.
         </p>
       </div>
+
+      <details open className="rounded-2xl bg-white p-3 text-sm text-zinc-600 shadow-sm">
+        <summary className="cursor-pointer font-bold text-zinc-800">🐟 츄르는 어떻게 모아요?</summary>
+        <ul className="mt-2 list-disc pl-5">
+          <li>쉐도잉 1문장 제출 +5</li>
+          <li>강의 영상 1분 +1</li>
+          <li>보카·기초 문법 게임, AI 면접 → 받은 리그 포인트의 절반</li>
+          <li>친구 방에 꾹꾹이 +1 · 내 방이 꾹꾹이 받으면 +3</li>
+          <li>깜짝 상자에서 츄르가 나오기도 해요</li>
+          <li>하루에 모을 수 있는 양에 제한은 없어요</li>
+          <li>며칠 쉬어도 고양이는 아프지 않아요. 창가에서 낮잠 자며 기다려요 💤</li>
+        </ul>
+      </details>
 
       {!student.catBreed ? (
         <p className="rounded-2xl bg-amber-50 p-3 text-sm text-amber-800">
@@ -128,18 +141,6 @@ export default async function CatHousePage() {
           })}
         </ul>
       </section>
-
-      <details className="rounded-2xl bg-white p-3 text-sm text-zinc-600 shadow-sm">
-        <summary className="cursor-pointer font-bold text-zinc-800">🐟 츄르는 어떻게 모아요?</summary>
-        <ul className="mt-2 list-disc pl-5">
-          <li>쉐도잉 1문장 제출 +5</li>
-          <li>강의 영상 1분 +1 (하루 20까지)</li>
-          <li>보카·기초 문법 게임, AI 면접 → 받은 리그 포인트의 절반</li>
-          <li>친구 방에 꾹꾹이 +1 · 내 방이 꾹꾹이 받으면 +3</li>
-          <li>하루 최대 {DAILY_CHURU_CAP}개까지 모여요. 매일 조금씩이 제일 좋아요!</li>
-          <li>며칠 쉬어도 고양이는 아프지 않아요. 창가에서 낮잠 자며 기다려요 💤</li>
-        </ul>
-      </details>
 
       <Guestbook ownerId={student.id} entries={guestbook} canWrite={false} isOwner wroteToday={false} />
 

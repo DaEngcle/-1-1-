@@ -102,9 +102,19 @@ export function HouseEditor({
     const p = layout.items[i];
     const at = toRoom(e);
     drag.current = { i, dx: at.x - p.x, dy: at.y - p.y };
+    const pointerId = e.pointerId;
+    const end = () => {
+      drag.current = null;
+      window.removeEventListener("pointermove", move);
+      window.removeEventListener("pointerup", up);
+      window.removeEventListener("pointercancel", up);
+    };
     const move = (ev: PointerEvent) => {
       const d = drag.current;
-      if (!d) return;
+      // 끌던 손가락의 움직임만 따른다 (다른 곳을 누른 움직임으로 물건이 날아가지 않게)
+      if (!d || ev.pointerId !== pointerId) return;
+      // 창 밖에서 마우스를 놓은 경우
+      if (ev.pointerType === "mouse" && ev.buttons === 0) return end();
       const pt = toRoom(ev);
       setLayout((l) => {
         const items = [...l.items];
@@ -113,13 +123,13 @@ export function HouseEditor({
         return { ...l, items };
       });
     };
-    const up = () => {
-      drag.current = null;
-      window.removeEventListener("pointermove", move);
-      window.removeEventListener("pointerup", up);
+    const up = (ev: PointerEvent) => {
+      if (ev.pointerId === pointerId) end();
     };
     window.addEventListener("pointermove", move);
     window.addEventListener("pointerup", up);
+    // 휴대폰에서 터치가 취소되면 pointerup이 오지 않는다: 안 끝내면 저장 버튼을 누를 때 물건이 그쪽으로 끌려간다
+    window.addEventListener("pointercancel", up);
   }
 
   function nudge(dx: number, dy: number) {
