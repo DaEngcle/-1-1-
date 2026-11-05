@@ -34,6 +34,17 @@ export default async function CatHousePage() {
         </p>
       </div>
 
+      <Link
+        href="/student/village"
+        className="flex items-center gap-3 rounded-2xl bg-gradient-to-br from-sky-500 to-indigo-500 p-4 text-white shadow-md"
+      >
+        <span className="text-3xl">🐾</span>
+        <span className="flex min-w-0 flex-col">
+          <span className="font-extrabold">고양이 마을로 나가기</span>
+          <span className="text-xs text-white/90">멜번을 걸어 다니며 가게에 들어가고 강의·보카로 이어져요</span>
+        </span>
+      </Link>
+
       <details className="rounded-2xl bg-white p-3 text-sm text-zinc-600 shadow-sm">
         <summary className="cursor-pointer font-bold text-zinc-800">🐟 츄르는 어떻게 모아요?</summary>
         <ul className="mt-2 list-disc pl-5">

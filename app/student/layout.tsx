@@ -12,7 +12,6 @@ const NAV = [
   { href: "/student/lessons", label: "강의 · 쉐도잉" },
   { href: "/student/voca", label: "🎮 보카" },
   { href: "/student/grammar", label: "🐤 기초 문법" },
-  { href: "/student/village", label: "🐾 고양이 마을" },
   { href: "/student/cat-house", label: "🏠 고양이 집" },
   { href: "/student/league", label: "🏆 리그" },
   { href: "/student/talk", label: "🎭 AI 면접" },
