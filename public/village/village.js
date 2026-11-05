@@ -111,7 +111,9 @@
     const card = el("div", "vg-card", room);
     const rImg = el("img", "", card);
     const rIn = el("div", "vg-in", card);
-    const rTitle = el("h2", "", rIn), rQ = el("div", "vg-q", rIn), rAct = el("div", "vg-row", rIn);
+    const rTitle = el("h2", "", rIn), rQ = el("div", "vg-q", rIn), rSpeak = el("div", "", rIn), rAct = el("div", "vg-row", rIn);
+    // 말하기 칸은 앱이 채운다 (미리보기에는 없다)
+    function closeRoom() { room.hidden = true; if (cfg.onRoomClose) cfg.onRoomClose(); }
 
     const pickZoom = () => {
       const vw = view.clientWidth, vh = view.clientHeight;
@@ -301,7 +303,7 @@
       fab.addEventListener("click", (e) => { e.stopPropagation(); follow = true; }, { signal });
 
       // 장소 카드
-      function btn(parent, label, cls, fn) { const b = el("button", "vg-btn " + cls, parent, label); b.type = "button"; b.addEventListener("click", fn); return b; }
+      function btn(parent, label, cls, fn) { const b = el("button", "vg-btn " + cls, parent, label); b.type = "button"; b.addEventListener("click", () => fn()); return b; }
       function select(p, walk) {
         for (const [id, b] of pins) b.classList.toggle("on", id === p.id);
         sTitle.textContent = p.name; sDesc.textContent = p.desc; sAct.replaceChildren();
@@ -330,9 +332,10 @@
         ans.addEventListener("click", () => { ans.textContent = "✅ " + p.q[1]; });
         rAct.replaceChildren();
         if ("speechSynthesis" in window) btn(rAct, "🔊 듣기", "", () => { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(p.q[1]); u.lang = "en-AU"; speechSynthesis.speak(u); });
-        if (p.link) btn(rAct, p.link[1], "go", () => { room.hidden = true; cfg.onOpen(p.link[0]); });
-        btn(rAct, "밖으로 나가기", "", () => { room.hidden = true; });
+        if (p.link) btn(rAct, p.link[1], "go", () => { closeRoom(); cfg.onOpen(p.link[0]); });
+        btn(rAct, "밖으로 나가기", "", closeRoom);
         room.hidden = false;
+        if (cfg.onRoomOpen) cfg.onRoomOpen(rSpeak, p.q[1]);
       }
       addEventListener("resize", setZoom, { signal });
       select(PLACES[0], false);
@@ -340,6 +343,7 @@
 
     return function stop() {
       stopped = true; ac.abort(); cancelAnimationFrame(raf);
+      if (cfg.onRoomClose) cfg.onRoomClose();
       if ("speechSynthesis" in window) speechSynthesis.cancel();
       root.replaceChildren();
     };
