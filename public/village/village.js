@@ -3,11 +3,11 @@
 (function () {
   const W = 2752, H = 1536, MS = 8; // 지도 크기 · 걷기 지도 한 칸 크기
   const SCALE = 0.36, FRAME = 120, STEP = 7; // 고양이 크기 · 그림 높이 · 그림 한 장당 걷는 거리(px)
-  const META = {"cheese-E":[103,10],"cheese-S":[86,8],"cheese-N":[81,8],"gray-E":[103,10],"gray-S":[86,8],"gray-N":[81,8],"russian-E":[102,10],"russian-S":[86,8],"russian-N":[82,8],"fold-E":[109,10],"fold-S":[88,8],"fold-N":[82,8],"siamese-E":[102,10],"siamese-S":[86,8],"siamese-N":[81,8],"ragdoll-E":[102,10],"ragdoll-S":[86,8],"ragdoll-N":[81,8],"tuxedo-E":[103,10],"tuxedo-S":[87,8],"tuxedo-N":[81,8],"white-E":[102,10],"white-S":[86,8],"white-N":[81,8],"angora-E":[111,10],"angora-S":[94,8],"angora-N":[96,8],"cream-E":[102,10],"cream-S":[86,8],"cream-N":[81,8]};
+  const META = {"cheese-E":[108,12],"gray-E":[103,12],"russian-E":[103,12],"fold-E":[110,12],"siamese-E":[102,12],"ragdoll-E":[124,12],"tuxedo-E":[111,12],"white-E":[99,12],"angora-E":[121,12],"cheese-S":[96,10],"gray-S":[93,10],"russian-S":[94,10],"fold-S":[100,10],"siamese-S":[91,10],"ragdoll-S":[104,10],"tuxedo-S":[98,10],"white-S":[92,10],"angora-S":[108,10],"cheese-SE":[92,10],"gray-SE":[92,10],"russian-SE":[92,10],"fold-SE":[97,10],"siamese-SE":[89,10],"ragdoll-SE":[101,9],"tuxedo-SE":[93,10],"white-SE":[77,10],"angora-SE":[100,10],"cheese-NE":[70,9],"gray-NE":[70,9],"russian-NE":[80,9],"fold-NE":[97,12],"siamese-NE":[72,10],"ragdoll-NE":[100,12],"tuxedo-NE":[76,9],"white-NE":[91,12],"angora-NE":[95,9],"cheese-N":[69,9],"gray-N":[66,9],"russian-N":[71,7],"fold-N":[77,9],"siamese-N":[80,10],"ragdoll-N":[78,7],"tuxedo-N":[86,10],"white-N":[72,9],"angora-N":[96,9]};
   // 서 있을 때 쓸 그림: 걷기 그림 중 다리가 가장 모인 장면
-  const REST = {"cheese-E":2,"cheese-S":0,"cheese-N":0,"gray-E":2,"gray-S":0,"gray-N":0,"russian-E":2,"russian-S":0,"russian-N":0,"fold-E":2,"fold-S":0,"fold-N":0,"siamese-E":2,"siamese-S":0,"siamese-N":0,"ragdoll-E":2,"ragdoll-S":0,"ragdoll-N":0,"tuxedo-E":2,"tuxedo-S":0,"tuxedo-N":0,"white-E":2,"white-S":0,"white-N":0,"angora-E":2,"angora-S":0,"angora-N":0,"cream-E":2,"cream-S":0,"cream-N":0};
-  // 그림은 앞(S)·옆(E)·뒤(N) 세 벌: 대각선은 옆걸음 그림을 같이 쓴다
-  const ART_DIR = { SE: "E", NE: "E" };
+  const REST = {"cheese-E":8,"gray-E":9,"russian-E":8,"fold-E":2,"siamese-E":2,"ragdoll-E":2,"tuxedo-E":8,"white-E":8,"angora-E":8,"cheese-S":7,"gray-S":2,"russian-S":2,"fold-S":2,"siamese-S":2,"ragdoll-S":2,"tuxedo-S":2,"white-S":2,"angora-S":2,"cheese-SE":2,"gray-SE":2,"russian-SE":2,"fold-SE":2,"siamese-SE":2,"ragdoll-SE":7,"tuxedo-SE":2,"white-SE":2,"angora-SE":2,"cheese-NE":4,"gray-NE":3,"russian-NE":4,"fold-NE":1,"siamese-NE":3,"ragdoll-NE":1,"tuxedo-NE":2,"white-NE":1,"angora-NE":7,"cheese-N":7,"gray-N":3,"russian-N":4,"fold-N":6,"siamese-N":3,"ragdoll-N":3,"tuxedo-N":1,"white-N":4,"angora-N":1};
+  // 그림이 없는 방향을 다른 방향 그림으로 대신할 때 쓴다 (지금 그림은 5방향이 다 있다)
+  const ART_DIR = {};
   const BREEDS = ["cheese", "gray", "russian", "fold", "siamese", "ragdoll", "tuxedo", "white", "angora"];
 
   // x·y: 건물 앞 땅, top: 이름표 아래 끝. link: 들어가면 열리는 앱 화면, q: 가게 안 표현 연습
@@ -50,7 +50,7 @@
   const INSIDE_SCALE = 0.95; // 내부 그림에서 고양이 크기
   // 마을을 돌아다니는 고양이 (이름 없음)
   const TOWN_CATS = 28;
-  const TOWN_BREEDS = [...BREEDS, "cream"];
+  const TOWN_BREEDS = BREEDS;
   const FRIEND_SPOTS = ["hosier", "fed", "china", "lib", "qvm", "eureka", "paul", "luna"];
 
   const CSS = `
@@ -169,7 +169,7 @@
 
     const walkImg = new Image();
     walkImg.onload = () => { if (!stopped) begin(walkImg); };
-    walkImg.src = base + "walk.png?v=3";
+    walkImg.src = base + "walk.png?v=4";
 
     let worldNav = null;
     function begin(mk) {
@@ -260,7 +260,7 @@
         const [w] = META[`${c.breed}-${art}`];
         c.dir = dir; c.art = art; c.flip = flip; c.w = w;
         c.img.style.width = w + "px"; c.img.style.height = FRAME + "px";
-        c.img.style.backgroundImage = `url(${base}c/${c.breed}-${art}.webp?v=3)`;
+        c.img.style.backgroundImage = `url(${base}c/${c.breed}-${art}.webp?v=4)`;
       }
       function draw(c) {
         // 걸은 거리만큼 그림을 넘긴다 (발이 미끄러져 보이지 않게)
