@@ -323,7 +323,7 @@ export async function makeTempPassword(_prev: TempPasswordState, formData: FormD
   const password = [...bytes].map((b) => chars[b % chars.length]).join("");
   const { error } = await supabase
     .from("students")
-    .update({ password_hash: await hashPassword(password), session_version: (cur.session_version ?? 1) + 1 })
+    .update({ password_hash: await hashPassword(password), session_version: (cur.session_version ?? 1) + 1, must_change_password: true })
     .eq("id", id);
   if (error) return { status: "error", message: "만들지 못했어요. 다시 시도해 주세요." };
   return { status: "success", password };

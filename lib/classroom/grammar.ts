@@ -163,6 +163,9 @@ export const FREE_GRAMMAR_UNITS = 3;
 /** 수강생에게 서비스로 여는 유닛. 그 뒤는 유료 과정 */
 export const SERVICE_GRAMMAR_UNITS = 20;
 
+/** 유료 과정 '초보를 위한 기초 영문법 30강' 가격 (신청 페이지와 같은 금액) */
+export const GRAMMAR_PRICE_LABEL = "300,000원";
+
 type GrammarStudent = { courses: readonly string[]; earlyCourses: readonly string[] };
 
 /** 문법 유료 과정 수강: 주말 기초반처럼 선생님이 따로 열어 준 학생 (early_courses의 "grammar") */
