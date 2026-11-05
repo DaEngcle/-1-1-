@@ -39,7 +39,7 @@
   const ROOMS = {
     bakery: { w: 1000, h: 1000, bg: "#6b4128", start: [470,885], spot: [690,700], floor: [[370,825,410,805,640,712,770,650,845,708,490,905]] },
     cafe: { w: 1000, h: 747, bg: "#6b4128", start: [300,640], spot: [540,500], floor: [[120,520,255,600,425,520,560,455,690,430,760,400,930,505,500,722]], block: CAFE_TABLES },
-    restaurant: { w: 1000, h: 747, bg: "#6b4128", start: [340,640], spot: [590,470], floor: [[120,520,255,600,425,520,560,455,690,430,760,400,930,505,500,722]], block: [...CAFE_TABLES, [255,565,330,565,330,610,255,610]] },
+    restaurant: { video: true, w: 1000, h: 747, bg: "#6b4128", start: [340,640], spot: [590,470], floor: [[120,520,255,600,425,520,560,455,690,430,760,400,930,505,500,722]], block: [...CAFE_TABLES, [255,565,330,565,330,610,255,610]] },
     hotel: { w: 1000, h: 747, bg: "#6b4128", start: [430,680], spot: [250,565], floor: [[60,515,115,495,175,550,300,480,310,520,275,530,275,600,390,650,430,690,500,722]] },
     pharmacy: { w: 1000, h: 1000, bg: "#6b4128", start: [250,820], spot: [720,815], floor: [[55,715,225,790,420,885,505,920,650,825,705,808,825,730,940,715,505,948],[300,800,490,705,600,620,690,680,640,690,440,765,420,880]] },
     site: { w: 1000, h: 1000, bg: "#6b4128", start: [640,830], spot: [410,540], floor: [[60,640,240,520,300,480,470,500,700,500,950,645,500,915]], block: [[355,600,450,560,560,490,720,590,800,640,800,730,690,730,640,780,580,800,450,740,450,680,365,680],[165,650,250,590,350,690,275,755],[110,670,150,640,180,680,140,695],[320,760,355,720,390,765,355,785],[450,855,495,820,535,860,495,900],[830,650,860,620,895,660,860,675],[705,510,790,470,865,540,800,620]] },
@@ -75,6 +75,8 @@
 .vg-inside { position: absolute; inset: 0; z-index: 1; overflow: hidden; touch-action: none; cursor: pointer; }
 .vg-inside[hidden] { display: none; }
 .vg-stage { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+.vg-stage video { position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: fill; pointer-events: none; }
+.vg-stage video[hidden] { display: none; }
 .vg-stage img { display: block; max-width: none; width: 100%; height: 100%; user-select: none; -webkit-user-drag: none; pointer-events: none; }
 .vg-sheet { border-top: 3px solid #2a2350; padding: 10px 14px 12px; display: grid; gap: 6px; background: #fffaf0; max-height: 58%; overflow-y: auto; }
 .vg-sheet[hidden], .vg-in[hidden] { display: none; }
@@ -127,6 +129,7 @@
     const inside = el("div", "vg-inside", view); inside.hidden = true;
     const stage = el("div", "vg-stage", inside);
     const stageImg = el("img", "", stage); stageImg.alt = "";
+    const stageVideo = el("video", "", stage); stageVideo.muted = true; stageVideo.loop = true; stageVideo.playsInline = true; stageVideo.hidden = true;
     const sheet = el("section", "vg-sheet", app); sheet.setAttribute("aria-live", "polite");
     const sTitle = el("h2", "", sheet), sDesc = el("p", "", sheet), sAct = el("div", "vg-row", sheet);
     const room = el("div", "vg-room", app); room.hidden = true;
@@ -386,6 +389,11 @@
         curRoom = r;
         inside.hidden = false; inside.style.background = r.bg; fab.hidden = true;
         stageImg.src = `${base}rooms/${p.room}.jpg`; stageImg.alt = p.name + " 안";
+        // 움직이는 가게: 영상이 재생되면 그림 위를 덮는다 (안 되면 그림만 보인다)
+        if (r.video && !reduce) {
+          stageVideo.src = `${base}rooms/${p.room}.mp4`; stageVideo.hidden = false;
+          const playing = stageVideo.play(); if (playing) playing.catch(() => {});
+        }
         for (const n of [sTitle, sDesc, sAct]) n.hidden = true;
         sheet.appendChild(rIn); rImg.hidden = true;
         fitStage(r);
@@ -395,6 +403,7 @@
         goTo(inCat, r.spot[0], r.spot[1]);
         leaveInside = () => {
           inCat.root.remove(); inCat.tag.remove(); inCat = null; curRoom = null; leaveInside = null;
+          stageVideo.pause(); stageVideo.removeAttribute("src"); stageVideo.load(); stageVideo.hidden = true;
           inside.hidden = true; fab.hidden = false; rIn.remove();
           for (const n of [sTitle, sDesc, sAct]) n.hidden = false;
           follow = true;

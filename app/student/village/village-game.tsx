@@ -21,7 +21,7 @@ declare global {
   }
 }
 
-const SCRIPT_SRC = "/village/village.js?v=7";
+const SCRIPT_SRC = "/village/village.js?v=8";
 
 function loadScript() {
   return new Promise<void>((resolve, reject) => {
