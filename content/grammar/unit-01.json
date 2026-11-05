@@ -231,5 +231,138 @@
       ],
       "why": "housemates는 여러 명이라 are를 써요."
     }
+  ],
+  "blocks": [
+    {
+      "ko": "저는 서울에서 왔어요.",
+      "en": "I am from Seoul.",
+      "tokens": [
+        "I",
+        "am",
+        "from",
+        "Seoul"
+      ],
+      "extra": [
+        "is"
+      ]
+    },
+    {
+      "ko": "저는 바리스타예요.",
+      "en": "I am a barista.",
+      "tokens": [
+        "I",
+        "am",
+        "a",
+        "barista"
+      ],
+      "extra": [
+        "are"
+      ]
+    },
+    {
+      "ko": "우리 매니저는 정말 친절해요.",
+      "en": "My manager is very kind.",
+      "tokens": [
+        "My",
+        "manager",
+        "is",
+        "very",
+        "kind"
+      ],
+      "extra": [
+        "am"
+      ]
+    },
+    {
+      "ko": "그 카페는 해변 근처에 있어요.",
+      "en": "The café is near the beach.",
+      "tokens": [
+        "The",
+        "café",
+        "is",
+        "near",
+        "the",
+        "beach"
+      ],
+      "extra": [
+        "are"
+      ]
+    },
+    {
+      "ko": "우리는 멜번에 있어요.",
+      "en": "We are in Melbourne.",
+      "tokens": [
+        "We",
+        "are",
+        "in",
+        "Melbourne"
+      ],
+      "extra": [
+        "is"
+      ]
+    },
+    {
+      "ko": "그들은 제 동료들이에요.",
+      "en": "They are my coworkers.",
+      "tokens": [
+        "They",
+        "are",
+        "my",
+        "coworkers"
+      ],
+      "extra": [
+        "am"
+      ]
+    },
+    {
+      "ko": "오늘 날씨가 더워요.",
+      "en": "It is hot today.",
+      "tokens": [
+        "It",
+        "is",
+        "hot",
+        "today"
+      ],
+      "extra": [
+        "are"
+      ]
+    },
+    {
+      "ko": "당신은 정말 친절해요.",
+      "en": "You are very kind.",
+      "tokens": [
+        "You",
+        "are",
+        "very",
+        "kind"
+      ],
+      "extra": [
+        "is"
+      ]
+    },
+    {
+      "ko": "그녀는 간호사예요.",
+      "en": "She is a nurse.",
+      "tokens": [
+        "She",
+        "is",
+        "a",
+        "nurse"
+      ],
+      "extra": [
+        "are"
+      ]
+    },
+    {
+      "ko": "저 피곤해요.",
+      "en": "I'm tired.",
+      "tokens": [
+        "I'm",
+        "tired"
+      ],
+      "extra": [
+        "is"
+      ]
+    }
   ]
 }

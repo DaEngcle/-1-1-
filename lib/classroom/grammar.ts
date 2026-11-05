@@ -163,14 +163,16 @@ export const FREE_GRAMMAR_UNITS = 3;
 /** 수강생에게 서비스로 여는 유닛. 그 뒤는 유료 과정 */
 export const SERVICE_GRAMMAR_UNITS = 20;
 
-/** 유료 과정 '초보를 위한 기초 영문법 30강' 가격 (신청 페이지와 같은 금액) */
-export const GRAMMAR_PRICE_LABEL = "300,000원";
+/** 유료 과정 '기초 영문법 30강' 가격·결제 페이지 (홈페이지 가격표와 같은 금액) */
+export const GRAMMAR_LIST_PRICE_LABEL = "249,000원";
+export const GRAMMAR_PRICE_LABEL = "199,000원";
+export const GRAMMAR_PAY_URL = "https://dingle-english.vercel.app/pay.html?plan=grammar";
 
-type GrammarStudent = { courses: readonly string[]; earlyCourses: readonly string[] };
+type GrammarStudent = { plan: string | null; courses: readonly string[]; earlyCourses: readonly string[] };
 
-/** 문법 유료 과정 수강: 주말 기초반처럼 선생님이 따로 열어 준 학생 (early_courses의 "grammar") */
+/** 문법 유료 과정 수강: 보너스로 포함된 워홀생존키트·All in one, 또는 선생님이 열어 준 학생 (early_courses의 "grammar") */
 export function hasPaidGrammar(student: GrammarStudent) {
-  return student.earlyCourses.includes("grammar");
+  return student.plan === "kit12" || student.plan === "allinone" || student.earlyCourses.includes("grammar");
 }
 
 /** 이 학생이 볼 수 있으면 null, 아니면 막힌 이유 */

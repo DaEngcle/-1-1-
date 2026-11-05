@@ -1,71 +1,98 @@
 "use client";
 
-import { useState } from "react";
-import { useRecorder } from "@/app/_ui/audio/use-recorder";
-import { VILLAGE_MAX_RECORD_SECONDS } from "@/lib/classroom/village";
+import { useEffect, useRef, useState } from "react";
+import { compareSpoken } from "@/lib/classroom/village";
 
-type Result = { heard: string; score: number; completeness: number; weak: string[]; left: number };
+type Recognition = {
+  lang: string;
+  interimResults: boolean;
+  maxAlternatives: number;
+  onresult: ((e: { results: ArrayLike<ArrayLike<{ transcript: string }>> }) => void) | null;
+  onerror: ((e: { error: string }) => void) | null;
+  onend: (() => void) | null;
+  start: () => void;
+  stop: () => void;
+  abort: () => void;
+};
+type RecognitionWindow = Window & { SpeechRecognition?: new () => Recognition; webkitSpeechRecognition?: new () => Recognition };
 
-function verdict(r: Result) {
-  if (r.completeness < 70) return "문장이 달라요. 정답을 듣고 다시 말해 보세요.";
-  if (r.score >= 80) return "잘했어요! 그대로 쓰면 돼요 🎉";
-  if (r.score >= 60) return "거의 다 왔어요. 아래 단어만 다시 말해 보세요.";
-  return "조금 더 또박또박 다시 말해 보세요.";
+const ERRORS: Record<string, string> = {
+  "not-allowed": "마이크를 허용해 주세요. 브라우저 설정에서 켤 수 있어요.",
+  "no-speech": "잘 안 들렸어요. 버튼을 누르고 다시 말해 주세요.",
+  "audio-capture": "마이크를 찾지 못했어요.",
+};
+
+function verdict(score: number) {
+  if (score >= 90) return "잘했어요! 그대로 쓰면 돼요 🎉";
+  if (score >= 60) return "거의 다 왔어요. 빠진 단어를 넣어 다시 말해 보세요.";
+  return "정답과 많이 달라요. 정답을 듣고 다시 말해 보세요.";
 }
 
-/** 가게 안 말하기 연습: 말하면 앱이 듣고 정답 문장과 비교해 알려 준다 */
+/** 가게 안 말하기 연습: 브라우저가 알아들은 말을 정답 문장과 비교한다 (비용 없음) */
 export function SpeakPractice({ text }: { text: string }) {
-  const [sending, setSending] = useState(false);
-  const [result, setResult] = useState<Result | null>(null);
+  // 방을 열 때 브라우저에서만 그려지므로 window를 바로 읽어도 된다
+  const [Engine] = useState(() => {
+    const w = window as RecognitionWindow;
+    return w.SpeechRecognition ?? w.webkitSpeechRecognition ?? null;
+  });
+  const [listening, setListening] = useState(false);
+  const [heard, setHeard] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  async function send(wav: Blob) {
-    setSending(true);
+  const rec = useRef<Recognition | null>(null);
+
+  useEffect(() => () => rec.current?.abort(), []);
+
+  if (!Engine) {
+    return <p className="text-sm text-zinc-600">이 화면에서는 앱이 듣지 못해요. 소리 내어 말해 본 뒤 정답을 확인해 보세요.</p>;
+  }
+
+  function start() {
+    setHeard(null);
     setError(null);
+    const r = new Engine!();
+    r.lang = "en-AU";
+    r.interimResults = false;
+    r.maxAlternatives = 3;
+    r.onresult = (e) => {
+      const alts = Array.from(e.results[0] ?? []).map((a) => a.transcript);
+      // 후보 중 정답에 가장 가까운 것을 쓴다
+      const best = alts.sort((x, y) => compareSpoken(text, y).score - compareSpoken(text, x).score)[0];
+      setHeard(best ?? "");
+    };
+    r.onerror = (e) => {
+      if (e.error !== "aborted") setError(ERRORS[e.error] ?? "지금은 앱이 듣지 못해요. 소리 내어 말해 본 뒤 정답을 확인해 보세요.");
+    };
+    r.onend = () => setListening(false);
+    rec.current = r;
     try {
-      const form = new FormData();
-      form.append("text", text);
-      form.append("audio", wav, "speak.wav");
-      const res = await fetch("/api/village/speak", { method: "POST", body: form });
-      const data = await res.json();
-      if (!res.ok) setError(data.error ?? "다시 말해 주세요.");
-      else setResult(data as Result);
+      r.start();
+      setListening(true);
     } catch {
-      setError("인터넷 연결을 확인하고 다시 말해 주세요.");
-    } finally {
-      setSending(false);
+      setError("잠깐 뒤에 다시 눌러 주세요.");
     }
   }
 
-  const recorder = useRecorder(VILLAGE_MAX_RECORD_SECONDS, (wav) => {
-    if (wav) void send(wav);
-  });
-
-  function start() {
-    setResult(null);
-    setError(null);
-    void recorder.start();
-  }
+  const result = heard === null ? null : compareSpoken(text, heard);
 
   return (
     <div className="flex flex-col gap-2">
-      {recorder.recording ? (
-        <button type="button" onClick={recorder.stop} className="rounded-[10px] border-2 border-red-500 bg-red-50 px-3 py-2 text-sm font-bold text-red-700">
-          ⏹ 다 말했어요 ({recorder.seconds}초 / {VILLAGE_MAX_RECORD_SECONDS}초)
+      {listening ? (
+        <button type="button" onClick={() => rec.current?.stop()} className="rounded-[10px] border-2 border-red-500 bg-red-50 px-3 py-2 text-sm font-bold text-red-700">
+          ⏹ 듣고 있어요. 다 말했으면 누르세요
         </button>
       ) : (
-        <button type="button" disabled={sending} onClick={start} className="rounded-[10px] border-2 border-[#2a2350] bg-[#6c5cff] px-3 py-2 text-sm font-bold text-white shadow-[0_3px_0_#2a2350] disabled:opacity-60">
-          {sending ? "듣고 있어요..." : result ? "🎤 다시 말하기" : "🎤 눌러서 말하기"}
+        <button type="button" onClick={start} className="rounded-[10px] border-2 border-[#2a2350] bg-[#6c5cff] px-3 py-2 text-sm font-bold text-white shadow-[0_3px_0_#2a2350]">
+          {result ? "🎤 다시 말하기" : "🎤 눌러서 말하기"}
         </button>
       )}
       {result && (
         <div className="rounded-[10px] border-2 border-[#2a2350] bg-white p-3 text-sm text-[#2a2350]">
-          <p className="font-extrabold">{result.score}점 · {verdict(result)}</p>
-          <p className="mt-1 text-xs text-zinc-600">앱이 들은 말: {result.heard || "(알아듣지 못했어요)"}</p>
-          {result.weak.length > 0 && <p className="mt-1 text-xs text-zinc-600">다시 말해 볼 단어: <b>{result.weak.join(", ")}</b></p>}
-          <p className="mt-1 text-xs text-zinc-500">오늘 {result.left}번 더 할 수 있어요.</p>
+          <p className="font-extrabold">정답과 {result.score}% 일치 · {verdict(result.score)}</p>
+          <p className="mt-1 text-xs text-zinc-600">앱이 들은 말: {heard || "(알아듣지 못했어요)"}</p>
+          {result.missing.length > 0 && <p className="mt-1 text-xs text-zinc-600">빠진 단어: <b>{result.missing.join(", ")}</b></p>}
         </div>
       )}
-      {(error ?? recorder.error) && <p className="text-sm text-red-600">{error ?? recorder.error}</p>}
+      {error && <p className="text-sm text-red-600">{error}</p>}
     </div>
   );
 }

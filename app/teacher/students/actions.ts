@@ -269,8 +269,18 @@ export async function setEarlyCourses(formData: FormData) {
   // '보카 전체 열기'(voca) 표시는 과정 체크와 따로 관리하니 그대로 둔다
   const { data: row } = await supabase.from("students").select("early_courses").eq("id", id).maybeSingle();
   // '보카 전체 열기'와 학생에게만 열어준 강의("lesson:...")는 그대로 둔다
-  const keep = ((row?.early_courses as string[] | null) ?? []).filter((c) => c === "voca" || c.startsWith("lesson:"));
+  const keep = ((row?.early_courses as string[] | null) ?? []).filter((c) => c === "voca" || c === "grammar" || c.startsWith("lesson:"));
   await supabase.from("students").update({ early_courses: [...courses, ...keep] }).eq("id", id);
+  revalidatePath(`/teacher/students/${id}`);
+}
+
+/** 문법 유료 과정을 결제한 학생에게 21강 이후 열어주기 / 닫기 */
+export async function setGrammarPaid(id: string, on: boolean) {
+  await requireTeacher();
+  const supabase = createServerSupabaseClient();
+  const { data: row } = await supabase.from("students").select("early_courses").eq("id", id).maybeSingle();
+  const rest = ((row?.early_courses as string[] | null) ?? []).filter((c) => c !== "grammar");
+  await supabase.from("students").update({ early_courses: on ? [...rest, "grammar"] : rest }).eq("id", id);
   revalidatePath(`/teacher/students/${id}`);
 }
 

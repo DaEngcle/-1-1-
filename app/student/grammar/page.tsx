@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { requireStudent } from "@/lib/classroom/dal";
-import { GRAMMAR_PARTS, GRAMMAR_PRICE_LABEL, OPEN_GRAMMAR_UNITS, SERVICE_GRAMMAR_UNITS, grammarDeck, grammarLock, grammarUnit, hasPaidGrammar } from "@/lib/classroom/grammar";
+import { GRAMMAR_LIST_PRICE_LABEL, GRAMMAR_PARTS, GRAMMAR_PAY_URL, GRAMMAR_PRICE_LABEL, OPEN_GRAMMAR_UNITS, SERVICE_GRAMMAR_UNITS, grammarDeck, grammarLock, grammarUnit, hasPaidGrammar } from "@/lib/classroom/grammar";
 
 export default async function GrammarPage() {
   const student = await requireStudent();
@@ -24,7 +24,11 @@ export default async function GrammarPage() {
           </span>
           <span className="text-xs font-bold text-white/90">{cleared}/{OPEN_GRAMMAR_UNITS} 유닛 클리어</span>
           {!hasPaidGrammar(student) && student.courses.length > 0 && (
-            <span className="text-xs text-amber-50">1~{SERVICE_GRAMMAR_UNITS}강은 수강생 서비스, {SERVICE_GRAMMAR_UNITS + 1}강부터는 유료 과정({GRAMMAR_PRICE_LABEL})이에요.</span>
+            <span className="text-xs text-amber-50">1~{SERVICE_GRAMMAR_UNITS}강은 수강생 서비스, {SERVICE_GRAMMAR_UNITS + 1}강부터는 유료 과정이에요.{" "}
+              <a href={GRAMMAR_PAY_URL} target="_blank" rel="noopener noreferrer" className="font-bold underline">
+                <s>{GRAMMAR_LIST_PRICE_LABEL}</s> {GRAMMAR_PRICE_LABEL} 결제하기
+              </a>
+            </span>
           )}
         </span>
       </section>

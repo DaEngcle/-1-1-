@@ -17,6 +17,7 @@ import {
   sendTeacherPush,
   setEarlyCourses,
   setHideFromProgress,
+  setGrammarPaid,
   setVocaFull,
   setStudentActive,
   updateMemo,
@@ -416,6 +417,19 @@ export default async function TeacherStudentPage({
             </p>
           ) : null;
         })()}
+        {student.plan !== "kit12" && student.plan !== "allinone" && (
+          <form
+            action={setGrammarPaid.bind(null, student.id, !(student.early_courses ?? []).includes("grammar"))}
+            className="mt-3 flex flex-wrap items-center gap-2 border-t border-slate-100 pt-3 text-sm"
+          >
+            <span className="text-xs font-semibold text-zinc-700">
+              🐤 문법 유료 과정(21강~) {(student.early_courses ?? []).includes("grammar") ? "열림" : "잠김"}
+            </span>
+            <SubmitButton className="rounded-lg border border-slate-300 px-3 py-1 text-xs font-semibold">
+              {(student.early_courses ?? []).includes("grammar") ? "다시 잠그기" : "결제 확인, 열어주기"}
+            </SubmitButton>
+          </form>
+        )}
         {!student.plan && (
           <form
             action={setVocaFull.bind(null, student.id, !(student.early_courses ?? []).includes("voca"))}

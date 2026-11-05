@@ -1,21 +1,35 @@
-// 고양이 마을 말하기 연습. 문장은 public/village/village.js의 PLACES와 똑같아야 채점된다.
-export const VILLAGE_PHRASES = [
-  "Where do I pick up my PPE today?",
-  "How much for a kilo of apples?",
-  "Have you got a table for two?",
-  "Can I grab a flat white, please?",
-  "Can I get two croissants to take away, please?",
-  "Hi, I have a booking for tonight under Daniel.",
-  "Can I get this prescription filled, please?",
-  "Excuse me, where can I find the milk?",
-  "Can I get a bag, please?",
-  "Can I get a slice of this cake to go?",
-  "Lovely day, isn't it?",
-  "Could you take a photo of us?",
-  "Excuse me, which way to the beach?",
-];
+// 고양이 마을 말하기 연습: 브라우저 음성 인식이 받아 적은 말을 정답 문장과 비교한다 (비용 없음)
 
-/** 학생 한 명이 하루에 채점받을 수 있는 횟수 (음성 채점 비용 상한) */
-export const VILLAGE_DAILY_SPEAK_LIMIT = 30;
-/** 한 번에 녹음하는 최대 길이(초) */
-export const VILLAGE_MAX_RECORD_SECONDS = 8;
+const words = (s: string) =>
+  s
+    .toLowerCase()
+    .replace(/['’]/g, "")
+    .replace(/[^a-z0-9\s]/g, " ")
+    .split(/\s+/)
+    .filter(Boolean);
+
+/** 정답과 들은 말을 단어 순서대로 비교해 점수(0~100)와 빠진 단어를 돌려준다 */
+export function compareSpoken(target: string, heard: string) {
+  const a = words(target);
+  const b = words(heard);
+  const dp = Array.from({ length: a.length + 1 }, () => new Array<number>(b.length + 1).fill(0));
+  for (let i = a.length - 1; i >= 0; i--) {
+    for (let j = b.length - 1; j >= 0; j--) {
+      dp[i][j] = a[i] === b[j] ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
+    }
+  }
+  const missing: string[] = [];
+  for (let i = 0, j = 0; i < a.length; ) {
+    if (j < b.length && a[i] === b[j]) {
+      i++;
+      j++;
+    } else if (j < b.length && dp[i][j + 1] >= dp[i + 1][j]) {
+      j++;
+    } else {
+      missing.push(a[i]);
+      i++;
+    }
+  }
+  const total = a.length + b.length;
+  return { score: total ? Math.round((200 * dp[0][0]) / total) : 0, missing };
+}
