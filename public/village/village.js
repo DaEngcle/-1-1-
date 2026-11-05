@@ -258,7 +258,7 @@
         const parent = place ? place.parent : world;
         const r = el("div", "vg-cat", parent), shadow = el("div", "vg-shadow", r), bob = el("div", "vg-bob", r), img = el("div", "vg-img", bob);
         const tag = el("div", "vg-tag" + (isMe ? " me" : ""), parent, name);
-        const c = { scale: place ? place.scale : SCALE, nav: place ? place.nav : worldNav, breed, x, y, root: r, shadow, bob, img, tag, dir: "S", flip: 1, clock: 0, dist: 0, walking: false, route: [], then: null, speed: isMe ? 140 : 55, idleT: Math.random() * 3 };
+        const c = { scale: place ? place.scale : SCALE, nav: place ? place.nav : worldNav, breed, x, y, root: r, shadow, bob, img, tag, dir: "S", flip: 1, clock: 0, dist: 0, walking: false, route: [], then: null, speed: isMe ? 80 : 30, idleT: Math.random() * 3 };
         if (place) shadow.style.transform = `translate(-50%, -50%) scale(${place.scale / SCALE})`;
         setDir(c, "S", 1); draw(c); return c;
       }
@@ -391,7 +391,7 @@
         fitStage(r);
         const nav = roomNav(r), s0 = nav.nearestWalk(r.start[0], r.start[1]);
         inCat = cat(me.breed, s0.gx * ROOM_MS + 5, s0.gy * ROOM_MS + 5, cfg.myName || "나", true, { parent: stage, scale: INSIDE_SCALE, nav });
-        inCat.speed = 220;
+        inCat.speed = 130;
         goTo(inCat, r.spot[0], r.spot[1]);
         leaveInside = () => {
           inCat.root.remove(); inCat.tag.remove(); inCat = null; curRoom = null; leaveInside = null;
