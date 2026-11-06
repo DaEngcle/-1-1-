@@ -1,4 +1,4 @@
-// 보카 표현 단어장: 호주 슬랭 · 상황별 생존 표현 · 필수 구동사. 서버·브라우저 공용
+// 보카 표현 단어장: 호주 슬랭 · 상황별 생존 표현 · 필수 구동사 · 주방·식재료. 서버·브라우저 공용
 // 예문에는 표현(term)이 그대로 들어가야 '빈칸 채우기' 문제가 만들어진다.
 
 import { SLANG_SETS, type Slang } from "./slang";
@@ -6,7 +6,7 @@ import { SLANG_SETS, type Slang } from "./slang";
 export type Phrase = Slang;
 export type PhraseSet = { id: number; title: string; emoji: string; items: Phrase[] };
 export type PhraseDeck = {
-  id: "slang" | "survival" | "phrasal";
+  id: "slang" | "survival" | "phrasal" | "kitchen";
   title: string;
   emoji: string;
   desc: string;
@@ -314,6 +314,112 @@ const PHRASAL: PhraseSet[] = [
   },
 ];
 
+// 주방·식재료: 고기 부위, 채소(호주 vs 미국 이름), 바비큐, 주방 조리 용어와 주방에서 듣는 말
+const KITCHEN: PhraseSet[] = [
+  {
+    id: 1,
+    title: "소고기 부위",
+    emoji: "🥩",
+    items: [
+      p("scotch fillet", "꽃등심 (립아이)", "Two scotch fillets, medium-rare, please.", "꽃등심 두 개, 미디엄 레어로 주세요.", "미국은 ribeye"),
+      p("eye fillet", "안심", "The eye fillet is the most tender cut.", "안심이 제일 부드러운 부위예요.", "미국은 tenderloin (스테이크는 filet mignon)"),
+      p("rump", "우둔·설도 (엉덩이살)", "Grab some rump for the barbecue, it's great value.", "바비큐용으로 엉덩이살 좀 사 와, 가성비 좋아.", "미국 top sirloin에 가까운 부위"),
+      p("sirloin", "채끝", "Can you trim the fat off the sirloin?", "채끝 기름 좀 손질해 줄래요?", "호주는 porterhouse라고도 해요. 미국은 strip steak(New York strip)"),
+      p("brisket", "양지", "We slow-cook the brisket for twelve hours.", "양지는 12시간 동안 천천히 익혀요."),
+      p("chuck", "목심·앞다리살", "Use chuck for the beef stew.", "소고기 스튜엔 목심을 써요."),
+      p("short ribs", "소갈비", "Korean BBQ short ribs are on the menu tonight.", "오늘 밤 메뉴에 갈비가 있어요."),
+      p("mince", "다진 고기", "Grab a kilo of beef mince for the burgers.", "버거용으로 소고기 다짐육 1킬로 사 와.", "미국은 ground beef"),
+      p("T-bone", "티본 스테이크", "The T-bone comes with chips and salad.", "티본은 감자튀김이랑 샐러드가 같이 나와요."),
+      p("wagyu", "와규", "Our wagyu has a marble score of nine.", "저희 와규는 마블 등급 9예요."),
+    ],
+  },
+  {
+    id: 2,
+    title: "돼지·닭·양·해산물",
+    emoji: "🍗",
+    items: [
+      p("pork belly", "삼겹살", "Score the skin on the pork belly so it crackles.", "껍질이 바삭해지게 삼겹살 껍질에 칼집을 내요."),
+      p("crackling", "바삭하게 구운 돼지 껍질", "Everyone fights over the crackling.", "다들 바삭한 껍질 먹으려고 싸워요."),
+      p("pork scotch", "돼지 목살", "Try the pork scotch for Korean BBQ.", "한국식 바비큐엔 목살을 써 봐요.", "정육점에선 pork neck이라고도 해요"),
+      p("lamb cutlets", "양갈비 (한 대씩 자른 것)", "We grill lamb cutlets every Sunday.", "일요일마다 양갈비를 구워요.", "lamb chops는 허리 쪽 두툼한 부위"),
+      p("chicken thigh fillet", "뼈 없는 닭다리살", "We need five kilos of chicken thigh fillet.", "뼈 없는 닭다리살 5킬로 필요해요."),
+      p("drumsticks", "닭다리 (북채)", "The kids love honey soy drumsticks.", "애들은 허니 소이 닭다리를 좋아해요."),
+      p("prawns", "새우", "Throw some prawns on the barbie.", "바비큐에 새우 좀 올려.", "미국은 shrimp. 호주는 크기와 상관없이 prawn"),
+      p("barramundi", "바라문디 (호주 대표 흰살생선)", "Today's special is pan-fried barramundi.", "오늘의 스페셜은 바라문디 구이예요."),
+      p("bugs", "모어튼베이 벅 (납작한 새우류)", "Moreton Bay bugs are on special this week.", "이번 주에 모어튼베이 벅이 할인이에요.", "벌레 아님! 호주 해산물 이름"),
+      p("calamari", "오징어 요리", "Can I get the salt and pepper calamari?", "소금후추 오징어 튀김 주세요."),
+    ],
+  },
+  {
+    id: 3,
+    title: "채소·과일 (호주 vs 미국)",
+    emoji: "🥬",
+    items: [
+      p("capsicum", "파프리카·피망", "Slice the red capsicum thinly.", "빨간 파프리카를 얇게 썰어요.", "미국은 bell pepper"),
+      p("zucchini", "애호박 (주키니)", "Grill the zucchini with a bit of olive oil.", "올리브유 조금 둘러서 주키니를 구워요.", "호주·미국 모두 zucchini, 영국은 courgette"),
+      p("eggplant", "가지", "The eggplant needs to be salted first.", "가지는 먼저 소금을 뿌려 둬야 해요.", "호주·미국 eggplant, 영국은 aubergine"),
+      p("rocket", "루콜라", "Top the pizza with fresh rocket.", "피자 위에 신선한 루콜라를 올려요.", "미국은 arugula"),
+      p("coriander", "고수", "No coriander for me, please.", "저는 고수 빼 주세요.", "미국은 잎을 cilantro라고 해요"),
+      p("spring onion", "파 (쪽파·대파)", "Garnish with chopped spring onion.", "다진 파로 마무리해요.", "미국은 scallion 또는 green onion"),
+      p("beetroot", "비트", "Do you want beetroot on your burger?", "버거에 비트 넣어 드릴까요?", "미국은 beet. 호주 버거엔 비트가 자주 들어가요"),
+      p("pumpkin", "단호박·호박", "Roast pumpkin is a classic Aussie side.", "구운 단호박은 호주의 대표 곁들임이에요.", "미국은 butternut 같은 건 squash라고 해요"),
+      p("silverbeet", "근대", "Wash the silverbeet well before cooking.", "요리 전에 근대를 잘 씻어요.", "미국은 Swiss chard"),
+      p("rockmelon", "멜론 (캔털루프)", "Cut up some rockmelon for the fruit platter.", "과일 플래터용으로 멜론 좀 썰어 줘요.", "미국은 cantaloupe"),
+    ],
+  },
+  {
+    id: 4,
+    title: "바비큐",
+    emoji: "🔥",
+    items: [
+      p("barbie", "바비큐 (그릴·파티)", "Come over for a barbie on Saturday.", "토요일에 바비큐 하러 와."),
+      p("snags", "소시지", "I'll grab some snags for the barbie.", "바비큐용 소시지 좀 사 올게."),
+      p("sausage sizzle", "소시지 시즐 (빵에 끼운 소시지)", "Bunnings has a sausage sizzle every weekend.", "버닝스는 주말마다 소시지 시즐을 해요.", "모금 행사로도 많이 열려요"),
+      p("tongs", "집게", "Pass me the tongs, mate.", "집게 좀 줘."),
+      p("esky", "아이스박스", "Put the drinks in the esky.", "음료는 아이스박스에 넣어.", "미국은 cooler"),
+      p("BYO", "각자 가져오기", "It's a BYO barbie, so bring your own meat.", "각자 고기 가져오는 바비큐야.", "Bring Your Own. 식당에선 술을 가져가도 된다는 뜻"),
+      p("marinate", "양념에 재우다", "You should marinate the chicken overnight.", "닭고기는 하룻밤 재워 두는 게 좋아."),
+      p("char", "겉을 살짝 태우듯 굽다", "We char the corn on the grill.", "옥수수는 그릴에서 겉을 그을려요."),
+      p("well done", "바싹 익힘", "I like my steak well done.", "저는 스테이크 완전히 익혀 주세요.", "rare < medium-rare < medium < well done"),
+      p("rest", "(구운 고기를) 쉬게 두다", "Let the steak rest for five minutes.", "스테이크는 5분 정도 두었다가 잘라요.", "육즙이 빠지지 않게 바로 자르지 말라는 뜻"),
+    ],
+  },
+  {
+    id: 5,
+    title: "주방 조리 용어",
+    emoji: "🔪",
+    items: [
+      p("dice", "깍둑썰기하다", "Can you dice the onions finely?", "양파를 잘게 깍둑썰기 해 줄래요?"),
+      p("julienne", "채썰다", "Please julienne the carrots for the salad.", "샐러드용으로 당근을 채 썰어 주세요."),
+      p("chop", "썰다", "Roughly chop the parsley.", "파슬리를 대충 썰어요."),
+      p("sear", "센 불에 겉면을 익히다", "Always sear the beef before roasting.", "굽기 전에 소고기 겉면을 꼭 센 불에 익혀요."),
+      p("simmer", "약불로 뭉근히 끓이다", "Let the sauce simmer for twenty minutes.", "소스는 20분 동안 약불에 끓여요."),
+      p("blanch", "데치다", "Quickly blanch the broccoli, then put it in ice water.", "브로콜리를 살짝 데친 다음 얼음물에 넣어요."),
+      p("deglaze", "팬에 눌어붙은 것을 녹여 내다", "Now deglaze the pan with a splash of wine.", "이제 와인을 조금 부어 팬을 디글레이즈해요."),
+      p("season", "간하다", "Don't forget to season the soup.", "수프 간하는 거 잊지 마요."),
+      p("prep", "재료 손질 (준비)", "We do all the prep before service.", "영업 전에 재료 손질을 다 해 둬요."),
+      p("portion", "1인분씩 나누다", "Can you portion the chips into containers?", "감자튀김을 용기에 1인분씩 나눠 줄래요?"),
+    ],
+  },
+  {
+    id: 6,
+    title: "주방에서 듣는 말",
+    emoji: "🧑‍🍳",
+    items: [
+      p("Yes, chef", "네, 셰프", "Two minutes on table six! Yes, chef!", "6번 테이블 2분 남았어! 네, 셰프!"),
+      p("Behind", "뒤에 지나가요", "Behind! Hot pan coming through!", "뒤에 지나가요! 뜨거운 팬이요!", "칼·뜨거운 것을 들고 지나갈 때 꼭 외쳐요"),
+      p("Corner", "모퉁이 돌아요", "Corner! Watch out!", "모퉁이 돌아요! 조심!"),
+      p("on the pass", "패스에 (요리를 내보내는 곳)", "Put the plates on the pass.", "접시는 패스에 올려요."),
+      p("86", "다 떨어짐 (품절)", "We're 86 on the barramundi.", "바라문디 다 떨어졌어요.", "86'd라고도 써요"),
+      p("docket", "주문서", "Two new dockets just came in.", "새 주문서 두 장 들어왔어요.", "미국은 ticket"),
+      p("walk-in", "대형 냉장고 (워크인)", "Grab the cream from the walk-in.", "워크인에서 크림 좀 가져와요."),
+      p("first in, first out", "선입선출", "Remember first in, first out when you stock the fridge.", "냉장고 채울 땐 먼저 들어온 것부터 쓰는 거 기억해요.", "FIFO라고 줄여 말해요"),
+      p("mise en place", "미장플라스 (재료 준비 세팅)", "Get your mise en place ready before service.", "영업 전에 재료 세팅 끝내 놔요."),
+      p("service", "(식당) 영업 시간", "Service starts at five, so be ready by four thirty.", "영업은 5시에 시작하니까 4시 반까지 준비해요."),
+    ],
+  },
+];
+
 export const PHRASE_DECKS: PhraseDeck[] = [
   {
     id: "survival",
@@ -330,6 +436,14 @@ export const PHRASE_DECKS: PhraseDeck[] = [
     desc: "pick up, figure out, run out of… 원어민이 매일 쓰는데 교과서엔 잘 안 나오는 100개.",
     quizLabel: "🔗 구동사",
     sets: PHRASAL,
+  },
+  {
+    id: "kitchen",
+    title: "주방·식재료 영어",
+    emoji: "🍖",
+    desc: "고기 부위·채소·바비큐·주방 용어 60개. 호주와 미국에서 이름이 다른 재료도 함께 알려 줘요.",
+    quizLabel: "🍖 주방·식재료",
+    sets: KITCHEN,
   },
   {
     id: "slang",
