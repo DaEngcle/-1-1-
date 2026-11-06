@@ -199,7 +199,7 @@ export default async function StudentHomePage() {
         )}
       </section>
 
-      <InstallAppCard />
+      <InstallAppCard hideWhenInstalled />
 
       {!student.catBreed && (
         <section className="flex flex-col gap-3 rounded-3xl border-2 border-dashed border-brand-200 bg-white p-4">

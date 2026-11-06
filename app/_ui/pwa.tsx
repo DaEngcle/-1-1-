@@ -230,7 +230,11 @@ export function InstallGuide() {
 }
 
 /** 설정 화면의 앱 설치 카드 */
-export function InstallAppCard() {
+/** hideWhenInstalled: 앱(홈 화면 아이콘)으로 연 사람에게는 카드를 아예 안 보여 준다 (홈 화면용) */
+export function InstallAppCard({ hideWhenInstalled = false }: { hideWhenInstalled?: boolean }) {
+  const env = useEnv();
+  // 기기 확인 전에는 숨겨 둬서, 설치한 사람에게 카드가 잠깐 떴다 사라지지 않게 한다
+  if (hideWhenInstalled && (!env || env.standalone)) return null;
   return (
     <section className="flex flex-col gap-3 rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm">
       <div className="flex items-center gap-3">
