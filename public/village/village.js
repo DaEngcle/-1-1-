@@ -79,9 +79,8 @@
 .vg-fab[hidden], .vg-zoom[hidden] { display: none; }
 .vg-bldg { position: absolute; max-width: none; pointer-events: none; user-select: none; -webkit-user-drag: none; transition: opacity .2s; }
 .vg-sky { position: absolute; inset: 0; z-index: 99990; pointer-events: none; mix-blend-mode: multiply; transition: background-color 2s, opacity 2s; }
-.vg-lights { position: absolute; left: 0; top: 0; z-index: 99991; max-width: none; pointer-events: none; mix-blend-mode: screen; transition: opacity 2s; }
-.vg-lamps { position: absolute; inset: 0; z-index: 99992; pointer-events: none; mix-blend-mode: screen; transition: opacity 2s; }
-.vg-lamp { position: absolute; width: 170px; height: 86px; margin: -43px 0 0 -85px; border-radius: 50%; background: radial-gradient(ellipse at center, rgba(255,222,150,.75) 0%, rgba(255,200,120,.35) 38%, rgba(255,190,110,0) 70%); }
+.vg-night { position: absolute; left: 0; top: 0; z-index: 0; max-width: none; pointer-events: none; opacity: 0; transition: opacity 2.5s; }
+.vg-bldg-n { opacity: 0; transition: opacity 2.5s; }
 .vg-time { pointer-events: auto; font: inherit; font-size: 12px; font-weight: 700; color: #2a2350; background: rgba(255,250,240,.85); border: 2px solid #2a2350; border-radius: 8px; padding: 2px 8px; cursor: pointer; }
 .vg-zoom { position: absolute; right: 10px; top: 10px; z-index: 3; display: flex; flex-direction: column; gap: 6px; }
 .vg-zoom button { width: 36px; height: 36px; font: inherit; font-size: 20px; font-weight: 800; line-height: 1; color: #2a2350; background: rgba(255,250,240,.85); border: 2px solid #2a2350; border-radius: 10px; cursor: pointer; }
@@ -147,17 +146,18 @@
     const zoomIn = el("button", "", zoomBox, "+"), zoomOut = el("button", "", zoomBox, "−");
     zoomIn.type = zoomOut.type = "button"; zoomIn.setAttribute("aria-label", "지도 확대"); zoomOut.setAttribute("aria-label", "지도 축소");
     // 하늘빛: 실제 시간에 따라 아침·낮·저녁·밤 (버튼으로 바꿔 볼 수 있다)
+    // 밤 지도: 같은 지도를 밤으로 다시 그린 그림. 시간에 따라 낮 지도 위에 서서히 겹친다
+    const nightMap = el("img", "vg-night", world); nightMap.alt = ""; nightMap.width = W; nightMap.height = H; nightMap.src = base + "map-night.jpg?v=1";
     const sky = el("div", "vg-sky", world);
-    // 밤 불빛: 창문(지도에서 찾은 작은 창)과 길 위 가로등 불빛
-    const lights = el("img", "vg-lights", world); lights.alt = ""; lights.width = W; lights.height = H; lights.src = base + "lights.webp?v=1";
-    const lamps = el("div", "vg-lamps", world);
-    fetch(base + "lamps.json?v=1").then((r) => r.json()).then((pts) => { for (const [x, y] of pts) { const l = el("div", "vg-lamp", lamps); l.style.left = x + "px"; l.style.top = y + "px"; } }).catch(() => {});
+    let nightLevel = 0;
+    const bldgs = []; // 건물 앞그림 (지도를 불러온 뒤 채운다)
     const timeBtn = el("button", "vg-time", chips); timeBtn.type = "button";
     const SKY = {
-      morning: ["🌅 아침", "rgb(255,214,190)", 0.45, 0],
+      // [이름, 덧씌울 색, 색 진하기, 밤 지도 진하기]
+      morning: ["🌅 아침", "rgb(255,214,190)", 0.35, 0.15],
       day: ["☀️ 낮", "rgb(255,255,255)", 0, 0],
-      evening: ["🌇 저녁", "rgb(255,170,120)", 0.6, 0.55],
-      night: ["🌙 밤", "rgb(60,70,140)", 0.62, 1],
+      evening: ["🌇 저녁", "rgb(255,170,120)", 0.45, 0.45],
+      night: ["🌙 밤", "rgb(255,255,255)", 0, 1],
     };
     const ORDER = ["morning", "day", "evening", "night"];
     const timeNow = () => { const h = new Date().getHours(); return h >= 5 && h < 9 ? "morning" : h < 17 ? "day" : h < 19 ? "evening" : "night"; };
@@ -165,7 +165,8 @@
     function paintSky() {
       const t = timeOver || cfg.timeOfDay || timeNow(), [label, color, a, glow] = SKY[t];
       sky.style.backgroundColor = color; sky.style.opacity = String(a);
-      lights.style.opacity = String(glow); lamps.style.opacity = String(glow);
+      nightLevel = glow; nightMap.style.opacity = String(glow);
+      for (const b of bldgs) if (b.night) b.night.style.opacity = String(glow);
       timeBtn.textContent = label;
     }
     paintSky();
@@ -358,13 +359,14 @@
         return Object.assign(cat(BREEDS.includes(f.breed) ? f.breed : "gray", h.x, h.y, f.name, false), { home: h });
       });
       // 건물 앞그림: 고양이가 건물 뒤(위쪽)에 있으면 건물이 고양이를 가린다
-      const bldgs = [];
       fetch(base + "b/list.json?v=1").then((r) => r.json()).then((list) => {
         if (stopped) return;
         for (const b of list) {
           const im = el("img", "vg-bldg", world); im.src = `${base}b/${b.i}.webp?v=1`; im.alt = "";
-          im.style.left = b.x + "px"; im.style.top = b.y + "px"; im.style.width = b.w + "px"; im.style.height = b.h + "px"; im.style.zIndex = String(b.z);
-          bldgs.push({ ...b, el: im });
+          const nim = el("img", "vg-bldg vg-bldg-n", world); nim.src = `${base}b/n${b.i}.webp?v=1`; nim.alt = "";
+          for (const x of [im, nim]) { x.style.left = b.x + "px"; x.style.top = b.y + "px"; x.style.width = b.w + "px"; x.style.height = b.h + "px"; x.style.zIndex = String(b.z); }
+          nim.style.opacity = String(nightLevel);
+          bldgs.push({ ...b, el: im, night: nim });
         }
       }).catch(() => {});
 
@@ -464,6 +466,7 @@
         if (!inCat) for (const b of bldgs) {
           const behind = me.y + 2 < b.z && me.y > b.y && me.x > b.x && me.x < b.x + b.w;
           b.el.style.opacity = behind ? "0.45" : "";
+          if (b.night) b.night.style.opacity = behind ? String(nightLevel * 0.45) : String(nightLevel);
         }
         // 길찾기는 한 프레임에 한 마리만 (휴대폰 부담 줄이기)
         let pathBudget = 1;
