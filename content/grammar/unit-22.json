@@ -231,5 +231,104 @@
       ],
       "why": "has + p.p.(known) + for + 기간"
     }
-  ]
+  ],
+  "homework": {
+    "live": "https://youtu.be/Nb9n0XfMC2w",
+    "sentences": [
+      {
+        "en": "She hasn't seen this movie.",
+        "ko": "그녀는 이 영화를 본 적이 없다."
+      },
+      {
+        "en": "We have visited Europe many times.",
+        "ko": "우리는 유럽에 여러 번 가 본 적이 있다."
+      },
+      {
+        "en": "I haven't tried Indian food. Is it good?",
+        "ko": "나는 인도 음식을 먹어 본 적이 없어. 맛있니?"
+      },
+      {
+        "en": "Tony has met the president before.",
+        "ko": "Tony는 전에 대통령을 만나 본 적이 있다."
+      },
+      {
+        "en": "Mandy hasn't taken art lessons, but she's a good artist.",
+        "ko": "Mandy는 미술 수업을 받아 본 적이 없지만 그림을 잘 그린다."
+      },
+      {
+        "en": "Have you ever stayed up all night?",
+        "ko": "지금까지 밤을 새 본 적이 있나요?"
+      },
+      {
+        "en": "\"Have you ever made cookies?\" \"Yes. How about you?\"",
+        "ko": "\"쿠키 만들어 본 적 있어?\" \"응. 너는?\""
+      },
+      {
+        "en": "I have never owned a pet.",
+        "ko": "나는 애완동물을 가져 본 적이 전혀 없다."
+      },
+      {
+        "en": "Bruce always studies very hard. He's never failed an exam.",
+        "ko": "Bruce는 항상 열심히 공부한다. 그는 시험에 떨어져 본 적이 전혀 없다."
+      },
+      {
+        "en": "Mr. Miller has been to many countries.",
+        "ko": "Miller 씨는 많은 나라에 가 본 적이 있다."
+      },
+      {
+        "en": "I went to the new restaurant yesterday. Have you been there?",
+        "ko": "나 어제 새 식당에 갔어. 너 거기 가 봤어?"
+      }
+    ],
+    "words": [
+      {
+        "en": "Have you ever + p.p.?",
+        "ko": "~해 본 적 있니?"
+      },
+      {
+        "en": "have/has never + p.p.",
+        "ko": "~해 본 적이 전혀 없다"
+      },
+      {
+        "en": "have/has been to",
+        "ko": "~에 가 본 적이 있다"
+      },
+      {
+        "en": "many times",
+        "ko": "여러 번"
+      },
+      {
+        "en": "try - tried - tried",
+        "ko": "먹어 보다, 해 보다"
+      },
+      {
+        "en": "meet - met - met",
+        "ko": "만나다"
+      },
+      {
+        "en": "take lessons",
+        "ko": "수업을 받다"
+      },
+      {
+        "en": "stay up all night",
+        "ko": "밤을 새우다"
+      },
+      {
+        "en": "own",
+        "ko": "소유하다, 가지다"
+      },
+      {
+        "en": "fail an exam",
+        "ko": "시험에 떨어지다"
+      },
+      {
+        "en": "president",
+        "ko": "대통령"
+      },
+      {
+        "en": "restaurant",
+        "ko": "식당"
+      }
+    ]
+  }
 }

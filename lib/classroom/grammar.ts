@@ -68,6 +68,15 @@ export type GrammarQuiz =
 
 export type GrammarBlock = { ko: string; en: string; tokens: string[]; extra: string[] };
 
+/** 라이브 수업 숙제 (노션 '다잉클 기초반 수업자료' 그대로). 라이브 링크만 있는 유닛도 있다 */
+export type GrammarHomework = {
+  live?: string;
+  /** 예문 해석: 영어 문장 → 우리말로 */
+  sentences?: { en: string; ko: string }[];
+  /** 단어 정리 */
+  words?: { en: string; ko: string }[];
+};
+
 type UnitContent = {
   unit: number;
   title: string;
@@ -80,6 +89,7 @@ type UnitContent = {
   quiz: GrammarQuiz[];
   /** 수업 끝나고 블록으로 문장 만들기 (있는 유닛만) */
   blocks?: GrammarBlock[];
+  homework?: GrammarHomework;
 };
 
 export type GrammarUnit = UnitContent & { lecture: string; video: string };

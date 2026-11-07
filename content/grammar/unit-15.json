@@ -232,5 +232,140 @@
       ],
       "why": "watch → watched, laugh → laughed. 두 동사 모두 과거형으로 -ed를 붙여요."
     }
-  ]
+  ],
+  "homework": {
+    "live": "https://youtu.be/iQqRIlSkcss",
+    "sentences": [
+      {
+        "en": "He walked to school yesterday.",
+        "ko": "어제 그는 학교에 걸어갔다."
+      },
+      {
+        "en": "I cleaned the house last Friday.",
+        "ko": "지난 금요일에 집을 청소했다."
+      },
+      {
+        "en": "The soccer game finished at 5 o'clock yesterday.",
+        "ko": "어제 축구 경기는 5시에 끝났다."
+      },
+      {
+        "en": "Vincent van Gogh died in 1890.",
+        "ko": "빈센트 반 고흐는 1890년에 사망했다."
+      },
+      {
+        "en": "We planned our vacation a month ago.",
+        "ko": "우리는 한 달 전에 휴가를 계획했다."
+      },
+      {
+        "en": "Emily had bacon and eggs for breakfast this morning.",
+        "ko": "Emily는 오늘 아침에 베이컨과 달걀을 먹었다."
+      },
+      {
+        "en": "\"I bought a new sofa last week.\" \"It's really nice.\"",
+        "ko": "\"나 지난주에 새 소파를 샀어.\" \"정말 좋다.\""
+      }
+    ],
+    "words": [
+      {
+        "en": "walk",
+        "ko": "걸어가다"
+      },
+      {
+        "en": "school",
+        "ko": "학교"
+      },
+      {
+        "en": "yesterday",
+        "ko": "어제"
+      },
+      {
+        "en": "clean",
+        "ko": "청소하다"
+      },
+      {
+        "en": "house",
+        "ko": "집"
+      },
+      {
+        "en": "last Friday",
+        "ko": "지난 금요일에"
+      },
+      {
+        "en": "soccer",
+        "ko": "축구"
+      },
+      {
+        "en": "game",
+        "ko": "경기"
+      },
+      {
+        "en": "finish",
+        "ko": "끝나다"
+      },
+      {
+        "en": "o'clock",
+        "ko": "~시"
+      },
+      {
+        "en": "die",
+        "ko": "죽다, 사망하다"
+      },
+      {
+        "en": "plan",
+        "ko": "계획하다"
+      },
+      {
+        "en": "vacation",
+        "ko": "휴가"
+      },
+      {
+        "en": "a month ago",
+        "ko": "한 달 전에"
+      },
+      {
+        "en": "have (had)",
+        "ko": "먹다, 가지다"
+      },
+      {
+        "en": "bacon",
+        "ko": "베이컨"
+      },
+      {
+        "en": "egg",
+        "ko": "달걀"
+      },
+      {
+        "en": "breakfast",
+        "ko": "아침 식사"
+      },
+      {
+        "en": "this morning",
+        "ko": "오늘 아침에"
+      },
+      {
+        "en": "buy (bought)",
+        "ko": "사다"
+      },
+      {
+        "en": "new",
+        "ko": "새로운"
+      },
+      {
+        "en": "sofa",
+        "ko": "소파"
+      },
+      {
+        "en": "last week",
+        "ko": "지난주에"
+      },
+      {
+        "en": "really",
+        "ko": "정말"
+      },
+      {
+        "en": "nice",
+        "ko": "좋은"
+      }
+    ]
+  }
 }

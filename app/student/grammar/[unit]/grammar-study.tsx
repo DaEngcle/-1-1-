@@ -6,8 +6,10 @@ import { VideoEmbed } from "@/app/_ui/video-embed";
 import { QuizGame, shuffle, type QuizQuestion } from "@/app/student/voca/quiz-game";
 import { grammarDeck, type GrammarQuiz, type GrammarUnit } from "@/lib/classroom/grammar";
 import { BlockBuilder } from "./block-builder";
+import { GrammarHomework } from "./grammar-homework";
 
 const STEPS = ["📺 강의", "① 개념", "② 예문", "③ 문제"];
+const GRID_COLS: Record<number, string> = { 4: "grid-cols-4", 5: "grid-cols-5", 6: "grid-cols-6" };
 
 /** 문법 문제 → 보카 게임 문제 형식 */
 function toQuestion(q: GrammarQuiz, i: number): QuizQuestion {
@@ -37,17 +39,22 @@ export function GrammarStudy({ unit, nextUnit }: { unit: GrammarUnit; nextUnit: 
   const [showKo, setShowKo] = useState<Record<number, boolean>>({});
   const { play, playingKey } = useTts();
   const hasBlocks = (unit.blocks?.length ?? 0) > 0;
-  const steps = hasBlocks ? [...STEPS, "④ 블록"] : STEPS;
+  const hw = unit.homework;
+  const hasHomework = (hw?.sentences?.length ?? 0) > 0 || (hw?.words?.length ?? 0) > 0;
+  const steps = [...STEPS, ...(hasBlocks ? ["④ 블록"] : []), ...(hasHomework ? ["📝 숙제"] : [])];
+  const blockStep = hasBlocks ? 4 : -1;
+  const homeworkStep = hasHomework ? steps.length - 1 : -1;
+  const compact = steps.length > 4;
 
   return (
     <div className="flex flex-col gap-4">
-      <div className={`grid ${hasBlocks ? "grid-cols-5" : "grid-cols-4"} gap-1 rounded-2xl bg-amber-50 p-1`}>
+      <div className={`grid ${GRID_COLS[steps.length]} gap-1 rounded-2xl bg-amber-50 p-1`}>
         {steps.map((s, i) => (
           <button
             key={s}
             type="button"
             onClick={() => setStep(i)}
-            className={`rounded-xl py-2 ${hasBlocks ? "text-xs" : "text-sm"} font-bold ${step === i ? "bg-white text-amber-700 shadow-sm" : "text-amber-800/60"}`}
+            className={`rounded-xl py-2 ${compact ? "text-xs" : "text-sm"} font-bold ${step === i ? "bg-white text-amber-700 shadow-sm" : "text-amber-800/60"}`}
           >
             {s}
           </button>
@@ -58,6 +65,16 @@ export function GrammarStudy({ unit, nextUnit }: { unit: GrammarUnit; nextUnit: 
         <section className="flex flex-col gap-3">
           <VideoEmbed url={unit.video} title={`Unit ${unit.unit} · ${unit.lecture}`} />
           <p className="text-sm text-zinc-600">다니엘 쌤 강의를 먼저 보고, 개념 → 예문 → 문제로 복습해요.</p>
+          {hw?.live && (
+            <a
+              href={hw.live}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-2xl bg-white p-3 text-sm font-bold text-amber-800 shadow-sm"
+            >
+              🔴 라이브 다시보기 <span className="font-normal text-zinc-500">· 기초반 라이브 수업 녹화</span>
+            </a>
+          )}
           <button
             type="button"
             onClick={() => setStep(1)}
@@ -157,14 +174,26 @@ export function GrammarStudy({ unit, nextUnit }: { unit: GrammarUnit; nextUnit: 
       {step === 3 && hasBlocks && (
         <button
           type="button"
-          onClick={() => setStep(4)}
+          onClick={() => setStep(blockStep)}
           className="rounded-2xl bg-amber-100 py-2.5 text-sm font-bold text-amber-900"
         >
           🧩 문제를 풀었다면, 블록으로 문장 만들기 →
         </button>
       )}
 
-      {step === 4 && unit.blocks && <BlockBuilder unit={unit.unit} blocks={unit.blocks} nextUnit={nextUnit} />}
+      {step === 3 && hasHomework && (
+        <button
+          type="button"
+          onClick={() => setStep(homeworkStep)}
+          className="rounded-2xl bg-amber-100 py-2.5 text-sm font-bold text-amber-900"
+        >
+          📝 라이브 수업 숙제 하기 →
+        </button>
+      )}
+
+      {step === blockStep && unit.blocks && <BlockBuilder unit={unit.unit} blocks={unit.blocks} nextUnit={nextUnit} />}
+
+      {step === homeworkStep && hw && <GrammarHomework homework={hw} />}
 
       {step === 3 && (
         <QuizGame

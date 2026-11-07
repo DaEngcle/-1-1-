@@ -232,5 +232,8 @@
       ],
       "why": "you로 물으면 I로 대답하고, Yes 대답은 I am을 줄이지 않아요."
     }
-  ]
+  ],
+  "homework": {
+    "live": "https://youtu.be/jtLWR0FQMwI"
+  }
 }

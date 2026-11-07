@@ -232,5 +232,88 @@
       ],
       "why": "know의 p.p.는 known, 기간은 for"
     }
-  ]
+  ],
+  "homework": {
+    "live": "https://youtu.be/56Je96LsLXA",
+    "sentences": [
+      {
+        "en": "She has washed the dishes.",
+        "ko": "그녀는 설거지를 했다. (그래서 지금 그릇들이 깨끗하다)"
+      },
+      {
+        "en": "I have lived in LA since 2008.",
+        "ko": "나는 2008년부터 (지금까지) LA에 살고 있다."
+      },
+      {
+        "en": "We haven't been to Egypt before.",
+        "ko": "우리는 전에 이집트에 가 본 적이 없다."
+      },
+      {
+        "en": "Bob has watched that TV show for five years. He never misses it.",
+        "ko": "Bob은 5년 동안 그 TV 프로그램을 봐 왔다. 그는 한 번도 빼먹지 않는다."
+      },
+      {
+        "en": "I have already eaten lunch.",
+        "ko": "나는 이미 점심을 먹었다."
+      },
+      {
+        "en": "Have you ever been to Japan?",
+        "ko": "너 일본에 가 본 적 있니?"
+      },
+      {
+        "en": "He hasn't finished his homework yet.",
+        "ko": "그는 아직 숙제를 끝내지 않았다."
+      },
+      {
+        "en": "We have known each other for ten years.",
+        "ko": "우리는 10년 동안 서로 알고 지내 왔다."
+      }
+    ],
+    "words": [
+      {
+        "en": "have/has + p.p.",
+        "ko": "현재완료 (~했다, ~해 왔다, ~한 적 있다)"
+      },
+      {
+        "en": "wash the dishes",
+        "ko": "설거지하다"
+      },
+      {
+        "en": "since + 시점",
+        "ko": "~부터 (지금까지)"
+      },
+      {
+        "en": "for + 기간",
+        "ko": "~동안"
+      },
+      {
+        "en": "before",
+        "ko": "전에"
+      },
+      {
+        "en": "already",
+        "ko": "이미, 벌써"
+      },
+      {
+        "en": "yet",
+        "ko": "아직 (부정문·의문문)"
+      },
+      {
+        "en": "TV show",
+        "ko": "TV 프로그램"
+      },
+      {
+        "en": "never",
+        "ko": "절대 ~않다"
+      },
+      {
+        "en": "miss",
+        "ko": "놓치다, 빼먹다"
+      },
+      {
+        "en": "I knew it!",
+        "ko": "내 그럴 줄 알았어!"
+      }
+    ]
+  }
 }

@@ -232,5 +232,136 @@
       ],
       "why": "it은 was. 질문은 Was + it + cold 순서."
     }
-  ]
+  ],
+  "homework": {
+    "live": "https://youtu.be/XceGh3wxuiQ",
+    "sentences": [
+      {
+        "en": "I was not good at math in high school.",
+        "ko": "나는 고등학교 때 수학을 잘하지 못했다."
+      },
+      {
+        "en": "My vacation was fun, but it wasn't very long.",
+        "ko": "내 휴가는 즐거웠지만 그리 길지 않았다."
+      },
+      {
+        "en": "Melanie and I weren't friends a year ago. Now we're best friends.",
+        "ko": "Melanie와 나는 1년 전에는 친구가 아니었다. 이제 우리는 가장 친한 친구다."
+      },
+      {
+        "en": "\"You weren't at the office last week.\" \"I was on a business trip.\"",
+        "ko": "\"너 지난주에 사무실에 없었잖아.\" \"출장 중이었어.\""
+      },
+      {
+        "en": "I told you the hotel was nice. Was I right?",
+        "ko": "내가 그 호텔 좋다고 했잖아. 내가 맞았지?"
+      },
+      {
+        "en": "Was Tom at his desk this morning?",
+        "ko": "Tom은 오늘 아침에 책상에 있었나요?"
+      },
+      {
+        "en": "\"Were you busy yesterday?\" \"Not really.\"",
+        "ko": "\"어제 바빴어?\" \"그렇게 바쁘진 않았어.\""
+      },
+      {
+        "en": "\"Were you at the mall last night?\" \"Yes, I was.\"",
+        "ko": "\"어젯밤에 쇼핑몰에 있었어?\" \"응, 있었어.\""
+      },
+      {
+        "en": "\"Was the movie good?\" \"No, it wasn't.\"",
+        "ko": "\"그 영화 좋았어?\" \"아니, 별로였어.\""
+      }
+    ],
+    "words": [
+      {
+        "en": "math",
+        "ko": "수학"
+      },
+      {
+        "en": "high school",
+        "ko": "고등학교"
+      },
+      {
+        "en": "vacation",
+        "ko": "휴가"
+      },
+      {
+        "en": "fun",
+        "ko": "즐거운, 재미있는"
+      },
+      {
+        "en": "long",
+        "ko": "긴"
+      },
+      {
+        "en": "a year ago",
+        "ko": "1년 전에"
+      },
+      {
+        "en": "best friend",
+        "ko": "가장 친한 친구"
+      },
+      {
+        "en": "office",
+        "ko": "사무실"
+      },
+      {
+        "en": "last week",
+        "ko": "지난주에"
+      },
+      {
+        "en": "business trip",
+        "ko": "출장"
+      },
+      {
+        "en": "hotel",
+        "ko": "호텔"
+      },
+      {
+        "en": "nice",
+        "ko": "좋은"
+      },
+      {
+        "en": "right",
+        "ko": "맞는, 옳은"
+      },
+      {
+        "en": "desk",
+        "ko": "책상"
+      },
+      {
+        "en": "this morning",
+        "ko": "오늘 아침에"
+      },
+      {
+        "en": "busy",
+        "ko": "바쁜"
+      },
+      {
+        "en": "yesterday",
+        "ko": "어제"
+      },
+      {
+        "en": "mall",
+        "ko": "쇼핑몰"
+      },
+      {
+        "en": "last night",
+        "ko": "어젯밤에"
+      },
+      {
+        "en": "movie",
+        "ko": "영화"
+      },
+      {
+        "en": "wasn't",
+        "ko": "was not"
+      },
+      {
+        "en": "weren't",
+        "ko": "were not"
+      }
+    ]
+  }
 }

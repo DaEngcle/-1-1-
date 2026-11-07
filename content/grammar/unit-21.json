@@ -232,5 +232,92 @@
       ],
       "why": "가서 지금 여기 없으면 has gone to"
     }
-  ]
+  ],
+  "homework": {
+    "live": "https://youtu.be/cIr32klpio4",
+    "sentences": [
+      {
+        "en": "He has known her for five years.",
+        "ko": "그는 그녀를 5년 동안 알고 지냈다."
+      },
+      {
+        "en": "He has known her since 2008.",
+        "ko": "그는 그녀를 2008년부터 알고 지냈다."
+      },
+      {
+        "en": "I have studied French for three months.",
+        "ko": "나는 3개월 동안 계속 프랑스어를 공부해 왔다."
+      },
+      {
+        "en": "I have studied French since May.",
+        "ko": "나는 5월부터 계속 프랑스어를 공부해 왔다."
+      },
+      {
+        "en": "Lily has lived in England for two years.",
+        "ko": "Lily는 2년 동안 계속 영국에서 살아 왔다."
+      },
+      {
+        "en": "Lily has lived in England since 2011.",
+        "ko": "Lily는 2011년부터 계속 영국에서 살아 왔다."
+      },
+      {
+        "en": "We haven't seen Kathy for a week.",
+        "ko": "우리는 일주일 동안 Kathy를 보지 못했다."
+      },
+      {
+        "en": "We haven't seen Kathy since Thursday.",
+        "ko": "우리는 목요일부터 Kathy를 보지 못했다."
+      },
+      {
+        "en": "\"How long have you been here?\" \"For three weeks.\"",
+        "ko": "\"여기에 온 지 얼마나 되었나요?\" \"3주요.\""
+      },
+      {
+        "en": "\"How long have you had your driver's license?\" \"Since last year.\"",
+        "ko": "\"운전면허를 가진 지 얼마나 됐어요?\" \"작년부터요.\""
+      }
+    ],
+    "words": [
+      {
+        "en": "have/has + p.p. + for + 기간",
+        "ko": "~동안 계속 ~해 왔다"
+      },
+      {
+        "en": "have/has + p.p. + since + 시점",
+        "ko": "~부터 계속 ~해 왔다"
+      },
+      {
+        "en": "How long have you ~?",
+        "ko": "~한 지 얼마나 되었나요?"
+      },
+      {
+        "en": "know - knew - known",
+        "ko": "알다"
+      },
+      {
+        "en": "be - was/were - been",
+        "ko": "~이다, 있다"
+      },
+      {
+        "en": "ago",
+        "ko": "~전에"
+      },
+      {
+        "en": "still",
+        "ko": "여전히, 아직도"
+      },
+      {
+        "en": "driver's license",
+        "ko": "운전면허"
+      },
+      {
+        "en": "be married",
+        "ko": "결혼한 상태이다"
+      },
+      {
+        "en": "lately",
+        "ko": "최근에"
+      }
+    ]
+  }
 }

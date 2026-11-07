@@ -377,5 +377,104 @@
         "is"
       ]
     }
-  ]
+  ],
+  "homework": {
+    "live": "https://youtu.be/Wutd0HmflV4",
+    "sentences": [
+      {
+        "en": "She runs every day. She ran yesterday. She will run tomorrow.",
+        "ko": "그녀는 매일 달린다. 어제 달렸다. 내일 달릴 것이다."
+      },
+      {
+        "en": "I'll be in the office this afternoon.",
+        "ko": "나는 오늘 오후에 사무실에 있을 것이다."
+      },
+      {
+        "en": "\"The baby is sleeping.\" \"OK. I won't make any noise.\"",
+        "ko": "\"아기가 자고 있어.\" \"알겠어. 시끄럽게 하지 않을게.\""
+      },
+      {
+        "en": "\"Will Rob finish the report by tomorrow?\" \"I hope so.\"",
+        "ko": "\"Rob이 내일까지 보고서를 끝낼까?\" \"그러면 좋겠어.\""
+      },
+      {
+        "en": "Sharon will be 18 years old next year.",
+        "ko": "Sharon은 내년에 18살이 될 것이다."
+      },
+      {
+        "en": "\"Will it snow tomorrow?\" \"Maybe.\"",
+        "ko": "\"내일 눈이 올까?\" \"아마도.\""
+      },
+      {
+        "en": "\"I'm worried about the test on Monday.\" \"Don't worry. You'll do fine.\"",
+        "ko": "\"월요일 시험이 걱정돼.\" \"걱정 마. 잘할 거야.\""
+      },
+      {
+        "en": "\"Larry, the music is too loud!\" \"OK, I'll turn down the volume.\"",
+        "ko": "\"Larry, 음악 소리가 너무 커!\" \"알았어, 소리 줄일게.\""
+      },
+      {
+        "en": "I think we're lost. I'll ask for directions.",
+        "ko": "우리 길을 잃은 것 같아. 내가 길을 물어볼게."
+      },
+      {
+        "en": "\"The party for Patty is a surprise.\" \"All right. I won't tell her about it.\"",
+        "ko": "\"Patty 파티는 깜짝 파티야.\" \"알았어. 그녀에게 말하지 않을게.\""
+      }
+    ],
+    "words": [
+      {
+        "en": "will + 동사원형",
+        "ko": "~할 것이다"
+      },
+      {
+        "en": "won't (= will not)",
+        "ko": "~하지 않을 것이다"
+      },
+      {
+        "en": "this afternoon",
+        "ko": "오늘 오후"
+      },
+      {
+        "en": "make noise",
+        "ko": "시끄럽게 하다"
+      },
+      {
+        "en": "finish the report",
+        "ko": "보고서를 끝내다"
+      },
+      {
+        "en": "by tomorrow",
+        "ko": "내일까지"
+      },
+      {
+        "en": "next year",
+        "ko": "내년"
+      },
+      {
+        "en": "be worried about",
+        "ko": "~을 걱정하다"
+      },
+      {
+        "en": "do fine",
+        "ko": "잘하다"
+      },
+      {
+        "en": "turn down the volume",
+        "ko": "소리를 줄이다"
+      },
+      {
+        "en": "ask for directions",
+        "ko": "길을 묻다"
+      },
+      {
+        "en": "be lost",
+        "ko": "길을 잃다"
+      },
+      {
+        "en": "match",
+        "ko": "어울리다"
+      }
+    ]
+  }
 }

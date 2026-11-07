@@ -227,5 +227,108 @@
       ],
       "why": "used to be + 상태, '더 이상'은 anymore"
     }
-  ]
+  ],
+  "homework": {
+    "live": "https://youtu.be/CZi_uxH1LoM",
+    "sentences": [
+      {
+        "en": "He is a golfer now. He used to be a football player.",
+        "ko": "그는 지금 골프 선수다. 그는 (예전에) 미식축구 선수였다."
+      },
+      {
+        "en": "I'm a music teacher, but I used to be a singer.",
+        "ko": "나는 음악 선생님이지만, 예전에는 가수였다."
+      },
+      {
+        "en": "\"Do you know Sandra?\" \"Yes, we used to work together.\"",
+        "ko": "\"너 Sandra 알아?\" \"응, 우리 예전에 같이 일했었어.\""
+      },
+      {
+        "en": "My little sister used to cry a lot, but now she doesn't cry often.",
+        "ko": "내 여동생은 예전에 많이 울었지만, 지금은 자주 울지 않는다."
+      },
+      {
+        "en": "My father used to smoke every day. Now he doesn't smoke anymore.",
+        "ko": "아버지는 예전에 매일 담배를 피우셨다. 지금은 더 이상 피우지 않으신다."
+      },
+      {
+        "en": "I used to live alone, but now I have a roommate.",
+        "ko": "나는 예전에 혼자 살았지만, 지금은 룸메이트가 있다."
+      },
+      {
+        "en": "Cindy used to study French. Now she studies Italian.",
+        "ko": "Cindy는 예전에 프랑스어를 공부했다. 지금은 이탈리아어를 공부한다."
+      },
+      {
+        "en": "I used to believe in Santa Claus, but I don't believe in him anymore.",
+        "ko": "나는 예전에 산타클로스가 있다고 믿었지만, 이제는 더 이상 믿지 않는다."
+      }
+    ],
+    "words": [
+      {
+        "en": "used to + 동사원형",
+        "ko": "(예전에) ~했었다 (지금은 아님)"
+      },
+      {
+        "en": "golfer",
+        "ko": "골프 선수"
+      },
+      {
+        "en": "football player",
+        "ko": "미식축구 선수"
+      },
+      {
+        "en": "music teacher",
+        "ko": "음악 선생님"
+      },
+      {
+        "en": "singer",
+        "ko": "가수"
+      },
+      {
+        "en": "work together",
+        "ko": "함께 일하다"
+      },
+      {
+        "en": "little sister",
+        "ko": "여동생"
+      },
+      {
+        "en": "cry",
+        "ko": "울다"
+      },
+      {
+        "en": "a lot",
+        "ko": "많이"
+      },
+      {
+        "en": "often",
+        "ko": "자주"
+      },
+      {
+        "en": "smoke",
+        "ko": "담배를 피우다"
+      },
+      {
+        "en": "not ~ anymore",
+        "ko": "더 이상 ~않다"
+      },
+      {
+        "en": "alone",
+        "ko": "혼자"
+      },
+      {
+        "en": "roommate",
+        "ko": "룸메이트"
+      },
+      {
+        "en": "French / Italian",
+        "ko": "프랑스어 / 이탈리아어"
+      },
+      {
+        "en": "believe in",
+        "ko": "~의 존재를 믿다"
+      }
+    ]
+  }
 }

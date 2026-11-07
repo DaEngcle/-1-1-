@@ -232,5 +232,103 @@
       ],
       "why": "Is로 물으면 is로 대답해요. Yes, he is."
     }
-  ]
+  ],
+  "homework": {
+    "sentences": [
+      {
+        "en": "He's going to make dinner tonight.",
+        "ko": "그는 오늘 저녁 식사를 준비할 것이다."
+      },
+      {
+        "en": "It's going to be very hot today.",
+        "ko": "오늘은 매우 더울 것이다."
+      },
+      {
+        "en": "Traffic is bad. We're not going to drive.",
+        "ko": "교통이 안 좋다. 우리는 운전하지 않을 것이다."
+      },
+      {
+        "en": "\"Are you going to clean your room?\" \"Yes, but I'm going to wash the dishes first.\"",
+        "ko": "\"방 청소할 거야?\" \"응, 하지만 설거지 먼저 할 거야.\""
+      },
+      {
+        "en": "Susan is going to move to Chicago. She bought a house there.",
+        "ko": "Susan은 시카고로 이사할 것이다. 거기에 집을 샀다."
+      },
+      {
+        "en": "We're not going to eat out tonight. Mom already made dinner at home.",
+        "ko": "우리는 오늘 밤 외식하지 않을 것이다. 엄마가 이미 집에서 저녁을 만드셨다."
+      },
+      {
+        "en": "The sun is going down. It's going to be dark soon.",
+        "ko": "해가 지고 있다. 곧 어두워질 것이다."
+      },
+      {
+        "en": "The bus is leaving! We're going to miss it.",
+        "ko": "버스가 떠나고 있어! 우리 놓치겠다."
+      },
+      {
+        "en": "I'm going to do my homework. Are you going to do your homework?",
+        "ko": "나는 숙제를 할 거야. 너는 숙제 할 거야?"
+      },
+      {
+        "en": "I'm going to hang out with my friends.",
+        "ko": "나는 친구들과 놀 거야."
+      }
+    ],
+    "words": [
+      {
+        "en": "be going to + 동사원형",
+        "ko": "~할 것이다 (= gonna)"
+      },
+      {
+        "en": "traffic",
+        "ko": "교통"
+      },
+      {
+        "en": "wash the dishes",
+        "ko": "설거지하다"
+      },
+      {
+        "en": "first",
+        "ko": "먼저"
+      },
+      {
+        "en": "move to",
+        "ko": "~로 이사하다"
+      },
+      {
+        "en": "eat out",
+        "ko": "외식하다"
+      },
+      {
+        "en": "already",
+        "ko": "이미"
+      },
+      {
+        "en": "go down",
+        "ko": "(해가) 지다"
+      },
+      {
+        "en": "dark",
+        "ko": "어두운"
+      },
+      {
+        "en": "leave",
+        "ko": "떠나다"
+      },
+      {
+        "en": "miss",
+        "ko": "놓치다"
+      },
+      {
+        "en": "hang out with",
+        "ko": "~와 놀다"
+      },
+      {
+        "en": "be afraid of",
+        "ko": "~을 무서워하다"
+      }
+    ]
+  }
 }

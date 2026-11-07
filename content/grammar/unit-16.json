@@ -227,5 +227,120 @@
       ],
       "why": "Did로 물으면 Yes는 did, No는 didn't로 대답"
     }
-  ]
+  ],
+  "homework": {
+    "live": "https://youtu.be/qRBFG-3HoaM",
+    "sentences": [
+      {
+        "en": "I didn't go to work yesterday.",
+        "ko": "어제 회사에 가지 않았다."
+      },
+      {
+        "en": "The bus didn't arrive on time this morning.",
+        "ko": "오늘 아침에 버스가 제시간에 도착하지 않았다."
+      },
+      {
+        "en": "We didn't sleep much last night because of the storm.",
+        "ko": "어젯밤에는 폭풍 때문에 잠을 많이 자지 못했다."
+      },
+      {
+        "en": "\"Did I leave my jacket here?\" \"Yes, here you go.\"",
+        "ko": "\"제가 여기에 재킷을 두고 갔나요?\" \"네, 여기 있어요.\""
+      },
+      {
+        "en": "Did Susie tell you about her wedding?",
+        "ko": "Susie가 결혼식에 대해 얘기했니?"
+      },
+      {
+        "en": "I didn't enjoy the show. Did you like it?",
+        "ko": "나는 그 공연이 재미없었어. 너는 좋았니?"
+      },
+      {
+        "en": "\"Did you take these pictures?\" \"Yes, I did.\"",
+        "ko": "\"네가 이 사진들을 찍었니?\" \"응, 내가 찍었어.\""
+      },
+      {
+        "en": "\"Did Mark get a haircut?\" \"No, he didn't.\"",
+        "ko": "\"Mark 머리 잘랐니?\" \"아니, 안 잘랐어.\""
+      }
+    ],
+    "words": [
+      {
+        "en": "go",
+        "ko": "가다"
+      },
+      {
+        "en": "work",
+        "ko": "회사, 직장"
+      },
+      {
+        "en": "arrive",
+        "ko": "도착하다"
+      },
+      {
+        "en": "on time",
+        "ko": "제시간에"
+      },
+      {
+        "en": "sleep",
+        "ko": "자다"
+      },
+      {
+        "en": "much",
+        "ko": "많이"
+      },
+      {
+        "en": "last night",
+        "ko": "어젯밤에"
+      },
+      {
+        "en": "because of",
+        "ko": "~ 때문에"
+      },
+      {
+        "en": "storm",
+        "ko": "폭풍"
+      },
+      {
+        "en": "leave",
+        "ko": "두고 가다, 떠나다"
+      },
+      {
+        "en": "jacket",
+        "ko": "재킷"
+      },
+      {
+        "en": "here you go",
+        "ko": "여기 있어요"
+      },
+      {
+        "en": "tell",
+        "ko": "말하다, 알려주다"
+      },
+      {
+        "en": "wedding",
+        "ko": "결혼식"
+      },
+      {
+        "en": "enjoy",
+        "ko": "즐기다"
+      },
+      {
+        "en": "show",
+        "ko": "공연, 쇼"
+      },
+      {
+        "en": "like",
+        "ko": "좋아하다"
+      },
+      {
+        "en": "take pictures",
+        "ko": "사진을 찍다"
+      },
+      {
+        "en": "get a haircut",
+        "ko": "머리를 자르다"
+      }
+    ]
+  }
 }

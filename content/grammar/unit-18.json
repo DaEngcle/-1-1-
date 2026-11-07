@@ -228,5 +228,116 @@
       ],
       "why": "Were로 물으면 weren't로 대답"
     }
-  ]
+  ],
+  "homework": {
+    "live": "https://youtu.be/XKFuE1NnU1g",
+    "sentences": [
+      {
+        "en": "\"Did I wake you?\" \"No, I wasn't sleeping.\"",
+        "ko": "\"내가 널 깨웠니?\" \"아니, 자고 있지 않았어.\""
+      },
+      {
+        "en": "Ken wasn't jogging at 8. He was at home.",
+        "ko": "Ken은 8시에 조깅하고 있지 않았다. 그는 집에 있었다."
+      },
+      {
+        "en": "\"Sorry I'm late.\" \"Don't worry. We weren't waiting long.\"",
+        "ko": "\"늦어서 미안해.\" \"괜찮아. 우리 오래 기다리고 있지 않았어.\""
+      },
+      {
+        "en": "Nick and Joe weren't eating. They were still looking at the menu.",
+        "ko": "Nick과 Joe는 먹고 있지 않았다. 그들은 아직 메뉴를 보고 있었다."
+      },
+      {
+        "en": "Was I talking too loudly?",
+        "ko": "내가 너무 크게 말하고 있었니?"
+      },
+      {
+        "en": "\"Was Lou driving?\" \"No. I was driving.\"",
+        "ko": "\"Lou가 운전하고 있었니?\" \"아니. 내가 운전하고 있었어.\""
+      },
+      {
+        "en": "\"Were you working in LA in 2010?\" \"No, I was in Seattle.\"",
+        "ko": "\"너 2010년에 LA에서 일하고 있었니?\" \"아니, 난 시애틀에 있었어.\""
+      },
+      {
+        "en": "Were you and Pete attending a wedding when I called on Sunday?",
+        "ko": "내가 일요일에 전화했을 때 너랑 Pete는 결혼식에 참석하고 있었니?"
+      },
+      {
+        "en": "\"Was Diane washing her car when you saw her?\" \"Yes, she was.\"",
+        "ko": "\"네가 Diane을 봤을 때 그녀는 세차하고 있었니?\" \"응, 그랬어.\""
+      },
+      {
+        "en": "\"Were your roommates watching a football game when you got up?\" \"No, they weren't.\"",
+        "ko": "\"네가 일어났을 때 룸메이트들은 축구 경기를 보고 있었니?\" \"아니, 안 보고 있었어.\""
+      }
+    ],
+    "words": [
+      {
+        "en": "wake",
+        "ko": "깨우다"
+      },
+      {
+        "en": "jog",
+        "ko": "조깅하다"
+      },
+      {
+        "en": "late",
+        "ko": "늦은"
+      },
+      {
+        "en": "wait",
+        "ko": "기다리다"
+      },
+      {
+        "en": "still",
+        "ko": "아직도"
+      },
+      {
+        "en": "menu",
+        "ko": "메뉴"
+      },
+      {
+        "en": "loudly",
+        "ko": "크게, 시끄럽게"
+      },
+      {
+        "en": "drive",
+        "ko": "운전하다"
+      },
+      {
+        "en": "attend",
+        "ko": "참석하다"
+      },
+      {
+        "en": "wedding",
+        "ko": "결혼식"
+      },
+      {
+        "en": "call",
+        "ko": "전화하다"
+      },
+      {
+        "en": "wash",
+        "ko": "씻다"
+      },
+      {
+        "en": "roommate",
+        "ko": "룸메이트"
+      },
+      {
+        "en": "football game",
+        "ko": "축구 경기"
+      },
+      {
+        "en": "get up",
+        "ko": "일어나다"
+      },
+      {
+        "en": "when",
+        "ko": "~할 때"
+      }
+    ]
+  }
 }

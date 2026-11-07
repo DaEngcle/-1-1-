@@ -231,5 +231,108 @@
       ],
       "why": "yesterday와 현재완료는 같이 못 써요. 때를 빼면 has + p.p.(broken)"
     }
-  ]
+  ],
+  "homework": {
+    "live": "https://youtu.be/zHGW-CrnsCo",
+    "sentences": [
+      {
+        "en": "They moved to New York City in 1990.",
+        "ko": "그들은 1990년에 뉴욕시로 이사했다."
+      },
+      {
+        "en": "They have lived in New York City since 1990.",
+        "ko": "그들은 1990년부터 지금까지 뉴욕시에 살고 있다."
+      },
+      {
+        "en": "\"How long have you lived in New York City?\" \"We've lived here since 1990.\"",
+        "ko": "\"뉴욕에 산 지 얼마나 되셨어요?\" \"1990년부터 여기 살았어요.\""
+      },
+      {
+        "en": "Christine went to the beach an hour ago.",
+        "ko": "Christine은 한 시간 전에 해변에 갔다."
+      },
+      {
+        "en": "Christine has gone to the beach.",
+        "ko": "Christine은 해변에 가고 지금 여기 없다."
+      },
+      {
+        "en": "Mike changed his phone number last week.",
+        "ko": "Mike는 지난주에 전화번호를 바꿨다."
+      },
+      {
+        "en": "Mike has changed his phone number.",
+        "ko": "Mike는 전화번호를 바꿔서 지금은 번호가 다르다."
+      },
+      {
+        "en": "My parents have been married for 30 years.",
+        "ko": "우리 부모님은 30년 동안 결혼 생활을 해 오셨다."
+      },
+      {
+        "en": "I miss Jenna. I haven't seen her since last year.",
+        "ko": "Jenna가 보고 싶다. 작년부터 그녀를 못 봤다."
+      },
+      {
+        "en": "I watched a football game last night.",
+        "ko": "나는 어젯밤에 축구 경기를 봤다."
+      },
+      {
+        "en": "Aaron is on vacation. He left for Hawaii two days ago.",
+        "ko": "Aaron은 휴가 중이다. 그는 이틀 전에 하와이로 떠났다."
+      },
+      {
+        "en": "I lost my wallet. / I have lost my wallet.",
+        "ko": "지갑을 잃어버렸다. (과거) / 지갑을 잃어버렸다. (지금도 없음)"
+      }
+    ],
+    "words": [
+      {
+        "en": "move - moved - moved",
+        "ko": "이사하다"
+      },
+      {
+        "en": "change - changed - changed",
+        "ko": "바꾸다"
+      },
+      {
+        "en": "leave - left - left",
+        "ko": "떠나다"
+      },
+      {
+        "en": "lose - lost - lost",
+        "ko": "잃어버리다"
+      },
+      {
+        "en": "be married",
+        "ko": "결혼한 상태이다"
+      },
+      {
+        "en": "miss",
+        "ko": "그리워하다"
+      },
+      {
+        "en": "be on vacation",
+        "ko": "휴가 중이다"
+      },
+      {
+        "en": "an hour ago / two days ago",
+        "ko": "한 시간 전 / 이틀 전"
+      },
+      {
+        "en": "last night / last week",
+        "ko": "어젯밤 / 지난주"
+      },
+      {
+        "en": "since last year",
+        "ko": "작년부터"
+      },
+      {
+        "en": "graduate from",
+        "ko": "~을 졸업하다"
+      },
+      {
+        "en": "invent",
+        "ko": "발명하다"
+      }
+    ]
+  }
 }
