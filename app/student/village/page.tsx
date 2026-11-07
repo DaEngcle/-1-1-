@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { requireStudent } from "@/lib/classroom/dal";
 import { getChuru, listRooms } from "@/lib/classroom/cat-house-data";
+import { maskName } from "@/lib/classroom/engagement";
 import { VillageGame } from "./village-game";
 
 export default async function VillagePage() {
@@ -23,7 +24,12 @@ export default async function VillagePage() {
           </Link>
         </p>
       )}
-      <VillageGame breed={student.catBreed} churu={churu.balance} friends={friends} />
+      <VillageGame
+        breed={student.catBreed}
+        churu={churu.balance}
+        friends={friends}
+        myName={student.nickname ?? maskName(student.name)}
+      />
     </>
   );
 }

@@ -28,9 +28,9 @@
     { id: "hosier", x: 716, y: 400, top: 96, name: "🎨 호시어 레인 카페", desc: "그래피티 골목의 작은 카페. 커피 주문 영어.", room: "cafe", q: ["\"플랫화이트 한 잔 주세요.\"", "Can I grab a flat white, please?"] },
     { id: "bakery", x: 502, y: 399, top: 248, name: "🥐 크루아상 빵집", desc: "주문·포장 영어.", room: "bakery", q: ["\"크루아상 두 개 포장해 주세요.\"", "Can I get two croissants to take away, please?"] },
     { id: "hotel", x: 1004, y: 619, top: 337, name: "🏨 호텔", desc: "체크인·예약 확인 영어.", room: "hotel", q: ["\"오늘 밤 예약했어요. 이름은 다니엘이에요.\"", "Hi, I have a booking for tonight under Daniel."] },
-    { id: "chemist", x: 96, y: 1445, top: 1266, name: "💊 Chemist Warehouse", desc: "처방전·증상 설명 영어.", room: "pharmacy", q: ["\"이 처방전 약 받을 수 있을까요?\"", "Can I get this prescription filled, please?"] },
+    { id: "chemist", x: 110, y: 1075, top: 880, name: "💊 Chemist Warehouse", desc: "처방전·증상 설명 영어.", room: "pharmacy", q: ["\"이 처방전 약 받을 수 있을까요?\"", "Can I get this prescription filled, please?"] },
     { id: "coles", x: 537, y: 1252, top: 1032, name: "🛒 Coles", desc: "물건 위치 묻기 영어.", room: "supermarket", q: ["\"우유 어디 있어요?\"", "Excuse me, where can I find the milk?"] },
-    { id: "woolies", x: 963, y: 1493, top: 1307, name: "🛒 Woolworths", desc: "계산대 영어: 봉투·결제.", room: "supermarket", q: ["\"봉투 하나 주세요.\"", "Can I get a bag, please?"] },
+    { id: "woolies", x: 96, y: 1445, top: 1266, name: "🛒 Woolworths", desc: "계산대 영어: 봉투·결제.", room: "supermarket", q: ["\"봉투 하나 주세요.\"", "Can I get a bag, please?"] },
     { id: "cake", x: 2367, y: 1197, top: 991, name: "🍰 케이크 가게", desc: "케이크 고르기·포장 영어.", room: "cafe", q: ["\"이 케이크 한 조각 포장해 주세요.\"", "Can I get a slice of this cake to go?"] },
     { id: "park", x: 1789, y: 413, top: 151, name: "🌳 공원", desc: "호수 옆 산책 코스. 스몰톡 영어.", q: ["\"오늘 날씨 좋네요.\"", "Lovely day, isn't it?"] },
     { id: "huts", x: 1968, y: 1376, top: 1142, name: "🏖 해변 오두막", desc: "알록달록 오두막. 사진 부탁 영어.", q: ["\"사진 한 장 찍어 주실 수 있어요?\"", "Could you take a photo of us?"] },
@@ -116,6 +116,20 @@
 .vg-in { padding: 12px 14px 14px; display: grid; gap: 8px; }
 .vg-q { font-size: 14px; background: #fff; border: 2px solid #2a2350; border-radius: 10px; padding: 10px 12px; }
 .vg-q button { display: block; margin-top: 6px; padding: 0; border: 0; background: none; font: inherit; font-weight: 800; color: #2a2350; cursor: pointer; text-align: left; }
+.vg-tram { position: absolute; width: 0; height: 0; pointer-events: none; }
+.vg-tram img { position: absolute; left: 0; top: 0; max-width: none; transform: translate(-50%, -55%); pointer-events: none; user-select: none; -webkit-user-drag: none; }
+.vg-tram img[hidden] { display: none; }
+.vg-say { position: absolute; z-index: 100002; max-width: 190px; width: max-content; font-size: 12px; line-height: 1.35; font-weight: 700; color: #2a2350; background: #fff; border: 2px solid #2a2350; border-radius: 10px; padding: 4px 8px; pointer-events: none; transform: translate(-50%, -100%) scale(var(--vg-iz, 1)); transform-origin: 50% 100%; word-break: break-word; }
+.vg-say::after { content: ""; position: absolute; left: 50%; bottom: -7px; margin-left: -6px; border: 6px solid transparent; border-top-color: #2a2350; border-bottom: 0; }
+.vg-say.me { background: #fff0f6; }
+.vg-log { position: absolute; left: 10px; top: 44px; z-index: 2; display: grid; gap: 3px; max-width: min(260px, 60%); pointer-events: none; }
+.vg-log div { font-size: 11px; line-height: 1.35; font-weight: 700; color: #fff; background: rgba(42,35,80,.55); border-radius: 7px; padding: 2px 7px; word-break: break-word; }
+.vg-log b { color: #ffd166; font-weight: 800; }
+.vg-chatbar { position: absolute; left: 10px; right: 10px; bottom: 10px; z-index: 4; display: flex; gap: 6px; padding: 6px; background: rgba(255,250,240,.95); border: 2px solid #2a2350; border-radius: 12px; }
+.vg-chatbar[hidden] { display: none; }
+.vg-chatbar input { flex: 1; min-width: 0; font: inherit; font-size: 16px; color: #2a2350; border: 2px solid #2a2350; border-radius: 8px; padding: 4px 8px; background: #fff; }
+.vg-chatbar button { font: inherit; font-size: 13px; font-weight: 800; color: #2a2350; border: 2px solid #2a2350; border-radius: 8px; padding: 4px 10px; background: #f2b631; cursor: pointer; }
+.vg-chatbar button.x { background: #fff; padding: 4px 8px; }
 @media (prefers-reduced-motion: reduce) { .vg-target.on { animation: none; } }
 `;
 
@@ -141,7 +155,7 @@
     const world = el("div", "vg-world", view);
     world.style.width = W + "px"; world.style.height = H + "px";
     const map = el("img", "vg-map", world);
-    map.src = base + "map.jpg"; map.alt = ""; map.width = W; map.height = H;
+    map.src = base + "map.jpg?v=2"; map.alt = ""; map.width = W; map.height = H;
     const target = el("div", "vg-target", world);
     const chips = el("div", "vg-chips", view);
     if (typeof cfg.churu === "number") el("span", "vg-chip gold", chips, "🐟 츄르 " + cfg.churu);
@@ -152,7 +166,7 @@
     zoomIn.type = zoomOut.type = "button"; zoomIn.setAttribute("aria-label", "지도 확대"); zoomOut.setAttribute("aria-label", "지도 축소");
     // 하늘빛: 실제 시간에 따라 아침·낮·저녁·밤 (버튼으로 바꿔 볼 수 있다)
     // 밤 지도: 같은 지도를 밤으로 다시 그린 그림. 시간에 따라 낮 지도 위에 서서히 겹친다
-    const nightMap = el("img", "vg-night", world); nightMap.alt = ""; nightMap.width = W; nightMap.height = H; nightMap.src = base + "map-night.jpg?v=1";
+    const nightMap = el("img", "vg-night", world); nightMap.alt = ""; nightMap.width = W; nightMap.height = H; nightMap.src = base + "map-night.jpg?v=2";
     const sky = el("div", "vg-sky", world);
     let nightLevel = 0, nowTime = "day";
     const dayOnly = [], nightOnly = []; // 낮에만(낚시) / 저녁·밤에만(불꽃놀이) 보이는 것
@@ -183,6 +197,29 @@
     signal.addEventListener("abort", () => clearInterval(skyTimer));
     timeBtn.addEventListener("pointerdown", (e) => e.stopPropagation(), { signal });
     timeBtn.addEventListener("click", (e) => { e.stopPropagation(); const cur = timeOver || timeNow(); timeOver = ORDER[(ORDER.indexOf(cur) + 1) % ORDER.length]; paintSky(); }, { signal });
+    // 채팅 버튼 · 배경음악 버튼 (시간 버튼 옆)
+    const chatBtn = el("button", "vg-time", chips, "💬 채팅"); chatBtn.type = "button";
+    const musicBtn = el("button", "vg-time", chips); musicBtn.type = "button";
+    const log = el("div", "vg-log", view);
+    const chatBar = el("form", "vg-chatbar", view); chatBar.hidden = true;
+    const chatIn = el("input", "", chatBar); chatIn.maxLength = 80; chatIn.placeholder = "영어로 한마디! (80자)"; chatIn.setAttribute("aria-label", "채팅 입력"); chatIn.enterKeyHint = "send";
+    const chatSend = el("button", "", chatBar, "보내기"); chatSend.type = "submit";
+    const chatX = el("button", "x", chatBar, "✕"); chatX.type = "button"; chatX.setAttribute("aria-label", "채팅 닫기");
+    for (const b of [chatBtn, musicBtn, chatBar]) b.addEventListener("pointerdown", (e) => e.stopPropagation(), { signal });
+    chatBtn.addEventListener("click", (e) => { e.stopPropagation(); chatBar.hidden = !chatBar.hidden; if (!chatBar.hidden) chatIn.focus(); }, { signal });
+    chatX.addEventListener("click", () => { chatBar.hidden = true; }, { signal });
+    // 배경음악: 직접 만든 왈츠. 학생이 켜야 나온다 (켜 둔 사람은 다음에 화면을 누르면 다시 켜짐)
+    const bgm = new Audio(base + "bgm.mp3?v=1"); bgm.loop = true; bgm.volume = 0.35; bgm.preload = "none";
+    let musicOn = false; try { musicOn = localStorage.getItem("vg-bgm") === "1"; } catch {}
+    const paintMusic = () => { musicBtn.textContent = musicOn ? "🔊 음악" : "🔇 음악"; musicBtn.setAttribute("aria-pressed", String(musicOn)); };
+    const playMusic = () => { if (musicOn && !stopped) bgm.play().catch(() => {}); };
+    paintMusic();
+    musicBtn.addEventListener("click", (e) => {
+      e.stopPropagation(); musicOn = !musicOn; paintMusic();
+      try { localStorage.setItem("vg-bgm", musicOn ? "1" : "0"); } catch {}
+      if (musicOn) playMusic(); else bgm.pause();
+    }, { signal });
+    view.addEventListener("pointerdown", () => { if (musicOn && bgm.paused) playMusic(); }, { signal });
     const inside = el("div", "vg-inside", view); inside.hidden = true;
     const stick = el("div", "vg-stick", view), knob = el("div", "vg-knob", stick);
     stick.setAttribute("aria-label", "고양이 움직이기. 끌어서 조종해요. 키보드 방향키도 돼요");
@@ -368,11 +405,11 @@
         return Object.assign(cat(BREEDS.includes(f.breed) ? f.breed : "gray", h.x, h.y, f.name, false), { home: h });
       });
       // 건물 앞그림: 고양이가 건물 뒤(위쪽)에 있으면 건물이 고양이를 가린다
-      fetch(base + "b/list.json?v=1").then((r) => r.json()).then((list) => {
+      fetch(base + "b/list.json?v=2").then((r) => r.json()).then((list) => {
         if (stopped) return;
         for (const b of list) {
-          const im = el("img", "vg-bldg", world); im.src = `${base}b/${b.i}.webp?v=1`; im.alt = "";
-          const nim = el("img", "vg-bldg vg-bldg-n", world); nim.src = `${base}b/n${b.i}.webp?v=1`; nim.alt = "";
+          const im = el("img", "vg-bldg", world); im.src = `${base}b/${b.i}.webp?v=2`; im.alt = "";
+          const nim = el("img", "vg-bldg vg-bldg-n", world); nim.src = `${base}b/n${b.i}.webp?v=2`; nim.alt = "";
           for (const x of [im, nim]) { x.style.left = b.x + "px"; x.style.top = b.y + "px"; x.style.width = b.w + "px"; x.style.height = b.h + "px"; x.style.zIndex = String(b.z); }
           nim.style.opacity = String(nightLevel);
           bldgs.push({ ...b, el: im, night: nim });
@@ -434,6 +471,66 @@
         target.style.left = last.x + "px"; target.style.top = last.y + "px";
         target.classList.remove("on"); void target.offsetWidth; target.classList.add("on");
       }
+
+      // 트램: 왼쪽 아래에서 들어와 역 앞에 잠깐 서고, 성당 옆 선로로 돌아 위로 나간다.
+      // 조금 뒤 타워 뒤에서 다시 나와 루나파크 앞을 돌아 해변 쪽 아래로 빠져나간다 (마을 한 바퀴)
+      const TRAM_LEGS = [
+        [[-220, 1640], [1245, 875, 4], [1478, 755], [1528, 722], [1556, 680], [1558, 640], [1536, 604], [1490, 580], [300, -60]],
+        [[1700, 836], [2040, 1006], [2068, 1030], [2078, 1062], [2062, 1088], [2035, 1098], [900, 1665]],
+      ];
+      const tram = el("div", "vg-tram", world), tImg = {};
+      for (const k of ["a", "b", "an", "bn"]) { const im = el("img", "", tram); im.src = `${base}tram/${k}.webp?v=1`; im.alt = ""; im.hidden = true; tImg[k] = im; }
+      const tramLegs = TRAM_LEGS.map((pts) => pts.slice(1).map((q, i) => { const [x0, y0] = pts[i], [x1, y1] = q; return { x0, y0, x1, y1, len: Math.hypot(x1 - x0, y1 - y0), wait: q[2] || 0 }; }));
+      const tramState = { leg: 0, seg: 0, d: 0, wait: 0, rest: 3, axis: "" };
+      function stepTram(dt) {
+        const t = tramState;
+        if (t.rest > 0) { t.rest -= dt; tram.style.display = "none"; return; }
+        const segs = tramLegs[t.leg];
+        if (t.wait > 0) t.wait -= dt;
+        else {
+          t.d += 38 * dt;
+          while (t.seg < segs.length && t.d >= segs[t.seg].len) {
+            t.d -= segs[t.seg].len; const w = segs[t.seg].wait; t.seg++;
+            if (w) { t.wait = w; t.d = 0; break; }
+          }
+          if (t.seg >= segs.length) {
+            t.leg = (t.leg + 1) % tramLegs.length; t.seg = 0; t.d = 0;
+            t.rest = t.leg ? 6 : 14 + Math.random() * 10; return;
+          }
+        }
+        const g = segs[t.seg], f = g.len ? Math.min(1, t.d / g.len) : 0;
+        const x = g.x0 + (g.x1 - g.x0) * f, y = g.y0 + (g.y1 - g.y0) * f;
+        const axis = (g.x1 - g.x0) * (g.y1 - g.y0) < 0 ? "a" : "b";
+        if (axis !== t.axis) { t.axis = axis; for (const k in tImg) tImg[k].hidden = !k.startsWith(axis); }
+        tImg[axis + "n"].style.opacity = String(nightLevel);
+        tram.style.display = ""; tram.style.left = x + "px"; tram.style.top = y + "px"; tram.style.zIndex = String(Math.round(y) + 30);
+      }
+
+      // 채팅: 보낸 말은 내 고양이 위에 말풍선으로, 다른 학생 말은 화면 왼쪽 위 목록에 (이웃 고양이면 그 고양이 위에도)
+      const bubbles = [];
+      function bubble(c, text, mine) {
+        const old = bubbles.findIndex((b) => b.c === c); if (old >= 0) { bubbles[old].el.remove(); bubbles.splice(old, 1); }
+        const b = el("div", "vg-say" + (mine ? " me" : ""), world, text);
+        bubbles.push({ c, el: b, t: 7 });
+      }
+      const seenMsg = new Set();
+      function say(msg) {
+        if (stopped) return;
+        const key = msg.id || `${msg.at}|${msg.name}|${msg.text}`;
+        if (seenMsg.has(key)) return; seenMsg.add(key);
+        const line = el("div", "", log); el("b", "", line, msg.name + " "); line.append(msg.text);
+        while (log.children.length > 4) log.firstChild.remove();
+        setTimeout(() => line.remove(), 20000);
+        const who = msg.mine ? me : friends.find((f) => f.tag && f.tag.textContent === msg.name);
+        if (who) bubble(who, msg.text, msg.mine);
+      }
+      chatBar.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const text = chatIn.value.replace(/\s+/g, " ").trim().slice(0, 80); if (!text) return;
+        chatIn.value = "";
+        if (cfg.onChat) cfg.onChat(text);
+        else say({ name: cfg.myName || "나", breed: cfg.breed, text, mine: true, at: new Date().toISOString() });
+      }, { signal });
 
       let lastT = performance.now(), inCat = null;
       // 조이스틱·방향키로 직접 움직이기: 막히면 벽을 따라 미끄러진다
@@ -497,6 +594,12 @@
         steer(inCat || me, dt);
         if (inCat) step(inCat, dt); else step(me, dt);
         step(fisher, dt); step(firer, dt);
+        stepTram(dt);
+        for (let i = bubbles.length - 1; i >= 0; i--) {
+          const b = bubbles[i]; b.t -= dt;
+          if (b.t <= 0) { b.el.remove(); bubbles.splice(i, 1); continue; }
+          b.el.style.left = b.c.x + "px"; b.el.style.top = (b.c.y - 50) + "px";
+        }
         for (const f of friends) {
           if (!f.route.length) { f.idleT -= dt; if (f.idleT <= 0) { f.idleT = 2 + Math.random() * 4; const r = 40 + Math.random() * 90, a = Math.random() * Math.PI * 2; goTo(f, f.home.x + Math.cos(a) * r, f.home.y + Math.sin(a) * r * 0.6); } }
           step(f, dt);
@@ -637,10 +740,11 @@
       }
       addEventListener("resize", setZoom, { signal });
       select(PLACES[0], false);
+      if (cfg.onReady) cfg.onReady({ say });
     }
 
     return function stop() {
-      stopped = true; ac.abort(); cancelAnimationFrame(raf);
+      stopped = true; ac.abort(); cancelAnimationFrame(raf); bgm.pause();
       if (cfg.onRoomClose) cfg.onRoomClose();
       if ("speechSynthesis" in window) speechSynthesis.cancel();
       root.replaceChildren();
