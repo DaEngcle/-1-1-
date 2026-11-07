@@ -3,7 +3,7 @@
 (function () {
   const W = 2752, H = 1536, MS = 8; // 지도 크기 · 걷기 지도 한 칸 크기
   const SCALE = 0.36, FRAME = 120, STEP = 7; // 고양이 크기 · 그림 높이 · 그림 한 장당 걷는 거리(px)
-  const META = {"angora-E":[120,12],"angora-S":[108,10],"angora-SE":[100,10],"angora-NE":[96,9],"angora-N":[96,9],"cheese-E":[108,12],"cheese-S":[96,10],"cheese-SE":[92,10],"cheese-NE":[70,9],"cheese-N":[68,9],"fold-E":[110,12],"fold-S":[100,10],"fold-SE":[96,10],"fold-NE":[96,12],"fold-N":[76,9],"gray-E":[104,12],"gray-S":[92,10],"gray-SE":[92,10],"gray-NE":[70,9],"gray-N":[66,9],"ragdoll-E":[124,12],"ragdoll-S":[104,10],"ragdoll-SE":[100,9],"ragdoll-NE":[100,12],"ragdoll-N":[78,7],"russian-E":[104,12],"russian-S":[94,10],"russian-SE":[92,10],"russian-NE":[80,9],"russian-N":[72,7],"siamese-E":[102,12],"siamese-S":[92,10],"siamese-SE":[88,10],"siamese-NE":[72,10],"siamese-N":[80,10],"tuxedo-E":[112,12],"tuxedo-S":[98,10],"tuxedo-SE":[92,10],"tuxedo-NE":[76,9],"tuxedo-N":[86,10],"white-E":[100,12],"white-S":[92,10],"white-SE":[76,10],"white-NE":[92,12],"white-N":[72,9]};
+  const META = {"cheese-E":[108,12],"gray-E":[103,12],"russian-E":[103,12],"fold-E":[110,12],"siamese-E":[102,12],"ragdoll-E":[124,12],"tuxedo-E":[111,12],"white-E":[99,12],"angora-E":[121,12],"cheese-S":[96,10],"gray-S":[93,10],"russian-S":[94,10],"fold-S":[100,10],"siamese-S":[91,10],"ragdoll-S":[104,10],"tuxedo-S":[98,10],"white-S":[92,10],"angora-S":[108,10],"cheese-SE":[92,10],"gray-SE":[92,10],"russian-SE":[92,10],"fold-SE":[97,10],"siamese-SE":[89,10],"ragdoll-SE":[101,9],"tuxedo-SE":[93,10],"white-SE":[77,10],"angora-SE":[100,10],"cheese-NE":[70,9],"gray-NE":[70,9],"russian-NE":[80,9],"fold-NE":[97,12],"siamese-NE":[72,10],"ragdoll-NE":[100,12],"tuxedo-NE":[76,9],"white-NE":[91,12],"angora-NE":[95,9],"cheese-N":[69,9],"gray-N":[66,9],"russian-N":[71,7],"fold-N":[77,9],"siamese-N":[80,10],"ragdoll-N":[78,7],"tuxedo-N":[86,10],"white-N":[72,9],"angora-N":[96,9]};
   // 서 있을 때 쓸 그림: 걷기 그림 중 다리가 가장 모인 장면
   const REST = {"cheese-E":8,"gray-E":9,"russian-E":8,"fold-E":2,"siamese-E":2,"ragdoll-E":2,"tuxedo-E":8,"white-E":8,"angora-E":8,"cheese-S":7,"gray-S":2,"russian-S":2,"fold-S":2,"siamese-S":2,"ragdoll-S":2,"tuxedo-S":2,"white-S":2,"angora-S":2,"cheese-SE":2,"gray-SE":2,"russian-SE":2,"fold-SE":2,"siamese-SE":2,"ragdoll-SE":7,"tuxedo-SE":2,"white-SE":2,"angora-SE":2,"cheese-NE":4,"gray-NE":3,"russian-NE":4,"fold-NE":1,"siamese-NE":3,"ragdoll-NE":1,"tuxedo-NE":2,"white-NE":1,"angora-NE":7,"cheese-N":7,"gray-N":3,"russian-N":4,"fold-N":6,"siamese-N":3,"ragdoll-N":3,"tuxedo-N":1,"white-N":4,"angora-N":1};
   // 그림이 없는 방향을 다른 방향 그림으로 대신할 때 쓴다 (지금 그림은 5방향이 다 있다)
@@ -56,7 +56,7 @@
   ROOMS.hotel = { w: 2400, h: 1340, bg: "#996550", img: "hotel-big.jpg?v=1", mask: "hotel-walk.png?v=1", fg: "hotel-fg", view: 800, scale: 0.8, start: [800, 900], spot: [1100, 760] };
   ROOMS.site = { w: 2400, h: 1340, bg: "#a06c54", img: "site-big.jpg?v=1", mask: "site-walk.png?v=1", fg: "site-fg", view: 800, scale: 0.8, start: [1200, 1060], spot: [1200, 800] };
   // 퀸 빅토리아 마켓: 안쪽 홀(정육·생선·델리) ↔ 바깥 장터(과일·채소 창고). 문으로 오간다. 손님 고양이들이 돌아다닌다
-  ROOMS.qvm = { w: 2400, h: 1340, bg: "#a2877c", img: "qvm-in.jpg?v=1", mask: "qvm-in-walk.png?v=1", fg: "qvm-in-fg", view: 800, scale: 0.8, start: [1300, 1150], spot: [1200, 900], npcs: 9,
+  ROOMS.qvm = { w: 2400, h: 1340, bg: "#a2877c", img: "qvm-in.jpg?v=1", mask: "qvm-in-walk.png?v=2", fg: "qvm-in-fg", view: 800, scale: 0.8, start: [1300, 1150], spot: [1200, 900], npcs: 9,
     portals: [{ x: 1540, y: 580, to: "qvmout", at: [440, 650], label: "🌳 Outdoor sheds →" }] };
   ROOMS.qvmout = { w: 2400, h: 1340, bg: "#77897b", img: "qvm-out.jpg?v=1", mask: "qvm-out-walk.png?v=1", fg: "qvm-out-fg", view: 800, scale: 0.8, start: [300, 560], spot: [600, 700], npcs: 12,
     portals: [{ x: 250, y: 500, to: "qvm", at: [1420, 760], label: "← Indoor halls 🏛" }] };
@@ -366,7 +366,7 @@
         const [w] = META[`${c.breed}-${art}`];
         c.dir = dir; c.art = art; c.flip = flip; c.w = w;
         c.img.style.width = w + "px"; c.img.style.height = FRAME + "px";
-        c.img.style.backgroundImage = `url(${base}c/${c.breed}-${art}.webp?v=6)`;
+        c.img.style.backgroundImage = `url(${base}c/${c.breed}-${art}.webp?v=7)`;
       }
       function draw(c) {
         // 걸은 거리만큼 그림을 넘긴다 (발이 미끄러져 보이지 않게)
