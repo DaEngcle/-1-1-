@@ -28,9 +28,9 @@
     { id: "hosier", x: 716, y: 400, top: 96, name: "🎨 호시어 레인 카페", desc: "그래피티 골목의 작은 카페. 커피 주문 영어.", room: "cafe", q: ["\"플랫화이트 한 잔 주세요.\"", "Can I grab a flat white, please?"] },
     { id: "bakery", x: 502, y: 399, top: 248, name: "🥐 크루아상 빵집", desc: "주문·포장 영어.", room: "bakery", q: ["\"크루아상 두 개 포장해 주세요.\"", "Can I get two croissants to take away, please?"] },
     { id: "hotel", x: 1004, y: 619, top: 337, name: "🏨 호텔", desc: "체크인·예약 확인 영어.", room: "hotel", q: ["\"오늘 밤 예약했어요. 이름은 다니엘이에요.\"", "Hi, I have a booking for tonight under Daniel."] },
-    { id: "chemist", x: 110, y: 1075, top: 880, name: "💊 Chemist Warehouse", desc: "처방전·증상 설명 영어.", room: "pharmacy", q: ["\"이 처방전 약 받을 수 있을까요?\"", "Can I get this prescription filled, please?"] },
-    { id: "coles", x: 537, y: 1252, top: 1032, name: "🛒 Coles", desc: "물건 위치 묻기 영어.", room: "supermarket", q: ["\"우유 어디 있어요?\"", "Excuse me, where can I find the milk?"] },
-    { id: "woolies", x: 96, y: 1445, top: 1266, name: "🛒 Woolworths", desc: "계산대 영어: 봉투·결제.", room: "supermarket", q: ["\"봉투 하나 주세요.\"", "Can I get a bag, please?"] },
+    { id: "chemist", x: 110, y: 1075, top: 880, name: "💊 Chemist Warehouse", desc: "처방전·증상 설명 영어.", room: "chemist", q: ["\"이 처방전 약 받을 수 있을까요?\"", "Can I get this prescription filled, please?"] },
+    { id: "coles", x: 537, y: 1252, top: 1032, name: "🛒 Coles", desc: "물건 위치 묻기 영어.", room: "coles", q: ["\"우유 어디 있어요?\"", "Excuse me, where can I find the milk?"] },
+    { id: "woolies", x: 96, y: 1445, top: 1266, name: "🛒 Woolworths", desc: "계산대 영어: 봉투·결제.", room: "woolies", q: ["\"봉투 하나 주세요.\"", "Can I get a bag, please?"] },
     { id: "cake", x: 2367, y: 1197, top: 991, name: "🍰 케이크 가게", desc: "케이크 고르기·포장 영어.", room: "cafe", q: ["\"이 케이크 한 조각 포장해 주세요.\"", "Can I get a slice of this cake to go?"] },
     { id: "park", x: 1789, y: 413, top: 151, name: "🌳 공원", desc: "호수 옆 산책 코스. 스몰톡 영어.", q: ["\"오늘 날씨 좋네요.\"", "Lovely day, isn't it?"] },
     { id: "huts", x: 1968, y: 1376, top: 1142, name: "🏖 해변 오두막", desc: "알록달록 오두막. 사진 부탁 영어.", q: ["\"사진 한 장 찍어 주실 수 있어요?\"", "Could you take a photo of us?"] },
@@ -47,6 +47,10 @@
     site: { w: 1000, h: 1000, bg: "#6b4128", start: [640,830], spot: [410,540], floor: [[60,640,240,520,300,480,470,500,700,500,950,645,500,915]], block: [[355,600,450,560,560,490,720,590,800,640,800,730,690,730,640,780,580,800,450,740,450,680,365,680],[165,650,250,590,350,690,275,755],[110,670,150,640,180,680,140,695],[320,760,355,720,390,765,355,785],[450,855,495,820,535,860,495,900],[830,650,860,620,895,660,860,675],[705,510,790,470,865,540,800,620]] },
     supermarket: { w: 1000, h: 1000, bg: "#8a6245", start: [510,760], spot: [600,600], floor: [[100,470,330,300,660,480,640,600,730,630,680,660,500,770,320,700]], block: [[150,440,270,400,390,510,270,590],[110,530,165,510,250,600,210,640],[275,620,400,540,485,590,485,640,340,700],[310,330,340,315,585,470,580,580,520,575],[380,240,410,225,650,370,650,470,590,460]] },
   };
+  // 넓은 가게: 그림에서 바닥을 찾아 만든 걷기 지도(mask)를 쓰고, 화면은 고양이를 따라간다
+  ROOMS.coles = { w: 2400, h: 1340, bg: "#9c6853", img: "coles.jpg?v=1", mask: "coles-walk.png?v=1", view: 800, scale: 0.8, start: [1400, 1060], spot: [1280, 920] };
+  ROOMS.woolies = { w: 2400, h: 1340, bg: "#9a6752", img: "woolies.jpg?v=1", mask: "woolies-walk.png?v=1", view: 800, scale: 0.8, start: [900, 900], spot: [1200, 840] };
+  ROOMS.chemist = { w: 2400, h: 1340, bg: "#38241d", img: "chemist.jpg?v=1", mask: "chemist-walk.png?v=1", view: 800, scale: 0.8, start: [1680, 1040], spot: [1400, 940] };
   const INSIDE_SCALE = 0.95; // 내부 그림에서 고양이 크기
   // 마을을 돌아다니는 고양이 (이름 없음)
   const TOWN_CATS = 28;
@@ -100,7 +104,7 @@
 .vg-stage video[hidden] { display: none; }
 .vg-stage img { display: block; max-width: none; width: 100%; height: 100%; user-select: none; -webkit-user-drag: none; pointer-events: none; }
 .vg-sheet { border-top: 3px solid #2a2350; padding: 10px 14px 12px; display: grid; gap: 6px; background: #fffaf0; max-height: 58%; overflow-y: auto; }
-.vg-sheet[hidden], .vg-in[hidden] { display: none; }
+.vg-sheet[hidden], .vg-in[hidden], .vg-row[hidden], .vg-sheet h2[hidden], .vg-sheet p[hidden] { display: none; }
 .vg-sheet .vg-in { padding: 0; }
 .vg-sheet h2, .vg-card h2 { margin: 0; font-size: 15px; font-weight: 800; line-height: 1.3; }
 .vg-sheet p { margin: 0; font-size: 13px; line-height: 1.45; color: #6d6890; }
@@ -322,6 +326,15 @@
       const ROOM_MS = 10;
       function roomNav(r) {
         if (r.nav) return r.nav;
+        if (r.maskImg) {
+          // 걷기 지도 그림 (한 칸 = ROOM_MS px, 밝은 칸 = 바닥)
+          const gw = r.maskImg.naturalWidth, gh = r.maskImg.naturalHeight, cv = document.createElement("canvas");
+          cv.width = gw; cv.height = gh; const cx = cv.getContext("2d"); cx.drawImage(r.maskImg, 0, 0);
+          const px = cx.getImageData(0, 0, gw, gh).data, w = new Uint8Array(gw * gh);
+          for (let i = 0; i < gw * gh; i++) w[i] = px[i * 4] > 127 ? 1 : 0;
+          keepLargest(w, gw, gh);
+          return (r.nav = makeNav(w, gw, gh, ROOM_MS));
+        }
         const gw = Math.ceil(r.w / ROOM_MS), gh = Math.ceil(r.h / ROOM_MS), w = new Uint8Array(gw * gh);
         for (let gy = 0; gy < gh; gy++) for (let gx = 0; gx < gw; gx++) {
           const x = gx * ROOM_MS + ROOM_MS / 2, y = gy * ROOM_MS + ROOM_MS / 2;
@@ -592,7 +605,7 @@
         if (stopped) return;
         const dt = Math.min(0.05, (now - lastT) / 1000); lastT = now;
         steer(inCat || me, dt);
-        if (inCat) step(inCat, dt); else step(me, dt);
+        if (inCat) { step(inCat, dt); if (curRoom && curRoom.view) fitStage(curRoom); } else step(me, dt);
         step(fisher, dt); step(firer, dt);
         stepTram(dt);
         for (let i = bubbles.length - 1; i >= 0; i--) {
@@ -689,9 +702,14 @@
 
       // 내부 맵을 화면에 맞춘다
       function fitStage(r) {
-        const vw = view.clientWidth, vh = view.clientHeight, k = Math.min(vw / r.w, vh / r.h);
+        const vw = view.clientWidth, vh = view.clientHeight;
+        // 큰 가게(r.view)는 화면에 일부만 보이고 고양이를 따라 움직인다
+        const k = Math.max(Math.min(vw / r.w, vh / r.h), r.view ? Math.min(vw, vh) / r.view : 0);
         stage.style.width = r.w + "px"; stage.style.height = r.h + "px";
-        stage.style.transform = `translate(${Math.round((vw - r.w * k) / 2)}px, ${Math.round((vh - r.h * k) / 2)}px) scale(${k})`;
+        const fx = inCat ? inCat.x : r.start[0], fy = inCat ? inCat.y : r.start[1];
+        const tx = r.w * k <= vw ? (vw - r.w * k) / 2 : Math.min(0, Math.max(vw - r.w * k, vw / 2 - fx * k));
+        const ty = r.h * k <= vh ? (vh - r.h * k) / 2 : Math.min(0, Math.max(vh - r.h * k, vh / 2 - fy * k));
+        stage.style.transform = `translate(${Math.round(tx)}px, ${Math.round(ty)}px) scale(${k})`;
         stage.style.setProperty("--vg-iz", String(1 / k));
       }
       let curRoom = null;
@@ -699,7 +717,7 @@
         const r = ROOMS[p.room];
         curRoom = r;
         inside.hidden = false; inside.style.background = r.bg; fab.hidden = true; zoomBox.hidden = true; timeBtn.hidden = true;
-        stageImg.src = `${base}rooms/${p.room}.jpg`; stageImg.alt = p.name + " 안";
+        stageImg.src = `${base}rooms/${r.img || p.room + ".jpg"}`; stageImg.alt = p.name + " 안";
         // 움직이는 가게: 영상이 재생되면 그림 위를 덮는다 (안 되면 그림만 보인다)
         if (r.video && (!reduce || cfg.forceMotion)) {
           stageVideo.src = `${base}rooms/${p.room}.mp4`; stageVideo.hidden = false;
@@ -708,8 +726,17 @@
         for (const n of [sTitle, sDesc, sAct]) n.hidden = true;
         sheet.appendChild(rIn); rImg.hidden = true;
         fitStage(r);
+        if (r.mask && !r.maskImg) {
+          // 걷기 지도를 처음 한 번 불러온 뒤 다시 들어온다
+          const mi = new Image(); mi.onload = () => { r.maskImg = mi; if (curRoom === r && !inCat) { leaveInside = null; enterRoom(p); } }; mi.src = `${base}rooms/${r.mask}`;
+          leaveInside = () => {
+            curRoom = null; leaveInside = null; inside.hidden = true; fab.hidden = false; zoomBox.hidden = false; timeBtn.hidden = false; rIn.remove();
+            for (const n of [sTitle, sDesc, sAct]) n.hidden = false;
+          };
+          return;
+        }
         const nav = roomNav(r), s0 = nav.nearestWalk(r.start[0], r.start[1]);
-        inCat = cat(me.breed, s0.gx * ROOM_MS + 5, s0.gy * ROOM_MS + 5, cfg.myName || "나", true, { parent: stage, scale: INSIDE_SCALE, nav });
+        inCat = cat(me.breed, s0.gx * ROOM_MS + 5, s0.gy * ROOM_MS + 5, cfg.myName || "나", true, { parent: stage, scale: r.scale || INSIDE_SCALE, nav });
         inCat.speed = 130;
         goTo(inCat, r.spot[0], r.spot[1]);
         leaveInside = () => {
@@ -741,6 +768,7 @@
       addEventListener("resize", setZoom, { signal });
       select(PLACES[0], false);
       if (cfg.onReady) cfg.onReady({ say });
+      for (const r of Object.values(ROOMS)) if (r.mask && !r.maskImg) { const mi = new Image(); mi.onload = () => { r.maskImg = mi; }; mi.src = `${base}rooms/${r.mask}`; }
     }
 
     return function stop() {
