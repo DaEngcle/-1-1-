@@ -12,17 +12,17 @@
 
   // x·y: 건물 앞 땅, top: 이름표 아래 끝. link: 들어가면 열리는 앱 화면, q: 가게 안 표현 연습
   const PLACES = [
-    { id: "station", x: 770, y: 1046, top: 730, name: "🚉 Flinders Street Station", desc: "오늘 들을 데일리 강의가 여기서 출발해요.", link: ["/student/lessons", "📺 강의실 들어가기"] },
-    { id: "lib", x: 605, y: 777, top: 468, name: "📚 State Library", desc: "기초 문법을 차근차근 공부하는 곳이에요.", link: ["/student/grammar", "📚 문법 공부하기"] },
-    { id: "paul", x: 1376, y: 777, top: 405, name: "⛪ St Paul's Cathedral", desc: "소리 내어 연습하는 곳. th·r·l·f·v 입모양을 볼 수 있어요.", link: ["/student/pronunciation", "👄 발음 가이드 보기"] },
-    { id: "apt", x: 1376, y: 420, top: 124, name: "🏢 673 La Trobe · Home", desc: "내 고양이가 사는 집. 츄르로 방을 꾸며요.", link: ["/student/cat-house", "🏠 집으로 들어가기"] },
-    { id: "fed", x: 1651, y: 592, top: 372, name: "🔷 Federation Square", desc: "광장 전광판에 오늘의 호주 뉴스가 떠요.", link: ["/student/news", "📰 오늘 뉴스 보기"] },
-    { id: "mcg", x: 2394, y: 571, top: 83, name: "🏟 MCG", desc: "이번 주 리그 순위를 겨루는 경기장이에요.", link: ["/student/league", "🏆 리그 보러 가기"] },
-    { id: "eureka", x: 1748, y: 1087, top: 592, name: "🏙 Eureka Tower", desc: "전망대에서 내 영어 레벨을 내려다봐요.", link: ["/student/level-test", "📈 레벨테스트 보기"] },
-    { id: "arts", x: 1582, y: 1211, top: 880, name: "🎭 Arts Centre", desc: "배우처럼 따라 말한 내 쉐도잉 기록이 있어요.", link: ["/student/shadowing", "🎤 내 쉐도잉 보기"] },
-    { id: "luna", x: 2180, y: 1101, top: 690, name: "🎡 Luna Park", desc: "게임으로 단어를 익히는 놀이공원이에요.", link: ["/student/voca", "🎮 보카 게임 하기"] },
-    { id: "sx", x: 206, y: 977, top: 688, name: "🚆 Southern Cross Station", desc: "출국 준비 자료와 교재를 챙기는 곳이에요.", link: ["/student/resources", "🎁 자료실 열기"] },
-    { id: "site", x: 248, y: 1321, top: 977, name: "🏗 Construction Site", desc: "스모코 타임! 현장 영어를 연습하고, 면접도 볼 수 있어요.", room: "site", q: ["\"오늘 안전 장비 어디서 받아요?\"", "Where do I pick up my PPE today?"], link: ["/student/talk", "🎭 AI 면접 보러 가기"] },
+    { id: "station", x: 770, y: 1046, top: 730, name: "🚉 Flinders Street Station", desc: "오늘 들을 데일리 강의가 여기서 출발해요.", link: ["/student/lessons", "📺 Lessons"] },
+    { id: "lib", x: 605, y: 777, top: 468, name: "📚 State Library", desc: "기초 문법을 차근차근 공부하는 곳이에요.", link: ["/student/grammar", "📚 Grammar"] },
+    { id: "paul", x: 1376, y: 777, top: 405, name: "⛪ St Paul's Cathedral", desc: "소리 내어 연습하는 곳. th·r·l·f·v 입모양을 볼 수 있어요.", link: ["/student/pronunciation", "👄 Pronunciation"] },
+    { id: "apt", x: 1376, y: 420, top: 124, name: "🏢 673 La Trobe · Home", desc: "내 고양이가 사는 집. 츄르로 방을 꾸며요.", link: ["/student/cat-house", "🏠 My room"] },
+    { id: "fed", x: 1651, y: 592, top: 372, name: "🔷 Federation Square", desc: "광장 전광판에 오늘의 호주 뉴스가 떠요.", link: ["/student/news", "📰 Today's news"] },
+    { id: "mcg", x: 2394, y: 571, top: 83, name: "🏟 MCG", desc: "이번 주 리그 순위를 겨루는 경기장이에요.", link: ["/student/league", "🏆 League"] },
+    { id: "eureka", x: 1748, y: 1087, top: 592, name: "🏙 Eureka Tower", desc: "전망대에서 내 영어 레벨을 내려다봐요.", link: ["/student/level-test", "📈 Level test"] },
+    { id: "arts", x: 1582, y: 1211, top: 880, name: "🎭 Arts Centre", desc: "배우처럼 따라 말한 내 쉐도잉 기록이 있어요.", link: ["/student/shadowing", "🎤 My shadowing"] },
+    { id: "luna", x: 2180, y: 1101, top: 690, name: "🎡 Luna Park", desc: "게임으로 단어를 익히는 놀이공원이에요.", link: ["/student/voca", "🎮 Voca game"] },
+    { id: "sx", x: 206, y: 977, top: 688, name: "🚆 Southern Cross Station", desc: "출국 준비 자료와 교재를 챙기는 곳이에요.", link: ["/student/resources", "🎁 Resources"] },
+    { id: "site", x: 248, y: 1321, top: 977, name: "🏗 Construction Site", desc: "스모코 타임! 현장 영어를 연습하고, 면접도 볼 수 있어요.", room: "site", q: ["\"오늘 안전 장비 어디서 받아요?\"", "Where do I pick up my PPE today?"], link: ["/student/talk", "🎭 AI interview"] },
     { id: "qvm", x: 248, y: 261, top: 14, name: "🛒 Queen Victoria Market", desc: "장보기 영어: 가격 묻기, 몇 개 사기.", room: "qvm", q: ["\"사과 1킬로에 얼마예요?\"", "How much for a kilo of apples?"] },
     { id: "china", x: 413, y: 619, top: 413, name: "🏮 Chinatown", desc: "주방·서빙·예약 영어.", room: "restaurant", q: ["\"두 명 자리 있어요?\"", "Have you got a table for two?"] },
     { id: "hosier", x: 716, y: 400, top: 96, name: "🎨 Hosier Lane Café", desc: "그래피티 골목의 작은 카페. 커피 주문 영어.", room: "cafe", q: ["\"플랫화이트 한 잔 주세요.\"", "Can I grab a flat white, please?"] },
@@ -146,6 +146,21 @@
 .vg-chatbar input { flex: 1; min-width: 0; font: inherit; font-size: 16px; color: #2a2350; border: 2px solid #2a2350; border-radius: 8px; padding: 4px 8px; background: #fff; }
 .vg-chatbar button { font: inherit; font-size: 13px; font-weight: 800; color: #2a2350; border: 2px solid #2a2350; border-radius: 8px; padding: 4px 10px; background: #f2b631; cursor: pointer; }
 .vg-chatbar button.x { background: #fff; padding: 4px 8px; }
+/* 미니멀: 버튼은 작고 반투명하게 */
+.vg-full .vg-chips { left: 52px; top: 10px; gap: 5px; }
+.vg-chips { right: 50px; }
+.vg-chip, .vg-time { font-size: 11px; font-weight: 700; padding: 3px 8px; border: 0; border-radius: 999px; background: rgba(255,255,255,.78); color: #2a2350; box-shadow: 0 1px 3px rgba(42,35,80,.18); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+.vg-chip.gold { background: rgba(242,182,49,.92); }
+.vg-zoom { gap: 5px; }
+.vg-zoom button { width: 32px; height: 32px; font-size: 18px; border: 0; border-radius: 999px; background: rgba(255,255,255,.78); box-shadow: 0 1px 3px rgba(42,35,80,.18); }
+.vg-fab { font-size: 12px; padding: 6px 11px; border: 0; border-radius: 999px; background: rgba(108,92,255,.9); box-shadow: 0 2px 6px rgba(42,35,80,.25); }
+.vg-sheet { border-top: 0; border-radius: 18px 18px 0 0; padding: 10px 14px 12px; gap: 5px; box-shadow: 0 -4px 14px rgba(42,35,80,.12); }
+.vg-sheet h2 { font-size: 14px; }
+.vg-sheet p { font-size: 12px; }
+.vg-btn { font-size: 12px; padding: 6px 12px; border: 0; border-radius: 999px; box-shadow: none; background: #f1eef9; }
+.vg-btn.go { background: #f2b631; }
+.vg-btn.tram { background: #1f8a4c; color: #fff; }
+.vg-pin { font-size: 11px; padding: 2px 7px; border-width: 1.5px; border-radius: 999px; box-shadow: 0 2px 0 #2a2350; }
 @media (prefers-reduced-motion: reduce) { .vg-target.on { animation: none; } }
 `;
 

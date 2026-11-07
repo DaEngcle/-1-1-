@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { SpeakPractice } from "./speak-practice";
 import { sendVillageChatAction } from "./actions";
@@ -35,7 +36,7 @@ declare global {
   }
 }
 
-const SCRIPT_SRC = "/village/village.js?v=29";
+const SCRIPT_SRC = "/village/village.js?v=30";
 
 function loadScript() {
   return new Promise<void>((resolve, reject) => {
@@ -68,6 +69,14 @@ export function VillageGame({
   const [speak, setSpeak] = useState<{ slot: HTMLElement; text: string } | null>(null);
   // 서버가 다시 그려도 게임을 처음부터 다시 시작하지 않게 첫 값만 쓴다
   const first = useRef({ breed, churu, friends, myName });
+
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, []);
 
   useEffect(() => {
     let stop: (() => void) | undefined;
@@ -137,7 +146,17 @@ export function VillageGame({
   }
   return (
     <>
-      <div ref={ref} className="h-[calc(100dvh-230px)] min-h-[420px] overflow-hidden rounded-2xl border-[3px] border-[#2a2350] sm:h-[calc(100dvh-210px)]" />
+      {/* 전체 화면: 위 메뉴·아래 탭을 덮고, 왼쪽 위 ← 로 고양이 집으로 돌아간다 */}
+      <div className="fixed inset-0 z-[90] bg-[#bfe3f7] pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)]">
+        <div ref={ref} className="vg-full h-full overflow-hidden" />
+        <Link
+          href="/student/cat-house"
+          aria-label="고양이 집으로 나가기"
+          className="absolute left-2.5 top-[calc(env(safe-area-inset-top)+10px)] z-[95] grid h-8 w-8 place-items-center rounded-full bg-white/80 text-base font-bold text-[#2a2350] shadow-sm backdrop-blur"
+        >
+          ←
+        </Link>
+      </div>
       {speak && createPortal(<SpeakPractice key={speak.text} text={speak.text} />, speak.slot)}
     </>
   );

@@ -13,9 +13,6 @@ export default async function VillagePage() {
   return (
     <>
       <h1 className="sr-only">멜번 고양이 마을</h1>
-      <Link href="/student/cat-house" className="text-sm text-zinc-600 underline">
-        ← 고양이 집
-      </Link>
       {!student.catBreed && (
         <p className="rounded-2xl bg-amber-50 p-3 text-sm text-amber-800">
           아직 내 고양이를 안 골랐어요. 지금은 치즈냥이가 대신 걸어요.{" "}
