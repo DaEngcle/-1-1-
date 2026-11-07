@@ -133,7 +133,7 @@
 .vg-q { font-size: 14px; background: #fff; border: 2px solid #2a2350; border-radius: 10px; padding: 10px 12px; }
 .vg-q button { display: block; margin-top: 6px; padding: 0; border: 0; background: none; font: inherit; font-weight: 800; color: #2a2350; cursor: pointer; text-align: left; }
 .vg-tram { position: absolute; width: 0; height: 0; pointer-events: none; }
-.vg-tram img { position: absolute; left: 0; top: 0; max-width: none; transform: translate(-50%, -55%); pointer-events: none; user-select: none; -webkit-user-drag: none; filter: drop-shadow(3px 7px 3px rgba(30,25,60,.38)); }
+.vg-tram img { position: absolute; left: 0; top: 0; max-width: none; transform: translate(-50%, -72%); pointer-events: none; user-select: none; -webkit-user-drag: none; filter: drop-shadow(3px 7px 3px rgba(30,25,60,.38)); }
 .vg-tram img[hidden] { display: none; }
 .vg-say { position: absolute; z-index: 100002; max-width: 190px; width: max-content; font-size: 12px; line-height: 1.35; font-weight: 700; color: #2a2350; background: #fff; border: 2px solid #2a2350; border-radius: 10px; padding: 4px 8px; pointer-events: none; transform: translate(-50%, -100%) scale(var(--vg-iz, 1)); transform-origin: 50% 100%; word-break: break-word; }
 .vg-say::after { content: ""; position: absolute; left: 50%; bottom: -7px; margin-left: -6px; border: 6px solid transparent; border-top-color: #2a2350; border-bottom: 0; }
@@ -524,40 +524,64 @@
       // 트램: 왼쪽 아래에서 들어와 역 앞에 잠깐 서고, 성당 옆 선로로 돌아 성당 뒤로 사라진다.
       // 조금 뒤 타워 뒤에서 다시 나와 루나파크 앞을 돌아 해변 쪽 아래로 빠져나간다 (마을 한 바퀴)
       const TRAM_LEGS = [
-        [[-220, 1640], [1245, 875, 4], [1478, 755], [1528, 722], [1556, 680], [1558, 640], [1536, 604], [1470, 572]],
-        [[1700, 836], [2040, 1006], [2068, 1030], [2078, 1062], [2062, 1088], [2035, 1098], [900, 1665]],
+        // 선로 가운데를 따라 (지도에 그려진 선로를 따라 잡은 점)
+        [[-220, 1688], [1150, 958, 4], [1250, 905], [1400, 825], [1500, 770], [1560, 730], [1590, 685], [1585, 635], [1560, 590], [1530, 550], [1495, 515]],
+        [[1700, 840], [1850, 930], [1950, 980], [2035, 1030], [2065, 1070], [2065, 1105], [2025, 1140], [1950, 1180], [1850, 1230], [1750, 1275], [1650, 1320], [900, 1660]],
       ];
       const tram = el("div", "vg-tram", world), tImg = {};
       for (const k of ["a", "b", "an", "bn"]) { const im = el("img", "", tram); im.src = `${base}tram/${k}.webp?v=1`; im.alt = ""; im.hidden = true; tImg[k] = im; }
-      const tramLegs = TRAM_LEGS.map((pts) => pts.slice(1).map((q, i) => { const [x0, y0] = pts[i], [x1, y1] = q; return { x0, y0, x1, y1, len: Math.hypot(x1 - x0, y1 - y0), wait: q[2] || 0 }; }));
-      const legLen = tramLegs.map((segs) => segs.reduce((a, g) => a + g.len, 0));
-      const tramState = { leg: 0, seg: 0, d: 0, wait: 0, rest: 3, axis: "" };
+      // 꺾이는 곳을 둥글게 다듬은 촘촘한 길 (Chaikin), 멈추는 곳(역)은 거리로 기억
+      function smoothLeg(pts) {
+        let P = pts.map((q) => [q[0], q[1]]);
+        for (let it = 0; it < 4; it++) {
+          const Q = [P[0]];
+          for (let i = 0; i < P.length - 1; i++) { const [x0, y0] = P[i], [x1, y1] = P[i + 1]; Q.push([x0 * 0.75 + x1 * 0.25, y0 * 0.75 + y1 * 0.25], [x0 * 0.25 + x1 * 0.75, y0 * 0.25 + y1 * 0.75]); }
+          Q.push(P[P.length - 1]); P = Q;
+        }
+        const S = [{ x: P[0][0], y: P[0][1], d: 0 }];
+        for (let i = 1; i < P.length; i++) { const l = S[S.length - 1]; S.push({ x: P[i][0], y: P[i][1], d: l.d + Math.hypot(P[i][0] - l.x, P[i][1] - l.y) }); }
+        const len = S[S.length - 1].d;
+        const stops = [{ d: 0, wait: 0 }];
+        for (const q of pts) if (q[2]) { let best = 0, bd = 1e9; for (const s of S) { const dd = Math.hypot(s.x - q[0], s.y - q[1]); if (dd < bd) { bd = dd; best = s.d; } } stops.push({ d: best, wait: q[2] }); }
+        stops.push({ d: len, wait: 0 });
+        return { S, len, stops };
+      }
+      const tramLegs = TRAM_LEGS.map(smoothLeg);
+      function at(L, d) {
+        const S = L.S; d = Math.max(0, Math.min(L.len, d));
+        let lo = 0, hi = S.length - 1;
+        while (hi - lo > 1) { const m = (lo + hi) >> 1; if (S[m].d <= d) lo = m; else hi = m; }
+        const f = (d - S[lo].d) / Math.max(1e-6, S[hi].d - S[lo].d);
+        return { x: S[lo].x + (S[hi].x - S[lo].x) * f, y: S[lo].y + (S[hi].y - S[lo].y) * f };
+      }
+      const tramState = { leg: 0, d: 0, wait: 0, rest: 3, stop: 1, waited: false };
+      for (const k in tImg) tImg[k].hidden = false;
       function stepTram(dt) {
         const t = tramState;
         if (t.rest > 0) { t.rest -= dt; tram.style.display = "none"; return; }
-        const segs = tramLegs[t.leg];
+        const L = tramLegs[t.leg];
+        const next = L.stops[t.stop], prev = L.stops[t.stop - 1];
         if (t.wait > 0) t.wait -= dt;
         else {
-          t.d += 38 * dt;
-          while (t.seg < segs.length && t.d >= segs[t.seg].len) {
-            t.d -= segs[t.seg].len; const w = segs[t.seg].wait; t.seg++;
-            if (w) { t.wait = w; t.d = 0; break; }
-          }
-          if (t.seg >= segs.length) {
-            t.leg = (t.leg + 1) % tramLegs.length; t.seg = 0; t.d = 0;
-            t.rest = t.leg ? 6 : 14 + Math.random() * 10; return;
+          // 출발할 때 천천히 빨라지고, 역·끝에 다가가면 천천히 느려진다
+          const v = 40 * Math.min(1, Math.max(0.18, Math.sqrt((t.d - prev.d) / 120)), Math.max(0.12, Math.sqrt((next.d - t.d) / 140)));
+          t.d += v * dt;
+          if (t.d >= next.d) {
+            t.d = next.d;
+            if (t.stop < L.stops.length - 1) { t.wait = next.wait; t.stop++; }
+            else { t.leg = (t.leg + 1) % tramLegs.length; t.d = 0; t.stop = 1; t.rest = t.leg ? 6 : 14 + Math.random() * 10; return; }
           }
         }
-        const g = segs[t.seg], f = g.len ? Math.min(1, t.d / g.len) : 0;
-        const x = g.x0 + (g.x1 - g.x0) * f, y = g.y0 + (g.y1 - g.y0) * f;
-        const axis = (g.x1 - g.x0) * (g.y1 - g.y0) < 0 ? "a" : "b";
-        if (axis !== t.axis) { t.axis = axis; for (const k in tImg) tImg[k].hidden = !k.startsWith(axis); }
-        tImg[axis + "n"].style.opacity = String(nightLevel);
-        // 들어올 때·나갈 때 서서히 나타나고 사라진다 (건물 뒤로 들어가는 느낌), 바퀴 덜컹임
-        let done = t.d; for (let i = 0; i < t.seg; i++) done += segs[i].len;
-        tram.style.opacity = String(Math.max(0, Math.min(1, done / 70, (legLen[t.leg] - done) / 90)));
-        const rumble = t.wait > 0 ? 0 : Math.sin(performance.now() / 45) * 0.7;
-        tram.style.display = ""; tram.style.left = x + "px"; tram.style.top = (y + rumble) + "px"; tram.style.zIndex = String(Math.round(y) + 30);
+        const p = at(L, t.d), p0 = at(L, t.d - 45), p1 = at(L, t.d + 45);
+        // 진행 방향에 따라 두 그림(／, ＼)을 서서히 바꿔 그린다
+        const tx = p1.x - p0.x, ty = p1.y - p0.y, n2 = tx * tx + ty * ty || 1;
+        const wa = Math.max(0, Math.min(1, 0.5 - (tx * ty / n2) * 4)), wb = 1 - wa;
+        const vis = Math.max(0, Math.min(1, t.d / 70, (L.len - t.d) / 90));
+        tImg.a.style.opacity = String(wa); tImg.b.style.opacity = String(wb);
+        tImg.an.style.opacity = String(wa * nightLevel); tImg.bn.style.opacity = String(wb * nightLevel);
+        tram.style.opacity = String(vis);
+        const rumble = t.wait > 0 ? 0 : Math.sin(performance.now() / 160) * 0.35;
+        tram.style.display = ""; tram.style.left = p.x + "px"; tram.style.top = (p.y + rumble) + "px"; tram.style.zIndex = String(Math.round(p.y) + 30);
       }
 
       // 채팅: 보낸 말은 내 고양이 위에 말풍선으로, 다른 학생 말은 화면 왼쪽 위 목록에 (이웃 고양이면 그 고양이 위에도)
