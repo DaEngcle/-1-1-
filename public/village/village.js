@@ -81,6 +81,11 @@
 .vg-sky { position: absolute; inset: 0; z-index: 99990; pointer-events: none; mix-blend-mode: multiply; transition: background-color 2s, opacity 2s; }
 .vg-night { position: absolute; left: 0; top: 0; z-index: 0; max-width: none; pointer-events: none; opacity: 0; transition: opacity 2.5s; }
 .vg-bldg-n { opacity: 0; transition: opacity 2.5s; }
+.vg-fx { position: absolute; inset: 0; z-index: 99993; pointer-events: none; }
+.vg-spark { position: absolute; width: 5px; height: 5px; margin: -2.5px 0 0 -2.5px; border-radius: 50%; }
+.vg-rod { position: absolute; pointer-events: none; overflow: visible; }
+.vg-float { animation: vg-float 1.8s ease-in-out infinite; }
+@keyframes vg-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(3px); } }
 .vg-time { pointer-events: auto; font: inherit; font-size: 12px; font-weight: 700; color: #2a2350; background: rgba(255,250,240,.85); border: 2px solid #2a2350; border-radius: 8px; padding: 2px 8px; cursor: pointer; }
 .vg-zoom { position: absolute; right: 10px; top: 10px; z-index: 3; display: flex; flex-direction: column; gap: 6px; }
 .vg-zoom button { width: 36px; height: 36px; font: inherit; font-size: 20px; font-weight: 800; line-height: 1; color: #2a2350; background: rgba(255,250,240,.85); border: 2px solid #2a2350; border-radius: 10px; cursor: pointer; }
@@ -149,7 +154,8 @@
     // 밤 지도: 같은 지도를 밤으로 다시 그린 그림. 시간에 따라 낮 지도 위에 서서히 겹친다
     const nightMap = el("img", "vg-night", world); nightMap.alt = ""; nightMap.width = W; nightMap.height = H; nightMap.src = base + "map-night.jpg?v=1";
     const sky = el("div", "vg-sky", world);
-    let nightLevel = 0;
+    let nightLevel = 0, nowTime = "day";
+    const dayOnly = [], nightOnly = []; // 낮에만(낚시) / 저녁·밤에만(불꽃놀이) 보이는 것
     const bldgs = []; // 건물 앞그림 (지도를 불러온 뒤 채운다)
     const timeBtn = el("button", "vg-time", chips); timeBtn.type = "button";
     const SKY = {
@@ -165,7 +171,10 @@
     function paintSky() {
       const t = timeOver || cfg.timeOfDay || timeNow(), [label, color, a, glow] = SKY[t];
       sky.style.backgroundColor = color; sky.style.opacity = String(a);
-      nightLevel = glow; nightMap.style.opacity = String(glow);
+      nightLevel = glow; nightMap.style.opacity = String(glow); nowTime = t;
+      const dark = t === "evening" || t === "night";
+      for (const e of dayOnly) e.style.display = dark ? "none" : "";
+      for (const e of nightOnly) e.style.display = dark ? "" : "none";
       for (const b of bldgs) if (b.night) b.night.style.opacity = String(glow);
       timeBtn.textContent = label;
     }
@@ -370,6 +379,35 @@
         }
       }).catch(() => {});
 
+      // 부두 끝에서 낚시하는 고양이 (아침·낮)
+      const fisher = cat("tuxedo", 2638, 1336, "", false); setDir(fisher, "E", 1);
+      const rod = document.createElementNS("http://www.w3.org/2000/svg", "svg"); rod.setAttribute("class", "vg-rod");
+      rod.setAttribute("width", "130"); rod.setAttribute("height", "150"); rod.style.left = "2630px"; rod.style.top = "1280px"; rod.style.zIndex = "1400";
+      rod.innerHTML = '<line x1="14" y1="34" x2="70" y2="4" stroke="#5b3a1e" stroke-width="2.5" stroke-linecap="round"/><path d="M70 4 Q96 40 92 118" fill="none" stroke="#f8f4e8" stroke-width="0.9"/><g class="vg-float"><circle cx="92" cy="120" r="4" fill="#e3342f" stroke="#2a2350" stroke-width="1"/><rect x="88" y="120" width="8" height="3" fill="#fff"/></g>';
+      world.appendChild(rod);
+      dayOnly.push(fisher.root, rod);
+      // 해변에서 불꽃놀이하는 고양이 (저녁·밤)
+      const firer = cat("cheese", 2318, 1262, "", false);
+      const fx = el("div", "vg-fx", world);
+      nightOnly.push(firer.root, fx);
+      const COLORS = ["#ffd166", "#ff6b9a", "#7bdff2", "#b9fbc0", "#f15bb5", "#fee440", "#ffffff"];
+      function firework() {
+        if (stopped || (reduce && !cfg.forceMotion) || (nowTime !== "evening" && nowTime !== "night")) return;
+        const sx = 2330, sy = 1238, ex = 2440 + Math.random() * 260, ey = 1070 + Math.random() * 140, col = COLORS[(Math.random() * COLORS.length) | 0];
+        const rocket = el("div", "vg-spark", fx); rocket.style.background = "#fff3c4"; rocket.style.left = sx + "px"; rocket.style.top = sy + "px";
+        rocket.animate([{ transform: "translate(0,0)", opacity: 1 }, { transform: `translate(${ex - sx}px,${ey - sy}px)`, opacity: 0.9 }], { duration: 750, easing: "ease-out" }).onfinish = () => {
+          rocket.remove();
+          for (let i = 0; i < 26; i++) {
+            const a = (i / 26) * Math.PI * 2, r = 65 + Math.random() * 45, p = el("div", "vg-spark", fx);
+            p.style.background = Math.random() < 0.25 ? "#ffffff" : col; p.style.boxShadow = `0 0 6px ${col}`; p.style.left = ex + "px"; p.style.top = ey + "px";
+            p.animate([{ transform: "translate(0,0) scale(1)", opacity: 1 }, { transform: `translate(${Math.cos(a) * r}px,${Math.sin(a) * r + 18}px) scale(.4)`, opacity: 0 }], { duration: 1300 + Math.random() * 400, easing: "cubic-bezier(.2,.7,.4,1)" }).onfinish = () => p.remove();
+          }
+        };
+      }
+      const fwTimer = setInterval(() => { if (Math.random() < 0.8) firework(); }, 1600);
+      signal.addEventListener("abort", () => clearInterval(fwTimer));
+      paintSky();
+
       // 동네 고양이: 길 위 아무 곳에서 시작해 쉬었다 걸었다 한다
       const townCats = [];
       for (let i = 0, tries = 0; i < TOWN_CATS && tries < 4000; tries++) {
@@ -458,6 +496,7 @@
         const dt = Math.min(0.05, (now - lastT) / 1000); lastT = now;
         steer(inCat || me, dt);
         if (inCat) step(inCat, dt); else step(me, dt);
+        step(fisher, dt); step(firer, dt);
         for (const f of friends) {
           if (!f.route.length) { f.idleT -= dt; if (f.idleT <= 0) { f.idleT = 2 + Math.random() * 4; const r = 40 + Math.random() * 90, a = Math.random() * Math.PI * 2; goTo(f, f.home.x + Math.cos(a) * r, f.home.y + Math.sin(a) * r * 0.6); } }
           step(f, dt);
