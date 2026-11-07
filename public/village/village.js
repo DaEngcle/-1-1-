@@ -12,29 +12,29 @@
 
   // x·y: 건물 앞 땅, top: 이름표 아래 끝. link: 들어가면 열리는 앱 화면, q: 가게 안 표현 연습
   const PLACES = [
-    { id: "station", x: 770, y: 1046, top: 730, name: "🚉 플린더스 스트리트역", desc: "오늘 들을 데일리 강의가 여기서 출발해요.", link: ["/student/lessons", "📺 강의실 들어가기"] },
-    { id: "lib", x: 605, y: 777, top: 468, name: "📚 주립도서관", desc: "기초 문법을 차근차근 공부하는 곳이에요.", link: ["/student/grammar", "📚 문법 공부하기"] },
-    { id: "paul", x: 1376, y: 777, top: 405, name: "⛪ 세인트 폴 대성당", desc: "소리 내어 연습하는 곳. th·r·l·f·v 입모양을 볼 수 있어요.", link: ["/student/pronunciation", "👄 발음 가이드 보기"] },
-    { id: "apt", x: 1376, y: 420, top: 124, name: "🏢 673 La Trobe · 우리 집", desc: "내 고양이가 사는 집. 츄르로 방을 꾸며요.", link: ["/student/cat-house", "🏠 집으로 들어가기"] },
-    { id: "fed", x: 1651, y: 592, top: 372, name: "🔷 페더레이션 스퀘어", desc: "광장 전광판에 오늘의 호주 뉴스가 떠요.", link: ["/student/news", "📰 오늘 뉴스 보기"] },
+    { id: "station", x: 770, y: 1046, top: 730, name: "🚉 Flinders Street Station", desc: "오늘 들을 데일리 강의가 여기서 출발해요.", link: ["/student/lessons", "📺 강의실 들어가기"] },
+    { id: "lib", x: 605, y: 777, top: 468, name: "📚 State Library", desc: "기초 문법을 차근차근 공부하는 곳이에요.", link: ["/student/grammar", "📚 문법 공부하기"] },
+    { id: "paul", x: 1376, y: 777, top: 405, name: "⛪ St Paul's Cathedral", desc: "소리 내어 연습하는 곳. th·r·l·f·v 입모양을 볼 수 있어요.", link: ["/student/pronunciation", "👄 발음 가이드 보기"] },
+    { id: "apt", x: 1376, y: 420, top: 124, name: "🏢 673 La Trobe · Home", desc: "내 고양이가 사는 집. 츄르로 방을 꾸며요.", link: ["/student/cat-house", "🏠 집으로 들어가기"] },
+    { id: "fed", x: 1651, y: 592, top: 372, name: "🔷 Federation Square", desc: "광장 전광판에 오늘의 호주 뉴스가 떠요.", link: ["/student/news", "📰 오늘 뉴스 보기"] },
     { id: "mcg", x: 2394, y: 571, top: 83, name: "🏟 MCG", desc: "이번 주 리그 순위를 겨루는 경기장이에요.", link: ["/student/league", "🏆 리그 보러 가기"] },
-    { id: "eureka", x: 1748, y: 1087, top: 592, name: "🏙 유레카 타워", desc: "전망대에서 내 영어 레벨을 내려다봐요.", link: ["/student/level-test", "📈 레벨테스트 보기"] },
-    { id: "arts", x: 1582, y: 1211, top: 880, name: "🎭 아트센터", desc: "배우처럼 따라 말한 내 쉐도잉 기록이 있어요.", link: ["/student/shadowing", "🎤 내 쉐도잉 보기"] },
-    { id: "luna", x: 2180, y: 1101, top: 690, name: "🎡 루나파크", desc: "게임으로 단어를 익히는 놀이공원이에요.", link: ["/student/voca", "🎮 보카 게임 하기"] },
-    { id: "sx", x: 206, y: 977, top: 688, name: "🚆 서던크로스역", desc: "출국 준비 자료와 교재를 챙기는 곳이에요.", link: ["/student/resources", "🎁 자료실 열기"] },
-    { id: "site", x: 248, y: 1321, top: 977, name: "🏗 건설 현장", desc: "스모코 타임! 현장 영어를 연습하고, 면접도 볼 수 있어요.", room: "site", q: ["\"오늘 안전 장비 어디서 받아요?\"", "Where do I pick up my PPE today?"], link: ["/student/talk", "🎭 AI 면접 보러 가기"] },
-    { id: "qvm", x: 248, y: 261, top: 14, name: "🛒 퀸 빅토리아 마켓", desc: "장보기 영어: 가격 묻기, 몇 개 사기.", room: "supermarket", q: ["\"사과 1킬로에 얼마예요?\"", "How much for a kilo of apples?"] },
-    { id: "china", x: 413, y: 619, top: 413, name: "🏮 차이나타운", desc: "주방·서빙·예약 영어.", room: "restaurant", q: ["\"두 명 자리 있어요?\"", "Have you got a table for two?"] },
-    { id: "hosier", x: 716, y: 400, top: 96, name: "🎨 호시어 레인 카페", desc: "그래피티 골목의 작은 카페. 커피 주문 영어.", room: "cafe", q: ["\"플랫화이트 한 잔 주세요.\"", "Can I grab a flat white, please?"] },
-    { id: "bakery", x: 502, y: 399, top: 248, name: "🥐 크루아상 빵집", desc: "주문·포장 영어.", room: "bakery", q: ["\"크루아상 두 개 포장해 주세요.\"", "Can I get two croissants to take away, please?"] },
-    { id: "hotel", x: 1004, y: 619, top: 337, name: "🏨 호텔", desc: "체크인·예약 확인 영어.", room: "hotel", q: ["\"오늘 밤 예약했어요. 이름은 다니엘이에요.\"", "Hi, I have a booking for tonight under Daniel."] },
+    { id: "eureka", x: 1748, y: 1087, top: 592, name: "🏙 Eureka Tower", desc: "전망대에서 내 영어 레벨을 내려다봐요.", link: ["/student/level-test", "📈 레벨테스트 보기"] },
+    { id: "arts", x: 1582, y: 1211, top: 880, name: "🎭 Arts Centre", desc: "배우처럼 따라 말한 내 쉐도잉 기록이 있어요.", link: ["/student/shadowing", "🎤 내 쉐도잉 보기"] },
+    { id: "luna", x: 2180, y: 1101, top: 690, name: "🎡 Luna Park", desc: "게임으로 단어를 익히는 놀이공원이에요.", link: ["/student/voca", "🎮 보카 게임 하기"] },
+    { id: "sx", x: 206, y: 977, top: 688, name: "🚆 Southern Cross Station", desc: "출국 준비 자료와 교재를 챙기는 곳이에요.", link: ["/student/resources", "🎁 자료실 열기"] },
+    { id: "site", x: 248, y: 1321, top: 977, name: "🏗 Construction Site", desc: "스모코 타임! 현장 영어를 연습하고, 면접도 볼 수 있어요.", room: "site", q: ["\"오늘 안전 장비 어디서 받아요?\"", "Where do I pick up my PPE today?"], link: ["/student/talk", "🎭 AI 면접 보러 가기"] },
+    { id: "qvm", x: 248, y: 261, top: 14, name: "🛒 Queen Victoria Market", desc: "장보기 영어: 가격 묻기, 몇 개 사기.", room: "supermarket", q: ["\"사과 1킬로에 얼마예요?\"", "How much for a kilo of apples?"] },
+    { id: "china", x: 413, y: 619, top: 413, name: "🏮 Chinatown", desc: "주방·서빙·예약 영어.", room: "restaurant", q: ["\"두 명 자리 있어요?\"", "Have you got a table for two?"] },
+    { id: "hosier", x: 716, y: 400, top: 96, name: "🎨 Hosier Lane Café", desc: "그래피티 골목의 작은 카페. 커피 주문 영어.", room: "cafe", q: ["\"플랫화이트 한 잔 주세요.\"", "Can I grab a flat white, please?"] },
+    { id: "bakery", x: 502, y: 399, top: 248, name: "🥐 Croissant Bakery", desc: "주문·포장 영어.", room: "bakery", q: ["\"크루아상 두 개 포장해 주세요.\"", "Can I get two croissants to take away, please?"] },
+    { id: "hotel", x: 1004, y: 619, top: 337, name: "🏨 Hotel", desc: "체크인·예약 확인 영어.", room: "hotel", q: ["\"오늘 밤 예약했어요. 이름은 다니엘이에요.\"", "Hi, I have a booking for tonight under Daniel."] },
     { id: "chemist", x: 110, y: 1075, top: 880, name: "💊 Chemist Warehouse", desc: "처방전·증상 설명 영어.", room: "chemist", q: ["\"이 처방전 약 받을 수 있을까요?\"", "Can I get this prescription filled, please?"] },
     { id: "coles", x: 537, y: 1252, top: 1032, name: "🛒 Coles", desc: "물건 위치 묻기 영어.", room: "coles", q: ["\"우유 어디 있어요?\"", "Excuse me, where can I find the milk?"] },
     { id: "woolies", x: 96, y: 1445, top: 1266, name: "🛒 Woolworths", desc: "계산대 영어: 봉투·결제.", room: "woolies", q: ["\"봉투 하나 주세요.\"", "Can I get a bag, please?"] },
-    { id: "cake", x: 2367, y: 1197, top: 991, name: "🍰 케이크 가게", desc: "케이크 고르기·포장 영어.", room: "cafe", q: ["\"이 케이크 한 조각 포장해 주세요.\"", "Can I get a slice of this cake to go?"] },
-    { id: "park", x: 1789, y: 413, top: 151, name: "🌳 공원", desc: "호수 옆 산책 코스. 스몰톡 영어.", q: ["\"오늘 날씨 좋네요.\"", "Lovely day, isn't it?"] },
-    { id: "huts", x: 1968, y: 1376, top: 1142, name: "🏖 해변 오두막", desc: "알록달록 오두막. 사진 부탁 영어.", q: ["\"사진 한 장 찍어 주실 수 있어요?\"", "Could you take a photo of us?"] },
-    { id: "pier", x: 2339, y: 1266, top: 1211, name: "⛵ 피어", desc: "해 질 녘 산책 코스. 길 묻기 영어.", q: ["\"해변은 어느 쪽이에요?\"", "Excuse me, which way to the beach?"] },
+    { id: "cake", x: 2367, y: 1197, top: 991, name: "🍰 Cake Shop", desc: "케이크 고르기·포장 영어.", room: "cafe", q: ["\"이 케이크 한 조각 포장해 주세요.\"", "Can I get a slice of this cake to go?"] },
+    { id: "park", x: 1789, y: 413, top: 151, name: "🌳 Park", desc: "호수 옆 산책 코스. 스몰톡 영어.", q: ["\"오늘 날씨 좋네요.\"", "Lovely day, isn't it?"] },
+    { id: "huts", x: 1968, y: 1376, top: 1142, name: "🏖 Beach Huts", desc: "알록달록 오두막. 사진 부탁 영어.", q: ["\"사진 한 장 찍어 주실 수 있어요?\"", "Could you take a photo of us?"] },
+    { id: "pier", x: 2339, y: 1266, top: 1211, name: "⛵ Pier", desc: "해 질 녘 산책 코스. 길 묻기 영어.", q: ["\"해변은 어느 쪽이에요?\"", "Excuse me, which way to the beach?"] },
   ];
   // 가게 내부 맵: 그림 좌표로 걸을 수 있는 바닥(floor)에서 가구(block)를 뺀다. start: 들어온 자리, spot: 처음 걸어가는 자리
   const CAFE_TABLES = [[495,530,610,610,495,700,390,610],[690,455,790,540,690,620,595,540],[830,375,925,450,830,530,745,450]];
@@ -48,9 +48,13 @@
     supermarket: { w: 1000, h: 1000, bg: "#8a6245", start: [510,760], spot: [600,600], floor: [[100,470,330,300,660,480,640,600,730,630,680,660,500,770,320,700]], block: [[150,440,270,400,390,510,270,590],[110,530,165,510,250,600,210,640],[275,620,400,540,485,590,485,640,340,700],[310,330,340,315,585,470,580,580,520,575],[380,240,410,225,650,370,650,470,590,460]] },
   };
   // 넓은 가게: 그림에서 바닥을 찾아 만든 걷기 지도(mask)를 쓰고, 화면은 고양이를 따라간다
-  ROOMS.coles = { w: 2400, h: 1340, bg: "#9c6853", img: "coles.jpg?v=1", mask: "coles-walk.png?v=1", view: 800, scale: 0.8, start: [1400, 1060], spot: [1280, 920] };
-  ROOMS.woolies = { w: 2400, h: 1340, bg: "#9a6752", img: "woolies.jpg?v=1", mask: "woolies-walk.png?v=1", view: 800, scale: 0.8, start: [900, 900], spot: [1200, 840] };
-  ROOMS.chemist = { w: 2400, h: 1340, bg: "#38241d", img: "chemist.jpg?v=1", mask: "chemist-walk.png?v=1", view: 800, scale: 0.8, start: [1680, 1040], spot: [1400, 940] };
+  ROOMS.coles = { w: 2400, h: 1340, bg: "#9c6853", img: "coles.jpg?v=1", mask: "coles-walk.png?v=3", fg: "coles-fg", view: 800, scale: 0.8, start: [1400, 1060], spot: [1280, 920] };
+  ROOMS.woolies = { w: 2400, h: 1340, bg: "#9a6752", img: "woolies.jpg?v=1", mask: "woolies-walk.png?v=3", fg: "woolies-fg", view: 800, scale: 0.8, start: [900, 900], spot: [1200, 840] };
+  ROOMS.chemist = { w: 2400, h: 1340, bg: "#38241d", img: "chemist.jpg?v=1", mask: "chemist-walk.png?v=3", fg: "chemist-fg", view: 800, scale: 0.8, start: [1680, 1040], spot: [1400, 940] };
+  ROOMS.bakery = { w: 2400, h: 1340, bg: "#93604e", img: "bakery-big.jpg?v=1", mask: "bakery-walk.png?v=1", fg: "bakery-fg", view: 800, scale: 0.8, start: [960, 960], spot: [800, 820] };
+  ROOMS.cafe = { w: 2400, h: 1340, bg: "#966650", img: "cafe-big.jpg?v=1", mask: "cafe-walk.png?v=1", fg: "cafe-fg", view: 800, scale: 0.8, start: [1260, 1080], spot: [1260, 800] };
+  ROOMS.hotel = { w: 2400, h: 1340, bg: "#996550", img: "hotel-big.jpg?v=1", mask: "hotel-walk.png?v=1", fg: "hotel-fg", view: 800, scale: 0.8, start: [800, 900], spot: [1100, 760] };
+  ROOMS.site = { w: 2400, h: 1340, bg: "#a06c54", img: "site-big.jpg?v=1", mask: "site-walk.png?v=1", fg: "site-fg", view: 800, scale: 0.8, start: [1200, 1060], spot: [1200, 800] };
   const INSIDE_SCALE = 0.95; // 내부 그림에서 고양이 크기
   // 마을을 돌아다니는 고양이 (이름 없음)
   const TOWN_CATS = 28;
@@ -102,6 +106,7 @@
 .vg-stage { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
 .vg-stage video { position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: fill; pointer-events: none; }
 .vg-stage video[hidden] { display: none; }
+.vg-fg { position: absolute; background-repeat: no-repeat; pointer-events: none; transition: opacity .2s; }
 .vg-stage img { display: block; max-width: none; width: 100%; height: 100%; user-select: none; -webkit-user-drag: none; pointer-events: none; }
 .vg-sheet { border-top: 3px solid #2a2350; padding: 10px 14px 12px; display: grid; gap: 6px; background: #fffaf0; max-height: 58%; overflow-y: auto; }
 .vg-sheet[hidden], .vg-in[hidden], .vg-row[hidden], .vg-sheet h2[hidden], .vg-sheet p[hidden] { display: none; }
@@ -159,7 +164,7 @@
     const world = el("div", "vg-world", view);
     world.style.width = W + "px"; world.style.height = H + "px";
     const map = el("img", "vg-map", world);
-    map.src = base + "map.jpg?v=2"; map.alt = ""; map.width = W; map.height = H;
+    map.src = base + "map.jpg?v=3"; map.alt = ""; map.width = W; map.height = H;
     const target = el("div", "vg-target", world);
     const chips = el("div", "vg-chips", view);
     if (typeof cfg.churu === "number") el("span", "vg-chip gold", chips, "🐟 츄르 " + cfg.churu);
@@ -170,7 +175,7 @@
     zoomIn.type = zoomOut.type = "button"; zoomIn.setAttribute("aria-label", "지도 확대"); zoomOut.setAttribute("aria-label", "지도 축소");
     // 하늘빛: 실제 시간에 따라 아침·낮·저녁·밤 (버튼으로 바꿔 볼 수 있다)
     // 밤 지도: 같은 지도를 밤으로 다시 그린 그림. 시간에 따라 낮 지도 위에 서서히 겹친다
-    const nightMap = el("img", "vg-night", world); nightMap.alt = ""; nightMap.width = W; nightMap.height = H; nightMap.src = base + "map-night.jpg?v=2";
+    const nightMap = el("img", "vg-night", world); nightMap.alt = ""; nightMap.width = W; nightMap.height = H; nightMap.src = base + "map-night.jpg?v=3";
     const sky = el("div", "vg-sky", world);
     let nightLevel = 0, nowTime = "day";
     const dayOnly = [], nightOnly = []; // 낮에만(낚시) / 저녁·밤에만(불꽃놀이) 보이는 것
@@ -254,7 +259,7 @@
 
     const walkImg = new Image();
     walkImg.onload = () => { if (!stopped) begin(walkImg); };
-    walkImg.src = base + "walk.png?v=5";
+    walkImg.src = base + "walk.png?v=6";
 
     let worldNav = null;
     function begin(mk) {
@@ -421,8 +426,8 @@
       fetch(base + "b/list.json?v=2").then((r) => r.json()).then((list) => {
         if (stopped) return;
         for (const b of list) {
-          const im = el("img", "vg-bldg", world); im.src = `${base}b/${b.i}.webp?v=2`; im.alt = "";
-          const nim = el("img", "vg-bldg vg-bldg-n", world); nim.src = `${base}b/n${b.i}.webp?v=2`; nim.alt = "";
+          const im = el("img", "vg-bldg", world); im.src = `${base}b/${b.i}.webp?v=3`; im.alt = "";
+          const nim = el("img", "vg-bldg vg-bldg-n", world); nim.src = `${base}b/n${b.i}.webp?v=3`; nim.alt = "";
           for (const x of [im, nim]) { x.style.left = b.x + "px"; x.style.top = b.y + "px"; x.style.width = b.w + "px"; x.style.height = b.h + "px"; x.style.zIndex = String(b.z); }
           nim.style.opacity = String(nightLevel);
           bldgs.push({ ...b, el: im, night: nim });
@@ -430,9 +435,9 @@
       }).catch(() => {});
 
       // 부두 끝에서 낚시하는 고양이 (아침·낮)
-      const fisher = cat("tuxedo", 2638, 1336, "", false); setDir(fisher, "E", 1);
+      const fisher = cat("tuxedo", 2615, 1398, "", false); setDir(fisher, "E", 1);
       const rod = document.createElementNS("http://www.w3.org/2000/svg", "svg"); rod.setAttribute("class", "vg-rod");
-      rod.setAttribute("width", "130"); rod.setAttribute("height", "150"); rod.style.left = "2630px"; rod.style.top = "1280px"; rod.style.zIndex = "1400";
+      rod.setAttribute("width", "130"); rod.setAttribute("height", "150"); rod.style.left = "2607px"; rod.style.top = "1342px"; rod.style.zIndex = "1400";
       rod.innerHTML = '<line x1="14" y1="34" x2="70" y2="4" stroke="#5b3a1e" stroke-width="2.5" stroke-linecap="round"/><path d="M70 4 Q96 40 92 118" fill="none" stroke="#f8f4e8" stroke-width="0.9"/><g class="vg-float"><circle cx="92" cy="120" r="4" fill="#e3342f" stroke="#2a2350" stroke-width="1"/><rect x="88" y="120" width="8" height="3" fill="#fff"/></g>';
       world.appendChild(rod);
       dayOnly.push(fisher.root, rod);
@@ -605,7 +610,13 @@
         if (stopped) return;
         const dt = Math.min(0.05, (now - lastT) / 1000); lastT = now;
         steer(inCat || me, dt);
-        if (inCat) { step(inCat, dt); if (curRoom && curRoom.view) fitStage(curRoom); } else step(me, dt);
+        if (inCat) {
+          step(inCat, dt); if (curRoom && curRoom.view) fitStage(curRoom);
+          for (const f of roomFg) {
+            const behind = inCat.y < f.z && inCat.y > f.y - 20 && inCat.x > f.x - 30 && inCat.x < f.x + f.w + 30;
+            if (behind !== f.faded) { f.faded = behind; f.el.style.opacity = behind ? "0.4" : ""; }
+          }
+        } else step(me, dt);
         step(fisher, dt); step(firer, dt);
         stepTram(dt);
         for (let i = bubbles.length - 1; i >= 0; i--) {
@@ -712,7 +723,7 @@
         stage.style.transform = `translate(${Math.round(tx)}px, ${Math.round(ty)}px) scale(${k})`;
         stage.style.setProperty("--vg-iz", String(1 / k));
       }
-      let curRoom = null;
+      let curRoom = null, roomFg = [];
       function enterRoom(p) {
         const r = ROOMS[p.room];
         curRoom = r;
@@ -739,7 +750,22 @@
         inCat = cat(me.breed, s0.gx * ROOM_MS + 5, s0.gy * ROOM_MS + 5, cfg.myName || "나", true, { parent: stage, scale: r.scale || INSIDE_SCALE, nav });
         inCat.speed = 130;
         goTo(inCat, r.spot[0], r.spot[1]);
+        // 진열대 앞그림: 고양이가 진열대 뒤(통로)에 있으면 앞 진열대를 반투명하게
+        let fgBox = null; roomFg = [];
+        if (r.fg) {
+          fgBox = el("div", "", stage);
+          fetch(`${base}rooms/${r.fg}.json?v=2`).then((res) => res.json()).then((list) => {
+            if (curRoom !== r || !fgBox) return;
+            const url = `url(${base}rooms/${r.fg}.webp?v=2)`;
+            for (const [x, y, w, h, z] of list) {
+              const d = el("div", "vg-fg", fgBox);
+              d.style.cssText = `left:${x}px;top:${y}px;width:${w}px;height:${h}px;z-index:${z};background-image:${url};background-position:${-x}px ${-y}px`;
+              roomFg.push({ x, y, w, h, z, el: d, faded: false });
+            }
+          }).catch(() => {});
+        }
         leaveInside = () => {
+          if (fgBox) { fgBox.remove(); fgBox = null; } roomFg = [];
           inCat.root.remove(); inCat.tag.remove(); inCat = null; curRoom = null; leaveInside = null;
           stageVideo.pause(); stageVideo.removeAttribute("src"); stageVideo.load(); stageVideo.hidden = true;
           inside.hidden = true; fab.hidden = false; zoomBox.hidden = false; timeBtn.hidden = false; rIn.remove();
