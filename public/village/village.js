@@ -3,7 +3,7 @@
 (function () {
   const W = 2752, H = 1536, MS = 8; // 지도 크기 · 걷기 지도 한 칸 크기
   const SCALE = 0.36, FRAME = 120, STEP = 7; // 고양이 크기 · 그림 높이 · 그림 한 장당 걷는 거리(px)
-  const META = {"cheese-E":[108,12],"gray-E":[103,12],"russian-E":[103,12],"fold-E":[110,12],"siamese-E":[102,12],"ragdoll-E":[124,12],"tuxedo-E":[111,12],"white-E":[99,12],"angora-E":[121,12],"cheese-S":[96,10],"gray-S":[93,10],"russian-S":[94,10],"fold-S":[100,10],"siamese-S":[91,10],"ragdoll-S":[104,10],"tuxedo-S":[98,10],"white-S":[92,10],"angora-S":[108,10],"cheese-SE":[92,10],"gray-SE":[92,10],"russian-SE":[92,10],"fold-SE":[97,10],"siamese-SE":[89,10],"ragdoll-SE":[101,9],"tuxedo-SE":[93,10],"white-SE":[77,10],"angora-SE":[100,10],"cheese-NE":[70,9],"gray-NE":[70,9],"russian-NE":[80,9],"fold-NE":[97,12],"siamese-NE":[72,10],"ragdoll-NE":[100,12],"tuxedo-NE":[76,9],"white-NE":[91,12],"angora-NE":[95,9],"cheese-N":[69,9],"gray-N":[66,9],"russian-N":[71,7],"fold-N":[77,9],"siamese-N":[80,10],"ragdoll-N":[78,7],"tuxedo-N":[86,10],"white-N":[72,9],"angora-N":[96,9]};
+  const META = {"angora-E":[120,12],"angora-S":[108,10],"angora-SE":[100,10],"angora-NE":[96,9],"angora-N":[96,9],"cheese-E":[108,12],"cheese-S":[96,10],"cheese-SE":[92,10],"cheese-NE":[70,9],"cheese-N":[68,9],"fold-E":[110,12],"fold-S":[100,10],"fold-SE":[96,10],"fold-NE":[96,12],"fold-N":[76,9],"gray-E":[104,12],"gray-S":[92,10],"gray-SE":[92,10],"gray-NE":[70,9],"gray-N":[66,9],"ragdoll-E":[124,12],"ragdoll-S":[104,10],"ragdoll-SE":[100,9],"ragdoll-NE":[100,12],"ragdoll-N":[78,7],"russian-E":[104,12],"russian-S":[94,10],"russian-SE":[92,10],"russian-NE":[80,9],"russian-N":[72,7],"siamese-E":[102,12],"siamese-S":[92,10],"siamese-SE":[88,10],"siamese-NE":[72,10],"siamese-N":[80,10],"tuxedo-E":[112,12],"tuxedo-S":[98,10],"tuxedo-SE":[92,10],"tuxedo-NE":[76,9],"tuxedo-N":[86,10],"white-E":[100,12],"white-S":[92,10],"white-SE":[76,10],"white-NE":[92,12],"white-N":[72,9]};
   // 서 있을 때 쓸 그림: 걷기 그림 중 다리가 가장 모인 장면
   const REST = {"cheese-E":8,"gray-E":9,"russian-E":8,"fold-E":2,"siamese-E":2,"ragdoll-E":2,"tuxedo-E":8,"white-E":8,"angora-E":8,"cheese-S":7,"gray-S":2,"russian-S":2,"fold-S":2,"siamese-S":2,"ragdoll-S":2,"tuxedo-S":2,"white-S":2,"angora-S":2,"cheese-SE":2,"gray-SE":2,"russian-SE":2,"fold-SE":2,"siamese-SE":2,"ragdoll-SE":7,"tuxedo-SE":2,"white-SE":2,"angora-SE":2,"cheese-NE":4,"gray-NE":3,"russian-NE":4,"fold-NE":1,"siamese-NE":3,"ragdoll-NE":1,"tuxedo-NE":2,"white-NE":1,"angora-NE":7,"cheese-N":7,"gray-N":3,"russian-N":4,"fold-N":6,"siamese-N":3,"ragdoll-N":3,"tuxedo-N":1,"white-N":4,"angora-N":1};
   // 그림이 없는 방향을 다른 방향 그림으로 대신할 때 쓴다 (지금 그림은 5방향이 다 있다)
@@ -23,7 +23,7 @@
     { id: "luna", x: 2180, y: 1101, top: 690, name: "🎡 Luna Park", desc: "게임으로 단어를 익히는 놀이공원이에요.", link: ["/student/voca", "🎮 보카 게임 하기"] },
     { id: "sx", x: 206, y: 977, top: 688, name: "🚆 Southern Cross Station", desc: "출국 준비 자료와 교재를 챙기는 곳이에요.", link: ["/student/resources", "🎁 자료실 열기"] },
     { id: "site", x: 248, y: 1321, top: 977, name: "🏗 Construction Site", desc: "스모코 타임! 현장 영어를 연습하고, 면접도 볼 수 있어요.", room: "site", q: ["\"오늘 안전 장비 어디서 받아요?\"", "Where do I pick up my PPE today?"], link: ["/student/talk", "🎭 AI 면접 보러 가기"] },
-    { id: "qvm", x: 248, y: 261, top: 14, name: "🛒 Queen Victoria Market", desc: "장보기 영어: 가격 묻기, 몇 개 사기.", room: "supermarket", q: ["\"사과 1킬로에 얼마예요?\"", "How much for a kilo of apples?"] },
+    { id: "qvm", x: 248, y: 261, top: 14, name: "🛒 Queen Victoria Market", desc: "장보기 영어: 가격 묻기, 몇 개 사기.", room: "qvm", q: ["\"사과 1킬로에 얼마예요?\"", "How much for a kilo of apples?"] },
     { id: "china", x: 413, y: 619, top: 413, name: "🏮 Chinatown", desc: "주방·서빙·예약 영어.", room: "restaurant", q: ["\"두 명 자리 있어요?\"", "Have you got a table for two?"] },
     { id: "hosier", x: 716, y: 400, top: 96, name: "🎨 Hosier Lane Café", desc: "그래피티 골목의 작은 카페. 커피 주문 영어.", room: "cafe", q: ["\"플랫화이트 한 잔 주세요.\"", "Can I grab a flat white, please?"] },
     { id: "bakery", x: 502, y: 399, top: 248, name: "🥐 Croissant Bakery", desc: "주문·포장 영어.", room: "bakery", q: ["\"크루아상 두 개 포장해 주세요.\"", "Can I get two croissants to take away, please?"] },
@@ -55,6 +55,11 @@
   ROOMS.cafe = { w: 2400, h: 1340, bg: "#966650", img: "cafe-big.jpg?v=1", mask: "cafe-walk.png?v=1", fg: "cafe-fg", view: 800, scale: 0.8, start: [1260, 1080], spot: [1260, 800] };
   ROOMS.hotel = { w: 2400, h: 1340, bg: "#996550", img: "hotel-big.jpg?v=1", mask: "hotel-walk.png?v=1", fg: "hotel-fg", view: 800, scale: 0.8, start: [800, 900], spot: [1100, 760] };
   ROOMS.site = { w: 2400, h: 1340, bg: "#a06c54", img: "site-big.jpg?v=1", mask: "site-walk.png?v=1", fg: "site-fg", view: 800, scale: 0.8, start: [1200, 1060], spot: [1200, 800] };
+  // 퀸 빅토리아 마켓: 안쪽 홀(정육·생선·델리) ↔ 바깥 장터(과일·채소 창고). 문으로 오간다. 손님 고양이들이 돌아다닌다
+  ROOMS.qvm = { w: 2400, h: 1340, bg: "#a2877c", img: "qvm-in.jpg?v=1", mask: "qvm-in-walk.png?v=1", fg: "qvm-in-fg", view: 800, scale: 0.8, start: [1300, 1150], spot: [1200, 900], npcs: 9,
+    portals: [{ x: 1540, y: 580, to: "qvmout", at: [440, 650], label: "🌳 Outdoor sheds →" }] };
+  ROOMS.qvmout = { w: 2400, h: 1340, bg: "#77897b", img: "qvm-out.jpg?v=1", mask: "qvm-out-walk.png?v=1", fg: "qvm-out-fg", view: 800, scale: 0.8, start: [300, 560], spot: [600, 700], npcs: 12,
+    portals: [{ x: 250, y: 500, to: "qvm", at: [1420, 760], label: "← Indoor halls 🏛" }] };
   const INSIDE_SCALE = 0.95; // 내부 그림에서 고양이 크기
   // 마을을 돌아다니는 고양이 (이름 없음)
   const TOWN_CATS = 28;
@@ -91,6 +96,7 @@
 .vg-bldg-n { opacity: 0; transition: opacity 2.5s; }
 .vg-fx { position: absolute; inset: 0; z-index: 99993; pointer-events: none; }
 .vg-spark { position: absolute; width: 5px; height: 5px; margin: -2.5px 0 0 -2.5px; border-radius: 50%; }
+.vg-fish { position: absolute; width: 68.5px; height: 64px; background-size: 274px 64px; background-repeat: no-repeat; pointer-events: none; }
 .vg-rod { position: absolute; pointer-events: none; overflow: visible; }
 .vg-float { animation: vg-float 1.8s ease-in-out infinite; }
 @keyframes vg-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(3px); } }
@@ -106,6 +112,7 @@
 .vg-stage { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
 .vg-stage video { position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: fill; pointer-events: none; }
 .vg-stage video[hidden] { display: none; }
+.vg-portal { pointer-events: none; background: #c9f0d2; z-index: 100001; }
 .vg-fg { position: absolute; background-repeat: no-repeat; pointer-events: none; transition: opacity .2s; }
 .vg-stage img { display: block; max-width: none; width: 100%; height: 100%; user-select: none; -webkit-user-drag: none; pointer-events: none; }
 .vg-sheet { border-top: 3px solid #2a2350; padding: 10px 14px 12px; display: grid; gap: 6px; background: #fffaf0; max-height: 58%; overflow-y: auto; }
@@ -126,7 +133,7 @@
 .vg-q { font-size: 14px; background: #fff; border: 2px solid #2a2350; border-radius: 10px; padding: 10px 12px; }
 .vg-q button { display: block; margin-top: 6px; padding: 0; border: 0; background: none; font: inherit; font-weight: 800; color: #2a2350; cursor: pointer; text-align: left; }
 .vg-tram { position: absolute; width: 0; height: 0; pointer-events: none; }
-.vg-tram img { position: absolute; left: 0; top: 0; max-width: none; transform: translate(-50%, -55%); pointer-events: none; user-select: none; -webkit-user-drag: none; }
+.vg-tram img { position: absolute; left: 0; top: 0; max-width: none; transform: translate(-50%, -55%); pointer-events: none; user-select: none; -webkit-user-drag: none; filter: drop-shadow(3px 7px 3px rgba(30,25,60,.38)); }
 .vg-tram img[hidden] { display: none; }
 .vg-say { position: absolute; z-index: 100002; max-width: 190px; width: max-content; font-size: 12px; line-height: 1.35; font-weight: 700; color: #2a2350; background: #fff; border: 2px solid #2a2350; border-radius: 10px; padding: 4px 8px; pointer-events: none; transform: translate(-50%, -100%) scale(var(--vg-iz, 1)); transform-origin: 50% 100%; word-break: break-word; }
 .vg-say::after { content: ""; position: absolute; left: 50%; bottom: -7px; margin-left: -6px; border: 6px solid transparent; border-top-color: #2a2350; border-bottom: 0; }
@@ -167,9 +174,9 @@
     map.src = base + "map.jpg?v=3"; map.alt = ""; map.width = W; map.height = H;
     const target = el("div", "vg-target", world);
     const chips = el("div", "vg-chips", view);
-    if (typeof cfg.churu === "number") el("span", "vg-chip gold", chips, "🐟 츄르 " + cfg.churu);
-    if (cfg.friends && cfg.friends.length) el("span", "vg-chip", chips, "🐾 이웃 고양이 " + cfg.friends.length);
-    const fab = el("button", "vg-fab", view, "📍 내 고양이"); fab.type = "button";
+    if (typeof cfg.churu === "number") el("span", "vg-chip gold", chips, "🐟 Churu " + cfg.churu);
+    if (cfg.friends && cfg.friends.length) el("span", "vg-chip", chips, "🐾 Neighbours " + cfg.friends.length);
+    const fab = el("button", "vg-fab", view, "📍 My cat"); fab.type = "button";
     const zoomBox = el("div", "vg-zoom", view);
     const zoomIn = el("button", "", zoomBox, "+"), zoomOut = el("button", "", zoomBox, "−");
     zoomIn.type = zoomOut.type = "button"; zoomIn.setAttribute("aria-label", "지도 확대"); zoomOut.setAttribute("aria-label", "지도 축소");
@@ -183,10 +190,10 @@
     const timeBtn = el("button", "vg-time", chips); timeBtn.type = "button";
     const SKY = {
       // [이름, 덧씌울 색, 색 진하기, 밤 지도 진하기]
-      morning: ["🌅 아침", "rgb(255,214,190)", 0.35, 0.15],
-      day: ["☀️ 낮", "rgb(255,255,255)", 0, 0],
-      evening: ["🌇 저녁", "rgb(255,170,120)", 0.45, 0.45],
-      night: ["🌙 밤", "rgb(255,255,255)", 0, 1],
+      morning: ["🌅 Morning", "rgb(255,214,190)", 0.35, 0.15],
+      day: ["☀️ Day", "rgb(255,255,255)", 0, 0],
+      evening: ["🌇 Evening", "rgb(255,170,120)", 0.45, 0.45],
+      night: ["🌙 Night", "rgb(255,255,255)", 0, 1],
     };
     const ORDER = ["morning", "day", "evening", "night"];
     const timeNow = () => { const h = new Date().getHours(); return h >= 5 && h < 9 ? "morning" : h < 17 ? "day" : h < 19 ? "evening" : "night"; };
@@ -207,12 +214,12 @@
     timeBtn.addEventListener("pointerdown", (e) => e.stopPropagation(), { signal });
     timeBtn.addEventListener("click", (e) => { e.stopPropagation(); const cur = timeOver || timeNow(); timeOver = ORDER[(ORDER.indexOf(cur) + 1) % ORDER.length]; paintSky(); }, { signal });
     // 채팅 버튼 · 배경음악 버튼 (시간 버튼 옆)
-    const chatBtn = el("button", "vg-time", chips, "💬 채팅"); chatBtn.type = "button";
+    const chatBtn = el("button", "vg-time", chips, "💬 Chat"); chatBtn.type = "button";
     const musicBtn = el("button", "vg-time", chips); musicBtn.type = "button";
     const log = el("div", "vg-log", view);
     const chatBar = el("form", "vg-chatbar", view); chatBar.hidden = true;
-    const chatIn = el("input", "", chatBar); chatIn.maxLength = 80; chatIn.placeholder = "영어로 한마디! (80자)"; chatIn.setAttribute("aria-label", "채팅 입력"); chatIn.enterKeyHint = "send";
-    const chatSend = el("button", "", chatBar, "보내기"); chatSend.type = "submit";
+    const chatIn = el("input", "", chatBar); chatIn.maxLength = 80; chatIn.placeholder = "Say something in English!"; chatIn.setAttribute("aria-label", "채팅 입력"); chatIn.enterKeyHint = "send";
+    const chatSend = el("button", "", chatBar, "Send"); chatSend.type = "submit";
     const chatX = el("button", "x", chatBar, "✕"); chatX.type = "button"; chatX.setAttribute("aria-label", "채팅 닫기");
     for (const b of [chatBtn, musicBtn, chatBar]) b.addEventListener("pointerdown", (e) => e.stopPropagation(), { signal });
     chatBtn.addEventListener("click", (e) => { e.stopPropagation(); chatBar.hidden = !chatBar.hidden; if (!chatBar.hidden) chatIn.focus(); }, { signal });
@@ -220,7 +227,7 @@
     // 배경음악: 직접 만든 왈츠. 학생이 켜야 나온다 (켜 둔 사람은 다음에 화면을 누르면 다시 켜짐)
     const bgm = new Audio(base + "bgm.mp3?v=1"); bgm.loop = true; bgm.volume = 0.35; bgm.preload = "none";
     let musicOn = false; try { musicOn = localStorage.getItem("vg-bgm") === "1"; } catch {}
-    const paintMusic = () => { musicBtn.textContent = musicOn ? "🔊 음악" : "🔇 음악"; musicBtn.setAttribute("aria-pressed", String(musicOn)); };
+    const paintMusic = () => { musicBtn.textContent = musicOn ? "🔊 Music" : "🔇 Music"; musicBtn.setAttribute("aria-pressed", String(musicOn)); };
     const playMusic = () => { if (musicOn && !stopped) bgm.play().catch(() => {}); };
     paintMusic();
     musicBtn.addEventListener("click", (e) => {
@@ -316,7 +323,7 @@
         return out;
       }
 
-        return { ok, nearestWalk, path, ms: MS };
+        return { ok, nearestWalk, path, ms: MS, gw: GW, gh: GH };
       }
       // 마을 지도에서 걸을 수 있는 곳
       const GW = mk.width, GH = mk.height;
@@ -359,7 +366,7 @@
         const [w] = META[`${c.breed}-${art}`];
         c.dir = dir; c.art = art; c.flip = flip; c.w = w;
         c.img.style.width = w + "px"; c.img.style.height = FRAME + "px";
-        c.img.style.backgroundImage = `url(${base}c/${c.breed}-${art}.webp?v=4)`;
+        c.img.style.backgroundImage = `url(${base}c/${c.breed}-${art}.webp?v=6)`;
       }
       function draw(c) {
         // 걸은 거리만큼 그림을 넘긴다 (발이 미끄러져 보이지 않게)
@@ -434,13 +441,22 @@
         }
       }).catch(() => {});
 
-      // 부두 끝에서 낚시하는 고양이 (아침·낮)
-      const fisher = cat("tuxedo", 2615, 1398, "", false); setDir(fisher, "E", 1);
-      const rod = document.createElementNS("http://www.w3.org/2000/svg", "svg"); rod.setAttribute("class", "vg-rod");
-      rod.setAttribute("width", "130"); rod.setAttribute("height", "150"); rod.style.left = "2607px"; rod.style.top = "1342px"; rod.style.zIndex = "1400";
-      rod.innerHTML = '<line x1="14" y1="34" x2="70" y2="4" stroke="#5b3a1e" stroke-width="2.5" stroke-linecap="round"/><path d="M70 4 Q96 40 92 118" fill="none" stroke="#f8f4e8" stroke-width="0.9"/><g class="vg-float"><circle cx="92" cy="120" r="4" fill="#e3342f" stroke="#2a2350" stroke-width="1"/><rect x="88" y="120" width="8" height="3" fill="#fff"/></g>';
-      world.appendChild(rod);
-      dayOnly.push(fisher.root, rod);
+      // 부두 끝에서 낚시하는 고양이 (아침·낮): 기다리기 → 입질 → 끌어올리기 → 물고기!
+      const fishBox = el("div", "vg-fish", world); fishBox.style.left = "2565px"; fishBox.style.top = "1353px"; fishBox.style.zIndex = "1420"; fishBox.style.backgroundImage = `url(${base}fish.webp?v=1)`;
+      const fishLine = document.createElementNS("http://www.w3.org/2000/svg", "svg"); fishLine.setAttribute("class", "vg-rod");
+      fishLine.setAttribute("width", "20"); fishLine.setAttribute("height", "40"); fishLine.style.left = "2622px"; fishLine.style.top = "1414px"; fishLine.style.zIndex = "1419";
+      fishLine.innerHTML = '<line x1="8.5" y1="0" x2="8.5" y2="28" stroke="#3a2a30" stroke-width="0.8"/><g class="vg-float"><circle cx="8.5" cy="30" r="3.2" fill="#e3342f" stroke="#2a2350" stroke-width="0.8"/><rect x="5.5" y="30" width="6" height="2.2" fill="#fff"/></g>';
+      world.appendChild(fishLine);
+      dayOnly.push(fishBox, fishLine);
+      const FISH_STEPS = [[0, 0], [1, 0.9], [2, 0.6], [3, 1.8]];
+      const fishState = { step: 0, t: 4 };
+      function stepFisher(dt) {
+        const f = fishState; f.t -= dt;
+        if (f.t <= 0) { f.step = (f.step + 1) % 4; f.t = f.step === 0 ? 4 + Math.random() * 5 : FISH_STEPS[f.step][1]; }
+        fishBox.style.backgroundPosition = `${-FISH_STEPS[f.step][0] * 68.5}px 0`;
+        fishLine.style.visibility = f.step <= 1 ? "" : "hidden";
+        fishLine.style.transform = f.step === 1 ? `translateY(${2 + Math.sin(performance.now() / 60) * 1.5}px)` : "";
+      }
       // 해변에서 불꽃놀이하는 고양이 (저녁·밤)
       const firer = cat("cheese", 2318, 1262, "", false);
       const fx = el("div", "vg-fx", world);
@@ -473,7 +489,7 @@
         townCats.push(c); i++;
       }
       const start = spot("station", 0, 50);
-      const me = cat(BREEDS.includes(cfg.breed) ? cfg.breed : "cheese", start.x, start.y, cfg.myName || "나", true);
+      const me = cat(BREEDS.includes(cfg.breed) ? cfg.breed : "cheese", start.x, start.y, cfg.myName || "Me", true);
 
       // 카메라: 내 고양이를 화면 가운데 근처에 두고 부드럽게 따라간다
       const cam = { x: me.x, y: me.y }; let follow = true;
@@ -490,15 +506,16 @@
         target.classList.remove("on"); void target.offsetWidth; target.classList.add("on");
       }
 
-      // 트램: 왼쪽 아래에서 들어와 역 앞에 잠깐 서고, 성당 옆 선로로 돌아 위로 나간다.
+      // 트램: 왼쪽 아래에서 들어와 역 앞에 잠깐 서고, 성당 옆 선로로 돌아 성당 뒤로 사라진다.
       // 조금 뒤 타워 뒤에서 다시 나와 루나파크 앞을 돌아 해변 쪽 아래로 빠져나간다 (마을 한 바퀴)
       const TRAM_LEGS = [
-        [[-220, 1640], [1245, 875, 4], [1478, 755], [1528, 722], [1556, 680], [1558, 640], [1536, 604], [1490, 580], [300, -60]],
+        [[-220, 1640], [1245, 875, 4], [1478, 755], [1528, 722], [1556, 680], [1558, 640], [1536, 604], [1470, 572]],
         [[1700, 836], [2040, 1006], [2068, 1030], [2078, 1062], [2062, 1088], [2035, 1098], [900, 1665]],
       ];
       const tram = el("div", "vg-tram", world), tImg = {};
       for (const k of ["a", "b", "an", "bn"]) { const im = el("img", "", tram); im.src = `${base}tram/${k}.webp?v=1`; im.alt = ""; im.hidden = true; tImg[k] = im; }
       const tramLegs = TRAM_LEGS.map((pts) => pts.slice(1).map((q, i) => { const [x0, y0] = pts[i], [x1, y1] = q; return { x0, y0, x1, y1, len: Math.hypot(x1 - x0, y1 - y0), wait: q[2] || 0 }; }));
+      const legLen = tramLegs.map((segs) => segs.reduce((a, g) => a + g.len, 0));
       const tramState = { leg: 0, seg: 0, d: 0, wait: 0, rest: 3, axis: "" };
       function stepTram(dt) {
         const t = tramState;
@@ -521,7 +538,11 @@
         const axis = (g.x1 - g.x0) * (g.y1 - g.y0) < 0 ? "a" : "b";
         if (axis !== t.axis) { t.axis = axis; for (const k in tImg) tImg[k].hidden = !k.startsWith(axis); }
         tImg[axis + "n"].style.opacity = String(nightLevel);
-        tram.style.display = ""; tram.style.left = x + "px"; tram.style.top = y + "px"; tram.style.zIndex = String(Math.round(y) + 30);
+        // 들어올 때·나갈 때 서서히 나타나고 사라진다 (건물 뒤로 들어가는 느낌), 바퀴 덜컹임
+        let done = t.d; for (let i = 0; i < t.seg; i++) done += segs[i].len;
+        tram.style.opacity = String(Math.max(0, Math.min(1, done / 70, (legLen[t.leg] - done) / 90)));
+        const rumble = t.wait > 0 ? 0 : Math.sin(performance.now() / 45) * 0.7;
+        tram.style.display = ""; tram.style.left = x + "px"; tram.style.top = (y + rumble) + "px"; tram.style.zIndex = String(Math.round(y) + 30);
       }
 
       // 채팅: 보낸 말은 내 고양이 위에 말풍선으로, 다른 학생 말은 화면 왼쪽 위 목록에 (이웃 고양이면 그 고양이 위에도)
@@ -547,7 +568,7 @@
         const text = chatIn.value.replace(/\s+/g, " ").trim().slice(0, 80); if (!text) return;
         chatIn.value = "";
         if (cfg.onChat) cfg.onChat(text);
-        else say({ name: cfg.myName || "나", breed: cfg.breed, text, mine: true, at: new Date().toISOString() });
+        else say({ name: cfg.myName || "Me", breed: cfg.breed, text, mine: true, at: new Date().toISOString() });
       }, { signal });
 
       let lastT = performance.now(), inCat = null;
@@ -603,6 +624,12 @@
         if (!k || !room.hidden || (t && /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
         keys.add(e.key); e.preventDefault();
       }, { signal });
+      // PC: 방향키(또는 WASD)로도 움직인다는 안내를 잠깐 보여 준다
+      if (matchMedia("(pointer: fine)").matches) {
+        const hint = el("div", "vg-toast", view, "⌨️ Use the arrow keys (↑↓←→) to move");
+        hint.style.top = "auto"; hint.style.bottom = "60px"; hint.style.fontSize = "13px"; hint.style.background = "#6c5cff";
+        setTimeout(() => hint.remove(), 6000);
+      }
       addEventListener("keyup", (e) => { keys.delete(e.key); if (e.key.length === 1) { keys.delete(e.key.toLowerCase()); keys.delete(e.key.toUpperCase()); } }, { signal });
       addEventListener("blur", () => keys.clear(), { signal });
 
@@ -612,12 +639,22 @@
         steer(inCat || me, dt);
         if (inCat) {
           step(inCat, dt); if (curRoom && curRoom.view) fitStage(curRoom);
+          for (const c of roomNpcs) {
+            if (!c.route.length) { c.idleT -= dt; if (c.idleT <= 0) { c.idleT = 1.5 + Math.random() * 5; const a = Math.random() * Math.PI * 2, d = 80 + Math.random() * 260; goTo(c, c.x + Math.cos(a) * d, c.y + Math.sin(a) * d * 0.6); } }
+            step(c, dt);
+          }
+          for (const q of roomPortals) {
+            const d = Math.hypot(inCat.x - q.x, inCat.y - q.y);
+            if (portalLock) { if (d > 110 && roomPortals.every((o) => Math.hypot(inCat.x - o.x, inCat.y - o.y) > 110)) portalLock = false; }
+            else if (d < 45) { goPortal(q); break; }
+          }
+          if (!inCat) { raf = requestAnimationFrame(tick); return; }
           for (const f of roomFg) {
             const behind = inCat.y < f.z && inCat.y > f.y - 20 && inCat.x > f.x - 30 && inCat.x < f.x + f.w + 30;
             if (behind !== f.faded) { f.faded = behind; f.el.style.opacity = behind ? "0.4" : ""; }
           }
         } else step(me, dt);
-        step(fisher, dt); step(firer, dt);
+        stepFisher(dt); step(firer, dt);
         stepTram(dt);
         for (let i = bubbles.length - 1; i >= 0; i--) {
           const b = bubbles[i]; b.t -= dt;
@@ -697,17 +734,17 @@
         for (const [id, b] of pins) b.classList.toggle("on", id === p.id);
         sTitle.textContent = p.name; sDesc.textContent = p.desc; sAct.replaceChildren();
         if (p.link && !p.q) btn(sAct, p.link[1], "go", () => cfg.onOpen(p.link[0]));
-        if (p.q) btn(sAct, p.room ? "🚪 들어가기" : "💬 표현 연습", "go", () => openRoom(p));
-        btn(sAct, "🚋 트램으로 이동", "tram", () => tramTo(p));
-        if (walk) walkTo(p.x, p.y + 50, () => { sDesc.textContent = p.desc + " (도착!)"; if (p.q) openRoom(p); });
+        if (p.q) btn(sAct, p.room ? "🚪 Enter" : "💬 Practice", "go", () => openRoom(p));
+        btn(sAct, "🚋 Take the tram", "tram", () => tramTo(p));
+        if (walk) walkTo(p.x, p.y + 50, () => { sDesc.textContent = p.desc + " (Arrived!)"; if (p.q) openRoom(p); });
       }
       function tramTo(p) {
-        const t = el("div", "vg-toast", view, "🚋 트램 이동 중… " + p.name.replace(/^\S+\s/, ""));
+        const t = el("div", "vg-toast", view, "🚋 On the tram… " + p.name.replace(/^\S+\s/, ""));
         setTimeout(() => {
           t.remove();
           if (stopped) return;
           const w = nearestWalk(p.x, p.y + 50); me.x = w.gx * MS + 4; me.y = w.gy * MS + 4; me.route = []; me.walking = false; me.then = null; setDir(me, "S", 1); follow = true;
-          cam.x = me.x; cam.y = me.y; sDesc.textContent = p.desc + " (트램으로 도착!)";
+          cam.x = me.x; cam.y = me.y; sDesc.textContent = p.desc + " (Arrived by tram!)";
         }, reduce ? 50 : 900);
       }
 
@@ -723,7 +760,13 @@
         stage.style.transform = `translate(${Math.round(tx)}px, ${Math.round(ty)}px) scale(${k})`;
         stage.style.setProperty("--vg-iz", String(1 / k));
       }
-      let curRoom = null, roomFg = [];
+      let curRoom = null, roomFg = [], roomPortals = [], roomNpcs = [], portalLock = false;
+      // 문을 지나면 같은 가게의 다른 구역으로 (말하기 연습 칸은 그대로)
+      function goPortal(q) {
+        const name = rTitle.dataset.place || "";
+        if (leaveInside) leaveInside();
+        enterRoom({ room: q.to, name, arrive: q.at });
+      }
       function enterRoom(p) {
         const r = ROOMS[p.room];
         curRoom = r;
@@ -746,10 +789,25 @@
           };
           return;
         }
-        const nav = roomNav(r), s0 = nav.nearestWalk(r.start[0], r.start[1]);
-        inCat = cat(me.breed, s0.gx * ROOM_MS + 5, s0.gy * ROOM_MS + 5, cfg.myName || "나", true, { parent: stage, scale: r.scale || INSIDE_SCALE, nav });
+        const arrive = p.arrive || r.start;
+        const nav = roomNav(r), s0 = nav.nearestWalk(arrive[0], arrive[1]);
+        inCat = cat(me.breed, s0.gx * ROOM_MS + 5, s0.gy * ROOM_MS + 5, cfg.myName || "Me", true, { parent: stage, scale: r.scale || INSIDE_SCALE, nav });
         inCat.speed = 130;
-        goTo(inCat, r.spot[0], r.spot[1]);
+        if (!p.arrive) goTo(inCat, r.spot[0], r.spot[1]);
+        // 다른 구역으로 가는 문
+        roomPortals = (r.portals || []).map((q) => {
+          const d = el("div", "vg-pin vg-portal", stage, q.label); d.style.left = q.x + "px"; d.style.top = (q.y - 30) + "px";
+          return { ...q, el: d };
+        });
+        portalLock = !!p.arrive;
+        // 손님·직원 고양이: 바닥 위 아무 곳이나 천천히 돌아다닌다
+        roomNpcs = [];
+        for (let i = 0, tries = 0; i < (r.npcs || 0) && tries < 3000; tries++) {
+          const gx = Math.floor(Math.random() * nav.gw), gy = Math.floor(Math.random() * nav.gh);
+          if (!nav.ok(gx, gy)) continue;
+          const c = cat(TOWN_BREEDS[(i * 3 + 1) % TOWN_BREEDS.length], gx * ROOM_MS + 5, gy * ROOM_MS + 5, "", false, { parent: stage, scale: r.scale || INSIDE_SCALE, nav });
+          c.speed = 45 + Math.random() * 25; c.idleT = Math.random() * 4; roomNpcs.push(c); i++;
+        }
         // 진열대 앞그림: 고양이가 진열대 뒤(통로)에 있으면 앞 진열대를 반투명하게
         let fgBox = null; roomFg = [];
         if (r.fg) {
@@ -766,6 +824,8 @@
         }
         leaveInside = () => {
           if (fgBox) { fgBox.remove(); fgBox = null; } roomFg = [];
+          for (const q of roomPortals) q.el.remove(); roomPortals = [];
+          for (const c of roomNpcs) { c.root.remove(); if (c.tag) c.tag.remove(); } roomNpcs = [];
           inCat.root.remove(); inCat.tag.remove(); inCat = null; curRoom = null; leaveInside = null;
           stageVideo.pause(); stageVideo.removeAttribute("src"); stageVideo.load(); stageVideo.hidden = true;
           inside.hidden = true; fab.hidden = false; zoomBox.hidden = false; timeBtn.hidden = false; rIn.remove();
@@ -774,19 +834,26 @@
         };
       }
       inside.addEventListener("pointerdown", (e) => e.stopPropagation(), { signal });
+      // 가게 안에서도 누른 곳으로 걸어가기
+      inside.addEventListener("click", (e) => {
+        if (!inCat || !curRoom) return;
+        const b = stage.getBoundingClientRect(), k = b.width / curRoom.w;
+        goTo(inCat, (e.clientX - b.left) / k, (e.clientY - b.top) / k);
+      }, { signal });
       addEventListener("resize", () => { if (curRoom) fitStage(curRoom); }, { signal });
 
       // 가게 안: 표현 연습 + 이어지는 앱 화면
       function openRoom(p) {
         if (leaveInside) closeRoom();
-        rTitle.textContent = p.room ? p.name + " 안이에요 · 조이스틱으로 걸어 보세요" : p.name;
+        rTitle.dataset.place = p.name;
+        rTitle.textContent = p.room ? p.name + " · walk around with the joystick" : p.name;
         rQ.replaceChildren(document.createTextNode(p.q[0] + " · 영어로 말해 보세요"));
-        const ans = el("button", "", rQ, "💡 정답 보기"); ans.type = "button";
+        const ans = el("button", "", rQ, "💡 Show answer"); ans.type = "button";
         ans.addEventListener("click", () => { ans.textContent = "✅ " + p.q[1]; });
         rAct.replaceChildren();
-        if ("speechSynthesis" in window) btn(rAct, "🔊 듣기", "", () => { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(p.q[1]); u.lang = "en-AU"; speechSynthesis.speak(u); });
+        if ("speechSynthesis" in window) btn(rAct, "🔊 Listen", "", () => { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(p.q[1]); u.lang = "en-AU"; speechSynthesis.speak(u); });
         if (p.link) btn(rAct, p.link[1], "go", () => { closeRoom(); cfg.onOpen(p.link[0]); });
-        btn(rAct, "밖으로 나가기", "", closeRoom);
+        btn(rAct, "Exit", "", closeRoom);
         if (p.room) enterRoom(p);
         else { card.appendChild(rIn); rImg.hidden = true; room.hidden = false; }
         if (cfg.onRoomOpen) cfg.onRoomOpen(rSpeak, p.q[1]);
