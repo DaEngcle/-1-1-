@@ -77,13 +77,17 @@
 .vg-fab { position: absolute; right: 10px; bottom: 10px; z-index: 2; font: inherit; font-size: 13px; font-weight: 700; color: #fff; background: #6c5cff; border: 2px solid #2a2350; border-radius: 10px; padding: 6px 10px; box-shadow: 0 3px 0 #2a2350; cursor: pointer; }
 .vg-toast { position: absolute; left: 50%; top: 45%; transform: translate(-50%, -50%); z-index: 3; font-size: 14px; font-weight: 700; color: #fff; background: #1f8a4c; border: 2px solid #2a2350; border-radius: 12px; padding: 10px 14px; text-align: center; }
 .vg-fab[hidden], .vg-zoom[hidden] { display: none; }
+.vg-bldg { position: absolute; max-width: none; pointer-events: none; user-select: none; -webkit-user-drag: none; transition: opacity .2s; }
+.vg-sky { position: absolute; inset: 0; z-index: 1; pointer-events: none; mix-blend-mode: multiply; transition: background-color 2s, opacity 2s; }
+.vg-time { pointer-events: auto; font: inherit; font-size: 12px; font-weight: 700; color: #2a2350; background: rgba(255,250,240,.85); border: 2px solid #2a2350; border-radius: 8px; padding: 2px 8px; cursor: pointer; }
 .vg-zoom { position: absolute; right: 10px; top: 10px; z-index: 3; display: flex; flex-direction: column; gap: 6px; }
 .vg-zoom button { width: 36px; height: 36px; font: inherit; font-size: 20px; font-weight: 800; line-height: 1; color: #2a2350; background: rgba(255,250,240,.85); border: 2px solid #2a2350; border-radius: 10px; cursor: pointer; }
 .vg-stick { position: absolute; left: 12px; bottom: 12px; z-index: 3; width: 104px; height: 104px; border-radius: 50%; background: rgba(255,255,255,.12); border: 2px solid rgba(255,255,255,.55); opacity: .55; transition: opacity .15s; touch-action: none; cursor: grab; }
 .vg-stick:active { opacity: .85; }
 .vg-knob { position: absolute; left: 50%; top: 50%; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%; background: rgba(255,255,255,.6); border: 2px solid rgba(42,35,80,.45); pointer-events: none; }
 .vg-inside { position: absolute; inset: 0; z-index: 1; overflow: hidden; touch-action: none; cursor: pointer; }
-.vg-inside[hidden] { display: none; }
+.vg-inside[hidden], .vg-sky[hidden], .vg-time[hidden] { display: none; }
+.vg-inside { z-index: 2 !important; }
 .vg-stage { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
 .vg-stage video { position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: fill; pointer-events: none; }
 .vg-stage video[hidden] { display: none; }
@@ -139,6 +143,28 @@
     const zoomBox = el("div", "vg-zoom", view);
     const zoomIn = el("button", "", zoomBox, "+"), zoomOut = el("button", "", zoomBox, "−");
     zoomIn.type = zoomOut.type = "button"; zoomIn.setAttribute("aria-label", "지도 확대"); zoomOut.setAttribute("aria-label", "지도 축소");
+    // 하늘빛: 실제 시간에 따라 아침·낮·저녁·밤 (버튼으로 바꿔 볼 수 있다)
+    const sky = el("div", "vg-sky", view);
+    const timeBtn = el("button", "vg-time", chips); timeBtn.type = "button";
+    const SKY = {
+      morning: ["🌅 아침", "rgb(255,214,190)", 0.45],
+      day: ["☀️ 낮", "rgb(255,255,255)", 0],
+      evening: ["🌇 저녁", "rgb(255,170,120)", 0.6],
+      night: ["🌙 밤", "rgb(60,70,140)", 0.62],
+    };
+    const ORDER = ["morning", "day", "evening", "night"];
+    const timeNow = () => { const h = new Date().getHours(); return h >= 5 && h < 9 ? "morning" : h < 17 ? "day" : h < 19 ? "evening" : "night"; };
+    let timeOver = null;
+    function paintSky() {
+      const t = timeOver || cfg.timeOfDay || timeNow(), [label, color, a] = SKY[t];
+      sky.style.backgroundColor = color; sky.style.opacity = String(a);
+      timeBtn.textContent = label;
+    }
+    paintSky();
+    const skyTimer = setInterval(paintSky, 60000);
+    signal.addEventListener("abort", () => clearInterval(skyTimer));
+    timeBtn.addEventListener("pointerdown", (e) => e.stopPropagation(), { signal });
+    timeBtn.addEventListener("click", (e) => { e.stopPropagation(); const cur = timeOver || timeNow(); timeOver = ORDER[(ORDER.indexOf(cur) + 1) % ORDER.length]; paintSky(); }, { signal });
     const inside = el("div", "vg-inside", view); inside.hidden = true;
     const stick = el("div", "vg-stick", view), knob = el("div", "vg-knob", stick);
     stick.setAttribute("aria-label", "고양이 움직이기. 끌어서 조종해요. 키보드 방향키도 돼요");
@@ -169,7 +195,7 @@
 
     const walkImg = new Image();
     walkImg.onload = () => { if (!stopped) begin(walkImg); };
-    walkImg.src = base + "walk.png?v=4";
+    walkImg.src = base + "walk.png?v=5";
 
     let worldNav = null;
     function begin(mk) {
@@ -323,6 +349,17 @@
         const h = spot(FRIEND_SPOTS[i], 40, 50);
         return Object.assign(cat(BREEDS.includes(f.breed) ? f.breed : "gray", h.x, h.y, f.name, false), { home: h });
       });
+      // 건물 앞그림: 고양이가 건물 뒤(위쪽)에 있으면 건물이 고양이를 가린다
+      const bldgs = [];
+      fetch(base + "b/list.json?v=1").then((r) => r.json()).then((list) => {
+        if (stopped) return;
+        for (const b of list) {
+          const im = el("img", "vg-bldg", world); im.src = `${base}b/${b.i}.webp?v=1`; im.alt = "";
+          im.style.left = b.x + "px"; im.style.top = b.y + "px"; im.style.width = b.w + "px"; im.style.height = b.h + "px"; im.style.zIndex = String(b.z);
+          bldgs.push({ ...b, el: im });
+        }
+      }).catch(() => {});
+
       // 동네 고양이: 길 위 아무 곳에서 시작해 쉬었다 걸었다 한다
       const townCats = [];
       for (let i = 0, tries = 0; i < TOWN_CATS && tries < 4000; tries++) {
@@ -415,6 +452,11 @@
           if (!f.route.length) { f.idleT -= dt; if (f.idleT <= 0) { f.idleT = 2 + Math.random() * 4; const r = 40 + Math.random() * 90, a = Math.random() * Math.PI * 2; goTo(f, f.home.x + Math.cos(a) * r, f.home.y + Math.sin(a) * r * 0.6); } }
           step(f, dt);
         }
+        // 내 고양이가 건물 뒤에 숨으면 그 건물을 반투명하게
+        if (!inCat) for (const b of bldgs) {
+          const behind = me.y + 2 < b.z && me.y > b.y && me.x > b.x && me.x < b.x + b.w;
+          b.el.style.opacity = behind ? "0.45" : "";
+        }
         // 길찾기는 한 프레임에 한 마리만 (휴대폰 부담 줄이기)
         let pathBudget = 1;
         const halfW = view.clientWidth / zoom / 2 + 120, halfH = view.clientHeight / zoom / 2 + 120;
@@ -503,7 +545,7 @@
       function enterRoom(p) {
         const r = ROOMS[p.room];
         curRoom = r;
-        inside.hidden = false; inside.style.background = r.bg; fab.hidden = true; zoomBox.hidden = true;
+        inside.hidden = false; inside.style.background = r.bg; fab.hidden = true; zoomBox.hidden = true; sky.hidden = true; timeBtn.hidden = true;
         stageImg.src = `${base}rooms/${p.room}.jpg`; stageImg.alt = p.name + " 안";
         // 움직이는 가게: 영상이 재생되면 그림 위를 덮는다 (안 되면 그림만 보인다)
         if (r.video && (!reduce || cfg.forceMotion)) {
@@ -520,7 +562,7 @@
         leaveInside = () => {
           inCat.root.remove(); inCat.tag.remove(); inCat = null; curRoom = null; leaveInside = null;
           stageVideo.pause(); stageVideo.removeAttribute("src"); stageVideo.load(); stageVideo.hidden = true;
-          inside.hidden = true; fab.hidden = false; zoomBox.hidden = false; rIn.remove();
+          inside.hidden = true; fab.hidden = false; zoomBox.hidden = false; sky.hidden = false; timeBtn.hidden = false; rIn.remove();
           for (const n of [sTitle, sDesc, sAct]) n.hidden = false;
           follow = true;
         };
