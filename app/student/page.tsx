@@ -38,12 +38,14 @@ import { getCourseProgress } from "@/lib/classroom/progress";
 import { ScoreTrendChart } from "@/app/_ui/score-trend-chart";
 import { cardClass } from "@/app/_ui/styles";
 import { ATTENDANCE_LABEL } from "@/lib/classroom/attendance";
-import { getEngagement, getSeasonRanking, weekShadowingCount, WEEKLY_SHADOWING_GOAL } from "@/lib/classroom/engagement";
+import { getEngagement, getSeasonRanking, maskName, weekShadowingCount, WEEKLY_SHADOWING_GOAL } from "@/lib/classroom/engagement";
 import { LeagueCard } from "@/app/_ui/league";
 import { getTests } from "@/lib/classroom/level-test-data";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { LevelCard } from "@/app/_ui/level-card";
 import { Badges, Missions, StudyCalendar } from "@/app/_ui/engagement";
+import { getHomeCourseState } from "@/lib/classroom/course-data";
+import { FirstVisitGuide } from "./first-visit-guide";
 
 function StatTile({
   label,
@@ -80,9 +82,10 @@ function ProgressBar({ percent }: { percent: number }) {
   );
 }
 
-export default async function StudentHomePage() {
+export default async function StudentHomePage({ searchParams }: { searchParams: Promise<{ guide?: string }> }) {
   const student = await requireStudent();
-  const [stats, progressMap, engagement, ranking, tests, { data: latestNews }, weekShadow] = await Promise.all([
+  const { guide } = await searchParams;
+  const [stats, progressMap, engagement, ranking, tests, { data: latestNews }, weekShadow, courseState] = await Promise.all([
     getStudentStats(student.id),
     getCourseProgress([student.id]),
     getEngagement(student.id),
@@ -97,7 +100,11 @@ export default async function StudentHomePage() {
       .limit(1)
       .maybeSingle(),
     weekShadowingCount(student.id),
+    getHomeCourseState(student.id),
   ]);
+  const courseReady = courseState.hasCourse;
+  // 처음 온 학생(코스 없음 · 안내 안 봄)에게만, 또는 더보기 '앱 사용법 다시 보기'로 왔을 때
+  const showGuide = guide === "1" || (!courseReady && !courseState.guideSeen);
   const nickname = student.nickname;
   const progress = progressMap.get(student.id)!;
   const totalClasses = Object.values(stats.attendance).reduce(
@@ -115,6 +122,9 @@ export default async function StudentHomePage() {
 
   return (
     <>
+      {showGuide && (
+        <FirstVisitGuide breed={student.catBreed ?? "cheese"} name={nickname ?? maskName(student.name)} hasCourse={courseReady} />
+      )}
       <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-600 to-brand-500 p-5 text-white shadow-lg shadow-brand-900/15">
         <span
           aria-hidden
@@ -200,6 +210,21 @@ export default async function StudentHomePage() {
       </section>
 
       <InstallAppCard hideWhenInstalled />
+
+      <Link
+        href={courseReady ? "/student/course" : "/student/course/start"}
+        className={`${cardClass} flex items-center gap-3 hover:border-brand-300`}
+      >
+        <CatSprite breed={student.catBreed ?? "cheese"} mood={courseReady ? "happy" : "default"} className="h-12 w-16 shrink-0" />
+        <span className="flex min-w-0 flex-col">
+          <span className="text-xs font-semibold text-brand-600">🧭 내 워홀 코스</span>
+          <span className="font-bold text-zinc-900">{courseReady ? "오늘의 연습 하러 가기" : "1분 질문으로 코스 만들기"}</span>
+          <span className="text-xs text-zinc-500">
+            {courseReady ? "새 표현 · 복습 · 오늘 할 것" : "가는 곳·하고 싶은 일·걱정되는 순간에 맞춰 순서를 짜 드려요"}
+          </span>
+        </span>
+        <span className="ml-auto shrink-0 text-xl text-brand-600">→</span>
+      </Link>
 
       {!student.catBreed && (
         <section className="flex flex-col gap-3 rounded-3xl border-2 border-dashed border-brand-200 bg-white p-4">

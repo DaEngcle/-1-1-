@@ -22,7 +22,8 @@ export function aiReady() {
 
 let client: Anthropic | null = null;
 
-async function ask(model: string, system: string, user: string, maxTokens: number, effort?: "low" | "medium") {
+/** 한 번 묻고 글자만 받는다 (내 워홀 코스 대화에서도 쓴다) */
+export async function ask(model: string, system: string, user: string, maxTokens: number, effort?: "low" | "medium") {
   client ??= new Anthropic();
   const response = await client.beta.messages.create({
     model,
@@ -41,7 +42,7 @@ async function ask(model: string, system: string, user: string, maxTokens: numbe
 }
 
 /** 응답에서 JSON만 꺼내기 (```json 감싸기·앞뒤 말 제거) */
-function parseJson<T>(text: string): T | null {
+export function parseJson<T>(text: string): T | null {
   const start = text.indexOf("{");
   const end = text.lastIndexOf("}");
   if (start < 0 || end < start) return null;

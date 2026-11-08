@@ -12,6 +12,7 @@ const SECTIONS: { title: string; items: Item[] }[] = [
   {
     title: "공부",
     items: [
+      { href: "/student/course", icon: "cards", title: "내 워홀 코스", sub: "오늘의 연습 · 내 상황에 맞춘 순서" },
       { href: "/student/grammar", icon: "book", title: "기초 문법", sub: "다니엘 쌤 강의 + 개념·예문·문제" },
       { href: "/student/news", icon: "news", title: "뉴스로 배우는 영어", sub: "매일 호주 뉴스로 · 핵심 표현 5개 + 퀴즈" },
       { href: "/student/pronunciation", icon: "sound", title: "발음 가이드", sub: "th·r·l·f·v 입모양부터" },
@@ -31,6 +32,7 @@ const SECTIONS: { title: string; items: Item[] }[] = [
       { href: "/student/profile", icon: "user", title: "내 정보", sub: "닉네임·비밀번호 바꾸기" },
       { href: "/student/settings", icon: "settings", title: "설정", sub: "알림·해석·자막·효과음" },
       { href: "/install", icon: "phone", title: "폰에 앱 설치하기", sub: "아이폰·갤럭시 홈 화면에 추가하는 방법" },
+      { href: "/student?guide=1", icon: "more", title: "앱 사용법 다시 보기", sub: "처음 들어왔을 때 본 안내 4장" },
     ],
   },
 ];
