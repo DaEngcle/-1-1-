@@ -182,7 +182,7 @@ function toStep(r: Ref, access: CourseAccess): Omit<CourseStep, "week"> | null {
     const deck = phraseDeck(r.deck);
     const set = deck?.sets.find((x) => x.id === r.set);
     if (!deck || !set) return null;
-    if (!access.fullVoca && set.id > access.freePhraseSets) return null;
+    if (!access.fullVoca && deck.id !== "jobs" && set.id > access.freePhraseSets) return null;
     return {
       id: `phrase:${deck.id}-${set.id}`,
       kind: "phrase",

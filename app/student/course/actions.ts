@@ -7,7 +7,8 @@ import { kstDate } from "@/lib/classroom/stats";
 import { maskName, addVocaPlay } from "@/lib/classroom/engagement";
 import { parseCourseAnswers } from "@/lib/classroom/course-questions";
 import { COURSE_TOPICS, courseTopic, phraseByKey, recommendTopics, requiredTopics, topicPhrases, type ChosenTopic } from "@/lib/classroom/course-topics";
-import { courseAccess, getCourseRow, markGuideSeen, parseTopics } from "@/lib/classroom/course-data";
+import { FREE_NEW_PER_DAY, courseAccess, getCourseRow, markGuideSeen, parseTopics } from "@/lib/classroom/course-data";
+import { phraseSetLocked } from "@/lib/classroom/verbs";
 import { recordPhraseResult } from "@/lib/classroom/course-data";
 import {
   AI_CALLS_PER_DAY,
@@ -202,6 +203,28 @@ export async function toggleTopic(formData: FormData) {
 export async function recordPhrase(key: string, correct: boolean) {
   const student = await requireStudent();
   if (typeof key !== "string" || key.length > 40 || !phraseByKey(key)) return;
+  const [deck, setId] = key.split(":");
+  const access = courseAccess(student);
+  if (phraseSetLocked(access.fullVoca, deck, Number(setId))) return;
+  if (!access.fullVoca) {
+    // 무료회원: 오늘 처음 보는 표현은 하루 FREE_NEW_PER_DAY개까지만 기록한다
+    const supabase = createServerSupabaseClient();
+    const { data: existing } = await supabase
+      .from("student_phrase")
+      .select("phrase_key")
+      .eq("student_id", student.id)
+      .eq("phrase_key", key)
+      .maybeSingle();
+    if (!existing) {
+      const dayStart = new Date(`${kstDate(new Date())}T00:00:00+09:00`).toISOString();
+      const { count } = await supabase
+        .from("student_phrase")
+        .select("phrase_key", { count: "exact", head: true })
+        .eq("student_id", student.id)
+        .gte("created_at", dayStart);
+      if ((count ?? 0) >= FREE_NEW_PER_DAY) return;
+    }
+  }
   await recordPhraseResult(student.id, key, correct === true);
 }
 

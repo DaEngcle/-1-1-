@@ -164,6 +164,12 @@ export const VERB_SETS: { id: number; title: string; verbs: Verb[] }[] = [
 
 /** 무료회원은 앞 2세트만 */
 export const FREE_VERB_SETS = 2;
+/** 무료회원에게도 전부 열어 두는 표현 단어장 (직군별 일터 영어) */
+export const OPEN_PHRASE_DECKS: readonly string[] = ["jobs"];
+/** 표현 단어장 세트가 이 학생에게 잠겼는지 */
+export function phraseSetLocked(fullVoca: boolean, deck: string, set: number) {
+  return !fullVoca && !OPEN_PHRASE_DECKS.includes(deck) && set > FREE_VERB_SETS;
+}
 
 /** 보카·기초 문법을 전부 열 수 있는지: 수강권이 있거나, 선생님이 '보카 전체 열기'를 해 준 학생 (예: 초급반) */
 export function hasFullVoca(student: { courses: readonly string[]; earlyCourses: readonly string[] }) {

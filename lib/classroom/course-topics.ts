@@ -60,7 +60,7 @@ export type TopicPhrase = Phrase & { key: string };
 /** 토픽에 들어 있는 표현 (잠긴 세트는 뺀다). key = 덱:세트:번호 */
 export function topicPhrases(t: CourseTopicDef, access: { fullVoca: boolean; freePhraseSets: number }): TopicPhrase[] {
   return t.sets.flatMap(([d, s]) => {
-    if (!access.fullVoca && s > access.freePhraseSets) return [];
+    if (!access.fullVoca && d !== "jobs" && s > access.freePhraseSets) return [];
     const set = phraseDeck(d)?.sets.find((x) => x.id === s);
     return set ? set.items.map((p, i) => ({ ...p, key: `${d}:${s}:${i}` })) : [];
   });

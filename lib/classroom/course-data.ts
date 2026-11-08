@@ -102,6 +102,9 @@ export type PracticeItem = TopicPhrase & { kind: "new" | "review" | "wrong"; top
 export type PracticeQueue = { items: PracticeItem[]; counts: { new: number; review: number; wrong: number } };
 
 /** 오늘의 연습: 오늘 틀린 것 + 복습할 때가 된 것 + 새 표현 (고른 토픽 순서) */
+/** 무료회원 하루 새 표현 개수 */
+export const FREE_NEW_PER_DAY = 3;
+
 export function practiceQueue(topics: ChosenTopic[], minutes: number, access: CourseAccess, rows: PhraseRow[], now = new Date()): PracticeQueue {
   const today = kstDate(now);
   const all = topics.flatMap((t) => {
@@ -119,7 +122,9 @@ export function practiceQueue(topics: ChosenTopic[], minutes: number, access: Co
     else if (new Date(r.due_at) <= now && review.length < MAX_REVIEW) review.push({ ...p, kind: "review" });
   }
   const introducedToday = rows.filter((r) => kstDate(r.created_at) === today).length;
-  const newLeft = Math.max(0, (NEW_PER_DAY[minutes] ?? 5) - introducedToday);
+  // 무료회원은 하루 새 표현 FREE_NEW_PER_DAY개까지 (복습·틀린 것은 그대로)
+  const perDay = access.fullVoca ? (NEW_PER_DAY[minutes] ?? 5) : Math.min(FREE_NEW_PER_DAY, NEW_PER_DAY[minutes] ?? 5);
+  const newLeft = Math.max(0, perDay - introducedToday);
   const fresh: PracticeItem[] = all.filter((p) => !seen.has(p.key)).slice(0, newLeft).map((p) => ({ ...p, kind: "new" }));
   return { items: [...wrong, ...review, ...fresh], counts: { new: fresh.length, review: review.length, wrong: wrong.length } };
 }

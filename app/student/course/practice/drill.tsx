@@ -42,7 +42,7 @@ function cheer(right: number, total: number) {
   return "처음엔 다 어려워요. 내일 한 번 더 보면 훨씬 쉬워져요.";
 }
 
-export function Drill({ breed, name, items }: { breed: CatBreed; name: string; items: DrillItem[] }) {
+export function Drill({ breed, name, items, freeLimit = null }: { breed: CatBreed; name: string; items: DrillItem[]; freeLimit?: number | null }) {
   const [queue, setQueue] = useState(items);
   const [idx, setIdx] = useState(0);
   const [typed, setTyped] = useState("");
@@ -103,6 +103,13 @@ export function Drill({ breed, name, items }: { breed: CatBreed; name: string; i
           {uniqueTotal > 0 && (
             <p className="text-sm text-zinc-600">
               {name}님, 처음에 바로 맞힌 표현 <b>{rightCount}</b>/{uniqueTotal}개 · 맞힌 표현은 1·3·7·14일 뒤에 복습으로 다시 나와요.
+            </p>
+          )}
+          {freeLimit !== null && (
+            <p className="rounded-2xl bg-amber-50 px-4 py-3 text-sm text-amber-800">
+              무료로는 하루 새 표현 {freeLimit}개까지 연습할 수 있어요. 복습은 그대로 나와요.
+              <br />
+              다잉클 수강생은 하루 최대 10개까지 새 표현을 연습해요.
             </p>
           )}
         </section>
