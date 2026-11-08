@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { requireStudent } from "@/lib/classroom/dal";
+import { catStage } from "@/lib/classroom/cat-stage-data";
 import { isPlanId, planName } from "@/lib/classroom/plans";
 import { logout } from "@/app/login/actions";
 import { CatSprite } from "@/app/_ui/cat";
@@ -39,6 +40,7 @@ const SECTIONS: { title: string; items: Item[] }[] = [
 
 export default async function MorePage() {
   const student = await requireStudent();
+  const { stage } = await catStage(student.id);
   const name = student.nickname ?? student.name;
   const plan = isPlanId(student.plan) ? planName(student.plan, student.courses).replace("다잉클 ", "") : "무료회원";
 
@@ -52,7 +54,7 @@ export default async function MorePage() {
       >
         <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-white/90">
           {student.catBreed ? (
-            <CatSprite breed={student.catBreed} className="h-10 w-12" />
+            <CatSprite breed={student.catBreed} stage={stage} className="h-10 w-12" />
           ) : (
             <span className="text-2xl font-extrabold text-violet-600">{name.slice(0, 1)}</span>
           )}

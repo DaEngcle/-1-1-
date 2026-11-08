@@ -276,7 +276,7 @@ export function QuizGame({
           </div>
           <div className="mt-1 flex w-full items-center gap-2 rounded-2xl bg-[#FFF8E6] p-2 text-left">
             {cat && (
-              <CatSprite breed={cat.breed} mood={stars >= 3 ? "cheer" : stars >= 1 ? "happy" : "sad"} className="h-14 w-16 shrink-0" />
+              <CatSprite breed={cat.breed} stage={cat.stage} mood={stars >= 3 ? "cheer" : stars >= 1 ? "happy" : "sad"} className="h-14 w-16 shrink-0" />
             )}
             <p className="text-sm font-bold text-[#6B4E00]">
               {cat?.name && <span className="block text-[11px] text-[#B08A2E]">{cat.name}</span>}

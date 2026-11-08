@@ -10,14 +10,19 @@ import { getChuru, getRoom, listGuestbook, listRooms } from "@/lib/classroom/cat
 import { Guestbook } from "./guestbook";
 import { HouseEditor } from "./house-editor";
 import { kstDate } from "@/lib/classroom/stats";
+import { catStage } from "@/lib/classroom/cat-stage-data";
+import { CAT_STAGE_NAMES } from "@/lib/classroom/cat";
+import { maskName } from "@/lib/classroom/engagement";
+import { CatEvolution } from "@/app/_ui/cat-evolution";
 
 export default async function CatHousePage() {
   const student = await requireStudent();
-  const [churu, room, rooms, guestbook] = await Promise.all([
+  const [churu, room, rooms, guestbook, cat] = await Promise.all([
     getChuru(student.id),
     getRoom(student.id),
     listRooms(student.id),
     listGuestbook(student.id, student.id),
+    catStage(student.id),
   ]);
   const mood = catMoodFor(churu.daysSince);
   const catName = student.catName ?? "고양이";
@@ -27,6 +32,9 @@ export default async function CatHousePage() {
 
   return (
     <>
+      {student.catBreed && cat.stage > (cat.seen ?? 1) && (
+        <CatEvolution breed={student.catBreed} name={student.nickname ?? maskName(student.name)} from={cat.seen ?? 1} to={cat.stage} />
+      )}
       <div>
         <h1 className="text-2xl font-extrabold text-zinc-900">🏠 {catName}의 집</h1>
         <p className="text-sm text-zinc-500">
@@ -74,6 +82,7 @@ export default async function CatHousePage() {
         owned={[...churu.owned]}
         balance={churu.balance}
         breed={student.catBreed}
+        stage={cat.stage}
         mood={mood.mood}
         guest={(guest?.breed as CatBreed | undefined) ?? null}
       />
@@ -81,6 +90,9 @@ export default async function CatHousePage() {
       <div className="flex flex-col gap-2 rounded-2xl bg-white p-3 shadow-sm">
         <div className="flex flex-wrap items-center gap-1.5">
           <span className="rounded-full bg-violet-50 px-2 py-0.5 text-xs font-bold text-violet-700">기분 · {mood.label}</span>
+          <span className="rounded-full bg-sky-50 px-2 py-0.5 text-xs font-bold text-sky-700">
+            🌱 {cat.stage}단계 {CAT_STAGE_NAMES[cat.stage]}
+          </span>
           <span className="rounded-full bg-pink-50 px-2 py-0.5 text-xs font-bold text-pink-700">💛 친밀도 Lv.{aff.level}</span>
           {score.trophy && <span className="rounded-full bg-amber-50 px-2 py-0.5 text-xs font-bold text-amber-800">{score.trophy} 하우스</span>}
           <span className="rounded-full bg-zinc-100 px-2 py-0.5 text-xs font-bold text-zinc-600">방 점수 {score.score}</span>
@@ -92,6 +104,11 @@ export default async function CatHousePage() {
         </div>
         <p className="text-sm text-zinc-700">
           <b>{catName}</b>: {churu.daysSince === 0 ? aff.line : mood.line}
+        </p>
+        <p className="text-[11px] text-zinc-400">
+          {cat.next
+            ? `다음 단계(${CAT_STAGE_NAMES[cat.next.next]})까지 공부한 날 ${cat.next.left}일 · 지금까지 ${cat.days}일`
+            : `다 자랐어요! 지금까지 공부한 날 ${cat.days}일`}
         </p>
         {aff.next !== null && (
           <p className="text-[11px] text-zinc-400">다음 친밀도까지 공부 츄르 {aff.next}개 · 친밀도는 줄어들지 않아요</p>

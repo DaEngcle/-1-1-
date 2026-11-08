@@ -101,20 +101,24 @@ export function buildCourse(answers: CourseAnswers, topics: ChosenTopic[], acces
   // 직군 면접 캐릭터 (최대 2명). 직군이 없거나 사무만 고르면 카페 면접으로 연습
   const scenarios = jobs.map((j) => SCENARIO_FOR_JOB[j]).filter((s): s is string => !!s).slice(0, 2);
   const interviewRefs = (why: string) => (scenarios.length ? scenarios : ["cafe"]).map((s) => talk(s, why));
-  const interviewEarly = stage === "jobhunt" || worries.includes("interview");
+  const goals = answers.goals ?? [];
+  const interviewEarly = stage === "jobhunt" || worries.includes("interview") || goals.includes("money") || goals.includes("career");
 
   topics.forEach((t, i) => {
     const def = courseTopic(t.id);
     if (!def) return;
     def.sets.forEach(([d, s]) => add(ph(d, s, t.title)));
     // 면접이 급하면 첫 토픽 바로 뒤에 AI 면접
-    if (i === 0 && interviewEarly) interviewRefs(stage === "jobhunt" ? STAGE_WHY.jobhunt : "면접이 걱정된다고 해서").forEach(add);
+    if (i === 0 && interviewEarly)
+      interviewRefs(
+        stage === "jobhunt" ? STAGE_WHY.jobhunt : worries.includes("interview") ? "면접이 걱정된다고 해서" : goals.includes("money") ? "돈 모으기가 목표라서" : "커리어가 목표라서",
+      ).forEach(add);
     if (t.id === "housing") add(talk("sharehouse", "집 구하기 연습"));
   });
   if (!interviewEarly && jobs.length > 0) interviewRefs("면접 미리 연습").forEach(add);
 
   // 고양이 마을: 멜버른(마을 배경)이나 친구 사귀기를 골랐으면 앞쪽에
-  const villageEarly = answers.cities.includes("melbourne") || worries.includes("friends");
+  const villageEarly = answers.cities.includes("melbourne") || worries.includes("friends") || goals.includes("friends");
   if (!content.some((r) => r.kind === "village")) {
     content.splice(Math.min(villageEarly ? 2 : 6, content.length), 0, {
       kind: "village",
@@ -132,10 +136,12 @@ export function buildCourse(answers: CourseAnswers, topics: ChosenTopic[], acces
     });
 
   // 문법 끼우기
-  const grammar = GRAMMAR_BY_LEVEL[level]
-    .map((unit) => toStep({ kind: "grammar", unit, why: level <= 2 ? "기초 문법부터 탄탄하게" : undefined }, access))
+  // 커리어·이민이 목표면 한 단계 위 문법까지
+  const grammarLevel = goals.includes("career") ? Math.min(5, level + 1) : level;
+  const grammar = GRAMMAR_BY_LEVEL[grammarLevel]
+    .map((unit) => toStep({ kind: "grammar", unit, why: grammarLevel > level ? "커리어가 목표라서 한 단계 위 문법" : level <= 2 ? "기초 문법부터 탄탄하게" : undefined }, access))
     .filter((s): s is Omit<CourseStep, "week"> => !!s);
-  const every = GRAMMAR_EVERY[level];
+  const every = GRAMMAR_EVERY[grammarLevel];
   const merged: Omit<CourseStep, "week">[] = [];
   let sinceGrammar = 0;
   for (const s of usable) {

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { requireStudent } from "@/lib/classroom/dal";
+import { catStage } from "@/lib/classroom/cat-stage-data";
 import { getSeasonRanking, getWeeklyRanking } from "@/lib/classroom/engagement";
 import { kstDate } from "@/lib/classroom/stats";
 import { nextTier, seasonInfo, tierFor } from "@/lib/classroom/league";
@@ -9,7 +10,7 @@ import { RankList, TierLadder } from "@/app/_ui/league";
 export default async function LeaguePage({ searchParams }: { searchParams: Promise<{ tab?: string }> }) {
   const student = await requireStudent();
   const week = (await searchParams).tab === "week";
-  const [season, weekly] = await Promise.all([getSeasonRanking({ masked: true }), getWeeklyRanking({ masked: true })]);
+  const [season, weekly, { stage }] = await Promise.all([getSeasonRanking({ masked: true }), getWeeklyRanking({ masked: true }), catStage(student.id)]);
   const me = season.find((r) => r.studentId === student.id);
   const points = me?.xp ?? 0;
   const tier = tierFor(points, me?.rank ?? 99);
@@ -63,7 +64,7 @@ export default async function LeaguePage({ searchParams }: { searchParams: Promi
         {(week ? weekly : season).length === 0 ? (
           <p className="p-3 text-sm text-zinc-500">아직 기록이 없어요.</p>
         ) : (
-          <RankList rows={week ? weekly : season} meId={student.id} showTier={!week} houseLinks />
+          <RankList rows={week ? weekly : season} meId={student.id} meStage={stage} showTier={!week} houseLinks />
         )}
       </section>
 

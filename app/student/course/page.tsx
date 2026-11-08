@@ -10,6 +10,9 @@ import { COURSE_TOPICS, topicPhrases } from "@/lib/classroom/course-topics";
 import { COURSE_BONUS_POINTS, courseAccess, getCourseRow, getCourseView } from "@/lib/classroom/course-data";
 import type { CourseStep } from "@/lib/classroom/course";
 import { toggleTopic } from "./actions";
+import { jobGear } from "@/lib/classroom/cat-gear";
+import { departureLabel } from "@/lib/classroom/course-questions";
+import { catStage } from "@/lib/classroom/cat-stage-data";
 
 export const metadata: Metadata = { title: "내 워홀 코스 · 다잉클" };
 
@@ -20,7 +23,7 @@ export default async function CoursePage() {
   const row = await getCourseRow(student.id);
   if (!row?.answers) redirect("/student/course/start");
   const access = courseAccess(student);
-  const view = await getCourseView(student.id, { ...row, answers: row.answers }, access);
+  const [view, cat] = await Promise.all([getCourseView(student.id, { ...row, answers: row.answers }, access), catStage(student.id)]);
   const name = student.nickname ?? maskName(student.name);
   const breed = student.catBreed ?? "cheese";
   const total = view.steps.length;
@@ -38,10 +41,13 @@ export default async function CoursePage() {
       <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-600 to-brand-500 p-5 text-white shadow-lg shadow-brand-900/15">
         <div className="relative flex items-center gap-3">
           <span className="shrink-0 rounded-2xl bg-white/15 p-1.5">
-            <CatSprite breed={breed} mood={view.todayDone ? "happy" : "default"} className="h-16 w-20" />
+            <CatSprite breed={breed} mood={view.todayDone ? "happy" : "default"} gear={jobGear(row.answers.jobs, row.answers.jobOther)} stage={cat.stage} className="h-16 w-20" />
           </span>
           <div className="flex min-w-0 flex-col gap-1">
             <h1 className="text-xl font-extrabold tracking-tight">{name}님의 워홀 코스</h1>
+            {row.answers.startMonth && (
+              <span className="self-start rounded-full bg-white/15 px-2.5 py-0.5 text-xs font-bold">✈️ {departureLabel(row.answers.startMonth)}</span>
+            )}
             {row.ai?.summary && <p className="text-sm text-brand-100">{row.ai.summary}</p>}
           </div>
         </div>

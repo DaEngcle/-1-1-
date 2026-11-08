@@ -1,15 +1,23 @@
 "use client";
 
 import { useRef, useState } from "react";
-import type { CatBreed } from "@/lib/classroom/cat";
+import type { CatBreed, CatStage } from "@/lib/classroom/cat";
 import {
   CITIES,
   COURSE_LEVELS,
+  GOALS,
   JOBS,
+  JOB_GROUPS,
+  JOB_OTHER_MAX,
   MINUTES,
   STAGES,
   WORRIES,
+  cleanJobOther,
+  kstToday,
+  monthsUntil,
+  stageFromMonth,
   type CityId,
+  type GoalId,
   type CourseAnswers,
   type CourseLevel,
   type DailyMinutes,
@@ -21,14 +29,33 @@ import { courseTopic, topicPhrases, type ChosenTopic } from "@/lib/classroom/cou
 import type { ChatTurn } from "@/lib/classroom/course-ai";
 import { courseChat, recommendCourse, saveCourse, type Recommendation } from "../actions";
 import { BottomButton, CatSays, FullScreen, TopBar } from "../course-ui";
+import { jobGear } from "@/lib/classroom/cat-gear";
 
-type Screen = "intro" | "cities" | "stage" | "jobs" | "level" | "worries" | "minutes" | "chat" | "building" | "ready" | "cards" | "done";
-const ORDER: Screen[] = ["intro", "cities", "stage", "jobs", "level", "worries", "minutes", "chat", "building", "ready", "cards", "done"];
+type Screen =
+  | "intro"
+  | "when"
+  | "stage"
+  | "cities"
+  | "goals"
+  | "jobs"
+  | "level"
+  | "worries"
+  | "minutes"
+  | "chat"
+  | "building"
+  | "ready"
+  | "cards"
+  | "done";
+const ORDER: Screen[] = ["intro", "when", "stage", "cities", "goals", "jobs", "level", "worries", "minutes", "chat", "building", "ready", "cards", "done"];
+const JOB_BY_ID = new Map(JOBS.map((j) => [j.id as JobId, j]));
 
 type Draft = {
+  startMonth: string | null;
   cities: CityId[];
   stage: StageId | null;
+  goals: GoalId[];
   jobs: JobId[];
+  jobOther: string;
   level: CourseLevel | null;
   worries: WorryId[];
   minutes: DailyMinutes | null;
@@ -88,7 +115,10 @@ export function Onboarding({
   initial,
   testLevel,
   access,
+  stage = 1,
 }: {
+  /** 내 고양이 성장 단계 */
+  stage?: CatStage;
   breed: CatBreed;
   name: string;
   initial: CourseAnswers | null;
@@ -98,15 +128,45 @@ export function Onboarding({
 }) {
   const [screen, setScreen] = useState<Screen>("intro");
   const [d, setD] = useState<Draft>({
+    startMonth: initial?.startMonth ?? null,
     cities: initial?.cities ?? [],
     stage: initial?.stage ?? null,
+    goals: initial?.goals ?? [],
     jobs: initial?.jobs ?? [],
+    jobOther: initial?.jobOther ?? "",
     level: testLevel ?? initial?.level ?? null,
     worries: initial?.worries ?? [],
     minutes: initial?.minutes ?? null,
   });
+  const thisYear = Number(kstToday().slice(0, 4));
+  const [year, setYear] = useState(d.startMonth ? Number(d.startMonth.slice(0, 4)) : thisYear);
+  const [otherOpen, setOtherOpen] = useState(!!d.jobOther);
+  // 출국 달이 지났을 때만 단계를 직접 고른다 (앞으로 갈 달 = 출국 전, 이번 달 = 도착 한 달 안)
+  const needStage = !!d.startMonth && stageFromMonth(d.startMonth) === null;
+  const jobOther = cleanJobOther(d.jobOther);
+  const gear = jobGear(d.jobs, jobOther);
   const answers: CourseAnswers | null =
-    d.stage && d.level && d.minutes ? { cities: d.cities, stage: d.stage, jobs: d.jobs, level: d.level, worries: d.worries, minutes: d.minutes } : null;
+    d.startMonth && d.stage && d.level && d.minutes
+      ? {
+          startMonth: d.startMonth,
+          cities: d.cities,
+          stage: d.stage,
+          jobs: d.jobs,
+          ...(jobOther ? { jobOther } : {}),
+          level: d.level,
+          goals: d.goals,
+          worries: d.worries,
+          minutes: d.minutes,
+        }
+      : null;
+
+  function pickMonth(m: number) {
+    const startMonth = `${year}-${String(m).padStart(2, "0")}`;
+    const auto = stageFromMonth(startMonth);
+    // 지난 달이면 출국 전은 고를 수 없다. 지난달 도착이면 '도착 한 달 안'을 미리 골라 둔다
+    const stage = auto ?? (d.stage && d.stage !== "before" ? d.stage : monthsUntil(startMonth) === -1 ? "arrived" : null);
+    setD({ ...d, startMonth, stage });
+  }
 
   // 고양이와 짧은 대화
   const [turns, setTurns] = useState<ChatTurn[]>([]);
@@ -124,14 +184,21 @@ export function Onboarding({
   const [saved, setSaved] = useState<"idle" | "saving" | "ok" | "error">("idle");
 
   const go = (s: Screen) => setScreen(s);
-  const next = () => go(ORDER[ORDER.indexOf(screen) + 1]);
+  const skip = (s: Screen) => s === "stage" && !needStage;
+  const next = () => {
+    let i = ORDER.indexOf(screen) + 1;
+    while (skip(ORDER[i])) i++;
+    go(ORDER[i]);
+  };
   const back = () => {
     if (screen === "cards" && card > 0) return undoCard();
     if (screen === "building" || screen === "ready" || screen === "cards") {
       run.current++;
       return go("minutes");
     }
-    go(ORDER[Math.max(0, ORDER.indexOf(screen) - 1)]);
+    let i = Math.max(0, ORDER.indexOf(screen) - 1);
+    while (i > 0 && skip(ORDER[i])) i--;
+    go(ORDER[i]);
   };
   const percent = Math.round((ORDER.indexOf(screen) / (ORDER.length - 1)) * 100);
 
@@ -227,9 +294,11 @@ export function Onboarding({
 
   const canNext: Partial<Record<Screen, boolean>> = {
     intro: true,
+    when: !!d.startMonth,
     cities: d.cities.length > 0,
     stage: !!d.stage,
-    jobs: d.jobs.length > 0,
+    goals: d.goals.length > 0,
+    jobs: d.jobs.length > 0 || !!jobOther,
     level: !!d.level,
     worries: d.worries.length > 0,
     minutes: !!d.minutes,
@@ -247,7 +316,7 @@ export function Onboarding({
       {screen === "intro" && (
         <>
           <div className="mt-10">
-            <CatSays breed={breed} big>
+            <CatSays breed={breed} gear={gear} stage={stage} big>
               안녕하세요! 저는 {name}님의 고양이예요.
               <br />
               워홀 영어 코스를 같이 짜 볼게요.
@@ -258,9 +327,56 @@ export function Onboarding({
         </>
       )}
 
+      {screen === "when" && (
+        <Question title="언제 호주에 가요?" sub="이미 갔으면 도착한 달을 골라 주세요">
+          <CatSays breed={breed} gear={gear} stage={stage}>
+            가는 달을 알면 남은 날짜에 맞춰 순서를 짤 수 있어요.
+          </CatSays>
+          <div className="grid grid-cols-2 gap-2" role="group" aria-label="연도">
+            {[thisYear, thisYear + 1].map((y) => (
+              <Chip key={y} on={year === y} onClick={() => setYear(y)}>
+                {y}년
+              </Chip>
+            ))}
+          </div>
+          <div className="grid grid-cols-3 gap-2" role="group" aria-label="월">
+            {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => {
+              const id = `${year}-${String(m).padStart(2, "0")}`;
+              const on = d.startMonth === id;
+              return (
+                <button
+                  key={m}
+                  type="button"
+                  onClick={() => pickMonth(m)}
+                  aria-pressed={on}
+                  className={`h-12 rounded-2xl border-2 text-[15px] font-bold transition-colors ${
+                    on ? "border-brand-500 bg-brand-50 text-brand-700" : "border-slate-200 bg-white text-zinc-800 hover:border-brand-200"
+                  }`}
+                >
+                  {m}월
+                </button>
+              );
+            })}
+          </div>
+        </Question>
+      )}
+
+      {screen === "goals" && (
+        <Question title="워홀에서 제일 이루고 싶은 것은요?" sub="여러 개 골라도 돼요">
+          <div className="grid grid-cols-2 gap-2">
+            {GOALS.map((g) => (
+              <Chip key={g.id} on={d.goals.includes(g.id)} onClick={() => setD({ ...d, goals: toggle(d.goals, g.id) })}>
+                <span>{g.emoji}</span>
+                {g.label}
+              </Chip>
+            ))}
+          </div>
+        </Question>
+      )}
+
       {screen === "cities" && (
         <Question title="어디로 가요?" sub="여러 곳 골라도 돼요">
-          <CatSays breed={breed}>도시마다 분위기가 달라요. 생각 중인 곳을 다 골라 주세요.</CatSays>
+          <CatSays breed={breed} gear={gear} stage={stage}>도시마다 분위기가 달라요. 생각 중인 곳을 다 골라 주세요.</CatSays>
           <div className="grid grid-cols-2 gap-2">
             {CITIES.map((c) => (
               <Chip key={c.id} on={d.cities.includes(c.id)} onClick={() => setD({ ...d, cities: toggle(d.cities, c.id) })}>
@@ -273,9 +389,9 @@ export function Onboarding({
       )}
 
       {screen === "stage" && (
-        <Question title="지금 어느 단계예요?">
+        <Question title="지금 어느 단계예요?" sub="이미 호주에 있으니 지금 하는 일을 골라 주세요">
           <div className="flex flex-col gap-2">
-            {STAGES.map((s) => (
+            {STAGES.filter((s) => s.id !== "before").map((s) => (
               <Option key={s.id} on={d.stage === s.id} onClick={() => setD({ ...d, stage: s.id })} title={s.label} desc={s.desc} emoji={s.emoji} />
             ))}
           </div>
@@ -283,15 +399,58 @@ export function Onboarding({
       )}
 
       {screen === "jobs" && (
-        <Question title="어떤 일을 하고 싶어요?" sub="여러 개 골라도 돼요">
-          <div className="grid grid-cols-2 gap-2">
-            {JOBS.map((j) => (
-              <Chip key={j.id} on={d.jobs.includes(j.id)} onClick={() => setD({ ...d, jobs: toggle(d.jobs, j.id) })}>
-                <span>{j.emoji}</span>
-                <span className="leading-tight">{j.label}</span>
-              </Chip>
-            ))}
-          </div>
+        <Question title="어떤 일을 하고 싶어요?" sub="여러 개 골라도 돼요. 처음 고른 일 옷을 고양이가 입어요">
+          <CatSays breed={breed} gear={gear} stage={stage}>
+            {d.jobs[0] ? `${JOB_BY_ID.get(d.jobs[0])?.label} 준비 완료!` : "어떤 일을 해 볼까요?"}
+          </CatSays>
+          {JOB_GROUPS.map((g) => (
+            <div key={g.title} className="flex flex-col gap-1.5">
+              <h2 className="text-xs font-bold text-zinc-500">{g.title}</h2>
+              <div className="flex flex-wrap gap-2">
+                {g.jobs.map((id) => {
+                  const j = JOB_BY_ID.get(id)!;
+                  const on = d.jobs.includes(id);
+                  return (
+                    <button
+                      key={id}
+                      type="button"
+                      aria-pressed={on}
+                      onClick={() => setD({ ...d, jobs: toggle(d.jobs, id) })}
+                      className={`flex items-center gap-1.5 rounded-full border-2 px-3 py-2 text-sm font-bold transition-colors ${
+                        on ? "border-brand-500 bg-brand-50 text-brand-700" : "border-slate-200 bg-white text-zinc-800 hover:border-brand-200"
+                      }`}
+                    >
+                      <span>{j.emoji}</span>
+                      {j.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+          {otherOpen ? (
+            <label className="flex flex-col gap-1">
+              <span className="text-xs font-bold text-zinc-500">직접 적기</span>
+              <input
+                value={d.jobOther}
+                onChange={(e) => setD({ ...d, jobOther: e.target.value.slice(0, JOB_OTHER_MAX) })}
+                maxLength={JOB_OTHER_MAX}
+                placeholder="예: 와이너리, 골프장"
+                className="rounded-2xl border-2 border-slate-200 bg-white px-3 py-2.5 text-base text-zinc-900 focus:border-brand-500 focus:outline-none"
+              />
+              <span className="text-right text-xs text-zinc-400">
+                {d.jobOther.length}/{JOB_OTHER_MAX}
+              </span>
+            </label>
+          ) : (
+            <button
+              type="button"
+              onClick={() => setOtherOpen(true)}
+              className="self-start rounded-full border-2 border-dashed border-slate-300 px-3 py-2 text-sm font-bold text-zinc-600"
+            >
+              + 직접 적기
+            </button>
+          )}
         </Question>
       )}
 
@@ -335,7 +494,7 @@ export function Onboarding({
           <div className="flex flex-col gap-2">
             {turns.map((t, i) =>
               t.role === "cat" ? (
-                <CatSays key={i} breed={breed}>
+                <CatSays key={i} breed={breed} gear={gear} stage={stage}>
                   {t.text}
                 </CatSays>
               ) : (
@@ -384,7 +543,7 @@ export function Onboarding({
 
       {screen === "building" && (
         <section className="mt-10 flex flex-col items-center gap-6">
-          <CatSays breed={breed} big>
+          <CatSays breed={breed} gear={gear} stage={stage} big>
             코스를 짜는 중…
           </CatSays>
           <ul className="flex w-full flex-col gap-2">
@@ -408,7 +567,7 @@ export function Onboarding({
       {screen === "ready" && rec && (
         <>
           <section className="mt-8 flex flex-col items-center gap-4 text-center">
-            <CatSays breed={breed} mood="happy" big>
+            <CatSays breed={breed} gear={gear} stage={stage} mood="happy" big>
               코스가 준비됐어요!
             </CatSays>
             <p className="rounded-2xl bg-brand-600 px-4 py-3 text-[15px] font-bold leading-snug text-white">{rec.summary}</p>
@@ -474,7 +633,7 @@ export function Onboarding({
       {screen === "done" && (
         <>
           <section className="mt-12 flex flex-col items-center gap-4 text-center">
-            <CatSays breed={breed} mood="happy" big>
+            <CatSays breed={breed} gear={gear} stage={stage} mood="happy" big>
               {name}님 코스가 만들어졌어요!
             </CatSays>
             {chosenTitles.length > 0 && (
@@ -501,7 +660,7 @@ export function Onboarding({
 
       {canNext[screen] !== undefined && screen !== "intro" && (
         <BottomButton disabled={!canNext[screen]} onClick={screen === "minutes" ? enterChat : next}>
-          다음
+          {screen === "jobs" ? `${d.jobs.length + (jobOther ? 1 : 0)}개 고르기` : "다음"}
         </BottomButton>
       )}
     </FullScreen>

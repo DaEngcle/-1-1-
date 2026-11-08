@@ -267,7 +267,7 @@ export function Conversation({ scenario: s, ready }: { scenario: Scenario; ready
               </div>
             </div>
             <div className="flex items-start gap-2 rounded-3xl bg-[#FFF8E6] p-3">
-              {cat && <CatSprite breed={cat.breed} mood={feedback.score >= 70 ? "cheer" : "happy"} className="h-14 w-16 shrink-0" />}
+              {cat && <CatSprite breed={cat.breed} stage={cat.stage} mood={feedback.score >= 70 ? "cheer" : "happy"} className="h-14 w-16 shrink-0" />}
               <p className="text-sm leading-relaxed text-[#5B4300]">{feedback.summary_ko}</p>
             </div>
             {feedback.good_ko.length > 0 && (

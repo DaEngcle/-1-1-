@@ -1,4 +1,5 @@
 import { requireStudent } from "@/lib/classroom/dal";
+import { catStage } from "@/lib/classroom/cat-stage-data";
 import type { Metadata } from "next";
 import { AppShell } from "@/app/_ui/app-shell";
 import { CatProvider } from "@/app/_ui/cat-context";
@@ -39,9 +40,10 @@ export default async function StudentLayout({
   children: React.ReactNode;
 }) {
   const student = await requireStudent();
+  const { stage } = await catStage(student.id);
   return (
     <AppShell title={`다잉클 · ${student.nickname ?? student.name}`} nav={NAV} bottomNav={{ items: BOTTOM_NAV, moreHref: "/student/more" }}>
-      <CatProvider breed={student.catBreed} name={student.catName}>{children}</CatProvider>
+      <CatProvider breed={student.catBreed} name={student.catName} stage={stage}>{children}</CatProvider>
       <FeedbackPrompt />
       {student.mustChangePassword && <NewPasswordPrompt />}
     </AppShell>

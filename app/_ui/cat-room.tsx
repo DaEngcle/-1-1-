@@ -1,5 +1,5 @@
 import { CatSprite } from "@/app/_ui/cat";
-import type { CatBreed, CatMood } from "@/lib/classroom/cat";
+import { catBox, type CatBreed, type CatMood, type CatStage } from "@/lib/classroom/cat";
 import { ITEM_BY_ID, WALL_H, artSize, roomDims, type Art, type Layout } from "@/lib/classroom/cat-house";
 
 /** 픽셀 그림 (문자 격자) → 사각형들. 같은 줄에서 같은 색은 한 칸으로 합친다 */
@@ -121,9 +121,12 @@ export function CatRoom({
   onItemPointerDown,
   svgRef,
   className = "",
+  stage = 1,
 }: {
   layout: Layout;
   breed: CatBreed | null;
+  /** 내 고양이 성장 단계 */
+  stage?: CatStage;
   mood?: CatMood;
   /** 놀러 온 손님 고양이 */
   guest?: CatBreed | null;
@@ -175,7 +178,8 @@ export function CatRoom({
     });
   }
   if (breed) {
-    const ch = (CAT.width * 18) / 24;
+    const box = catBox(stage);
+    const ch = (CAT.width * box.h) / box.w;
     nodes.push({
       z: CAT.base,
       order: 999,
@@ -189,7 +193,7 @@ export function CatRoom({
             dur="30s"
             repeatCount="indefinite"
           />
-          <CatSprite breed={breed} mood={mood} hat={hat} outfit={outfit} place={{ x: CAT.x, y: CAT.base - ch, width: CAT.width }} />
+          <CatSprite breed={breed} mood={mood} stage={stage} hat={hat} outfit={outfit} place={{ x: CAT.x, y: CAT.base - ch, width: CAT.width }} />
         </g>
       ),
     });

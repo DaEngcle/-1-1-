@@ -148,6 +148,7 @@ export function NewsQuiz({ newsId, quiz }: { newsId: string; quiz: Quiz[] }) {
           {cat && (
             <CatSprite
               breed={cat.breed}
+              stage={cat.stage}
               mood={correct === quiz.length ? "cheer" : correct > 0 ? "happy" : "sad"}
               className="h-14 w-16 shrink-0"
             />

@@ -45,6 +45,8 @@ import { createServerSupabaseClient } from "@/lib/supabase";
 import { LevelCard } from "@/app/_ui/level-card";
 import { Badges, Missions, StudyCalendar } from "@/app/_ui/engagement";
 import { getHomeCourseState } from "@/lib/classroom/course-data";
+import { catStage } from "@/lib/classroom/cat-stage-data";
+import { CatEvolution } from "@/app/_ui/cat-evolution";
 import { FirstVisitGuide } from "./first-visit-guide";
 
 function StatTile({
@@ -85,7 +87,7 @@ function ProgressBar({ percent }: { percent: number }) {
 export default async function StudentHomePage({ searchParams }: { searchParams: Promise<{ guide?: string }> }) {
   const student = await requireStudent();
   const { guide } = await searchParams;
-  const [stats, progressMap, engagement, ranking, tests, { data: latestNews }, weekShadow, courseState] = await Promise.all([
+  const [stats, progressMap, engagement, ranking, tests, { data: latestNews }, weekShadow, courseState, cat] = await Promise.all([
     getStudentStats(student.id),
     getCourseProgress([student.id]),
     getEngagement(student.id),
@@ -101,6 +103,7 @@ export default async function StudentHomePage({ searchParams }: { searchParams: 
       .maybeSingle(),
     weekShadowingCount(student.id),
     getHomeCourseState(student.id),
+    catStage(student.id),
   ]);
   const courseReady = courseState.hasCourse;
   // 처음 온 학생(코스 없음 · 안내 안 봄)에게만, 또는 더보기 '앱 사용법 다시 보기'로 왔을 때
@@ -122,6 +125,9 @@ export default async function StudentHomePage({ searchParams }: { searchParams: 
 
   return (
     <>
+      {!showGuide && student.catBreed && cat.stage > (cat.seen ?? 1) && (
+        <CatEvolution breed={student.catBreed} name={nickname ?? maskName(student.name)} from={cat.seen ?? 1} to={cat.stage} />
+      )}
       {showGuide && (
         <FirstVisitGuide breed={student.catBreed ?? "cheese"} name={nickname ?? maskName(student.name)} hasCourse={courseReady} />
       )}
@@ -141,7 +147,7 @@ export default async function StudentHomePage({ searchParams }: { searchParams: 
               aria-label="고양이 집 가기"
               className="shrink-0 rounded-2xl bg-white/15 p-1.5"
             >
-              <CatSprite breed={student.catBreed} mood={greeting.mood} className="h-16 w-20" />
+              <CatSprite breed={student.catBreed} mood={greeting.mood} stage={cat.stage} className="h-16 w-20" />
             </Link>
             <div className="flex min-w-0 flex-col gap-1.5">
               <h1 className="text-xl font-extrabold tracking-tight">
@@ -215,7 +221,7 @@ export default async function StudentHomePage({ searchParams }: { searchParams: 
         href={courseReady ? "/student/course" : "/student/course/start"}
         className={`${cardClass} flex items-center gap-3 hover:border-brand-300`}
       >
-        <CatSprite breed={student.catBreed ?? "cheese"} mood={courseReady ? "happy" : "default"} className="h-12 w-16 shrink-0" />
+        <CatSprite breed={student.catBreed ?? "cheese"} mood={courseReady ? "happy" : "default"} stage={cat.stage} className="h-12 w-16 shrink-0" />
         <span className="flex min-w-0 flex-col">
           <span className="text-xs font-semibold text-brand-600">🧭 내 워홀 코스</span>
           <span className="font-bold text-zinc-900">{courseReady ? "오늘의 연습 하러 가기" : "1분 질문으로 코스 만들기"}</span>
@@ -299,7 +305,7 @@ export default async function StudentHomePage({ searchParams }: { searchParams: 
 
       <div className="grid gap-3 sm:grid-cols-2">
         <Missions missions={engagement.missions} />
-        <LeagueCard rows={ranking} meId={student.id} />
+        <LeagueCard rows={ranking} meId={student.id} meStage={cat.stage} />
       </div>
 
       {latestNews && (

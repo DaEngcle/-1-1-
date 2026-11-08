@@ -1,12 +1,14 @@
 import Link from "next/link";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { requireStudent } from "@/lib/classroom/dal";
+import { catStage } from "@/lib/classroom/cat-stage-data";
 import { VERB_SETS } from "@/lib/classroom/verbs";
 import { PHRASE_DECKS } from "@/lib/classroom/phrase-decks";
 import { CatSprite } from "@/app/_ui/cat";
 
 export default async function VocaHomePage() {
   const student = await requireStudent();
+  const { stage } = await catStage(student.id);
   const supabase = createServerSupabaseClient();
   const { data } = await supabase
     .from("voca_progress")
@@ -19,7 +21,7 @@ export default async function VocaHomePage() {
   return (
     <>
       <section className="flex items-center gap-3 rounded-3xl bg-gradient-to-br from-violet-600 to-fuchsia-500 p-5 text-white shadow-lg">
-        {student.catBreed && <CatSprite breed={student.catBreed} mood="happy" className="h-16 w-20 shrink-0" />}
+        {student.catBreed && <CatSprite breed={student.catBreed} stage={stage} mood="happy" className="h-16 w-20 shrink-0" />}
         <div>
           <h1 className="text-2xl font-extrabold">🎮 보카</h1>
           <p className="text-sm text-white/85">게임처럼 매일 5분, 단어를 입에 붙여요.</p>

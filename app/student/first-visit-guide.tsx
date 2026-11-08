@@ -4,11 +4,13 @@ import { useEffect, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import type { CatBreed } from "@/lib/classroom/cat";
 import { CatSays } from "./course/course-ui";
+import { useMyCat } from "@/app/_ui/cat-context";
 import { dismissGuide } from "./course/actions";
 
 /** 처음 온 학생에게 보여 주는 앱 사용법 4장 (한 번 보면 다시 안 뜬다. 더보기에서 다시 볼 수 있다) */
 export function FirstVisitGuide({ breed, name, hasCourse }: { breed: CatBreed; name: string; hasCourse: boolean }) {
   const router = useRouter();
+  const myStage = useMyCat()?.stage;
   const [open, setOpen] = useState(true);
   const [i, setI] = useState(0);
   const [, startTransition] = useTransition();
@@ -79,7 +81,7 @@ export function FirstVisitGuide({ breed, name, hasCourse }: { breed: CatBreed; n
         </div>
 
         <div key={i} className="mt-14 flex flex-col items-center" aria-live="polite">
-          <CatSays breed={breed} mood={cards[i].mood} big>
+          <CatSays breed={breed} stage={myStage} mood={cards[i].mood} big>
             {cards[i].body}
           </CatSays>
         </div>

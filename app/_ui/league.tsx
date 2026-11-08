@@ -1,13 +1,13 @@
 import Link from "next/link";
 import type { RankRow } from "@/lib/classroom/engagement";
 import { TIERS, nextTier, tierFor, type TierId } from "@/lib/classroom/league";
-import { isCatBreed } from "@/lib/classroom/cat";
+import { isCatBreed, type CatStage } from "@/lib/classroom/cat";
 import { CatSprite } from "./cat";
 import { TierEmblem } from "./tier-emblem";
 
-export function Avatar({ breed, className = "h-9 w-11" }: { breed: string | null; className?: string }) {
+export function Avatar({ breed, className = "h-9 w-11", stage }: { breed: string | null; className?: string; stage?: CatStage }) {
   return isCatBreed(breed) ? (
-    <CatSprite breed={breed} className={className} />
+    <CatSprite breed={breed} stage={stage} className={className} />
   ) : (
     <span className={`${className} flex items-center justify-center rounded-xl bg-slate-100 text-lg`}>🐾</span>
   );
@@ -19,9 +19,12 @@ export function RankList({
   meId,
   showTier = true,
   houseLinks = false,
+  meStage,
 }: {
   rows: RankRow[];
   meId?: string;
+  /** 내 고양이 성장 단계 (다른 사람 고양이는 그대로) */
+  meStage?: CatStage;
   showTier?: boolean;
   houseLinks?: boolean;
 }) {
@@ -34,7 +37,7 @@ export function RankList({
         const row = (
           <>
             <span className={`w-7 text-center ${r.rank <= 3 ? "text-xl" : "text-sm font-bold text-zinc-400"}`}>{medal(r.rank)}</span>
-            <Avatar breed={r.catBreed} />
+            <Avatar breed={r.catBreed} stage={me ? meStage : undefined} />
             <span className="flex min-w-0 flex-1 flex-col">
               <span className="truncate font-bold text-zinc-900">
                 {r.name}
@@ -77,7 +80,7 @@ export function RankList({
 }
 
 /** 홈에 놓는 작은 리그 카드 */
-export function LeagueCard({ rows, meId }: { rows: RankRow[]; meId: string }) {
+export function LeagueCard({ rows, meId, meStage }: { rows: RankRow[]; meId: string; meStage?: CatStage }) {
   const me = rows.find((r) => r.studentId === meId);
   const points = me?.xp ?? 0;
   const tier = tierFor(points, me?.rank ?? 99);
@@ -117,7 +120,7 @@ export function LeagueCard({ rows, meId }: { rows: RankRow[]; meId: string }) {
         {rows.slice(0, 3).map((r) => (
           <span key={r.studentId} className="flex min-w-0 flex-1 items-center gap-1 rounded-xl bg-slate-50 px-1.5 py-1">
             <span className="text-sm">{r.rank === 1 ? "🥇" : r.rank === 2 ? "🥈" : "🥉"}</span>
-            <Avatar breed={r.catBreed} className="h-6 w-7" />
+            <Avatar breed={r.catBreed} className="h-6 w-7" stage={r.studentId === meId ? meStage : undefined} />
             <span className="truncate text-[11px] font-semibold text-zinc-700">{r.name}</span>
           </span>
         ))}

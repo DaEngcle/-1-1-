@@ -5,7 +5,7 @@ import { createServerSupabaseClient } from "@/lib/supabase";
 import { requireStudent } from "@/lib/classroom/dal";
 import { kstDate } from "@/lib/classroom/stats";
 import { maskName, addVocaPlay } from "@/lib/classroom/engagement";
-import { parseCourseAnswers } from "@/lib/classroom/course-questions";
+import { parseCourseAnswers, withCurrentStage } from "@/lib/classroom/course-questions";
 import { COURSE_TOPICS, courseTopic, phraseByKey, recommendTopics, requiredTopics, topicPhrases, type ChosenTopic } from "@/lib/classroom/course-topics";
 import { FREE_NEW_PER_DAY, courseAccess, getCourseRow, markGuideSeen, parseTopics } from "@/lib/classroom/course-data";
 import { phraseSetLocked } from "@/lib/classroom/verbs";
@@ -79,7 +79,8 @@ export type ChatStep = { question: string } | { done: true };
 /** 고양이 되묻기 시작/이어 가기. AI를 못 쓰면 { done } → 화면은 바로 코스 짜기로 넘어간다 */
 export async function courseChat(rawAnswers: unknown, rawTurns: unknown): Promise<ChatStep> {
   const student = await requireStudent();
-  const answers = parseCourseAnswers(rawAnswers);
+  const parsed = parseCourseAnswers(rawAnswers);
+  const answers = parsed ? withCurrentStage(parsed) : null;
   if (!answers) return { done: true };
   const turns = cleanTurns(rawTurns);
   if (turns.filter((t) => t.role === "cat").length >= MAX_CHAT_TURNS) return { done: true };
@@ -108,7 +109,8 @@ function withRequired(topics: ChosenTopic[], required: string[], allowed: string
 /** 토픽 추천: AI(대화를 했을 때) → 실패하면 규칙 */
 export async function recommendCourse(rawAnswers: unknown, rawTurns: unknown): Promise<Recommendation | null> {
   const student = await requireStudent();
-  const answers = parseCourseAnswers(rawAnswers);
+  const parsed = parseCourseAnswers(rawAnswers);
+  const answers = parsed ? withCurrentStage(parsed) : null;
   if (!answers) return null;
   const access = courseAccess(student);
   const name = student.nickname ?? maskName(student.name);
@@ -144,7 +146,8 @@ export async function saveCourse(
   meta: { summary: string; source: "ai" | "rule"; suggested: string[] },
 ) {
   const student = await requireStudent();
-  const answers = parseCourseAnswers(rawAnswers);
+  const parsed = parseCourseAnswers(rawAnswers);
+  const answers = parsed ? withCurrentStage(parsed) : null;
   const access = courseAccess(student);
   if (!answers) return { ok: false as const };
   const allowed = COURSE_TOPICS.filter((t) => topicPhrases(t, access).length > 0).map((t) => t.id);

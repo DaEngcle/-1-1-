@@ -115,18 +115,41 @@ export function requiredTopics(a: Pick<CourseAnswers, "stage">): string[] {
   return a.stage === "working" ? ["shift", "customer"] : [];
 }
 
+/**
+ * 워홀 목표 → 먼저 넣을 토픽.
+ * 돈: 내 직군 + 면접 · 커리어·이민: 면접 + 전화·사무 · 친구: 수다·슬랭 · 영어: 구동사 · 여행: 교통·슬랭
+ */
+export function goalTopics(a: Pick<CourseAnswers, "goals" | "jobs">): string[] {
+  const out: string[] = [];
+  const add = (id: string) => !out.includes(id) && out.push(id);
+  const goals = a.goals ?? [];
+  if (goals.includes("money")) {
+    a.jobs.forEach((j) => JOB_TOPIC[j]?.slice(0, 1).forEach(add));
+    add("interview");
+  }
+  if (goals.includes("career")) ["interview", "phone"].forEach(add);
+  if (goals.includes("friends")) ["friends", "aussie"].forEach(add);
+  if (goals.includes("english")) add("everyday");
+  if (goals.includes("travel")) ["transport", "aussie"].forEach(add);
+  return out;
+}
+
 /** 규칙으로 추천 (AI를 못 쓸 때도 이걸로 코스가 만들어진다). 3~6개, 급한 순서 */
 export function recommendTopics(a: CourseAnswers, access: { fullVoca: boolean; freePhraseSets: number }): string[] {
   const order: string[] = [];
   const add = (id: string) => {
     if (!order.includes(id)) order.push(id);
   };
+  // 워홀 목표가 제일 먼저 (최대 3개만, 지금 단계 토픽도 들어갈 자리를 남긴다)
+  goalTopics(a).slice(0, 3).forEach(add);
   if (a.stage === "before") ["admin", "transport", "housing"].forEach(add);
   if (a.stage === "arrived") ["housing", "admin"].forEach(add);
   if (a.stage === "jobhunt") add("interview");
-  if (a.stage === "working") a.jobs.forEach((j) => JOB_TOPIC[j]?.slice(0, 1).forEach(add));
+  // 보기에 없는 일만 직접 적었으면 '기타'처럼 (일터 공통 손님 응대)
+  const jobs: string[] = a.jobs.length ? a.jobs : a.jobOther ? ["other"] : [];
+  if (a.stage === "working") jobs.forEach((j) => JOB_TOPIC[j]?.slice(0, 1).forEach(add));
   a.worries.forEach((w) => add(WORRY_TOPIC[w]));
-  a.jobs.forEach((j) => JOB_TOPIC[j]?.forEach(add));
+  jobs.forEach((j) => JOB_TOPIC[j]?.forEach(add));
   // 일하는 학생은 일터 공통(근무·급여, 손님 응대)을 모두 넣는다
   requiredTopics(a).forEach(add);
   if (a.level >= 4) add("everyday");

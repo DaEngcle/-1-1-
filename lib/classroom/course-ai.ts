@@ -2,7 +2,7 @@ import "server-only";
 // 내 워홀 코스 AI: 고양이가 짧게 되묻고(최대 3번), 토픽 목록 안에서만 골라 이름을 맞춰 준다.
 // 싼 모델(haiku)만 쓰고, 실패하면 부르는 쪽이 규칙 추천으로 넘어간다.
 import { aiReady, ask, parseJson } from "./interview-ai";
-import { CITIES, COURSE_LEVELS, JOBS, MINUTES, STAGES, WORRIES, type CourseAnswers } from "./course-questions";
+import { CITIES, COURSE_LEVELS, GOALS, JOBS, MINUTES, STAGES, WORRIES, departureLabel, type CourseAnswers } from "./course-questions";
 import { COURSE_TOPICS, validateAiCourse, type AiCourse } from "./course-topics";
 import { phraseDeck } from "./phrase-decks";
 
@@ -33,9 +33,12 @@ const label = <T extends { id: string | number; label: string }>(list: readonly 
 
 function answersText(a: CourseAnswers) {
   return [
+    ...(a.startMonth ? [`출국: ${departureLabel(a.startMonth)}`] : []),
     `가는 곳: ${a.cities.map((c) => label(CITIES, c)).join(", ") || "안 고름"}`,
     `지금 단계: ${label(STAGES, a.stage)}`,
     `하고 싶은 일: ${a.jobs.map((j) => label(JOBS, j)).join(", ") || "안 고름"}`,
+    ...(a.jobOther ? [`직접 적은 일: ${stripPersonal(a.jobOther)}`] : []),
+    `워홀 목표: ${(a.goals ?? []).map((g) => label(GOALS, g)).join(", ") || "안 고름"}`,
     `영어: ${label(COURSE_LEVELS, a.level)}`,
     `걱정되는 순간: ${a.worries.map((w) => label(WORRIES, w)).join(", ") || "안 고름"}`,
     `하루: ${label(MINUTES, a.minutes)}`,

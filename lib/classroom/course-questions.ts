@@ -59,6 +59,28 @@ export const WORRIES = [
   { id: "phone", label: "전화 영어", emoji: "📞" },
 ] as const;
 
+/** 직군 고르기 화면의 묶음 (소제목). 보기 id는 JOBS와 같다 */
+export const JOB_GROUPS: { title: string; jobs: JobId[] }[] = [
+  { title: "카페·음식", jobs: ["cafe", "kitchen", "serving", "takeaway", "bakery"] },
+  { title: "호텔·청소", jobs: ["hotel", "housekeeping", "cleaning"] },
+  { title: "케어", jobs: ["care", "childcare", "animal"] },
+  { title: "뷰티", jobs: ["salon"] },
+  { title: "리테일", jobs: ["retail", "fashion", "servo"] },
+  { title: "현장·기술", jobs: ["construction", "trades"] },
+  { title: "농장·공장", jobs: ["farm", "factory"] },
+  { title: "사무·기타", jobs: ["office", "fitness", "other"] },
+];
+/** '직접 적기' 글자 수 */
+export const JOB_OTHER_MAX = 30;
+
+export const GOALS = [
+  { id: "english", label: "영어 실력", emoji: "🗣️" },
+  { id: "money", label: "돈 모으기", emoji: "💰" },
+  { id: "friends", label: "친구·사람", emoji: "🤝" },
+  { id: "travel", label: "여행·경험", emoji: "🗺️" },
+  { id: "career", label: "커리어·이민", emoji: "🎓" },
+] as const;
+
 export const MINUTES = [
   { id: 5, label: "5분", desc: "출퇴근길에 가볍게" },
   { id: 10, label: "10분", desc: "하루 한 번 집중해서" },
@@ -71,12 +93,18 @@ export type JobId = (typeof JOBS)[number]["id"];
 export type WorryId = (typeof WORRIES)[number]["id"];
 export type CourseLevel = (typeof COURSE_LEVELS)[number]["id"];
 export type DailyMinutes = (typeof MINUTES)[number]["id"];
+export type GoalId = (typeof GOALS)[number]["id"];
 
 export type CourseAnswers = {
+  /** 호주 가는(이미 갔으면 도착한) 달 "YYYY-MM". 예전에 만든 코스에는 없다 */
+  startMonth?: string;
   cities: CityId[];
   stage: StageId;
   jobs: JobId[];
+  /** 보기에 없는 일 (직접 적기, AI에게만 참고로 준다) */
+  jobOther?: string;
   level: CourseLevel;
+  goals: GoalId[];
   worries: WorryId[];
   minutes: DailyMinutes;
 };
@@ -88,6 +116,8 @@ const JOB_IDS = ids(JOBS);
 const WORRY_IDS = ids(WORRIES);
 const LEVEL_IDS = ids(COURSE_LEVELS);
 const MINUTE_IDS = ids(MINUTES);
+const GOAL_IDS = ids(GOALS);
+const MONTH_RE = /^20\d\d-(0[1-9]|1[0-2])$/;
 
 /** 저장된(또는 화면에서 보낸) 답을 믿을 수 있는 모양으로. 이상하면 null */
 export function parseCourseAnswers(raw: unknown): CourseAnswers | null {
@@ -96,14 +126,64 @@ export function parseCourseAnswers(raw: unknown): CourseAnswers | null {
   const list = <T>(v: unknown, ok: Set<string | number>) =>
     Array.isArray(v) ? ([...new Set(v)].filter((x) => ok.has(x as string)) as T[]) : [];
   if (!STAGE_IDS.has(r.stage as string) || !LEVEL_IDS.has(r.level as number) || !MINUTE_IDS.has(r.minutes as number)) return null;
+  const jobOther = typeof r.jobOther === "string" ? cleanJobOther(r.jobOther) : "";
   return {
+    ...(typeof r.startMonth === "string" && MONTH_RE.test(r.startMonth) ? { startMonth: r.startMonth } : {}),
     cities: list<CityId>(r.cities, CITY_IDS),
     stage: r.stage as StageId,
     jobs: list<JobId>(r.jobs, JOB_IDS),
+    ...(jobOther ? { jobOther } : {}),
     level: r.level as CourseLevel,
+    goals: list<GoalId>(r.goals, GOAL_IDS),
     worries: list<WorryId>(r.worries, WORRY_IDS),
     minutes: r.minutes as DailyMinutes,
   };
+}
+
+/** 직접 적은 일: 줄바꿈·꺾쇠 빼고 30자까지 */
+export function cleanJobOther(v: string) {
+  return v.replace(/[<>\n\r\t]/g, " ").replace(/\s+/g, " ").trim().slice(0, JOB_OTHER_MAX);
+}
+
+/** 한국 시간 오늘 "YYYY-MM-DD" */
+export function kstToday(now = new Date()) {
+  return now.toLocaleDateString("sv-SE", { timeZone: "Asia/Seoul" });
+}
+
+/** 이번 달에서 startMonth까지 몇 달 (지났으면 음수) */
+export function monthsUntil(startMonth: string, now = new Date()) {
+  const [y, m] = kstToday(now).split("-").map(Number);
+  const [sy, sm] = startMonth.split("-").map(Number);
+  return (sy - y) * 12 + (sm - m);
+}
+
+/**
+ * 출국 달로 단계 정하기: 앞으로 갈 달이면 출국 전, 이번 달이면 도착 한 달 안.
+ * 지난 달이면 null (이미 호주에 있으니 단계 질문으로 직접 고른다)
+ */
+export function stageFromMonth(startMonth: string, now = new Date()): StageId | null {
+  const diff = monthsUntil(startMonth, now);
+  if (diff > 0) return "before";
+  if (diff === 0) return "arrived";
+  return null;
+}
+
+/** 저장된 단계를 오늘 날짜로 맞춘다 (출국 전으로 골랐는데 출국 달이 지났으면 도착 한 달 안으로) */
+export function withCurrentStage(a: CourseAnswers, now = new Date()): CourseAnswers {
+  if (!a.startMonth) return a;
+  const auto = stageFromMonth(a.startMonth, now);
+  const stage = auto ?? (a.stage === "before" ? "arrived" : a.stage);
+  return stage === a.stage ? a : { ...a, stage };
+}
+
+/** 코스 화면 머리말: "2027년 3월 출국 · D-113" 또는 "호주 생활 N일째" */
+export function departureLabel(startMonth: string, now = new Date()) {
+  const [sy, sm] = startMonth.split("-").map(Number);
+  const start = Date.UTC(sy, sm - 1, 1);
+  const today = Date.parse(`${kstToday(now)}T00:00:00Z`);
+  const days = Math.round((start - today) / 86400000);
+  if (days > 0) return `${sy}년 ${sm}월 출국 · D-${days}`;
+  return `호주 생활 ${-days + 1}일째`;
 }
 
 /** 앱 레벨테스트 레벨(1~6) → 코스 레벨(1~5) */

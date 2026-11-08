@@ -78,7 +78,7 @@ function ResultView({ result, onPlayWord }: { result: PracticeResult; onPlayWord
     <div className="flex flex-col gap-3">
       {cat && result.overall_score != null && (
         <div className="flex items-center gap-2">
-          <CatSprite breed={cat.breed} mood={catReaction(result.overall_score).mood} className="h-14 w-16 shrink-0" />
+          <CatSprite breed={cat.breed} stage={cat.stage} mood={catReaction(result.overall_score).mood} className="h-14 w-16 shrink-0" />
           <p className="rounded-2xl rounded-tl-sm bg-brand-50 px-3 py-2 text-sm font-bold text-brand-700">
             {cat.name && <span className="block text-[11px] font-semibold text-brand-500">{cat.name}</span>}
             {catReaction(result.overall_score).text}

@@ -1,7 +1,36 @@
-import { catPixels, type CatBreed, type CatMood, type CatPart } from "@/lib/classroom/cat";
+import { catAnchors, catBox, catPixels, type CatAnchor, type CatBreed, type CatMood, type CatPart, type CatStage } from "@/lib/classroom/cat";
 
 /** 모자·옷 그림 (고양이 집에서 입힌 것) */
 type WearArt = { rows: string[]; pal: Record<string, string> };
+/** 고양이 격자 위 아무 데나 얹는 그림 (직군 소품 등). x·y는 고양이 격자 좌표 */
+export type CatGearLayer = WearArt & {
+  x: number;
+  y: number;
+  /** 자란 단계에서 어디를 따라 옮길지 (머리·가슴·왼손·오른손). 없으면 가슴 */
+  anchor?: CatAnchor;
+};
+
+/** 모자를 큰 머리에 맞게 가운데 칸을 늘린다 */
+function stretchRows(rows: string[], extra: number) {
+  if (extra <= 0) return rows;
+  return rows.map((r) => {
+    const mid = Math.floor(r.length / 2);
+    return r.slice(0, mid) + r[mid].repeat(extra) + r.slice(mid);
+  });
+}
+
+/** 1단계 좌표로 만든 소품을 지금 단계 위치로 */
+function placeLayer(g: CatGearLayer, stage: CatStage): CatGearLayer {
+  if (stage === 1) return g;
+  const a = catAnchors(stage);
+  const anchor = g.anchor ?? "chest";
+  if (anchor === "head") {
+    const [dx, dy, extra] = a.head;
+    return { ...g, rows: stretchRows(g.rows, extra), x: g.x + dx - Math.floor(extra / 2), y: g.y + dy };
+  }
+  const [dx, dy] = a[anchor];
+  return { ...g, x: g.x + dx, y: g.y + dy };
+}
 
 function wearRects(art: WearArt, x0: number, y0: number, key: string) {
   const out: React.ReactNode[] = [];
@@ -29,6 +58,8 @@ export function CatSprite({
   hat,
   outfit,
   place,
+  gear,
+  stage = 1,
 }: {
   breed: CatBreed;
   mood?: CatMood;
@@ -42,12 +73,25 @@ export function CatSprite({
   outfit?: WearArt;
   /** 다른 그림(방) 안에 넣을 때 위치·크기 (SVG 좌표) */
   place?: { x: number; y: number; width: number };
+  /** 몸과 같이 움직이는 소품 그림 (예: 내 워홀 코스의 직군 소품) */
+  gear?: CatGearLayer[];
+  /** 성장 단계 1~5 (공부한 날이 쌓이면 자란다). 없으면 1단계 */
+  stage?: CatStage;
 }) {
-  const { pixels, z } = catPixels(breed, mood);
+  const { pixels, z } = catPixels(breed, mood, stage);
+  const box = catBox(stage);
+  // 고양이 집 모자·옷도 소품처럼 단계에 맞춰 옮긴다
+  const hatW = hat ? Math.max(...hat.rows.map((r) => r.length)) : 0;
+  const layers: CatGearLayer[] = [
+    ...(outfit ? [{ ...outfit, x: 2, y: 9, anchor: "chest" as const }] : []),
+    ...(hat ? [{ ...hat, x: Math.round(9 - hatW / 2), y: 3 - hat.rows.length, anchor: "head" as const }] : []),
+    ...(gear ?? []),
+  ].map((g) => placeLayer(g, stage));
+  const groundY = box.h + box.y - 1;
   return (
     <svg
-      viewBox="-3 -3 24 18"
-      {...(place ? { x: place.x, y: place.y, width: place.width, height: (place.width * 18) / 24 } : {})}
+      viewBox={`${box.x} ${box.y} ${box.w} ${box.h}`}
+      {...(place ? { x: place.x, y: place.y, width: place.width, height: (place.width * box.h) / box.w } : {})}
       className={`cat-sprite cat-${mood} ${place ? "" : className}`}
       style={{ "--cat-delay": `${-delay}s` } as React.CSSProperties}
       shapeRendering="crispEdges"
@@ -55,7 +99,7 @@ export function CatSprite({
       aria-label={title}
       aria-hidden={title ? undefined : true}
     >
-      <rect x={1} y={14} width={16} height={0.6} fill="#000" opacity={0.08} />
+      <rect x={1} y={groundY} width={box.w - 8} height={0.6} fill="#000" opacity={0.08} />
       {PARTS.map((part) => {
         const own = pixels.filter((p) => p.part === part);
         if (own.length === 0) return null;
@@ -75,14 +119,9 @@ export function CatSprite({
           g
         );
       })}
-      {(hat || outfit) && (
-        <g className="cat-bob">
-          {outfit && wearRects(outfit, 2, 9, "o")}
-          {hat && wearRects(hat, Math.round(9 - Math.max(...hat.rows.map((r) => r.length)) / 2), 3 - hat.rows.length, "h")}
-        </g>
-      )}
+      {layers.length > 0 && <g className="cat-bob">{layers.map((g, i) => wearRects(g, g.x, g.y, `g${i}-`))}</g>}
       {z && (
-        <text className="cat-z" x={16} y={-0.2} fontFamily="Menlo,monospace" fontWeight={900} fontSize={2.4} fill="#2453EB">
+        <text className="cat-z" x={box.w - 8} y={-0.2} fontFamily="Menlo,monospace" fontWeight={900} fontSize={2.4} fill="#2453EB">
           z
         </text>
       )}

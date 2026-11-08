@@ -5,6 +5,7 @@ import type { CatBreed } from "@/lib/classroom/cat";
 import { isCorrect, splitExample, splitKorean } from "@/lib/classroom/course-drill";
 import { finishPractice, recordPhrase } from "../actions";
 import { BottomButton, CatSays, FullScreen, TopBar } from "../course-ui";
+import { useMyCat } from "@/app/_ui/cat-context";
 
 export type DrillItem = {
   key: string;
@@ -43,6 +44,7 @@ function cheer(right: number, total: number) {
 }
 
 export function Drill({ breed, name, items, freeLimit = null }: { breed: CatBreed; name: string; items: DrillItem[]; freeLimit?: number | null }) {
+  const myStage = useMyCat()?.stage;
   const [queue, setQueue] = useState(items);
   const [idx, setIdx] = useState(0);
   const [typed, setTyped] = useState("");
@@ -97,7 +99,7 @@ export function Drill({ breed, name, items, freeLimit = null }: { breed: CatBree
       <FullScreen>
         <TopBar percent={100} backHref="/student/course" />
         <section className="mt-10 flex flex-col items-center gap-4 text-center">
-          <CatSays breed={breed} mood={uniqueTotal > 0 && rightCount >= uniqueTotal / 2 ? "happy" : "default"} big>
+          <CatSays breed={breed} stage={myStage} mood={uniqueTotal > 0 && rightCount >= uniqueTotal / 2 ? "happy" : "default"} big>
             {cheer(rightCount, uniqueTotal)}
           </CatSays>
           {uniqueTotal > 0 && (

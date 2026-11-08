@@ -6,7 +6,7 @@ import { addVocaPlay } from "./engagement";
 import { kstDate } from "./stats";
 import { FREE_VERB_SETS, hasFullVoca } from "./verbs";
 import { OPEN_GRAMMAR_UNITS, grammarLock } from "./grammar";
-import { parseCourseAnswers, type CourseAnswers } from "./course-questions";
+import { parseCourseAnswers, withCurrentStage, type CourseAnswers } from "./course-questions";
 import { buildCourse, doneSteps, pickToday, type CourseAccess, type CourseStep } from "./course";
 import { courseTopic, topicPhrases, type ChosenTopic, type TopicPhrase } from "./course-topics";
 import type { ChatTurn } from "./course-ai";
@@ -52,7 +52,10 @@ export async function getCourseRow(studentId: string): Promise<CourseRow | null>
   if (!data) return null;
   const today = data.today as CourseRow["today"];
   return {
-    answers: parseCourseAnswers(data.answers),
+    answers: (() => {
+      const a = parseCourseAnswers(data.answers);
+      return a ? withCurrentStage(a) : null;
+    })(),
     topics: parseTopics(data.topics),
     ai: (data.ai as CourseRow["ai"]) ?? null,
     today: today && typeof today.day === "string" && Array.isArray(today.ids) ? today : null,

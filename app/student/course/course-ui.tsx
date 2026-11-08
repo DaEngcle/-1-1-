@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { CatSprite } from "@/app/_ui/cat";
-import type { CatBreed, CatMood } from "@/lib/classroom/cat";
+import { CatSprite, type CatGearLayer } from "@/app/_ui/cat";
+import type { CatBreed, CatMood, CatStage } from "@/lib/classroom/cat";
 
 /** 코스 질문·연습 화면: 앱 메뉴 위를 덮는 전체 화면 (부드러운 브랜드 파랑 → 크림색) */
 export function FullScreen({ children }: { children: React.ReactNode }) {
@@ -39,10 +39,26 @@ export function TopBar({ percent, onBack, backHref }: { percent: number; onBack?
 }
 
 /** 내 고양이 + 말풍선 */
-export function CatSays({ breed, mood = "default", children, big }: { breed: CatBreed; mood?: CatMood; children: React.ReactNode; big?: boolean }) {
+export function CatSays({
+  breed,
+  mood = "default",
+  children,
+  big,
+  gear,
+  stage,
+}: {
+  /** 내 고양이 성장 단계 */
+  stage?: CatStage;
+  breed: CatBreed;
+  mood?: CatMood;
+  children: React.ReactNode;
+  big?: boolean;
+  /** 직군 소품 (lib/classroom/cat-gear.ts) */
+  gear?: CatGearLayer[];
+}) {
   return (
     <div className={`flex ${big ? "flex-col items-center text-center" : "items-end"} gap-3`}>
-      <CatSprite breed={breed} mood={mood} className={big ? "h-28 w-36" : "h-16 w-20 shrink-0"} />
+      <CatSprite breed={breed} mood={mood} gear={gear} stage={stage} className={big ? "h-28 w-36" : "h-16 w-20 shrink-0"} />
       <p className={`rounded-2xl bg-white px-4 py-3 text-[15px] font-bold leading-snug text-zinc-800 shadow-sm shadow-brand-900/5 ${big ? "" : "rounded-bl-sm"}`}>
         {children}
       </p>

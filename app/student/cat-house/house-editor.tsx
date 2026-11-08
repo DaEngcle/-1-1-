@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, useTransition } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { CatRoom, ItemPreview } from "@/app/_ui/cat-room";
-import type { CatBreed, CatMood } from "@/lib/classroom/cat";
+import type { CatBreed, CatMood, CatStage } from "@/lib/classroom/cat";
 import {
   ITEMS,
   ITEM_BY_ID,
@@ -54,7 +54,10 @@ export function HouseEditor({
   mood,
   guest,
   today,
+  stage = 1,
 }: {
+  /** 내 고양이 성장 단계 */
+  stage?: CatStage;
   /** 오늘 날짜 (YYYY-MM-DD, 한국 시간): 오늘 특가·한정 아이템 */
   today: string;
   initial: Layout;
@@ -324,6 +327,7 @@ export function HouseEditor({
       <CatRoom
         layout={layout}
         breed={breed}
+        stage={stage}
         mood={mood}
         guest={guest}
         selected={sel}
