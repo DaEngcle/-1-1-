@@ -7,6 +7,7 @@ import { kstDate } from "./stats";
 import { FREE_VERB_SETS, hasFullVoca } from "./verbs";
 import { OPEN_GRAMMAR_UNITS, grammarLock } from "./grammar";
 import { parseCourseAnswers, withCurrentStage, type CourseAnswers } from "./course-questions";
+import { getRoleplayStars } from "./roleplay-data";
 import { buildCourse, doneSteps, pickToday, type CourseAccess, type CourseStep } from "./course";
 import { courseTopic, topicPhrases, type ChosenTopic, type TopicPhrase } from "./course-topics";
 import type { ChatTurn } from "./course-ai";
@@ -149,7 +150,7 @@ export async function getPracticeQueue(studentId: string, course: CourseRow, acc
 /** 코스 화면에 필요한 것 전부. 오늘 할 것은 하루 동안 고정해서 저장한다 */
 export async function getCourseView(studentId: string, course: CourseRow & { answers: CourseAnswers }, access: CourseAccess) {
   const supabase = createServerSupabaseClient();
-  const [stars, interviews, { count: shadowSince }, { count: villageDays }, rows] = await Promise.all([
+  const [stars, interviews, { count: shadowSince }, { count: villageDays }, rows, roleplayStars] = await Promise.all([
     fetchAll<{ deck: string; stars: number }>((from, to) =>
       supabase.from("voca_progress").select("deck, stars").eq("student_id", studentId).range(from, to),
     ),
@@ -159,6 +160,7 @@ export async function getCourseView(studentId: string, course: CourseRow & { ans
     supabase.from("submissions").select("id", { count: "exact", head: true }).eq("student_id", studentId).gte("created_at", course.createdAt),
     supabase.from("village_speak_usage").select("day", { count: "exact", head: true }).eq("student_id", studentId),
     phraseRows(studentId),
+    getRoleplayStars(studentId),
   ]);
   const steps: CourseStep[] = buildCourse(course.answers, course.topics, access);
   const done = doneSteps(steps, {
@@ -167,6 +169,7 @@ export async function getCourseView(studentId: string, course: CourseRow & { ans
     shadowSince: shadowSince ?? 0,
     villageSpoke: (villageDays ?? 0) > 0,
     drilled: new Set(rows.filter((r) => r.box > 0).map((r) => r.phrase_key)),
+    roleplays: new Set([...roleplayStars].filter(([, n]) => n > 0).map(([id]) => id)),
   });
 
   const day = kstDate(new Date());
@@ -201,6 +204,8 @@ export async function getCourseView(studentId: string, course: CourseRow & { ans
     bonusGot: todayDone && (bonusNow || course.bonusDay === day),
     practice: practiceQueue(course.topics, course.answers.minutes, access, rows),
     topics: topicProgress(course.topics, access, rows),
+    roleplayStars,
+    stars: new Map(stars.map((r) => [r.deck, r.stars ?? 0])),
   };
 }
 

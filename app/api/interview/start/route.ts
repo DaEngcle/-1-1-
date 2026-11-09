@@ -3,7 +3,7 @@ import { getVerifiedStudent } from "@/lib/classroom/dal";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { scenario } from "@/lib/classroom/interview-scenarios";
 import { talkAccess } from "@/lib/classroom/talk-access";
-import { aiReady, interviewerOpening } from "@/lib/classroom/interview-ai";
+import { aiReady, interviewerOpening, type Coach } from "@/lib/classroom/interview-ai";
 
 export const maxDuration = 30;
 
@@ -36,12 +36,12 @@ export async function POST(request: NextRequest) {
     .single();
   if (error || !data) return NextResponse.json({ error: "시작하지 못했어요. 다시 시도해 주세요." }, { status: 500 });
   // 첫 인사도 면접마다 다르게 (AI가 안 되면 기본 인사)
-  let opening = s.opening;
+  let opening: Coach & { reply: string } = { reply: s.opening };
   try {
     opening = await interviewerOpening(s, data.id);
-    await supabase.from("interview_sessions").update({ transcript: [{ role: "ai", text: opening }] }).eq("id", data.id);
+    await supabase.from("interview_sessions").update({ transcript: [{ role: "ai", text: opening.reply }] }).eq("id", data.id);
   } catch (e) {
     console.error("첫 인사 만들기 실패:", e);
   }
-  return NextResponse.json({ sessionId: data.id, reply: opening, left: access.left - 1 });
+  return NextResponse.json({ sessionId: data.id, ...opening, left: access.left - 1 });
 }

@@ -4,6 +4,26 @@ import { MAX_TURNS, QUESTION_BANK, type Scenario } from "./interview-scenarios";
 
 export type Turn = { role: "ai" | "me"; text: string };
 
+/** 면접관 한 마디에 같이 붙는 학생용 도움말 (같은 AI 응답에 함께 받는다, 추가 호출 없음) */
+export type Coach = {
+  /** 면접관 말 번역 */
+  ko?: string;
+  /** 짧은 한국어 미션: 무슨 질문이고 뭘 말하면 되는지 */
+  coach_ko?: string;
+  /** 자연스러운 예시 답 하나 (영어) */
+  hint?: string;
+};
+
+const COACH_RULES = `Also help the Korean student (they see this, the interviewer doesn't say it):
+- "ko": natural Korean translation of your line.
+- "coach_ko": ONE short Korean mission (max 40 Korean characters) saying what kind of question this is and what to include, e.g. "경력 질문이에요. 전에 했던 일과 기간을 말해 보세요."
+- "hint": ONE natural sample answer in simple English (max 20 words), matching what they've told you so far.`;
+
+function cleanCoach(d: { ko?: unknown; coach_ko?: unknown; hint?: unknown } | null): Coach {
+  const str = (v: unknown, n: number) => (typeof v === "string" && v.trim() ? v.trim().slice(0, n) : undefined);
+  return { ko: str(d?.ko, 200), coach_ko: str(d?.coach_ko, 80), hint: str(d?.hint, 200) };
+}
+
 export type InterviewFeedback = {
   result: string;
   score: number;
@@ -116,10 +136,13 @@ Sound like a real person talking, not a script: vary your wording every time, so
 /** 첫 인사 (면접마다 다르게). 실패하면 기본 인사 */
 export async function interviewerOpening(s: Scenario, key: string) {
   const system = `${systemPrompt(s, key)}
-Write ONLY your first line as ${s.name}: greet them, say your name and role in a natural way that fits today's situation, and ask one easy opening question. 1-2 short sentences, max 30 words, simple clear Australian English. Plain text only.`;
-  const text = await ask("claude-sonnet-5-5", system, `Example of the usual opening (do NOT copy it, make it different): "${s.opening}"`, 120, "low");
-  const line = text.replace(/^["']|["']$/g, "").trim();
-  return line.length > 5 ? line.slice(0, 300) : s.opening;
+Write your first line as ${s.name}: greet them, say your name and role in a natural way that fits today's situation, and ask one easy opening question. 1-2 short sentences, max 30 words, simple clear Australian English.
+${COACH_RULES}
+Reply ONLY with JSON: {"reply": "...", "ko": "...", "coach_ko": "...", "hint": "..."}`;
+  const text = await ask("claude-sonnet-5-5", system, `Example of the usual opening (do NOT copy it, make it different): "${s.opening}"`, 260, "low");
+  const data = parseJson<{ reply?: string; ko?: string; coach_ko?: string; hint?: string }>(text);
+  const line = (data?.reply ?? (data ? "" : text)).replace(/^["']|["']$/g, "").trim();
+  return line.length > 5 ? { reply: line.slice(0, 300), ...cleanCoach(data) } : { reply: s.opening };
 }
 
 /** 면접관의 다음 말 */
@@ -137,21 +160,23 @@ Rules:
 - If they ask you to repeat or say they didn't understand, repeat ONLY your last question in simpler words (don't start a new or old topic).
 - Never correct their English and never speak Korean. Stay in character.
 - After about 6-8 questions${mustEnd ? " (you must finish NOW)" : ""}, wrap up warmly: tell them what happens next (e.g. trial shift, call back) and say goodbye. Then set "done" to true.
-Reply ONLY with JSON: {"reply": "...", "done": false, "mood": "smile" | "neutral" | "thinking"}`;
+${COACH_RULES} When you are wrapping up (done = true), set "coach_ko" to a short Korean goodbye tip and "hint" to a natural closing line like "Thanks for your time."
+Reply ONLY with JSON: {"reply": "...", "done": false, "mood": "smile" | "neutral" | "thinking", "ko": "...", "coach_ko": "...", "hint": "..."}`;
   const askedBefore = turns.filter((t) => t.role === "ai").map((t, i) => `${i + 1}. ${t.text}`).join("\n");
   const text = await ask(
     "claude-sonnet-5-5",
     system,
     `Conversation so far:\n${transcriptText(turns, s)}\n\nThings you already said/asked (don't repeat these topics):\n${askedBefore}\n\nYour next line as ${s.name}:`,
-    300,
+    500,
     "low",
   );
-  const data = parseJson<{ reply?: string; done?: boolean; mood?: string }>(text);
+  const data = parseJson<{ reply?: string; done?: boolean; mood?: string; ko?: string; coach_ko?: string; hint?: string }>(text);
   const reply = (data?.reply ?? text.replace(/[{}"]/g, "")).trim().slice(0, 400);
   return {
     reply,
     done: Boolean(data?.done) || mustEnd,
     mood: data?.mood === "thinking" || data?.mood === "neutral" ? data.mood : "smile",
+    ...cleanCoach(data),
   };
 }
 

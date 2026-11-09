@@ -37,7 +37,7 @@ export function BottomNav({
   return (
     <>
       <nav className="fixed inset-x-3 bottom-[calc(10px+env(safe-area-inset-bottom))] z-40 sm:hidden">
-        <ul className="grid grid-cols-6 gap-1 rounded-[28px] border border-white/70 bg-white/95 p-1.5 shadow-[0_8px_30px_rgba(15,23,42,0.14)] backdrop-blur">
+        <ul style={{ gridTemplateColumns: `repeat(${primary.length + 1}, minmax(0, 1fr))` }} className="grid gap-1 rounded-[28px] border border-white/70 bg-white/95 p-1.5 shadow-[0_8px_30px_rgba(15,23,42,0.14)] backdrop-blur">
           {primary.map((p) => {
             const on = p.href === active && !moreActive;
             return (

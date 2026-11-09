@@ -23,10 +23,21 @@ export default async function VocaHomePage() {
       <section className="flex items-center gap-3 rounded-3xl bg-gradient-to-br from-violet-600 to-fuchsia-500 p-5 text-white shadow-lg">
         {student.catBreed && <CatSprite breed={student.catBreed} stage={stage} mood="happy" className="h-16 w-20 shrink-0" />}
         <div>
-          <h1 className="text-2xl font-extrabold">🎮 보카</h1>
-          <p className="text-sm text-white/85">게임처럼 매일 5분, 단어를 입에 붙여요.</p>
+          <h1 className="text-2xl font-extrabold">🗣️ 문장·표현</h1>
+          <p className="text-sm text-white/85">표현을 문장째로 외워서 일터에서 바로 써요.</p>
         </div>
       </section>
+
+      <Link
+        href="/student/practice"
+        className="flex items-center justify-between gap-3 rounded-3xl bg-brand-600 p-4 text-white shadow-sm transition-transform active:translate-y-0.5"
+      >
+        <span className="flex flex-col">
+          <span className="text-lg font-extrabold">🎭 상황 연습</span>
+          <span className="text-sm text-brand-100">내 일터 표현 익히기 → 상황극 → AI 실전 대화</span>
+        </span>
+        <span className="text-xl">→</span>
+      </Link>
 
       <Link
         href="/student/voca/verbs"
@@ -53,9 +64,9 @@ export default async function VocaHomePage() {
         href="/student/voca/course"
         className="flex flex-col gap-1 rounded-3xl border-2 border-sky-200 bg-white p-4 shadow-sm transition-transform active:translate-y-0.5"
       >
-        <span className="text-lg font-extrabold text-zinc-900">📚 과정별 단어</span>
+        <span className="text-lg font-extrabold text-zinc-900">📚 과정별 문장</span>
         <p className="text-sm text-zinc-600">
-          부트캠프·Level 1.0·2.0 수업에서 쉐도잉한 문장으로 주차별 복습. 빈칸 채우기 + 듣고 뜻 고르기.
+          부트캠프·Level 1.0·2.0 수업에서 쉐도잉한 문장을 주차별로 복습해요. 듣기 → 순서 맞추기 → 빈칸 → 말하기.
         </p>
       </Link>
 

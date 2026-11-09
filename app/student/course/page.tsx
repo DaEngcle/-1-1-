@@ -16,7 +16,7 @@ import { catStage } from "@/lib/classroom/cat-stage-data";
 
 export const metadata: Metadata = { title: "내 워홀 코스 · 다잉클" };
 
-const KIND_LABEL = { phrase: "표현", grammar: "문법", talk: "AI 면접", shadowing: "쉐도잉", village: "고양이 마을" } as const;
+const KIND_LABEL = { phrase: "표현", grammar: "문법", talk: "AI 면접", shadowing: "쉐도잉", village: "고양이 마을", roleplay: "상황극" } as const;
 
 export default async function CoursePage() {
   const student = await requireStudent();
@@ -61,6 +61,14 @@ export default async function CoursePage() {
           {doneCount}/{total}단계 완료 · 하루 {row.answers.minutes}분
         </p>
       </section>
+
+      <Link href="/student/practice" className="flex items-center justify-between gap-3 rounded-2xl border-2 border-brand-200 bg-white p-4 shadow-sm active:translate-y-0.5">
+        <span className="flex flex-col">
+          <span className="font-extrabold text-zinc-900">🎭 상황 연습에서 커리큘럼 보기</span>
+          <span className="text-xs text-zinc-500">이 코스 순서대로 표현 익히기 → 상황극 → AI 실전 대화</span>
+        </span>
+        <span className="text-lg text-brand-600">→</span>
+      </Link>
 
       <section className={`${cardClass} flex flex-col gap-3`}>
         <div className="flex items-center justify-between gap-2">

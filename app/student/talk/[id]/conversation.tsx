@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useTts } from "@/app/_ui/audio/use-tts";
 import { useRecorder } from "@/app/_ui/audio/use-recorder";
 import { usePref } from "@/app/_ui/prefs";
@@ -11,8 +11,27 @@ import { CatSprite } from "@/app/_ui/cat";
 import { useMyCat } from "@/app/_ui/cat-context";
 import type { Scenario } from "@/lib/classroom/interview-scenarios";
 import { PracticeLine } from "./practice-line";
+import { AnswerSheet, ChatScreen, HintPill, MissionCard, MyMessage, PartnerMessage, TypingBubble, type AnswerMode } from "@/app/_ui/chat/chat-ui";
+import { spokenWords } from "@/lib/classroom/sentence-practice";
 
-type Turn = { role: "ai" | "me"; text: string };
+type Turn = { role: "ai" | "me"; text: string; ko?: string; coach_ko?: string; hint?: string };
+/** 면접 한 번에 '다시 시도' 횟수 (서버와 같게) */
+const MAX_RETRIES = 3;
+
+/**
+ * 리포트가 나온 뒤 내 답마다 별: 코칭 '이렇게 말하면 더 좋아요'에 나온 답이면 2개 (아주 짧으면 1개), 아니면 3개.
+ * (답마다 따로 AI 채점을 하지 않고 이미 받은 코칭 리포트로만 정한다)
+ */
+function answerStars(text: string, fb: Feedback | null): number | undefined {
+  if (!fb) return undefined;
+  const mine = spokenWords(text).join(" ");
+  const fixed = fb.fixes.some((f) => {
+    const said = spokenWords(f.you_said).join(" ");
+    return said && (said === mine || mine.includes(said) || said.includes(mine));
+  });
+  if (!fixed) return 3;
+  return spokenWords(text).length <= 3 ? 1 : 2;
+}
 type Feedback = {
   result: string;
   score: number;
@@ -41,34 +60,39 @@ async function request(url: string, init: RequestInit): Promise<{ ok: boolean; d
 }
 
 export function Conversation({ scenario: s, ready }: { scenario: Scenario; ready: boolean }) {
-  const { play, stop, unlock, playingKey } = useTts();
+  const { play, stop, unlock } = useTts();
+  /** ✕로 녹음을 취소하면 녹음 결과를 보내지 않는다 */
+  const cancelRef = useRef(false);
   const recorder = useRecorder(
     MAX_ANSWER_SECONDS,
     (wav) => {
-      if (wav) void sendAnswer(wav);
+      if (cancelRef.current) {
+        cancelRef.current = false;
+        setPhase("listening");
+        return;
+      }
+      if (wav) void sendAnswer({ audio: wav });
       else setPhase("listening");
     },
     { keepContext: true },
   );
   // 실전: 면접관 말이 끝나면 바로 마이크가 켜지고, 말을 멈추면 자동 전송 · 연습: 버튼으로
   const [mode, setMode] = useState<"real" | "practice">("real");
+  const [answerMode, setAnswerMode] = useState<AnswerMode>("voice");
   const cat = useMyCat();
   const [phase, setPhase] = useState<Phase>("intro");
   const [turns, setTurns] = useState<Turn[]>([]);
   const [sessionId, setSessionId] = useState<string | null>(null);
-  const [mood, setMood] = useState<"smile" | "neutral" | "thinking">("smile");
   const subtitlesPref = usePref("interviewSubtitles");
   const [subtitlesToggled, setSubtitlesToggled] = useState<boolean | null>(null);
   const subtitles = subtitlesToggled ?? subtitlesPref;
+  const [revealed, setRevealed] = useState<Set<number>>(new Set());
   const [error, setError] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<Feedback | null>(null);
   const [ended, setEnded] = useState(false);
-  const bottomRef = useRef<HTMLDivElement | null>(null);
-  const talking = playingKey?.startsWith("iv:") ?? false;
-
-  useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
-  }, [turns, phase]);
+  /** 다음 답을 '다시 시도'로 보낼지 (지운 내 답·면접관 대답) */
+  const retryRef = useRef<Turn[] | null>(null);
+  const [retriesLeft, setRetriesLeft] = useState(MAX_RETRIES);
 
   /** 면접관 말하기 → 끝나면 학생 차례 (마지막이면 리포트) */
   async function say(text: string, last = false) {
@@ -78,8 +102,8 @@ export function Conversation({ scenario: s, ready }: { scenario: Scenario; ready
     else if (!heard) {
       // 소리가 안 나왔는데 녹음부터 시작하면 안 된다 → 직접 듣고 시작하게
       setPhase("listening");
-      setError("면접관 말이 재생되지 않았어요. 🔊 버튼으로 듣고 🎙 버튼을 눌러 대답해 주세요.");
-    } else if (mode === "real") startRecording();
+      setError("면접관 말이 재생되지 않았어요. 🔊로 듣고 🎙를 눌러 대답해 주세요.");
+    } else if (mode === "real" && answerMode === "voice") startRecording();
     else setPhase("listening");
   }
 
@@ -100,21 +124,27 @@ export function Conversation({ scenario: s, ready }: { scenario: Scenario; ready
       return;
     }
     setSessionId(data.sessionId);
-    setTurns([{ role: "ai", text: data.reply }]);
+    setTurns([{ role: "ai", text: data.reply, ko: data.ko, coach_ko: data.coach_ko, hint: data.hint }]);
     void say(data.reply);
   }
 
-  async function sendAnswer(blob: Blob) {
+  async function sendAnswer(answer: { audio?: Blob; text?: string }) {
     if (!sessionId) return;
     setPhase("thinking");
-    setMood("thinking");
     const form = new FormData();
     form.append("sessionId", sessionId);
-    form.append("audio", blob, "answer.wav");
+    if (answer.audio) form.append("audio", answer.audio, "answer.wav");
+    if (answer.text) form.append("text", answer.text);
+    const retrying = retryRef.current;
+    if (retrying) form.append("retry", "1");
     const { ok, data } = await request("/api/interview/turn", { method: "POST", body: form });
-    setMood("smile");
     if (!ok) {
       setError(data.error ?? "다시 말해 주세요.");
+      // 다시 시도가 막히면 지웠던 대화를 되돌린다
+      if (retrying) {
+        setTurns((t) => [...t, ...retrying]);
+        retryRef.current = null;
+      }
       setPhase("listening");
       return;
     }
@@ -123,19 +153,38 @@ export function Conversation({ scenario: s, ready }: { scenario: Scenario; ready
       setPhase("listening");
       return;
     }
+    retryRef.current = null;
+    if (typeof data.retriesLeft === "number") setRetriesLeft(data.retriesLeft);
     setError(null);
-    setTurns((t) => [...t, { role: "me", text: data.heard }, { role: "ai", text: data.reply }]);
-    setMood(data.mood ?? "smile");
+    setTurns((t) => [...t, { role: "me", text: data.heard }, { role: "ai", text: data.reply, ko: data.ko, coach_ko: data.coach_ko, hint: data.hint }]);
     if (data.done) setEnded(true);
     void say(data.reply, Boolean(data.done));
+  }
+
+  /** 마지막 내 답을 지우고 같은 질문에 다시 답하기 */
+  function retryLast() {
+    if (retriesLeft <= 0 || turns.length < 3 || phase === "recording" || phase === "thinking") return;
+    stop();
+    const removed = turns.slice(-2);
+    retryRef.current = removed;
+    setTurns(turns.slice(0, -2));
+    setEnded(false);
+    setError(null);
+    setPhase("listening");
   }
 
   function startRecording() {
     stop();
     unlock();
     setError(null);
+    cancelRef.current = false;
     setPhase("recording");
     void recorder.start({ autoStop: mode === "real" });
+  }
+
+  function cancelRecording() {
+    cancelRef.current = true;
+    recorder.stop();
   }
 
   async function finish() {
@@ -156,7 +205,8 @@ export function Conversation({ scenario: s, ready }: { scenario: Scenario; ready
     setPhase("report");
   }
 
-  const lastAi = [...turns].reverse().find((t) => t.role === "ai")?.text;
+  const lastAiIndex = turns.map((t) => t.role).lastIndexOf("ai");
+  const lastMeIndex = turns.map((t) => t.role).lastIndexOf("me");
 
   // ---------- 시작 전: 캐릭터 소개 + 미리 볼 표현 ----------
   if (phase === "intro") {
@@ -212,7 +262,7 @@ export function Conversation({ scenario: s, ready }: { scenario: Scenario; ready
               type="button"
               onClick={() => setMode(id)}
               className={`flex flex-col gap-1 rounded-2xl border-2 p-3 text-left ${
-                mode === id ? "border-[#6C5CFF] bg-[#F1EEFF]" : "border-slate-200 bg-white"
+                mode === id ? "border-brand-600 bg-brand-50" : "border-slate-200 bg-white"
               }`}
             >
               <span className="font-extrabold text-zinc-900">{title}</span>
@@ -225,7 +275,7 @@ export function Conversation({ scenario: s, ready }: { scenario: Scenario; ready
           type="button"
           disabled={!ready}
           onClick={start}
-          className="rounded-2xl bg-[#6C5CFF] py-4 text-lg font-extrabold text-white shadow-[0_4px_0_#4936D8] active:translate-y-[3px] active:shadow-none disabled:bg-slate-300 disabled:shadow-none"
+          className="rounded-2xl bg-brand-600 py-4 text-lg font-extrabold text-white shadow-[0_4px_0_var(--color-brand-800)] active:translate-y-[3px] active:shadow-none disabled:bg-slate-300 disabled:shadow-none"
         >
           {ready ? "면접 시작하기 🎤" : "🛠 AI 연결 준비 중이에요"}
         </button>
@@ -247,7 +297,7 @@ export function Conversation({ scenario: s, ready }: { scenario: Scenario; ready
             <div className="flex flex-col items-center gap-2 rounded-[28px] p-5 text-center shadow-sm" style={{ background: s.look.bg }}>
               <InterviewerFace id={s.id} look={s.look} className="h-28 w-28" />
               <p className="text-2xl font-extrabold text-zinc-900">{feedback.result}</p>
-              <p className="text-5xl font-black text-[#6C5CFF]">
+              <p className="text-5xl font-black text-brand-600">
                 {feedback.score}
                 <span className="text-lg font-bold text-zinc-500">점</span>
               </p>
@@ -282,7 +332,7 @@ export function Conversation({ scenario: s, ready }: { scenario: Scenario; ready
             )}
             {feedback.fixes.length > 0 && (
               <div className="flex flex-col gap-2 rounded-3xl bg-white p-4 shadow-sm">
-                <p className="text-sm font-bold text-[#6C5CFF]">✨ 이렇게 말하면 더 좋아요</p>
+                <p className="text-sm font-bold text-brand-600">✨ 이렇게 말하면 더 좋아요</p>
                 {feedback.fixes.map((f) => (
                   <div key={f.you_said} className="flex flex-col gap-1 rounded-2xl bg-slate-50 p-3 text-sm">
                     <p className="text-zinc-500 line-through decoration-rose-300">🗣 {f.you_said}</p>
@@ -347,32 +397,34 @@ export function Conversation({ scenario: s, ready }: { scenario: Scenario; ready
             </button>
           </div>
         )}
-        <details className="rounded-3xl bg-white p-4 text-sm shadow-sm">
-          <summary className="cursor-pointer font-bold text-zinc-800">💬 대화 다시 보기</summary>
-          <div className="mt-2 flex flex-col gap-1.5">
-            {turns.map((t, i) => (
-              <p key={i} className={t.role === "ai" ? "text-zinc-800" : "text-right text-[#5B4CFF]"}>
-                <b>{t.role === "ai" ? s.name : "나"}:</b> {t.text}
-              </p>
-            ))}
-          </div>
-        </details>
+        <div className="flex flex-col gap-3 rounded-3xl bg-white p-4 shadow-sm">
+          <p className="text-sm font-bold text-zinc-800">💬 대화 다시 보기 {feedback && <span className="font-semibold text-zinc-400">· 별은 코칭 리포트 기준</span>}</p>
+          {turns.map((t, i) =>
+            t.role === "ai" ? (
+              <PartnerMessage key={i} name={s.name} text={t.text} ko={t.ko} onPlay={() => play(t.text, "normal", `iv:${t.text}`, s.voice)} />
+            ) : (
+              <MyMessage key={i} text={t.text} stars={answerStars(t.text, feedback)} />
+            ),
+          )}
+        </div>
         <div className="grid grid-cols-2 gap-2 pb-2">
           <button
             type="button"
             onClick={() => {
               setTurns([]);
+              setRetriesLeft(MAX_RETRIES);
+              setRevealed(new Set());
               setSessionId(null);
               setFeedback(null);
               setEnded(false);
               setError(null);
               setPhase("intro");
             }}
-            className="rounded-2xl bg-[#6C5CFF] py-3 font-extrabold text-white shadow-[0_4px_0_#4936D8] active:translate-y-[3px] active:shadow-none"
+            className="rounded-2xl bg-brand-600 py-3 font-extrabold text-white shadow-[0_4px_0_var(--color-brand-800)] active:translate-y-[3px] active:shadow-none"
           >
             다시 도전
           </button>
-          <Link href="/student/talk" className="rounded-2xl bg-white py-3 text-center font-extrabold text-[#6C5CFF] ring-2 ring-[#DCD7FF]">
+          <Link href="/student/talk" className="rounded-2xl bg-white py-3 text-center font-extrabold text-brand-600 ring-2 ring-brand-100">
             다른 면접
           </Link>
         </div>
@@ -380,118 +432,89 @@ export function Conversation({ scenario: s, ready }: { scenario: Scenario; ready
     );
   }
 
-  // ---------- 대화 중 ----------
+  // ---------- 대화 중 (상황극과 같은 대화 화면) ----------
+  const busy = phase === "thinking" || phase === "talking";
+  const answered = turns.filter((t) => t.role === "me").length;
   return (
-    <section className="-mx-4 flex min-h-[80vh] flex-col gap-3 px-4 pb-4 pt-2 sm:mx-0 sm:rounded-[32px]" style={{ background: `linear-gradient(180deg, ${s.look.bg} 0%, #ffffff 70%)` }}>
-      <div className="flex items-center justify-between text-xs font-semibold text-zinc-600">
-        <span>
-          {s.emoji} {s.name} · {s.roleKo}
-        </span>
-        <button type="button" onClick={() => setSubtitlesToggled(!subtitles)} className="rounded-full bg-white/80 px-3 py-1 shadow-sm">
-          {subtitles ? "💬 자막 끄기" : "💬 자막 켜기"}
-        </button>
-      </div>
-
-      <div className="flex flex-col items-center">
-        {hasInterviewerVideo(s.id) ? (
-          <InterviewerVideo id={s.id} talking={talking} className="aspect-video w-full rounded-3xl shadow-lg" />
-        ) : (
-          <Interviewer look={s.look} talking={talking} mood={phase === "thinking" ? "thinking" : mood} className="h-48 w-48 drop-shadow-lg" />
-        )}
-        <p className="mt-1 h-5 text-sm font-semibold text-zinc-500">
-          {phase === "talking"
-            ? `${s.name}가 말하는 중…`
-            : phase === "thinking"
-              ? "🤔 듣고 생각하는 중…"
-              : phase === "recording"
-                ? mode === "real"
-                  ? "🎙 듣고 있어요… 말을 멈추면 자동으로 보내요"
-                  : "🎙 듣고 있어요. 다 말하면 버튼을 다시 눌러요"
-                : mode === "real"
-                  ? "🎙 버튼을 눌러 다시 말해 주세요"
-                  : "당신 차례예요!"}
-        </p>
-      </div>
-
-      <div className="flex max-h-[34vh] flex-col gap-2 overflow-y-auto rounded-3xl bg-white/70 p-3">
-        {turns.map((t, i) =>
-          t.role === "ai" ? (
-            <div key={i} className="max-w-[85%] self-start rounded-2xl rounded-tl-sm bg-white px-3 py-2 text-sm text-zinc-900 shadow-sm">
-              {subtitles ? t.text : <span className="text-zinc-400">🔊 (자막 꺼짐)</span>}
-            </div>
-          ) : (
-            <div key={i} className="max-w-[85%] self-end rounded-2xl rounded-tr-sm bg-[#6C5CFF] px-3 py-2 text-sm text-white shadow-sm">
-              {t.text}
-            </div>
-          ),
-        )}
-        <div ref={bottomRef} />
-      </div>
-
-      {error && <p className="rounded-xl bg-rose-50 p-2 text-center text-sm font-semibold text-rose-700">{error}</p>}
-      {recorder.error && phase !== "recording" && (
-        <p className="rounded-xl bg-amber-50 p-2 text-center text-sm font-semibold text-amber-800">{recorder.error}</p>
-      )}
-
-      <div className="mt-auto flex items-center justify-center gap-4">
-        <button
-          type="button"
-          disabled={!lastAi || phase === "recording" || phase === "thinking"}
-          onClick={() => lastAi && play(lastAi, "slow", `iv:${lastAi}`, s.voice)}
-          className="flex h-14 w-14 flex-col items-center justify-center rounded-full bg-white text-xl shadow disabled:opacity-40"
-          aria-label="천천히 다시 듣기"
-        >
-          🐢
-        </button>
-        {phase === "recording" ? (
+    <ChatScreen
+      title={`${s.emoji} ${s.title}`}
+      closeHref="/student/talk"
+      scrollKey={`${turns.length}-${phase}`}
+      sheet={
+        <div className="flex flex-col gap-2">
+          {error && <p className="rounded-xl bg-rose-50 p-2 text-center text-sm font-semibold text-rose-700">{error}</p>}
+          {recorder.error && phase !== "recording" && <p className="rounded-xl bg-amber-50 p-2 text-center text-sm font-semibold text-amber-800">{recorder.error}</p>}
+          <AnswerSheet
+            mode={answerMode}
+            onMode={setAnswerMode}
+            recording={phase === "recording"}
+            busy={busy}
+            disabled={ended || phase !== "listening"}
+            onMic={startRecording}
+            onCancel={cancelRecording}
+            onSend={recorder.stop}
+            onSubmitText={(text) => void sendAnswer({ text })}
+            level={recorder.level}
+            status={
+              phase === "talking"
+                ? `${s.name}가 말하는 중…`
+                : phase === "thinking"
+                  ? "듣고 생각하는 중…"
+                  : phase === "recording"
+                    ? mode === "real"
+                      ? `듣고 있어요 · 말을 멈추면 자동으로 보내요 (${recorder.seconds}s)`
+                      : `듣고 있어요 · 다 말했으면 ↑ (${recorder.seconds}s)`
+                    : ended
+                      ? "면접이 끝났어요"
+                      : retryRef.current
+                        ? "같은 질문에 다시 답해 보세요"
+                        : "내 차례예요"
+            }
+          />
           <button
             type="button"
-            onClick={recorder.stop}
-            className={`flex h-24 w-24 flex-col items-center justify-center rounded-full bg-rose-500 text-white shadow-[0_6px_0_#BE123C] active:translate-y-[3px] active:shadow-none ${mode === "real" ? "animate-pulse" : ""}`}
+            disabled={phase === "recording" || phase === "thinking" || answered < 2}
+            onClick={finish}
+            className="text-center text-xs font-semibold text-zinc-400 underline disabled:no-underline disabled:opacity-40"
           >
-            <span className="text-3xl">{mode === "real" ? "✋" : "■"}</span>
-            <span className="text-xs font-bold">{mode === "real" ? "다 말했어요" : `${recorder.seconds}s · 끝내기`}</span>
+            여기서 끝내고 리포트 받기
           </button>
-        ) : (
-          <button
-            type="button"
-            disabled={phase !== "listening" || ended}
-            onClick={startRecording}
-            className="flex h-24 w-24 flex-col items-center justify-center rounded-full bg-[#6C5CFF] text-white shadow-[0_6px_0_#4936D8] active:translate-y-[3px] active:shadow-none disabled:bg-slate-300 disabled:shadow-none"
-          >
-            <span className="text-3xl">🎙</span>
-            <span className="text-xs font-bold">말하기</span>
-          </button>
-        )}
-        <button
-          type="button"
-          disabled={!lastAi || phase === "recording" || phase === "thinking"}
-          onClick={() => lastAi && play(lastAi, "normal", `iv:${lastAi}`, s.voice)}
-          className="flex h-14 w-14 flex-col items-center justify-center rounded-full bg-white text-xl shadow disabled:opacity-40"
-          aria-label="다시 듣기"
-        >
-          🔊
-        </button>
-      </div>
-      {phase === "recording" && (
-        <div className="flex h-6 items-end justify-center gap-1">
-          {[0.1, 0.25, 0.4, 0.55, 0.7, 0.55, 0.4, 0.25, 0.1].map((t, i) => (
-            <span
-              key={i}
-              className={`w-1.5 rounded-full transition-all ${recorder.level >= t * 0.6 ? "bg-rose-500" : "bg-zinc-200"}`}
-              style={{ height: `${30 + t * 100}%` }}
-            />
-          ))}
         </div>
+      }
+    >
+      <div className="flex items-center justify-between text-xs text-zinc-500">
+        <span className="flex items-center gap-2">
+          <InterviewerFace id={s.id} look={s.look} className="h-9 w-9" />
+          {s.name} · {s.roleKo}
+        </span>
+        <button type="button" onClick={() => setSubtitlesToggled(!subtitles)} className="rounded-full bg-slate-100 px-3 py-1 font-semibold">
+          {subtitles ? "자막 끄기" : "자막 켜기"}
+        </button>
+      </div>
+      {turns.map((t, i) =>
+        t.role === "ai" ? (
+          <div key={i} className="flex flex-col gap-2">
+            <PartnerMessage
+              name={s.name}
+              text={t.text}
+              ko={t.ko}
+              onPlay={() => play(t.text, "normal", `iv:${t.text}`, s.voice)}
+              hidden={!subtitles && !revealed.has(i)}
+              onReveal={() => setRevealed((r) => new Set(r).add(i))}
+            />
+            {t.coach_ko && <MissionCard label="코치">{t.coach_ko}</MissionCard>}
+            {t.hint && i === lastAiIndex && !ended && <HintPill>{t.hint}</HintPill>}
+          </div>
+        ) : (
+          <MyMessage
+            key={i}
+            text={t.text}
+            onRetry={i === lastMeIndex && retriesLeft > 0 && phase === "listening" ? retryLast : undefined}
+            note={i === lastMeIndex && retriesLeft < MAX_RETRIES ? `다시 시도 ${retriesLeft}번 남음` : undefined}
+          />
+        ),
       )}
-      <button
-        type="button"
-        disabled={phase === "recording" || phase === "thinking" || turns.filter((t) => t.role === "me").length < 2}
-        onClick={finish}
-        className="text-center text-xs font-semibold text-zinc-500 underline disabled:no-underline disabled:opacity-40"
-      >
-        여기서 끝내고 리포트 받기
-      </button>
-    </section>
+      {phase === "thinking" && <TypingBubble name={s.name} />}
+    </ChatScreen>
   );
 }

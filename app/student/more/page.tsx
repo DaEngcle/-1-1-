@@ -14,6 +14,9 @@ const SECTIONS: { title: string; items: Item[] }[] = [
     title: "공부",
     items: [
       { href: "/student/course", icon: "cards", title: "내 워홀 코스", sub: "오늘의 연습 · 내 상황에 맞춘 순서" },
+      { href: "/student/practice", icon: "talk", title: "상황 연습", sub: "일터 표현 익히기 · 상황극 · AI 실전 대화" },
+      { href: "/student/voca", icon: "cards", title: "문장·표현", sub: "표현을 문장째로 외우기 · 동사 3단변화" },
+      { href: "/student/talk", icon: "talk", title: "AI 면접", sub: "면접관 캐릭터와 말로 면접 보기" },
       { href: "/student/grammar", icon: "book", title: "기초 문법", sub: "다니엘 쌤 강의 + 개념·예문·문제" },
       { href: "/student/news", icon: "news", title: "뉴스로 배우는 영어", sub: "매일 호주 뉴스로 · 핵심 표현 5개 + 퀴즈" },
       { href: "/student/pronunciation", icon: "sound", title: "발음 가이드", sub: "th·r·l·f·v 입모양부터" },
