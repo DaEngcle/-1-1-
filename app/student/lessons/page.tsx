@@ -8,6 +8,7 @@ import {
 } from "@/lib/supabase";
 import { requireStudent } from "@/lib/classroom/dal";
 import { COURSE_APPLY_LINKS, COURSE_SHORT, upgradePlanFor } from "@/lib/classroom/plans";
+import { ScrollToLesson } from "./scroll-to-lesson";
 
 /** 과정별 색 (Level 1.0은 교재 표지의 노란색) */
 const THEME: Record<string, { tab: string; badge: string; icon: string }> = {
@@ -281,7 +282,7 @@ export default async function StudentLessonsPage({
       .eq("student_id", student.id),
     supabase
       .from("video_progress")
-      .select("lesson_id, percent, completed_at")
+      .select("lesson_id, percent, completed_at, last_viewed_at")
       .eq("student_id", student.id),
   ]);
   const watch = new Map((progressRows ?? []).map((p) => [p.lesson_id, p]));
@@ -301,6 +302,11 @@ export default async function StudentLessonsPage({
       item.id,
     ]);
   }
+
+  // 이 과정에서 마지막으로 본 강의 (다시 보기 포함, 가장 최근에 영상을 튼 것)
+  const lastLesson = lessons
+    .filter((l) => openIds.has(l.id) && watch.get(l.id)?.last_viewed_at)
+    .sort((a, b) => String(watch.get(b.id)!.last_viewed_at).localeCompare(String(watch.get(a.id)!.last_viewed_at)))[0];
 
   const weeks = new Map<number, { title: string; lessons: Lesson[] }>();
   for (const l of lessons) {
@@ -370,6 +376,25 @@ export default async function StudentLessonsPage({
           )}
         </section>
       )}
+      {lastLesson && (
+        <>
+          <ScrollToLesson id={lastLesson.id} />
+          <Link
+            href={`/student/lessons/${lastLesson.id}`}
+            className="flex items-center justify-between gap-3 rounded-2xl border border-brand-200 bg-brand-50 px-4 py-3"
+          >
+            <span className="flex flex-col">
+              <span className="text-xs font-semibold text-brand-700">▶ 이어 보기</span>
+              <span className="font-bold text-zinc-900">
+                {lastLesson.kind === "day" ? `Day ${String(lastLesson.day_number).padStart(2, "0")} · ${lastLesson.title}` : (lastLesson.title_ko ?? lastLesson.title)}
+              </span>
+            </span>
+            <span className="shrink-0 text-sm text-zinc-600">
+              {watch.get(lastLesson.id)?.completed_at ? "수강 완료" : `${watch.get(lastLesson.id)?.percent ?? 0}%`}
+            </span>
+          </Link>
+        </>
+      )}
       {lessons.some((l) => l.video_live) && (
         <p className="rounded-lg bg-slate-100 px-3 py-1.5 text-xs text-zinc-600">
           📼 Live 표시가 있는 강의는 수업 녹화본이에요. VOD 강의가 준비되면
@@ -412,8 +437,9 @@ export default async function StudentLessonsPage({
               return (
                 <Link
                   key={l.id}
+                  id={`lesson-${l.id}`}
                   href={`/student/lessons/${l.id}`}
-                  className="flex items-center justify-between gap-3 px-4 py-3 hover:bg-brand-50"
+                  className={`flex scroll-mt-24 items-center justify-between gap-3 px-4 py-3 hover:bg-brand-50 ${lastLesson?.id === l.id ? "bg-brand-50/70" : ""}`}
                 >
                   <span className="flex flex-col">
                     <span className="text-xs text-zinc-500">

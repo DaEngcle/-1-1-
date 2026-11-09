@@ -84,7 +84,7 @@ export async function POST(request: NextRequest) {
     if (position != null) {
       await supabase
         .from("video_progress")
-        .update({ last_position: position })
+        .update({ last_position: position, last_viewed_at: new Date().toISOString() })
         .eq("student_id", student.id)
         .eq("lesson_id", lessonId);
     }
@@ -106,6 +106,7 @@ export async function POST(request: NextRequest) {
     completed_at: completedAt,
     ...(position != null ? { last_position: position } : {}),
     updated_at: new Date().toISOString(),
+    last_viewed_at: new Date().toISOString(),
   });
   if (error) {
     console.error("시청 기록 저장 실패:", error.message);

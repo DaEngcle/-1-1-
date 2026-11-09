@@ -122,7 +122,7 @@ export default async function StudentLessonPage({
   return (
     <>
       <div className="flex flex-col gap-1">
-        <Link href={`/student/lessons?course=${lesson.course_id}`} className="text-xs text-zinc-500">
+        <Link href={`/student/lessons?course=${lesson.course_id}#lesson-${lesson.id}`} className="text-xs text-zinc-500">
           ← Week {lesson.week_number} · {lesson.week_title}
         </Link>
         <h1 className="text-xl font-bold text-zinc-900">{heading}</h1>
