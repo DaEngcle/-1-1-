@@ -80,7 +80,7 @@ async function main() {
       continue;
     }
     const out = join(outDir, `day${String(day).padStart(2, "0")}.m4a`);
-    execFileSync("ffmpeg", ["-y", "-v", "error", "-i", pick.file, "-vn", "-ac", "1", "-ar", "24000", "-c:a", "aac", "-b:a", "48k", "-movflags", "+faststart", out]);
+    execFileSync("ffmpeg", ["-y", "-v", "error", "-i", pick.file, "-vn", "-ac", "1", "-ar", "16000", "-c:a", "aac", "-b:a", "24k", "-movflags", "+faststart", out]);
     const up = await supabase.storage
       .from("lesson-audio")
       .upload(path, readFileSync(out), { contentType: "audio/mp4", upsert: true });
