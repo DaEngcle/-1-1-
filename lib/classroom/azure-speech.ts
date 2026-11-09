@@ -69,6 +69,35 @@ function escapeXml(text: string) {
     .replace(/'/g, "&apos;");
 }
 
+/**
+ * 기계 음성이 이상하게 읽는 호주 구어 표현: 화면 글자는 그대로 두고 읽는 소리만 바꾼다.
+ * (예: G'day를 "지 데이"로 읽는 문제). 바꾸면 PRONOUNCE_VERSION을 올려 예전 캐시를 안 쓰게 한다.
+ */
+export const PRONOUNCE_VERSION = 1;
+// 긴 표현부터 (한 번에 하나만 바뀌게 한 정규식으로 묶는다)
+const PRONOUNCE: [string, string][] = [
+  ["How ya going", "How yuh goin"],
+  ["G'?day", "gidday"],
+  ["arvo", "ahvo"],
+  ["ya", "yuh"],
+];
+const PRONOUNCE_RE = new RegExp(PRONOUNCE.map(([src]) => `\\b(${src})\\b`).join("|"), "gi");
+/** 바꿔 읽을 말이 있는지 (캐시 키에 버전을 넣을지 정할 때) */
+export function needsPronounceFix(text: string) {
+  return new RegExp(PRONOUNCE_RE.source, "i").test(text);
+}
+/** 원문을 이스케이프하고, 바꿔 읽을 부분은 <sub alias>로 감싼다 */
+function withPronounce(text: string) {
+  let out = "";
+  let last = 0;
+  for (const m of text.matchAll(PRONOUNCE_RE)) {
+    const i = m.slice(1).findIndex((g) => g !== undefined);
+    out += escapeXml(text.slice(last, m.index)) + `<sub alias="${PRONOUNCE[i][1]}">${escapeXml(m[0])}</sub>`;
+    last = m.index! + m[0].length;
+  }
+  return out + escapeXml(text.slice(last));
+}
+
 /** Azure 신경망 TTS로 mp3 생성 */
 export async function synthesizeSpeech(
   text: string,
@@ -82,7 +111,8 @@ export async function synthesizeSpeech(
   const name = TTS_VOICES[voice];
   const lang = name.slice(0, 5);
   // 보통 속도는 그대로 읽게 둔다 (속도 태그를 안 씌우는 게 더 자연스럽다)
-  let body = speed === "normal" ? escapeXml(text) : `<prosody rate="${TTS_SPEEDS[speed]}">${escapeXml(text)}</prosody>`;
+  const spoken = withPronounce(text);
+  let body = speed === "normal" ? spoken : `<prosody rate="${TTS_SPEEDS[speed]}">${spoken}</prosody>`;
   if (hasAuAccent(voice)) body = `<lang xml:lang="en-AU">${body}</lang>`;
   const ssml = `<speak version="1.0" xml:lang="${lang}"><voice name="${name}">${body}</voice></speak>`;
 
