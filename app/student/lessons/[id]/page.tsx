@@ -13,6 +13,7 @@ import {
 import { requireStudent } from "@/lib/classroom/dal";
 import { VideoEmbed } from "@/app/_ui/video-embed";
 import { TrackedVideo } from "@/app/_ui/tracked-video";
+import { LessonAudioPlayer } from "@/app/_ui/lesson-audio-player";
 import { youTubeVideoId } from "@/lib/classroom/youtube";
 import { SentencePractice, type PracticeResult } from "@/app/_ui/practice/sentence-practice";
 import type { WordResult } from "@/lib/classroom/azure-speech";
@@ -49,6 +50,7 @@ export default async function StudentLessonPage({
     { data: neighborRows },
     { data: progressRow },
     { data: subRows },
+    audioUrl,
   ] = await Promise.all([
     supabase.from("lesson_items").select("*").eq("lesson_id", id).order("item_order"),
     supabase
@@ -89,6 +91,13 @@ export default async function StudentLessonPage({
       .eq("student_id", student.id)
       .eq("lesson_items.lesson_id", id)
       .order("created_at", { ascending: false }),
+    // 소리로 듣기: 비공개 버킷이라 볼 수 있는 학생에게만 6시간짜리 서명 URL (위에서 수강 권한 확인을 통과한 경우만 여기까지 온다)
+    lesson.audio_path && lesson.video_url
+      ? supabase.storage
+          .from("lesson-audio")
+          .createSignedUrl(lesson.audio_path, 6 * 60 * 60)
+          .then(({ data }) => data?.signedUrl ?? null)
+      : Promise.resolve(null),
   ]);
   const lessonVideoId = youTubeVideoId(lesson.video_url);
   const items = (itemRows ?? []) as LessonItem[];
@@ -175,6 +184,14 @@ export default async function StudentLessonPage({
           ) : (
             <VideoEmbed url={lesson.video_url} title={heading} />
           )}
+        </section>
+      )}
+
+      {audioUrl && (
+        <section className="flex flex-col gap-2">
+          <h2 className="font-bold text-zinc-900">🎧 소리로 듣기 <span className="text-xs font-semibold text-zinc-500">화면 꺼도 재생</span></h2>
+          <p className="text-xs text-zinc-500">화면을 꺼도 계속 들려요. 들은 만큼 수강 기록에도 들어가요.</p>
+          <LessonAudioPlayer lessonId={lesson.id} src={audioUrl} title={heading} artwork="/icon-512.png" />
         </section>
       )}
 

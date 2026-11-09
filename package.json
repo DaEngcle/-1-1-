@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "seed:contents": "tsx --env-file=.env.local scripts/seed-contents.ts",
-    "seed:bootcamp": "tsx --env-file=.env.local scripts/seed-bootcamp.ts"
+    "seed:bootcamp": "tsx --env-file=.env.local scripts/seed-bootcamp.ts",
+    "audio:upload": "tsx --env-file=.env.local scripts/upload-lesson-audio.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.133.0",

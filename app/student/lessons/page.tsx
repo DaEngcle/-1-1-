@@ -267,7 +267,7 @@ export default async function StudentLessonsPage({
     supabase
       .from("lessons")
       .select(
-        "id, course_id, sort_order, week_number, week_title, kind, day_number, title, title_ko, video_url, video_live, is_published",
+        "id, course_id, sort_order, week_number, week_title, kind, day_number, title, title_ko, video_url, video_live, audio_path, is_published",
       )
       // 아직 공개 안 한 레슨도 '공개 예정'으로 목록에 보여준다
       .eq("course_id", course.id)
@@ -471,6 +471,11 @@ export default async function StudentLessonsPage({
                         {watch.get(l.id)?.completed_at
                           ? "수강 완료"
                           : `${watch.get(l.id)?.percent ?? 0}%`}
+                      </span>
+                    )}
+                    {l.audio_path && l.video_url && (
+                      <span className="rounded-full bg-zinc-100 px-2 py-0.5 text-xs text-zinc-600" title="소리로 듣기 (화면 꺼도 재생)">
+                        🎧 듣기
                       </span>
                     )}
                     {items.length > 0 && (

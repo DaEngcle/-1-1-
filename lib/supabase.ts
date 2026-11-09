@@ -99,6 +99,8 @@ export interface Lesson {
   video_live?: boolean;
   /** 교재 영상(원어민 대화 클립): storage clips 버킷 안 경로 */
   clip_path?: string | null;
+  /** 소리로 듣기: storage lesson-audio 버킷 안 경로 (예: level1/day05.m4a) */
+  audio_path?: string | null;
   description: string | null;
   is_published: boolean;
   created_at: string;
