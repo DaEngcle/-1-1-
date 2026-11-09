@@ -103,6 +103,7 @@ const GEAR_FOR_JOB: Record<JobId, GearId> = {
   housekeeping: "mop",
   cleaning: "mop",
   hotel: "tie",
+  resort: "tie",
   care: "heart",
   childcare: "heart",
   animal: "heart",

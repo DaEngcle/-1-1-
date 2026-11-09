@@ -25,6 +25,7 @@ export const JOBS = [
   { id: "housekeeping", label: "하우스키핑", emoji: "🛏️" },
   { id: "cleaning", label: "청소 (사무실·상가)", emoji: "🧽" },
   { id: "hotel", label: "호텔 프런트", emoji: "🛎️" },
+  { id: "resort", label: "리조트", emoji: "🏝️" },
   { id: "farm", label: "농장", emoji: "🍓" },
   { id: "factory", label: "공장·육가공", emoji: "🏭" },
   { id: "construction", label: "건설·노무", emoji: "🦺" },
@@ -62,7 +63,7 @@ export const WORRIES = [
 /** 직군 고르기 화면의 묶음 (소제목). 보기 id는 JOBS와 같다 */
 export const JOB_GROUPS: { title: string; jobs: JobId[] }[] = [
   { title: "카페·음식", jobs: ["cafe", "kitchen", "serving", "takeaway", "bakery"] },
-  { title: "호텔·청소", jobs: ["hotel", "housekeeping", "cleaning"] },
+  { title: "호텔·청소", jobs: ["hotel", "resort", "housekeeping", "cleaning"] },
   { title: "케어", jobs: ["care", "childcare", "animal"] },
   { title: "뷰티", jobs: ["salon"] },
   { title: "리테일", jobs: ["retail", "fashion", "servo"] },

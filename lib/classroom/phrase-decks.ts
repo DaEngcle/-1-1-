@@ -797,6 +797,23 @@ const JOBS: PhraseSet[] = [
       p("bedtime", "잘 시간", "Bedtime is at seven thirty.", "7시 반이 잘 시간이에요."),
     ],
   },
+  {
+    id: 23,
+    title: "리조트 (화상 면접·근무)",
+    emoji: "🏝️",
+    items: [
+      p("resort", "리조트", "I'd love to work at a resort on the island.", "섬에 있는 리조트에서 꼭 일해 보고 싶어요."),
+      p("staff accommodation", "직원 숙소", "Is staff accommodation provided?", "직원 숙소가 제공되나요?"),
+      p("food and beverage", "식음료 부서 (F&B)", "I'm applying for a food and beverage role.", "식음료 부서 자리에 지원했어요.", "줄여서 F&B라고 해요"),
+      p("minimum commitment", "최소 근무 기간", "What's the minimum commitment for this role?", "이 자리는 최소 몇 달 일해야 해요?", "리조트는 3~6개월을 요구하는 곳이 많아요"),
+      p("remote location", "외딴 곳", "I'm comfortable living in a remote location.", "외딴 곳에서 지내는 것도 괜찮아요."),
+      p("can you hear me", "제 소리 들리세요?", "Hi, can you hear me okay?", "안녕하세요, 제 목소리 잘 들리세요?", "화상 면접 시작할 때"),
+      p("you cut out", "(소리·화면이) 끊겼어요", "Sorry, you cut out for a second. Could you say that again?", "죄송해요, 잠깐 끊겼어요. 다시 말씀해 주시겠어요?"),
+      p("I'm currently doing", "지금 ~를 하고 있어요", "I'm currently doing farm work for my second-year visa.", "지금 세컨 비자 때문에 농장 일을 하고 있어요."),
+      p("available from", "~부터 일할 수 있어요", "I'm available from the first of December.", "12월 1일부터 일할 수 있어요."),
+      p("Do you have any questions for us", "저희한테 궁금한 거 있으세요?", "Do you have any questions for us? – Yes, what does a typical day look like?", "궁금한 거 있으세요? – 네, 보통 하루가 어떻게 돌아가나요?"),
+    ],
+  },
 ];
 
 export const PHRASE_DECKS: PhraseDeck[] = [
@@ -828,7 +845,7 @@ export const PHRASE_DECKS: PhraseDeck[] = [
     id: "jobs",
     title: "직군별 일터 영어",
     emoji: "🧑‍🍳",
-    desc: "카페·서빙·빵집·청소·농장·공장·건설·기술직·리테일·옷가게·호텔·요양·미용·동물·아이 돌보기 등 워홀 일터 20곳, 그리고 어느 일터에서나 쓰는 근무·손님 응대 표현 220개.",
+    desc: "카페·서빙·빵집·청소·농장·공장·건설·기술직·리테일·옷가게·호텔·요양·미용·동물·아이 돌보기 등 리조트까지 워홀 일터 21곳, 그리고 어느 일터에서나 쓰는 근무·손님 응대 표현 230개.",
     quizLabel: "🧑‍🍳 일터 영어",
     sets: JOBS,
   },
