@@ -7,7 +7,7 @@ import type { TimelineItem, TimelineSection } from "@/app/_ui/chat/step-timeline
 /** 상황 연습에서 보여 주는 단계 종류 */
 export const HUB_KINDS = new Set(["phrase", "roleplay", "talk"]);
 
-export const HUB_KIND_LABEL: Record<string, string> = { phrase: "표현 익히기", roleplay: "상황극", talk: "실전 대화" };
+export const HUB_KIND_LABEL: Record<string, string> = { phrase: "표현 익히기", roleplay: "실전 상황", talk: "실전 대화" };
 
 export function hubSteps(steps: CourseStep[]) {
   return steps.filter((s) => HUB_KINDS.has(s.kind));

@@ -6,7 +6,7 @@ import { phraseDeck } from "./phrase-decks";
 import { grammarDeck, grammarUnit } from "./grammar";
 import type { CourseAnswers, JobId, StageId } from "./course-questions";
 import { courseTopic, type ChosenTopic } from "./course-topics";
-import { ROLEPLAYS, TOPIC_FOR_JOB, roleplay, type RoleplayJob } from "./roleplays";
+import { ROLEPLAYS, TOPIC_FOR_JOB, lessonHref, roleplay, type RoleplayJob } from "./roleplays";
 
 export type CourseStepKind = "phrase" | "grammar" | "talk" | "shadowing" | "village" | "roleplay";
 
@@ -34,7 +34,7 @@ export type CourseAccess = {
   maxGrammarUnit: number;
 };
 
-const MIN = { phrase: 5, grammar: 10, talk: 10, shadowing: 5, village: 5, roleplay: 3 } as const;
+const MIN = { phrase: 5, grammar: 10, talk: 10, shadowing: 5, village: 5, roleplay: 8 } as const;
 /** 직군 토픽 하나에 코스로 넣는 상황극 수 (나머지는 상황 연습 화면에서) */
 const ROLEPLAYS_PER_JOB = 2;
 /** 쉐도잉 한 단계 = 이만큼 문장 제출 */
@@ -243,9 +243,9 @@ function toStep(r: Ref, access: CourseAccess): Omit<CourseStep, "week"> | null {
       kind: "roleplay",
       emoji: rp.emoji,
       title: rp.title,
-      sub: `상황극 · STEP ${rp.step} · ${rp.desc}`,
+      sub: `리스닝 · 표현 · 롤플레잉 · ${rp.desc}`,
       why: r.why,
-      href: `/student/roleplay/${rp.id}`,
+      href: lessonHref(rp),
       minutes: MIN.roleplay,
     };
   }

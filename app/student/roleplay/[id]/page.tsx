@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { requireStudent } from "@/lib/classroom/dal";
-import { roleplay } from "@/lib/classroom/roleplays";
+import { lessonHref, roleplay } from "@/lib/classroom/roleplays";
 import { FREE_ROLEPLAYS_PER_DAY, roleplayQuota } from "@/lib/classroom/roleplay-data";
 import { RoleplayPlayer } from "./roleplay-player";
 
@@ -13,7 +13,7 @@ export default async function RoleplayPage({ params }: { params: Promise<{ id: s
   const r = roleplay((await params).id);
   if (!r) notFound();
   const quota = await roleplayQuota(student);
-  const back = `/student/practice/${r.job}?tab=roleplay`;
+  const back = lessonHref(r);
   if (!quota.unlimited && quota.left <= 0 && !quota.started.includes(r.id)) {
     return (
       <section className="flex flex-col items-center gap-3 rounded-3xl bg-white p-6 text-center shadow-sm">

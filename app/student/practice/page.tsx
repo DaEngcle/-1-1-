@@ -8,7 +8,8 @@ import { courseAccess, getCourseRow, getCourseView } from "@/lib/classroom/cours
 import { pickToday } from "@/lib/classroom/course";
 import { PHRASE_DECKS } from "@/lib/classroom/phrase-decks";
 import { ROLEPLAYS } from "@/lib/classroom/roleplays";
-import { FREE_ROLEPLAYS_PER_DAY, getRoleplayStars, roleplayUnlimited } from "@/lib/classroom/roleplay-data";
+import { FREE_ROLEPLAYS_PER_DAY, roleplayUnlimited } from "@/lib/classroom/roleplay-data";
+import { getLessonProgress } from "@/lib/classroom/lesson-progress";
 import { HUB_KIND_LABEL, curriculumSections, hubSteps, orderedJobs } from "@/lib/classroom/practice-hub";
 import { CatSprite } from "@/app/_ui/cat";
 import { StepTimeline } from "@/app/_ui/chat/step-timeline";
@@ -25,7 +26,7 @@ export default async function PracticeHubPage() {
   const name = student.nickname ?? maskName(student.name);
   const breed = student.catBreed ?? "cheese";
   const view = row?.answers ? await getCourseView(student.id, { ...row, answers: row.answers }, access) : null;
-  const rpStars = view?.roleplayStars ?? (await getRoleplayStars(student.id));
+  const lessons = await getLessonProgress(student.id);
 
   const steps = view ? hubSteps(view.steps) : [];
   const done = view?.done ?? new Set<string>();
@@ -137,12 +138,12 @@ export default async function PracticeHubPage() {
       <section className="flex flex-col gap-2">
         <div className="flex items-end justify-between">
           <h2 className="text-sm font-bold text-zinc-500">일터별로 연습하기</h2>
-          {!roleplayUnlimited(student) && <span className="text-[11px] text-zinc-400">무료회원 상황극 하루 {FREE_ROLEPLAYS_PER_DAY}개</span>}
+          {!roleplayUnlimited(student) && <span className="text-[11px] text-zinc-400">무료회원 롤플레잉 하루 {FREE_ROLEPLAYS_PER_DAY}개</span>}
         </div>
         <ul className="grid grid-cols-2 gap-2 sm:grid-cols-3">
           {jobs.map((j) => {
             const list = ROLEPLAYS.filter((r) => r.job === j.id);
-            const cleared = list.filter((r) => (rpStars.get(r.id) ?? 0) > 0).length;
+            const cleared = list.filter((r) => lessons.done(r.id)).length;
             return (
               <li key={j.id}>
                 <Link
@@ -152,7 +153,7 @@ export default async function PracticeHubPage() {
                   <span className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-50 text-2xl">{j.emoji}</span>
                   <span className="text-sm font-extrabold leading-snug text-zinc-900">{j.label}</span>
                   <span className="text-[11px] text-zinc-500">
-                    {courseJobs.has(j.id) ? "내 일터 · " : ""}상황극 {cleared}/{list.length}
+                    {courseJobs.has(j.id) ? "내 일터 · " : ""}상황 {cleared}/{list.length}
                   </span>
                 </Link>
               </li>
