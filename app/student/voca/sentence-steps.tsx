@@ -60,76 +60,94 @@ function Progress({ at, total }: { at: number; total: number }) {
   );
 }
 
-/* ───────── 1. 문장으로 익히기 ───────── */
+/* ───────── 1. 먼저 떠올리기 (문제 먼저, 정답은 나중에) ───────── */
 
 export function StudyCards({ items, onFinish }: { items: Phrase[]; onFinish: () => void }) {
+  // 몰랐던 문장은 판 끝에 한 번 더 낸다
+  const [queue, setQueue] = useState<Phrase[]>(items);
   const [i, setI] = useState(0);
-  const [showKo, setShowKo] = useState(false);
-  const touchX = useRef<number | null>(null);
+  const [revealed, setRevealed] = useState(false);
+  const [hint, setHint] = useState(false);
   const { play, stop } = useTts();
-  const x = items[i];
-  const last = i + 1 >= items.length;
+  const x = queue[i];
+  const firstPass = i < items.length;
 
-  function go(n: number) {
-    if (n < 0 || n >= items.length) return;
-    stop();
-    setShowKo(false);
-    setI(n);
+  function reveal() {
+    setRevealed(true);
+    play(x.example);
   }
+  function next(knew: boolean) {
+    stop();
+    const q = !knew && firstPass ? [...queue, x] : queue;
+    if (i + 1 >= q.length) {
+      onFinish();
+      return;
+    }
+    setQueue(q);
+    setRevealed(false);
+    setHint(false);
+    setI(i + 1);
+  }
+  const initials = x.term
+    .split(/\s+/)
+    .map((w) => w[0] + "_".repeat(Math.max(0, w.replace(/[^A-Za-z']/g, "").length - 1)))
+    .join(" ");
 
   return (
     <section className="flex flex-col gap-3">
-      <Progress at={i} total={items.length} />
-      <div
-        className="flex min-h-[260px] flex-col gap-3 rounded-3xl border border-slate-200 bg-white p-5"
-        onTouchStart={(e) => (touchX.current = e.touches[0].clientX)}
-        onTouchEnd={(e) => {
-          if (touchX.current === null) return;
-          const dx = e.changedTouches[0].clientX - touchX.current;
-          touchX.current = null;
-          if (dx < -50) go(i + 1);
-          else if (dx > 50) go(i - 1);
-        }}
-      >
-        <p className="text-sm font-bold text-teal-700">
-          {x.term} {x.ko && <span className="font-normal text-zinc-500">· {x.ko}</span>}
+      <Progress at={Math.min(i, items.length - 1)} total={items.length} />
+      <div className="flex min-h-[260px] flex-col gap-3 rounded-3xl border border-slate-200 bg-white p-5">
+        {!firstPass && <p className="text-xs font-bold text-amber-600">아까 헷갈린 문장, 한 번 더!</p>}
+        <p className="text-sm font-bold text-zinc-500">영어로 어떻게 말할까요?</p>
+        <p className="text-[20px] font-bold leading-snug text-zinc-900">
+          <KoHighlighted x={x} />
         </p>
-        <p className="text-[22px] font-bold leading-snug text-zinc-900">
-          <Highlighted example={x.example} term={x.term} />
-        </p>
-        <div className="flex gap-2">
-          <button type="button" onClick={() => play(x.example)} className={soft}>
-            🔊 듣기
+        {!revealed && (
+          <>
+            <p className="text-sm text-zinc-500">정답을 보기 전에 소리 내서 먼저 말해 보세요.</p>
+            {hint ? (
+              <p className="rounded-xl bg-amber-50 px-3 py-2 text-sm text-amber-800">
+                💡 핵심 표현: <b className="font-mono tracking-wide">{initials}</b>
+                {x.ko && <span className="text-amber-700"> ({x.ko})</span>}
+              </p>
+            ) : (
+              <button type="button" onClick={() => setHint(true)} className="self-start rounded-full border border-slate-200 px-3 py-1.5 text-sm font-bold text-zinc-600">
+                💡 힌트 보기
+              </button>
+            )}
+          </>
+        )}
+        {revealed && (
+          <div className="flex flex-col gap-3 rounded-2xl bg-teal-50/60 p-4">
+            <p className="text-[22px] font-bold leading-snug text-zinc-900">
+              <Highlighted example={x.example} term={x.term} />
+            </p>
+            <div className="flex gap-2">
+              <button type="button" onClick={() => play(x.example)} className={soft}>
+                🔊 다시 듣기
+              </button>
+              <button type="button" onClick={() => play(x.example, "slow")} className={soft}>
+                🐢 천천히
+              </button>
+            </div>
+            {x.note && <p className="text-xs text-amber-700">💡 {x.note}</p>}
+          </div>
+        )}
+      </div>
+      {!revealed ? (
+        <button type="button" onClick={reveal} className={primary}>
+          정답 보기
+        </button>
+      ) : (
+        <div className="grid grid-cols-2 gap-2">
+          <button type="button" onClick={() => next(false)} className="rounded-2xl bg-slate-100 py-3 text-lg font-extrabold text-zinc-600">
+            몰랐어요
           </button>
-          <button type="button" onClick={() => play(x.example, "slow")} className={soft}>
-            🐢 천천히
+          <button type="button" onClick={() => next(true)} className={primary}>
+            맞혔어요
           </button>
         </div>
-        {showKo ? (
-          <p className="text-[15px] text-zinc-600">
-            <KoHighlighted x={x} />
-          </p>
-        ) : (
-          <button type="button" onClick={() => setShowKo(true)} className="self-start rounded-lg bg-slate-100 px-3 py-1.5 text-sm font-bold text-slate-500">
-            번역 보기
-          </button>
-        )}
-        {x.note && <p className="text-xs text-amber-700">💡 {x.note}</p>}
-      </div>
-      <p className="text-center text-xs text-zinc-400">소리 내서 두세 번 따라 읽고 넘기세요. 옆으로 밀어도 넘어가요.</p>
-      <div className="grid grid-cols-[1fr_2fr] gap-2">
-        <button
-          type="button"
-          onClick={() => go(i - 1)}
-          disabled={i === 0}
-          className="rounded-2xl bg-slate-100 py-3 text-lg font-extrabold text-zinc-600 disabled:text-zinc-300"
-        >
-          이전
-        </button>
-        <button type="button" onClick={() => (last ? onFinish() : go(i + 1))} className={primary}>
-          {last ? "다 봤어요 →" : "다음"}
-        </button>
-      </div>
+      )}
     </section>
   );
 }
@@ -556,7 +574,7 @@ function SayItCard({ turn, onNext }: { turn: Turn; onNext: (value: number) => vo
 /* ───────── 단계 탭 (보카 표현 세트 · 과정별 수업 문장 공용) ───────── */
 
 const STEPS = [
-  { id: "study", tab: "듣기", title: "문장으로 익히기", guide: "문장째로 듣고 따라 읽어요. 칠한 부분이 핵심 표현이에요." },
+  { id: "study", tab: "떠올리기", title: "먼저 떠올려 보기", guide: "한국어를 보고 영어로 먼저 말해 본 다음 정답을 확인해요." },
   { id: "order", tab: "순서", title: "순서 맞추기", guide: "한국어를 보고 영어 단어를 순서대로 놓아 문장을 만들어요." },
   { id: "type", tab: "빈칸", title: "빈칸 쓰기", guide: "문장 속 핵심 표현을 직접 써요." },
   { id: "say", tab: "말하기", title: "보고 말하기", guide: "한국어를 보고 영어 문장 전체를 소리 내서 말해요." },
