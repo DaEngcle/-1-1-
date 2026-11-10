@@ -64,6 +64,20 @@ export function PlanEditor({
               {PLANS[pid].name.replace("다잉클 ", "")} · {PLANS[pid].months}개월
             </button>
           ))}
+          {/* 짧은 무료 체험: 오늘 포함 3일 동안만 (끝나면 무료회원으로 내려간다) */}
+          <button
+            type="button"
+            onClick={() => {
+              setCourses(["bootcamp"]);
+              setTrial(true);
+              const d = new Date(`${today()}T00:00:00`);
+              d.setDate(d.getDate() + 2);
+              setUntil(`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`);
+            }}
+            className="rounded-lg bg-amber-100 px-2.5 py-1 text-xs font-semibold text-amber-800 hover:bg-amber-200"
+          >
+            🎁 무료 체험 · 3일
+          </button>
         </div>
       </div>
 
