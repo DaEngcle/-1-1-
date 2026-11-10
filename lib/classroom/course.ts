@@ -6,11 +6,12 @@ import { phraseDeck } from "./phrase-decks";
 import { grammarDeck, grammarUnit } from "./grammar";
 import type { CourseAnswers, JobId, StageId } from "./course-questions";
 import { courseTopic, type ChosenTopic } from "./course-topics";
+import { ROLEPLAYS, TOPIC_FOR_JOB, roleplay, type RoleplayJob } from "./roleplays";
 
-export type CourseStepKind = "phrase" | "grammar" | "talk" | "shadowing" | "village";
+export type CourseStepKind = "phrase" | "grammar" | "talk" | "shadowing" | "village" | "roleplay";
 
 export type CourseStep = {
-  /** phrase:survival-2 · grammar:5 · talk:cafe · shadow:3 · village */
+  /** phrase:survival-2 · grammar:5 · talk:cafe · shadow:3 · village · roleplay:cafe-1 */
   id: string;
   kind: CourseStepKind;
   emoji: string;
@@ -33,7 +34,9 @@ export type CourseAccess = {
   maxGrammarUnit: number;
 };
 
-const MIN = { phrase: 5, grammar: 10, talk: 10, shadowing: 5, village: 5 } as const;
+const MIN = { phrase: 5, grammar: 10, talk: 10, shadowing: 5, village: 5, roleplay: 3 } as const;
+/** 직군 토픽 하나에 코스로 넣는 상황극 수 (나머지는 상황 연습 화면에서) */
+const ROLEPLAYS_PER_JOB = 2;
 /** 쉐도잉 한 단계 = 이만큼 문장 제출 */
 export const SHADOW_PER_STEP = 5;
 const MAX_SHADOW_STEPS = 8;
@@ -43,10 +46,19 @@ type Ref =
   | { kind: "phrase"; deck: string; set: number; why?: string }
   | { kind: "grammar"; unit: number; why?: string }
   | { kind: "talk"; scenario: string; why?: string }
-  | { kind: "village"; why?: string };
+  | { kind: "village"; why?: string }
+  | { kind: "roleplay"; id: string; why?: string };
 
 const ph = (deck: string, set: number, why?: string): Ref => ({ kind: "phrase", deck, set, why });
 const talk = (scenario: string, why?: string): Ref => ({ kind: "talk", scenario, why });
+
+/** 표현 토픽 → 그 직군 상황극 (앞에서부터 몇 개) */
+const JOB_OF_TOPIC = new Map(Object.entries(TOPIC_FOR_JOB).map(([job, topic]) => [topic, job as RoleplayJob]));
+function roleplayRefs(job: RoleplayJob, why: string): Ref[] {
+  return ROLEPLAYS.filter((r) => r.job === job)
+    .slice(0, ROLEPLAYS_PER_JOB)
+    .map((r) => ({ kind: "roleplay", id: r.id, why }));
+}
 
 /** 직군 → AI 면접 캐릭터 (lib/classroom/interview-scenarios.ts) */
 export const SCENARIO_FOR_JOB: Partial<Record<JobId, string>> = {
@@ -109,6 +121,9 @@ export function buildCourse(answers: CourseAnswers, topics: ChosenTopic[], acces
     const def = courseTopic(t.id);
     if (!def) return;
     def.sets.forEach(([d, s]) => add(ph(d, s, t.title)));
+    // 표현을 익힌 바로 뒤에 같은 직군 상황극으로 써 보기
+    const job = JOB_OF_TOPIC.get(t.id);
+    if (job) roleplayRefs(job, "방금 익힌 표현으로 상황극").forEach(add);
     // 면접이 급하면 첫 토픽 바로 뒤에 AI 면접
     if (i === 0 && interviewEarly)
       interviewRefs(
@@ -117,6 +132,11 @@ export function buildCourse(answers: CourseAnswers, topics: ChosenTopic[], acces
     if (t.id === "housing") add(talk("sharehouse", "집 구하기 연습"));
   });
   if (!interviewEarly && jobs.length > 0) interviewRefs("면접 미리 연습").forEach(add);
+  // 고른 직군인데 토픽에 없으면 상황극만이라도 (최대 2개 직군)
+  jobs
+    .filter((j): j is RoleplayJob => j !== "other" && !topics.some((t) => t.id === TOPIC_FOR_JOB[j as RoleplayJob]))
+    .slice(0, 2)
+    .forEach((j) => roleplayRefs(j, "고른 일터 상황극").forEach(add));
 
   // 고양이 마을: 멜버른(마을 배경)이나 친구 사귀기를 골랐으면 앞쪽에
   const villageEarly = answers.cities.includes("melbourne") || worries.includes("friends") || goals.includes("friends");
@@ -215,6 +235,20 @@ function toStep(r: Ref, access: CourseAccess): Omit<CourseStep, "week"> | null {
       minutes: MIN.grammar,
     };
   }
+  if (r.kind === "roleplay") {
+    const rp = roleplay(r.id);
+    if (!rp) return null;
+    return {
+      id: `roleplay:${rp.id}`,
+      kind: "roleplay",
+      emoji: rp.emoji,
+      title: rp.title,
+      sub: `상황극 · STEP ${rp.step} · ${rp.desc}`,
+      why: r.why,
+      href: `/student/roleplay/${rp.id}`,
+      minutes: MIN.roleplay,
+    };
+  }
   if (r.kind === "talk") {
     const label = TALK_LABEL[r.scenario];
     if (!label) return null;
@@ -265,6 +299,8 @@ export type CourseProgressData = {
   villageSpoke: boolean;
   /** 표현 연습에서 한 번이라도 맞힌 표현 (덱:세트:번호) */
   drilled: Set<string>;
+  /** 끝낸 상황극 (roleplay_progress) */
+  roleplays?: Set<string>;
 };
 
 /** 세트의 표현을 표현 연습에서 다 맞혔는지 */
@@ -285,6 +321,8 @@ export function doneSteps(steps: CourseStep[], p: CourseProgressData): Set<strin
           ? (p.stars.get(grammarDeck(Number(key))) ?? 0) > 0
           : s.kind === "talk"
             ? p.interviews.has(key)
+            : s.kind === "roleplay"
+              ? (p.roleplays?.has(key) ?? false)
             : s.kind === "shadowing"
               ? p.shadowSince >= SHADOW_PER_STEP * Number(key)
               : p.villageSpoke;

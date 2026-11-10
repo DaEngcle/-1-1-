@@ -1,28 +1,10 @@
 "use client";
 
+import { keyWords } from "@/lib/classroom/lesson-sentences";
 import { QuizGame, shuffle, type QuizQuestion } from "../../../quiz-game";
+import { SentenceSteps, type SentenceItem } from "../../../sentence-steps";
 
 type Sentence = { sentence: string; translation: string };
-
-// 빈칸으로 만들지 않을 쉬운 단어
-const STOP = new Set(
-  "this that these those there their they them then than what when where which while with would could should have has had been being were your yours you're from into onto about after before because just like really very much many some them they're it's that's what's don't didn't doesn't can't won't isn't aren't wasn't i'm i've i'll you'll we're we'll he's she's here also only even well yeah okay gonna wanna gotta".split(
-    " ",
-  ),
-);
-
-/** 문장에서 빈칸으로 쓸 핵심 단어 후보 (고유명사·쉬운 단어 제외) */
-function keyWords(sentence: string) {
-  const words = sentence.split(/\s+/).map((w, idx) => ({ raw: w, clean: w.replace(/^[^A-Za-z]+|[^A-Za-z']+$/g, ""), idx }));
-  return words.filter(
-    (w) =>
-      w.clean.length >= 4 &&
-      /^[a-z][a-z']*$/i.test(w.clean) &&
-      !w.clean.includes("'") &&
-      !STOP.has(w.clean.toLowerCase()) &&
-      !(w.idx > 0 && /^[A-Z]/.test(w.clean)), // 문장 중간 대문자 = 이름·지명
-  );
-}
 
 function buildQuestions(sentences: Sentence[], only?: string[]): QuizQuestion[] {
   const pool = sentences.map((s, n) => ({ ...s, key: String(n), words: keyWords(s.sentence) }));
@@ -68,6 +50,23 @@ function buildQuestions(sentences: Sentence[], only?: string[]): QuizQuestion[] 
   });
 }
 
-export function WeekGame({ deck, sentences, nextHref }: { deck: string; sentences: Sentence[]; nextHref: string | null }) {
-  return <QuizGame deck={deck} seconds={15} nextHref={nextHref} build={(only) => buildQuestions(sentences, only)} />;
+/** 과정별 수업 문장: 문장 연습 4단계가 기본, 예전 고르기 게임은 '빠른 퀴즈' */
+export function WeekGame({
+  deck,
+  sentences,
+  items,
+  nextHref,
+}: {
+  deck: string;
+  sentences: Sentence[];
+  items: SentenceItem[];
+  nextHref: string | null;
+}) {
+  return (
+    <SentenceSteps
+      items={items}
+      deck={deck}
+      quiz={<QuizGame deck={deck} seconds={15} nextHref={nextHref} build={(only) => buildQuestions(sentences, only)} />}
+    />
+  );
 }

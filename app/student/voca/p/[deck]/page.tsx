@@ -22,7 +22,7 @@ export default async function PhraseDeckPage({ params }: { params: Promise<{ dec
   return (
     <>
       <Link href="/student/voca" className="text-sm text-zinc-600 underline">
-        ← 보카
+        ← 문장·표현
       </Link>
       <div>
         <h1 className="text-xl font-extrabold text-zinc-900">
@@ -30,7 +30,7 @@ export default async function PhraseDeckPage({ params }: { params: Promise<{ dec
         </h1>
         <p className="text-sm text-zinc-500">{deck.desc}</p>
         <p className="text-xs text-zinc-400">
-          {deck.sets.length}세트 · {total}개
+          {deck.sets.length}세트 · 예문 {total}개
         </p>
       </div>
       <section className="grid grid-cols-1 gap-2 sm:grid-cols-2">

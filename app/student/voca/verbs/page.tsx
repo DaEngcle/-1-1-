@@ -17,7 +17,7 @@ export default async function VerbSetsPage() {
   return (
     <>
       <Link href="/student/voca" className="text-sm text-zinc-600 underline">
-        ← 보카
+        ← 문장·표현
       </Link>
       <div>
         <h1 className="text-xl font-extrabold text-zinc-900">🔤 동사 3단변화</h1>

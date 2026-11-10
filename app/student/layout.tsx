@@ -12,11 +12,10 @@ const NAV = [
   { href: "/student", label: "홈 · 내 성과" },
   { href: "/student/course", label: "🧭 내 워홀 코스" },
   { href: "/student/lessons", label: "강의 · 쉐도잉" },
-  { href: "/student/voca", label: "🎮 보카" },
+  { href: "/student/practice", label: "🎭 상황 연습" },
   { href: "/student/grammar", label: "🐤 기초 문법" },
   { href: "/student/cat-house", label: "🏠 고양이 집" },
   { href: "/student/league", label: "🏆 리그" },
-  { href: "/student/talk", label: "🎭 AI 면접" },
   { href: "/student/news", label: "📰 뉴스로 배우는 영어" },
   { href: "/student/resources", label: "🎁 자료실" },
   { href: "/student/shadowing", label: "🎤 내 쉐도잉" },
@@ -29,9 +28,8 @@ const NAV = [
 const BOTTOM_NAV = [
   { href: "/student", icon: "home", label: "홈" },
   { href: "/student/lessons", icon: "play", label: "강의" },
-  { href: "/student/voca", icon: "cards", label: "보카" },
+  { href: "/student/practice", icon: "talk", label: "상황 연습" },
   { href: "/student/league", icon: "trophy", label: "리그" },
-  { href: "/student/talk", icon: "talk", label: "AI 면접" },
 ];
 
 export default async function StudentLayout({

@@ -15,11 +15,11 @@ export default async function CourseVocaPage() {
   return (
     <>
       <Link href="/student/voca" className="text-sm text-zinc-600 underline">
-        ← 보카
+        ← 문장·표현
       </Link>
       <div>
-        <h1 className="text-xl font-extrabold text-zinc-900">📚 과정별 단어</h1>
-        <p className="text-sm text-zinc-500">수업에서 쉐도잉한 문장으로 복습해요. 주차를 골라 10문제씩!</p>
+        <h1 className="text-xl font-extrabold text-zinc-900">📚 과정별 문장</h1>
+        <p className="text-sm text-zinc-500">수업에서 쉐도잉한 문장을 문장째로 복습해요. 주차를 골라 10문장씩.</p>
       </div>
       {courses.map((c) => (
         <section key={c.id} className="flex flex-col gap-2">
