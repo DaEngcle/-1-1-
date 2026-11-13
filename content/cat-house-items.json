@@ -1045,5 +1045,564 @@
     "S": "#E3E6EC"
    }
   }
+ },
+ {
+  "id": "sofa",
+  "name": "초록 2인 소파",
+  "kind": "floorItem",
+  "price": 160,
+  "rarity": "레어",
+  "desc": "쉐어하우스 거실의 낡았지만 푹신한 초록 소파",
+  "art": {
+   "rows": [
+    "..gggggggggggggg..",
+    ".gGGGGGGGGGGGGGGg.",
+    ".gGGGGGGgGGGGGGGg.",
+    ".gGGGGGGgGGGGGGGg.",
+    "gggggggggggggggggg",
+    "gGgLLLLLLgLLLLLLgG",
+    "gGgLLLLLLgLLLLLLgG",
+    "gGgggggggggggggggG",
+    "gggggggggggggggggg",
+    ".w..............w."
+   ],
+   "pal": {
+    "g": "#2F6B4F",
+    "G": "#4E9A72",
+    "L": "#6FBF92",
+    "w": "#5E4329"
+   }
+  }
+ },
+ {
+  "id": "desk",
+  "name": "공부 책상",
+  "kind": "floorItem",
+  "price": 120,
+  "rarity": "일반",
+  "desc": "노트북 펴 놓고 오늘의 문장 연습하는 책상",
+  "art": {
+   "rows": [
+    "....kkkkkkk.....",
+    "....kSSSSSk.....",
+    "....kSssSSk..mm.",
+    "....kSSSSSk..mM.",
+    "...kkkkkkkkk.mm.",
+    "tttttttttttttttt",
+    "TTTTTTTTTTTTTTTT",
+    ".T..........DDT.",
+    ".T..........DdT.",
+    ".T..........DDT.",
+    ".T............T."
+   ],
+   "pal": {
+    "k": "#3A3F4B",
+    "S": "#8FD3FF",
+    "s": "#FFFFFF",
+    "m": "#F4F1EA",
+    "M": "#7A4E2A",
+    "t": "#C99A6B",
+    "T": "#9C7048",
+    "D": "#B5865A",
+    "d": "#5E4329"
+   }
+  }
+ },
+ {
+  "id": "fridge",
+  "name": "미니 냉장고",
+  "kind": "floorItem",
+  "price": 90,
+  "rarity": "일반",
+  "desc": "마그넷 잔뜩 붙은 쉐어하우스 미니 냉장고",
+  "art": {
+   "rows": [
+    ".wwwwwwww.",
+    "wWWWWWWWWw",
+    "wWrWWWWhWw",
+    "wWWWWbWhWw",
+    "wwwwwwwwww",
+    "wWWWWWWhWw",
+    "wWWyWWWhWw",
+    "wWWWWWWhWw",
+    "wWWWWWWWWw",
+    "wWWWWWWWWw",
+    "wwwwwwwwww",
+    ".k......k."
+   ],
+   "pal": {
+    "w": "#9AA5B4",
+    "W": "#EEF2F6",
+    "h": "#6B7686",
+    "r": "#E85D4A",
+    "b": "#3B82F6",
+    "y": "#FFD45C",
+    "k": "#3A3F4B"
+   }
+  }
+ },
+ {
+  "id": "espresso",
+  "name": "에스프레소 머신",
+  "kind": "floorItem",
+  "price": 140,
+  "rarity": "레어",
+  "desc": "카페 잡 연습용, 반짝이는 은색 에스프레소 머신",
+  "art": {
+   "rows": [
+    "..cc..cc....",
+    "kkkkkkkkkkkk",
+    "kSSSSSSSSSSk",
+    "kSsSSSSSSsSk",
+    "kSSSkkkkSSSk",
+    "kSSS.kk.SSSk",
+    "kSSS.ww.SSSk",
+    "kSSS.ww.SSSk",
+    "kkkkkkkkkkkk",
+    "tttttttttttt"
+   ],
+   "pal": {
+    "c": "#FFFFFF",
+    "k": "#2E3038",
+    "S": "#C9D1DD",
+    "s": "#FFFFFF",
+    "w": "#F2E6D3",
+    "t": "#8B5A2B"
+   }
+  }
+ },
+ {
+  "id": "bbq",
+  "name": "바비큐 그릴",
+  "kind": "floorItem",
+  "price": 150,
+  "rarity": "레어",
+  "desc": "주말 바비(barbie) 파티! 소시지 굽는 호주식 그릴",
+  "art": {
+   "rows": [
+    "...s...s...s..",
+    "..s...s...s...",
+    "kkkkkkkkkkkkkk",
+    "kSrSSrSSrSSrSk",
+    "kkkkkkkkkkkkkk",
+    ".kRRRRRRRRRRk.",
+    ".kRRRRRRRRRRk.",
+    "..kkkkkkkkkk..",
+    "...k......k...",
+    "...k......k...",
+    "..ok......ko..",
+    "..oo......oo.."
+   ],
+   "pal": {
+    "s": "#D5D9E1",
+    "k": "#2E3038",
+    "S": "#6B7686",
+    "r": "#C8603A",
+    "R": "#D93A3A",
+    "o": "#3A3F4B"
+   }
+  }
+ },
+ {
+  "id": "fan",
+  "name": "선풍기",
+  "kind": "floorItem",
+  "price": 60,
+  "rarity": "일반",
+  "desc": "에어컨 없는 쉐어하우스 여름 필수템",
+  "art": {
+   "rows": [
+    "..bbbbbb..",
+    ".bwwbbwwb.",
+    "bwwwbbwwwb",
+    "bbbbkkbbbb",
+    "bwwwbbwwwb",
+    ".bwwbbwwb.",
+    "..bbbbbb..",
+    "....kk....",
+    "....kk....",
+    "....kk....",
+    "....kk....",
+    "..kkkkkk.."
+   ],
+   "pal": {
+    "b": "#7FB8E6",
+    "w": "#DCEFFF",
+    "k": "#3A3F4B"
+   }
+  }
+ },
+ {
+  "id": "camp-chair",
+  "name": "캠핑 의자",
+  "kind": "floorItem",
+  "price": 70,
+  "rarity": "일반",
+  "desc": "로드트립 갈 때 차에 싣는 접이식 캠핑 의자",
+  "art": {
+   "rows": [
+    "k........k",
+    "kBBBBBBBBk",
+    "kBbBBBBbBk",
+    "kBBBBBBBBk",
+    "kkkkkkkkkk",
+    "kBBBBBBBBk",
+    ".k......k.",
+    "..k....k..",
+    ".k.k..k.k.",
+    "k...kk...k"
+   ],
+   "pal": {
+    "k": "#3A3F4B",
+    "B": "#E85D4A",
+    "b": "#F59A8A"
+   }
+  }
+ },
+ {
+  "id": "tv",
+  "name": "벽걸이 TV",
+  "kind": "wallItem",
+  "price": 130,
+  "rarity": "레어",
+  "desc": "호주 드라마 틀어 놓고 영어 귀 뚫기",
+  "art": {
+   "rows": [
+    "kkkkkkkkkkkkkkkk",
+    "kBBBBBBBBBBBBBBk",
+    "kBBBBBBBBBySBBBk",
+    "kBBBBBBBBBSSBBBk",
+    "kBBBGGGGGGGGGBBk",
+    "kBBGGGGGGGGGGGBk",
+    "kGGGGGGGGGGGGGGk",
+    "kkkkkkkkkkkkkkkk",
+    ".......kk......."
+   ],
+   "pal": {
+    "k": "#1F2433",
+    "B": "#7FC4F0",
+    "y": "#FFD45C",
+    "S": "#FFE48A",
+    "G": "#3F9B58"
+   }
+  }
+ },
+ {
+  "id": "shelf-plants",
+  "name": "다육이 선반",
+  "kind": "wallItem",
+  "price": 60,
+  "rarity": "일반",
+  "desc": "작은 다육이 셋이 나란히, 원목 벽 선반",
+  "art": {
+   "rows": [
+    ".g.....G.....g",
+    "ggg...GGG...gg",
+    "ggg..GGgGG..gg",
+    "ooo...ppp..ooo",
+    "ooo...ppp..ooo",
+    "tttttttttttttt",
+    ".T..........T."
+   ],
+   "pal": {
+    "g": "#6FBF92",
+    "G": "#3F9B58",
+    "o": "#D2814F",
+    "p": "#F4F1EA",
+    "t": "#C99A6B",
+    "T": "#9C7048"
+   }
+  }
+ },
+ {
+  "id": "pendant",
+  "name": "펜던트 조명",
+  "kind": "lightItem",
+  "price": 70,
+  "rarity": "일반",
+  "desc": "카페처럼 아늑한 노란 불빛 펜던트 조명",
+  "art": {
+   "rows": [
+    "...k....",
+    "...k....",
+    "...k....",
+    "..kkk...",
+    ".kBBBk..",
+    "kBBBBBk.",
+    "kkkkkkk.",
+    "..yYy...",
+    "...y...."
+   ],
+   "pal": {
+    "k": "#2E3038",
+    "B": "#3A6B5A",
+    "y": "#FFF1A8",
+    "Y": "#FFD45C"
+   }
+  }
+ },
+ {
+  "id": "food-bowl",
+  "name": "고양이 밥그릇",
+  "kind": "frontItem",
+  "price": 30,
+  "rarity": "일반",
+  "desc": "츄르 담아 주고 싶은 생선 무늬 밥그릇",
+  "art": {
+   "rows": [
+    "..bbbbbbbb..",
+    ".bBBBBBBBBb.",
+    "bBBwBBBBwBBb",
+    ".bbbbbbbbbb."
+   ],
+   "pal": {
+    "b": "#2453EB",
+    "B": "#7FA8FF",
+    "w": "#FFFFFF"
+   }
+  }
+ },
+ {
+  "id": "cap",
+  "name": "야구 모자",
+  "kind": "hat",
+  "price": 50,
+  "rarity": "일반",
+  "desc": "뙤약볕 아래 피킹할 때 꼭 쓰는 파란 캡",
+  "art": {
+   "rows": [
+    ".....bbbb.....",
+    "...bbBBBBbb...",
+    "..bBBBwwBBBb..",
+    "..bBBBBBBBBb..",
+    "..ddddddddddVV"
+   ],
+   "pal": {
+    "b": "#1D4ED8",
+    "B": "#3B82F6",
+    "w": "#FFFFFF",
+    "d": "#1E3A8A",
+    "V": "#1E3A8A"
+   }
+  }
+ },
+ {
+  "id": "beret",
+  "name": "빨간 베레모",
+  "kind": "hat",
+  "price": 60,
+  "rarity": "일반",
+  "desc": "멜버른 갤러리 산책 갈 때 폭 얹는 베레모",
+  "art": {
+   "rows": [
+    ".......t......",
+    "....rrrrrr....",
+    "..rrRRrrrrrr..",
+    ".rrRrrrrrrrrr.",
+    "..dddddddddd.."
+   ],
+   "pal": {
+    "t": "#A82828",
+    "r": "#D93A3A",
+    "R": "#F06060",
+    "d": "#A82828"
+   }
+  }
+ },
+ {
+  "id": "chef-hat",
+  "name": "셰프 모자",
+  "kind": "hat",
+  "price": 80,
+  "rarity": "일반",
+  "desc": "키친핸드에서 셰프까지! 하얀 셰프 모자",
+  "art": {
+   "rows": [
+    "...oo..oo.....",
+    "..oWWooWWo....",
+    ".oWWWWWWWWo...",
+    ".oWWWWWWWWo...",
+    "..GGGGGGGG...."
+   ],
+   "pal": {
+    "W": "#FFFFFF",
+    "o": "#C9D1DD",
+    "G": "#E4E8EF"
+   }
+  }
+ },
+ {
+  "id": "flower-crown",
+  "name": "꽃 머리띠",
+  "kind": "hat",
+  "price": 90,
+  "rarity": "레어",
+  "desc": "와틀·와라타 꽃으로 엮은 봄 머리띠",
+  "art": {
+   "rows": [
+    "..y...r...y...",
+    ".yYy.rRr.yYy..",
+    "gggggggggggggg"
+   ],
+   "pal": {
+    "y": "#F2C230",
+    "Y": "#FFE48A",
+    "r": "#D93A3A",
+    "R": "#FF8F8F",
+    "g": "#3F9B58"
+   }
+  }
+ },
+ {
+  "id": "hardhat",
+  "name": "안전모",
+  "kind": "hat",
+  "price": 70,
+  "rarity": "일반",
+  "desc": "건설 현장 워홀이라면 이거 없이 못 들어가요",
+  "art": {
+   "rows": [
+    "....YYYYYY....",
+    "..YYYYYyYYYY..",
+    ".YYYYYYyYYYYY.",
+    "DDDDDDDDDDDDDD"
+   ],
+   "pal": {
+    "Y": "#FFC93C",
+    "y": "#FFE48A",
+    "D": "#E0A400"
+   }
+  }
+ },
+ {
+  "id": "hoodie",
+  "name": "회색 후드티",
+  "kind": "outfit",
+  "price": 80,
+  "rarity": "일반",
+  "desc": "멜버른 쌀쌀한 저녁엔 역시 후드티",
+  "art": {
+   "rows": [
+    "..hhhhhhhhhh..",
+    ".gGGGwGGwGGGg.",
+    ".gGGGwGGwGGGg.",
+    ".gGGPPPPPPGGg.",
+    ".gGGPPPPPPGGg."
+   ],
+   "pal": {
+    "h": "#6B7686",
+    "g": "#7F8A99",
+    "G": "#A3ADBB",
+    "w": "#FFFFFF",
+    "P": "#8E99A8"
+   }
+  }
+ },
+ {
+  "id": "overalls",
+  "name": "청멜빵",
+  "kind": "outfit",
+  "price": 100,
+  "rarity": "레어",
+  "desc": "농장 피킹 갈 때 입는 튼튼한 청 멜빵바지",
+  "art": {
+   "rows": [
+    "...d......d...",
+    "...d......d...",
+    "...ddddddddd..",
+    "...dDDyyDDdd..",
+    "...ddddddddd.."
+   ],
+   "pal": {
+    "d": "#2B4C8C",
+    "D": "#4A6FB5",
+    "y": "#FFD45C"
+   }
+  }
+ },
+ {
+  "id": "chef-jacket",
+  "name": "셰프 자켓",
+  "kind": "outfit",
+  "price": 110,
+  "rarity": "레어",
+  "desc": "단추 두 줄 하얀 셰프 자켓",
+  "art": {
+   "rows": [
+    "..WWWWWWWWWW..",
+    ".WWWkWWWWkWWW.",
+    ".WWWWWWWWWWWW.",
+    ".WWWkWWWWkWWW.",
+    ".WWWWWWWWWWWW."
+   ],
+   "pal": {
+    "W": "#F7F8FA",
+    "k": "#3A3F4B"
+   }
+  }
+ },
+ {
+  "id": "stripe-tee",
+  "name": "줄무늬 티셔츠",
+  "kind": "outfit",
+  "price": 50,
+  "rarity": "일반",
+  "desc": "본다이 해변 산책룩, 네이비 줄무늬 티",
+  "art": {
+   "rows": [
+    "..wwwwwwwwww..",
+    ".nnnnnnnnnnnn.",
+    ".wwwwwwwwwwww.",
+    ".nnnnnnnnnnnn.",
+    ".wwwwwwwwwwww."
+   ],
+   "pal": {
+    "w": "#FFFFFF",
+    "n": "#1E3A8A"
+   }
+  }
+ },
+ {
+  "id": "rashie",
+  "name": "서핑 래시가드",
+  "kind": "outfit",
+  "price": 90,
+  "rarity": "일반",
+  "desc": "골드코스트 서핑 레슨 갈 때 입는 래시가드",
+  "art": {
+   "rows": [
+    "..tttttttttt..",
+    ".tTTTTyTTTTTt.",
+    ".tTTTyyyTTTTt.",
+    ".tTTTTyTTTTTt.",
+    ".tttttttttttt."
+   ],
+   "pal": {
+    "t": "#0E7490",
+    "T": "#22B8CF",
+    "y": "#FFD45C"
+   }
+  }
+ },
+ {
+  "id": "bowtie",
+  "name": "나비넥타이",
+  "kind": "outfit",
+  "price": 40,
+  "rarity": "일반",
+  "desc": "호텔 연회 서빙 알바할 때 매는 까만 나비넥타이",
+  "art": {
+   "rows": [
+    "..............",
+    "....kk..kk....",
+    "....kKkkKk....",
+    "....kk..kk....",
+    ".............."
+   ],
+   "pal": {
+    "k": "#1A1B20",
+    "K": "#3A3F4B"
+   }
+  }
  }
 ]

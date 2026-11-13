@@ -3,7 +3,7 @@
 import { usePref } from "@/app/_ui/prefs";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { WordResult } from "@/lib/classroom/azure-speech";
 import { findTipsForSentence } from "@/lib/classroom/pronunciation-tips";
 import { buildDetailedFeedback } from "@/lib/classroom/detailed-feedback";
@@ -11,6 +11,7 @@ import { splitFeedback } from "@/lib/classroom/feedback-summary";
 import { useTts } from "@/app/_ui/audio/use-tts";
 import { toWav16kMono } from "@/app/_ui/audio/wav";
 import { useRecorder } from "@/app/_ui/audio/use-recorder";
+import { loadRecording, saveRecording } from "@/app/_ui/audio/recording-cache";
 import { CatSprite } from "@/app/_ui/cat";
 import { useMyCat } from "@/app/_ui/cat-context";
 import type { CatMood } from "@/lib/classroom/cat";
@@ -185,8 +186,22 @@ export function SentencePractice({
   const showKoPref = usePref("showTranslation");
   const [toggledKo, setShowTranslation] = useState<boolean | null>(null);
   const showTranslation = toggledKo ?? showKoPref;
-  const recorder = useRecorder(MAX_RECORD_SECONDS);
+  // 녹음이 끝나면 보관 → 입모양 가이드에 다녀와도 그대로 남는다
+  const recorder = useRecorder(MAX_RECORD_SECONDS, (wav) => {
+    if (wav) saveRecording(`sentence:${itemId}`, wav);
+  });
   const { recording, seconds, url: recordedUrl, blob: recordedBlob } = recorder;
+  const restore = recorder.restore;
+  useEffect(() => {
+    let alive = true;
+    void loadRecording(`sentence:${itemId}`).then((wav) => {
+      if (alive && wav) restore(wav);
+    });
+    return () => {
+      alive = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [itemId]);
   const [submitting, setSubmitting] = useState(false);
   const [result, setResult] = useState<PracticeResult | null>(initialResult);
   const [error, setError] = useState<string | null>(null);

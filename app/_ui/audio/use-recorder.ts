@@ -97,6 +97,16 @@ export function useRecorder(
     });
   }
 
+  /** 보관해 둔 녹음을 다시 띄운다 (다른 화면에 다녀왔을 때) */
+  function restore(wav: Blob) {
+    if (activeRef.current || startingRef.current) return;
+    setBlob(wav);
+    setUrl((old) => {
+      if (old) URL.revokeObjectURL(old);
+      return URL.createObjectURL(wav);
+    });
+  }
+
   function stop() {
     if (!activeRef.current) return;
     const rate = ctxRef.current?.sampleRate ?? 48000;
@@ -264,5 +274,5 @@ export function useRecorder(
     stopRef.current = stop;
   });
 
-  return { recording, seconds, level, blob, url, error, start, stop, reset, prepare };
+  return { recording, seconds, level, blob, url, error, start, stop, reset, prepare, restore };
 }
