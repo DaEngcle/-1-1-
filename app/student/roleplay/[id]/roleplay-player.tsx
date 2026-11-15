@@ -23,7 +23,7 @@ function ModelHint({ turn }: { turn: RoleplayTurn }) {
   );
 }
 
-/** 상황극 진행: 상대 말 → 미션 → 내 답(음성·텍스트) → 별 → 다음 상대 말 */
+/** 상황극 진행: 상대 말(먼저 듣기, 자막은 눌러야) → 미션 → 내 답(음성·텍스트) → 별 + 모범 답 → 다음 상대 말 */
 export function RoleplayPlayer({ scenario: r, backHref }: { scenario: Roleplay; backHref: string }) {
   const { play, unlock } = useTts();
   const sr = useSpeechRecognition("en-AU");
@@ -36,6 +36,8 @@ export function RoleplayPlayer({ scenario: r, backHref }: { scenario: Roleplay; 
   const [saving, startSaving] = useTransition();
   const [, startCall] = useTransition();
   const spoken = useRef(new Set<number>());
+  /** 영어 자막을 연 턴 (먼저 듣고 답하게, 처음엔 가린다) */
+  const [shown, setShown] = useState<Set<number>>(() => new Set());
 
   // 지금까지 나온 마지막 상대 말 (아직 안 한 첫 턴, 다 했으면 마지막 턴)
   const firstOpen = answers.findIndex((a) => a === null);
@@ -136,7 +138,14 @@ export function RoleplayPlayer({ scenario: r, backHref }: { scenario: Roleplay; 
             const a = answers[i];
             return (
               <div key={i} className="flex flex-col gap-2">
-                <PartnerMessage name={r.who} text={turn.line} ko={turn.ko} onPlay={() => play(turn.line)} />
+                <PartnerMessage
+                  name={r.who}
+                  text={turn.line}
+                  ko={a || shown.has(i) ? turn.ko : undefined}
+                  onPlay={() => play(turn.line)}
+                  hidden={!a && !shown.has(i)}
+                  onReveal={() => setShown((cur) => new Set(cur).add(i))}
+                />
                 <MissionCard>{turn.mission}</MissionCard>
                 <HintPill>
                   <ModelHint turn={turn} />
@@ -147,13 +156,18 @@ export function RoleplayPlayer({ scenario: r, backHref }: { scenario: Roleplay; 
                     stars={a.check.stars}
                     onRetry={() => setActive(i)}
                     note={
-                      !a.check.keyHit ? (
-                        <>
-                          핵심 표현을 넣어 보세요: <b className="text-brand-700">{turn.keys[0]}</b>
-                        </>
-                      ) : a.check.stars < 3 ? (
-                        "좋아요. 힌트 문장처럼 조금 더 길게 말하면 별 3개예요."
-                      ) : null
+                      <>
+                        {!a.check.keyHit ? (
+                          <>
+                            핵심 표현을 넣어 보세요: <b className="text-brand-700">{turn.keys[0]}</b>
+                          </>
+                        ) : a.check.stars < 3 ? (
+                          "좋아요. 모범 답처럼 조금 더 길게 말하면 별 3개예요."
+                        ) : null}
+                        <button type="button" onClick={() => play(turn.model)} className="mt-1 block w-full rounded-xl bg-white px-3 py-2 text-left text-[13px] text-zinc-700 ring-1 ring-brand-100">
+                          모범 답 🔊 <ModelHint turn={turn} />
+                        </button>
+                      </>
                     }
                   />
                 )}
@@ -176,6 +190,7 @@ export function RoleplayPlayer({ scenario: r, backHref }: { scenario: Roleplay; 
                     type="button"
                     onClick={() => {
                       spoken.current.clear();
+                      setShown(new Set());
                       setAnswers(r.turns.map(() => null));
                       setActive(0);
                     }}

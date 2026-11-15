@@ -6,9 +6,9 @@ import type { LessonParts } from "@/lib/classroom/lesson-progress";
 export function lessonPartLinks(r: Pick<Roleplay, "id" | "job" | "n" | "lines">, p: LessonParts) {
   const base = lessonHref(r);
   return [
-    { key: "listen", label: `리스닝 연습 ${r.lines.length}개`, sub: "듣고 뜻 고르기 → 문장 확인", href: `${base}?part=listen`, done: p.listen },
-    { key: "phrase", label: "표현 연습", sub: "떠올리기 → 순서 → 빈칸 → 말하기", href: `${base}?part=phrase`, done: p.phrase },
-    { key: "roleplay", label: "롤플레잉 해보기", sub: "상대 말에 영어로 답하기", href: `/student/roleplay/${r.id}`, done: p.roleplay > 0 },
+    { key: "listen", label: `리스닝 연습 ${r.lines.length}개`, sub: "듣고 뜻 고르기 → 따라 말하기", href: `${base}?part=listen`, done: p.listen },
+    { key: "phrase", label: "표현 연습", sub: "말하거나 써서 먼저 답하기 → 순서 → 빈칸 → 말하기", href: `${base}?part=phrase`, done: p.phrase },
+    { key: "roleplay", label: "롤플레잉 해보기", sub: "자막 없이 듣고 바로 대답하기 (말·채팅)", href: `/student/roleplay/${r.id}`, done: p.roleplay > 0 },
   ];
 }
 

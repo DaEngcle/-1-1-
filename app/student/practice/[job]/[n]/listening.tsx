@@ -7,6 +7,8 @@ import { splitExample } from "@/lib/classroom/course-drill";
 import type { LessonLine } from "@/lib/classroom/curriculum/kit";
 import { saveVocaResult } from "@/app/student/voca/actions";
 import { shuffle } from "@/app/student/voca/quiz-game";
+import { AnswerBox, AnswerCompare } from "@/app/student/voca/sentence-steps";
+import type { SpokenCheck } from "@/lib/classroom/sentence-practice";
 
 const primary =
   "w-full rounded-2xl border-b-4 border-brand-800 bg-brand-600 py-3 text-center text-lg font-extrabold text-white active:translate-y-0.5 active:border-b-2 disabled:border-slate-300 disabled:bg-slate-200 disabled:text-slate-400";
@@ -25,7 +27,7 @@ function Highlighted({ example, term }: { example: string; term: string }) {
 }
 
 /**
- * 리스닝: 영어는 숨기고 소리만 → 뜻 고르기 → 그다음에 영어 문장 공개.
+ * 리스닝: 영어는 숨기고 소리만 → 뜻 고르기 → 영어 문장 공개 → 따라 말하기(또는 받아쓰기).
  * 처음 맞힌 비율로 기록 (voca_progress, 키 ls-<상황 id>).
  */
 export function ListeningDrill({ items, deck, nextHref, nextLabel }: { items: LessonLine[]; deck: string; nextHref: string; nextLabel: string }) {
@@ -33,6 +35,7 @@ export function ListeningDrill({ items, deck, nextHref, nextLabel }: { items: Le
   const order = useMemo(() => shuffle(items), [items, round]); // eslint-disable-line react-hooks/exhaustive-deps
   const [i, setI] = useState(0);
   const [picked, setPicked] = useState<string | null>(null);
+  const [shadow, setShadow] = useState<{ said: string; check: SpokenCheck } | null>(null);
   const [wrong, setWrong] = useState<string[]>([]);
   const [done, setDone] = useState(false);
   const [, startTransition] = useTransition();
@@ -71,6 +74,7 @@ export function ListeningDrill({ items, deck, nextHref, nextLabel }: { items: Le
       return;
     }
     setPicked(null);
+    setShadow(null);
     setI(i + 1);
   }
 
@@ -78,6 +82,7 @@ export function ListeningDrill({ items, deck, nextHref, nextLabel }: { items: Le
     setRound((r) => r + 1);
     setI(0);
     setPicked(null);
+    setShadow(null);
     setWrong([]);
     setDone(false);
   }
@@ -175,9 +180,25 @@ export function ListeningDrill({ items, deck, nextHref, nextLabel }: { items: Le
           ))}
         </ul>
       ) : (
+        <>
+          <div className="flex flex-col gap-2 rounded-3xl bg-brand-50/60 p-4">
+            <p className="text-sm font-extrabold text-zinc-800">🎤 이제 내 입으로 따라 말해 보세요</p>
+            {shadow && <AnswerCompare said={shadow.said} check={shadow.check} />}
+            <AnswerBox
+              key={`${round}-${i}-${shadow ? "again" : "first"}`}
+              target={x.example}
+              onAnswer={(said, check) => {
+                setShadow({ said, check });
+                if (check.grade === "정확") void play(x.example);
+              }}
+              voiceLabel={shadow ? "한 번 더 따라 말하기" : "따라 말하기"}
+              placeholder="들은 문장을 써 보세요"
+            />
+          </div>
         <button type="button" onClick={next} className={primary}>
           {i + 1 >= order.length ? "결과 보기" : "다음 문장"}
         </button>
+        </>
       )}
     </section>
   );

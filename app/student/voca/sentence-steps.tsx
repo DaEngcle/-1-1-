@@ -60,7 +60,106 @@ function Progress({ at, total }: { at: number; total: number }) {
   );
 }
 
-/* ───────── 1. 먼저 떠올리기 (문제 먼저, 정답은 나중에) ───────── */
+/* ───────── 내 답 입력 (말하기 · 쓰기) ───────── */
+
+/**
+ * 정답을 보기 전에 학생이 먼저 답한다: 🎤 말하기 또는 ⌨️ 쓰기.
+ * 들은 말·쓴 말을 정답 문장과 비교해서 onAnswer로 넘긴다.
+ */
+export function AnswerBox({
+  target,
+  onAnswer,
+  placeholder = "영어로 써 보세요",
+  voiceLabel = "말로 답하기",
+}: {
+  target: string;
+  onAnswer: (said: string, check: SpokenCheck) => void;
+  placeholder?: string;
+  voiceLabel?: string;
+}) {
+  const sr = useSpeechRecognition("en-AU");
+  const [typing, setTyping] = useState(false);
+  const [text, setText] = useState("");
+  const voiceOk = sr.supported !== false;
+  const useText = typing || !voiceOk;
+
+  function speak() {
+    sr.listen((alts) => {
+      const top = alts.map((a) => ({ a, c: checkSpoken(target, a) })).sort((p, q) => q.c.score - p.c.score)[0];
+      onAnswer(top?.a ?? "", top?.c ?? checkSpoken(target, ""));
+    });
+  }
+  function send() {
+    const t = text.trim();
+    if (!t) return;
+    onAnswer(t, checkSpoken(target, t));
+  }
+
+  return (
+    <div className="flex flex-col gap-2">
+      {useText ? (
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            send();
+          }}
+          className="flex gap-2"
+        >
+          <input
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder={placeholder}
+            autoCapitalize="off"
+            autoCorrect="off"
+            spellCheck={false}
+            enterKeyHint="send"
+            className="min-w-0 flex-1 rounded-2xl border-2 border-slate-200 px-4 py-3 text-[16px] focus:border-teal-500 focus:outline-none"
+          />
+          <button type="submit" disabled={!text.trim()} className="shrink-0 rounded-2xl bg-teal-600 px-4 font-extrabold text-white disabled:bg-slate-200 disabled:text-slate-400">
+            확인
+          </button>
+        </form>
+      ) : sr.listening ? (
+        <button type="button" onClick={sr.stop} className="rounded-2xl border-2 border-red-400 bg-red-50 py-3 text-base font-extrabold text-red-600">
+          ⏹ 듣고 있어요. 다 말했으면 누르세요
+        </button>
+      ) : (
+        <button type="button" onClick={speak} className="rounded-2xl border-b-4 border-teal-800 bg-teal-600 py-3 text-base font-extrabold text-white active:translate-y-0.5 active:border-b-2">
+          🎤 {voiceLabel}
+        </button>
+      )}
+      {voiceOk && (
+        <button type="button" onClick={() => setTyping(!useText)} className="self-center text-sm font-bold text-zinc-500 underline">
+          {useText ? "🎤 말로 답할래요" : "⌨️ 글로 쓸래요"}
+        </button>
+      )}
+      {!voiceOk && <p className="text-center text-xs text-zinc-500">이 브라우저는 음성 인식이 안 돼서 글로 답해요.</p>}
+      {sr.error && <p className="text-sm text-red-600">{sr.error}</p>}
+    </div>
+  );
+}
+
+/** 내 답과 정답 비교: 맞은 단어는 초록, 빠진 단어는 회색 */
+export function AnswerCompare({ said, check }: { said: string; check: SpokenCheck }) {
+  return (
+    <div className="flex flex-col gap-1.5 rounded-2xl bg-slate-50 p-3">
+      <div className="flex items-center gap-2">
+        <span className={`rounded-full px-2.5 py-0.5 text-sm font-extrabold ${GRADE_STYLE[check.grade]}`}>{check.grade}</span>
+        <span className="text-xs text-zinc-500">{check.score}% 일치</span>
+      </div>
+      <p className="text-xs text-zinc-500">내 답: {said || "(알아듣지 못했어요)"}</p>
+      <p className="text-[15px] font-bold leading-relaxed">
+        {check.chips.map((c, k) => (
+          <span key={k} className={c.ok ? "text-green-600" : "text-zinc-300"}>
+            {c.text}{" "}
+          </span>
+        ))}
+      </p>
+    </div>
+  );
+}
+
+/* ───────── 1. 먼저 떠올리기 (내가 먼저 답하고, 정답은 나중에) ───────── */
 
 export function StudyCards({ items, onFinish }: { items: Phrase[]; onFinish: () => void }) {
   // 몰랐던 문장은 판 끝에 한 번 더 낸다
@@ -68,6 +167,7 @@ export function StudyCards({ items, onFinish }: { items: Phrase[]; onFinish: () 
   const [i, setI] = useState(0);
   const [revealed, setRevealed] = useState(false);
   const [hint, setHint] = useState(false);
+  const [mine, setMine] = useState<{ said: string; check: SpokenCheck } | null>(null);
   const { play, stop } = useTts();
   const x = queue[i];
   const firstPass = i < items.length;
@@ -75,6 +175,10 @@ export function StudyCards({ items, onFinish }: { items: Phrase[]; onFinish: () 
   function reveal() {
     setRevealed(true);
     play(x.example);
+  }
+  function answered(said: string, check: SpokenCheck) {
+    setMine({ said, check });
+    reveal();
   }
   function next(knew: boolean) {
     stop();
@@ -86,6 +190,7 @@ export function StudyCards({ items, onFinish }: { items: Phrase[]; onFinish: () 
     setQueue(q);
     setRevealed(false);
     setHint(false);
+    setMine(null);
     setI(i + 1);
   }
   const initials = x.term
@@ -104,7 +209,6 @@ export function StudyCards({ items, onFinish }: { items: Phrase[]; onFinish: () 
         </p>
         {!revealed && (
           <>
-            <p className="text-sm text-zinc-500">정답을 보기 전에 소리 내서 먼저 말해 보세요.</p>
             {hint ? (
               <p className="rounded-xl bg-amber-50 px-3 py-2 text-sm text-amber-800">
                 💡 핵심 표현: <b className="font-mono tracking-wide">{initials}</b>
@@ -117,8 +221,10 @@ export function StudyCards({ items, onFinish }: { items: Phrase[]; onFinish: () 
             )}
           </>
         )}
+        {revealed && mine && <AnswerCompare said={mine.said} check={mine.check} />}
         {revealed && (
           <div className="flex flex-col gap-3 rounded-2xl bg-teal-50/60 p-4">
+            <p className="text-xs font-bold text-teal-700">정답</p>
             <p className="text-[22px] font-bold leading-snug text-zinc-900">
               <Highlighted example={x.example} term={x.term} />
             </p>
@@ -135,9 +241,29 @@ export function StudyCards({ items, onFinish }: { items: Phrase[]; onFinish: () 
         )}
       </div>
       {!revealed ? (
-        <button type="button" onClick={reveal} className={primary}>
-          정답 보기
-        </button>
+        <>
+          <AnswerBox key={`${i}`} target={x.example} onAnswer={answered} />
+          <button type="button" onClick={reveal} className="self-center text-sm font-bold text-zinc-400 underline">
+            모르겠어요 · 정답 보기
+          </button>
+        </>
+      ) : mine ? (
+        <div className="grid grid-cols-2 gap-2">
+          <button
+            type="button"
+            onClick={() => {
+              setMine(null);
+              setRevealed(false);
+              stop();
+            }}
+            className="rounded-2xl bg-slate-100 py-3 text-lg font-extrabold text-zinc-600"
+          >
+            다시 답하기
+          </button>
+          <button type="button" onClick={() => next(mine.check.grade !== "다시")} className={primary}>
+            다음
+          </button>
+        </div>
       ) : (
         <div className="grid grid-cols-2 gap-2">
           <button type="button" onClick={() => next(false)} className="rounded-2xl bg-slate-100 py-3 text-lg font-extrabold text-zinc-600">
@@ -574,7 +700,7 @@ function SayItCard({ turn, onNext }: { turn: Turn; onNext: (value: number) => vo
 /* ───────── 단계 탭 (보카 표현 세트 · 과정별 수업 문장 공용) ───────── */
 
 const STEPS = [
-  { id: "study", tab: "떠올리기", title: "먼저 떠올려 보기", guide: "한국어를 보고 영어로 먼저 말해 본 다음 정답을 확인해요." },
+  { id: "study", tab: "떠올리기", title: "먼저 답해 보기", guide: "한국어를 보고 영어로 먼저 말하거나 써서 답한 다음 정답과 비교해요." },
   { id: "order", tab: "순서", title: "순서 맞추기", guide: "한국어를 보고 영어 단어를 순서대로 놓아 문장을 만들어요." },
   { id: "type", tab: "빈칸", title: "빈칸 쓰기", guide: "문장 속 핵심 표현을 직접 써요." },
   { id: "say", tab: "말하기", title: "보고 말하기", guide: "한국어를 보고 영어 문장 전체를 소리 내서 말해요." },
