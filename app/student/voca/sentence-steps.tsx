@@ -62,6 +62,9 @@ function Progress({ at, total }: { at: number; total: number }) {
 
 /* ───────── 내 답 입력 (말하기 · 쓰기) ───────── */
 
+/** 마지막으로 고른 답하는 방식 (글로 쓰기를 고르면 다음 문제도 글로) */
+let preferTyping = false;
+
 /**
  * 정답을 보기 전에 학생이 먼저 답한다: 🎤 말하기 또는 ⌨️ 쓰기.
  * 들은 말·쓴 말을 정답 문장과 비교해서 onAnswer로 넘긴다.
@@ -78,7 +81,7 @@ export function AnswerBox({
   voiceLabel?: string;
 }) {
   const sr = useSpeechRecognition("en-AU");
-  const [typing, setTyping] = useState(false);
+  const [typing, setTyping] = useState(preferTyping);
   const [text, setText] = useState("");
   const voiceOk = sr.supported !== false;
   const useText = typing || !voiceOk;
@@ -129,7 +132,10 @@ export function AnswerBox({
         </button>
       )}
       {voiceOk && (
-        <button type="button" onClick={() => setTyping(!useText)} className="self-center text-sm font-bold text-zinc-500 underline">
+        <button type="button" onClick={() => {
+            preferTyping = !useText;
+            setTyping(!useText);
+          }} className="self-center text-sm font-bold text-zinc-500 underline">
           {useText ? "🎤 말로 답할래요" : "⌨️ 글로 쓸래요"}
         </button>
       )}

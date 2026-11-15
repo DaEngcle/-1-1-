@@ -80,7 +80,7 @@ export function PartnerMessage({
       <div className="flex items-start gap-2 rounded-2xl rounded-tl-md bg-slate-100 px-4 py-3 text-[16px] leading-snug text-zinc-900">
         {hidden ? (
           <button type="button" onClick={onReveal} className="text-left text-zinc-400">
-            🔊 듣고 대답해 보세요 · 영어 보기
+            듣고 대답해 보세요 · 영어 보기
           </button>
         ) : (
           <span>{text}</span>
