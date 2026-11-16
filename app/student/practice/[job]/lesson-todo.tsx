@@ -2,12 +2,13 @@ import Link from "next/link";
 import { lessonHref, type Roleplay } from "@/lib/classroom/roleplays";
 import type { LessonParts } from "@/lib/classroom/lesson-progress";
 
-/** 상황 하나의 할 일 세 줄 (리스닝 → 표현 연습 → 롤플레잉) + 이어서 하기 버튼 */
+/** 상황 하나의 할 일 (리스닝 → 표현 연습 → 3초 대답 → 롤플레잉) + 이어서 하기 버튼 */
 export function lessonPartLinks(r: Pick<Roleplay, "id" | "job" | "n" | "lines">, p: LessonParts) {
   const base = lessonHref(r);
   return [
     { key: "listen", label: `리스닝 연습 ${r.lines.length}개`, sub: "듣고 뜻 고르기 → 따라 말하기", href: `${base}?part=listen`, done: p.listen },
     { key: "phrase", label: "표현 연습", sub: "말하거나 써서 먼저 답하기 → 순서 → 빈칸 → 말하기", href: `${base}?part=phrase`, done: p.phrase },
+    { key: "quick", label: "3초 대답", sub: "질문 듣자마자 3초 안에 대답 시작하기 (말·채팅)", href: `${base}?part=quick`, done: p.quick },
     { key: "roleplay", label: "롤플레잉 해보기", sub: "자막 없이 듣고 바로 대답하기 (말·채팅)", href: `/student/roleplay/${r.id}`, done: p.roleplay > 0 },
   ];
 }

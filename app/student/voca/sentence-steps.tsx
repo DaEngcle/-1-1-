@@ -74,11 +74,14 @@ export function AnswerBox({
   onAnswer,
   placeholder = "영어로 써 보세요",
   voiceLabel = "말로 답하기",
+  onStart,
 }: {
   target: string;
   onAnswer: (said: string, check: SpokenCheck) => void;
   placeholder?: string;
   voiceLabel?: string;
+  /** 대답을 시작한 순간 (마이크를 누르거나 첫 글자를 칠 때) */
+  onStart?: () => void;
 }) {
   const sr = useSpeechRecognition("en-AU");
   const [typing, setTyping] = useState(preferTyping);
@@ -87,6 +90,7 @@ export function AnswerBox({
   const useText = typing || !voiceOk;
 
   function speak() {
+    onStart?.();
     sr.listen((alts) => {
       const top = alts.map((a) => ({ a, c: checkSpoken(target, a) })).sort((p, q) => q.c.score - p.c.score)[0];
       onAnswer(top?.a ?? "", top?.c ?? checkSpoken(target, ""));
@@ -110,7 +114,10 @@ export function AnswerBox({
         >
           <input
             value={text}
-            onChange={(e) => setText(e.target.value)}
+            onChange={(e) => {
+              if (!text && e.target.value) onStart?.();
+              setText(e.target.value);
+            }}
             placeholder={placeholder}
             autoCapitalize="off"
             autoCorrect="off"

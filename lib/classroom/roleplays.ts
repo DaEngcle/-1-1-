@@ -45,6 +45,7 @@ export const lessonHref = (r: Pick<Roleplay, "job" | "n">) => `/student/practice
 /** 리스닝·표현 연습 기록 키 (voca_progress.deck) */
 export const listenDeck = (id: string) => `ls-${id}`;
 export const phraseDeckKey = (id: string) => `ex-${id}`;
+export const quickDeck = (id: string) => `qk-${id}`;
 
 /** 직군 → 표현 익히기 토픽 (course-topics.ts의 id). 사무는 '전화' 토픽 */
 export const TOPIC_FOR_JOB: Record<RoleplayJob, string> = {

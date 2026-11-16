@@ -41,7 +41,7 @@ export default async function PracticeJobPage({ params }: { params: Promise<{ jo
           id: r.id,
           emoji: r.emoji,
           title: r.title,
-          tag: `${p.listen ? "✓" : "○"} 리스닝 · ${p.phrase ? "✓" : "○"} 표현 · ${p.roleplay ? "✓" : "○"} 롤플레잉`,
+          tag: `${p.listen ? "✓" : "○"} 리스닝 · ${p.phrase ? "✓" : "○"} 표현 · ${p.quick ? "✓" : "○"} 3초 · ${p.roleplay ? "✓" : "○"} 롤플레잉`,
           desc: r.desc,
           href: lessonHref(r),
           done: progress.done(r.id),

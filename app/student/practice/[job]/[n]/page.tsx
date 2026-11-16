@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { requireStudent } from "@/lib/classroom/dal";
-import { jobSteps, lessonHref, listenDeck, roleplay, roleplaysFor, type RoleplayJob } from "@/lib/classroom/roleplays";
+import { jobSteps, lessonHref, listenDeck, quickDeck, roleplay, roleplaysFor, type RoleplayJob } from "@/lib/classroom/roleplays";
 import { getLessonProgress } from "@/lib/classroom/lesson-progress";
 import { LessonTodo } from "../lesson-todo";
 import { ListeningDrill } from "./listening";
 import { LessonPhrase } from "./lesson-phrase";
+import { QuickAnswerDrill } from "./quick-answer";
 
 export const metadata: Metadata = { title: "상황 연습 · 다잉클" };
 
@@ -27,17 +28,19 @@ export default async function LessonPage({
   const stepTitle = jobSteps(r.job as RoleplayJob)[r.step - 1]?.title ?? "";
   const here = lessonHref(r);
 
-  if (part === "listen" || part === "phrase") {
+  if (part === "listen" || part === "phrase" || part === "quick") {
     return (
       <>
         <Link href={here} className="text-sm text-zinc-600 underline">
           ← {r.emoji} {r.title}
         </Link>
-        <h1 className="text-xl font-extrabold text-zinc-900">{part === "listen" ? "🎧 리스닝 연습" : "✍️ 표현 연습"}</h1>
+        <h1 className="text-xl font-extrabold text-zinc-900">{part === "listen" ? "🎧 리스닝 연습" : part === "phrase" ? "✍️ 표현 연습" : "⚡ 3초 대답"}</h1>
         {part === "listen" ? (
           <ListeningDrill items={r.lines} deck={listenDeck(r.id)} nextHref={`${here}?part=phrase`} nextLabel="표현 연습으로" />
+        ) : part === "phrase" ? (
+          <LessonPhrase items={r.lines} deckId={`ex-${r.job}`} setId={r.n} nextHref={`${here}?part=quick`} />
         ) : (
-          <LessonPhrase items={r.lines} deckId={`ex-${r.job}`} setId={r.n} nextHref={`/student/roleplay/${r.id}`} />
+          <QuickAnswerDrill turns={r.turns} who={r.who} deck={quickDeck(r.id)} nextHref={`/student/roleplay/${r.id}`} />
         )}
       </>
     );
