@@ -252,8 +252,22 @@ export async function getSeasonRanking({ masked }: { masked: boolean }): Promise
   return getRanking({ masked, start: `${kstDate(new Date()).slice(0, 8)}01` });
 }
 
+// 순위는 모든 학생에게 똑같아서 1분 동안 서버에 저장해 두고 같이 쓴다 (홈을 열 때마다 이번 달 기록 전체를 다시 읽지 않게)
+const RANK_TTL = 60_000;
+const rankCache = new Map<string, { at: number; rows: Promise<RankRow[]> }>();
+
 /** start(한국 날짜)부터 지금까지 학습 포인트 순위 */
-async function getRanking({ masked, start }: { masked: boolean; start: string }): Promise<RankRow[]> {
+function getRanking(opts: { masked: boolean; start: string }): Promise<RankRow[]> {
+  const key = `${opts.masked}|${opts.start}`;
+  const hit = rankCache.get(key);
+  if (hit && Date.now() - hit.at < RANK_TTL) return hit.rows;
+  const rows = computeRanking(opts);
+  rankCache.set(key, { at: Date.now(), rows });
+  rows.catch(() => rankCache.delete(key));
+  return rows;
+}
+
+async function computeRanking({ masked, start }: { masked: boolean; start: string }): Promise<RankRow[]> {
   const supabase = createServerSupabaseClient();
   const startIso = new Date(`${start}T00:00:00+09:00`).toISOString();
   const [{ data: students }, watchRows, subs] = await Promise.all([
