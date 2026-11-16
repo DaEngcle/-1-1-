@@ -135,6 +135,7 @@
 .vg-tram { position: absolute; width: 0; height: 0; pointer-events: none; }
 .vg-tram img { position: absolute; left: 0; top: 0; max-width: none; transform: translate(-50%, -72%); pointer-events: none; user-select: none; -webkit-user-drag: none; filter: drop-shadow(3px 7px 3px rgba(30,25,60,.38)); }
 .vg-tram img[hidden] { display: none; }
+.vg-tram img { transition: opacity .14s linear; }
 .vg-say { position: absolute; z-index: 100002; max-width: 190px; width: max-content; font-size: 12px; line-height: 1.35; font-weight: 700; color: #2a2350; background: #fff; border: 2px solid #2a2350; border-radius: 10px; padding: 4px 8px; pointer-events: none; transform: translate(-50%, -100%) scale(var(--vg-iz, 1)); transform-origin: 50% 100%; word-break: break-word; }
 .vg-say::after { content: ""; position: absolute; left: 50%; bottom: -7px; margin-left: -6px; border: 6px solid transparent; border-top-color: #2a2350; border-bottom: 0; }
 .vg-say.me { background: #fff0f6; }
@@ -554,7 +555,7 @@
         const f = (d - S[lo].d) / Math.max(1e-6, S[hi].d - S[lo].d);
         return { x: S[lo].x + (S[hi].x - S[lo].x) * f, y: S[lo].y + (S[hi].y - S[lo].y) * f };
       }
-      const tramState = { leg: 0, d: 0, wait: 0, rest: 3, stop: 1, waited: false };
+      const tramState = { leg: 0, d: 0, wait: 0, rest: 3, stop: 1, waited: false, face: "a" };
       for (const k in tImg) tImg[k].hidden = false;
       function stepTram(dt) {
         const t = tramState;
@@ -573,9 +574,14 @@
           }
         }
         const p = at(L, t.d), p0 = at(L, t.d - 45), p1 = at(L, t.d + 45);
-        // 진행 방향에 따라 두 그림(／, ＼)을 서서히 바꿔 그린다
+        // 진행 방향에 따라 두 그림(／, ＼) 중 하나만 그린다. 반쯤 섞으면 트램이 두 대 겹쳐 보여서,
+        // 방향이 확실히 바뀌었을 때만 짧게(0.14초) 바꾼다 (경계에서 깜빡이지 않게 여유를 둔다)
         const tx = p1.x - p0.x, ty = p1.y - p0.y, n2 = tx * tx + ty * ty || 1;
-        const wa = Math.max(0, Math.min(1, 0.5 - (tx * ty / n2) * 4)), wb = 1 - wa;
+        const slope = (tx * ty) / n2;
+        if (t.face === "a" && slope > 0.12) t.face = "b";
+        else if (t.face === "b" && slope < -0.12) t.face = "a";
+        if (t.d === 0) t.face = slope > 0 ? "b" : "a";
+        const wa = t.face === "a" ? 1 : 0, wb = 1 - wa;
         const vis = Math.max(0, Math.min(1, t.d / 70, (L.len - t.d) / 90));
         tImg.a.style.opacity = String(wa); tImg.b.style.opacity = String(wb);
         tImg.an.style.opacity = String(wa * nightLevel); tImg.bn.style.opacity = String(wb * nightLevel);
