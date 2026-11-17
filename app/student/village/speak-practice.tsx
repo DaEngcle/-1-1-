@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useSpeechRecognition } from "@/app/_ui/audio/use-speech-recognition";
 import { compareSpoken } from "@/lib/classroom/village";
+import { recordVillageSpeakAction } from "./actions";
 
 function verdict(score: number) {
   if (score >= 90) return "잘했어요! 그대로 쓰면 돼요 🎉";
@@ -14,9 +15,28 @@ function verdict(score: number) {
 export function SpeakPractice({ text }: { text: string }) {
   const { supported, listening, error, listen, stop } = useSpeechRecognition("en-AU");
   const [heard, setHeard] = useState<string | null>(null);
+  const [done, setDone] = useState(false);
+
+  // 한 번이라도 말해 보면 코스 미션 완료로 기록한다 (가게마다 한 번)
+  function markSpoken() {
+    if (done) return;
+    setDone(true);
+    void recordVillageSpeakAction();
+  }
+  const doneNote = done && <p className="text-xs font-bold text-emerald-700">✅ 말 걸어 보기 미션 완료! 내 코스에 체크돼요.</p>;
 
   if (supported === false) {
-    return <p className="text-sm text-zinc-600">이 화면에서는 앱이 듣지 못해요. 소리 내어 말해 본 뒤 정답을 확인해 보세요.</p>;
+    return (
+      <div className="flex flex-col gap-2">
+        <p className="text-sm text-zinc-600">이 화면에서는 앱이 듣지 못해요. 소리 내어 말해 본 뒤 정답을 확인해 보세요. (크롬이나 사파리에서 열면 앱이 들어 줘요)</p>
+        {!done && (
+          <button type="button" onClick={markSpoken} className="rounded-[10px] border-2 border-[#2a2350] bg-white px-3 py-2 text-sm font-bold text-[#2a2350]">
+            🗣 소리 내어 말해 봤어요
+          </button>
+        )}
+        {doneNote}
+      </div>
+    );
   }
 
   function start() {
@@ -25,6 +45,7 @@ export function SpeakPractice({ text }: { text: string }) {
       // 후보 중 정답에 가장 가까운 것을 쓴다
       const best = alts.sort((x, y) => compareSpoken(text, y).score - compareSpoken(text, x).score)[0];
       setHeard(best ?? "");
+      if (best) markSpoken();
     });
   }
 
@@ -48,7 +69,13 @@ export function SpeakPractice({ text }: { text: string }) {
           {result.missing.length > 0 && <p className="mt-1 text-xs text-zinc-600">빠진 단어: <b>{result.missing.join(", ")}</b></p>}
         </div>
       )}
+      {doneNote}
       {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && !done && (
+        <button type="button" onClick={markSpoken} className="self-start text-xs font-bold text-[#2a2350] underline">
+          앱이 못 들어도 소리 내어 말해 봤어요
+        </button>
+      )}
     </div>
   );
 }
