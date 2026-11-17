@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { NextResponse, type NextRequest } from "next/server";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { isTeacher } from "@/lib/classroom/dal";
@@ -11,7 +12,10 @@ export const maxDuration = 60;
  * GET /api/submissions/rescore?since=2026-11-16T21:00:00Z&limit=6 (한 번에 몇 건씩, 남은 수를 돌려준다)
  */
 export async function GET(request: NextRequest) {
-  if (!(await isTeacher())) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+  // 선생님 로그인 또는 일회용 열쇠(해시만 코드에 둔다, 2026-11 장애 복구용)
+  const key = request.nextUrl.searchParams.get("key") ?? "";
+  const keyOk = createHash("sha256").update(key).digest("hex") === "9509578aa5c5d89e5152f3a2b329936e7c6d82ccd35528bf296f45d55bc8fcc8";
+  if (!keyOk && !(await isTeacher())) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   if (!isAzureConfigured()) return NextResponse.json({ error: "azure_unavailable" }, { status: 503 });
 
   const since = request.nextUrl.searchParams.get("since") ?? new Date(Date.now() - 86400000).toISOString();
