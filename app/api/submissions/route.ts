@@ -97,10 +97,14 @@ export async function POST(request: NextRequest) {
       .from("submissions")
       .update({ status: "failed" })
       .eq("id", submission.id);
+    // 채점 서버 쪽 문제(키 거절·한도 초과·서버 오류)는 학생 탓이 아니니 다르게 안내한다
+    const serverSide = /실패: (401|403|429|5\d\d)/.test(String(error));
     return NextResponse.json({
       id: submission.id,
       status: "failed",
-      error: "음성을 잘 인식하지 못했어요. 조용한 곳에서 문장 전체를 또박또박 다시 녹음해보세요.",
+      error: serverSide
+        ? "지금 채점 서버에 문제가 있어 고치는 중이에요. 녹음은 저장됐고, 고쳐지면 채점해 드릴게요."
+        : "음성을 잘 인식하지 못했어요. 조용한 곳에서 문장 전체를 또박또박 다시 녹음해보세요.",
     });
   }
 }
