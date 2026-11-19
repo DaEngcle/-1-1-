@@ -5,6 +5,8 @@ import { createPortal } from "react-dom";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { SpeakPractice } from "./speak-practice";
+import { ShopTalk } from "./shop-talk";
+import { VILLAGE_TALKS } from "@/lib/classroom/village-talk";
 import { sendVillageChatAction } from "./actions";
 
 /** 마을 말풍선 하나 (village.js가 그린다) */
@@ -20,7 +22,9 @@ type VillageConfig = {
   churu: number;
   friends: { breed: string; name: string }[];
   onOpen: (href: string) => void;
-  onRoomOpen: (slot: HTMLElement, text: string) => void;
+  onRoomOpen: (slot: HTMLElement, text: string, placeId?: string) => void;
+  /** 점원 대화가 있는 가게 id (village.js가 기본 문제 칸을 숨긴다) */
+  talks: string[];
   onRoomClose: () => void;
   /** 내 표시 이름 (닉네임 또는 가린 이름) */
   myName: string;
@@ -36,7 +40,7 @@ declare global {
   }
 }
 
-const SCRIPT_SRC = "/village/village.js?v=32";
+const SCRIPT_SRC = "/village/village.js?v=33";
 
 function loadScript() {
   return new Promise<void>((resolve, reject) => {
@@ -66,7 +70,7 @@ export function VillageGame({
   const ref = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const [failed, setFailed] = useState(false);
-  const [speak, setSpeak] = useState<{ slot: HTMLElement; text: string } | null>(null);
+  const [speak, setSpeak] = useState<{ slot: HTMLElement; text: string; placeId?: string } | null>(null);
   // 서버가 다시 그려도 게임을 처음부터 다시 시작하지 않게 첫 값만 쓴다
   const first = useRef({ breed, churu, friends, myName });
 
@@ -118,7 +122,8 @@ export function VillageGame({
           base: "/village/",
           ...first.current,
           onOpen: (href) => router.push(href),
-          onRoomOpen: (slot, text) => setSpeak({ slot, text }),
+          talks: Object.keys(VILLAGE_TALKS),
+          onRoomOpen: (slot, text, placeId) => setSpeak({ slot, text, placeId }),
           onRoomClose: () => setSpeak(null),
           onChat: (text) => {
             sendVillageChatAction(text)
@@ -157,7 +162,15 @@ export function VillageGame({
           ←
         </Link>
       </div>
-      {speak && createPortal(<SpeakPractice key={speak.text} text={speak.text} />, speak.slot)}
+      {speak &&
+        createPortal(
+          speak.placeId && VILLAGE_TALKS[speak.placeId] ? (
+            <ShopTalk key={speak.placeId} turns={VILLAGE_TALKS[speak.placeId]} />
+          ) : (
+            <SpeakPractice key={speak.text} text={speak.text} />
+          ),
+          speak.slot,
+        )}
     </>
   );
 }

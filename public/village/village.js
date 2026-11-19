@@ -892,16 +892,19 @@
         if (leaveInside) closeRoom();
         rTitle.dataset.place = p.name;
         rTitle.textContent = p.room ? p.name + " · walk around with the joystick" : p.name;
+        // 가게 대화가 있는 곳은 앱(말하기 칸)이 점원과 주고받기를 그린다
+        const talk = (cfg.talks || []).includes(p.id);
+        rQ.hidden = talk;
         rQ.replaceChildren(document.createTextNode(p.q[0] + " · 영어로 말해 보세요"));
         const ans = el("button", "", rQ, "💡 Show answer"); ans.type = "button";
         ans.addEventListener("click", () => { ans.textContent = "✅ " + p.q[1]; });
         rAct.replaceChildren();
-        if ("speechSynthesis" in window) btn(rAct, "🔊 Listen", "", () => { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(p.q[1]); u.lang = "en-AU"; speechSynthesis.speak(u); });
+        if (!talk && "speechSynthesis" in window) btn(rAct, "🔊 Listen", "", () => { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(p.q[1]); u.lang = "en-AU"; speechSynthesis.speak(u); });
         if (p.link) btn(rAct, p.link[1], "go", () => { closeRoom(); cfg.onOpen(p.link[0]); });
         btn(rAct, "Exit", "", closeRoom);
         if (p.room) enterRoom(p);
         else { card.appendChild(rIn); rImg.hidden = true; room.hidden = false; }
-        if (cfg.onRoomOpen) cfg.onRoomOpen(rSpeak, p.q[1]);
+        if (cfg.onRoomOpen) cfg.onRoomOpen(rSpeak, p.q[1], p.id);
       }
       addEventListener("resize", setZoom, { signal });
       select(PLACES[0], false);
