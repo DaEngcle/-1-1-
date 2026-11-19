@@ -78,11 +78,14 @@ export function HouseEditor({
   const [sel, setSel] = useState<number | null>(null);
   const [msg, setMsg] = useState<string | null>(null);
   const [confirm, setConfirm] = useState<HouseItem | null>(null);
+  // 안 산 아이템 미리보기: 방에 잠깐 놓아 본다 (저장할 땐 빠진다)
+  const [trying, setTrying] = useState<string | null>(null);
+  const [tryBase, setTryBase] = useState<Layout | null>(null);
   const [pending, start] = useTransition();
   const svgRef = useRef<SVGSVGElement | null>(null);
   const drag = useRef<{ i: number; dx: number; dy: number } | null>(null);
   const own = new Set(owned);
-  const dirty = JSON.stringify(layout) !== JSON.stringify(initial);
+  const dirty = JSON.stringify(trying ? withoutTry(layout, trying) : layout) !== JSON.stringify(initial);
   const placedIds = new Set(layout.items.map((p) => p.id));
   const selItem = sel !== null ? layout.items[sel] : null;
   const size: RoomSize = layout.size ?? 1;
@@ -189,7 +192,7 @@ export function HouseEditor({
   }
 
   /** 가진 아이템을 고르면: 놓여 있으면 선택, 아니면 방에 놓기 / 배경·옷은 바꾸기 */
-  function use(it: HouseItem) {
+  function applyItem(it: HouseItem) {
     setMsg(null);
     if (it.kind === "room") {
       const up = ROOM_UPGRADES.find((r) => r.id === it.id);
@@ -229,12 +232,62 @@ export function HouseEditor({
     setSel(cur.items.length);
   }
 
+  /** 미리보기로 놓은 것만 원래대로 (그 사이 옮긴 다른 물건은 그대로 둔다) */
+  function withoutTry(l: Layout, id: string): Layout {
+    const it = ITEM_BY_ID.get(id);
+    const before = tryBase ?? initial;
+    if (!it) return l;
+    if (PLACEABLE.includes(it.kind)) return { ...l, items: l.items.filter((p) => p.id !== id) };
+    if (it.kind === "wall" || it.kind === "floor" || it.kind === "window") return { ...l, [it.kind]: before[it.kind] };
+    if (it.kind === "hat" || it.kind === "outfit") {
+      const wear = { ...l.wear };
+      if (before.wear[it.kind]) wear[it.kind] = before.wear[it.kind];
+      else delete wear[it.kind];
+      return { ...l, wear };
+    }
+    return l;
+  }
+
+  function undoTry() {
+    if (!trying) return;
+    const next = withoutTry(latest.current, trying);
+    latest.current = next;
+    setLayout(next);
+    setTrying(null);
+    setSel(null);
+    setTryBase(null);
+  }
+
+  /** 안 산 아이템을 방에 놓아 보기. 같은 걸 한 번 더 누르면 사기 창 */
+  function tryOn(it: HouseItem) {
+    if (trying === it.id) {
+      setConfirm(it);
+      return;
+    }
+    let base = latest.current;
+    if (trying) base = withoutTry(base, trying);
+    if (PLACEABLE.includes(it.kind) && base.items.length >= maxPlaced(base.size ?? 1)) {
+      setMsg(`방이 꽉 찼어요 (${maxPlaced(base.size ?? 1)}개). 물건 하나를 빼면 놓아 볼 수 있어요.`);
+      return;
+    }
+    latest.current = base;
+    setLayout(base);
+    setSel(null);
+    setTryBase(base);
+    setTrying(it.id);
+    applyItem(it);
+  }
+
   function buy(it: HouseItem) {
     start(async () => {
       const r = await buyItem(it.id);
       setMsg(r.message);
       if (r.ok) {
-        use(it);
+        // 미리보기로 이미 놓여 있으면 그대로 둔다
+        if (trying === it.id) {
+          setTrying(null);
+          setTryBase(null);
+        } else applyItem(it);
         router.refresh();
       }
     });
@@ -242,7 +295,9 @@ export function HouseEditor({
 
   function save() {
     start(async () => {
-      const r = await saveLayout(layout);
+      // 미리보기 중인 안 산 아이템은 빼고 저장한다
+      const toSave = trying ? withoutTry(layout, trying) : layout;
+      const r = await saveLayout(toSave);
       setMsg(r.message);
       if (r.ok) router.refresh();
     });
@@ -335,6 +390,30 @@ export function HouseEditor({
         svgRef={svgRef}
         className="shadow-lg"
       />
+      {trying && ITEM_BY_ID.get(trying) && (
+        <div className="flex flex-wrap items-center gap-2 rounded-2xl border-2 border-amber-300 bg-amber-50 p-2">
+          <span className="text-sm font-bold text-amber-900">
+            👀 미리보기: {ITEM_BY_ID.get(trying)!.name}
+          </span>
+          <span className="text-xs text-amber-800">아직 안 샀어요. 저장하면 빠져요.</span>
+          <span className="ml-auto flex gap-1">
+            <button
+              type="button"
+              onClick={() => setConfirm(ITEM_BY_ID.get(trying)!)}
+              className="rounded-lg bg-violet-600 px-3 py-1.5 text-xs font-bold text-white"
+            >
+              🐟 {priceOf(ITEM_BY_ID.get(trying)!)} 사기
+            </button>
+            <button
+              type="button"
+              onClick={undoTry}
+              className="rounded-lg bg-white px-3 py-1.5 text-xs font-bold text-zinc-700 shadow-sm"
+            >
+              되돌리기
+            </button>
+          </span>
+        </div>
+      )}
       <p className="-mt-1 text-center text-xs text-zinc-400">
         물건을 손가락으로 끌어서 옮겨요 · 바닥 앞쪽에 둔 물건이 고양이 앞에
         보여요
@@ -449,8 +528,8 @@ export function HouseEditor({
               <button
                 type="button"
                 disabled={pending || (!has && locked(it))}
-                onClick={() => (has ? use(it) : setConfirm(it))}
-                className={`flex w-full flex-col items-center gap-1 rounded-2xl border-2 bg-white p-2 text-center shadow-sm ${on ? "border-violet-500" : "border-transparent"}`}
+                onClick={() => (has ? applyItem(it) : it.kind === "room" || locked(it) ? setConfirm(it) : tryOn(it))}
+                className={`flex w-full flex-col items-center gap-1 rounded-2xl border-2 bg-white p-2 text-center shadow-sm ${trying === it.id ? "border-amber-400" : on ? "border-violet-500" : "border-transparent"}`}
               >
                 <ItemPreview id={it.id} className="h-14 w-14" />
                 <span className="line-clamp-1 text-xs font-bold text-zinc-900">
@@ -486,7 +565,13 @@ export function HouseEditor({
                   <span
                     className={`text-[11px] font-bold ${balance >= price ? "text-amber-700" : "text-zinc-400"}`}
                   >
-                    {locked(it) ? "🔒 큰 방 먼저" : `🐟 ${price} 사기`}
+                    {locked(it)
+                      ? "🔒 큰 방 먼저"
+                      : trying === it.id
+                        ? `👀 보는 중 · 🐟 ${price} 사기`
+                        : it.kind === "room"
+                          ? `🐟 ${price} 사기`
+                          : `👀 놓아 보기 · 🐟 ${price}`}
                   </span>
                 )}
               </button>
