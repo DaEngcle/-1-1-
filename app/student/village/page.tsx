@@ -2,11 +2,12 @@ import Link from "next/link";
 import { requireStudent } from "@/lib/classroom/dal";
 import { getChuru, listRooms } from "@/lib/classroom/cat-house-data";
 import { maskName } from "@/lib/classroom/engagement";
+import { getQuestState } from "@/lib/classroom/village-quest-data";
 import { VillageGame } from "./village-game";
 
 export default async function VillagePage() {
   const student = await requireStudent();
-  const [churu, rooms] = await Promise.all([getChuru(student.id), listRooms(student.id)]);
+  const [churu, rooms, quests] = await Promise.all([getChuru(student.id), listRooms(student.id), getQuestState(student)]);
   // 방을 꾸민 다른 학생의 고양이가 이웃으로 돌아다닌다 (이름은 닉네임 또는 가린 이름)
   const friends = rooms.flatMap((r) => (r.breed ? [{ breed: r.breed as string, name: r.name }] : [])).slice(0, 8);
 
@@ -26,6 +27,7 @@ export default async function VillagePage() {
         churu={churu.balance}
         friends={friends}
         myName={student.nickname ?? maskName(student.name)}
+        quests={quests}
       />
     </>
   );

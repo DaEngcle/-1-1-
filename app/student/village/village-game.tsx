@@ -7,12 +7,15 @@ import { useRouter } from "next/navigation";
 import { SpeakPractice } from "./speak-practice";
 import { ShopTalk } from "./shop-talk";
 import { VILLAGE_TALKS } from "@/lib/classroom/village-talk";
-import { sendVillageChatAction } from "./actions";
+import { completeQuestAction, sendVillageChatAction } from "./actions";
+import { QuestPanel } from "./quest-panel";
+import type { QuestState } from "@/lib/classroom/village-quest-data";
+import type { QuestKind } from "@/lib/classroom/village-quest";
 
 /** 마을 말풍선 하나 (village.js가 그린다) */
 type ChatBubble = { name: string; breed: string | null; text: string; mine: boolean; at: string };
 type ChatMessage = ChatBubble & { id: string };
-type VillageApi = { say: (msg: ChatBubble) => void };
+type VillageApi = { say: (msg: ChatBubble) => void; visit?: (placeId: string) => void };
 
 const CHAT_POLL_MS = 4000;
 
@@ -40,7 +43,7 @@ declare global {
   }
 }
 
-const SCRIPT_SRC = "/village/village.js?v=33";
+const SCRIPT_SRC = "/village/village.js?v=34";
 
 function loadScript() {
   return new Promise<void>((resolve, reject) => {
@@ -61,11 +64,13 @@ export function VillageGame({
   churu,
   friends,
   myName,
+  quests,
 }: {
   breed: string | null;
   churu: number;
   friends: { breed: string; name: string }[];
   myName: string;
+  quests: QuestState;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -73,6 +78,18 @@ export function VillageGame({
   const [speak, setSpeak] = useState<{ slot: HTMLElement; text: string; placeId?: string } | null>(null);
   // 서버가 다시 그려도 게임을 처음부터 다시 시작하지 않게 첫 값만 쓴다
   const first = useRef({ breed, churu, friends, myName });
+  const [quest, setQuest] = useState(quests);
+  const apiRef = useRef<VillageApi | null>(null);
+
+  function complete(kind: QuestKind) {
+    // 바로 체크해 보여 주고, 서버 결과(연속 기록·츄르)로 맞춘다
+    setQuest((q) => (q.done.includes(kind) ? q : { ...q, done: [...q.done, kind] }));
+    completeQuestAction(kind)
+      .then((r) => {
+        if (r.ok) setQuest(r.state);
+      })
+      .catch(() => {});
+  }
 
   useEffect(() => {
     const prev = document.body.style.overflow;
@@ -133,6 +150,7 @@ export function VillageGame({
           onReady: (ready) => {
             if (gone || api) return;
             api = ready;
+            apiRef.current = ready;
             void poll();
             timer = setInterval(() => void poll(), CHAT_POLL_MS);
           },
@@ -161,11 +179,19 @@ export function VillageGame({
         >
           ←
         </Link>
+        <QuestPanel state={quest} onComplete={complete} onVisit={(id) => apiRef.current?.visit?.(id)} />
       </div>
       {speak &&
         createPortal(
           speak.placeId && VILLAGE_TALKS[speak.placeId] ? (
-            <ShopTalk key={speak.placeId} turns={VILLAGE_TALKS[speak.placeId]} />
+            <ShopTalk
+              key={speak.placeId}
+              turns={VILLAGE_TALKS[speak.placeId]}
+              quest={speak.placeId === quest.shopId && !quest.done.includes("shop")}
+              onFinish={() => {
+                if (speak.placeId === quest.shopId) complete("shop");
+              }}
+            />
           ) : (
             <SpeakPractice key={speak.text} text={speak.text} />
           ),

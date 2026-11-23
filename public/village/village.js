@@ -908,7 +908,7 @@
       }
       addEventListener("resize", setZoom, { signal });
       select(PLACES[0], false);
-      if (cfg.onReady) cfg.onReady({ say });
+      if (cfg.onReady) cfg.onReady({ say, visit: (id) => { const p = PLACES.find((q) => q.id === id); if (p) select(p, true); } });
       for (const r of Object.values(ROOMS)) if (r.mask && !r.maskImg) { const mi = new Image(); mi.onload = () => { r.maskImg = mi; }; mi.src = `${base}rooms/${r.mask}`; }
     }
 

@@ -13,11 +13,12 @@ import {
   postcardFor,
   type Layout,
 } from "./cat-house";
+import { questChuru } from "./village-quest";
 
 /** 공부 기록으로 번 츄르 · 쓴 츄르 · 마지막 공부일 */
 export async function getChuru(studentId: string) {
   const supabase = createServerSupabaseClient();
-  const [acts, subs, { data: items }, { count: likesGot }, { count: likesGave }, { data: boxes }] = await Promise.all([
+  const [acts, subs, { data: items }, { count: likesGot }, { count: likesGave }, { data: boxes }, { data: quests }] = await Promise.all([
     fetchAll<{ day: string; watched_seconds: number; voca_points: number | null }>((from, to) =>
       supabase.from("daily_activity").select("day, watched_seconds, voca_points").eq("student_id", studentId).range(from, to),
     ),
@@ -28,6 +29,7 @@ export async function getChuru(studentId: string) {
     supabase.from("cat_room_likes").select("owner_id", { count: "exact", head: true }).eq("owner_id", studentId),
     supabase.from("cat_room_likes").select("owner_id", { count: "exact", head: true }).eq("liker_id", studentId),
     supabase.from("cat_boxes").select("week, item_id, churu").eq("student_id", studentId),
+    supabase.from("village_quests").select("done").eq("student_id", studentId),
   ]);
   const days = new Map<string, { submissions: number; watchedSeconds: number; vocaPoints: number }>();
   const get = (d: string) => {
@@ -61,6 +63,8 @@ export async function getChuru(studentId: string) {
   const studyEarned = earned;
   // 꾹꾹이: 받으면 +3, 누르면 +1 / 깜짝 상자 츄르
   earned += (likesGot ?? 0) * 3 + (likesGave ?? 0) + (boxes ?? []).reduce((n, b) => n + (b.churu ?? 0), 0);
+  // 고양이 마을 오늘의 의뢰 츄르
+  earned += (quests ?? []).reduce((n, q) => n + questChuru((q.done as string[] | null) ?? []), 0);
   postcardDays.sort();
   const postcards = new Map<string, string>(); // 엽서 id → 처음 받은 날
   for (const d of postcardDays) {

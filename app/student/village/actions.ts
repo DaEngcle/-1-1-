@@ -4,6 +4,8 @@ import { getVerifiedStudent } from "@/lib/classroom/dal";
 import { maskName } from "@/lib/classroom/engagement";
 import { sendVillageChat } from "@/lib/classroom/village-chat";
 import { createServerSupabaseClient } from "@/lib/supabase";
+import { QUEST_KINDS, type QuestKind } from "@/lib/classroom/village-quest";
+import { completeQuest, getQuestState } from "@/lib/classroom/village-quest-data";
 
 /** 마을 채팅 보내기. 이름은 닉네임 또는 가린 이름만 저장한다 (실명 노출 금지) */
 export async function sendVillageChatAction(text: string) {
@@ -34,4 +36,14 @@ export async function recordVillageSpeakAction() {
     .from("village_speak_usage")
     .upsert({ student_id: student.id, day, count: ((row?.count as number | undefined) ?? 0) + 1 }, { onConflict: "student_id,day" });
   return { ok: !error };
+}
+
+/** 오늘의 의뢰 하나 끝냄 → 새 상태(연속 기록·츄르 포함)를 돌려준다 */
+export async function completeQuestAction(kind: string) {
+  const student = await getVerifiedStudent();
+  if (!student) return { ok: false as const };
+  if (!(QUEST_KINDS as readonly string[]).includes(kind)) return { ok: false as const };
+  const r = await completeQuest(student.id, kind as QuestKind);
+  if (!r.ok) return { ok: false as const };
+  return { ok: true as const, state: await getQuestState(student) };
 }

@@ -30,13 +30,15 @@ type Line = { who: "clerk" | "me"; text: string; ko?: string; score?: number };
  * 가게 대화: 점원이 말을 걸면 학생이 영어로 받아 2~3번 주고받는다.
  * 브라우저 음성 인식(무료)으로 들은 말을 정답 후보와 비교하고, 60% 넘으면 다음 차례로 간다.
  */
-export function ShopTalk({ turns }: { turns: TalkTurn[] }) {
+export function ShopTalk({ turns, quest: questProp = false, onFinish }: { turns: TalkTurn[]; quest?: boolean; onFinish?: () => void }) {
   const { supported, listening, error, listen, stop } = useSpeechRecognition("en-AU");
   const [step, setStep] = useState(0);
   const [log, setLog] = useState<Line[]>([{ who: "clerk", text: turns[0].clerk, ko: turns[0].clerkKo }]);
   const [last, setLast] = useState<{ heard: string; score: number; missing: string[] } | null>(null);
   const [showAnswer, setShowAnswer] = useState(false);
   const [recorded, setRecorded] = useState(false);
+  // 의뢰 가게인지는 들어올 때 기준 (끝내고 나면 부모 값이 바뀌어도 안내는 남긴다)
+  const [quest] = useState(questProp);
   const finished = step >= turns.length;
   const turn = turns[Math.min(step, turns.length - 1)];
 
@@ -62,6 +64,7 @@ export function ShopTalk({ turns }: { turns: TalkTurn[] }) {
       setTimeout(() => say(turns[next].clerk), 500);
     }
     setLog((l) => [...l, ...lines]);
+    if (next >= turns.length) onFinish?.();
     setStep(next);
     setLast(null);
     setShowAnswer(false);
@@ -103,6 +106,7 @@ export function ShopTalk({ turns }: { turns: TalkTurn[] }) {
     <div className="flex flex-col gap-2">
       <p className="text-xs font-bold text-[#6c5cff]">
         🗣 점원과 대화하기 · {Math.min(step + (finished ? 0 : 1), turns.length)}/{turns.length}
+        {quest && " · 📜 오늘의 의뢰"}
       </p>
       <div className="flex max-h-56 flex-col gap-2 overflow-y-auto">{log.map(bubble)}</div>
 
@@ -110,6 +114,7 @@ export function ShopTalk({ turns }: { turns: TalkTurn[] }) {
         <div className="rounded-[10px] border-2 border-emerald-600 bg-emerald-50 p-3 text-sm text-emerald-800">
           <p className="font-extrabold">🎉 대화 완료! 영어로 {turns.length}번 주고받았어요.</p>
           <p className="mt-1 text-xs">말 걸어 보기 미션도 내 코스에 체크돼요. 다른 가게에서도 해 보세요.</p>
+          {quest && <p className="mt-1 text-xs font-bold">📜 오늘의 의뢰 &lsquo;오늘의 가게&rsquo; 완료! 🐟 +5</p>}
         </div>
       ) : (
         <>
