@@ -179,6 +179,67 @@ type AzureWord = AzureScores & {
 };
 
 /**
+ * 녹음 앞뒤의 조용한 부분을 잘라낸다 (16kHz 모노 16bit WAV). Azure 무료 요금제는 보낸 '소리 길이'로
+ * 한 달 한도를 세서, 말 안 한 구간을 빼면 같은 한도로 더 많이 채점할 수 있다. 앞뒤 0.3초는 남긴다.
+ */
+export function trimSilence(audio: Uint8Array): Uint8Array {
+  if (audio.length < 44 + 3200) return audio;
+  const view = new DataView(audio.buffer, audio.byteOffset, audio.byteLength);
+  if (view.getUint32(0, false) !== 0x52494646 || view.getUint16(22, true) !== 1 || view.getUint32(24, true) !== 16000 || view.getUint16(34, true) !== 16) {
+    return audio;
+  }
+  const n = Math.floor((audio.length - 44) / 2);
+  const sample = (i: number) => view.getInt16(44 + i * 2, true);
+  const WIN = 320; // 20ms
+  let peak = 0;
+  for (let i = 0; i < n; i++) peak = Math.max(peak, Math.abs(sample(i)));
+  const threshold = Math.max(500, peak * 0.08);
+  const loud = (w: number) => {
+    let sum = 0;
+    for (let i = w * WIN; i < Math.min(n, (w + 1) * WIN); i++) sum += Math.abs(sample(i));
+    return sum / WIN > threshold * 0.35;
+  };
+  const wins = Math.floor(n / WIN);
+  let first = 0;
+  while (first < wins && !loud(first)) first++;
+  let last = wins - 1;
+  while (last > first && !loud(last)) last--;
+  if (first >= last) return audio; // 판단이 안 되면 그대로
+  const pad = 4800; // 0.3초
+  const from = Math.max(0, first * WIN - pad);
+  const to = Math.min(n, (last + 1) * WIN + pad);
+  if (to - from > n - 3200) return audio; // 0.2초도 안 줄면 그대로
+  const out = new Uint8Array(44 + (to - from) * 2);
+  out.set(audio.subarray(0, 44), 0);
+  out.set(audio.subarray(44 + from * 2, 44 + to * 2), 44);
+  const ov = new DataView(out.buffer);
+  ov.setUint32(4, 36 + (to - from) * 2, true);
+  ov.setUint32(40, (to - from) * 2, true);
+  return out;
+}
+
+/** Azure 음성 인식 요청. 잠깐 몰리거나(429) 서버 오류(5xx)·연결 끊김이면 조금 쉬었다가 두 번까지 다시 보낸다 */
+async function sttFetch(url: string, headers: Record<string, string>, audio: Uint8Array): Promise<Response> {
+  const body = Buffer.from(trimSilence(audio));
+  const waits = [1200, 2500];
+  for (let attempt = 0; ; attempt++) {
+    try {
+      const res = await fetch(url, { method: "POST", headers, body });
+      if ((res.status === 429 || res.status >= 500) && attempt < waits.length) {
+        const after = Number(res.headers.get("retry-after"));
+        await res.text().catch(() => "");
+        await new Promise((r) => setTimeout(r, after > 0 && after <= 5 ? after * 1000 : waits[attempt]));
+        continue;
+      }
+      return res;
+    } catch (e) {
+      if (attempt >= waits.length) throw e;
+      await new Promise((r) => setTimeout(r, waits[attempt]));
+    }
+  }
+}
+
+/**
  * Azure 발음 평가 (짧은 음성 REST API, 60초 이하).
  * audio: 16kHz 모노 16bit PCM WAV. 운율(prosody) 평가는 en-US에서만 지원.
  */
@@ -200,18 +261,15 @@ export async function assessPronunciation(
     }),
   ).toString("base64");
 
-  const res = await fetch(
+  const res = await sttFetch(
     `https://${config.region}.stt.speech.microsoft.com/speech/recognition/conversation/cognitiveservices/v1?language=en-US&format=detailed`,
     {
-      method: "POST",
-      headers: {
-        "Ocp-Apim-Subscription-Key": config.key,
-        "Content-Type": "audio/wav; codecs=audio/pcm; samplerate=16000",
-        "Pronunciation-Assessment": params,
-        Accept: "application/json",
-      },
-      body: Buffer.from(audio),
+      "Ocp-Apim-Subscription-Key": config.key,
+      "Content-Type": "audio/wav; codecs=audio/pcm; samplerate=16000",
+      "Pronunciation-Assessment": params,
+      Accept: "application/json",
     },
+    audio,
   );
   if (!res.ok) {
     throw new Error(`Azure 발음 평가 실패: ${res.status} ${await res.text()}`);
@@ -263,17 +321,14 @@ export async function assessPronunciation(
 export async function transcribe(audio: Uint8Array): Promise<string> {
   const config = getConfig();
   if (!config) throw new Error("Azure Speech가 설정되지 않았습니다.");
-  const res = await fetch(
+  const res = await sttFetch(
     `https://${config.region}.stt.speech.microsoft.com/speech/recognition/conversation/cognitiveservices/v1?language=en-US&format=detailed`,
     {
-      method: "POST",
-      headers: {
-        "Ocp-Apim-Subscription-Key": config.key,
-        "Content-Type": "audio/wav; codecs=audio/pcm; samplerate=16000",
-        Accept: "application/json",
-      },
-      body: Buffer.from(audio),
+      "Ocp-Apim-Subscription-Key": config.key,
+      "Content-Type": "audio/wav; codecs=audio/pcm; samplerate=16000",
+      Accept: "application/json",
     },
+    audio,
   );
   if (!res.ok) throw new Error(`Azure 받아쓰기 실패: ${res.status} ${await res.text()}`);
   const data = (await res.json()) as { RecognitionStatus: string; NBest?: { Display?: string }[] };

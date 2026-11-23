@@ -95,7 +95,7 @@ export async function POST(request: NextRequest) {
     console.error("발음 평가 실패:", error);
     await supabase
       .from("submissions")
-      .update({ status: "failed" })
+      .update({ status: "failed", fail_reason: String(error).slice(0, 300) })
       .eq("id", submission.id);
     // 채점 서버 쪽 문제(키 거절·한도 초과·서버 오류)는 학생 탓이 아니니 다르게 안내한다
     const serverSide = /실패: (401|403|429|5\d\d)/.test(String(error));
