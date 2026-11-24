@@ -11,6 +11,8 @@ import { splitFeedback } from "@/lib/classroom/feedback-summary";
 import { useTts } from "@/app/_ui/audio/use-tts";
 import { toWav16kMono } from "@/app/_ui/audio/wav";
 import { useRecorder } from "@/app/_ui/audio/use-recorder";
+import { useSpeechRecognition } from "@/app/_ui/audio/use-speech-recognition";
+import { compareSpoken } from "@/lib/classroom/village";
 import { loadRecording, saveRecording } from "@/app/_ui/audio/recording-cache";
 import { CatSprite } from "@/app/_ui/cat";
 import { useMyCat } from "@/app/_ui/cat-context";
@@ -162,6 +164,68 @@ function ResultView({ result, onPlayWord }: { result: PracticeResult; onPlayWord
           ))}
         </div>
       )}
+    </div>
+  );
+}
+
+/**
+ * 무료 연습: 브라우저 음성 인식으로 몇 번이든 말해 보고 일치율을 본다 (Azure 안 씀).
+ * 정밀 채점(점수·단어별 발음)은 아래 '제출'에서만 Azure로 한다.
+ * 카톡 안 브라우저처럼 음성 인식이 없는 곳에선 안내만 보여 준다.
+ */
+function FreePractice({ sentence, onBeforeListen }: { sentence: string; onBeforeListen: () => void }) {
+  const { supported, listening, error, listen, stop } = useSpeechRecognition("en-US");
+  const [last, setLast] = useState<{ heard: string; score: number; missing: string[] } | null>(null);
+  const [tries, setTries] = useState(0);
+
+  if (supported === null) return null;
+  if (supported === false) {
+    return (
+      <p className="text-xs text-zinc-500">
+        💡 크롬·사파리에서 열면 제출 전에 무료로 몇 번이든 연습해 볼 수 있어요. (이 화면에선 녹음 후 바로 제출해 주세요)
+      </p>
+    );
+  }
+
+  function start() {
+    onBeforeListen();
+    setLast(null);
+    listen((alts) => {
+      const best = alts.map((h) => ({ heard: h, ...compareSpoken(sentence, h) })).sort((x, y) => y.score - x.score)[0];
+      setTries((n) => n + 1);
+      setLast(best ?? { heard: "", score: 0, missing: [] });
+    });
+  }
+
+  return (
+    <div className="flex flex-col gap-1.5 rounded-xl bg-zinc-50 p-3">
+      <div className="flex flex-wrap items-center gap-2">
+        {listening ? (
+          <button type="button" onClick={stop} className="rounded-lg border border-red-400 bg-red-50 px-3 py-2 text-sm font-medium text-red-700">
+            ⏹ 듣고 있어요. 다 말했으면 누르세요
+          </button>
+        ) : (
+          <button type="button" onClick={start} className="rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm font-medium">
+            🗣 {last ? "다시 연습" : "먼저 연습해 보기"}
+          </button>
+        )}
+        <span className="text-xs text-zinc-500">무료 · 횟수 제한 없음{tries > 0 ? ` · ${tries}번째` : ""}</span>
+      </div>
+      {last && (
+        <div className="text-sm text-zinc-700">
+          <p className={`font-bold ${last.score >= 80 ? "text-green-700" : last.score >= 60 ? "text-amber-800" : "text-red-700"}`}>
+            {last.score}% 일치
+            {last.score >= 80 ? " · 좋아요! 이제 녹음해서 제출해 보세요 👇" : " · 한 번 더 들어 보고 연습해 볼까요?"}
+          </p>
+          <p className="text-xs text-zinc-500">앱이 들은 말: {last.heard || "(알아듣지 못했어요)"}</p>
+          {last.missing.length > 0 && (
+            <p className="text-xs text-zinc-500">
+              안 들린 단어: <b className="text-zinc-700">{last.missing.join(", ")}</b>
+            </p>
+          )}
+        </div>
+      )}
+      {error && <p className="text-xs text-red-600">{error}</p>}
     </div>
   );
 }
@@ -321,6 +385,7 @@ export function SentencePractice({
       )}
 
       <div className="flex flex-col gap-2 border-t border-zinc-100 pt-3">
+        <FreePractice sentence={sentence} onBeforeListen={() => { stop(); if (recording) recorder.stop(); }} />
         <div className="flex flex-wrap items-center gap-2">
           {recording ? (
             <>
@@ -357,7 +422,7 @@ export function SentencePractice({
                 disabled={submitting}
                 className={`${btn} border-b-4 border-brand-800 bg-brand-600 font-bold text-white active:translate-y-0.5 active:border-b-2`}
               >
-                {submitting ? "AI가 듣는 중..." : "제출하고 피드백 받기"}
+                {submitting ? "AI가 듣는 중..." : "이걸로 제출 (AI 정밀 채점)"}
               </button>
             </>
           )}

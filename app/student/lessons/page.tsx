@@ -51,8 +51,38 @@ export default async function StudentLessonsPage({
   const allowed = new Set<string>(student.courses);
   const early = new Set<string>(student.earlyCourses);
   const requested = (await searchParams).course;
+  const visible = (c: Course) => early.has(c.id) || (allowed.has(c.id) && c.status === "open");
+  // 과정을 고르지 않고 들어오면 가장 최근에 본 강의(영상 시청·쉐도잉 제출 중 더 최근)의 과정으로 연다
+  let recentCourse: string | undefined;
+  if (!requested) {
+    const [{ data: watched }, { data: submitted }] = await Promise.all([
+      supabase
+        .from("video_progress")
+        .select("t:last_viewed_at, lessons!inner(course_id)")
+        .eq("student_id", student.id)
+        .not("last_viewed_at", "is", null)
+        .order("last_viewed_at", { ascending: false })
+        .limit(20),
+      supabase
+        .from("submissions")
+        .select("t:created_at, lesson_items!inner(lessons!inner(course_id))")
+        .eq("student_id", student.id)
+        .order("created_at", { ascending: false })
+        .limit(20),
+    ]);
+    const one = <T,>(v: T | T[] | null | undefined): T | undefined => (Array.isArray(v) ? v[0] : (v ?? undefined));
+    type Row = { t: string; lessons?: unknown; lesson_items?: unknown };
+    const events = [
+      ...((watched ?? []) as Row[]).map((r) => ({ t: r.t, cid: one(r.lessons as { course_id: string } | null)?.course_id })),
+      ...((submitted ?? []) as Row[]).map((r) => ({
+        t: r.t,
+        cid: one(one(r.lesson_items as { lessons: unknown } | null)?.lessons as { course_id: string } | null)?.course_id,
+      })),
+    ].sort((a, b) => (a.t < b.t ? 1 : -1));
+    recentCourse = events.find((e) => e.cid && courses.some((c) => c.id === e.cid && visible(c)))?.cid;
+  }
   const course =
-    courses.find((c) => c.id === requested) ??
+    courses.find((c) => c.id === (requested ?? recentCourse)) ??
     courses.find((c) => allowed.has(c.id) && c.status === "open") ??
     courses[0];
   // 준비 중이어도 선생님이 미리 열어준 학생은 바로 볼 수 있다
