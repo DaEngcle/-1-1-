@@ -98,11 +98,15 @@ export async function POST(request: NextRequest) {
       .update({ status: "failed", fail_reason: String(error).slice(0, 300) })
       .eq("id", submission.id);
     // 채점 서버 쪽 문제(키 거절·한도 초과·서버 오류)는 학생 탓이 아니니 다르게 안내한다
-    const serverSide = /실패: (401|403|429|5\d\d)/.test(String(error));
+    // Azure 무료 한도가 다 차면 400 "Quota exceeded"가 온다. 다시 녹음해도 소용없으니 따로 안내
+    const quota = /quota exceeded/i.test(String(error));
+    const serverSide = quota || /실패: (401|403|429|5\d\d)/.test(String(error));
     return NextResponse.json({
       id: submission.id,
       status: "failed",
-      error: serverSide
+      error: quota
+        ? "지금은 AI 정밀 채점을 잠시 쉬고 있어요. 녹음은 저장됐고 나중에 채점해 드릴게요. 다시 녹음하지 않아도 돼요. 그동안 위의 '🗣 먼저 연습해 보기'로 일치율을 확인해 보세요."
+        : serverSide
         ? "지금 채점 서버에 문제가 있어 고치는 중이에요. 녹음은 저장됐고, 고쳐지면 채점해 드릴게요."
         : "음성을 잘 인식하지 못했어요. 조용한 곳에서 문장 전체를 또박또박 다시 녹음해보세요.",
     });
