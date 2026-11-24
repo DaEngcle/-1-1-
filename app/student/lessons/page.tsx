@@ -80,6 +80,8 @@ export default async function StudentLessonsPage({
       })),
     ].sort((a, b) => (a.t < b.t ? 1 : -1));
     recentCourse = events.find((e) => e.cid && courses.some((c) => c.id === e.cid && visible(c)))?.cid;
+    // 기록이 없으면 1.0을 수강 중인 학생은 1.0부터 (부트캠프보다 먼저)
+    if (!recentCourse && courses.some((c) => c.id === "level1" && visible(c))) recentCourse = "level1";
   }
   const course =
     courses.find((c) => c.id === (requested ?? recentCourse)) ??
