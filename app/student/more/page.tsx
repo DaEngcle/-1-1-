@@ -33,11 +33,13 @@ const SECTIONS: { title: string; items: Item[] }[] = [
   {
     title: "계정",
     items: [
+      { href: "/student/membership", icon: "gift", title: "내 멤버십", sub: "결제·다음 결제일·해지·영수증" },
       { href: "/student/profile", icon: "user", title: "내 정보", sub: "닉네임·비밀번호 바꾸기" },
       { href: "/student/settings", icon: "settings", title: "설정", sub: "알림·해석·자막·효과음" },
       { href: "/install", icon: "phone", title: "폰에 앱 설치하기", sub: "아이폰·갤럭시 홈 화면에 추가하는 방법" },
       { href: "/student?guide=1", icon: "more", title: "앱 사용법 다시 보기", sub: "처음 들어왔을 때 본 안내 4장" },
       { href: "/privacy", icon: "user", title: "개인정보 처리방침", sub: "모으는 정보·맡기는 곳·보관 기간" },
+      { href: "/terms", icon: "book", title: "이용약관·환불 규정", sub: "멤버십 정기결제·해지·환불" },
     ],
   },
 ];

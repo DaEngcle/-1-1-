@@ -10,9 +10,9 @@ export const FREE_ROLEPLAYS_PER_DAY = 3;
 /** 시나리오를 끝내면 주는 포인트 (시나리오마다 하루 한 번) */
 export const ROLEPLAY_POINTS = 4;
 
-/** 유료 과정 수강생은 무제한 */
-export function roleplayUnlimited(student: { courses: readonly string[] }) {
-  return student.courses.length > 0;
+/** 유료 과정 수강생·앱 멤버십은 무제한 */
+export function roleplayUnlimited(student: { courses: readonly string[]; member?: boolean }) {
+  return student.courses.length > 0 || student.member === true;
 }
 
 /** 시나리오별 최고 별 */
@@ -38,14 +38,14 @@ async function startedToday(studentId: string, day: string): Promise<string[] | 
 
 export type RoleplayQuota = { unlimited: boolean; left: number; started: string[] };
 
-export async function roleplayQuota(student: { id: string; courses: readonly string[] }): Promise<RoleplayQuota> {
+export async function roleplayQuota(student: { id: string; courses: readonly string[]; member?: boolean }): Promise<RoleplayQuota> {
   if (roleplayUnlimited(student)) return { unlimited: true, left: Infinity, started: [] };
   const started = (await startedToday(student.id, kstDate(new Date()))) ?? [];
   return { unlimited: false, left: Math.max(0, FREE_ROLEPLAYS_PER_DAY - started.length), started };
 }
 
 /** 시작 기록 (무료회원 하루 3개). 이미 오늘 시작한 시나리오는 다시 해도 안 센다 */
-export async function claimRoleplayStart(student: { id: string; courses: readonly string[] }, id: string) {
+export async function claimRoleplayStart(student: { id: string; courses: readonly string[]; member?: boolean }, id: string) {
   if (!roleplay(id)) return { ok: false as const, reason: "missing" as const };
   if (roleplayUnlimited(student)) return { ok: true as const };
   const day = kstDate(new Date());
@@ -82,7 +82,7 @@ export async function claimRoleplayStart(student: { id: string; courses: readonl
  * 끝낸 결과 저장. 별은 서버에서 답을 다시 채점해서 정한다 (화면이 보낸 별은 안 믿는다).
  * 포인트는 시나리오마다 하루 한 번.
  */
-export async function saveRoleplayResult(student: { id: string; courses: readonly string[] }, id: string, answers: unknown) {
+export async function saveRoleplayResult(student: { id: string; courses: readonly string[]; member?: boolean }, id: string, answers: unknown) {
   const r = roleplay(id);
   if (!r || !Array.isArray(answers) || answers.length !== r.turns.length) return null;
   const texts = answers.map((a) => (typeof a === "string" ? a.slice(0, 300) : ""));

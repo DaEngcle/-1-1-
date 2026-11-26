@@ -12,7 +12,7 @@ import { buildCourse, doneSteps, pickToday, type CourseAccess, type CourseStep }
 import { courseTopic, topicPhrases, type ChosenTopic, type TopicPhrase } from "./course-topics";
 import type { ChatTurn } from "./course-ai";
 
-type AccessStudent = { plan: string | null; courses: readonly string[]; earlyCourses: readonly string[] };
+type AccessStudent = { plan: string | null; courses: readonly string[]; earlyCourses: readonly string[]; member?: boolean };
 
 export function courseAccess(student: AccessStudent): CourseAccess {
   let max = 0;

@@ -38,7 +38,7 @@ export async function createStudent(
   const memo = String(formData.get("memo") ?? "").trim();
   const plan = String(formData.get("plan") ?? "bootcamp");
   if (!name) return { status: "error", message: "이름을 입력해주세요." };
-  if (!isPlanId(plan)) return { status: "error", message: "수강권을 선택해주세요." };
+  if (!isPlanId(plan) || plan === "app") return { status: "error", message: "수강권을 선택해주세요." };
 
   const supabase = createServerSupabaseClient();
   if (phone) {
@@ -112,7 +112,7 @@ export async function approveStudent(formData: FormData) {
   const id = String(formData.get("id"));
   const plan = String(formData.get("plan"));
   const start = String(formData.get("start") || kstDate(new Date()));
-  if (!isPlanId(plan) || !/^\d{4}-\d{2}-\d{2}$/.test(start)) return;
+  if (!isPlanId(plan) || plan === "app" || !/^\d{4}-\d{2}-\d{2}$/.test(start)) return;
   const supabase = createServerSupabaseClient();
   const { data: cur } = await supabase.from("students").select("access_until").eq("id", id).maybeSingle();
   const until =
@@ -148,7 +148,7 @@ export async function mergeSignup(formData: FormData) {
   const plan = String(formData.get("plan"));
   const start = String(formData.get("start") || kstDate(new Date()));
   if (!targetId || targetId === "null") fail("합칠 카드 정보가 안 넘어왔어요");
-  if (!isPlanId(plan)) fail(`수강권을 알 수 없어요 (${plan})`);
+  if (!isPlanId(plan) || plan === "app") fail(`수강권을 알 수 없어요 (${plan})`);
   if (!/^\d{4}-\d{2}-\d{2}$/.test(start)) fail(`시작일 형식이 이상해요 (${start})`);
   if (pendingId === targetId) fail("같은 카드끼리는 합칠 수 없어요");
   const supabase = createServerSupabaseClient();

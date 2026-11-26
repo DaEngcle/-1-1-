@@ -7,6 +7,8 @@ import {
   isAzureConfigured,
 } from "@/lib/classroom/azure-speech";
 import { generateCoachFeedback } from "@/lib/classroom/coach-feedback";
+import { AI_LIMITS } from "@/lib/classroom/membership";
+import { kstDate } from "@/lib/classroom/stats";
 
 export const maxDuration = 60;
 
@@ -77,7 +79,16 @@ export async function POST(request: NextRequest) {
 
   try {
     const result = await assessPronunciation(bytes, item.sentence);
-    const feedback = await generateCoachFeedback(item.sentence, result);
+    // AI 코칭 문장은 하루 한도까지만 (비용 관리). 넘으면 점수만 준다
+    const limit =
+      student.courses.length > 0 ? AI_LIMITS.coachPerDay.course : student.member ? AI_LIMITS.coachPerDay.member : AI_LIMITS.coachPerDay.free;
+    const { count: coachedToday } = await supabase
+      .from("submissions")
+      .select("id", { count: "exact", head: true })
+      .eq("student_id", student.id)
+      .not("feedback_text", "is", null)
+      .gte("created_at", new Date(`${kstDate(new Date())}T00:00:00+09:00`).toISOString());
+    const feedback = (coachedToday ?? 0) < limit ? await generateCoachFeedback(item.sentence, result) : null;
     const update = {
       status: "scored" as const,
       overall_score: result.overall,

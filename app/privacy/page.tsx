@@ -1,105 +1,123 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { LegalPage } from "@/app/_ui/legal";
+import { BUSINESS } from "@/lib/business";
 
 export const metadata: Metadata = {
   title: "개인정보 처리방침 | 다잉클 클래스룸",
   description: "다잉클 클래스룸이 어떤 정보를 왜 모으고, 어디에 맡기며, 언제 지우는지 안내합니다.",
 };
 
-// 로그인 없이 볼 수 있는 공개 페이지 (가입 동의 문구에서 링크)
-const UPDATED = "2026년 11월 27일";
-
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <section className="flex flex-col gap-2 rounded-2xl bg-white p-4 shadow-sm">
-      <h2 className="text-base font-extrabold text-zinc-900">{title}</h2>
-      <div className="flex flex-col gap-1.5 text-sm leading-relaxed text-zinc-700">{children}</div>
-    </section>
-  );
-}
-
-const VENDORS: { name: string; job: string; where: string }[] = [
-  { name: "Supabase", job: "회원·학습 기록·녹음 파일 저장", where: "대한민국(서울)" },
-  { name: "Vercel", job: "앱 서버 운영", where: "대한민국(서울)" },
-  { name: "Microsoft Azure", job: "쉐도잉 녹음 발음 채점, 원어민 음성 생성", where: "호주" },
-  { name: "Anthropic", job: "AI 피드백·코스 추천 문장 생성 (이름·연락처는 보내지 않음)", where: "미국" },
-  { name: "PostHog", job: "앱 이용 기록 분석, 세션 다시보기", where: "미국" },
-];
-
 export default function PrivacyPage() {
   return (
-    <div className="mx-auto flex w-full max-w-2xl flex-col gap-4 px-4 py-8">
-      <div>
-        <h1 className="text-2xl font-extrabold text-zinc-900">개인정보 처리방침</h1>
-        <p className="mt-1 text-sm text-zinc-500">다니엘잉글리시(다잉클) · 시행일 {UPDATED}</p>
-      </div>
+    <LegalPage title="개인정보 처리방침">
+      <p>
+        {BUSINESS.name}(이하 &quot;회사&quot;)는 {BUSINESS.service} 이용자의 개인정보를 개인정보 보호법에 따라 안전하게 다룹니다.
+      </p>
 
-      <Section title="1. 모으는 정보">
-        <p>• 가입 정보: 이름, 휴대폰 번호, 닉네임, 비밀번호(암호화해 저장)</p>
-        <p>• 학습 기록: 강의 시청, 쉐도잉 녹음과 채점 결과, 숙제·연습·레벨테스트 결과, 출석</p>
+      <section>
+        <h2>1. 모으는 정보와 목적</h2>
+        <table>
+          <thead>
+            <tr><th>구분</th><th>항목</th><th>목적</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>가입(필수)</td><td>이름, 휴대폰 번호, 비밀번호(암호화), 닉네임</td><td>본인 확인, 로그인, 수강 관리</td></tr>
+            <tr><td>학습(필수)</td><td>녹음한 음성, 발음 점수, 학습·출석 기록, AI 면접 대화 내용</td><td>발음 채점, AI 피드백, 진도 관리</td></tr>
+            <tr><td>결제(멤버십)</td><td>카드사 이름과 끝 4자리, 결제 일시·금액, 결제 키</td><td>정기결제, 환불, 거래 기록 보관</td></tr>
+            <tr><td>선택</td><td>출국 예정일, 희망 도시·직업 등 상담 정보, 마케팅 수신 동의</td><td>맞춤 학습 안내, 이벤트 안내</td></tr>
+            <tr><td>자동 수집</td><td>접속 기록, 어떤 화면을 열고 무엇을 눌렀는지, 기기·브라우저 종류, 대략적인 접속 지역, 화면 움직임을 다시 볼 수 있는 세션 기록, 알림 구독 정보</td><td>보안, 오류 확인, 어려워하는 화면을 찾아 고치기, 학습 알림</td></tr>
+          </tbody>
+        </table>
+        <p>카드번호 전체는 회사가 받거나 저장하지 않으며, 결제대행사(토스페이먼츠)가 보관합니다.</p>
+        <p>세션 기록에서 입력한 글자(비밀번호, 답안 등)는 가려져 저장되지 않으며, 이용 기록은 이름·연락처 없이 앱 내부 번호로만 구분합니다.</p>
+      </section>
+
+      <section>
+        <h2>2. 보관 기간</h2>
+        <ul>
+          <li>회원 정보·학습 기록: 수강 종료(무료회원은 마지막 이용) 후 1년 뒤, 또는 삭제 요청 시 바로 지웁니다.</li>
+          <li>앱 이용 기록(분석·세션 기록): 수집일로부터 1년 이내에 지웁니다.</li>
+          <li>계약·결제·환불 기록: 5년 (전자상거래법)</li>
+          <li>소비자 불만·분쟁 처리 기록: 3년 (전자상거래법)</li>
+          <li>접속 기록: 3개월 (통신비밀보호법)</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>3. 처리를 맡기는 곳 (위탁)</h2>
+        <table>
+          <thead>
+            <tr><th>받는 곳</th><th>맡기는 일</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>토스페이먼츠(주)</td><td>카드 결제·정기결제</td></tr>
+            <tr><td>(주)솔라피</td><td>카카오 알림톡·문자 발송</td></tr>
+            <tr><td>Supabase Inc.</td><td>데이터베이스·녹음 파일 보관 (서버: 대한민국 서울)</td></tr>
+            <tr><td>Vercel Inc.</td><td>웹 서비스 운영 (서버: 대한민국 서울)</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>4. 국외 이전</h2>
+        <p>발음 채점과 AI 피드백을 위해 아래와 같이 정보가 해외 서버로 전송됩니다. 전송된 정보는 처리 후 해당 회사의 정책에 따라 보관·삭제됩니다.</p>
+        <table>
+          <thead>
+            <tr><th>받는 곳 (국가)</th><th>항목</th><th>목적·시점</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Microsoft Corporation (호주, Azure)</td><td>녹음한 음성, 연습 문장</td><td>발음 채점, 원어민 음성 생성 · 녹음을 제출할 때마다 암호화 통신</td></tr>
+            <tr><td>Anthropic PBC (미국)</td><td>발음 점수, 연습 문장, AI 면접·레벨테스트 답변 글</td><td>한국어 코칭·면접 피드백 생성 · 기능을 쓸 때마다 암호화 통신</td></tr>
+            <tr><td>PostHog Inc. (미국)</td><td>앱 이용 기록, 세션 기록 (이름·연락처 제외)</td><td>이용 분석, 오류 확인 · 앱을 쓰는 동안</td></tr>
+            <tr><td>Google LLC (미국, YouTube)</td><td>강의 영상 재생 정보</td><td>강의 영상 재생</td></tr>
+          </tbody>
+        </table>
+        <p>이름과 휴대폰 번호는 위 회사로 보내지 않습니다. 국외 이전을 원하지 않으면 해당 AI 기능을 쓰지 않으면 되며, 이 경우 발음 채점·AI 피드백은 받을 수 없습니다.</p>
+      </section>
+
+      <section>
+        <h2>5. 제3자 제공</h2>
+        <p>회사는 법령에 따른 경우를 빼고는 이용자 동의 없이 개인정보를 다른 곳에 제공하지 않습니다.</p>
+      </section>
+
+      <section>
+        <h2>6. 이용자의 권리</h2>
         <p>
-          • 앱 이용 기록: 어떤 화면을 열고 무엇을 눌렀는지, 접속 기기·브라우저 종류, 대략적인 접속 지역, 화면 움직임을 다시
-          볼 수 있는 세션 기록
+          언제든 내 정보의 열람, 정정, 삭제, 처리 정지, 동의 철회(마케팅 수신 거부 포함)를 요청할 수 있습니다. 카카오톡 채널이나 이메일로 요청하면 10일 이내에
+          처리합니다.
+        </p>
+      </section>
+
+      <section>
+        <h2>7. 안전 조치</h2>
+        <ul>
+          <li>비밀번호는 복호화할 수 없는 방식으로 암호화해 저장합니다.</li>
+          <li>모든 통신은 암호화(HTTPS)하며, 데이터베이스는 서버에서만 접근할 수 있게 막아 둡니다.</li>
+          <li>개인정보를 다루는 사람을 최소한으로 제한합니다.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>8. 개인정보 보호책임자</h2>
+        <p>
+          책임자: {BUSINESS.privacyOfficer} ({BUSINESS.name} 대표)
+          <br />
+          이메일: {BUSINESS.email}
+          <br />
+          카카오톡 채널:{" "}
+          <a href={BUSINESS.kakao} target="_blank" rel="noopener" className="underline">
+            다니엘 잉글리시 클럽
+          </a>
         </p>
         <p className="text-xs text-zinc-500">
-          세션 기록에서 입력한 글자(비밀번호, 답안 등)는 가려져 저장되지 않아요. 이용 기록은 이름·연락처 없이 앱 내부 번호로만
-          구분해요.
+          개인정보 침해 신고·상담: 개인정보침해신고센터(privacy.kisa.or.kr, 국번 없이 118), 개인정보분쟁조정위원회(kopico.go.kr, 1833-6972)
         </p>
-      </Section>
+      </section>
 
-      <Section title="2. 쓰는 목적">
-        <p>• 수강생 확인과 로그인</p>
-        <p>• 학습 관리: 진도·점수·피드백 제공, 숙제 확인, 학습 알림</p>
-        <p>• 서비스 개선: 학생들이 어려워하거나 자주 멈추는 화면을 찾아 고치고, 오류를 해결하기 위해</p>
-      </Section>
-
-      <Section title="3. 보관 기간">
-        <p>• 가입 정보·학습 기록: 수강 종료(무료회원은 마지막 이용) 후 1년 뒤, 또는 삭제 요청 시 바로 지워요.</p>
-        <p>• 앱 이용 기록: 수집일로부터 1년 이내에 지워요.</p>
-        <p>• 법령에 따라 보관해야 하는 결제 기록은 그 기간 동안 보관해요.</p>
-      </Section>
-
-      <Section title="4. 처리를 맡기는 곳 · 해외로 보내는 정보">
-        <p>앱 운영을 위해 아래 업체에 정보 처리를 맡겨요. 일부는 해외 서버에서 처리돼요(인터넷으로 전송).</p>
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[28rem] text-left text-xs">
-            <thead className="text-zinc-500">
-              <tr>
-                <th className="py-1.5 pr-2 font-semibold">업체</th>
-                <th className="py-1.5 pr-2 font-semibold">맡기는 일</th>
-                <th className="py-1.5 font-semibold">처리 국가</th>
-              </tr>
-            </thead>
-            <tbody>
-              {VENDORS.map((v) => (
-                <tr key={v.name} className="border-t border-zinc-100">
-                  <td className="py-1.5 pr-2 font-semibold text-zinc-800">{v.name}</td>
-                  <td className="py-1.5 pr-2">{v.job}</td>
-                  <td className="py-1.5">{v.where}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <p className="text-xs text-zinc-500">
-          해외로 보내는 정보는 각 일에 필요한 것(녹음, 학습 문장, 앱 이용 기록)뿐이고, 보관 기간은 위 3번과 같아요. 해외 전송을
-          원하지 않으면 아래 문의처로 알려 주세요. 다만 녹음 채점처럼 해외 처리가 꼭 필요한 기능은 쓸 수 없게 될 수 있어요.
-        </p>
-      </Section>
-
-      <Section title="5. 내 정보에 대한 권리">
-        <p>언제든 내 정보를 보거나, 고치거나, 지우거나, 처리를 멈춰 달라고 요청할 수 있어요. 요청하면 지체 없이 처리해요.</p>
-      </Section>
-
-      <Section title="6. 문의처">
-        <p>개인정보 보호 책임자: 다니엘 (다니엘잉글리시 대표)</p>
-        <p>문의: 카카오톡 채널 「다잉클」</p>
-      </Section>
-
-      <p className="text-center text-xs text-zinc-400">이 방침이 바뀌면 앱 공지로 미리 알려 드려요.</p>
-      <Link href="/login" className="text-center text-sm font-semibold text-brand-600">
-        ← 다잉클 클래스룸으로
-      </Link>
-    </div>
+      <section>
+        <h2>9. 변경</h2>
+        <p>이 방침을 바꾸면 시행 7일 전부터 앱에 알립니다.</p>
+      </section>
+    </LegalPage>
   );
 }

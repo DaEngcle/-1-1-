@@ -7,6 +7,7 @@ import { teacherPasswordFingerprint } from "./login-code";
 import { isTrialPlan, studentCourses } from "./plans";
 import { kstDate } from "./stats";
 import { isCatBreed } from "./cat";
+import { isMembershipPlan } from "./membership";
 
 /** 선생님 세션이 유효한지 (비밀번호가 바뀌면 기존 세션은 무효) */
 export const isTeacher = cache(async () => {
@@ -45,7 +46,9 @@ export const checkStudent = cache(async () => {
   const ended = Boolean(student.access_until && student.access_until < kstDate(new Date()));
   // 무료 체험이 끝나면 로그인은 되고 강의만 잠긴다 (무료회원처럼)
   const trialEnded = ended && isTrialPlan(student.plan);
-  if (ended && !trialEnded) {
+  // 앱 멤버십이 끝나도 마찬가지로 무료회원처럼 (보통은 결제 정리 작업이 먼저 무료회원으로 돌려놓는다)
+  const membershipEnded = ended && isMembershipPlan(student.plan);
+  if (ended && !trialEnded && !membershipEnded) {
     return { denied: "plan-ended" as StudentDenial };
   }
   return {
@@ -59,6 +62,8 @@ export const checkStudent = cache(async () => {
       plan: (student.plan as string | null) ?? null,
       accessUntil: (student.access_until as string | null) ?? null,
       courses: trialEnded ? [] : studentCourses(student.plan, student.courses as string[] | null),
+      /** 앱 멤버십 이용 중 (강의는 없고 앱 기능만 열림) */
+      member: isMembershipPlan(student.plan) && !membershipEnded,
       /** 무료 체험 중인지 (강의는 앞부분만 열린다) */
       isTrial: !trialEnded && isTrialPlan(student.plan),
       /** 준비 중이어도 이 학생에게만 미리 열린 과정 */
@@ -79,4 +84,25 @@ export const requireStudent = cache(async () => {
     redirect(`/login?error=${result.denied}`);
   }
   return result.student;
+});
+
+/**
+ * 멤버십 결제용 학생 확인: 수강 기간이 끝난 학생도 결제는 할 수 있어야 해서 기간은 보지 않는다.
+ * 로그인 안 됨·비활성·승인 전이면 null
+ */
+export const getPayingStudent = cache(async () => {
+  const session = await getSession();
+  if (session?.role !== "student") return null;
+  const { data: student } = await createServerSupabaseClient()
+    .from("students")
+    .select("id, name, is_active, session_version, approval, plan, access_until")
+    .eq("id", session.studentId)
+    .maybeSingle();
+  if (!student || student.session_version !== session.v || !student.is_active || student.approval !== "approved") return null;
+  return {
+    id: student.id as string,
+    name: student.name as string,
+    plan: (student.plan as string | null) ?? null,
+    access_until: (student.access_until as string | null) ?? null,
+  };
 });

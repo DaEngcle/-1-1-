@@ -3,6 +3,7 @@ import { InstallAppCard } from "@/app/_ui/pwa";
 import { ReviewMarquee, ReviewWall } from "@/app/_ui/reviews";
 import { requireStudent } from "@/lib/classroom/dal";
 import { isPlanId, isTrialPlan, planName } from "@/lib/classroom/plans";
+import { MEMBERSHIP } from "@/lib/classroom/membership";
 import { kstDate } from "@/lib/classroom/stats";
 import { CatSprite } from "@/app/_ui/cat";
 import { CatPicker } from "@/app/_ui/cat-picker";
@@ -179,7 +180,12 @@ export default async function StudentHomePage({ searchParams }: { searchParams: 
               {student.accessUntil && ` · D-${daysLeft(student.accessUntil)}`}
             </span>
           )}
-          {student.courses.length === 0 && (
+          {student.member && (
+            <Link href="/student/membership" className="rounded-full bg-white/15 px-3 py-1">
+              💳 앱 멤버십
+            </Link>
+          )}
+          {student.courses.length === 0 && !student.member && (
             <span className="rounded-full bg-[#ffd23f] px-3 py-1 text-zinc-900">
               🎁 무료회원
             </span>
@@ -251,7 +257,17 @@ export default async function StudentHomePage({ searchParams }: { searchParams: 
         </section>
       )}
 
-      {student.courses.length === 0 && (
+      {student.courses.length === 0 && !student.member && MEMBERSHIP.onSale && (
+        <Link href="/subscribe" className="flex items-center justify-between gap-3 rounded-2xl bg-brand-600 p-4 text-white shadow-md">
+          <span className="flex flex-col">
+            <span className="font-extrabold">💳 앱 멤버십으로 매일 말하기</span>
+            <span className="text-sm text-white/80">AI 면접·상황극·보카 전체 · 월 {MEMBERSHIP.price.toLocaleString("ko-KR")}원</span>
+          </span>
+          <span className="rounded-full bg-white px-3 py-1 text-sm font-bold text-brand-700">보기</span>
+        </Link>
+      )}
+
+      {student.courses.length === 0 && !student.member && (
         <section className="flex flex-col gap-2 rounded-2xl bg-[#fff8db] p-4 text-zinc-900">
           <p className="font-bold">🎁 무료회원으로 이용 중이에요</p>
           <p className="text-sm text-zinc-700">

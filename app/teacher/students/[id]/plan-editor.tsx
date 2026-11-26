@@ -5,7 +5,7 @@ import { COURSE_IDS, COURSE_SHORT, PLANS, accessUntil, planForCourses, planName,
 import { SubmitButton } from "@/app/_ui/submit-button";
 import { updatePlan } from "../actions";
 
-const PRESETS = (Object.keys(PLANS) as PlanId[]).filter((id) => id !== "custom");
+const PRESETS = (Object.keys(PLANS) as PlanId[]).filter((id) => id !== "custom" && id !== "app");
 
 function today() {
   return new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10);

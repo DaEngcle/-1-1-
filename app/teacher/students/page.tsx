@@ -338,7 +338,7 @@ export default async function StudentsPage({
                         defaultValue={defaultPlan}
                         className="rounded-lg border border-slate-200 px-2 py-1.5 text-sm"
                       >
-                        {Object.entries(PLANS).map(([id, plan]) => (
+                        {Object.entries(PLANS).filter(([id]) => id !== "app").map(([id, plan]) => (
                           <option key={id} value={id}>
                             {plan.name} ({plan.months}개월)
                           </option>
@@ -448,7 +448,7 @@ export default async function StudentsPage({
                     defaultValue="bootcamp"
                     className="rounded-lg border border-slate-200 px-2 py-1.5 text-sm"
                   >
-                    {Object.entries(PLANS).map(([id, plan]) => (
+                    {Object.entries(PLANS).filter(([id]) => id !== "app").map(([id, plan]) => (
                       <option key={id} value={id}>
                         {plan.name} ({plan.months}개월)
                       </option>

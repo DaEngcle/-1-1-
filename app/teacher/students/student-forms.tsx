@@ -46,7 +46,7 @@ export function CreateStudentForm() {
         <input name="memo" placeholder="메모 (선택)" className={inputClass} />
       </div>
       <select name="plan" defaultValue="bootcamp" className={inputClass}>
-        {Object.entries(PLANS).map(([id, p]) => (
+        {Object.entries(PLANS).filter(([id]) => id !== "app").map(([id, p]) => (
           <option key={id} value={id}>
             {p.name} ({p.months}개월, 오늘부터)
           </option>

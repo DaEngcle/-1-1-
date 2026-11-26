@@ -7,7 +7,7 @@ import { DAILY_LIMIT, FREE_TRIALS } from "./interview-scenarios";
  * AI 면접을 지금 할 수 있는지.
  * 수강생: 하루 5번 · 패스 있는 무료회원: 하루 3번 · 무료회원: 처음 1번 무료 체험
  */
-export async function talkAccess(student: { id: string; courses: string[] }) {
+export async function talkAccess(student: { id: string; courses: string[]; member?: boolean }) {
   const supabase = createServerSupabaseClient();
   const today = kstDate(new Date());
   const todayStart = new Date(`${today}T00:00:00+09:00`).toISOString();
@@ -20,10 +20,12 @@ export async function talkAccess(student: { id: string; courses: string[] }) {
   const passUntil = (st?.talk_until as string | null) ?? null;
   const hasPass = Boolean(passUntil && passUntil >= today);
   const enrolled = student.courses.length > 0;
-  if (enrolled || hasPass) {
+  // 앱 멤버십은 패스와 같은 한도 (하루 3번)
+  if (enrolled || hasPass || student.member) {
     const limit = enrolled ? DAILY_LIMIT.student : DAILY_LIMIT.pass;
     const left = Math.max(0, limit - (todayCount ?? 0));
-    return { kind: enrolled ? ("student" as const) : ("pass" as const), left, limit, passUntil, requested: Boolean(req), canStart: left > 0 };
+    const kind = enrolled ? ("student" as const) : student.member ? ("member" as const) : ("pass" as const);
+    return { kind, left, limit, passUntil, requested: Boolean(req), canStart: left > 0 };
   }
   const left = Math.max(0, FREE_TRIALS - (totalCount ?? 0));
   return { kind: "free" as const, left, limit: FREE_TRIALS, passUntil, requested: Boolean(req), canStart: left > 0 };

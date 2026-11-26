@@ -172,8 +172,8 @@ export function phraseSetLocked(fullVoca: boolean, deck: string, set: number) {
 }
 
 /** 보카·기초 문법을 전부 열 수 있는지: 수강권이 있거나, 선생님이 '보카 전체 열기'를 해 준 학생 (예: 초급반) */
-export function hasFullVoca(student: { courses: readonly string[]; earlyCourses: readonly string[] }) {
-  return student.courses.length > 0 || student.earlyCourses.includes("voca");
+export function hasFullVoca(student: { courses: readonly string[]; earlyCourses: readonly string[]; member?: boolean }) {
+  return student.courses.length > 0 || student.member === true || student.earlyCourses.includes("voca");
 }
 
 export function verbSet(id: number) {

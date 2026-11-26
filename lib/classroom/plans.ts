@@ -28,6 +28,8 @@ export const PLANS = {
   allinone: { name: "다잉클 All in one", months: 18, courses: ["bootcamp", "level1", "level2", "level3"] as CourseId[] },
   // 선생님이 과정을 직접 골라 준 학생 (예: 1.0반만). 실제 과정은 students.courses에 있다
   custom: { name: "다잉클 맞춤 수강", months: 3, courses: [] as CourseId[], legacy: true },
+  // 앱 멤버십 (월 정기결제). 강의는 없고 앱 기능만. 기간은 결제할 때마다 늘어난다 (lib/classroom/membership.ts)
+  app: { name: "다잉클 앱 멤버십", months: 1, courses: [] as CourseId[], legacy: true },
 } as const;
 export type PlanId = keyof typeof PLANS;
 
@@ -95,9 +97,9 @@ export function planName(plan: string | null | undefined, courses?: readonly unk
 export function planForCourses(courses: CourseId[], current?: string | null): PlanId {
   const key = (list: readonly string[]) => [...list].sort().join(",");
   const want = key(courses);
-  if (isPlanId(current) && current !== "custom" && current !== "trial1" && key(PLANS[current].courses) === want) return current;
+  if (isPlanId(current) && current !== "custom" && current !== "trial1" && current !== "app" && key(PLANS[current].courses) === want) return current;
   const hit = (Object.keys(PLANS) as PlanId[]).find(
-    (id) => id !== "custom" && id !== "trial1" && key(PLANS[id].courses) === want,
+    (id) => id !== "custom" && id !== "trial1" && id !== "app" && key(PLANS[id].courses) === want,
   );
   return hit ?? "custom";
 }

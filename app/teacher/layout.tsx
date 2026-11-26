@@ -11,6 +11,7 @@ const NAV = [
   { href: "/teacher/progress", label: "진도표" },
   { href: "/teacher/crm", label: "상담·고객" },
   { href: "/teacher/sales", label: "매출" },
+  { href: "/teacher/memberships", label: "멤버십" },
   { href: "/teacher/lessons", label: "레슨" },
   { href: "/teacher/resources", label: "자료실" },
   { href: "/teacher/news", label: "뉴스" },
