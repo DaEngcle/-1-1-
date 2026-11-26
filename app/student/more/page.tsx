@@ -37,6 +37,7 @@ const SECTIONS: { title: string; items: Item[] }[] = [
       { href: "/student/settings", icon: "settings", title: "설정", sub: "알림·해석·자막·효과음" },
       { href: "/install", icon: "phone", title: "폰에 앱 설치하기", sub: "아이폰·갤럭시 홈 화면에 추가하는 방법" },
       { href: "/student?guide=1", icon: "more", title: "앱 사용법 다시 보기", sub: "처음 들어왔을 때 본 안내 4장" },
+      { href: "/privacy", icon: "user", title: "개인정보 처리방침", sub: "모으는 정보·맡기는 곳·보관 기간" },
     ],
   },
 ];

@@ -116,8 +116,12 @@ export function SignupForm() {
         <span>
           <b>[필수] 개인정보 수집·이용 동의</b>
           <br />
-          수집 항목: 이름, 휴대폰 번호, 학습 기록(녹음 포함) · 목적: 수강생 확인과 학습 관리 · 보관: 수강 종료 후 1년 뒤
+          수집 항목: 이름, 휴대폰 번호, 학습 기록(녹음 포함), 앱 이용 기록 · 목적: 수강생 확인과 학습 관리, 서비스 개선 · 보관: 수강 종료 후 1년 뒤
           삭제
+        {" "}
+          <a href="/privacy" target="_blank" className="underline">
+            자세히 보기
+          </a>
         </span>
       </label>
       <SubmitButton disabled={pending} className={buttonClass}>

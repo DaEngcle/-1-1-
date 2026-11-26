@@ -37,8 +37,12 @@ export function FreeSignupForm({ from }: { from: string }) {
         <span>
           <b>[필수] 개인정보 수집·이용 동의</b>
           <br />
-          수집 항목: 이름, 휴대폰 번호, 학습 기록(녹음 포함) · 목적: 무료 자료 제공과 학습 관리 · 보관: 탈퇴 요청 시 또는
+          수집 항목: 이름, 휴대폰 번호, 학습 기록(녹음 포함), 앱 이용 기록 · 목적: 무료 자료 제공과 학습 관리, 서비스 개선 · 보관: 탈퇴 요청 시 또는
           마지막 이용 후 1년 뒤 삭제
+        {" "}
+          <a href="/privacy" target="_blank" className="underline">
+            자세히 보기
+          </a>
         </span>
       </label>
       <label className="flex items-start gap-2 rounded-xl bg-slate-50 p-3 text-xs leading-relaxed text-zinc-600">
