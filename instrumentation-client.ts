@@ -1,8 +1,12 @@
 // PostHog: 학생들이 어떤 화면을 열고 어디서 멈추는지 보는 분석 도구
-// NEXT_PUBLIC_POSTHOG_KEY가 있을 때만 켜진다 (없으면 아무것도 보내지 않음)
+// 프로젝트 토큰(phc_)은 보내기 전용 공개 열쇠라 코드에 둬도 안전하다 (PostHog: "Safe to use in public apps")
+// 로컬 개발(npm run dev)에서는 보내지 않는다
 import posthog from "posthog-js";
 
-const key = process.env.NEXT_PUBLIC_POSTHOG_KEY;
+const key =
+  process.env.NODE_ENV === "production"
+    ? (process.env.NEXT_PUBLIC_POSTHOG_KEY ?? "phc_qKrRHifzNqTzVj6JMufFPeC7HmwKq9PP2kLF3iy9usVF")
+    : undefined;
 
 if (key) {
   try {
