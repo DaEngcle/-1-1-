@@ -1,6 +1,7 @@
 import "server-only";
 import { createServerSupabaseClient, type AttendanceStatus } from "@/lib/supabase";
 import type { WordResult } from "./azure-speech";
+import { studentSubmissions } from "./progress";
 
 export function kstDate(d: Date | string) {
   return new Date(d).toLocaleDateString("sv-SE", { timeZone: "Asia/Seoul" });
@@ -29,12 +30,18 @@ export interface StudentStats {
 
 export async function getStudentStats(studentId: string): Promise<StudentStats> {
   const supabase = createServerSupabaseClient();
-  const [{ data: subs }, { data: att }] = await Promise.all([
+  const [submissions, { data: wordRows }, { data: att }] = await Promise.all([
+    // 점수·연속 학습일은 홈의 다른 계산과 같이 쓰는 제출 기록으로 (한 요청 안에서 다시 읽지 않게)
+    studentSubmissions(studentId),
+    // 단어별 결과(무거운 칸)는 '자주 틀리는 단어'에만 필요해서, 채점된 최근 1,000개만 따로 읽는다
     supabase
       .from("submissions")
-      .select("lesson_item_id, status, overall_score, word_details, created_at")
+      .select("word_details")
       .eq("student_id", studentId)
-      .order("created_at"),
+      .eq("status", "scored")
+      .not("word_details", "is", null)
+      .order("created_at", { ascending: false })
+      .limit(1000),
     supabase
       .from("attendance")
       .select("class_date, status")
@@ -42,7 +49,6 @@ export async function getStudentStats(studentId: string): Promise<StudentStats> 
       .order("class_date", { ascending: false }),
   ]);
 
-  const submissions = subs ?? [];
   const scored = submissions.filter((s) => s.status === "scored" && s.overall_score != null);
   const scores = scored.map((s) => Number(s.overall_score));
 
@@ -77,7 +83,7 @@ export async function getStudentStats(studentId: string): Promise<StudentStats> 
     "to", "of", "and", "or", "in", "on", "at", "is", "am", "are", "i", "it",
   ]);
   const wordStats = new Map<string, { miss: number; total: number; sum: number }>();
-  for (const s of scored) {
+  for (const s of wordRows ?? []) {
     for (const w of (s.word_details as WordResult[] | null) ?? []) {
       if (w.errorType === "Insertion") continue;
       const key = w.word.toLowerCase();

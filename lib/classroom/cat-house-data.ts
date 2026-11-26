@@ -1,6 +1,6 @@
 import "server-only";
 import { createServerSupabaseClient } from "@/lib/supabase";
-import { fetchAll } from "./progress";
+import { studentActivity, studentSubmissions } from "./progress";
 import { addDays, kstDate } from "./stats";
 import type { CatBreed } from "./cat";
 import { maskName, weekStart } from "./engagement";
@@ -19,12 +19,8 @@ import { questChuru } from "./village-quest";
 export async function getChuru(studentId: string) {
   const supabase = createServerSupabaseClient();
   const [acts, subs, { data: items }, { count: likesGot }, { count: likesGave }, { data: boxes }, { data: quests }] = await Promise.all([
-    fetchAll<{ day: string; watched_seconds: number; voca_points: number | null }>((from, to) =>
-      supabase.from("daily_activity").select("day, watched_seconds, voca_points").eq("student_id", studentId).range(from, to),
-    ),
-    fetchAll<{ created_at: string }>((from, to) =>
-      supabase.from("submissions").select("created_at").eq("student_id", studentId).range(from, to),
-    ),
+    studentActivity(studentId),
+    studentSubmissions(studentId),
     supabase.from("cat_items").select("item_id, price").eq("student_id", studentId),
     supabase.from("cat_room_likes").select("owner_id", { count: "exact", head: true }).eq("owner_id", studentId),
     supabase.from("cat_room_likes").select("owner_id", { count: "exact", head: true }).eq("liker_id", studentId),

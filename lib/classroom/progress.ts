@@ -1,4 +1,5 @@
 import "server-only";
+import { cache } from "react";
 import { createServerSupabaseClient, type Lesson } from "@/lib/supabase";
 import { SEGMENT_SECONDS, COMPLETE_PERCENT } from "./progress-rules";
 import { isTrialPlan, studentCourses } from "./plans";
@@ -16,7 +17,6 @@ export function watchPercent(segments: number[], durationSeconds: number) {
   return Math.min(100, Math.floor((watched / total) * 100));
 }
 
-type Client = ReturnType<typeof createServerSupabaseClient>;
 
 /** Supabase는 한 번에 1000행까지만 주므로 끝까지 나눠서 가져온다 */
 export async function fetchAll<T>(
@@ -31,12 +31,46 @@ export async function fetchAll<T>(
   }
 }
 
+export type StudentSubmission = { lesson_item_id: string; status: string; overall_score: number | null; created_at: string };
+
+/**
+ * 학생 한 명의 쉐도잉 제출 기록 전체 (오래된 순).
+ * 홈 한 번 그릴 때 진도·통계·연속 기록·고양이 단계가 모두 쓰므로, 한 요청 안에서는 한 번만 읽는다 (React cache).
+ */
+export const studentSubmissions = cache(async (studentId: string) =>
+  fetchAll<StudentSubmission>((from, to) =>
+    createServerSupabaseClient()
+      .from("submissions")
+      .select("lesson_item_id, status, overall_score, created_at")
+      .eq("student_id", studentId)
+      .order("created_at")
+      .order("id")
+      .range(from, to),
+  ),
+);
+
+export type StudentActivity = { day: string; watched_seconds: number; voca_plays: number | null; voca_points: number | null };
+
+/** 학생 한 명의 날짜별 학습 기록 (시청 초·보카) — 한 요청 안에서는 한 번만 읽는다 */
+export const studentActivity = cache(async (studentId: string) =>
+  fetchAll<StudentActivity>((from, to) =>
+    createServerSupabaseClient()
+      .from("daily_activity")
+      .select("day, watched_seconds, voca_plays, voca_points")
+      .eq("student_id", studentId)
+      .order("day")
+      .range(from, to),
+  ),
+);
+
 type PublishedLesson = Pick<
   Lesson,
   "id" | "course_id" | "sort_order" | "week_number" | "week_title" | "kind" | "day_number" | "title" | "video_url"
 >;
 
-async function loadPublished(supabase: Client) {
+// 공개 레슨·문장 목록 (문장 1,700여 줄) — 진도 계산 두 곳이 같이 쓰므로 한 요청 안에서는 한 번만 읽는다
+const loadPublished = cache(async () => {
+  const supabase = createServerSupabaseClient();
   // 레슨과 문장을 동시에 조회 (문장은 공개 레슨 것만)
   const [{ data: lessonRows }, items] = await Promise.all([
     supabase
@@ -57,7 +91,7 @@ async function loadPublished(supabase: Client) {
     lessons: (lessonRows ?? []) as PublishedLesson[],
     items: items as { id: string; lesson_id: string; lessons?: { course_id: string } }[],
   };
-}
+});
 
 export interface CourseProgress {
   /** 영상이 있는 공개 레슨 수 */
@@ -79,7 +113,7 @@ export async function getCourseProgress(studentIds: string[]): Promise<Map<strin
 
   const supabase = createServerSupabaseClient();
   const [{ lessons, items }, { data: planRows }, progressRows, submissionRows] = await Promise.all([
-    loadPublished(supabase),
+    loadPublished(),
     supabase.from("students").select("id, plan, courses").in("id", studentIds),
     fetchAll<{ student_id: string; lesson_id: string }>((from, to) =>
       supabase
@@ -89,13 +123,18 @@ export async function getCourseProgress(studentIds: string[]): Promise<Map<strin
         .not("completed_at", "is", null)
         .range(from, to),
     ),
-    fetchAll<{ student_id: string; lesson_item_id: string }>((from, to) =>
-      supabase
-        .from("submissions")
-        .select("student_id, lesson_item_id")
-        .in("student_id", studentIds)
-        .range(from, to),
-    ),
+    // 학생 한 명(학생 홈)이면 다른 곳과 같이 쓰는 제출 기록을 쓴다
+    studentIds.length === 1
+      ? studentSubmissions(studentIds[0]).then((rows) =>
+          rows.map((r) => ({ student_id: studentIds[0], lesson_item_id: r.lesson_item_id })),
+        )
+      : fetchAll<{ student_id: string; lesson_item_id: string }>((from, to) =>
+          supabase
+            .from("submissions")
+            .select("student_id, lesson_item_id")
+            .in("student_id", studentIds)
+            .range(from, to),
+        ),
   ]);
   const courseOfLesson = new Map(lessons.map((l) => [l.id, l.course_id]));
   const videoLessonIds = new Set(lessons.filter((l) => l.video_url).map((l) => l.id));
@@ -146,15 +185,13 @@ export interface LessonProgressRow {
 export async function getLessonProgress(studentId: string): Promise<LessonProgressRow[]> {
   const supabase = createServerSupabaseClient();
   const [{ lessons: allLessons, items }, { data: me }, { data: progressRows }, submissionRows] = await Promise.all([
-    loadPublished(supabase),
+    loadPublished(),
     supabase.from("students").select("plan, courses, early_courses").eq("id", studentId).maybeSingle(),
     supabase
       .from("video_progress")
       .select("lesson_id, percent, completed_at")
       .eq("student_id", studentId),
-    fetchAll<{ lesson_item_id: string }>((from, to) =>
-      supabase.from("submissions").select("lesson_item_id").eq("student_id", studentId).range(from, to),
-    ),
+    studentSubmissions(studentId),
   ]);
 
   const courses = new Set<string>(studentCourses(me?.plan, me?.courses as string[] | null));

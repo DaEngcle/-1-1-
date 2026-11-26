@@ -1,7 +1,7 @@
 import "server-only";
 import { createServerSupabaseClient } from "@/lib/supabase";
 import { kstDate } from "./stats";
-import { fetchAll, getLessonProgress } from "./progress";
+import { getLessonProgress, studentActivity, studentSubmissions } from "./progress";
 
 // 학습 포인트: 영상 1분 = 1, 쉐도잉 제출 = 10, 80점 이상이면 +5
 const XP_PER_SUBMISSION = 10;
@@ -25,15 +25,9 @@ export const WEEKLY_SHADOWING_GOAL = 20;
 
 /** 이번 주(월요일부터, 한국 시간)에 쉐도잉한 문장 수 (같은 문장을 여러 번 내도 1개) */
 export async function weekShadowingCount(studentId: string) {
-  const supabase = createServerSupabaseClient();
-  const rows = await fetchAll<{ lesson_item_id: string }>((from, to) =>
-    supabase
-      .from("submissions")
-      .select("lesson_item_id")
-      .eq("student_id", studentId)
-      .gte("created_at", `${weekStart()}T00:00:00+09:00`)
-      .range(from, to),
-  );
+  // 홈의 다른 계산과 같이 쓰는 제출 기록에서 이번 주 것만 센다
+  const since = new Date(`${weekStart()}T00:00:00+09:00`).getTime();
+  const rows = (await studentSubmissions(studentId)).filter((r) => new Date(r.created_at).getTime() >= since);
   return new Set(rows.map((r) => r.lesson_item_id)).size;
 }
 
@@ -46,7 +40,7 @@ interface DayActivity {
   bestScore: number;
 }
 
-function buildDays(watchRows: { day: string; watched_seconds: number; voca_plays?: number }[], subs: SubRow[]) {
+function buildDays(watchRows: { day: string; watched_seconds: number; voca_plays?: number | null }[], subs: SubRow[]) {
   const days = new Map<string, DayActivity>();
   const get = (d: string) => {
     let v = days.get(d);
@@ -115,20 +109,8 @@ export async function getEngagement(studentId: string): Promise<Engagement> {
   const supabase = createServerSupabaseClient();
   const [watchRows, subs, { data: attRows }, { count: completedVideos }, lessonRows, { data: tests }] =
     await Promise.all([
-      fetchAll<{ day: string; watched_seconds: number; voca_plays: number }>((from, to) =>
-        supabase
-          .from("daily_activity")
-          .select("day, watched_seconds, voca_plays")
-          .eq("student_id", studentId)
-          .range(from, to),
-      ),
-      fetchAll<SubRow>((from, to) =>
-        supabase
-          .from("submissions")
-          .select("created_at, status, overall_score")
-          .eq("student_id", studentId)
-          .range(from, to),
-      ),
+      studentActivity(studentId),
+      studentSubmissions(studentId),
       supabase.from("attendance").select("class_date, status").eq("student_id", studentId),
       supabase
         .from("video_progress")
@@ -270,36 +252,29 @@ function getRanking(opts: { masked: boolean; start: string }): Promise<RankRow[]
 async function computeRanking({ masked, start }: { masked: boolean; start: string }): Promise<RankRow[]> {
   const supabase = createServerSupabaseClient();
   const startIso = new Date(`${start}T00:00:00+09:00`).toISOString();
-  const [{ data: students }, watchRows, subs] = await Promise.all([
+  const [{ data: students }, { data: xpRows, error: xpError }] = await Promise.all([
     supabase
       .from("students")
       .select("id, name, nickname, cat_breed")
       .eq("is_active", true)
       // 시트에서 가져왔지만 아직 가입 안 한 학생은 랭킹에서 뺀다
       .or("password_hash.not.is.null,login_code_hash.not.is.null"),
-    fetchAll<{ student_id: string; watched_seconds: number; voca_points: number }>((from, to) =>
-      supabase
-        .from("daily_activity")
-        .select("student_id, watched_seconds, voca_points")
-        .gte("day", start)
-        .range(from, to),
-    ),
-    fetchAll<{ student_id: string; status: string; overall_score: number | null }>((from, to) =>
-      supabase
-        .from("submissions")
-        .select("student_id, status, overall_score")
-        .gte("created_at", startIso)
-        .range(from, to),
-    ),
+    // 학생별 포인트 합계는 DB에서 계산해 받는다 (이번 달 기록 전체를 서버로 가져오지 않게)
+    // 시청 분 + 보카 포인트 + 제출당 XP_PER_SUBMISSION + 고득점 보너스 — 함수 정의는 Supabase 'league_xp'
+    supabase.rpc("league_xp", {
+      p_start_day: start,
+      p_start_ts: startIso,
+      p_per_sub: XP_PER_SUBMISSION,
+      p_high: HIGH_SCORE,
+      p_bonus: XP_HIGH_SCORE_BONUS,
+    }),
   ]);
+  // 실패를 0점 순위로 저장해 두지 않게 던진다 (getRanking이 캐시에서 지운다)
+  if (xpError) throw new Error(`리그 점수 계산 실패: ${xpError.message}`);
 
-  const xp = new Map<string, number>();
-  const add = (id: string, n: number) => xp.set(id, (xp.get(id) ?? 0) + n);
-  for (const w of watchRows) add(w.student_id, Math.floor(w.watched_seconds / 60) + (w.voca_points ?? 0));
-  for (const s of subs) {
-    add(s.student_id, XP_PER_SUBMISSION);
-    if (s.status === "scored" && Number(s.overall_score) >= HIGH_SCORE) add(s.student_id, XP_HIGH_SCORE_BONUS);
-  }
+  const xp = new Map<string, number>(
+    ((xpRows ?? []) as { student_id: string; xp: number | string }[]).map((r) => [r.student_id, Number(r.xp)]),
+  );
 
   const rows = (students ?? [])
     .map((s) => ({

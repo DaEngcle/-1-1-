@@ -2,7 +2,7 @@ import "server-only";
 // 고양이 성장 단계: 지금까지 '공부한 날' 수(달력·연속 기록과 같은 기준)로 정한다
 import { cache } from "react";
 import { createServerSupabaseClient } from "@/lib/supabase";
-import { fetchAll } from "./progress";
+import { studentActivity, studentSubmissions } from "./progress";
 import { kstDate } from "./stats";
 import { catStageForDays, daysToNextStage, isCatStage, type CatStage } from "./cat";
 
@@ -11,21 +11,12 @@ import { catStageForDays, daysToNextStage, isCatStage, type CatStage } from "./c
  * lib/classroom/engagement.ts의 '공부한 날'(studied)과 같은 기준이다.
  */
 export const studyDayCount = cache(async (studentId: string) => {
-  const supabase = createServerSupabaseClient();
-  const [acts, subs] = await Promise.all([
-    fetchAll<{ day: string }>((from, to) =>
-      supabase
-        .from("daily_activity")
-        .select("day")
-        .eq("student_id", studentId)
-        .or("watched_seconds.gt.0,voca_plays.gt.0")
-        .range(from, to),
-    ),
-    fetchAll<{ created_at: string }>((from, to) =>
-      supabase.from("submissions").select("created_at").eq("student_id", studentId).range(from, to),
-    ),
-  ]);
-  return new Set([...acts.map((a) => a.day), ...subs.map((s) => kstDate(s.created_at))]).size;
+  // 홈·달력과 같이 쓰는 기록을 쓴다 (한 요청 안에서 다시 읽지 않게)
+  const [acts, subs] = await Promise.all([studentActivity(studentId), studentSubmissions(studentId)]);
+  return new Set([
+    ...acts.filter((a) => a.watched_seconds > 0 || (a.voca_plays ?? 0) > 0).map((a) => a.day),
+    ...subs.map((s) => kstDate(s.created_at)),
+  ]).size;
 });
 
 /** 내 고양이 단계 + 마지막으로 본 단계 (축하 화면용) */
